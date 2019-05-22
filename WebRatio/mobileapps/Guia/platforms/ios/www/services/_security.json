@@ -1,0 +1,4 @@
+{
+  "_" : "wrm.core.SecurityService",
+  "requireAllowRoles" : false
+}

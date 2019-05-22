@@ -1,0 +1,18 @@
+#?delimiters [%,%],[%=,%]
+<?xml version="1.0" encoding="UTF-8"?>
+<?bpm version="4.0.0.0"?>
+[% setXMLOutput() %]
+<BPMProject xmlns:gr="http://www.webratio.com/2006/WebML/Graph" gr:showTooltip="true" gr:showActivityParameters="true" uuid="[%=getUUID(this)%]">  
+  <Pool id="pool1" uuid="[%=getUUID()%]">
+    <Parameters/>
+    <Lane id="pool1#lane1" name="Lane 1" notification="None" uuid="[%=getUUID()%]">
+      <UserTask id="pool1#lane1#task1" name="Task 1" gr:x="168" gr:y="36" uuid="[%=getUUID()%]">
+   	    <FlowConnector id="pool1#lane1#task1#fcon2" to="pool1#lane1#endter1" uuid="[%=getUUID()%]"/>
+	  </UserTask>
+	  <StartEvent execution="userExecution" gr:x="36" gr:y="48" id="pool1#lane1#strev2" name="Start Event 1" uuid="[%=getUUID()%]">
+		<FlowConnector id="pool1#lane1#strev2#fcon1" to="pool1#lane1#task1" uuid="[%=getUUID()%]"/>
+	  </StartEvent>
+	  <EndEvent id="pool1#lane1#endter1" name="End Event 1" uuid="[%=getUUID()%]" gr:x="312" gr:y="48"/>
+    </Lane>
+  </Pool>
+</BPMProject>

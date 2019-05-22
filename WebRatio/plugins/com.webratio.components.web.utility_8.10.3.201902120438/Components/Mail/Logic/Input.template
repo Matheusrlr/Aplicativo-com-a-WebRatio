@@ -1,0 +1,59 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import org.apache.commons.lang.StringUtils
+
+setXMLOutput()
+def componentId = component["id"]
+def placeholders = component.selectNodes("Placeholder")
+def templateFile = getContentFileOptional(component["template"])
+Set tokens = new HashSet()
+def template = null
+def subject = component.valueOf("SubjectTemplate") != "" ? "_" + component.valueOf("SubjectTemplate") : ""
+if (templateFile != null && templateFile.isFile()) {	
+	try {
+		template = templateFile.getText()
+	} catch (Throwable e) {
+        // ignore any exception
+    }
+}
+if (StringUtils.isBlank(template)) {
+	template = component.valueOf("BodyTemplate");
+}
+%>
+<InputParameters>
+  
+  <InputParameter name="<%=componentId%>.from" label="Mail - From"/>
+  <InputParameter name="<%=componentId%>.to" label="Mail - To"/>
+  <InputParameter name="<%=componentId%>.cc" label="Mail - Cc"/>
+  <InputParameter name="<%=componentId%>.bcc" label="Mail - Bcc"/>
+  <InputParameter name="<%=componentId%>.subject" label="Mail - Subject"/>
+  <InputParameter name="<%=componentId%>.body" label="Mail - Body"/>
+  
+  <InputParameter name="<%=componentId%>.serverHost" label="SMTP Server - Host"/>
+  <InputParameter name="<%=componentId%>.serverPort" label="SMTP Server - Port"/>
+  <InputParameter name="<%=componentId%>.serverUsername" label="SMTP Server - Username"/>
+  <InputParameter name="<%=componentId%>.serverPassword" label="SMTP Server - Password"/>
+  <InputParameter name="<%=componentId%>.serverProtocol" label="SMTP Server - Protocol"/>
+  <InputParameter name="<%=componentId%>.serverUseSsl" label="SMTP Server - Use SSL"/>
+
+  <% if (placeholders.empty) { 
+  	   def stringToSplit = "_" + StringUtils.replace(template, "\$\$\$\$", "\$\$_\$\$") + subject
+  	   holders = StringUtils.splitByWholeSeparator(stringToSplit, "\$\$")
+	   for (i in 0..holders.size() - 1) {
+	     if (i % 2 != 0) {
+	       tokens.add(holders[i])
+	     }
+ 	   }
+       for (token in tokens) {
+         %><InputParameter name="<%=componentId%>.<%=token%>" label="<%=token%>"/><%
+       }
+     } else {
+	   for(p in placeholders) { 
+	     %><InputParameter name="<%=componentId%>.<%=p["name"]%>" label="<%=p["name"]%>" refId="<%=p["id"]%>"/><%
+	   } 
+     } 
+     for(a in component.selectNodes("Attachment")) { 
+       %><InputParameter name="<%=componentId%>.<%=a["name"]%>" label="<%=a["name"]%>" refId="<%=a["id"]%>"/><InputParameter name="<%=componentId%>.<%=a["name"]%>.filename" label="<%=a["name"]%> [file name]" refId="<%=a["id"]%>"/><%
+     } 
+  %>
+</InputParameters>

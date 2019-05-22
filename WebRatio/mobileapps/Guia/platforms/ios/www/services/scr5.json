@@ -1,0 +1,85 @@
+{
+  "_" : "wrm.core.PanelService",
+  "masters" : [ "tlb2" ],
+  "navigations" : {
+    "0" : {
+      "nc" : true,
+      "flows" : "scr5",
+      "fr" : true
+    },
+    "1" : {
+      "nc" : true,
+      "flows" : "scr5.link",
+      "fr" : true
+    },
+    "2" : {
+      "flows" : "scr5.auto-link",
+      "fr" : true
+    },
+    "3" : {
+      "flows" : "scr5.auto-link"
+    },
+    "4" : {
+      "flows" : "nf10",
+      "fr" : true
+    },
+    "5" : {
+      "flows" : "nf10"
+    },
+    "6" : {
+      "flows" : "nf6",
+      "fr" : true
+    },
+    "7" : {
+      "flows" : "nf6"
+    },
+    "8" : {
+      "flows" : "nf9",
+      "fr" : true
+    },
+    "9" : {
+      "flows" : "nf9"
+    }
+  },
+  "knownEffects" : "#pr#",
+  "propagationSequence" : "",
+  "propagations" : { },
+  "components" : {
+    "dau2" : {
+      "fb" : false,
+      "conds" : [ {
+        "fr" : false,
+        "navs" : "3",
+        "effects" : "#pr#"
+      } ]
+    }
+  },
+  "events" : {
+    "oslte5" : {
+      "component" : "dau2",
+      "type" : "OnSelectEvent",
+      "flow" : {
+        "id" : "nf5",
+        "navTo" : "scr1",
+        "bindTo" : "pwu1",
+        "preserve" : ""
+      }
+    },
+    "oslte8" : {
+      "component" : "dau2",
+      "type" : "OnSelectEvent",
+      "flow" : {
+        "id" : "nf8",
+        "navTo" : "scr6",
+        "bindTo" : "enu1",
+        "preserve" : ""
+      }
+    }
+  },
+  "autoFlow" : {
+    "preserve" : ""
+  },
+  "autoFlowFull" : {
+    "preserve" : ""
+  }
+}

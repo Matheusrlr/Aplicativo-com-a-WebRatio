@@ -1,0 +1,16 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+%]
+
+<OutputParameters>
+	[% for (field in component.selectNodes("Field | SelectionField")) {
+		if (field["splitOutput"] == "true") {
+			for (slot in field.selectNodes("Slot[@output = 'true']")) { %]
+				<OutputParameter name="[%= slot["id"] %]" refId="[%= field["id"] %]" type="" label="[%= field["name"] %][[%= slot["name"] %]]" providedByForm="true"/>
+			[% }
+		} else { %]
+			<OutputParameter name="[%= field["id"] %]" refId="[%= field["id"] %]" type="" label="[%= field["name"] %]" providedByForm="true"/>
+		[% }
+	} %]
+</OutputParameters>

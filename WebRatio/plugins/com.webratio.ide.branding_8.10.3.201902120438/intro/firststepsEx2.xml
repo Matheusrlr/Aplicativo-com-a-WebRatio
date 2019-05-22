@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<introContent>
+  <extensionContent id="com.webratio.ide.ui.firststeps.right" name="WebRatio Home (Right)" alt-style="css/firststeps.properties" style="css/firststeps.css" path="firststeps/@">
+    <group style-id="content-group" id="content-group">
+      <link style-id="content-link" label="Tutorials" url="http://org.eclipse.ui.intro/showPage?id=tutorials" id="wr_tutorials">
+        <text>Go through tutorials</text>
+      </link>
+      <link style-id="content-link" label="What's New" url="http://org.eclipse.ui.intro/showPage?id=whatsnew" id="wr_whatsnew">
+        <text>Find out what is new</text>
+      </link>
+      <link style-id="content-link" label="Web Resources" url="http://org.eclipse.ui.intro/showPage?id=webresources" id="wr_webresources">
+        <text>Read more on the Web</text>
+      </link>
+    </group>
+  </extensionContent>
+</introContent>

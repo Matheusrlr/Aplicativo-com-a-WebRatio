@@ -1,0 +1,83 @@
+<Element name="Lane" lowerName="lane"
+		pluralLowerName="">
+		<Description>
+			A &lt;a href="/Concepts/Elements/Process/CommonElements/Lane"/&gt; is a sub-partition within a <a href="Pool"/> 
+			and will extend the entire length of the Pool, either vertically  or horizontally. 
+			Different Lanes can be placed within a single Pool and they represent the involved actors. 
+			These actors can be both humans, automatically managed or delegated to other systems.
+  	  	</Description>
+        
+        <ActionRef label="Add Lane" />
+        <ActionRef label="Add Group" />
+        <ActionRef label="Add User Task" />
+        <ActionRef label="Add Service Task" />
+        <ActionRef label="Add Subprocess" />
+        <ActionRef label="Add Embedded Subprocess" />
+        <ActionRef label="Add Message Flow" />
+        <ActionRef label="Add Text Annotation" />
+        <ActionRef label="Add Property" />
+        <ActionRef label="Add Exclusive Gateway" />
+        <ActionRef label="Add Inclusive Gateway" />
+        <ActionRef label="Add Parallel Gateway" />
+        <ActionRef label="Add Complex Gateway" />
+        <ActionRef label="Add Exclusive Event Gateway" />
+        <ActionRef label="Add Start Event" />
+        <ActionRef label="Add Start Message" />
+        <ActionRef label="Add Start Timer" />
+        <ActionRef label="Add Start Conditional" />
+        <ActionRef label="Add Start Signal" />
+        <ActionRef label="Add Start Multiple" />
+        <ActionRef label="Add Intermediate Catching Message" />
+        <ActionRef label="Add Intermediate Catching Timer" />
+        <ActionRef label="Add Intermediate Catching Compensation" />
+        <ActionRef label="Add Intermediate Catching Conditional" />
+        <ActionRef label="Add Intermediate Catching Signal" />
+        <ActionRef label="Add Intermediate Catching Multiple" />
+        <ActionRef label="Add Intermediate Catching Link" />
+        <ActionRef label="Add Intermediate Throwing Event" />
+        <ActionRef label="Add Intermediate Throwing Message" />
+        <ActionRef label="Add Intermediate Throwing Compensation" />
+        <ActionRef label="Add Intermediate Throwing Signal" />
+        <ActionRef label="Add Intermediate Throwing Multiple" />
+        <ActionRef label="Add Intermediate Throwing Link" />
+        <ActionRef label="Add End Event" />
+        <ActionRef label="Add End Message" />
+        <ActionRef label="Add End Error" />
+        <ActionRef label="Add End Cancel" />
+        <ActionRef label="Add End Compensation" />
+        <ActionRef label="Add End Signal" />
+        <ActionRef label="Add End Multiple" />
+        <ActionRef label="Add End Terminate" />
+        <Action label="Open Control View...">
+          Opens the Site View this lane is mapped on.
+        </Action>
+        <ActionRef label="Edit Process Parameters..." />
+        <ActionRef label="Search References" />
+        <ActionRef label="Help" />  	  	
+        
+    <PropertyCategory name="General">
+        <PropertyRef label="Id"/>
+        <PropertyRef label="Name"/>
+        <Property label="Roles">
+        	The set of roles associated with the lane. 
+			The Select Roles button shows the dialog containing all the roles defined in the project.       
+        </Property>
+        <PropertyRef label="Save Policy"/>
+        <PropertyRef label="Leave Policy"/>
+        <PropertyRef label="Distribution Policy"/>
+        <PropertyRef label="distributionPolicyActionDefinition"/>
+    </PropertyCategory>
+    <PropertyCategory name="Notification">
+	    <Property label="Mail">
+	      If checked, the notification message is sent by email.
+		</Property>
+	    <Property label="Mail Message">
+	      The message sent to a user by email when a task is assigned to him.  
+		  &lt;p&gt;
+		  The Edit button <Button name="Edit"/> opens the 
+	      &lt;a href="/Reference/WizardsAndDialogs/NotificationMessageDialog"/&gt;, which 
+	      allows to customize the message.
+	      &lt;/p&gt;
+		</Property>
+    </PropertyCategory>
+</Element>

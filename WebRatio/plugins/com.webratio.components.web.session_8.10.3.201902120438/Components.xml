@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Components priority="300"> 
+  <Group> 
+    <Component>GetContext</Component>  
+  </Group>  
+  <Group> 
+    <Component>Login</Component>  
+    <Component>Logout</Component>  
+    <Component>ChangeRole</Component> 
+  </Group> 
+</Components>

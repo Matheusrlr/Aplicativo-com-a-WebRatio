@@ -1,0 +1,36 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.io.IOHelper
+
+def PLATFORM_NAME = "android"
+def OUT_BASE = "platforms/" + PLATFORM_NAME
+def RES_BASE = "Framework/Platforms/" + PLATFORM_NAME
+
+/* Copy static files of the platform */
+processOutputFile(OUT_BASE, "static ${PLATFORM_NAME} files", wr.project, { rootDir ->
+	def staticDir = wr.locateResourceFile(RES_BASE + "/Static")
+	IOHelper.copyDirectory(staticDir, rootDir, [IOHelper.CVS_AWARE_FILTER], [])
+})
+
+/* Create and fill the platform www directory */
+executeContextTemplate("Framework/PlatformWebRoot.template", ["platformName": PLATFORM_NAME, "platformPath": OUT_BASE, "wwwPath": OUT_BASE + "/assets/www"])
+
+/* Create the resource strings file */
+processOutputFile(OUT_BASE + "/res/values/strings.xml", "string resource file", wr.project, { stringsFile ->
+	stringsFile.parentFile.mkdirs()
+	stringsFile.writeAsync(executeContextTemplate(RES_BASE + "/StringsXml.template"), "UTF-8")
+})
+
+/* Create the Android activity java class */
+def activityClassFilePath = "/src/" + appInfo.packageName.replaceAll(/\./, "/") + "/" + appInfo.className + ".java"
+processOutputFile(OUT_BASE + activityClassFilePath, "activity class", wr.project, { activityFile ->
+	activityFile.parentFile.mkdirs()
+	activityFile.writeAsync(executeContextTemplate(RES_BASE + "/ActivityClass.template"))
+})
+
+/* Create the Android manifest */
+processOutputFile(OUT_BASE + "/AndroidManifest.xml", "manifest file", wr.project, { manifestFile ->
+	manifestFile.parentFile.mkdirs()
+	manifestFile.writeAsync(executeContextTemplate(RES_BASE + "/AndroidManifestXml.template"), "UTF-8")
+})
+%]

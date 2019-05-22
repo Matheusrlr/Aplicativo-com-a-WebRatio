@@ -1,0 +1,121 @@
+{
+  "_" : "wrm.core.PanelService",
+  "masters" : [ "tlb2" ],
+  "navigations" : {
+    "0" : {
+      "nc" : true,
+      "flows" : "scr2",
+      "fr" : true
+    },
+    "1" : {
+      "nc" : true,
+      "flows" : "scr2.link",
+      "fr" : true
+    },
+    "2" : {
+      "flows" : "scr2.auto-link",
+      "fr" : true
+    },
+    "3" : {
+      "flows" : "scr2.auto-link"
+    },
+    "4" : {
+      "flows" : "nf12"
+    },
+    "5" : {
+      "flows" : "nf13"
+    },
+    "6" : {
+      "flows" : "nf14",
+      "fr" : true
+    },
+    "7" : {
+      "flows" : "nf14"
+    },
+    "8" : {
+      "flows" : "nf3",
+      "fr" : true
+    },
+    "9" : {
+      "flows" : "nf3"
+    }
+  },
+  "knownEffects" : "#pr#",
+  "propagationSequence" : "",
+  "propagations" : { },
+  "components" : {
+    "pwu2" : {
+      "fb" : true,
+      "conds" : [ {
+        "fr" : false,
+        "navs" : "5",
+        "effects" : "-"
+      }, {
+        "fr" : false,
+        "navs" : "3|5",
+        "effects" : "#pr#"
+      } ],
+      "rf" : [ {
+        "all" : true,
+        "fr" : true,
+        "navs" : "0|1|6|8"
+      }, {
+        "all" : true,
+        "navs" : "7|9"
+      } ]
+    },
+    "dau3" : {
+      "fb" : false,
+      "conds" : [ {
+        "fr" : false,
+        "navs" : "4|5",
+        "effects" : "-"
+      }, {
+        "fr" : false,
+        "navs" : "3|4|5",
+        "effects" : "#pr#"
+      } ]
+    }
+  },
+  "events" : {
+    "oslte7" : {
+      "component" : "pwu2",
+      "type" : "OnSelectEvent",
+      "flow" : {
+        "id" : "nf7",
+        "navTo" : "scr1",
+        "bindTo" : "pwu1",
+        "preserve" : ""
+      }
+    },
+    "oslte13" : {
+      "component" : "pwu2",
+      "type" : "OnSelectEvent",
+      "flow" : {
+        "id" : "nf13",
+        "navTo" : "scr2",
+        "bindTo" : "dau3",
+        "preserve" : "dau3:kcond3.att4",
+        "bind" : {
+          "kcond3.att4" : "data.att4"
+        }
+      }
+    },
+    "oslte12" : {
+      "component" : "dau3",
+      "type" : "OnSelectEvent",
+      "flow" : {
+        "id" : "nf12",
+        "navTo" : "scr2",
+        "bindTo" : "pwu2",
+        "preserve" : ""
+      }
+    }
+  },
+  "autoFlow" : {
+    "preserve" : ""
+  },
+  "autoFlowFull" : {
+    "preserve" : "dau3:kcond3.att4"
+  }
+}

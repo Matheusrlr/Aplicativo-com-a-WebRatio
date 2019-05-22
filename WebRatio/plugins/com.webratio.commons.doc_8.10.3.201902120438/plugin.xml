@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="true"
+            id="com.webratio.commons.doc.popupMenu"
+            nameFilter="*.wrdoc"
+            objectClass="org.eclipse.core.resources.IFile">
+         <menu
+               id="com.webratio.commons.doc.menu"
+               label="WebRatio">
+            <separator name="group0"/>
+         </menu>
+         <action
+               class="com.webratio.commons.doc.actions.CreatePDFAction"
+               enablesFor="1"
+               id="com.webratio.commons.doc.actions.CreatePDFAction"
+               label="Create PDF"
+               menubarPath="com.webratio.commons.doc.menu/group0"/>
+         <action
+               class="com.webratio.commons.doc.actions.CreateHTMLAction"
+               enablesFor="1"
+               id="com.webratio.commons.doc.actions.CreateHTMLAction"
+               label="Create HTML"
+               menubarPath="com.webratio.commons.doc.menu/group0"/>
+      </objectContribution>
+   </extension>
+
+</plugin>

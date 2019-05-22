@@ -1,0 +1,86 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Width" name="width" type="enum" default="card" values="full|inset|card">
+Defines the width of the components inside their container.
+Allowed values are:
+- full: use the full width available
+- inset: add a margin
+- card: add a margin and a shadow
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Events Style" name="events-style" type="enum" default="none" values="none|button-bar|tabs">
+Defines the style of the events.
+</wr:LayoutParameter>
+[%
+setHTMLOutput()
+
+def eventTabs = params["events-style"] == "tabs"
+def listClass = (params["width"] != "full") ? params["width"] : ""
+listClass = (listClass == "inset") ? "list-" + listClass : listClass
+
+def hasEvents = false
+%]
+<div class="<wr:StyleClass/> wr-comp-Details">
+	<div class="list [%= listClass %]">
+		<wr:Frame>
+		<wr:Iterate var="component" context="cell" select="layout:Component[@unitTagName='Details']">
+			[% 
+				def item = getView(component)
+				
+				def attrs = component.selectNodes("layout:Attribute")
+				def attrsCount = attrs.size()
+				hasEvents = hasEvents || component.selectSingleNode("layout:Event") != null
+				
+				def avatar = null
+				def title = null
+				def subtitle = null
+				
+				if (index == 0) {
+					avatar = (attrsCount && attrs[0]["type"] == "blob" && (attrs[0]["contentType"] == "" || attrs[0]["contentType"].startsWith("image"))) ? attrs[0] : null
+					title = attrs.find{it["type"] != "blob"}
+					subtitle = attrs.find{it["type"] != "blob" && it != title}
+				}
+				
+			%]
+			<div ng-if="[%= item %].data" ng-init="view = [%= item %]">
+				[% if (attrsCount > 0 && index == 0) { %]
+					<div class="item [%= (avatar) ? "item-avatar" : "" %]">
+						[% if (avatar) { %]
+							<wr:Value context="avatar" class="item-image"/>
+						[% } %]
+						<h2><wr:Value context="title"/></h2>
+						[% if (subtitle) { %]
+							<p><wr:Value context="subtitle"/></p>
+						[% } %]
+					</div>
+				[% } %]
+				<wr:Iterate var="attr" context="component" select="layout:Attribute" varIndex="attrIndex">
+					[% if (index > 0 || (attr != avatar && attr != title && attr != subtitle)) { %]
+						[% if (attr["type"] == "blob") { %]
+							<div class="item item-image">
+								<wr:Value/>
+							</div>
+						[% } else { %]
+							<div class="item item-attribute item-text-wrap">
+								<wr:Label/>
+								<p><wr:Value/></p>
+							</div>
+						[% } %]
+					[% } %]
+				</wr:Iterate>
+			</div>
+		</wr:Iterate>
+		[% if (hasEvents) { %]
+			<div class="item [%= (params["events-style"] != "none") ? params["events-style"] : "item-buttons" %]">  
+				<wr:Iterate var="component" context="cell" select="layout:Component[@unitTagName='Details']">	
+					<wr:Iterate var="event" context="component" select="layout:Event" varIndex="eventIndex">
+						[% if (eventTabs && !getLayout(event, LayoutType.EVENT).path.endsWith("Tab")) { 
+								throwGenerationException("Use Tab event template for ${event['name']} (${event['id']})")
+							}
+						%]
+						<wr:Event/>
+					</wr:Iterate>
+				</wr:Iterate>
+			</div>
+		[% } %]
+		</wr:Frame>
+	</div>
+</div>

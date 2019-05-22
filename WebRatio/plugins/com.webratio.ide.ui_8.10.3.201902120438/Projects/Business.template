@@ -1,0 +1,216 @@
+#?delimiters [%,%],[%=,%]
+<?xml version="1.0" encoding="UTF-8"?>
+<?webml version="8.3.1.1"?>
+[% setXMLOutput() %]
+<WebProject 
+    xmlns:db="http://www.webratio.com/2006/WebML/Database" 
+    xmlns:gr="http://www.webratio.com/2006/WebML/Graph"
+    xmlns:temp="http://www.webratio.com/2006/WebML/Temp"
+    uuid="[%=getUUID()%]"
+    outputPath="${webapps_loc}/${project_name}"
+    gr:showUnitContent="true"
+    gr:showTooltip="true"
+    enableProjectDependencies="true"
+    mailProvider="smtp1"
+    >
+    <DomainModel xmlns:db="http://www.webratio.com/2006/WebML/Database" xmlns:gr="http://www.webratio.com/2006/WebML/Graph">
+	  <Package gr:x="65" gr:y="70" id="SystemModel" name="System Model">
+	    <Class id="User" name="User" duration="persistent" attributeOrder="userOID userName email firstName lastName" gr:hideAttributes="false" gr:x="665" gr:y="480">
+	      <Attribute id="userOID" name="oid" key="true" type="integer"/>
+	      <Attribute id="userName" name="username" type="string"/>
+	      <Attribute id="email" name="email" type="string"/>
+	      <Attribute id="firstName" name="firstName" type="string"/>
+	      <Attribute id="lastName" name="lastName" type="string"/>
+	      <Comment xml:space="preserve">A user represents one mobile application user. In addition to the standard information such as username, password and email, a user is also characterized by a token. The token is a string that authorizes the usage of all services published by the backend application. The token is automatically set by the backend application at login. The token may have a limited duration, that's why a token expiration date can be set. The secret key is the encryption key used when transferring files between the mobile application and the backend.</Comment>
+	    </Class>
+	    <Class id="Role" name="Role" duration="persistent" attributeOrder="roleOID roleName" gr:hideAttributes="false" gr:x="470" gr:y="560">
+	      <Attribute id="roleOID" name="oid" key="true" type="integer"/>
+	      <Attribute id="roleName" name="roleName" type="string"/>
+	      <Comment xml:space="preserve">A role represents an application role managed by the backend application. This class is automatically filled in by the backend application with all Roles elements modeled in the project.</Comment>
+	    </Class>
+	    <Class id="Device" name="Device" duration="persistent" attributeOrder="deviceOid deviceId notificationDeviceId deviceModel devicePlatform devicePlatformVersion deviceBrowser" gr:x="750" gr:y="255">
+	      <Attribute id="deviceOid" name="oid" key="true" type="integer"/>
+	      <Attribute id="deviceId" name="deviceId" type="string"/>
+	      <Attribute id="notificationDeviceId" name="notificationDeviceId" type="string"/>
+	      <Attribute id="deviceModel" name="model" type="string"/>
+	      <Attribute id="devicePlatform" name="platform" type="string"/>
+	      <Attribute id="devicePlatformVersion" name="platformVersion" type="string"/>
+	      <Attribute id="deviceBrowser" name="browser" type="string"/>
+	      <Comment xml:space="preserve">A device represents a mobile phone or a tablet on which there's an app that interacts with the backend application. A device is identified through the Device ID, which is automatically calculated from the backend application. Other information about the device: the Model (e.g. iPhone 6), the Platform (iOS/Android) and its version (e.g. 8.1.3), the installed Browser (e.g. Mozilla/5.0). Finally the Notification Device ID identifies the device for sending push notifications to the installed app; it must be sent by the mobile application at login.</Comment>
+	    </Class>
+	    <Class gr:x="240" gr:y="25" id="Process" name="Process" duration="persistent" attributeOrder="processOid processName processStatus processCreatedAt processUpdatedAt">
+	      <Attribute id="processOid" key="true" name="oid" type="decimal"/>
+	      <Attribute id="processName" name="name" type="string" key="false"/>
+	      <Attribute id="processStatus" name="status" type="string"/>
+	      <Attribute id="processCreatedAt" name="createdAt" type="timestamp"/>
+	      <Attribute id="processUpdatedAt" name="updatedAt" type="timestamp"/>
+	    </Class>
+	    <Class gr:x="175" gr:y="210" id="Parameter" name="Parameter" duration="persistent" attributeOrder="parameterOid parameterName parameterValue parameterType">
+	      <Attribute id="parameterOid" key="true" name="oid" type="decimal"/>
+	      <Attribute id="parameterName" name="name" type="string"/>
+	      <Attribute id="parameterValue" name="value" type="string"/>
+	      <Attribute id="parameterType" name="type" type="string"/>
+	    </Class>
+	    <Class gr:x="0" gr:y="470" id="Task" name="Task" duration="persistent" attributeOrder="taskOid taskName taskStatus taskCreatedAt taskActivatedAt taskUpdatedAt">
+	      <Attribute id="taskOid" key="true" name="oid" type="decimal"/>
+	      <Attribute id="taskName" name="name" key="false" type="string"/>
+	      <Attribute id="taskStatus" name="status" type="string"/>
+	      <Attribute id="taskCreatedAt" name="createdAt" type="timestamp"/>
+	      <Attribute id="taskActivatedAt" name="activatedAt" type="timestamp"/>
+	      <Attribute id="taskUpdatedAt" name="updatedAt" type="timestamp"/>
+	    </Class>
+	    <Class gr:x="525" gr:y="25" id="ProcessDefinition" name="ProcessDefinition" duration="persistent" attributeOrder="processDefinitionDefinitionId processDefinitionCode processDefinitionName processDefinitionModelId processDefinitionVersion processDefinitionDescription">
+	      <Attribute id="processDefinitionDefinitionId" name="definitionId" key="true" type="string"/>
+	      <Attribute id="processDefinitionCode" name="code" key="false" type="string"/>
+	      <Attribute id="processDefinitionName" name="name" type="string"/>
+	      <Attribute id="processDefinitionModelId" name="modelId" type="string"/>
+	      <Attribute id="processDefinitionVersion" name="version" type="string"/>
+	      <Attribute id="processDefinitionDescription" name="description" type="text"/>
+	    </Class>
+	    <Class id="TaskDefinition" name="TaskDefinition" duration="persistent" attributeOrder="taskDefinitionDefinitionId taskDefinitionCode taskDefinitionName taskDefinitionDescription" gr:x="20" gr:y="680">
+	      <Attribute id="taskDefinitionDefinitionId" name="definitionId" key="true" type="string"/>
+	      <Attribute id="taskDefinitionCode" name="code" key="false" type="string"/>
+	      <Attribute id="taskDefinitionName" name="name" type="string"/>
+	      <Attribute id="taskDefinitionDescription" name="description" type="text"/>
+	    </Class>
+	    <Class gr:x="250" gr:y="445" id="Note" name="Note" duration="persistent" attributeOrder="noteOid noteText noteCreatedAt">
+	      <Attribute id="noteOid" key="true" name="oid" type="integer"/>
+	      <Attribute id="noteText" name="text" type="text"/>
+	      <Attribute id="noteCreatedAt" name="createdAt" type="timestamp"/>
+	    </Class>
+	    <Class id="Attachment" name="Attachment" duration="persistent" attributeOrder="attachmentOid attachmentName attachmentCreatedAt attachmentFileId" gr:x="360" gr:y="280">
+	      <Attribute id="attachmentOid" name="oid" key="true" type="integer"/>
+	      <Attribute id="attachmentName" name="name" type="string"/>
+	      <Attribute id="attachmentCreatedAt" name="createdAt" type="timestamp"/>
+	      <Attribute id="attachmentFileId" name="fileId" type="string"/>
+	    </Class>
+	    <Package gr:x="960" gr:y="0" id="History" name="History">
+	      <Class gr:x="5" gr:y="0" id="HistoricProcess" name="HistoricProcess" duration="persistent" attributeOrder="historicProcessOid historicProcessName historicProcessStatus historicProcessCreatedAt historicProcessUpdatedAt">
+	        <Attribute id="historicProcessOid" key="true" name="oid" type="decimal"/>
+	        <Attribute id="historicProcessName" name="name" type="string" key="false"/>
+	        <Attribute id="historicProcessStatus" name="status" type="string"/>
+	        <Attribute id="historicProcessCreatedAt" name="createdAt" type="timestamp"/>
+	        <Attribute id="historicProcessUpdatedAt" name="updatedAt" type="timestamp"/>
+	      </Class>
+	      <Class gr:x="0" gr:y="565" id="HistoricTask" name="HistoricTask" duration="persistent" attributeOrder="historicTaskOid historicTaskName historicTaskStatus historicTaskCreatedAt historicTaskActivatedAt historicTaskUpdatedAt">
+	        <Attribute id="historicTaskOid" key="true" name="oid" type="decimal"/>
+	        <Attribute id="historicTaskName" name="name" key="false" type="string"/>
+	        <Attribute id="historicTaskStatus" name="status" type="string"/>
+	        <Attribute id="historicTaskCreatedAt" name="createdAt" type="timestamp"/>
+	        <Attribute id="historicTaskActivatedAt" name="activatedAt" type="timestamp"/>
+	        <Attribute id="historicTaskUpdatedAt" name="updatedAt" type="timestamp"/>
+	      </Class>
+	      <Class gr:x="200" gr:y="155" id="HistoricParameter" name="HistoricParameter" duration="persistent" attributeOrder="historicParameterOid historicParameterName historicParameterValue historicParameterType">
+	        <Attribute id="historicParameterOid" key="true" name="oid" type="decimal"/>
+	        <Attribute id="historicParameterName" name="name" type="string"/>
+	        <Attribute id="historicParameterValue" name="value" type="string"/>
+	        <Attribute id="historicParameterType" name="type" type="string"/>
+	      </Class>
+	      <Class gr:x="295" gr:y="560" id="HistoricNote" name="HistoricNote" duration="persistent" attributeOrder="historicNoteOid historicNoteText historicNoteCreatedAt historicNoteUser">
+	        <Attribute id="historicNoteOid" key="true" name="oid" type="decimal"/>
+	        <Attribute id="historicNoteText" name="text" type="text"/>
+	        <Attribute id="historicNoteCreatedAt" name="createdAt" type="timestamp"/>
+	        <Attribute id="historicNoteUser" name="user" type="string"/>
+	      </Class>
+	      <Class gr:x="110" gr:y="285" id="HistoricAttachment" name="HistoricAttachment" duration="persistent" attributeOrder="historicAttachmentOid historicAttachmentName historicAttachmentCreatedAt historicAttachmentFileId historicAttachmentUser">
+	        <Attribute id="historicAttachmentOid" name="oid" key="true" type="decimal"/>
+	        <Attribute id="historicAttachmentName" name="name" type="string"/>
+	        <Attribute id="historicAttachmentCreatedAt" name="createdAt" type="timestamp"/>
+	        <Attribute id="historicAttachmentFileId" name="fileId" type="string"/>
+	        <Attribute id="historicAttachmentUser" name="user" type="string"/>
+	      </Class>
+	    </Package>
+	  </Package>
+	  <Association id="User2Role_Role2User" name="User_Role" sourceClass="User" targetClass="Role">
+	    <AssociationRole1 id="User2Role" name="roles" maxCard="N"/>
+	    <AssociationRole2 id="Role2User" name="users" maxCard="N"/>
+	  </Association>
+	  <Association id="User2Device_Device2User" name="User_Device" sourceClass="User" targetClass="Device">
+	    <AssociationRole1 id="User2Device" name="devices" maxCard="N"/>
+	    <AssociationRole2 id="Device2User" name="user" maxCard="1"/>
+	  </Association>
+	  <Association id="Process_Parameter" name="Process_Parameter" sourceClass="Process" targetClass="Parameter">
+	    <AssociationRole1 id="Process2Parameters" name="parameters" maxCard="N"/>
+	    <AssociationRole2 id="Parameter2Process" name="process" maxCard="1"/>
+	  </Association>
+	  <Association id="Process_Task" name="Process_Task" sourceClass="Process" targetClass="Task">
+	    <AssociationRole1 id="Process2Tasks" name="tasks" maxCard="N"/>
+	    <AssociationRole2 id="Task2Process" name="process" maxCard="1"/>
+	  </Association>
+	  <Association id="Task_User" name="Task_User" sourceClass="Task" targetClass="User">
+	    <AssociationRole1 id="Task2OwnerUser" name="ownerUser" maxCard="1"/>
+	    <AssociationRole2 id="User2OwnTasks" name="ownTasks" maxCard="N"/>
+	  </Association>
+	  <Association id="Task_Role" name="Task_Role" sourceClass="Task" targetClass="Role">
+	    <AssociationRole1 id="Task2OwnerRole" name="ownerRole" maxCard="1"/>
+	    <AssociationRole2 id="Role2OwnTasks" name="ownTasks" maxCard="N"/>
+	  </Association>
+	  <Association id="Process_ParentProcess" name="Process_ParentProcess" sourceClass="Process" targetClass="Process">
+	    <AssociationRole1 id="Process2ParentProcess" name="parentProcess" maxCard="1"/>
+	    <AssociationRole2 id="Process2SubProcesses" name="subProcesses" maxCard="N"/>
+	  </Association>
+	  <Association id="Process_ProcessDefinition" name="Process_ProcessDefinition" sourceClass="Process" targetClass="ProcessDefinition">
+	    <AssociationRole1 id="Process2ProcessDefinition" name="processDefinition" maxCard="1"/>
+	    <AssociationRole2 id="ProcessDefinition2Processes" name="processes" maxCard="N"/>
+	  </Association>
+	  <Association id="HistoricProcess_ProcessDefinition" name="HistoricProcess_ProcessDefinition" sourceClass="HistoricProcess" targetClass="ProcessDefinition">
+	    <AssociationRole1 id="HistoricProcess2ProcessDefinition" name="processDefinition" maxCard="1"/>
+	    <AssociationRole2 id="ProcessDefinition2HistoricProcesses" name="historicProcesses" maxCard="N"/>
+	  </Association>
+	  <Association id="HistoricProcess_HistoricTask" name="HistoricProcess_HistoricTask" sourceClass="HistoricProcess" targetClass="HistoricTask">
+	    <AssociationRole1 id="HistoricProcess2HistoricTasks" name="historicTasks" maxCard="N"/>
+	    <AssociationRole2 id="HistoricTask2HistoricProcess" name="historicProcess" maxCard="1"/>
+	  </Association>
+	  <Association id="HistoricProcess_HistoricParameter" name="HistoricProcess_HistoricParameter" sourceClass="HistoricProcess" targetClass="HistoricParameter">
+	    <AssociationRole1 id="HistoricProcess2HistoricParameters" name="historicParameters" maxCard="N"/>
+	    <AssociationRole2 id="HistoricParameter2HistoricProcess" name="historicProcess" maxCard="1"/>
+	  </Association>
+	  <Association id="Task_TaskDefinition" name="Task_TaskDefinition" sourceClass="Task" targetClass="TaskDefinition">
+	    <AssociationRole1 id="Task2TaskDefinition" name="taskDefinition" maxCard="1"/>
+	    <AssociationRole2 id="TaskDefinition2Tasks" name="tasks" maxCard="N"/>
+	  </Association>
+	  <Association id="HistoricTask_TaskDefinition" name="HistoricTask_TaskDefinition" sourceClass="HistoricTask" targetClass="TaskDefinition">
+	    <AssociationRole1 id="HistoricTask2TaskDefinition" name="taskDefinition" maxCard="1"/>
+	    <AssociationRole2 id="TaskDefinition2HistoricTasks" name="historicTasks" maxCard="N"/>
+	  </Association>
+	  <Association id="Note_Process" name="Note_Process" sourceClass="Note" targetClass="Process">
+	    <AssociationRole1 id="Note2Process" name="process" maxCard="1"/>
+	    <AssociationRole2 id="Process2Notes" name="notes" maxCard="N"/>
+	  </Association>
+	  <Association id="Note_User" name="Note_User" sourceClass="Note" targetClass="User">
+	    <AssociationRole1 id="Note2User" name="user" maxCard="1"/>
+	    <AssociationRole2 id="User2Notes" name="notes" maxCard="N"/>
+	  </Association>
+	  <Association id="Note_Task" name="Note_Task" sourceClass="Note" targetClass="Task">
+	    <AssociationRole1 id="Note2Task" name="task" maxCard="1"/>
+	    <AssociationRole2 id="Task2Notes" name="notes" maxCard="N"/>
+	  </Association>
+	  <Association id="Attachment_User" name="Attachment_User" sourceClass="Attachment" targetClass="User">
+	    <AssociationRole1 id="Attachment2User" name="user" maxCard="1"/>
+	    <AssociationRole2 id="User2Attachments" name="attachments" maxCard="N"/>
+	  </Association>
+	  <Association id="Attachment_Process" name="Attachment_Process" sourceClass="Attachment" targetClass="Process">
+	    <AssociationRole1 id="Attachment2Process" name="process" maxCard="1"/>
+	    <AssociationRole2 id="Process2Attachments" name="attachments" maxCard="N"/>
+	  </Association>
+	  <Association id="HistoricNote_HistoricProcess" name="HistoricNote_HistoricProcess" sourceClass="HistoricNote" targetClass="HistoricProcess">
+	    <AssociationRole1 id="HistoricNote2HistoricProcess" name="historicProcess" maxCard="1"/>
+	    <AssociationRole2 id="HistoricProcess2HistoricNotes" name="historicNotes" maxCard="N"/>
+	  </Association>
+	  <Association id="HistoricNote_HistoricTask" name="HistoricNote_HistoricTask" sourceClass="HistoricNote" targetClass="HistoricTask">
+	    <AssociationRole1 id="HistoricNote2HistoricTask" name="historicTask" maxCard="1"/>
+	    <AssociationRole2 id="HistoricTask2HistoricNotes" name="historicNotes" maxCard="N"/>
+	  </Association>
+	  <Association id="HistoricAttachment_HistoricProcess" name="HistoricAttachment_HistoricProcess" sourceClass="HistoricAttachment" targetClass="HistoricProcess">
+	    <AssociationRole1 id="HistoricAttachment2HistoricProcess" name="historicProcess" maxCard="1"/>
+	    <AssociationRole2 id="HistoricProcess2HistoricAttachments" name="historicAttachments" maxCard="N"/>
+	  </Association>  
+	</DomainModel>
+    <WebModel>
+    </WebModel>
+    <ServiceDataProviders>
+	  <SMTPServer id="smtp1" name="Mail Server"/>
+	</ServiceDataProviders>
+    <Roles/>
+    <temp:ActionDefinitionsBag/>
+</WebProject>

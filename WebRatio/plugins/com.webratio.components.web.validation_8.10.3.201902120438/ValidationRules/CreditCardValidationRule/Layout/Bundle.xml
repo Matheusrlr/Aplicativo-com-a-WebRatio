@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle>
+  <Entry key="CreditCardValidationRule.error">the value is not a valid credit card number</Entry>
+</Bundle>

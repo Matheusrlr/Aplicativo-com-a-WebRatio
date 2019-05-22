@@ -1,0 +1,34 @@
+#?delimiters [%, %], [%=, %]
+<wr:Frame>
+	<div class="plain <wr:StyleClass/>">
+		<div class="plain Form">
+			<p><form:errors path="<wr:Id context="component"/>"/></p>
+			<wr:Iterate var="field" context="component" select="layout:Field">
+			  	[% def fieldType = getById(field["field"])?.name %]
+			    <div>
+			      <label for="<wr:Id context="field"/>" class="left"><wr:Label/></label>
+			      <wr:Value class="field"/>
+				</div>
+				<p>
+				  <wr:FieldError/>
+			    </p>
+			</wr:Iterate>
+			[%
+				// prints hidden fields, which do not have associated layout:Field elements
+				for (hiddenField in getById(component["id"])?.selectNodes("Field[@hidden = 'true']")) {
+				  def type = hiddenField["type"]
+				  if (type == "blob") { %]
+				<form:hidden path="[%=hiddenField["id"]%].preload"/>
+				  [% } else { %]
+				<form:hidden path="[%=hiddenField["id"]%]"/>
+				  [% }
+				} 
+			%]
+			<wr:Iterate var="event" context="component" select="layout:Event">
+		        <p>
+		         <wr:Event type="button" class="button"/> 
+		        </p>
+		      </wr:Iterate>
+		 </div>
+	</div>
+</wr:Frame>

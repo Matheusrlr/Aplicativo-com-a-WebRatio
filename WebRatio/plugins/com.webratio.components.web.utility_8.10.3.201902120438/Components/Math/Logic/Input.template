@@ -1,0 +1,11 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+def componentId = component["id"]
+%>
+<InputParameters>
+  <InputParameter name="<%=componentId%>.expr" label="Expression"/>
+  <% for (var in component.selectNodes("MathVariable")) {%>
+    <InputParameter name="<%=var["id"]%>" label="<%=var["name"]%>"/>
+  <% } %>
+</InputParameters>

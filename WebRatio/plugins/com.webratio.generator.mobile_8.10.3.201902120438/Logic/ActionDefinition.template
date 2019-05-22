@@ -1,0 +1,118 @@
+#?delimiters [%, %], [%=, %]
+[%
+setJSONOutput()
+
+def isLoginActionDef = (getLoginActionDefinition() == actionDef)
+
+def inputFlow = actionDef.selectSingleNode("InputPortDefinition/SuccessFlow")
+def inputDataFlows = actionDef.selectNodes("InputPortDefinition/DataFlow")
+
+def defaultSuccessPortDef = getById(actionDef, "defaultSuccessPortDefinition")
+def defaultErrorPortDef = getById(actionDef, "defaultErrorPortDefinition")
+def otherSuccessPortDefs = actionDef.selectNodes("SuccessPortDefinition").minus(defaultSuccessPortDef)
+def otherErrorPortDefs = actionDef.selectNodes("ErrorPortDefinition").minus(defaultErrorPortDef)
+def allPrtDefs = []
+allPrtDefs.add(defaultSuccessPortDef)
+allPrtDefs.add(defaultErrorPortDef)
+allPrtDefs.addAll(otherSuccessPortDefs)
+allPrtDefs.addAll(otherErrorPortDefs)
+
+def components = actionDef.selectNodes("Action | Operations/*")
+%]
+{
+	"_": "wrm.core.ActionDefService",
+	
+	[% if (inputFlow) { %]
+		"input": [% printRaw(executeContextTemplate("Logic/Flow.template", ["flow": inputFlow])) %],
+	[% } %]
+	[% if (inputDataFlows) { %]
+		"input*": [
+			[% inputDataFlows.eachWithSeparator(",") { dataFlow -> %]
+				[% printRaw(executeContextTemplate("Logic/Flow.template", ["flow": dataFlow])) %]
+			[% } %]
+		],
+	[% } %]
+	
+	"outputPorts": {
+		"success": "[%= defaultSuccessPortDef["id"] %]",
+		"error": "[%= defaultErrorPortDef["id"] %]"
+		[% if (!otherSuccessPortDefs.isEmpty()) { %],
+			"other_success": [
+				[% otherSuccessPortDefs.eachWithSeparator(",") { successPortDef -> %]
+					"[%= successPortDef["id"] %]"
+				[% } %]
+			]
+		[% } %]
+		[% if (!otherErrorPortDefs.isEmpty()) { %],
+			"other_error": [
+				[% otherErrorPortDefs.eachWithSeparator(",") { errorPortDef -> %]
+					"[%= errorPortDef["id"] %]"
+				[% } %]
+			]
+		[% } %]
+	},
+	
+	[% if (isLoginActionDef) { %]
+		"progressNotification": "notification.loginProgress",
+	[% } %]
+	
+	"outputNotifications": {
+		[% allPrtDefs.eachWithSeparator(",") { portDef ->
+			def notificationMessageKey = portDef["notificationMessage"]
+			if (notificationMessageKey) { %]
+				"[%= portDef["id"] %]": "[%= notificationMessageKey %]"
+			[% } %]
+		[% } %]
+	},
+	
+	"components": {
+		[% components.eachWithSeparator(",") { component -> %]
+			"[%= component["id"] %]": {
+				[% if (component.name == "Action") { %]
+					[% component.selectNodes("Events/SuccessEvent | Events/ErrorEvent").eachWithSeparator(",") { actionEvent -> %]
+						[% 
+							def success = (actionEvent.name == "SuccessEvent")
+							def actionFlow = actionEvent.element(success ? "SuccessFlow" : "ErrorFlow")
+							def dataFlows = actionEvent.selectNodes("DataFlow")
+						%]
+						[% if (actionFlow) { %]
+							"[%= actionEvent["definition"] %]": [% printRaw(executeContextTemplate("Logic/Flow.template", ["flow": actionFlow])) %]
+						[% } else { %]
+							"[%= actionEvent["definition"] %]": {
+								"navTo": "[%= success ? defaultSuccessPortDef["id"] : defaultErrorPortDef["id"] %]"
+							}
+						[% } %]
+						[% if (!dataFlows.isEmpty()) { %],
+							"[%= actionEvent["definition"] %]*": [
+								[% dataFlows.eachWithSeparator(",") { dataFlow -> %]
+									[% printRaw(executeContextTemplate("Logic/Flow.template", ["flow": dataFlow])) %]
+								[% } %]
+							]
+						[% } %]
+					[% } %]
+				[% } else { %]
+					[%
+						def successFound = false
+						def errorFound = false
+						def flows = component.selectNodes("SuccessFlow | ErrorFlow")
+						def dataFlows = component.selectNodes("DataFlow")
+					%]
+					[% flows.eachWithSeparator(",") { flow -> %]
+						[%
+							def code = (flow.name == "SuccessFlow" ? "success" : "error")
+							code += (flow["code"] ? "." + flow["code"] : "")
+						%]
+						"[%= code %]": [% printRaw(executeContextTemplate("Logic/Flow.template", ["flow": flow])) %]
+						[% if (!dataFlows.isEmpty()) { %],
+							"*": [
+								[% dataFlows.eachWithSeparator(",") { dataFlow -> %]
+									[% printRaw(executeContextTemplate("Logic/Flow.template", ["flow": dataFlow])) %]
+								[% } %]
+							]
+						[% } %]
+					[% } %]
+				[% } %]
+			}
+		[% } %]
+	}
+}

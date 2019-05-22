@@ -1,0 +1,9 @@
+#?delimiters [%,%],[%=,%]
+[% setXMLOutput() %]
+<Form viewRef="form">
+	[% for (field in component.selectNodes("Field | SelectionField")) { %]
+		[% if (field["hidden"] != "true") { %]
+			<Property name="[%= field["id"] %]" fieldId="[%= field["id"] %]"/>
+		[% } %]
+	[% } %]
+</Form>

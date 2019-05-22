@@ -1,0 +1,63 @@
+#?delimiters [%,%],[%=,%]
+[%
+import com.webratio.generator.contributors.GeneratorContributorHelper
+
+setXMLOutput()
+def componentId = component["id"]
+def modeSoap = component["invocationStyle"] == "SOAP"
+def bodyAwareMethod = modeSoap || component["requestMethod"] == "PUT" || component["requestMethod"] == "POST"
+%]
+<OutputParameters>
+  [%if(modeSoap){%]
+     <OutputParameter name="soapEnvelope" label="SOAP Envelope" image="DOM_TYPE"/>
+  [%} else {%]
+     <OutputParameter name="requestMethod" label="Request Method" image="HEADER"/>
+     <OutputParameter name="contentType" label="Content Type" image="HEADER"/>
+  [%}%]
+  [%if(bodyAwareMethod){%]
+    <OutputParameter name="attachmentBlobs" label="Attachment BLOBs" image="BLOB"/>
+    <OutputParameter name="attachmentCids" label="Attachment CIDs"/>
+  [%}%]
+  <OutputParameter name="errorMessage" label="Error Message"/>
+  <OutputParameter name="exception" label="Exception"/>
+  
+  [% for (h in component.selectNodes("Header")) { %]
+  	<OutputParameter name="map([%=h['id']%])" label="[%=h["name"]%]" refId="[%=h['id']%]"/>
+  [% } %]
+  
+  [% for (p in component.selectNodes("QueryStringParameter")) { %]
+    <OutputParameter name="map([%=p["id"]%])" label="[%=p["name"]%]" refId="[%=p["id"]%]"/>
+  [%}%]
+  
+  [% for (p in component.selectNodes("RequestBodyParameter")) { 
+    def subParams = GeneratorContributorHelper.getOutputParameters(p, wr)
+    if(subParams.empty){
+      %]<OutputParameter name="map([%=p["id"]%])" label="[%=p["name"]%]" refId="[%=p["id"]%]"/>[%
+    }
+      for(param in subParams){
+        %]<OutputParameter name="map([%=p["id"]%]_[%=param.name%])" label="[%=param.label%]" type="[%=param.type%]" mandatory="[%=param.mandatory%]" image="[%=param.imageName%]">
+              [%if(param.description){%]<Description>[%=param.description%]</Description>[%}%]
+          </OutputParameter>[%
+      }
+    %]
+  [% } 
+	def urlFragments = component["name"].tokenize("/")
+	for(i = 1; i < urlFragments.size();i++){
+		if(urlFragments[i].contains("{") && urlFragments[i].contains("}")){
+		  def name = urlFragments[i].substring(1,urlFragments[i].length()-1)
+		%]
+		<OutputParameter name="map([%=name%])" label="[%=name%]" urlEncoded="true" image="pathParameter"/>
+	[%}
+	}    
+  %]
+  
+  [% for (p in component.selectNodes("FormDataParameter")) {%]
+  		<OutputParameter name="map([%=p["id"]%]_[%=p["name"]%])" label="[%=p["name"]%]" refId="[%=p["id"]%]"/>
+  [% }%]
+  
+  [% for (sh in component.selectNodes("SoapHeader")) { %]
+  	[% def label = (modeSoap && sh['fullElementOutput']) ? sh['name'] + "(XML)" : sh['name']%]
+  	<OutputParameter name="map([%=sh['id']%])" label="[%=label%]" refId="[%=sh['id']%]"/>
+  [% } %]
+  
+</OutputParameters>

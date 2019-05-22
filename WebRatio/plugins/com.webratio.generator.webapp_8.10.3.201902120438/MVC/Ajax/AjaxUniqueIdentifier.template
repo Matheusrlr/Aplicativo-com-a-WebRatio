@@ -1,0 +1,19 @@
+#?delimiters [%, %], [%=, %]
+[%
+	def positions = position.split(",")
+	def elementName = element.name
+	def elementId = ""
+	if (element.selectSingleNode("self::layout:Cell") != null) {
+		elementId = getLayoutId(element)
+	} else if (element.selectSingleNode("self::layout:Component") != null) {
+		elementId = getLayoutId(element)
+	} else {
+		def component = element.selectSingleNode("ancestor::layout:Component")
+		if (component != null) {
+			elementId = getLayoutId(element)
+		} else {
+			elementId = getLayoutId(element)
+			item = ""
+		}
+	}
+%]id_[%= elementId %][% if(item != null && item != "") { %]_[%= item %][% } %][% positions.eachWithIndex{position, index ->%][% if(position != "") {%]_${[%= position %]}[% }} %]

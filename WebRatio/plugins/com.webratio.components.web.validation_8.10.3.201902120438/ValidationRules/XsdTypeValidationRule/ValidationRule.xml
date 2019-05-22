@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ValidationRule type="singleProperty" idPrefix="xvr" namePrefix="XSD Type " label="XSD Type" contexts="Form/Field|MultipleForm/Field|Attribute">
+
+	<XsdProviderProperty attributeName="xsdProvider" label="XSD Provider">
+		<Description xml:space="preserve">The reference to a XSD provider.</Description>
+	</XsdProviderProperty>
+	<XsdTypeProperty attributeName="xsdType" xsdProviderIdExpr="@xsdProvider" includeSimpleTypes="true" label="XSD Type">
+		<Description xml:space="preserve">The validating XSD type.</Description>
+	</XsdTypeProperty>
+
+	<Description xml:space="preserve">A XSD Type validation rule lets you to validate a property value respecting a certain XST type.</Description>
+</ValidationRule>

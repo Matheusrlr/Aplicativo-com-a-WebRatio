@@ -1,0 +1,57 @@
+#?delimiters [%,%],[%=,%]
+<?xml version="1.0" encoding="UTF-8"?>
+<?webml version="8.3.0.0"?>
+[% setXMLOutput() %]
+<WebProject 
+    xmlns:db="http://www.webratio.com/2006/WebML/Database" 
+    xmlns:gr="http://www.webratio.com/2006/WebML/Graph"
+    xmlns:layout="http://www.webratio.com/2006/WebML/Layout"
+    outputPath="${webapps_loc}/${project_name}"
+    gr:showUnitContent="true"
+    gr:showTooltip="true"
+    httpPort="8080" 
+    httpsPort="8443"
+    enableProjectDependencies="true"
+    wsEnableRestSummaryPage="true"
+    >
+    <DomainModel>
+        <Class id="User" name="User" duration="persistent" gr:x="20" gr:y="150" gr:hideAttributes="false" attributeOrder="userOID userName password email token tokenExpirationDate secretKey">
+          <Attribute name="oid" id="userOID" type="integer" key="true"/>
+          <Attribute name="userName" id="userName" type="string"/>
+          <Attribute name="password" id="password" type="password"/>
+          <Attribute name="email" id="email" type="string"/>
+          <Attribute id="token" name="Token" type="string"/>
+          <Attribute id="tokenExpirationDate" name="Token Expiration Date" type="timestamp"/>
+          <Attribute id="secretKey" name="secretKey" type="string"/>
+          <Comment xml:space="preserve">A user represents one mobile application user. In addition to the standard information such as username, password and email, a user is also characterized by a token. The token is a string that authorizes the usage of all services published by the backend application. The token is automatically set by the backend application at login. The token may have a limited duration, that's why a token expiration date can be set. The secret key is the encryption key used when transferring files between the mobile application and the backend.</Comment>
+        </Class>
+        <Class id="Role" name="Role" duration="persistent" gr:x="355" gr:y="200" gr:hideAttributes="false" attributeOrder="roleOID roleName">
+          <Attribute name="oid" id="roleOID" type="integer" key="true"/>
+          <Attribute name="roleName" id="roleName" type="string"/>
+          <Comment xml:space="preserve">A role represents an application role managed by the backend application. This class is automatically filled in by the backend application with all Roles elements modeled in the project.</Comment>
+        </Class>
+	    <Class id="Device" name="Device" duration="persistent" attributeOrder="deviceOid deviceId notificationDeviceId deviceModel devicePlatform devicePlatformVersion deviceBrowser" gr:x="35" gr:y="-60">
+	        <Attribute id="deviceOid" name="oid" type="integer" key="true"/>
+	        <Attribute id="deviceId" name="Device ID" type="string"/>
+	        <Attribute id="notificationDeviceId" name="Notification Device ID" type="string"/>
+	        <Attribute id="deviceModel" name="Model" type="string"/>
+	        <Attribute id="devicePlatform" name="Platform" type="string"/>
+            <Attribute id="devicePlatformVersion" name="Platform Version" type="string"/>
+            <Attribute id="deviceBrowser" name="Browser" type="string"/>
+            <Comment xml:space="preserve">A device represents a mobile phone or a tablet on which there's an app that interacts with the backend application. A device is identified through the Device ID, which is automatically calculated from the backend application. Other information about the device: the Model (e.g. iPhone 6), the Platform (iOS/Android) and its version (e.g. 8.1.3), the installed Browser (e.g. Mozilla/5.0). Finally the Notification Device ID identifies the device for sending push notifications to the installed app; it must be sent by the mobile application at login.</Comment>
+	    </Class>
+        <Association id="User2Role_Role2User" name="User_Role" sourceClass="User" targetClass="Role">
+          <AssociationRole1 id="User2Role" name="roles" maxCard="N"/>
+          <AssociationRole2 id="Role2User" name="users" maxCard="N"/>
+        </Association>
+	    <Association id="User2Device_Device2User" name="User_Device" sourceClass="User" targetClass="Device">
+	        <AssociationRole1 id="User2Device" name="UserToDevice" maxCard="N"/>
+	        <AssociationRole2 id="Device2User" name="DeviceToUser" maxCard="1"/>
+	    </Association>
+        <DataServices/>
+        <UserServices/>
+    </DomainModel>
+    <WebModel/>
+    <ServiceDataProviders/>
+    <Roles/>
+</WebProject>

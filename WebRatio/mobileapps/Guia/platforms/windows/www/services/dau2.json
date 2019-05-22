@@ -1,0 +1,17 @@
+{
+  "service" : "wrm.comp.DetailsService",
+  "entity" : "cls3",
+  "condExprs" : {
+    "property" : "att11",
+    "operator" : "in",
+    "valueInput" : "kcond2.att11",
+    "config" : {
+      "oneImpliedInputRequired" : false
+    }
+  },
+  "output" : [ {
+    "ref" : "att22",
+    "viewName" : "logo",
+    "bindName" : "att22"
+  } ]
+}

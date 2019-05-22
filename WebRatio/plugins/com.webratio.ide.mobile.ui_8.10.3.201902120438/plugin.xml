@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <viewerContribution
+            id="com.webratio.ide.mobile.ui.popupmenu"
+            targetID="com.webratio.commons.mf.ui.PopupMenu">
+         <action
+               class="com.webratio.ide.mobile.ui.actions.SynchronizeMobileDomainModelAction"
+               icon="icons/full/elcl16/mobile_sync.png"
+               id="com.webratio.ide.mobile.ui.actions.SynchronizeXsd"
+               label="Synchronize Domain Model..."
+               tooltip="Synchronize Domain Model">
+         </action>
+      </viewerContribution>
+   </extension>
+    
+   <extension point="com.webratio.generator.contributor">
+     <ModelProblemsDetector
+           class="com.webratio.ide.mobile.ui.generator.DomainModelProblemsDetector">
+     </ModelProblemsDetector>
+   </extension>
+
+</plugin>

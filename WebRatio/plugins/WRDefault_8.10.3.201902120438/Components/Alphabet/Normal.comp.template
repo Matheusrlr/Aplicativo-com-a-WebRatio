@@ -1,0 +1,32 @@
+#?delimiters [%, %], [%=, %]
+[% 
+    setHTMLOutput()
+	def firstEvent = component.selectSingleNode("layout:Event[1]")
+	def domainClass = component["dataBinding"]
+%]
+<wr:Frame>
+<div class="plain <wr:StyleClass/>">
+	<div class="plain Alphabet">
+	  <table>
+	  	<tr>
+		  <c:forEach var="current" varStatus="status" items="${<wr:Id context="component"/>.data}">
+		    <c:set var="index" value="${status.index}"/>
+		    <td class="<wr:StyleClass /> value">
+		    	[%if(firstEvent != null){ %]
+			    	[% if (domainClass != "") {%]<c:if test="${current.dataSize gt 0}">[% } %]
+			    	<a class="<wr:StyleClass context="firstEvent"/> link" onclick="<wr:AjaxURL context="firstEvent"/>" href="<wr:URL context="firstEvent"/>">
+			    	[% if (domainClass != "") {%]</c:if>[% } %]
+		    	[%}%]
+		    	<c:out value="${current.letterChar}"/>[% if (domainClass != "") {%] (<c:out value="${current.dataSize}"/>)[%}%]
+		    	[%if(firstEvent != null){ %]
+			    	[% if (domainClass != "") { %]<c:if test="${current.dataSize gt 0}">[% } %]
+			    	</a>
+			    	[% if (domainClass != "") {%]</c:if>[% } %]
+		    	[% } %]
+		    </td>
+		  </c:forEach>
+		</tr>
+	  </table>
+	</div>
+</div>
+</wr:Frame>

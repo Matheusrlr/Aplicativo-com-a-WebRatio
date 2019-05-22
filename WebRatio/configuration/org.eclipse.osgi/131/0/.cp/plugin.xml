@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><?eclipse version="3.4"?>
+
+<plugin>
+  <extension-point id="deployContributor" name="com.webratio.ide.deploy.core.deployContributor" schema="schema/deployContributor.exsd"/>
+  <extension point="org.eclipse.debug.core.launchModes">
+    <launchMode label="Build" launchAsLabel="Build As" mode="webratioBuild"></launchMode>
+  </extension>
+  <extension point="org.eclipse.debug.core.launchConfigurationTypes">
+    <launchConfigurationType delegate="com.webratio.ide.deploy.core.launching.WebRatioCloudLaunchConfigurationDelegate" id="com.webratio.ide.deploy.core.WebRatioCloudLaunchConfigurationType" modes="webratioBuild" name="Web - WebRatio Cloud"></launchConfigurationType>
+    <launchConfigurationType delegate="com.webratio.ide.deploy.core.launching.IOSMobileLaunchConfigurationDelegate" id="com.webratio.ide.deploy.core.IOSMobileLaunchConfigurationType" modes="webratioBuild" name="Mobile - iOS"></launchConfigurationType>
+    <launchConfigurationType delegate="com.webratio.ide.deploy.core.launching.AndroidMobileLaunchConfigurationDelegate" id="com.webratio.ide.deploy.core.AndroidMobileLaunchConfigurationType" modes="webratioBuild" name="Mobile - Android"></launchConfigurationType>
+    <launchConfigurationType delegate="com.webratio.ide.deploy.core.launching.WindowsMobileLaunchConfigurationDelegate" id="com.webratio.ide.deploy.core.WindowsMobileLaunchConfigurationType" modes="webratioBuild" name="Mobile - Windows"></launchConfigurationType>
+  </extension>
+  <extension point="com.webratio.commons.mf.model.mfExpanders">
+    <MFExpander name="Database Expander" modelId="webml" qName="db:Database" class="com.webratio.ide.deploy.core.expanders.DatabaseExpander"></MFExpander>
+    <MFExpander name="WebProject Expander" modelId="webml" qName="WebProject" class="com.webratio.ide.deploy.core.expanders.WebProjectExpander"></MFExpander>
+    <MFExpander name="SMTP Server Expander" modelId="webml" qName="SMTPServer" class="com.webratio.ide.deploy.core.expanders.SMTPServerExpander"></MFExpander>
+    <MFExpander name="Cookie Storage Provider Expander" modelId="webml" qName="CookieStorageProvider" class="com.webratio.ide.deploy.core.expanders.CookieStorageProviderExpander"></MFExpander>
+    <MFExpander name="Service Data Provider Expander" modelId="webml" qName="ServiceDataProvider" class="com.webratio.ide.deploy.core.expanders.ServiceDataProviderExpander"></MFExpander>
+  </extension>
+</plugin>

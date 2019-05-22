@@ -1,0 +1,5 @@
+#?delimiters <%,%>,<%=,%>
+<%setXMLOutput()%>
+<InputParameters>
+  <InputParameter name="<%=component["id"]%>.jobInstanceId" label="Job Instance Identifier" mandatory="true"/>
+</InputParameters>

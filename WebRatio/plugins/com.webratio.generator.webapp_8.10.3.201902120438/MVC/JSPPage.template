@@ -1,0 +1,76 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.GenerationException
+import com.webratio.generator.webapp.output.FileType
+import org.apache.commons.lang.StringUtils
+import java.io.StringReader
+
+processOutputFile(FileType.LAYOUT_PAGE, page, { outputFile ->
+	outputFile.parentFile.mkdirs()
+	def pageId = page["id"] ?: ""
+	def genErrorPageTemplatePath = wr.locateResourcePath("MVC/GenerationErrorPage.template")
+	try {
+		def resourceRegistry = createResourceRegistry()
+		def pageUsedStyles = [] as Set
+		def addUsedTemplate = { templatePath ->
+			def style = StringUtils.substringBefore(templatePath, "/")
+			if (pageUsedStyles.add(style)) {
+				resourceRegistry.addAll(getRequiredResources(style), ["condition": ""], getAvailableResources(style))
+			}
+		}
+		addUsedTemplate("BUILTIN/*")
+		
+		def pageLayout = getLayout(page, LayoutType.PAGE)
+		if (pageLayout.path == "") {
+			def title = "Undefined Page Layout"    
+			def reason = "Unable to find the page layout for the page."
+			def hint = "Specify a page layout either for this page [id = " + pageId + "] or for one of its ancestors"
+			throw new GenerationException(title, reason, [hint], null)
+		}
+		def templateFile = getLayoutFile(pageLayout.path, LayoutType.PAGE)
+		if (templateFile == null) {
+			def title = "Page Layout Not Found"
+			def reason = "Unable to find the page layout \'" + pageLayout.path + "\'"
+			def hint = "Check the project for the missing page layout [name = " + pageLayout.path + "] associated with this page [id = " + pageId + "]"
+			throw new GenerationException(title, reason, [hint], null)
+		}
+		addUsedTemplate(pageLayout.path)
+	    wr.loginPages.add(getStylePage(page, StylePageType.LOGIN))
+	    wr.expirePages.add(getStylePage(page, StylePageType.EXPIRE))
+	    wr.errorPages.add(getStylePage(page, StylePageType.ERROR))
+	    wr.currentTopPage = page
+	    
+	    pageOutputType = com.webratio.generator.helpers.OutputType.UNKNOWN
+		def text = executeTemplateWithDelayedFragments(templateFile.absolutePath, ["params": pageLayout.parameters, "templateType": "page", "_pageResources": ["registry": resourceRegistry], "addUsedTemplate": addUsedTemplate, "getAuxFileName": { it + ".jsp" }, "getAuxContentType": { null }])
+	    def strWriter = new StringWriter()
+	    def strReader = new StringReader(text)
+	    strReader.filterLine(strWriter) { it.trim().length() != 0 }
+	    if (page.selectSingleNode("Property[@name = 'trim'][@value = 'true']") != null || wr.project.selectSingleNode("Property[@name = 'trim'][@value = 'true']") != null) {
+			def strWriter2 = new StringWriter()
+			new StringReader(strWriter.toString()).transformLine(strWriter2){it.trim()}
+			outputFile.writeAsync(strWriter2.toString().trim(), "UTF-8")
+	    } else {
+			outputFile.writeAsync(strWriter.toString().trim(), "UTF-8")
+	    }
+	    
+	    wr.usedStyles.addAll(pageUsedStyles)
+	} catch (GenerationException e) {
+		def text = executeTemplate(genErrorPageTemplatePath, ["title": e.title, "reason": e.reason, "hints": e.hints, "exception": e.cause])   
+		outputFile.write(text, "UTF-8")
+		e.setTargetId(pageId)
+		wr.generationExceptions.add(e)
+	} catch (Throwable e) {
+		def title = "Page Generated with Errors"
+		def reason = "WebRatio generated this page with errors."
+		def hint = "Check the WebRatio generation logs for errors encountered generating this page [id = " + pageId + "]"
+		def text = executeTemplate(genErrorPageTemplatePath, ["title": title, "reason": reason, "hints": [hint], "exception": e])
+		try {
+			outputFile.write(text, "UTF-8")
+		} catch (Throwable e2) {
+		}
+		def genExc = new GenerationException(title, reason, [hint], e)
+		genExc.setTargetId(pageId)
+		wr.generationExceptions.add(genExc)
+	}
+})
+%]

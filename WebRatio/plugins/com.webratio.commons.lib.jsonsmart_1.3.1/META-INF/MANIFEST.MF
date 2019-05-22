@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Export-Package: net.minidev.json,net.minidev.json.parser,net.minidev.j
+ son.reader
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/jsonsmart.jar
+Bundle-Version: 1.3.1
+Bundle-Name: WebRatio 3rd Party Library - Json-smart
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.jsonsmart
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: NSxgUjlNz4YkiMLIxCVj2+mNTFSWE5S/T9/HPgzvSE8=
+
+Name: lib/jsonsmart.jar
+SHA-256-Digest: rDaJESeI4EIIh1XmPs0faJrf6wTX+xz9JEUT+U+CUiw=
+
+Name: lib/jsonsmartsrc.zip
+SHA-256-Digest: Ks9tJ+wM+b2myPbq0WECmbVhc9KR8ZkSCa7j4aaV53c=
+

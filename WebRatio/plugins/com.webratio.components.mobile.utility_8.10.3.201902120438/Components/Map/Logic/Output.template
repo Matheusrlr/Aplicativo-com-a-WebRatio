@@ -1,0 +1,8 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+%]
+
+<OutputParameters>
+	<OutputParameter name="locationId" label="Location ID" />
+</OutputParameters>

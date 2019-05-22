@@ -1,0 +1,292 @@
+#?delimiters [%, %], [%=, %]
+[%
+import org.apache.commons.lang.StringUtils
+
+setXMLOutput()
+
+def protectedSubPages = getSubPages(page).findAll{ it["protected"] == "true" }
+def navFlows = getNavigationFlowsByTopPanel(page)
+
+/* Compute page runtime information */
+def runInfo = createSerializableProxy(wr.helpers.runtime.getPageRunInfo(page))
+%]
+<Descriptor service="com.webratio.rtx.page.DefaultPageService" name="[%= page["name"] %]">
+	<ParentContainer>[%= runInfo.parentContainer %]</ParentContainer>
+	<Secure>[%= runInfo.secure %]</Secure>
+	<Localized>[%= runInfo.localized %]</Localized>
+	<CheckPermission>[%= runInfo.permissionElement != null %]</CheckPermission>
+	[% if (runInfo.permissionElement) { %]
+		<PermissionElement>[%= runInfo.permissionElement %]</PermissionElement>
+	[% } %]
+	[% if (page.name == "MasterContainer") { %]
+		<IsMasterPage>true</IsMasterPage>
+	[% } else if (runInfo.masterPanelsIgnored) { %]
+		<MasterPage ignore="true"/>
+	[% } else if (runInfo.masterPanels[0]) { %]
+		<MasterPage>[%= runInfo.masterPanels[0] %]</MasterPage>
+	[% } %]
+	<Alternatives>[%= runInfo.xorPageIds.join("|") %]</Alternatives>
+	<ProtectedSubPages>[%= protectedSubPages.collect{ it["id"] }.join("|") %]</ProtectedSubPages>
+	
+	<Navigations
+		[% if (!runInfo.knownSideEffects.names.isEmpty()) { %]
+			knownEffects="[%= runInfo.knownSideEffects.names.join("|") %]"
+		[% } %]
+	>
+		[% for (nav in runInfo.entryNavigations) { %]
+			<Navigation
+				name="[%= nav.id %]"
+				[% if (nav.nonContextual) { %]
+					nonContextual="true"
+				[% } %]
+				[% if (nav.interView && nav.interViewDynamic) { %]
+					interPage="dynamic"
+				[% } else if (nav.interView) { %]
+					interPage="always"
+				[% } %]
+				links="[%= nav.flowIds.join("|") %]"
+				[% if (nav.selectiveRefresh) { %]
+					selectiveRefresh="true"
+				[% } %]
+				[% if (nav.postPropagatedFlowId) { %]
+					postPropagatedLink="[%= nav.postPropagatedFlowId %]"
+				[% } %]
+				[% if (!nav.sideEffects.names.isEmpty()) { %]
+					effects="[%= nav.sideEffects.names.join("|") %]"
+				[% } %]
+			[% if (nav.parameterConditions.empty) { %]
+			/>
+			[% } else { %]
+			>
+				[% for (paramCond in nav.parameterConditions) { %]
+					<ParameterCondition	
+						param="[%= paramCond.paramName %]"
+						values="[%= paramCond.paramValues.join("|") %]"
+						[% if (paramCond.paramPrevValues != null) { %]
+							prevValues="[%= paramCond.paramPrevValues.join("|") %]"
+						[% } %]
+					/>
+				[% } %]
+			</Navigation>
+			[% } %]
+		[% } %]
+	</Navigations>
+	
+	<ContextInitServices>[%= runInfo.contextInitServiceIds.join("|") %]</ContextInitServices>
+	<ContextInits>
+		[% for (init in runInfo.contextInits) { %]
+			<ContextInit targetParam="[%= init.targetParam %]" value="[%= init.value %]"/>
+		[% } %]
+	</ContextInits>
+	<UselessPreserves>
+		[% for (uselessPreserve in runInfo.uselessPreserves) { %]
+			<UselessPreserve
+				[% if (uselessPreserve.entryNavigations != null) { %]
+					navs="[%= uselessPreserve.entryNavigations.collect{ it.id }.join("|") %]"
+				[% } %]
+				[% if (uselessPreserve.sideEffects != null) { %]
+					effects="[%= uselessPreserve.sideEffects.names.join("|") %]"
+				[% } %]
+				futile="[%= uselessPreserve.futileParamNames.join("|") %]"
+				[% if (!uselessPreserve.renewedParamNames.isEmpty()) { %]
+					renewed="[%= uselessPreserve.renewedParamNames.join("|") %]"
+				[% } %]
+			/>
+		[% } %]
+	</UselessPreserves>
+	
+	<LinkSequence>[%= runInfo.defaultFlowSequence.flowIds.join("|") %]</LinkSequence>
+	[% for (seq in runInfo.customFlowSequences) { %]
+		<LinkSequence name="[%= seq.name %]">[%= seq.flowIds.join("|") %]</LinkSequence>
+	[% } %]
+	[% for (prop in runInfo.customFlowPropagations) { %]
+		<CustomLinkPropagations navigatedLink="[%= prop.navigatedFlowId %]" linkSequence="[%= prop.flowSequence.name %]"/>
+	[% } %]
+	
+	<ComponentComputations>
+		[% def compNavConditions = [:] %]
+		[% for (compComp in runInfo.componentComputations) { %]
+			<ComponentComputation
+				componentId="[%= compComp.componentId %]"
+				[% if (compComp.formBased) { %]
+					formBased="true"
+				[% } %]
+			>
+				[% 
+					printNavigationConditions(compComp)
+					compNavConditions[compComp.componentId] = compComp.navigationConditions
+				%]
+				[% for (refreshFormInfo in compComp.refreshFormInfos) { %]
+					<RefreshForm[% if (refreshFormInfo.refreshAll) { %]All[% } %]
+						[% if (refreshFormInfo.selectiveRefresh) { %]
+							selectiveRefresh="true"
+						[% } %]
+						[% if (refreshFormInfo.entryNavigations != null) { %]
+							navs="[%= refreshFormInfo.entryNavigations.collect{ it.id }.join("|") %]"
+						[% } %]
+						[% if (refreshFormInfo.sideEffects != null) { %]
+							effects="[%= refreshFormInfo.sideEffects.names.join("|") %]"
+						[% } %]
+						[% if (!refreshFormInfo.renewedInputs.isEmpty()) { %]
+							inputs="[%= refreshFormInfo.renewedInputs.join("|") %]"
+						[% } %]
+					/>
+				[% } %]
+			</ComponentComputation>
+		[% } %]
+	</ComponentComputations>
+	
+	<ManualLinks>
+		[% for (navFlow in navFlows) { %]
+			<ManualLink>[%= navFlow["id"] %]</ManualLink>
+		[% } %]
+	</ManualLinks>
+	
+	[% if (runInfo.propagationModes.client || !runInfo.propagationModes.server) { %]
+		<PropagationModes
+			client="[%= runInfo.propagationModes.client %]"
+			server="[%= runInfo.propagationModes.server %]"
+		/>
+	[% } %]
+	
+	<Variables>
+		[% for (varComp in runInfo.variableComputations) { %]
+			<Variable
+				id="[%= varComp.variableId %]"
+				name="[%= varComp.variableName %]"
+				[% if (varComp.variableType) { %]
+					type="[%= varComp.variableType %]"
+				[% } %]
+				[% if (varComp.componentId) { %]
+					componentId="[%= varComp.componentId %]"
+				[% } %]
+				[% if (varComp.sourceParam) { %]
+					parameter="[%= varComp.sourceParam %]"
+				[% } %]
+				[% if (varComp.sourceSessionParam) { %]
+					sessionParameter="[%= varComp.sourceSessionParam %]"
+				[% } %]
+				[% if (varComp.value) { %]
+					value="[%= varComp.value %]"
+				[% } %]
+			>
+				[%
+					printNavigationConditions(varComp)
+				%]
+			</Variable>
+		[% } %]
+	</Variables>
+	
+	<Conditions>
+		[% for (expr in getAvailableActivationExpressions(page)) { %]
+			[% def global = (expr.parent.name == "WebModel") %]
+			[% if (expr.name == "Variable") { %]
+				<Condition 
+					id="cexpr_[%= expr["id"] %]"
+					name="[%= expr["name"] %]"
+					[% if (global) { %]
+						global="true"
+					[% } %]
+					variables="[%= expr["id"] %]"
+					xml:space="preserve"
+				>com.webratio.rtx.beans.BeanHelper.asObject([%= expr["id"] %])</Condition>
+			[% } else { %]
+				[% def usedVariables = getUsedVariables(expr, page) %]
+				[% if (expr["scriptFile"]) { %]
+					[%
+						def scriptPath = expr["scriptFile"]
+						if (wr.projectType.name() in ["WEBMODEL","MODULE"]) {
+							scriptPath = StringUtils.removeStart(scriptPath, rootModuleName + ".jar/") 	  
+						}
+         			%]
+					<Condition 
+						id="[%= expr["id"] %]"
+						name="[%= expr["name"] %]"
+						[% if (global) { %]
+							global="true"
+						[% } %]
+						[% if (!usedVariables.isEmpty()) { %]
+							variables="[%= usedVariables.collect{ it["id"] }.unique().join("|") %]"
+						[% } %]
+						scriptFile="[%= scriptPath %]"
+					/>
+				[% } else { %]
+					<Condition 
+						id="[%= expr["id"] %]"
+						name="[%= expr["name"] %]"
+						[% if (global) { %]
+							global="true"
+						[% } %]
+						[% if (!usedVariables.isEmpty()) { %]
+							variables="[%= usedVariables.collect{ it["id"] }.unique().join("|") %]"
+						[% } %]
+						xml:space="preserve"
+					>[%= expr.valueOf("TextValue") %]</Condition>
+				[% } %]
+			[% } %]
+		[% } %]
+	</Conditions>
+	
+	<Layouts>
+		[%
+			def printLayoutComputations(parent, compNavConditions) {
+				for (layoutComp in parent.layoutComputations) { %]
+					<Layout
+						id="[%= layoutComp.layoutId %]"
+						[% if (layoutComp.componentId) { %]
+							componentId="[%= layoutComp.componentId %]"
+						[% } %]
+					>
+						[%
+							printNavigationConditions(layoutComp, compNavConditions[layoutComp.componentId])
+							printLayoutComputations(layoutComp, compNavConditions) // recurse
+						%]
+					</Layout>
+				[% }
+			}
+			printLayoutComputations(runInfo, compNavConditions)
+		%]
+	</Layouts>
+	
+	[%
+		/* Helper for printing the navigation conditions of a computation */
+		def printNavigationConditions(computation, defaultNavigationConditions = null) {
+			if (defaultNavigationConditions == null || !defaultNavigationConditions.equals(computation.navigationConditions)) {
+				for (navCond in computation.navigationConditions) {
+					def usesDefaultBehavior
+					if (navCond.selectiveRefresh) {
+						usesDefaultBehavior = (navCond.entryNavigations != null && navCond.entryNavigations.isEmpty())
+					} else {
+						usesDefaultBehavior = (navCond.entryNavigations == null)
+					}
+					if (!usesDefaultBehavior || navCond.sideEffects != null) { %]
+						<NavigationCondition
+							[% if (navCond.selectiveRefresh) { %]
+								selectiveRefresh="true"
+							[% } %]
+							[% if (navCond.entryNavigations != null) { %]
+								navs="[%= navCond.entryNavigations.collect{ it.id }.join("|") %]"
+							[% } %]
+							[% if (navCond.sideEffects != null) { %]
+								effects="[%= navCond.sideEffects.names.join("|") %]"
+							[% } %]
+						/>
+					[% }
+				}
+			}
+		}
+	%]
+	
+	<AutoLinkInfo>
+		[% if (runInfo.autoFlowInfo.fullRefresh) { %]
+			<PreservedContextParams>
+				<Params>[%= runInfo.autoFlowInfo.fullRefreshPreservedParameterIds.join("|") %]</Params>
+			</PreservedContextParams>
+		[% } %]
+		[% if (runInfo.autoFlowInfo.selectiveRefresh) { %]
+			<PreservedContextParams selectiveRefresh="true">
+				<Params>[%= runInfo.autoFlowInfo.selectiveRefreshPreservedParameterIds.join("|") %]</Params>
+			</PreservedContextParams>
+		[% } %]
+	</AutoLinkInfo>
+</Descriptor>

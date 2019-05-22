@@ -1,0 +1,44 @@
+Manifest-Version: 1.0
+Export-Package: com.lowagie.text,com.lowagie.text.exceptions,com.lowag
+ ie.text.factories,com.lowagie.text.html,com.lowagie.text.html.simplep
+ arser,com.lowagie.text.pdf,com.lowagie.text.pdf.codec,com.lowagie.tex
+ t.pdf.codec.wmf,com.lowagie.text.pdf.collection,com.lowagie.text.pdf.
+ crypto,com.lowagie.text.pdf.draw,com.lowagie.text.pdf.events,com.lowa
+ gie.text.pdf.fonts,com.lowagie.text.pdf.fonts.cmaps,com.lowagie.text.
+ pdf.hyphenation,com.lowagie.text.pdf.interfaces,com.lowagie.text.pdf.
+ internal,com.lowagie.text.pdf.parser,com.lowagie.text.rtf,com.lowagie
+ .text.rtf.direct,com.lowagie.text.rtf.document,com.lowagie.text.rtf.d
+ ocument.output,com.lowagie.text.rtf.field,com.lowagie.text.rtf.graphi
+ c,com.lowagie.text.rtf.headerfooter,com.lowagie.text.rtf.list,com.low
+ agie.text.rtf.parser,com.lowagie.text.rtf.parser.ctrlwords,com.lowagi
+ e.text.rtf.parser.destinations,com.lowagie.text.rtf.parser.enumeratio
+ ns,com.lowagie.text.rtf.parser.exceptions,com.lowagie.text.rtf.parser
+ .properties,com.lowagie.text.rtf.style,com.lowagie.text.rtf.table,com
+ .lowagie.text.rtf.text,com.lowagie.text.xml,com.lowagie.text.xml.simp
+ leparser,com.lowagie.text.xml.xmp,com.lowagie.tools
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/itext.jar,lib/itext-rtf.jar
+Bundle-Version: 2.1.7
+Bundle-Name: WebRatio 3rd Party Library - iText
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.itext
+Bundle-RequiredExecutionEnvironment: J2SE-1.4
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: lib/itextsrc.zip
+SHA-256-Digest: IGTFWB16PU70a8FKYVErWRpAMqcDS7kK9dcImceNY8k=
+
+Name: lib/itext.jar
+SHA-256-Digest: fYLGsJejHN9abUmjJ79YL97HME2mkwj59qv1Sqn9kFU=
+
+Name: about.html
+SHA-256-Digest: UgxYqFP1Qckn+NqMbmXVrUfDKjCwfrM/w1Yx8U1DPiw=
+
+Name: about_files/MPL-1.1.txt
+SHA-256-Digest: u0aAsTwxkEKUZKgwigfX2JHmRUNJ+3voVuAkBbJbEZU=
+
+Name: lib/itext-rtf.jar
+SHA-256-Digest: SdO53yDMxlZckbixjGOOywGP1Si262SZHW2Lpzl1wTU=
+

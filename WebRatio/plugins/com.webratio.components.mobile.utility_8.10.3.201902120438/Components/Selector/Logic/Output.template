@@ -1,0 +1,36 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+
+def domainClass = getById(component["dataBinding"])
+def attributes = getAttributes(domainClass)
+def roles = getOutgoingRoles(domainClass).findAll{!isMany(it)}
+def distinctAttributes = component["distinctAttributes"].split(" ")
+%]
+<OutputParameters>
+	[% for (a in attributes) {
+		if (isOutputBindableAttribute(a)) { %]
+			<OutputParameter
+				name="data.[%= a["id"] %]"
+				refId="[%= a["id"] %]"
+				type="[%= getTypeExpression(domainClass, a, true, false) %]"
+				label="[%= getLabel(a) %]"
+			/>
+		[% }
+	}
+	for (role in roles) {
+		def keyAttributes = getKeyAttributes(getTargetDomainClass(role))
+		for (keyAttr in keyAttributes) { %]
+			<OutputParameter
+				name="data.[%=role["id"] + "_" + keyAttr["id"]%]"
+				refId="[%=role["id"]%]"
+				label="[%=getLabel(role) + "." + getLabel(keyAttr)%]"
+				mandatory="false"
+			/>
+		[% }
+	} %]
+	[% component["distinctAttributes"].tokenize(" ").findAll{it.contains(".")}.each{ %]
+		<OutputParameter name="data.[%=getAttributeExpressionId(it)%]" refId="importedAttribute" label="[%=getAttributeExpressionImportLabel(it)%]" possiblyLarge="true"/>
+	[% } %]
+	<OutputParameter name="dataSize" label="Data Size"/>
+</OutputParameters>

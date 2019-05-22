@@ -1,0 +1,23 @@
+#?delimiters <%,%>,<%=,%>
+<%setXMLOutput()%>
+<InputParameters>
+  <%if(component["mode"] == "read" || component["mode"] == "update"){%>
+     <% if(component.valueOf("@sourceType") == "dynamic") { %>
+         <InputParameter  name="<%=component["id"]%>.url" label="Dynamic URL"/>
+     <% }else if(component.valueOf("@sourceType") == "blob") { %>
+         <InputParameter  name="<%=component["id"]%>.blob" label="BLOB"/>
+     <% } %>
+     <InputParameter name="<%=component["id"]%>.outCellCodes" label="Output Cell Codes"/>
+  <%}%>
+  <%if(component["mode"] == "write" || component["mode"] == "update"){%>
+      <InputParameter name="<%=component["id"]%>.excelFileName" label="Excel File Name"/>
+      <% for(cellInfo in component.selectNodes("CellInfo")){ %>
+        <InputParameter name="<%=component["id"]%>.<%=cellInfo["id"]%>" label="<%=cellInfo["name"]%>"/>
+      <%}%>
+      <InputParameter name="<%=component["id"]%>.cellCodes" label="Input Cell Codes"/>
+      <InputParameter name="<%=component["id"]%>.cellValues" label="Input Cell Values"/>   
+  <%}%>
+  <% for(cellInfo in component.selectNodes("CellInfo").findAll{it["sheet"] == ""}){ %>
+  	<InputParameter name="<%=component["id"]%>.<%=cellInfo["id"]%>CellSheet" label="<%= cellInfo["name"]%> - Sheet"/>
+  <%}%>
+</InputParameters>

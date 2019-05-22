@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root>
+	
+	<Statement name="Entity Instances" image="STATEMENT" templateTypes="xml" indent="true">
+		<Description>
+			Outputs the canonical XML representing instances of an entity.
+		</Description>
+		<Value><![CDATA[
+<@@EntityName@@>
+	$SS for (@@item@@ in @@collection@@) { $SE
+		<Instance>
+			$$CURSOR$$
+		</Instance>
+	$SS } $SE
+</@@EntityName@@>
+]]></Value>
+	</Statement>
+	
+	<Statement name="Entity Attribute" image="STATEMENT" templateTypes="xml" indent="true">
+		<Description>
+			Outputs the canonical XML representing an attribute of an entity instance.
+		</Description>
+		<Value><![CDATA[<@@0|AttributeName@@>@@1|@@</@@0|AttributeName@@>]]></Value>
+	</Statement>
+	
+	<Statement name="Relationship Instances" image="STATEMENT" templateTypes="xml" indent="true">
+		<Description>
+			Outputs the canonical XML representing instances of a relationship.
+		</Description>
+		<Value><![CDATA[
+<Relationship id="@@relId@@">
+	$SS for (@@item@@ in @@collection@@) { $SE
+		<Instance>
+			<Source>$$CURSOR$$</Source>
+			<Target></Target>
+		</Instance>
+	$SS } $SE
+</Relationship>
+]]></Value>
+	</Statement>
+	
+	<Statement name="Relationship Instances (custom keys)" image="STATEMENT" templateTypes="xml" indent="true">
+		<Description>
+			Outputs the canonical XML representing instances of a relationship.
+		</Description>
+		<Value><![CDATA[
+<Relationship id="@@roleID@@">
+	$SS for (@@item@@ in @@collection@@) { $SE
+		<Instance>
+			<SourceAttribute id="@@srcID@@">$$CURSOR$$</SourceAttribute>
+			<TargetAttribute id="@@tgtID@@"></TargetAttribute>
+		</Instance>
+	$SS } $SE
+</Relationship>
+]]></Value>
+	</Statement>
+	
+</Root>

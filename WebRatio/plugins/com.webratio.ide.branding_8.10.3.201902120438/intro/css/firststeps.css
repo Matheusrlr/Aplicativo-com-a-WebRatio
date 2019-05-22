@@ -1,0 +1,66 @@
+#head-anchor {
+	display: none;
+}
+.head-anchor {
+	display: none;
+}
+#navigation-links#page-links {
+	display: none;
+}
+
+a#wr_overview img { 
+    background-image : url('graphics/obj48/wroverview_obj.png'); 
+}
+
+a:hover#wr_overview img { 
+    background-image : url('graphics/obj48/wroverviewhov_obj.png'); 
+}
+
+a#wr_samples img { 
+    background-image : url('graphics/obj48/wrsamples_obj.png'); 
+}
+
+a:hover#wr_samples img { 
+    background-image : url('graphics/obj48/wrsampleshov_obj.png'); 
+}
+
+a#wr_migrate img { 
+    background-image : url('graphics/obj48/wrmigrate_obj.png'); 
+}
+
+a:hover#wr_migrate img { 
+    background-image : url('graphics/obj48/wrmigratehov_obj.png'); 
+}
+
+a#wr_workbench img { 
+    background-image : url('graphics/obj48/wrworkbench_obj.png'); 
+}
+
+a:hover#wr_workbench img { 
+    background-image : url('graphics/obj48/wrworkbenchhov_obj.png'); 
+}
+
+a#wr_tutorials img { 
+    background-image : url('graphics/obj48/wrtutorials_obj.png'); 
+}
+
+a:hover#wr_tutorials img { 
+    background-image : url('graphics/obj48/wrtutorialshov_obj.png'); 
+}
+
+a#wr_whatsnew img { 
+    background-image : url('graphics/obj48/wrwhatsnew_obj.png'); 
+}
+
+a:hover#wr_whatsnew img { 
+    background-image : url('graphics/obj48/wrwhatsnewhov_obj.png'); 
+}
+
+a#wr_webresources img { 
+    background-image : url('graphics/obj48/wrwebresources_obj.png'); 
+}
+
+a:hover#wr_webresources img { 
+    background-image : url('graphics/obj48/wrwebresourceshov_obj.png'); 
+}
+

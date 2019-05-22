@@ -1,0 +1,30 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: com.webratio.commons.lib.apache.commons.fileuploa
+ d
+Export-Package: org.apache.commons.fileupload,org.apache.commons.fileu
+ pload.disk,org.apache.commons.fileupload.portlet,org.apache.commons.f
+ ileupload.servlet,org.apache.commons.fileupload.util,org.apache.commo
+ ns.fileupload.util.mime
+Bundle-Name: WebRatio 3rd Party Library - Apache Commons FileUpload
+Bundle-Version: 1.3.3
+Bundle-ClassPath: lib/commons-fileupload.jar
+Require-Bundle: com.webratio.commons.lib.apache.commons.io
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-Vendor: WebRatio
+
+Name: about.html
+SHA-256-Digest: gx6CaGAlR9onDfyrA6MBk87pP3k9NEurlaQB/+b01O4=
+
+Name: lib/commons-fileupload.jar
+SHA-256-Digest: 4Uq320feEk9fnpwOA/T20qAH2DRYoK1nNWt73XdcjNA=
+
+Name: lib/commons-fileuploadsrc.zip
+SHA-256-Digest: Wv11aMiOXpVdukw4gwUxphULPX//IkaIQyEN/NYybyQ=
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+

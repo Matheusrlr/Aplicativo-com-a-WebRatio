@@ -1,0 +1,18 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+def componentId = component["id"]
+%>
+<OutputParameters>
+  <OutputParameter name="currentTime" label="Current/Input Time"/>
+  <OutputParameter name="currentDate" label="Current/Input Date"/>
+  <OutputParameter name="currentTimestamp" label="Current/Input Timestamp"/>
+  <OutputParameter name="year" label="Year"/>
+  <OutputParameter name="month" label="Month"/>
+  <OutputParameter name="day" label="Day"/>
+  <OutputParameter name="hour" label="Hour"/>
+  <OutputParameter name="min" label="Minutes"/>
+  <OutputParameter name="sec" label="Seconds"/>
+  <OutputParameter name="timeInMillis" label="Time in Milliseconds"/>
+  <OutputParameter name="nextMidnightTimestamp" label="Next Midnight Timestamp"/>
+</OutputParameters>

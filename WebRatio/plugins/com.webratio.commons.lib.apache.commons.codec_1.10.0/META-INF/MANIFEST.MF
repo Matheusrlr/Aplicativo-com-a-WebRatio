@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Export-Package: org.apache.commons.codec,org.apache.commons.codec.bina
+ ry,org.apache.commons.codec.digest,org.apache.commons.codec.language,
+ org.apache.commons.codec.language.bm,org.apache.commons.codec.net
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/commons-codec.jar
+Bundle-Version: 1.10.0
+Bundle-Name: WebRatio 3rd Party Library - Apache Commons Codec
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.apache.commons.codec
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: lib/commons-codecsrc.zip
+SHA-256-Digest: 365oJozobxoY/EW5kxfBPWydJS8AHTeWHnmlEHaAiYY=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: Lf7ZkmYc9gnr70QwRFp0LFVJBLLGWZPnKo8qX6F4FLE=
+
+Name: lib/commons-codec.jar
+SHA-256-Digest: QkHfqU5xHUNfKaRgSj4t5cSqPBZeI70Ga+b8H8QwlWk=
+

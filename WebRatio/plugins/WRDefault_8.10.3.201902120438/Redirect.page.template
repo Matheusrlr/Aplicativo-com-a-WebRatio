@@ -1,0 +1,7 @@
+#?delimiters [%, %], [%=, %]
+[%setHTMLOutput()%]
+<wr:Page type="HTML4_Transitional"/>
+<wr:Resources types="jspdeclaration"/>
+<%@ page contentType="text/html; charset=UTF-8"%> 
+<webratio:Page page="<wr:Id context="page"/>"/>
+<wr:CustomLocation name="main"/>

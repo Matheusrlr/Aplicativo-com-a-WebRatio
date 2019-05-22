@@ -1,0 +1,28 @@
+Manifest-Version: 1.0
+Export-Package: org.apache.commons.dbcp,org.apache.commons.dbcp.cpdsad
+ apter,org.apache.commons.dbcp.datasources,org.apache.commons.dbcp.man
+ aged,org.apache.commons.jocl
+Require-Bundle: com.webratio.commons.lib.apache.commons.pool
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/commons-dbcp.jar
+Bundle-Version: 1.4.0
+Bundle-Name: WebRatio 3rd Party Library - Apache Commons DBCP
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.apache.commons.dbcp
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: lib/commons-dbcp.jar
+SHA-256-Digest: puLYNVHQ5bWaqUI1nzAQ0155Nl5lUq09uqZ3bkhR5PY=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: /MpllCqQP0rOScqcEIYBlRpiHTIF1Bew+oqP36fLr4s=
+
+Name: lib/commons-dbcpsrc.zip
+SHA-256-Digest: xbM3udMXdHPad5XvQ3td/anyV1vjdAKUkZZKabq1Udc=
+

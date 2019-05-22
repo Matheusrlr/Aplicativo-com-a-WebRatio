@@ -1,0 +1,18 @@
+  <Element name="Row" lowerName="row"
+		pluralLowerName="rows">
+		<Description>
+			A row
+			is the platform- and language-independent specification of a 
+			table row.
+		</Description>
+		<ActionRef label="Add Property" />
+		<ActionRef label="Localize" />
+		<ActionRef label="Open in Browser" />
+		<ActionRef label="Help"/>
+		
+		<PropertyCategory name="Layout">
+			<Property label="Nr. of Cells">
+				The number of cells that compose the row.
+			</Property>
+		</PropertyCategory>
+	</Element>

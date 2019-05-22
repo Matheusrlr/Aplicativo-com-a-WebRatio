@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Descriptor service="com.webratio.web.mvc.module.CollectorService" name="Error Port">
+  <Type>KO</Type>
+  <ResultCode>error</ResultCode>
+  <!--Port Definition Decorator Service-->
+  <wr:DecoratorService xmlns:wr="http://www.webratio.com/2013/WebML/Logic" service="com.webratio.rtx.components.DefaultOperationDecoratorService">
+    <ModelName>Error Port</ModelName>
+    <ParentContainer>ad2</ParentContainer>
+    <NavigationAncestors/>
+    <Secure>false</Secure>
+    <Localized>false</Localized>
+    <CheckPermission>false</CheckPermission>
+    <LinkIdRequired>true</LinkIdRequired>
+    <OperationParams>
+      <Params/>
+    </OperationParams>
+    <Outgoing></Outgoing>
+    <IsLinkHistoryRecorded>true</IsLinkHistoryRecorded>
+    <DomainModelValidationEnabled>true</DomainModelValidationEnabled>
+  </wr:DecoratorService>
+</Descriptor>

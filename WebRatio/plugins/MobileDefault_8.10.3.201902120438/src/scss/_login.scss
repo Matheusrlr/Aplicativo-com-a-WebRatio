@@ -1,0 +1,21 @@
+/* Login Screen */
+
+.login-screen {
+  background: url(../images/login-bg.jpg) no-repeat center scroll;
+  background-size: cover;
+  .scroll {
+    min-height: 100%;
+    display: block;
+    @include display-flex();
+    @include flex-direction(column);
+    @include justify-content(flex-end);
+  }
+  .login-grid {
+    > .list {
+      padding-bottom: 0;
+    }
+    .button.button-full {
+      margin: 0;
+    }
+  }
+}

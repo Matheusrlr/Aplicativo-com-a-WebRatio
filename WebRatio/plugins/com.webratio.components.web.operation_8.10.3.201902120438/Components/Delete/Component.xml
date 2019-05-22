@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="operation" formBased="false" idPrefix="dlu" namePrefix="Delete " label="Delete" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" successFlowSource="true" successFlowTarget="true" multipleSuccessFlowCardinality="true" defaultLabel="Delete {label(id(@dataBinding))}"> 
+  <SuccessFlowCodes xml:space="preserve">return ["Not Found"]</SuccessFlowCodes>
+  <DomainClassProperty attributeName="dataBinding" includeDerived="false" figureDisplayOrder="1"> 
+    <Description xml:space="preserve">The class for which one or more instances must be deleted.</Description> 
+  </DomainClassProperty>  
+  <ConditionalExpression classIdExpr="../../@dataBinding" elementName="ConditionalExpression" defaultPolicy="true" figureDisplayOrder="2" automatic="true"> 
+    <Description xml:space="preserve">The set of selection criteria that retrieves the instances of the class of the component.</Description> 
+  </ConditionalExpression>  
+  <SubComponent elementName="CascadeDeleteRole" idPrefix="cdr" namePrefix="Cascade Delete Role " label="Cascade Delete Role" preferredIcon="CascadeDelete"> 
+    <AssociationRoleProperty label="Role" attributeName="role" includeDerived="true" sourceClassIdExpr="id(get-target-class-id(id(../@role)))/@id | ../@dataBinding"> 
+      <Description xml:space="preserve">The association role used to perform cascade delete.</Description> 
+    </AssociationRoleProperty>  
+    <SubComponentReference elementName="CascadeDeleteRole"/>  
+    <Description xml:space="preserve">The cascade delete role permits also to delete the connected objects 
+navigating the selected role.</Description> 
+  </SubComponent >  
+  <Description xml:space="preserve">A delete component removes a set of class instances or
+an individual class instance.
+The instances to delete are identified using a conditional expression.
+A delete component specification consists of the specification of the class to
+which the component refers and of a conditional expression used to restrict the set
+of instances to delete.</Description>  
+  <InputDescription xml:space="preserve" name="Condition-Name">The parameter associated to one of the Conditional Expressions
+of the operation.</InputDescription>  
+  <!-- <OutputDescription xml:space="preserve" name="Preserved Object(s)">The key attributes values of the object(s) that have not been deleted. This
+can be a subset of the input objects of the operation, in case
+of partial or total failure, or the empty set, in case of operation
+success.</OutputDescription> --> 
+</Component>

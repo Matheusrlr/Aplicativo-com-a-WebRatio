@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.9.2
+Bundle-SymbolicName: com.webratio.lib.spring
+Bundle-Name: WebRatio 3rd Party Library - Spring
+Bundle-Version: 8.10.3.201902120438
+Require-Bundle: com.webratio.commons.lib.spring.beans;visibility:=reex
+ port,com.webratio.commons.lib.spring.context;visibility:=reexport,com
+ .webratio.commons.lib.spring.context.support;visibility:=reexport,com
+ .webratio.commons.lib.spring.core;visibility:=reexport,com.webratio.c
+ ommons.lib.spring.expression;visibility:=reexport,com.webratio.common
+ s.lib.spring.web;visibility:=reexport,com.webratio.commons.lib.spring
+ .webmvc;visibility:=reexport,com.webratio.commons.lib.spring.aop;visi
+ bility:=reexport
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: WebRatio
+Created-By: 1.8.0-b132 (Oracle Corporation)
+
+Name: META-INF/signature
+SHA-256-Digest: PRYYgqFVErjMMx3lDuv1T8nEp66ZmsJ8BwS19rF+4z4=
+

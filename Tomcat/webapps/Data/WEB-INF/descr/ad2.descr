@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Descriptor service="com.webratio.rtx.actions.DefaultActionService">
+  <CheckPermission>false</CheckPermission>
+  <InputPort name="" id="ipd2">
+    <Parameter id="pdp1" name="Keys"/>
+  </InputPort>
+  <OKPort id="spd2" name="Success Port" default="true"></OKPort>
+  <KOPort id="epd2" name="Error Port" default="true"></KOPort>
+</Descriptor>

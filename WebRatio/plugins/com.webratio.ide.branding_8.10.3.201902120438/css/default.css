@@ -1,0 +1,51 @@
+/* 
+	e.g. @import url("e4_default_win7.css");
+	URL for images: url(MYURI);
+	1) into ...../eclipse-SDK-4.3.0-win32/plugins/org.eclipse.platform_4.3.0.v20130605-2000/images
+	2) into if MYURI starts with "http"
+	3) into if MYURI starts with "file:XYZ" try to use new File(XYZ)
+	4) into com.webratio.ide.branding/images (e.g. url(./prova.png)) (see plugin.xml applicationCSSResources property)
+	
+	e.g.
+	#topLeft.MPartStack {
+	  font-size: 1;
+	}
+
+*/
+
+.MTrimmedWindow {  
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.MPartStack {
+  swt-tab-renderer: null;
+  swt-selected-tabs-background: #FFFFFF #F0F0F0 100%;
+  swt-simple: false;
+  swt-mru-visible: true;
+}
+
+.MPartStack.active {
+  swt-selected-tabs-background: #F2F5F9 #99B4D1	 100%;
+}
+
+#PerspectiveSwitcher  {
+	eclipse-perspective-keyline-color: #F0F0F0 #F0F0F0;
+}
+
+.MToolControl.TrimStack {
+	frame-image:  url(../images/winClassicTSFrame.png); /* use the image form org.eclipse.platform */
+	handle-image:  url(../images/winClassicHandle.png); /* use the image form org.eclipse.platform */
+	frame-cuts: 5px 1px 5px 16px;
+}
+
+.MToolBar.Draggable {
+	handle-image:  url(../images/dragHandle.png); /* use the image form org.eclipse.platform */
+}
+
+.MToolControl.Draggable {
+	handle-image:  url(../images/dragHandle.png); /* use the image form org.eclipse.platform */
+}
+

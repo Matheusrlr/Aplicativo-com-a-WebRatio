@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+<!-- BY JAVA -->
+  <extension point="org.eclipse.ui.intro">
+    <intro
+        class="com.webratio.ide.branding.intro.WRIntroPart2Pages"
+        icon="open_learning_center_tool.png"
+        label="Learning Center"
+        id="com.webratio.ide.branding.intro"> 
+    </intro>
+    <introProductBinding introId="com.webratio.ide.branding.intro" productId="com.webratio.ide.branding.product"/>
+  </extension>
+<!--
+-->  
+
+<!-- BY HTML -->
+<!--
+   <extension point="org.eclipse.ui.intro">
+    <intro
+        class="org.eclipse.ui.intro.config.CustomizableIntroPart"
+        id="com.webratio.ide.branding.template"> 
+    </intro>
+    <introProductBinding introId="com.webratio.ide.branding.template" productId="com.webratio.ide.branding.product"/>
+   </extension>
+	<extension point="org.eclipse.ui.intro.config"> 
+		<config id = "com.webratio.ide.branding.template.configId" 
+	        introId="com.webratio.ide.branding.template" 
+	        content="introContent.xml">
+			<presentation home-page-id="root">
+				<implementation kind="html"/>
+			</presentation> 
+		</config> 
+	</extension> 
+  <extension point="org.eclipse.ui.intro.configExtension">
+    <configExtension configId="com.webratio.ide.branding.template.configId" content="$nl$/root.xhtml"/>
+  </extension>
+-->
+
+
+<!-- CURRENT -->
+<!--
+  <extension point="org.eclipse.ui.intro">
+    <introProductBinding introId="org.eclipse.ui.intro.universal" productId="com.webratio.ide.branding.product"/>
+  </extension>
+-->  
+  
+  <extension point="org.eclipse.ui.intro.configExtension">
+    <configExtension configId="org.eclipse.ui.intro.universalConfig" content="$nl$/intro/firststepsEx.xml"/>
+    <configExtension configId="org.eclipse.ui.intro.universalConfig" content="$nl$/intro/firststepsEx2.xml"/>
+    <configExtension configId="org.eclipse.ui.intro.universalConfig" content="$nl$/intro/overviewEx.xml"/>
+    <configExtension configId="org.eclipse.ui.intro.universalConfig" content="$nl$/intro/tutorialsEx.xml"/>
+    <configExtension
+          configId="org.eclipse.ui.intro.universalConfig"
+          content="intro/tutorialsEx2.xml"/>
+    <configExtension configId="org.eclipse.ui.intro.universalConfig" content="$nl$/intro/samplesEx.xml"/>
+    <configExtension configId="org.eclipse.ui.intro.universalConfig" content="$nl$/intro/samplesEx2.xml"/>
+    <configExtension configId="org.eclipse.ui.intro.universalConfig" content="$nl$/intro/webresources1Ex.xml"/>
+    <configExtension configId="org.eclipse.ui.intro.universalConfig" content="$nl$/intro/webresources2Ex.xml"/>
+    <configExtension configId="org.eclipse.ui.intro.universalConfig" content="$nl$/intro/migrateEx.xml"/>
+    <configExtension configId="org.eclipse.ui.intro.universalConfig" content="$nl$/intro/whatsnewEx1.xml"/>
+    <configExtension configId="org.eclipse.ui.intro.universalConfig" content="$nl$/intro/whatsnewEx2.xml"/>
+    <configExtension configId="org.eclipse.ui.intro.universalConfig" content="$nl$/intro/whatsnewEx3.xml"/>
+      <theme
+            default="true"
+            id="com.webratio.ide.branding.intro"
+            name="WebRatio"
+            path="$nl$/themes/wr"
+            previewImage="$nl$/themes/wr/preview.png">
+            <property name="workbenchAsRootLink"
+            		value="true"/>
+            		<!--
+            <property name="launchbarBackground"
+            		value="#a1c2cb"/>
+            		-->
+            <property name="launchbarOverviewIcon"
+            		  value="$theme$graphics/launchbar/overview16.png"/>
+            <property name="launchbarFirststepsIcon"
+            		  value="$theme$graphics/launchbar/firststeps16.png"/>
+            <property name="launchbarTutorialsIcon"
+            		  value="$theme$graphics/launchbar/tutorials16.png"/>
+            <property name="launchbarSamplesIcon"
+            		  value="$theme$graphics/launchbar/samples16.png"/>
+            <property name="launchbarWhatsnewIcon"
+            		  value="$theme$graphics/launchbar/whatsnew16.png"/>
+            <property name="launchbarMigrateIcon"
+            		  value="$theme$graphics/launchbar/migrate16.png"/>
+            <property name="launchbarWebresourcesIcon"
+            		  value="$theme$graphics/launchbar/webresources16.png"/>
+
+            <property name="highContrast-overview"
+            		  value="$theme$graphics/icons/ctool/overview.png"/>
+            <property name="highContrast-firststeps"
+            		  value="$theme$graphics/icons/ctool/firststeps.png"/>
+            <property name="highContrast-tutorials"
+            		  value="$theme$graphics/icons/ctool/tutorials.png"/>
+            <property name="highContrast-samples"
+            		  value="$theme$graphics/icons/ctool/samples.png"/>
+            <property name="highContrast-whatsnew"
+            		  value="$theme$graphics/icons/ctool/whatsnew.png"/>
+            <property name="highContrast-webresources"
+            		  value="$theme$graphics/icons/ctool/webresources.png"/>
+            <property name="highContrast-migrate"
+            		  value="$theme$graphics/icons/ctool/migrate.png"/>    
+            		  
+            <property name="highContrastNav-overview"
+            		  value="$theme$graphics/icons/ctool/ov_nav.png"/>
+            <property name="highContrastNav-firststeps"
+            		  value="$theme$graphics/icons/ctool/fs_nav.png"/>
+            <property name="highContrastNav-tutorials"
+            		  value="$theme$graphics/icons/ctool/tu_nav.png"/>
+            <property name="highContrastNav-samples"
+            		  value="$theme$graphics/icons/ctool/sa_nav.png"/>
+            <property name="highContrastNav-whatsnew"
+            		  value="$theme$graphics/icons/ctool/wn_nav.png"/>
+            <property name="highContrastNav-webresources"
+            		  value="$theme$graphics/icons/ctool/wr_nav.png"/>
+            <property name="highContrastNav-migrate"
+            		  value="$theme$graphics/icons/ctool/mi_nav.png"/>            		  
+      </theme>
+
+  </extension>
+  <extension id="product" point="org.eclipse.core.runtime.products">
+    <product application="org.eclipse.ui.ide.workbench" name="%productName">
+      <property name="windowImages" value="images/webratio.png,images/webratio32.png,images/webratio48.png,images/webratio64.png,images/webratio128.png"/>
+      <property name="aboutText" value="%productBlurb"/>
+      <property name="aboutImage" value="images/webratio_lg.gif"/>
+      <property name="preferenceCustomization" value="plugin_customization.ini"/>
+      <property name="startupForegroundColor" value="FFFFFF"/>
+      <property name="startupProgressRect" value="0,70,510,15"/>
+      <property name="startupMessageRect" value="6,0,490,20"/>
+      <!-- OLD
+      <property name="startupProgressRect" value="0,205,332,15"/>
+      <property name="startupMessageRect" value="6,145,324,20"/>
+      -->
+      <property name="introTitle" value="%productIntroTitle"/>
+      <property name="introBrandingImage" value="product:intro-wr.png"/>
+      <property name="introBrandingImageText" value="%productIntroBrandingText"/>
+      <property name="introDescription-overview" value="%introDescription-overview"/>
+      <property
+            name="updateUrl"
+            value="%updateSiteURL"/>
+      <property
+            name="appName"
+            value="%productName">
+      </property>
+      <property
+            name="cssTheme"
+            value="com.webratio.ide.branding.theme.default">
+      </property>
+      <property
+            name="applicationCSS"
+            value="platform:/plugin/com.webratio.ide.branding/css/default.css">
+      </property>
+   	  <property
+			name="applicationCSSResources"
+			value="platform:/plugin/com.webratio.ide.branding/images/">    
+      </property>
+    </product>
+  </extension>
+  <extension point="org.eclipse.ui.splashHandlers">
+<!--    <splashHandler class="com.webratio.ide.branding.splash.WRSplashHandler" id="com.webratio.ide.branding.splash.extensible"/>-->
+    <splashHandler class="com.webratio.ide.branding.splash.WRInteractiveSplashHandler" id="com.webratio.ide.branding.splash.extensible"/>
+    <splashHandlerProductBinding productId="com.webratio.ide.branding.product" splashId="com.webratio.ide.branding.splash.extensible"/>
+  </extension>
+  <extension
+        point="org.eclipse.e4.ui.css.swt.theme">
+     <theme
+           basestylesheeturi="css/default.css"
+           id="com.webratio.ide.branding.theme.default"
+           label="WebRatio Default Theme">
+     </theme>
+  </extension>
+
+</plugin>

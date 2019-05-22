@@ -1,0 +1,26 @@
+<Element name="ExclusiveEventGateway" lowerName="exclusive event gateway"
+		pluralLowerName="">
+		<Description>
+			A &lt;a href="/Concepts/Elements/Process/Gateways/ExclusiveEventGateway"/&gt; refers to a branching point where alternatives are based on an event that occurs at that point in the
+		process. 
+		</Description>
+        
+        <ActionRef label="Add Lane" />
+        <ActionRef label="Add Sequence Flow" />
+        <ActionRef label="Add Property" />
+        <ActionRef label="Surround with Group" />
+        <ActionRef label="Move into Embedded Subprocess" />
+        <ActionRef label="Edit Process Parameters..." />
+        <Action label="Change Type to">
+          Change this gateway to a different gateway.        
+        </Action>
+        <ActionRef label="Search References" />
+        <ActionRef label="Help" />		
+
+    <PropertyCategory name="General">
+        <PropertyRef label="Id"/>
+        <PropertyRef label="Code"/>
+        <PropertyRef label="Name"/>
+        <PropertyRef label="Instance Name"/>
+    </PropertyCategory>
+</Element>

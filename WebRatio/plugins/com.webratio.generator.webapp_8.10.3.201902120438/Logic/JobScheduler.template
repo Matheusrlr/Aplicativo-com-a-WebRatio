@@ -1,0 +1,48 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import org.apache.commons.lang.StringUtils
+import org.apache.commons.lang.math.NumberUtils
+
+setXMLOutput()
+int threadCount = NumberUtils.toInt(scheduler["threadPoolSize"], 5) 
+def jobStoreType = scheduler["jobStoreType"] == "Database" ? "Database" : "Memory"
+def jobDb =  getByIdOptional(scheduler.valueOf("@db:jobDatabase"))
+if (jobDb == null) {
+    jobStoreType = "Memory"
+}
+def jobTablePrefix = StringUtils.defaultIfEmpty(scheduler.valueOf("@db:jobTablePrefix"), "QRTZ_")
+if(jobStoreType == "Database" && jobDb["ignoreSchema"] != "true"){
+   def jobSchema = StringUtils.defaultIfEmpty(scheduler.valueOf("@db:jobSchema"), jobDb["schema"]);
+   if(!StringUtils.isBlank(jobSchema)){
+     jobTablePrefix = jobSchema + "." + jobTablePrefix
+   }
+}
+def clusteredJobStore = (scheduler.valueOf("@db:clusteredJobStore") == "true") || (wr.projectType.name() == "ENTERPRISE")
+%>
+<Descriptor service="com.webratio.rtx.jobs.QuartzJobSchedulerService">
+  <% if (jobStoreType == "Database") { %>
+    <Database><%=jobDb != null ? jobDb["id"] : ""%></Database>
+  <% } %>
+  <Property name="org.quartz.scheduler.instanceName" value="WRQuartzScheduler"/>
+  <Property name="org.quartz.scheduler.instanceId" value="AUTO"/>
+  <Property name="org.quartz.threadPool.class" value="org.quartz.simpl.SimpleThreadPool"/>
+  <Property name="org.quartz.threadPool.threadCount" value="<%=threadCount%>"/>
+  <% if (jobStoreType == "Memory") { %>
+    <Property name="org.quartz.jobStore.class" value="org.quartz.simpl.RAMJobStore"/>
+  <% } else { %>
+    <%
+     def dbTypeName = jobDb.valueOf("@type")
+     def dbType = wr.explorer.databaseTypes().getConfiguration(dbTypeName)
+     def delegateClass = dbType["quartzDelegateClass"]
+    %> 
+    <Property name="org.quartz.jobStore.class" value="org.quartz.impl.jdbcjobstore.JobStoreTX"/>
+    <Property name="org.quartz.jobStore.driverDelegateClass" value="<%= StringUtils.defaultIfEmpty(delegateClass, "org.quartz.impl.jdbcjobstore.StdJDBCDelegate")%>"/>
+    <Property name="org.quartz.jobStore.dataSource" value="<%=jobDb != null ? jobDb["id"] : ""%>"/>
+    <Property name="org.quartz.jobStore.tablePrefix" value="<%=jobTablePrefix%>"/>
+    <Property name="org.quartz.jobStore.isClustered" value="<%=clusteredJobStore%>"/>
+  <% } %>
+  <% for (prop in scheduler.selectNodes("Property[starts-with(@name, \'org.quartz.\')]")) { %>
+    <Property name="<%=prop.valueOf("@name")%>" value="<%=prop.valueOf("@value")%>"/>
+  <% } %>
+  <Property name="org.quartz.scheduler.skipUpdateCheck" value="true"/>
+</Descriptor>

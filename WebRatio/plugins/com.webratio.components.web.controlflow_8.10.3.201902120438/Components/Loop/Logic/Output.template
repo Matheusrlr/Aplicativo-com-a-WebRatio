@@ -1,0 +1,15 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+%>
+<OutputParameters>
+
+  <OutputParameter name="next" label="Next Element"/>
+  <OutputParameter name="index" label="Index"/>
+  <OutputParameter name="loopBroken" label="Loop Broken"/>
+  
+  <% for (secArray in component.elements("SecondaryArray")) { %>
+    <OutputParameter name="<%= secArray["id"]%>" label="Next Element (<%=secArray["name"]%>)"/>
+  <% } %>
+  
+</OutputParameters>

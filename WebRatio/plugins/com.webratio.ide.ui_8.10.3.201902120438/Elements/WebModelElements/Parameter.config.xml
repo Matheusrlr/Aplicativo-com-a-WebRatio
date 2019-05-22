@@ -1,0 +1,20 @@
+<Element name="Parameter" lowerName="parameter" pluralLowerName="parameters">
+	<Description>
+		TODO
+	</Description>
+	<PropertyCategory name="General">
+		<PropertyRef label="Identifier" />
+		<PropertyRef label="Name" />
+
+		<Property label="Type" >
+			TODO:Parameter@Type
+		</Property>
+		<Property label="Duration" >
+			TODO:Parameter@Duration
+		</Property>
+		<Property label="Preserve" >
+			TODO:Parameter@Preserve
+		</Property>
+		
+	</PropertyCategory>
+</Element>

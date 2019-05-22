@@ -1,0 +1,236 @@
+#?delimiters [%,%],[%=,%]
+[% 
+import org.apache.commons.lang.StringUtils
+setXMLOutput() 
+
+shapeIdCounter++;
+def mainShapeId = shapeIdCounter;
+idMap.put(bpmElementId, mainShapeId);
+
+%]
+<!--
+    Complex Gateway
+-->    
+<Shape ID='[%=mainShapeId%]' Type='Group' LineStyle='3' FillStyle='3' TextStyle='3'>
+[%
+    printRaw(executeTemplate(baseTemplatePath + "_XForm.template", ["mainShapeId":mainShapeId,
+        "XForm_X":pinX, 
+        "XForm_Y":(pageHeight - pinY - gatewayDiameter), 
+        "XForm_W":gatewayDiameter, 
+        "XForm_H":gatewayDiameter, 
+    ]))
+    printRaw(executeTemplate(baseTemplatePath + "_Misc.template", [:]))
+%]
+    <Shapes>
+        <Shape ID='[%=++shapeIdCounter%]' Type='Shape' LineStyle='3' FillStyle='3' TextStyle='3'>
+            <XForm>
+                <PinX F='Sheet.[%=mainShapeId%]!Width*0.5'>0.2165354330708663</PinX>
+                <PinY F='Sheet.[%=mainShapeId%]!Height*0.5'>0.2165354330708661</PinY>
+                <Width F='Sheet.[%=mainShapeId%]!Width*1'>0.433070866141733</Width>
+                <Height F='Sheet.[%=mainShapeId%]!Height*1'>0.4330708661417321</Height>
+                <LocPinX F='Width*0.5'>0.2165354330708665</LocPinX>
+                <LocPinY F='Height*0.5'>0.2165354330708661</LocPinY>
+                <Angle>0</Angle>
+                <FlipX>0</FlipX>
+                <FlipY>0</FlipY>
+                <ResizeMode>0</ResizeMode>
+            </XForm>
+            <TextBlock>
+                <LeftMargin Unit='PT' F='Inh'>0.05555555555555555</LeftMargin>
+                <RightMargin Unit='PT' F='Inh'>0.05555555555555555</RightMargin>
+                <TopMargin Unit='PT' F='Inh'>0.05555555555555555</TopMargin>
+                <BottomMargin Unit='PT' F='Inh'>0.05555555555555555</BottomMargin>
+                <VerticalAlign F='Inh'>1</VerticalAlign>
+                <TextBkgnd>#ffffff</TextBkgnd>
+                <DefaultTabStop F='Inh'>0.5905511811023622</DefaultTabStop>
+                <TextDirection F='Inh'>0</TextDirection>
+                <TextBkgndTrans F='Inh'>0</TextBkgndTrans>
+            </TextBlock>
+            <vx:TextBlock xmlns:vx='http://schemas.microsoft.com/visio/2006/extension'>
+                <vx:TextBkgnd F='THEMEGUARD(THEME("BackgroundColor")+1)'>#ffffff</vx:TextBkgnd>
+            </vx:TextBlock>
+            <Misc>
+                <NoObjHandles F='Inh'>0</NoObjHandles>
+                <NonPrinting F='Inh'>0</NonPrinting>
+                <NoCtlHandles F='Inh'>0</NoCtlHandles>
+                <NoAlignBox F='Inh'>0</NoAlignBox>
+                <UpdateAlignBox F='Inh'>0</UpdateAlignBox>
+                <HideText F='Inh'>0</HideText>
+                <DynFeedback F='Inh'>0</DynFeedback>
+                <GlueType F='Inh'>0</GlueType>
+                <WalkPreference F='Inh'>0</WalkPreference>
+                <BegTrigger F='No Formula'>0</BegTrigger>
+                <EndTrigger F='No Formula'>0</EndTrigger>
+                <ObjType F='Inh'>0</ObjType>
+                <Comment F='Inh'/>
+                <IsDropSource F='Inh'>0</IsDropSource>
+                <NoLiveDynamics F='Inh'>0</NoLiveDynamics>
+                <LocalizeMerge F='Inh'>0</LocalizeMerge>
+                <Calendar F='Inh'>0</Calendar>
+                <LangID F='Inh'>1040</LangID>
+                <ShapeKeywords F='Inh'/>
+                <DropOnPageScale F='Inh'>1</DropOnPageScale>
+            </Misc>
+            <Fill>
+                <FillForegnd>#f8e8c4</FillForegnd>
+                <FillBkgnd>#f8e8c4</FillBkgnd>
+                <FillPattern>1</FillPattern>
+                <ShdwForegnd F='Inh'>0</ShdwForegnd>
+                <ShdwBkgnd F='Inh'>1</ShdwBkgnd>
+                <ShdwPattern F='Inh'>0</ShdwPattern>
+                <FillForegndTrans F='Inh'>0</FillForegndTrans>
+                <FillBkgndTrans F='Inh'>0</FillBkgndTrans>
+                <ShdwForegndTrans F='Inh'>0</ShdwForegndTrans>
+                <ShdwBkgndTrans F='Inh'>0</ShdwBkgndTrans>
+                <ShapeShdwType F='Inh'>0</ShapeShdwType>
+                <ShapeShdwOffsetX F='Inh'>0</ShapeShdwOffsetX>
+                <ShapeShdwOffsetY F='Inh'>0</ShapeShdwOffsetY>
+                <ShapeShdwObliqueAngle F='Inh'>0</ShapeShdwObliqueAngle>
+                <ShapeShdwScaleFactor F='Inh'>1</ShapeShdwScaleFactor>
+            </Fill>
+            <vx:Fill xmlns:vx='http://schemas.microsoft.com/visio/2006/extension'>
+                <vx:FillForegnd F='THEMEGUARD(RGB(248,232,196))'>#f8e8c4</vx:FillForegnd>
+                <vx:FillBkgnd F='THEMEGUARD(RGB(248,232,196))'>#f8e8c4</vx:FillBkgnd>
+            </vx:Fill>
+            <Line>
+                <LineWeight F='Inh'>0.01</LineWeight>
+                <LineColor>#c18748</LineColor>
+                <LinePattern F='Inh'>1</LinePattern>
+                <Rounding F='Inh'>0</Rounding>
+                <EndArrowSize F='Inh'>2</EndArrowSize>
+                <BeginArrow F='Inh'>0</BeginArrow>
+                <EndArrow F='Inh'>0</EndArrow>
+                <LineCap F='Inh'>0</LineCap>
+                <BeginArrowSize F='Inh'>2</BeginArrowSize>
+                <LineColorTrans F='Inh'>0</LineColorTrans>
+            </Line>
+            <vx:Line xmlns:vx='http://schemas.microsoft.com/visio/2006/extension'>
+                <vx:LineColor F='THEMEGUARD(RGB(193,135,72))'>#c18748</vx:LineColor>
+            </vx:Line>
+            <Geom IX='0'>
+                <NoFill>0</NoFill>
+                <NoLine>0</NoLine>
+                <NoShow>0</NoShow>
+                <NoSnap>0</NoSnap>
+                <MoveTo IX='1'>
+                    <X F='Width*0.5'>0.2165354330708664</X><Y F='Height*1'>0.4330708661417321</Y>
+                </MoveTo>
+                <LineTo IX='2'>
+                    <X F='Width*0'>0</X><Y F='Height*0.5'>0.2165354330708661</Y>
+                </LineTo>
+                <LineTo IX='3'>
+                    <X F='Width*0.5'>0.2165354330708664</X><Y F='Height*0'>0</Y>
+                </LineTo>
+                <LineTo IX='4'>
+                    <X F='Width*1'>0.433070866141733</X><Y F='Height*0.5'>0.2165354330708661</Y>
+                </LineTo>
+                <LineTo IX='5'>
+                    <X F='Geometry1.X1'>0.2165354330708664</X><Y F='Geometry1.Y1'>0.4330708661417321</Y>
+                </LineTo>
+            </Geom>
+            <Text/>
+        </Shape>
+        <Shape ID='[%=++shapeIdCounter%]' Type='Shape' LineStyle='3' FillStyle='3' TextStyle='3'>
+            <XForm>
+                <PinX F='Sheet.[%=mainShapeId%]!Width*0.5'>0.216535433070867</PinX>
+                <PinY F='Sheet.[%=mainShapeId%]!Height*0.5'>0.2165354330708668</PinY>
+                <Width F='Sheet.[%=mainShapeId%]!Width*0.63035714285714'>0.2729893138357699</Width>
+                <Height F='Sheet.[%=mainShapeId%]!Height*0.63035714285715'>0.2729893138357714</Height>
+                <LocPinX F='Width*0.5'>0.136494656917885</LocPinX>
+                <LocPinY F='Height*0.5'>0.1364946569178857</LocPinY>
+                <Angle>0</Angle>
+                <FlipX>0</FlipX>
+                <FlipY>0</FlipY>
+                <ResizeMode>0</ResizeMode>
+            </XForm>
+            <TextBlock>
+                <LeftMargin Unit='PT' F='Inh'>0.05555555555555555</LeftMargin>
+                <RightMargin Unit='PT' F='Inh'>0.05555555555555555</RightMargin>
+                <TopMargin Unit='PT' F='Inh'>0.05555555555555555</TopMargin>
+                <BottomMargin Unit='PT' F='Inh'>0.05555555555555555</BottomMargin>
+                <VerticalAlign F='Inh'>1</VerticalAlign>
+                <TextBkgnd>#ffffff</TextBkgnd>
+                <DefaultTabStop F='Inh'>0.5905511811023622</DefaultTabStop>
+                <TextDirection F='Inh'>0</TextDirection>
+                <TextBkgndTrans F='Inh'>0</TextBkgndTrans>
+            </TextBlock>
+            <vx:TextBlock xmlns:vx='http://schemas.microsoft.com/visio/2006/extension'>
+                <vx:TextBkgnd F='THEMEGUARD(THEME("BackgroundColor")+1)'>#ffffff</vx:TextBkgnd>
+            </vx:TextBlock>
+            <Misc>
+                <NoObjHandles F='Inh'>0</NoObjHandles>
+                <NonPrinting F='Inh'>0</NonPrinting>
+                <NoCtlHandles F='Inh'>0</NoCtlHandles>
+                <NoAlignBox F='Inh'>0</NoAlignBox>
+                <UpdateAlignBox F='Inh'>0</UpdateAlignBox>
+                <HideText F='Inh'>0</HideText>
+                <DynFeedback F='Inh'>0</DynFeedback>
+                <GlueType F='Inh'>0</GlueType>
+                <WalkPreference F='Inh'>0</WalkPreference>
+                <BegTrigger F='No Formula'>0</BegTrigger>
+                <EndTrigger F='No Formula'>0</EndTrigger>
+                <ObjType F='Inh'>0</ObjType>
+                <Comment F='Inh'/>
+                <IsDropSource F='Inh'>0</IsDropSource>
+                <NoLiveDynamics F='Inh'>0</NoLiveDynamics>
+                <LocalizeMerge F='Inh'>0</LocalizeMerge>
+                <Calendar F='Inh'>0</Calendar>
+                <LangID F='Inh'>1040</LangID>
+                <ShapeKeywords F='Inh'/>
+                <DropOnPageScale F='Inh'>1</DropOnPageScale>
+            </Misc>
+            <Fill>
+                <FillForegnd>#4d8b2f</FillForegnd>
+                <FillBkgnd>#ffff00</FillBkgnd>
+                <FillPattern>33</FillPattern>
+                <ShdwForegnd F='Inh'>0</ShdwForegnd>
+                <ShdwBkgnd F='Inh'>1</ShdwBkgnd>
+                <ShdwPattern F='Inh'>0</ShdwPattern>
+                <FillForegndTrans F='Inh'>0</FillForegndTrans>
+                <FillBkgndTrans F='Inh'>0</FillBkgndTrans>
+                <ShdwForegndTrans F='Inh'>0</ShdwForegndTrans>
+                <ShdwBkgndTrans F='Inh'>0</ShdwBkgndTrans>
+                <ShapeShdwType F='Inh'>0</ShapeShdwType>
+                <ShapeShdwOffsetX F='Inh'>0</ShapeShdwOffsetX>
+                <ShapeShdwOffsetY F='Inh'>0</ShapeShdwOffsetY>
+                <ShapeShdwObliqueAngle F='Inh'>0</ShapeShdwObliqueAngle>
+                <ShapeShdwScaleFactor F='Inh'>1</ShapeShdwScaleFactor>
+            </Fill>
+            <vx:Fill xmlns:vx='http://schemas.microsoft.com/visio/2006/extension'>
+                <vx:FillForegnd F='THEMEGUARD(RGB(77,139,47))'>#4d8b2f</vx:FillForegnd>
+                <vx:FillBkgnd F='THEMEGUARD(RGB(255,255,0))'>#ffff00</vx:FillBkgnd>
+            </vx:Fill>
+            <Line>
+                <LineWeight>0.01</LineWeight>
+                <LineColor>#4d8b2f</LineColor>
+                <LinePattern F='Inh'>1</LinePattern>
+                <Rounding F='Inh'>0</Rounding>
+                <EndArrowSize F='Inh'>2</EndArrowSize>
+                <BeginArrow F='Inh'>0</BeginArrow>
+                <EndArrow F='Inh'>0</EndArrow>
+                <LineCap F='Inh'>0</LineCap>
+                <BeginArrowSize F='Inh'>2</BeginArrowSize>
+                <LineColorTrans F='Inh'>0</LineColorTrans>
+            </Line>
+            <vx:Line xmlns:vx='http://schemas.microsoft.com/visio/2006/extension'>
+                <vx:LineColor F='THEMEGUARD(RGB(77,139,47))'>#4d8b2f</vx:LineColor>
+            </vx:Line>
+            <Geom IX='0'>
+                <NoFill>0</NoFill>
+                <NoLine>0</NoLine>
+                <NoShow>0</NoShow>
+                <NoSnap>0</NoSnap>
+                <MoveTo IX='1'>
+                	<X F='Width*0.42157794676806'>0.05053132200089843</X><Y F='Height*0.30158792282979'>0.04155739094111272</Y></MoveTo><LineTo IX='2'><X F='Width*0.42157794676806'>0.05053132200089843</X><Y F='Height*0'>0</Y></LineTo><LineTo IX='3'><X F='Width*0.57842205323193'>0.06933102466188562</X><Y F='Height*0'>0</Y></LineTo><LineTo IX='4'><X F='Width*0.57842205323193'>0.06933102466188562</X><Y F='Height*0.30346382336326'>0.04181588117210268</Y></LineTo><LineTo IX='5'><X F='Width*0.79249993598883'>0.09499090205772826</X><Y F='Height*0.087146336995387'>0.01200835352298638</Y></LineTo><LineTo IX='6'><X F='Width*0.89846227843805'>0.1076917970815775</X><Y F='Height*0.21466285751286'>0.02957952761003971</Y></LineTo><LineTo IX='7'><X F='Width*0.70166197533678'>0.0841028509279118</X><Y F='Height*0.41352201257862'>0.05698137968603021</Y></LineTo><LineTo IX='8'><X F='Width*1'>0.1198623466627853</X><Y F='Height*0.41352201257862'>0.05698137968603021</Y></LineTo><LineTo IX='9'><X F='Width*1'>0.1198623466627853</X><Y F='Height*0.58647798742139'>0.08081389590452211</Y></LineTo><LineTo IX='10'><X F='Width*0.69959660064942'>0.08385529027114691</X><Y F='Height*0.58647798742139'>0.08081389590452211</Y></LineTo><LineTo IX='11'><X F='Width*0.89428482815978'>0.1071910780881569</X><Y F='Height*0.78597806029893'>0.1083040634270177</Y></LineTo><LineTo IX='12'><X F='Width*0.78751777171661'>0.09439372815660048</X><Y F='Height*0.91267573147285'>0.125762403943109</Y></LineTo><LineTo IX='13'><X F='Width*0.57842205323193'>0.06933102466188562</X><Y F='Height*0.6984120771702'>0.09623788464943685</Y></LineTo><LineTo IX='14'><X F='Width*0.57842205323193'>0.06933102466188562</X><Y F='Height*1'>0.1377952755905509</Y></LineTo><LineTo IX='15'><X F='Width*0.42157794676806'>0.05053132200089843</X><Y F='Height*1'>0.1377952755905509</Y></LineTo><LineTo IX='16'><X F='Width*0.42157794676806'>0.05053132200089843</X><Y F='Height*0.69653617663674'>0.09597939441844824</Y></LineTo><LineTo IX='17'><X F='Width*0.20750006401117'>0.02487144460505699</X><Y F='Height*0.91285366300461'>0.1257869220675641</Y></LineTo><LineTo IX='18'><X F='Width*0.10153772156195'>0.01217054958120782</X><Y F='Height*0.78533714248714'>0.1082157479805112</Y></LineTo><LineTo IX='19'><X F='Width*0.29833802466321'>0.03575949573487226</X><Y F='Height*0.58647798742139'>0.08081389590452211</Y></LineTo><LineTo IX='20'><X F='Width*0'>0</X><Y F='Height*0.58647798742139'>0.08081389590452211</Y></LineTo><LineTo IX='21'><X F='Width*0'>0</X><Y F='Height*0.41352201257862'>0.05698137968603021</Y></LineTo><LineTo IX='22'><X F='Width*0.30040339935058'>0.03600705639163834</X><Y F='Height*0.41352201257862'>0.05698137968603021</Y></LineTo><LineTo IX='23'><X F='Width*0.10571517184022'>0.01267126857462836</X><Y F='Height*0.21402193970107'>0.02949121216353321</Y></LineTo><LineTo IX='24'><X F='Width*0.21248222828339'>0.02546861850618477</X><Y F='Height*0.087324268527153'>0.01203287164744232</Y></LineTo><LineTo IX='25'><X F='Width*0.42157794676806'>0.05053132200089843</X><Y F='Height*0.30158792282979'>0.04155739094111272</Y></LineTo>
+            </Geom>
+        </Shape>
+    </Shapes>
+</Shape>
+[%
+    printRaw(executeTemplate(baseTemplatePath + "_BottomText.template", [
+        "parentWidth":gatewayDiameter, 
+        "parentHeight":gatewayDiameter, 
+        "textWidth":gatewayTextWidth, 
+        "textHeight":gatewayTextHeight, 
+        "text":text]))
+%]

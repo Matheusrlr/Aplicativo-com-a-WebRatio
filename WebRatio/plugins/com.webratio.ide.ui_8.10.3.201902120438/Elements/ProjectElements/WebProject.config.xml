@@ -1,0 +1,237 @@
+<Element name="WebProject" lowerName="web project"
+		pluralLowerName="">
+		<Description>
+			A Web Project maintains the model information of your Web Application. 
+			The project includes information about
+			Domain Model and Web Model elements.
+		</Description>
+		<ActionRef label="Add Site View" />
+		<ActionRef label="Add Service View" />
+		<ActionRef label="Add Module Definitions" />
+		<ActionRef label="Add Context Parameter" />
+		<ActionRef label="Add Activation Expression"/>
+		<ActionRef label="Add Property"/>
+		<ActionRef label="Localize"/>
+		<ActionRef label="Generate Layout Pages Only"/>
+		<ActionRef label="Generate Logic Descriptors Only"/>
+		<ActionRef label="Generate Selection"/>
+		<ActionRef label="Generate and Run"/>
+		<ActionRef label="Find Model Problems"/>
+		<ActionRef label="Help"/>
+		<PropertyCategory name="General">
+			<Property label="Current Deploy Configuration">
+It defines one of the local deploy configurations to be used to generate the project. 
+When selected all the properties are automatically inherited from the configuration and rendered as read-only in the project.
+&lt;p&gt; The Browse button <Button name="Browse"/> opens the Select Local Deploy Configuration dialog to choose or create a new configuration.&lt;/p&gt;
+The Edit button permits to see and to edit the selected deploy configuration.
+<Button name="Clear"/>
+			</Property>
+			<PropertyRef label="Output Path"/>
+			<PropertyRef label="HTTP Port"/>
+			<PropertyRef label="HTTPS Port"/>
+			<PropertyRef label="HTTP Request Helper"/>
+			<PropertyRef label="Default Application Encoding"/>
+			<Property label="Default Server Encoding">
+				Character encoding that the target application server uses for reading parts of
+				incoming requests that do not specify an encoding.&lt;br/&gt;
+				If 'Use Default URL Encoding' is checked, this is also the encoding used for
+				&lt;i&gt;writing&lt;/i&gt; URLs.&lt;br/&gt;
+				Default value: ISO-8859-1
+				
+				&lt;p&gt;For correct operation it is very important that this property value matches
+				the configuration of the target application server.&lt;/p&gt;
+				
+				&lt;p&gt;Since request headers declare their own encoding inline and the body is
+				read using the 'Default Application Encoding', the request URL is the only part
+				of the request not specifying an encoding.&lt;/p&gt;
+				
+				&lt;p&gt;Therefore, the server encoding is used in practice just for
+				&lt;i&gt;reading&lt;/i&gt; incoming request URLs. On the other hand, the encoding used
+				for &lt;i&gt;writing&lt;/i&gt; URLs is ultimately controlled by the
+				'Use Default URL Encoding' property.&lt;/p&gt;
+				
+				&lt;p&gt;If the two encodings do not match, it is possible for URLs to get corrupted,
+				most notably affecting query string parameters. With 'Protect URL' checked, the server
+				may even mistake a corrupted character for a security issue.&lt;/p&gt;
+			</Property>
+			<PropertyRef label="Server Name"/>
+			<PropertyRef label="Use Default URL Encoding"/>
+			<PropertyRef label="Max Upload File Size"/>
+			<PropertyRef label="Resource Servlet Path"/>
+			<Property label="Default WebModel Project">
+			    The default web model project where the user is redirected accessing the enterprise application. 
+			</Property>
+			<PropertyRef label="Session Timeout"/>
+			<Property label="Default Cookie Timeout">
+			    The default cookie timeout in minutes.
+			    A negative value (-1) means that the cookie is not stored persistently and will be deleted when the Web browser exits. 
+			</Property>
+		    <Property label="Current Running Profiles">
+		    	The Running Profile(s) set on the Web Project and used during the editing and generation process. 
+				If empty, the whole web project is considered.
+		    </Property>
+			<Property label="Database">
+			    The source database.
+			</Property>
+			<Property label="Schema">
+			    The source database schema.
+			</Property>
+			<Property label="Table Prefix">
+			    If set, all the names of tables are prefixed with the specified value.
+			</Property>
+			<Property label="Job Thread Pool Size">
+			    The number of threads that are available for concurrent execution of jobs.
+			</Property>
+			<Property label="Mail Provider">
+			    The default SMTP Server used to deliver mail notifications.
+			</Property>
+			<Property label="Orientation">
+			    Defines the locked screen orientation for the Mobile Application when running on the mobile device. 
+				The default value is the device default orientation.
+			</Property>
+			<Property label="Full Screen">
+			    If checked, the Mobile Application will be displayed in full screen mode when running on the mobile device.
+			</Property>
+
+
+			<Property label="Platform">
+			    The device platform which the Notification Provider is configured for.
+			</Property>
+			<Property label="API Key">
+			    The public API key generated on the Google Cloud Messaging website. This API key enables push notification for Android devices.
+			</Property>
+			<Property label="APNS Certificate">
+			    The Certificate file generated on the Apple Developer Portal. This certificate enables push notifications for iOS devices.
+                If unspecified it will be possible to send notifications only to the WebRatio Developer App.
+			</Property>
+			<Property label="APNS Certificate Passphrase">
+			    The password required to use the APNS Certificate.
+			</Property>
+			<Property label="Sandbox">
+			    If checked, the provider will use the APNS sandbox environment to dispatch messages.
+			</Property>
+
+
+
+
+			<Property label="Output Path" onlyForNatureId="com.webratio.ide.WebNature">
+				The directory in which the Web Application is generated.
+				The Browse button <Button name="Browse"/>opens the &lt;a href="/Reference/WizardsAndDialogs/OutputPathSelectionDialog"/&gt; that allows to select a valid directory.
+				<Button name="Clear"/>
+			</Property>
+			<Property label="Login Definition" onlyForNatureId="com.webratio.ide.WebNature">
+				The Action Definition set as the Login of the Web Application.
+			</Property>
+			<Property label="Back-end Base URL" onlyForNatureId="com.webratio.ide.WebNature">
+				The endpoint URL of the back-end to be used for data synchronization. 
+			</Property>
+			<Property label="App Name" onlyForNatureId="com.webratio.ide.WebNature">
+				The user-defined name for the Web Application.
+			</Property>
+
+
+
+
+
+
+		</PropertyCategory>
+		<PropertyCategory name="Layout">
+			<PropertyRef label="Style" />
+			<PropertyRef label="Page Layout" />
+			<PropertyRef label="Layout Manager" />
+			<PropertyRef label="Grid Layout"/>
+			<PropertyRef label="Frame Layout"/>
+			<PropertyRef label="Cell Layout"/>
+			<PropertyRef label="Attribute Layout"/>
+			<PropertyRef label="Field Layout"/>
+			<PropertyRef label="Event Layout"/>
+			<PropertyRef label="Error Style Page"/>
+			<PropertyRef label="Expire Style Page"/>
+			<PropertyRef label="Login Style Page"/>
+			<PropertyRef label="Component Configuration"/>
+			<PropertyRef label="Old Resources"/>
+			<PropertyRef label="Inherit Parameters"/>
+		</PropertyCategory>
+		<PropertyCategory name="Condition">
+			<PropertyRef name="Visibility Condition" label="Grid Visibility Cond." />
+			<PropertyRef name="Visibility Condition" label="Cell Visibility Cond."/>
+			<PropertyRef name="Visibility Condition" label="Attribute Visibility Cond."/>
+			<PropertyRef name="Visibility Condition" label="Field Visibility Cond."/>
+			<PropertyRef name="Visibility Condition" label="Field Disable Cond."/>
+			<PropertyRef name="Visibility Condition" label="Event Visibility Cond."/>
+			<PropertyRef name="Visibility Condition" label="Event Disable Cond."/>
+		</PropertyCategory>
+		<PropertyCategory name="Security">
+			<PropertyRef label="Protect URL"/>
+			<PropertyRef label="Protect BLOB"/>
+			<PropertyRef label="Digest Id"/>
+			<PropertyRef label="Digest with Session Id"/>
+			<PropertyRef label="Digest Type"/>
+			<PropertyRef label="Digest Provider"/>
+			<PropertyRef label="Digest Algorithm"/>
+			<Property label="Module Domain Name">
+				The domain name used to group the protected modules belonging to a specific web application.
+		    </Property>
+		    <Property label="Strict Module Access">
+				If checked, the user has access only to modules associated with the current group.
+		    </Property>
+			<PropertyRef label="Enable Admin Area"/>
+			<PropertyRef label="Admin Path"/>
+			<PropertyRef label="Admin Username"/>
+			<PropertyRef label="Admin Password"/>
+		    <Property label="Model Element Domain Name">
+		    	TODO missing description ... tbd
+		    </Property>
+		</PropertyCategory>
+		<PropertyCategory name="Services/Jobs">
+		    <Property label="Target Namespace URI">
+			    The WSDL target namespace URI (default http://www.webml.org/webservices/wsdl).
+			</Property>
+            <Property label="SOAP Version">
+                The SOAP protocol version used used by SOAP services (default 1.1).
+            </Property>
+            <Property label="SOAP Binding Style">
+                The binding style used by SOAP services. 
+                The possible values are: RPC Literal (default) or Document Literal. 
+            </Property>
+            <Property label="Enable REST Summary Page">
+                If checked a summary page (RestSummary.do) describing REST web services is generated. 
+            </Property>
+			<Property label="Thread Pool Size">
+			    The number of threads that are available for concurrent execution of jobs. If 
+			    unspecified, a default value (5) is used.
+			</Property>
+			<Property label="Job Store Type">
+			   It indicates where scheduling information (jobs and triggers) is stored.
+			   The possible values are: 
+			   &lt;ul&gt;
+			      &lt;li&gt;Memory: scheduling information is stored within memory; this kind
+of job store is fast and lightweight, but all scheduling information is lost when the process 
+terminates.&lt;/li&gt;
+			      &lt;li&gt;Database: scheduling information is stored within a relational database;&lt;/li&gt;
+			   &lt;/ul&gt;
+			</Property>
+			<Property label="Job Database">
+			    One of the databases defined in the project, where scheduling information is stored.
+			</Property>
+			<Property label="Job Schema">
+				The database schema where the scheduling information is stored.
+			</Property>
+			<Property label="Job Table Prefix">
+			    The prefix given to tables storing scheduling information; you can have multiple 
+			    sets of scheduling tables within the same database if they use different table prefixes.
+			</Property>
+			<Property label="Clustered Job Store">
+			    This property must be set to true if the Web application is deployed in
+			    a clustered environment.
+			</Property>
+			<Property label="Job Group Name">
+				The group name that jobs and triggers instances belong to. 
+			</Property>
+		</PropertyCategory>
+		<PropertyCategory name="Localization">
+			<PropertyRef label="Bundle Store Type"/>
+			<PropertyRef label="Bundle Refresh Timeout"/>
+		</PropertyCategory>
+</Element>
+		

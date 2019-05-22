@@ -1,0 +1,14 @@
+#?delimiters [%, %], [%=, %]
+[%	setHTMLOutput()
+	def mode = component["mode"]
+	def templateName = ""
+	if ("verifyMetadata".equals(mode)) {
+		templateName = "WRDefault/VerifyMetadata"
+	} else if ("parameters".equals(mode)) {
+		templateName = "WRDefault/Parameters"
+	} else if ("error".equals(mode)) {
+		templateName = "WRDefault/ProcessError"
+	}
+	def templateFile = getLayoutFile(templateName, LayoutType.COMPONENT, "ProcessUnit")
+	printRaw(executeTemplate(templateFile, ["templateType": "unit"]))
+%]

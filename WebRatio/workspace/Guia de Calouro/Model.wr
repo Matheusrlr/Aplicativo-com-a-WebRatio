@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?webml version="8.6.0.0"?>
+
+<WebProject xmlns:gr="http://www.webratio.com/2006/WebML/Graph" outputPath="${mobileapps_loc}/${project_name}" gr:showUnitContent="true" gr:showTooltip="true" enableProjectDependencies="true" toolVersion="8.10.3" backEndBaseUrl="http://localhost:8080/Data/">
+  <ServiceDataProviders/>
+  <Roles/>
+  <ReferencedProject name="Data" natureId="com.webratio.ide.DataServiceNature"/>
+</WebProject>

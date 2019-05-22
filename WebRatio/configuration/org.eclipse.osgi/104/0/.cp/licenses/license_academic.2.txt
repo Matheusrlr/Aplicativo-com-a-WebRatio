@@ -1,0 +1,9 @@
+For the purposes of compliance of this Agreement with the rules set 
+forth by articles 1341 and 1342 of the Italian Civil Code, You hereby 
+specifically approve in writing the following clauses: articles 1. 
+General Grant of License; 2. Use of Program and terms for source code; 
+3. Remote services; 4. Third Party Components; 5. Term and termination; 
+7. Limited warranties and liabilities; 8. Customer responsibilities; 9. 
+Data protection; 10. Miscellanea, 11. Applicable law; 12. Jurisdiction". 
+
+Licensee 

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle>
+	<Entry key="ajax.computingRequest">Computing request..</Entry>
+	<Entry key="emptyUnitMessage">No Results</Entry>
+	<Entry key="error.button.not.pressed">Please press a button for form submission</Entry>
+	<Entry key="error.empty">{0}</Entry>
+	<Entry key="error.security">A security exception occurred: {0}</Entry>
+	<Entry key="error.stacktrace">{0}</Entry>
+	<Entry key="error.validation.exception">The following exception occurred during form validation: {0}</Entry>
+	<Entry key="errors.footer">&lt;/ul&gt;</Entry>
+	<Entry key="errors.header">&lt;ul&gt;</Entry>
+	<Entry key="linkConfirmMessage">Continue?</Entry>
+
+	<!-- types validation messages -->
+	<Entry key="BooleanValidation">the value must be a valid boolean</Entry>
+	<Entry key="FloatValidation">the value must be a valid float</Entry>
+	<Entry key="IntegerValidation">the value must be a valid integer</Entry>
+	<Entry key="DecimalValidation">the value must be a valid number</Entry>
+	<Entry key="DateValidation">the value must be a valid date (${pattern})</Entry>
+	<Entry key="TimeValidation">the value must be a valid time (${pattern})</Entry>
+	<Entry key="TimestampValidation">the value must be a valid timestamp (${pattern})</Entry>
+
+	<!-- mobile -->
+	<Entry key="notification.activityProgress">Loading...</Entry>
+	<Entry key="notification.blobOpenError">This file cannot be opened.</Entry>
+	<Entry key="notification.genericError">An error occurred.</Entry>
+	<Entry key="notification.loginProgress">Authenticating...</Entry>
+	<Entry key="notification.synchronizationError">Data synchronization failed.</Entry>
+	<Entry key="notification.synchronizationForbidden">Access denied: please login again.</Entry>
+	<Entry key="notification.synchronizationNetworkError">Problems connecting to the network. Please try again later.</Entry>
+	<Entry key="notification.synchronizationNetworkUnavailable">Network unavailable. Please check your network connection and try again.</Entry>
+	<Entry key="notification.synchronizationProgress">Synchronizing data...</Entry>
+	<Entry key="notification.updateError">Update failed due to internal error.</Entry>
+	<Entry key="notification.updateProgress">Updating...</Entry>
+	<Entry key="dialog.button.Cancel">Cancel</Entry>
+	<Entry key="dialog.button.Continue">Continue</Entry>
+	<Entry key="dialog.button.Exit">Exit</Entry>
+	<Entry key="dialog.button.OK">OK</Entry>
+	<Entry key="dialog.button.Reset">Reset</Entry>
+	<Entry key="dialog.button.Retry">Retry</Entry>
+	<Entry key="dialog.title.error">Error</Entry>
+	<Entry key="dialog.title.warning">Warning</Entry>
+	<Entry key="emptyComponentMessage">No Results</Entry>
+	<Entry key="event.Back">Back</Entry>
+	<Entry key="event.Home">Home</Entry>
+	<Entry key="loginDialog.title">Login</Entry>
+	<Entry key="update.loginDialog.message">Please enter your credentials to continue with the update.</Entry>
+	<Entry key="update.networkDialog.message">Network connectivity is required for performing this update. Please check your network and try again.</Entry>
+	<Entry key="update.resetDialog.message">Some local changes are yet to be synchronized with the server. Resetting will cause all changes to be lost.</Entry>
+  
+	<!-- mobile types validation messages -->
+	<Entry key="typeValidation.float">the value must be a valid float</Entry>
+	<Entry key="typeValidation.integer">the value must be a valid integer</Entry>
+	<Entry key="typeValidation.decimal">the value must be a valid number</Entry>
+	<Entry key="typeValidation.date">the value must be a valid date</Entry>
+	<Entry key="typeValidation.time">the value must be a valid time</Entry>
+	<Entry key="typeValidation.timestamp">the value must be a valid timestamp</Entry>
+</Bundle>

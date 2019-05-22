@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping auto-import="true" default-cascade="none" default-access="property" default-lazy="true">
+  <class name="com.webratio.webapp.User" table="`user`" dynamic-update="true" dynamic-insert="true" mutable="true" polymorphism="implicit" select-before-update="false" optimistic-lock="version">
+    <id name="oid" column="`oid`" type="java.lang.Integer">
+      <generator class="com.webratio.hibernate.id.MaxPlusOneIncrementGenerator"/>
+    </id>
+    <property name="userName" column="`username`" type="java.lang.String" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
+    <property name="password" column="`password`" type="java.lang.String" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
+    <property name="email" column="`email`" type="java.lang.String" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
+    <property name="token" column="`token`" type="java.lang.String" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
+    <property name="tokenExpirationDate" column="`token_expiration_date`" type="java.sql.Timestamp" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
+    <property name="secretKey" column="`secretkey`" type="java.lang.String" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
+    <set name="roles" table="`user_role`" inverse="false" sort="unsorted" mutable="true" optimistic-lock="true" embed-xml="true">
+      <key on-delete="noaction">
+        <column name="`user_oid`"/>
+      </key>
+      <many-to-many class="com.webratio.webapp.Role" not-found="exception" embed-xml="true" unique="false">
+        <column name="`role_oid`"/>
+      </many-to-many>
+    </set>
+    <set name="userToDevice" inverse="true" sort="unsorted" mutable="true" optimistic-lock="true" embed-xml="true">
+      <key on-delete="noaction">
+        <column name="`user_oid`"/>
+      </key>
+      <one-to-many class="com.webratio.webapp.Device" not-found="exception" embed-xml="true"/>
+    </set>
+  </class>
+  <!-- mapping for relationship 'roles[User2Role]' -->
+  <class entity-name="com.webratio.webapp.Rel_User_to_roles" table="`user_role`" dynamic-update="true" dynamic-insert="true" mutable="true" polymorphism="implicit" select-before-update="false" optimistic-lock="version">
+    <composite-id mapped="false" unsaved-value="undefined">
+      <key-property name="source_oid" column="`user_oid`" type="java.lang.Integer"/>
+      <key-property name="target_oid" column="`role_oid`" type="java.lang.Integer"/>
+    </composite-id>
+  </class>
+  <!-- mapping for relationship 'UserToDevice[User2Device]' -->
+  <class entity-name="com.webratio.webapp.Rel_User_to_userToDevice" table="`device`" dynamic-update="true" dynamic-insert="true" mutable="true" polymorphism="implicit" select-before-update="false" optimistic-lock="version">
+    <id name="target_oid" column="`oid`" type="java.lang.Integer"/>
+    <property name="source_oid" column="`user_oid`" type="java.lang.Integer" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
+  </class>
+</hibernate-mapping>

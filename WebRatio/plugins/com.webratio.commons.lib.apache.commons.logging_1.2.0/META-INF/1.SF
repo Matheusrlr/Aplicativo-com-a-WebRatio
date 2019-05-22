@@ -1,0 +1,21 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: +uUqlUXOE4YJd8Nvcfai9IrT/oIBv
+ 9bXpK2BRgJPLTQ=
+SHA-256-Digest-Manifest: dlVmu0++3MQ9rA2pYFM0e8+8b0N89eNX3D8GLqbnbys=
+Created-By: 1.7.0_80 (Oracle Corporation)
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: a5fmgH7myHzNji9AMOfHrVh8fy7MOgIdRSUiRZ6EFA4=
+
+Name: lib/commons-logging.jar
+SHA-256-Digest: oVjOcaxsBjhG3d1//0Q9oaM7shv1IHnS7lxflLtnWZM=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: about.html
+SHA-256-Digest: l9r9ImVEtPPYzsytjbg3E0hf3s6ezrLifo3sgOduuR0=
+
+Name: lib/commons-loggingsrc.zip
+SHA-256-Digest: LFyOqTtPYezNkxhgMtqIZLS/3YG5/CDdSIulHydst3o=
+

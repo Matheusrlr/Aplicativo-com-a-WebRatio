@@ -1,0 +1,42 @@
+<Element name="ServiceTask" lowerName="service task"
+		pluralLowerName="">
+		<Description>
+			A Task is an atomic activity that is included within a Process. A Task is used when the work in the Process is not broken down to a finer level of Process Model detail.
+		</Description>
+        
+        <ActionRef label="Add Lane" />
+        <ActionRef label="Add Sequence Flow" />
+        <ActionRef label="Add Property" />
+        <ActionRef label="Add Intermediate Catching Message" />
+        <ActionRef label="Add Intermediate Catching Timer" />
+        <ActionRef label="Add Intermediate Catching Compensation" />
+        <ActionRef label="Add Intermediate Catching Conditional" />
+        <ActionRef label="Add Intermediate Catching Signal" />
+        <ActionRef label="Add Intermediate Catching Multiple" />
+        <ActionRef label="Surround with Group" />
+        <ActionRef label="Move into Embedded Subprocess" />
+        <ActionRef label="Open Activity Module..." />
+        <ActionRef label="Edit Process Parameters..." />
+        <ActionRef label="Search References" />
+        <ActionRef label="Help" />		
+        
+        
+    <PropertyCategory name="General">
+        <PropertyRef label="Id"/>
+        <PropertyRef label="Code"/>
+        <PropertyRef label="Name"/>
+        <PropertyRef label="Instance Name"/>
+        <PropertyRef label="Parameters"/>
+        <PropertyRef label="serviceTaskActionDefinition"/>
+        <!-- In/Out binding similar to ComplexGateway (B1) -->
+	    <Property label="Input Binding">
+	    	The set of task parameters bound to the available action definition parameters.  
+		</Property>
+	    <Property label="Output Binding">
+	    	The set of action definition parameters bound to the available task parameters.
+		</Property>
+    </PropertyCategory>
+	<PropertyCategory name="Appearance">
+        <PropertyRef label="Color"/>
+	</PropertyCategory>
+</Element>

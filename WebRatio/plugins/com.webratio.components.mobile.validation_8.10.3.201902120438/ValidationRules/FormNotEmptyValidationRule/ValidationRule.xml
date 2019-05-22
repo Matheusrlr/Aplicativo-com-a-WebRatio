@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ValidationRule type="object" idPrefix="fnevr" namePrefix="Form Not Empty " label="Form Not Empty" contexts="Form"> 
+  <Description xml:space="preserve">The Form Not Empty validation rule verifies if at least one component field has been filled.&lt;br/&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;${propertyValue}&lt;/b&gt;: the field value&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${propertyName}&lt;/b&gt;: the field name&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${objectName}&lt;/b&gt;: the parent component name&lt;/li&gt;
+&lt;/ul&gt;</Description>
+</ValidationRule>

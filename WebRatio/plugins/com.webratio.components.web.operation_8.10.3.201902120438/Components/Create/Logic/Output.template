@@ -1,0 +1,18 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+def componentId = component["id"]
+def classId = component["dataBinding"]
+def paramSuffix = (component["bulk"] == "true") ? "" : ".single"
+%>
+<OutputParameters>
+  <% for (a in getAttributes(getById(classId))) { %>
+    <% if (!isDerived(a)) { %>
+      <OutputParameter 
+          name="<%=a["id"]%>Array"
+          refId="<%=a["id"]%>"
+		  type="<%= a["key"] == "true" ? getSuperDomainClassHierarchy(getById(classId)).collect{it["id"] + "." + a["id"] + paramSuffix}.join("|") : "" %>"
+          label="<%=getLabel(a)%>"/>
+    <% } %>
+  <% } %>
+</OutputParameters>

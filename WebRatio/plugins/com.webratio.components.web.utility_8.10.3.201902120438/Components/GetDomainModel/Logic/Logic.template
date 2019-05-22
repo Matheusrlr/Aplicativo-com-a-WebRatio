@@ -1,0 +1,13 @@
+#?delimiters [%,%],[%=,%]
+[% setXMLOutput() %]
+<Descriptor service="com.webratio.components.web.utility.GetDomainModelService">
+  [% for(classElement in component.selectNodes("DomainModelClass")){ %]
+    <Class id="[%=classElement["dataBinding"]%]" attributes="[%=classElement["attributes"]%]" hideRoles="[%=classElement["hideRoles"]%]">
+       [%if("true" == classElement["hideRoles"]){ %]
+           [% for(role in classElement.selectNodes("DomainModelRole")){ %]
+             <Role>[%=role["role"]%]</Role>
+           [% } %]
+       [% } %]
+    </Class>
+  [% } %]
+</Descriptor>

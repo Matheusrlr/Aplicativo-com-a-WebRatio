@@ -1,0 +1,17 @@
+#?delimiters [%, %], [%=, %]
+[%
+setJSONOutput()
+def dClass = component["dataBinding"]
+def ce = component.selectSingleNode("ConditionalExpression")
+def condExprs = ""
+if(ce){
+	condExprs = getConditionalExpressionJson( getById(dClass), ce )
+}
+%]
+{
+	"service": "wrm.comp.DeleteService",
+		[% if (ce) { %]
+				"condExprs":  [% printRaw(condExprs) %],
+		[% } %]
+	"entity": "[%= dClass %]"
+}

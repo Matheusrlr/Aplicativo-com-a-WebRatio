@@ -1,0 +1,54 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.GenerationException
+import org.apache.commons.lang.StringUtils
+setXMLOutput()
+
+/* Get style */
+def pageLayout = getLayout(page, LayoutType.PAGE)
+def templatePath = pageLayout.path
+def templateParameters = pageLayout.parameters
+if (!templatePath) {
+	def title = "Undefined Page Layout"    
+	def reason = "Unable to find the page layout for the page."
+	def hint = "Specify a page layout either for this page [id = " + page["id"] + "] or for one of its ancestors"
+	throw new GenerationException(title, reason, [hint], null)
+}
+def templateFile = getLayoutFile(templatePath, LayoutType.PAGE)
+if (!templateFile) {
+	def title = "Page Layout Not Found"
+	def reason = "Unable to find the page layout \'" + templatePath + "\'"
+	def hint = "Check the project for the missing page layout [name = " + templatePath + "] associated with this page [id = " + page["id"] + "]"
+	throw new GenerationException(title, reason, [hint], null)
+}
+addUsedTemplate(templatePath)
+
+/* Generate the auxiliary page prolog, since the page template is not printed in full */
+printRaw(executeContextTemplate("MVC/AuxPageProlog.template", null))
+
+/* Execute the page template, collecting refresh fragment templates; this also causes side-effects like setting the output type */
+def fragments = [:]
+executeTemplate(templateFile.absolutePath, ["params": templateParameters, "templateType": "page", "_pageResources": ["registry": _pageResources.registry], "_refreshFragments": fragments])
+
+%]
+<%@ page contentType="text/xml; charset=UTF-8"%>
+<webratio:Page page="<wr:Id context="page"/>"/>
+<PageRefresh>
+	[% if (fragments["formStart"]) { %]
+		<![CDATA[[% printRaw(fragments["formStart"][0].text) %]]]>
+	[% } %]
+	[% if (fragments["hiddenFields"]) { %]
+		<HiddenFields page="[%= getPageRuntimeId(page) %]">
+			<![CDATA[[% printRaw(fragments["hiddenFields"][0].text) %]]]>
+		</HiddenFields>
+	[% } %]
+	[% if (getPropagationMode(page).isClient()) { %]
+		<LinkData>
+			<![CDATA[<webratio:LinkData page="[%= page["id"] %]"/>]]>
+		</LinkData>
+	[% } %]
+	[% printRaw(executeContextTemplate("MVC/Ajax/ControlData.template", ["fragments": fragments["control"] ?: [], "parentFragments": []])) %]
+	[% if (fragments["formEnd"]) { %]
+		<![CDATA[[% printRaw(fragments["formEnd"][0].text) %]]]>
+	[% } %]
+</PageRefresh>

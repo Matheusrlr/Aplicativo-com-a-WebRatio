@@ -1,0 +1,87 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Width" name="width" type="enum" default="full" values="full|inset|card">
+Defines the width of the component inside their container.
+Allowed values are:
+- full: use the full width available
+- inset: add a margin
+- card: add a margin and a shadow
+</wr:LayoutParameter>
+<wr:LayoutParameter label="First Event on Row" name="first-event-on-row" type="boolean" default="true">
+Defines if the first event is on row when the list is not checkable.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Use Empty Message" name="use-empty-component-message" type="boolean" default="false">
+Defines the usage of a message for empty components.
+Allowed values are: true or false.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Empty Message Key" name="empty-component-message" type="string" default="emptyComponentMessage">
+Defines the key of the message to use if the component is empty.
+Default value: emptyComponentMessage
+</wr:LayoutParameter>
+[%
+setHTMLOutput()
+def listClass = (params["width"] != "full") ? params["width"] : ""
+listClass = (listClass == "inset") ? "list-" + listClass : listClass
+
+def dclassKeyName = getKeyAttributes(getById(component["dataBinding"]))[0]["name"]
+def isCheckable = component["checkable"] == "true"
+
+def attrs = component.selectNodes("layout:Attribute")
+def nameAttr = attrs.find{it["type"] != 'blob'}
+def imageAttr = !isCheckable ? attrs.find{it["type"] == 'blob' && (it["contentType"] == "" || it["contentType"].startsWith("image"))} : null
+
+def firstEventOnRow = params["first-event-on-row"] == "true"
+def events = component.selectNodes("layout:Event")
+def selectEvent = (!isCheckable && firstEventOnRow && events.size() > 0) ? events[0] : null
+
+def useEmptyComponentMessage = params["use-empty-component-message"] == "true"
+def emptyComponentMessage = params["empty-component-message"]
+%]
+<div class="<wr:StyleClass/> wr-comp-List">
+	<ion-list ng-if="view.data && view.data.length" type="[%= listClass %]">
+		<wr:Frame>
+			<ion-item item="current"
+				ng-repeat="current in view.data"
+				[% if (selectEvent) { %]
+					ng-click="[%= getEventThrowExpression(selectEvent, "{ position: \$index }") %]"
+				[% } %]
+				class="[% if (imageAttr) { %]item-avatar[% } %][% if (isCheckable) { %] item-checkbox[% } %]"
+			>
+				[% if (isCheckable) { %]
+					<label class="checkbox">
+						<input type="checkbox" ng-model="view.checkedRows[current.[%= dclassKeyName %]]">
+					</label>
+				[% } %]
+				[% if (imageAttr) { %]
+					<wr:Value context="imageAttr" class="item-image"/>
+				[% } %]
+				[% if (nameAttr) { %]
+					<h2><wr:Value context="nameAttr"/></h2>
+				[% } %]
+				<wr:Iterate var="attr" context="component" select="layout:Attribute">
+					[% if (attr != nameAttr && attr != imageAttr) { %]
+						<p><wr:Value/></p>
+					[% } %]
+				</wr:Iterate>
+				
+				<wr:Iterate var="event" context="component" select="layout:Event">
+					[% if (event != selectEvent) { %]
+						[% if (!getLayout(event, LayoutType.EVENT).path.endsWith("IonButton")) {
+								throwGenerationException("Use IonButton event template for ${event['name']} (${event['id']})")
+							} %]
+						<wr:Event/>
+					[% } %]
+				</wr:Iterate>
+				
+			</ion-item>
+		</wr:Frame>
+	</ion-list>
+	[% if (useEmptyComponentMessage) { %]
+		<div ng-if="!view.data || !view.data.length" class="wr-empty-message list [%= listClass %]">
+			<wr:Frame>
+				<div class="item item-text-wrap">
+					{{ '[%= emptyComponentMessage %]' | wrLocalize }}
+				</div>
+			</wr:Frame>
+		</div>
+	[% } %]
+</div>

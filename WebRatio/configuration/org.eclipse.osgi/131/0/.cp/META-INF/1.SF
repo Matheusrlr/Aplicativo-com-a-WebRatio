@@ -1,0 +1,742 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: /7bZ/1qx1inIvqWy6lJ2aNWpcRQhw
+ /htn3Wr2qC6S2g=
+SHA-256-Digest-Manifest: 4hVZz/PXUFJ30Tc7TmucTO7iwUKMRDlcjXtS8wqvgyI=
+Created-By: 1.8.0 (Oracle Corporation)
+
+Name: plugin.xml
+SHA-256-Digest: 5EPdk4tCKhrrQ65h5lMnk1UAPk0kgP3cewvbUQPg2FE=
+
+Name: com/webratio/ide/deploy/core/mobile/dashboard/MobileBuildDashboa
+ rd$ServeField.class
+SHA-256-Digest: YakGsQzJP2yhuLP8lAKVdzMFMR+KcuWZ513k2KPpiV4=
+
+Name: com/webratio/ide/deploy/core/DeployHelper$1.class
+SHA-256-Digest: IZx30OqjGnYQwspduB+cDvSC/oB2ZRASd2BkPee574M=
+
+Name: com/webratio/ide/deploy/core/launching/BPMProcessesLaunchConfigu
+ rationDelegate.class
+SHA-256-Digest: hW0bTCwuulTcbW9jJKPQPilxa0wwCk6Gt8Wtutu92p4=
+
+Name: ApplicationServers/WebLogic_11g/Ear.PreAssemble.template
+SHA-256-Digest: STSX+vw23XTpEjMLXTUXH3xZdHHnZGXR0r2U+b4hRPo=
+
+Name: com/webratio/ide/deploy/core/expanders/SMTPServerExpander.class
+SHA-256-Digest: 2Gs5Cji7SafwajQyyxwk6bJuZkL8w9SvQWYfMfG3MPc=
+
+Name: com/webratio/ide/deploy/core/mobile/dashboard/dashboard.js
+SHA-256-Digest: YsgfB7IDUhOiJ5UW8KGNcgMOWV58L1/lYjmjmP75tR0=
+
+Name: com/webratio/ide/deploy/core/ExportingContextBuilder$1.class
+SHA-256-Digest: 8F1WRe1LC+kagrGyMAElb21VIFGYVYNt/ni/73sB6QE=
+
+Name: com/webratio/ide/deploy/core/mobile/dashboard/MobileBuildDashboa
+ rd$InstallCommand.class
+SHA-256-Digest: NJ4Zym5u7Qk2KCtvLLTTPP/5pUM0EROn4DOjJSuaFYM=
+
+Name: com/webratio/ide/deploy/core/DeployCore.class
+SHA-256-Digest: kXrXsmV7FSF+JIFb/CklRV/AFoOiYpFuSHaqYGL40Nc=
+
+Name: com/webratio/ide/deploy/core/DeploymentTaskType.class
+SHA-256-Digest: AIxxxQm2mJ2ymbJTWRs4015sH6lyUIWnffnIdRtNF+A=
+
+Name: com/webratio/ide/deploy/core/ExportingContextBuilder$2$1.class
+SHA-256-Digest: UqJUoYsrTmZ/GxG8ku7t6ZygeFmHsJuXZC7fIl+ACzU=
+
+Name: com/webratio/ide/deploy/core/launching/AbstractMobileLaunchConfi
+ gurationDelegate$3.class
+SHA-256-Digest: g7HDi2PYFvk6d64pVGUJiNrehXKGnxXOTPadFTf1whc=
+
+Name: Scripts/EAR.xml
+SHA-256-Digest: WJPYN2BEDjj3hWT5fP32m84el6hCq7Gtgpfgc3ACQ2w=
+
+Name: com/webratio/ide/deploy/core/OtherServiceLaunchAttributeProvider
+ .class
+SHA-256-Digest: yRWuv4Og0RLhMJUbYPybP2dbn/REtIcuyGKDAe6S8Wc=
+
+Name: com/webratio/ide/deploy/core/launching/AbstractMobileLaunchConfi
+ gurationDelegate.class
+SHA-256-Digest: 4CfQH/cIhUEoqLx3PlsVA/9igGXY2BrUHK5XRlthu5g=
+
+Name: com/webratio/ide/deploy/core/jobs/AbstractDeploymentJob$LoggerEv
+ entSocketServer.class
+SHA-256-Digest: A9j66zMciX62eIIuiaQAot+26RKYhw7Oo1t05y8VKKs=
+
+Name: com/webratio/ide/deploy/core/jobs/CopyAdditionalFoldersJob.class
+SHA-256-Digest: Xf4YKATgXd20jAK9h+uUqMAE2l7fusiZUT9shGUcYck=
+
+Name: com/webratio/ide/deploy/core/mobile/dashboard/AvenirLTW0155Roman
+ -webfont.svg
+SHA-256-Digest: D36PZyizMjMN6JIu/2pKPhX5q7Bjb/WsoPyDfixF4L4=
+
+Name: com/webratio/ide/deploy/core/mobile/dashboard/MobileBuildDashboa
+ rd$BuildField.class
+SHA-256-Digest: LejwQSmHS8+wB1eB5la0UI6qEW9AWNqrnB/8b/HEBMA=
+
+Name: com/webratio/ide/deploy/core/GenerationConfFactory.class
+SHA-256-Digest: b7vPgk+EQohgxtiUqbd/F7Th5IW1XjaLpz1tqOO/ITg=
+
+Name: com/webratio/ide/deploy/core/launching/WebRatioCloudLaunchConfig
+ urationDelegate$WebRatioCloudUploadMonitor.class
+SHA-256-Digest: 2bHiaWdEJFRY9xNtYbZkao/JKFX2DPwEz3gc0Uj0dQY=
+
+Name: com/webratio/ide/deploy/core/ICustomAssembly.class
+SHA-256-Digest: ggRTDe4ZG2mbtBjljv2A6KZc4qx6cZWlg5kpA/Yt+Xs=
+
+Name: com/webratio/ide/deploy/core/GenerationConfFactory$2.class
+SHA-256-Digest: MGe5RzI/EGcMdF0zl+Ea72pjfhuR/ZCgP0uEqJQQqmM=
+
+Name: com/webratio/ide/deploy/core/CustomServerInfo.class
+SHA-256-Digest: S1FTdSbRVzIxpMXp59HdBaKf3jNHx+j2tsAmLB4j5iM=
+
+Name: com/webratio/ide/deploy/core/DeploymentTaskType$DiagramWidthProp
+ erty.class
+SHA-256-Digest: bPu/soA9kLLh7C70h5hOw3nzR4QFbeP2I7BQpYmWCZY=
+
+Name: com/webratio/ide/deploy/core/DeployHelper$6.class
+SHA-256-Digest: 7PrZeqbd6t+b8nZZYK1OXi2Sbivxmp551C4cnpJS9Mc=
+
+Name: com/webratio/ide/deploy/core/DeploymentTaskType$TitleProperty.cl
+ ass
+SHA-256-Digest: BMiEa/SIFnKa/38UWcJCZ40Za0M6p9L1HJ3WieiICDw=
+
+Name: com/webratio/ide/deploy/core/DeploymentTaskType$HiddenProperty.c
+ lass
+SHA-256-Digest: 9lCGzitSkrLOZK0YFX80y6BBkNAZcA0W9JUgFL1DtQU=
+
+Name: com/webratio/ide/deploy/core/WebProjectPropertiesProvider$1.clas
+ s
+SHA-256-Digest: bsNhnKzioHx0FwzieaOM8tb6iOXAC6N82XyUuZCy1gI=
+
+Name: com/webratio/ide/deploy/core/launching/WebRatioCloudLaunchConfig
+ urationDelegate$WebRatioCloudDeployer.class
+SHA-256-Digest: LuAgCBvAJbut4f/jBioWVyvKw+MQzpzKee8DiWF2C9Q=
+
+Name: com/webratio/ide/deploy/core/DeploymentTaskType$AntTargetPropert
+ y.class
+SHA-256-Digest: TwXaydzSF17LFX2+vI6pDXmgA7iaejELdGZ9uWkZ4ds=
+
+Name: ApplicationServers/JBoss_6/jboss-app.xml.template
+SHA-256-Digest: 9EGJh2hQsE1m2j++XQZMgqmveu0RqV4RcEVbMoXg2lw=
+
+Name: com/webratio/ide/deploy/core/DeploymentTaskType$AntBuildFileProp
+ erty.class
+SHA-256-Digest: 97QVgpnikn4cDJzXcxs1dC4ohnsMunc6k6gJLZA56wE=
+
+Name: com/webratio/ide/deploy/core/mobile/emulation/EmulatorProcess$Sc
+ annerThread.class
+SHA-256-Digest: w30sWgqPeVVPt8SoQqRQIoWDxxYHIcEV6botGy2SItE=
+
+Name: ApplicationServers/WebSphere_6/deployment.xml.template
+SHA-256-Digest: GLQ8LUXZQHjfPUWtjJW4/zKspNT9HFG/PTHOVtSpIA8=
+
+Name: com/webratio/ide/deploy/core/DeploymentTaskType$ComboProperty.cl
+ ass
+SHA-256-Digest: YJKvZfUyn9ow+S5uvWLjGL6ElB21ynKTzs+q5KLUo1g=
+
+Name: com/webratio/ide/deploy/core/DeployExportManager$Data.class
+SHA-256-Digest: V1FyRu1FAU3MKVZdHZttHZHlzh2yj/XzjAUMRcDPUCc=
+
+Name: Scripts/Nodejs.xml
+SHA-256-Digest: HRiT2DiP4gLy3cxVyUKzeX4tcdsJO1DbGvbuMerJ8aI=
+
+Name: com/webratio/ide/deploy/core/DeployPreChecker$1.class
+SHA-256-Digest: 1ipETpXRWS4eJX5LBGl9ibgdogHYp+SBoIwkf7A7zNA=
+
+Name: com/webratio/ide/deploy/core/launching/AmazonElasticBeanstalkLau
+ nchConfigurationDelegate$AmazonElasticBeanstalkDeployer$1.class
+SHA-256-Digest: WI8kZClRAmbGhTostmmreokMTnWOsZhEhdip1v7volw=
+
+Name: com/webratio/ide/deploy/core/DeployHelper.class
+SHA-256-Digest: CVrJsoMFRyaPxNZtm+AyCVYGIVhiDpUldaZEZsq4lVM=
+
+Name: com/webratio/ide/deploy/core/DeployHelper$7.class
+SHA-256-Digest: QpiaggZVrOpNONxawIESV1j3rXeURRse/yELmjRaGRA=
+
+Name: com/webratio/ide/deploy/core/EclipseBuildMonitor$MonitorInfo.cla
+ ss
+SHA-256-Digest: 1Wfj0rWMuZT5jWiaVt0O0fn2QJPvR7qvsLY5grGCkLg=
+
+Name: com/webratio/ide/deploy/core/ExportingContextBuilder$2.class
+SHA-256-Digest: nNxHiYy5r0S7a+FdYqrUdnuLFRV+k3sdPTJBAZ7T4/M=
+
+Name: com/webratio/ide/deploy/core/WebProjectPropertiesProvider$2.clas
+ s
+SHA-256-Digest: M/vHxW5aZg4cubjUwt4bJA3PKqI36LWMWTqjyQcI3HU=
+
+Name: com/webratio/ide/deploy/core/jobs/ApplicationDeployerJob.class
+SHA-256-Digest: HMJKxlvyhE3B7Bi8B3VRH9h0tW4cN5YNPOLZb7FUdXc=
+
+Name: com/webratio/ide/deploy/core/ElementsSupplier.class
+SHA-256-Digest: dHfTPqXUE7j7A2i3csK2iAys6/l6Ick/IHwsU3dRufA=
+
+Name: Resources/Empty.war
+SHA-256-Digest: 9+iB/LU83dUL7D0T+is/Fd4JTb7ZJ2PQMC2C0yKbq+o=
+
+Name: com/webratio/ide/deploy/core/mobile/emulation/RippleProcess.clas
+ s
+SHA-256-Digest: CisJgYMJxNLu0aYAUtPjaLdGIXh/zkDAJTlxiUfIZ/I=
+
+Name: com/webratio/ide/deploy/core/launching/DeployLaunchAttribute.cla
+ ss
+SHA-256-Digest: Eq+G9GsLLjI6L/RjwLlzd81xCk5lEdJYhuNVCpuc1Yg=
+
+Name: ApplicationServers/WebSphere_7/application.xml.template
+SHA-256-Digest: IVubn57di6r5XiTgYPpyqjrAvfMZO1y0n/3HcJbrdHQ=
+
+Name: ApplicationServers/WebLogic_11g/application.xml.template
+SHA-256-Digest: rIsxieE54P8M6jJuW7v3G4Bc90JNfRkPObAzFqMF8Ho=
+
+Name: com/webratio/ide/deploy/core/DomainModelHandler$1.class
+SHA-256-Digest: 4J2vfX0qr8w1Ft48ZlITKw4ggUteCszltmIPQeTHSjU=
+
+Name: com/webratio/ide/deploy/core/DeploymentTaskType$FileProperty.cla
+ ss
+SHA-256-Digest: CTMNjqPxdc03LB5gnbnKWfcFeh6em1seZR/GsNMD+sE=
+
+Name: com/webratio/ide/deploy/core/expanders/CookieStorageProviderExpa
+ nder.class
+SHA-256-Digest: lt7WPJT0QaGPs1kzZea7xE5DHMf0004J4/28GWzIt0k=
+
+Name: com/webratio/ide/deploy/core/mobile/dashboard/MobileBuildDashboa
+ rd$WaitState.class
+SHA-256-Digest: +17kO/oX2SjWb6svGPoeNROTVD5Bc4RkvFI0IVy8PtE=
+
+Name: Scripts/WAR.xml
+SHA-256-Digest: 3c22ezkEfbojLvkka8tggRSCqQH+HJsRglnBONonT10=
+
+Name: com/webratio/ide/deploy/core/expanders/ServiceDataProviderExpand
+ er.class
+SHA-256-Digest: bVgjgqmd1hakJ0lZ5UDjqOiUHtqH6Y9c5wt/3rmAXpk=
+
+Name: com/webratio/ide/deploy/core/mobile/jobs/EmulateMobileAppJob.cla
+ ss
+SHA-256-Digest: v+xv9/P8DO0+MJx7fGwKWwC2mGSlsCCzFUjfG7d+uMM=
+
+Name: com/webratio/ide/deploy/core/ExportingContextBuilder.class
+SHA-256-Digest: CwbFKKT1rXINbRtfd8TnN6036PMx16IHONZDkSJSIn8=
+
+Name: com/webratio/ide/deploy/core/mobile/dashboard/AvenirLTW0155Roman
+ -webfont.woff
+SHA-256-Digest: SUoXe92amamWt1j1qZbbp8CtPRGYLHVcRz0ehRaN8uw=
+
+Name: com/webratio/ide/deploy/core/launching/BPMEngineOpenShiftLaunchC
+ onfigurationDelegate.class
+SHA-256-Digest: xUTs1AT5YIiIoYdk1oB8fl5PjBBrzNaFwXx5nNdxlyU=
+
+Name: com/webratio/ide/deploy/core/DeploymentTaskType$AntPropertiesPro
+ perty.class
+SHA-256-Digest: W7pgCX5NpyEYMxaVNEUEn4IyQilE3Hl/Frq7Q6wJkjY=
+
+Name: com/webratio/ide/deploy/core/launching/BPMEngineLocalLaunchConfi
+ gurationDelegate.class
+SHA-256-Digest: M9QviRxee/VikTxK+6BYXRxb2L9tT7PL/NXjVZ6ryCU=
+
+Name: com/webratio/ide/deploy/core/launching/LocalLaunchConfigurationD
+ elegate.class
+SHA-256-Digest: +yyVaZoY02YDsQclSlIAcFIPJT2yRYFHaI2BuyXKiVE=
+
+Name: lib/ant-contrib.jar
+SHA-256-Digest: v14YKk8ZDi/2RACG7MM8duDmpdgONwKQKesPWOj6sz0=
+
+Name: ApplicationServers/WebLogic_11g/weblogic-application.xml.templat
+ e
+SHA-256-Digest: 642opLC1/E3+O+Bvw6kyUAyrF7ojUr23+2yYeS7ms3Y=
+
+Name: com/webratio/ide/deploy/core/mobile/emulation/EmulatorProcess.cl
+ ass
+SHA-256-Digest: MKTF2GI2AjehZ57placsaLqEidaEFKc+JuT65v+JKkA=
+
+Name: com/webratio/ide/deploy/core/DeployHelper$5.class
+SHA-256-Digest: NL2dTtZ32wy4+Cuv6fb+zNHYgahhsVAWoesJ3LmKzt4=
+
+Name: com/webratio/ide/deploy/core/mobile/dashboard/AvenirLTW0155Roman
+ -webfont.ttf
+SHA-256-Digest: 48ej35fQ1HR1hA+eBXg2Ki92821OUjk67Z3rVufIJNc=
+
+Name: com/webratio/ide/deploy/core/mobile/dashboard/AvenirLTW0185Heavy
+ -webfont.eot
+SHA-256-Digest: xdkG0FyFYb7YDuDGUFUjq7fvRjdJWrahoL+XkJTtvc0=
+
+Name: com/webratio/ide/deploy/core/DeployHelper$2.class
+SHA-256-Digest: MvFjf0pwdIppXyLw/H9lMDeuyNSbRlJLY7noUBdgbnw=
+
+Name: com/webratio/ide/deploy/core/launching/LocalEnterpriseLaunchConf
+ igurationDelegate.class
+SHA-256-Digest: ORAn6Z+jyYaqM5HXHihzC2x8o79vyvFRoED2wpJW/98=
+
+Name: com/webratio/ide/deploy/core/jobs/GenerateEnterpriseAppJob.class
+SHA-256-Digest: tjYX8Q0tLtveZFKP2sffdYfgSUJsO7WQ+DVbNEh/jFA=
+
+Name: ApplicationServers/JBoss_5/Main.template
+SHA-256-Digest: vQ48EOxDpRbYXlI2vtiaQloVCfWbbKqzxpBP0IdDNIg=
+
+Name: ApplicationServers/WebSphere_7/Ear.PreAssemble.template
+SHA-256-Digest: 7DlYWJlX4TNKrxUsmQ+hufe3PdTxbcnTpRYiz6ouxXE=
+
+Name: com/webratio/ide/deploy/core/launching/AbstractDeployLaunchConfi
+ gurationDelegate$1.class
+SHA-256-Digest: 5LYjlfLGtNvG+zhOzjSlyNCfVisegAvis51yBSYkW2Y=
+
+Name: com/webratio/ide/deploy/core/launching/AbstractMobileLaunchConfi
+ gurationDelegate$2.class
+SHA-256-Digest: U38gu0pSwo1lbAtL8zE1KmNXyYV5egc1QT0LYUPPdKQ=
+
+Name: ApplicationServers/JBoss_7/application.xml.template
+SHA-256-Digest: xrvM3PKB28H+Y+1JYwJq1l+4vnRg/MEcf7MDLg0K/G4=
+
+Name: com/webratio/ide/deploy/core/launching/OpenShiftLaunchConfigurat
+ ionDelegate$OpenShiftApplicationDeployer.class
+SHA-256-Digest: /5O7Qd4p1WReBpd1TI7u//8avGUKkx4i41A8AflxRUY=
+
+Name: com/webratio/ide/deploy/core/mobile/emulation/Nodejs.class
+SHA-256-Digest: g1vSU2QatQ9p1Sq1h/Syu9pn7jiQ6/BZzyFxYFMJRSs=
+
+Name: com/webratio/ide/deploy/core/launching/WebRatioCloudLaunchConfig
+ urationDelegate.class
+SHA-256-Digest: AQrRD6nc1Wqv9VEZvR7zTShL7dqDhEtYk1qLAqq+F+s=
+
+Name: com/webratio/ide/deploy/core/jobs/CopyLocalWebAppJob.class
+SHA-256-Digest: m/knkmAsAFT63Tc38lfxhN0A9Y+aepFtTd67fxvJU8I=
+
+Name: com/webratio/ide/deploy/core/launching/OpenShiftLaunchConfigurat
+ ionDelegate$WebRatioGitProgressMonitor.class
+SHA-256-Digest: ++i7nGTgLa3b5KNzX3sZ9TxkBPOwgm1b4uBcX+i+jkc=
+
+Name: com/webratio/ide/deploy/core/EclipseBuildPlatform.class
+SHA-256-Digest: ic7Yz7YdFozQFg0uRVvIOz0ASaD9c7o+CWnmxfGLfG8=
+
+Name: com/webratio/ide/deploy/core/mobile/dashboard/dashboard.html
+SHA-256-Digest: FOoOShXAIYt7ciWZ5NmuKo4m67/LXqKtNKeduvWiKY0=
+
+Name: com/webratio/ide/deploy/core/DeploymentTaskType$DirectoryPropert
+ y.class
+SHA-256-Digest: UCgLPD/lYTTlQdyGzw9OlR7APBcJOEiF0Nqjuqu1GeA=
+
+Name: Scripts/ant-contrib.xml
+SHA-256-Digest: c9QZOLsdq1wyHAzPvxKG4mdLwR8vTC3DdkscjVsk9JI=
+
+Name: com/webratio/ide/deploy/core/expanders/AbstractMFExpander.class
+SHA-256-Digest: QFq9xqfpfboRDvJu39pIaO0ZJJgt88fbU8ZJaxTBlf4=
+
+Name: com/webratio/ide/deploy/core/mobile/dashboard/AvenirLTW0185Heavy
+ -webfont.woff
+SHA-256-Digest: 5eTVtB+/VOgFZnYPNO67XM8xWMWiU4GJhWmMo+DvIqw=
+
+Name: ApplicationServers/JBoss_7/Main.template
+SHA-256-Digest: igW7zwQ8LXoxeGvzjT/CTHljXl38v5NvYJGTKA5nzW4=
+
+Name: com/webratio/ide/deploy/core/GenerationPhase.class
+SHA-256-Digest: XoMu1/EyqTKm6rz7py5IICD1G9e3nlnynKnvFw6Zmh8=
+
+Name: ApplicationServers/WebLogic_11g/Ear.PreBuild.template
+SHA-256-Digest: HdKSSrvRfvvx437XZ7gmMKKaLOBkvpE9QqanLfbaKxQ=
+
+Name: Scripts/Utils.xml
+SHA-256-Digest: iJgEGLQZhBprRc5Dy6RoT/SxbmsrhyV8EErjz0rCYy8=
+
+Name: ApplicationServers/JBoss_5/Redeploy.template
+SHA-256-Digest: 8AcOrKnnPdNpKAvjNWzc6THiNxvi65HhhlnU0S9nMb8=
+
+Name: com/webratio/ide/deploy/core/DeployHelper$3.class
+SHA-256-Digest: 4rG9Vw2z4cxYn8KIbUfuGoWMBlHYGtCXRvGP2XO304U=
+
+Name: ApplicationServers/JBoss_6/Main.template
+SHA-256-Digest: vO2PY7Pvpu8BYH/+QDLNhu6PTc/8N8JQrn4PIxBOtUg=
+
+Name: Scripts/TomcatRunner.xml
+SHA-256-Digest: 4tTz21oug/21kkoQss++fHK4Dfr7JAmm4AvgGrYBVqQ=
+
+Name: ApplicationServers/JBoss_7/jboss-deployment-structure.xml.templa
+ te
+SHA-256-Digest: CS4Nf+7vitwidDuLGnB8oL9oYtz9A/xE+xWADoGOEYA=
+
+Name: ApplicationServers/Tomcat/Redeploy.template
+SHA-256-Digest: ef2vUJT3fcexW0g77ha25FLLDufldiBhO1nsyZye+Tk=
+
+Name: com/webratio/ide/deploy/core/DeployConstants$LaunchMode.class
+SHA-256-Digest: eJByhj0+UMPQjc8TgVd8L3On4my7FquAJk5Fy0LIWic=
+
+Name: com/webratio/ide/deploy/core/jobs/ClearOutputFolderJob.class
+SHA-256-Digest: k8VJCSAAGRWUk3CfdqDLP+BhBF/PWnlp47vTgPq6VSI=
+
+Name: com/webratio/ide/deploy/core/EclipseBuildMonitor.class
+SHA-256-Digest: Q39a5NQedGwdn6DjV7dKtAPvTKELR3M3MD0eCGMCjmw=
+
+Name: com/webratio/ide/deploy/core/ApplicationServer.class
+SHA-256-Digest: Z5HLgQKhsKDH8+phJZUkfOyjrwXF4N0XO81ZLnGkXLU=
+
+Name: com/webratio/ide/deploy/core/launching/AmazonElasticBeanstalkLau
+ nchConfigurationDelegate.class
+SHA-256-Digest: yp7cSGRK+54g6XGENW82kQPzel65OyKmFQ29Esxw91c=
+
+Name: com/webratio/ide/deploy/core/mobile/dashboard/MobileBuildDashboa
+ rd$GenericField.class
+SHA-256-Digest: 6vEEU7HQ5Gx7RbkyXhHRumR9+cKPslLyAQ7OiHeSXn0=
+
+Name: com/webratio/ide/deploy/core/jobs/TomcatRunnerJob$Command.class
+SHA-256-Digest: 9CJzLP43Km/AknOIL+SlBIfE770JXSNliToclqrYVys=
+
+Name: com/webratio/ide/deploy/core/mobile/jobs/GenerateMobileAppJob.cl
+ ass
+SHA-256-Digest: MYqRWzPa1LW2FzXN+xJZCP1HFoOE1a+ENO8pCDTQUnw=
+
+Name: com/webratio/ide/deploy/core/DeployHelper$4.class
+SHA-256-Digest: PhV/05krbblVLeIUMvZW8IcGsw7azOFmico9+efnkSA=
+
+Name: com/webratio/ide/deploy/core/mobile/dashboard/MobileBuildDashboa
+ rd.class
+SHA-256-Digest: tnaLqfWbH8vGYb2bYONs09bNJTX6bWSVAo7350d1ceA=
+
+Name: Scripts/JARDescriptorFolder.xml
+SHA-256-Digest: bn0wulw9ejrreVWqMex+0RoUavOZXKtCOVNAjZCOHE0=
+
+Name: ApplicationServers/WebLogic_11g/Main.template
+SHA-256-Digest: A9V1Q10CYh21jAh89ZkrSD39Q/K7FS//sBsuyOdvTIw=
+
+Name: com/webratio/ide/deploy/core/DeployPreChecker.class
+SHA-256-Digest: Nbv8OeZhjG7NUjYBgonzggRcpDcsoM0B36vLEavKwcI=
+
+Name: com/webratio/ide/deploy/core/WebProjectPropertiesProvider$IWebPr
+ ojectNode.class
+SHA-256-Digest: Eea7SYEYU6BhM6cL3lgsU+IvjhH7MqVRinU6Qsgwf/U=
+
+Name: com/webratio/ide/deploy/core/expanders/WebProjectExpander.class
+SHA-256-Digest: hTLcma8UPV99AitI8MiqhJLrLCaDhzjUDAm+cidZ/iE=
+
+Name: com/webratio/ide/deploy/core/mobile/dashboard/MobileBuildDashboa
+ rd$1.class
+SHA-256-Digest: uDyh0s5oWKA02+W16DmQXLkkpGkJzmIWa1jJXW/SngI=
+
+Name: com/webratio/ide/deploy/core/WebProjectPropertiesProvider$WebPro
+ jectNode$1.class
+SHA-256-Digest: kGf2NbmhRggl7ElKIh6xtnj96hQdSxr0OMEdtBs+1/Y=
+
+Name: com/webratio/ide/deploy/core/mobile/emulation/MobileEmulatorRegi
+ stry$1.class
+SHA-256-Digest: v2x5wU67zDxJoRktn12WSM+KTK8LmclpNESzraGo1IA=
+
+Name: com/webratio/ide/deploy/core/mobile/dashboard/MobileBuildDashboa
+ rd$EmulateField.class
+SHA-256-Digest: AME9TGuaSNjxb+tDak665BWbMATVt1cxyAVXdtFil14=
+
+Name: com/webratio/ide/deploy/core/DeploymentTaskType$DocumentFormatPr
+ operty.class
+SHA-256-Digest: 66Rm2EdVSHLd1LQFU+oRFx1SqdommbAmN1CkFNEhec4=
+
+Name: com/webratio/ide/deploy/core/DeploymentTaskType$SectionFilterPro
+ perty.class
+SHA-256-Digest: LOG3ldbaD9PtYOb7jT2hRr9jLdnuMqmJONCVApU3yM8=
+
+Name: com/webratio/ide/deploy/core/DomainModelHandler.class
+SHA-256-Digest: WrNOhVAi9p0ItiOKw6WF7S/0ZS6HqffEX5sNVmNX/Kg=
+
+Name: com/webratio/ide/deploy/core/DeploymentTaskType$PasswordProperty
+ .class
+SHA-256-Digest: h2RAZaivrrvqAR776J3ux9pbNIq7aEPRnXHY8aSt/to=
+
+Name: com/webratio/ide/deploy/core/launching/OpenShiftLaunchConfigurat
+ ionDelegate.class
+SHA-256-Digest: t1a9Qx6AaIbL0g23wy62q3NOCnLj4cL9yxeH/Mi1F+o=
+
+Name: com/webratio/ide/deploy/core/DeployExportManager$1.class
+SHA-256-Digest: P4lEys9dFUxkYLwAeZA0Edx7cSVEjlzrp/qYf9F852Q=
+
+Name: com/webratio/ide/deploy/core/DeploymentTaskType$DiagramFormatPro
+ perty.class
+SHA-256-Digest: S4aFj7HQw5MCRe/uhH4mbxpjdRH3EVZfRI3AAeJm9KM=
+
+Name: com/webratio/ide/deploy/core/DeployHelper$9.class
+SHA-256-Digest: fYOXKOwkdPpVrjc639zcdNHvaJaiZUcYmjGA67YgeBU=
+
+Name: com/webratio/ide/deploy/core/AntBuildListener.class
+SHA-256-Digest: Y8zrvnCSgqecxIgdtqgwiJSqPjJi5+K/ZOJ/UtXNM1s=
+
+Name: com/webratio/ide/deploy/core/DeploymentTaskType$StringProperty.c
+ lass
+SHA-256-Digest: uqXk3upZZ3NU1Zdh3lfWP+Ndyu+CcpMUs3n9vviM2zY=
+
+Name: com/webratio/ide/deploy/core/mobile/emulation/MobileEmulatorRegi
+ stry.class
+SHA-256-Digest: 7OT4vvU+GXTLsyzwm92t8A8iRY6rEjnFbne8EoweMyI=
+
+Name: com/webratio/ide/deploy/core/WebProjectPropertiesProvider.class
+SHA-256-Digest: zrxGiUxlD5GeqAQbeU9PSJyrewmETNEJCYN/398994k=
+
+Name: com/webratio/ide/deploy/core/ProjectType.class
+SHA-256-Digest: 0atD23/KrNsX+FYsLW4kopvNEt63CDkNXcDm1s1QQ5M=
+
+Name: com/webratio/ide/deploy/core/DeploymentTaskType$WorkspaceFilePro
+ perty.class
+SHA-256-Digest: 4IQ1NLjo75CqgxMV7tlow6x5VLfosON9JVImsrEIOTc=
+
+Name: com/webratio/ide/deploy/core/mobile/dashboard/dashboard.css
+SHA-256-Digest: 9z+a1z93cpjZS+7ZVUIMUTQk3bSTB/cAsyfO8zlax+c=
+
+Name: com/webratio/ide/deploy/core/DeployExportManager$Mode.class
+SHA-256-Digest: wPFo/0mVHUWb+qvhAzR5/LzZmAzamJX4nzzYfcCt39w=
+
+Name: com/webratio/ide/deploy/core/mobile/dashboard/AvenirLTW0185Heavy
+ -webfont.ttf
+SHA-256-Digest: EWCiSlaY6PTl98ESJTF6AnR2Iwyam9dmdPW0kh3URiw=
+
+Name: com/webratio/ide/deploy/core/jobs/OpenCloudApplicationInBrowserJ
+ ob.class
+SHA-256-Digest: pvfEaWjCtt+xZ2cdiwb+SQvDmh51OS80ub3fkrRj8zo=
+
+Name: com/webratio/ide/deploy/core/launching/AbstractMobileLaunchConfi
+ gurationDelegate$1.class
+SHA-256-Digest: 6LCdELki9obcU4nvuf9Y/vQgqou9wl32K+p05kvAD5Y=
+
+Name: com/webratio/ide/deploy/core/mobile/emulation/PhoneGapProcess.cl
+ ass
+SHA-256-Digest: S8TKXFVo/5pqcAr0HUY4tpJsC2UfDkvBz665JfOukYg=
+
+Name: Scripts/DeleteHibernateJavaSources.xml
+SHA-256-Digest: 2LsFDs3iFUmMkEvSSyg8mXhOl0Q+/WGNxK568BRDiz0=
+
+Name: com/webratio/ide/deploy/core/mobile/emulation/EmulatorProcess$OS
+ Type.class
+SHA-256-Digest: qt2Z1gIBdZQlFGQXYPDdVvXXRZ2FEOTIH3LCctMuMa4=
+
+Name: ApplicationServers/JBoss_5/application.xml.template
+SHA-256-Digest: 7SOZQdh1SgZoPNjqoU9XT86inlzydoI0d9yOv8enPuM=
+
+Name: com/webratio/ide/deploy/core/WebProjectUpdater.class
+SHA-256-Digest: nBY82aY3dBqSwY+WkGh39ARXvZKh+EwaOdrwG9jXLDs=
+
+Name: com/webratio/ide/deploy/core/mobile/dashboard/MobileBuildDashboa
+ rd$2.class
+SHA-256-Digest: XlTpp7Ck41DNjZVYRTOY1AEZ6A4xr4Mzk4H+SO+8a1g=
+
+Name: ApplicationServers/WebSphere_6/application.xml.template
+SHA-256-Digest: 59H8o1MknFx3eMA5rFMxpzDePo3fWwmDc630z0eOmP8=
+
+Name: com/webratio/ide/deploy/core/jobs/ExecuteSQLJob.class
+SHA-256-Digest: ESiVRbQOoF8H+NmTKFjc/S878TI/e0yfnEZndAPXezc=
+
+Name: com/webratio/ide/deploy/core/jobs/GenerateProcessArchiveJob.clas
+ s
+SHA-256-Digest: uQKWvMLqY5f4iaSKhXoTXxjA34sA2OaNJ1p3uoFF+l8=
+
+Name: Scripts/CustomMobile.xml
+SHA-256-Digest: o2oErkUgB89P7oRpCHa/IKI2+qmAEDgCX3klfue39CI=
+
+Name: com/webratio/ide/deploy/core/launching/AbstractCloudDeployLaunch
+ ConfigurationDelegate.class
+SHA-256-Digest: qeMUrJP36/+pBDgr1Re+tetxQy7g8sHwg5fdYefWaHs=
+
+Name: com/webratio/ide/deploy/core/launching/AndroidMobileLaunchConfig
+ urationDelegate.class
+SHA-256-Digest: 4OfO7PwFNGhthMIjqqpx/BKUyZKObaD27JCfePn4m04=
+
+Name: com/webratio/ide/deploy/core/ElementsSupplier$ElementsSupplierFa
+ ctory.class
+SHA-256-Digest: uzQsa8tWdflJzIhmFDD2uIuoV3XgkMyna1FDY+OipNM=
+
+Name: com/webratio/ide/deploy/core/DeploymentTaskType$BooleanProperty.
+ class
+SHA-256-Digest: U10C6dZG5b6H0yGFWGVqxt8ICQDVI53hbslPMNBIlCY=
+
+Name: com/webratio/ide/deploy/core/DeploymentTaskType$EnterpriseSubPro
+ jectsPropertiesProperty.class
+SHA-256-Digest: bRctrfhhrjuHgGEfCQZbsrpWirdkuTs8DiRAqGoOafs=
+
+Name: com/webratio/ide/deploy/core/DeployContributorHelper$1.class
+SHA-256-Digest: tQ4J7EVPpwN4N7DqsokkywwUvgAwyLnQsD1UJ96mRD0=
+
+Name: com/webratio/ide/deploy/core/jobs/GenerateDocumentatioJob.class
+SHA-256-Digest: BLZTtrY7G441Mbm6OBS5ww4B+G99S8YH97wbHDS+26U=
+
+Name: Scripts/CustomWeb.xml
+SHA-256-Digest: 0fXk2rnd4gS5pl0s2K7GwyKmoKyuLwkFiMh0ObvYgGQ=
+
+Name: com/webratio/ide/deploy/core/mobile/emulation/MobileEmulatorRegi
+ stry$EmulatorType.class
+SHA-256-Digest: wzIvdFOJ1ahdH3TNdsN82dlJriu6B4uTPFe2jPpfexU=
+
+Name: com/webratio/ide/deploy/core/DeploymentTaskType$DatabasesPropert
+ y.class
+SHA-256-Digest: ZB+uRTFL0OXflLR2uVDFk8F4ttQoVwLKsSe6YQ24rVw=
+
+Name: com/webratio/ide/deploy/core/jobs/EarCreatorJob.class
+SHA-256-Digest: APlqhOjZIM27MiCs5s8CL6uaQP0LQkVijcy2HnkAyTM=
+
+Name: com/webratio/ide/deploy/core/ExtendedLaunchAttribute.class
+SHA-256-Digest: PLxct6tfToVds79rjwijQ1Q3bfdi2MvqKcRQKS6odWc=
+
+Name: com/webratio/ide/deploy/core/mobile/emulation/EmulatorProcess$1.
+ class
+SHA-256-Digest: LqewyizTWleiYC1w8EIlIEyMh2z7cckKOTo+rxwoLFk=
+
+Name: com/webratio/ide/deploy/core/GenerationConfFactory$1.class
+SHA-256-Digest: EezdehH0kq55acUzBIIY9lnOrTsV8zObAh/CXWuHtVg=
+
+Name: com/webratio/ide/deploy/core/jobs/TomcatRunnerJob.class
+SHA-256-Digest: /3W06z8W6q5E3LE4g7QGmmx1dbm40SKWw3hZCVQmaAI=
+
+Name: com/webratio/ide/deploy/core/expanders/DatabaseExpander.class
+SHA-256-Digest: IHr9Q+H2y6+XsHluCn/3Zu8zp6cJDbNA/01JRg/NVqo=
+
+Name: ApplicationServers/WebSphere_6/Ear.PreBuild.template
+SHA-256-Digest: Th+Pup2y6wBZky+RfGA6YLOoYtpmhdF7uJ4iLnMm+pA=
+
+Name: com/webratio/ide/deploy/core/launching/WindowsMobileLaunchConfig
+ urationDelegate.class
+SHA-256-Digest: MeoGrNdL4qRoH30qxo4zeu/6zHsqAO9IYK6B59ERPJc=
+
+Name: com/webratio/ide/deploy/core/mobile/dashboard/AvenirLTW0155Roman
+ -webfont.eot
+SHA-256-Digest: 7zL5eS6mJkgvOGixLIe5PJ3xOEISHFmCSzS5X+VsyIs=
+
+Name: com/webratio/ide/deploy/core/ElementsSupplier$ElementsSupplierFa
+ ctory$1.class
+SHA-256-Digest: mp+bHLBt6YtA9YiQjv1M+OdvciMkATepFTolv7kOBbU=
+
+Name: com/webratio/ide/deploy/core/jobs/WarCreatorJob.class
+SHA-256-Digest: 9H9TWsWYNS1Qrhts2aFj2/YtsXKMO75rtXOQaA8OVmE=
+
+Name: com/webratio/ide/deploy/core/launching/AbstractDeployLaunchConfi
+ gurationDelegate.class
+SHA-256-Digest: Kz0WdvYwaFNGt3+08K8UbdHyrayDHVBDMMfIKZmOtdQ=
+
+Name: com/webratio/ide/deploy/core/jobs/JARDescriptorsFolderJob.class
+SHA-256-Digest: uwaYGGRspT4Aak7x4Ufh2XMQnWo5lTh2s7ml9X8iFcs=
+
+Name: com/webratio/ide/deploy/core/jobs/AbstractDeploymentJob.class
+SHA-256-Digest: kZOhN7JxmyCYe6QlLV5ZuKAsan6JY4idSLEkyoW+xNI=
+
+Name: com/webratio/ide/deploy/core/AntProperty.class
+SHA-256-Digest: dRgr4C8tkEHvuxiBkhRV5MdAqs+z46vxVnXS2mU+Rlo=
+
+Name: ApplicationServers/WebSphere_6/Main.template
+SHA-256-Digest: c4PiI8AulB59ooO8WvEC6j75995A7v4iq+wMy/EkgzE=
+
+Name: com/webratio/ide/deploy/core/DatabasesHandler$1.class
+SHA-256-Digest: Z/dhokW0nneNGeZvPYm9SmDUcVebhKJG68+tmcvV83k=
+
+Name: com/webratio/ide/deploy/core/DeployHelper$8.class
+SHA-256-Digest: vSYXwWWRwM8YeZwpTnU7kHWvTkr0nWyCM3RMtJ3m2Qo=
+
+Name: com/webratio/ide/deploy/core/DeploymentTaskType$DocumentXPathCon
+ tentProperty.class
+SHA-256-Digest: SVuFegcORjIvTRJLxOBSxHbW2BeOAiybay+O+p+NB6Q=
+
+Name: com/webratio/ide/deploy/core/mobile/jobs/Network.class
+SHA-256-Digest: cS3EY6AnqYeH1u54mPEOOWo3xcEhbE5FTEY/6vIYZfo=
+
+Name: com/webratio/ide/deploy/core/DatabasesHandler.class
+SHA-256-Digest: uRdtYL2uLy/dyZVoI1dfmyRQvTShXU00hrQWO7DPuqw=
+
+Name: com/webratio/ide/deploy/core/IEnterpriseProjectContext.class
+SHA-256-Digest: gHtj+IMqP0xscxDIFzjF3tvBg2VBW0YjN/Ww+z5zZ0s=
+
+Name: ApplicationServers/JBoss_6/Redeploy.template
+SHA-256-Digest: RLm6FEdI9UANGHiSNuEib+OTrkzejoiqXBmQZnb8GcU=
+
+Name: com/webratio/ide/deploy/core/DeployContributorHelper.class
+SHA-256-Digest: PXpad94lmDbhy5xsjpxnJKyWHOU8/f7e062I86QzVnI=
+
+Name: ApplicationServers/WebSphere_7/deployment.xml.template
+SHA-256-Digest: wl8WpYn5lMulV7yxlPIiLKIZKF8fV9OV9zmQvJ2AkDQ=
+
+Name: com/webratio/ide/deploy/core/jobs/JobsFactory.class
+SHA-256-Digest: QverU+tDRgXB0gfZLQSIAD5Ap3zB//WyGdyehKzj4Cs=
+
+Name: ApplicationServers/WebSphere_7/Ear.PreBuild.template
+SHA-256-Digest: dcIKrZFDBceHyqpIDhvSJJ6bIlsMqT/ktwZX4Vvffi0=
+
+Name: com/webratio/ide/deploy/core/mobile/dashboard/jquery.min.js
+SHA-256-Digest: BKJKlOU+GUSxPxJQIUpsh0x4r6wH4NtEuaarC57WpGA=
+
+Name: com/webratio/ide/deploy/core/DeployConstants.class
+SHA-256-Digest: AEz07KhqZd1MDvuR69NYwLPQCHQZrj5dHqBgNFDN8wc=
+
+Name: ApplicationServers/JBoss_5/jboss-app.xml.template
+SHA-256-Digest: FNVpC2rXkewPrs2DyJS714RzHi6tDCrfD8DzJ/a6HWs=
+
+Name: ApplicationServers/JBoss_6/application.xml.template
+SHA-256-Digest: f8C54cj5RP00kqGpodVIUiax0K3+qcrudPj0lq7rOa0=
+
+Name: ApplicationServers/JBoss_7/Redeploy.template
+SHA-256-Digest: yobDCijc+x78fnZRtXn78TkuiXwHrRrqnvAVFBy3uHc=
+
+Name: com/webratio/ide/deploy/core/jobs/BpmEngineDeployerJob.class
+SHA-256-Digest: jcq9yPsvct1/XQ0D3fHNmO5QGadcYxdMzYKMnEO0B/4=
+
+Name: com/webratio/ide/deploy/core/jobs/DeleteHibernateJavaSourcesJob.
+ class
+SHA-256-Digest: U16R57f+y5z6Ie/30OXqh5LJDJ7VDRqkOBGZTkdk48w=
+
+Name: com/webratio/ide/deploy/core/DeploymentTaskType$Property.class
+SHA-256-Digest: OcxzpVF4d6pxk6wJ8dGrRzGG7X2sjw270l9i6tES614=
+
+Name: com/webratio/ide/deploy/core/jobs/AntScriptJob.class
+SHA-256-Digest: h9AIcwAd3SBfyMDBp88gmvHqdxk5/OU+FDBVtE/w1eA=
+
+Name: com/webratio/ide/deploy/core/DeploymentTaskType$AbstractFileProp
+ erty.class
+SHA-256-Digest: rNMxtfQz9atlx42e7AWE/O6eHHAuT4O2Od9xwVzFU/M=
+
+Name: com/webratio/ide/deploy/core/DeploymentTaskType$DocumentXPathCon
+ tentProperty$Mode.class
+SHA-256-Digest: zMmNgDHdBqimXpeBKCKuRnI6Wo38hmTOy+ntSbDqEaw=
+
+Name: com/webratio/ide/deploy/core/jobs/GenerateWebAppJob.class
+SHA-256-Digest: CuOJ4AEcpZp1g5G50Kup3ntCGvCqQAk31etpCAXwW08=
+
+Name: com/webratio/ide/deploy/core/DeployExportManager.class
+SHA-256-Digest: KO/BZiVu249Vft/FFiWIF7Wb8mq913zR4CqY2XeG5Sg=
+
+Name: com/webratio/ide/deploy/core/DeploymentTaskType$1.class
+SHA-256-Digest: Cnz6HdBaddPcuA0eCiXjXyvbZwH2Pn73/bbhl7dOoLk=
+
+Name: com/webratio/ide/deploy/core/DeploymentTaskType$WebContentFolder
+ sPropertiesProperty.class
+SHA-256-Digest: Gb9begyx3Nx3B5Vm0SDfJCsrNT6ImjxNTz8maLb3w+Q=
+
+Name: com/webratio/ide/deploy/core/LaunchConfigurationReplacer.class
+SHA-256-Digest: j3xyZUeRAeOUDEm2p03Np/+ZavQ5fnRvBt5fFvJCpTY=
+
+Name: com/webratio/ide/deploy/core/launching/AmazonElasticBeanstalkLau
+ nchConfigurationDelegate$AmazonElasticBeanstalkDeployer.class
+SHA-256-Digest: b/nOD4ZzAO7s91jOoqxfuDJ06AWJ5pTEO9fXm2XknHs=
+
+Name: com/webratio/ide/deploy/core/jobs/ProcessArchiveDeployerJob.clas
+ s
+SHA-256-Digest: 8ou2tSuQLa/UxHldkSG6ZtvU49KL2dWqFDQDYCRs1zg=
+
+Name: ApplicationServers/WebSphere_7/Main.template
+SHA-256-Digest: fjkh2dFnVCwiAk+2On67jBlepcCS6yb0MrURUmxyTYM=
+
+Name: com/webratio/ide/deploy/core/IDeployListener.class
+SHA-256-Digest: 76dYWNRA5ESXe8IVJ9TWg52xy/SB9iocC5jxUb8LVBo=
+
+Name: com/webratio/ide/deploy/core/launching/IOSMobileLaunchConfigurat
+ ionDelegate.class
+SHA-256-Digest: odfiL4sV7U9EhW5A+ancesNAd9ebHKle5PxuCFbYAiM=
+
+Name: com/webratio/ide/deploy/core/mobile/dashboard/AvenirLTW0185Heavy
+ -webfont.svg
+SHA-256-Digest: Lzyo0sNaV9WmoKPYqK71jWKBtQ3zt7Bafv/1S5+eWvI=
+
+Name: com/webratio/ide/deploy/core/LaunchLogger.class
+SHA-256-Digest: d+7hJvvyaYv9MsWWNE21btpaKoTSr49aiF9+XZADr7g=
+
+Name: com/webratio/ide/deploy/core/WebProjectPropertiesProvider$WebPro
+ jectNode.class
+SHA-256-Digest: r3CeAZ/nc8aH8UaPBRJ85GkC/y16+WY4esi4R57Z2ks=
+
+Name: com/webratio/ide/deploy/core/IDeployer.class
+SHA-256-Digest: gtAQXqIEQmQB0aeZGU5GgYnryH70JzcNU4XMxZJ2zEU=
+
+Name: com/webratio/ide/deploy/core/DeployContext.class
+SHA-256-Digest: 6wVs+FBQYS10CFgy2CG+rKkXEUcGOYDns3ZUuzjWbd8=
+
+Name: com/webratio/ide/deploy/core/launching/BPMEngineWebRatioCloudLau
+ nchConfigurationDelegate.class
+SHA-256-Digest: uaKikujS9MGRXgWeSpHGyzEYpMxR1TyGWK48lbDMjdM=
+
+Name: com/webratio/ide/deploy/core/DeploymentTaskType$2.class
+SHA-256-Digest: Ft/ADJiOlhEbYMb4VawobcbztLnKk0bbtlytmUzeepw=
+

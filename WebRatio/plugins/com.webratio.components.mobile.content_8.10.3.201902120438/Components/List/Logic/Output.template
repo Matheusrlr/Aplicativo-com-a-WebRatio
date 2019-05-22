@@ -1,0 +1,40 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+
+def dClassId = component["dataBinding"]
+def attributes = getAttributes(getById(dClassId))
+def roles = getOutgoingRoles(getById(dClassId)).findAll{!isMany(it)}
+%]
+<OutputParameters>
+	[% for (a in attributes) {
+		if (isOutputBindableAttribute(a)) { %]
+			<OutputParameter
+				name="data.[%= a["id"] %]"
+				refId="[%= a["id"] %]"
+				type="[%= getTypeExpression(getById(dClassId), a, true, false) %]"
+				label="[%= getLabel(a) %]"
+				possiblyLarge="true"
+			/>
+		[% }
+	}
+	for (role in roles) {
+		def keyAttributes = getKeyAttributes(getTargetDomainClass(role))
+		for (keyAttr in keyAttributes) { %]
+			<OutputParameter
+				name="data.[%= role["id"] + "_" + keyAttr["id"] %]"
+				refId="[%= role["id"] %]"
+				label="[%= getLabel(role) + "." + getLabel(keyAttr) %]"
+				mandatory="false"
+				possiblyLarge="true"
+			/>
+		[% }
+	} 
+	if (component["distinct"] != "true" && "true" == component["checkable"]) { %]
+		<OutputParameter name="checkedKeys" label="Checked Oid" providedByForm="true"/>
+	[% } %]
+	[% component["displayAttributes"].tokenize(" ").findAll{it.contains(".")}.each{ %]
+		<OutputParameter name="data.[%=getAttributeExpressionId(it)%]" refId="importedAttribute" label="[%=getAttributeExpressionImportLabel(it)%]" possiblyLarge="true"/>
+	[% } %]
+	<OutputParameter name="dataSize" label="Data Size"/>
+</OutputParameters>

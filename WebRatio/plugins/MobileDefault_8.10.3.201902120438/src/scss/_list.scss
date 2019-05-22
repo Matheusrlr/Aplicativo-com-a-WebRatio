@@ -1,0 +1,65 @@
+.list {
+  .item {
+    h1, h2, h3, h4, h5, p {
+      margin: 0;
+    }
+    &.item-text {
+      align-items: inherit;
+      -webkit-align-items: inherit;
+      -moz-align-items: inherit;
+      textarea {
+        padding-top: 7px;
+        min-height: 70px;
+      }
+    }
+    &.item-buttons {
+      padding: 0;
+    }
+    .button-bar {
+      margin-top: 16px;
+    }
+    .sublist {
+      // Hierarchy Component
+      margin-top: 16px;
+    }
+    .item-content {
+      // remove extra padding of .item element
+      &.item-avatar {
+        padding-left: 56px;
+        min-height: 40px;
+      }
+      &.item-button-right {
+        padding-right: 64px;
+      }
+    }
+  }
+  .item-complex.item-checkbox {
+    padding-left: 0;
+    .item-content {
+      padding-left: 60px;
+    }
+  }
+  
+}
+/* fix vertical align */
+
+.item-options .button {
+  @include display-inline-flex();
+  @include align-items(center);
+}
+
+.list-horizontal-wrapper {
+  display: table;
+  min-width: 100%;
+  .list-horizontal {
+    display: table-row;
+    vertical-align: top;
+    > .item-horizontal {
+      display: table-cell;
+      max-width: 100%;
+      .list {
+        margin-top: 0;
+      }
+    }
+  }
+}

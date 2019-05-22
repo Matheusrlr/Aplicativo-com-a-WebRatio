@@ -1,0 +1,27 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: SAyYfQAiozGr0+JuKdY2DZnVGI1AQ
+ tuq7sm6WCK+ba4=
+SHA-256-Digest-Manifest: fLUVKMTElJyTlg/QazRVyK2tsLGqVpAHONKAj+3tdsw=
+Created-By: 1.7.0_80 (Oracle Corporation)
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: lib/mchange-commons-javasrc.zip
+SHA-256-Digest: aEO6vReB7cTWhs09HKdr0Nug+l7fbicNGNXCKStaTTo=
+
+Name: lib/c3p0src.zip
+SHA-256-Digest: hQD46zaxuqiLCq6BoB1V6cZUhNl7PjPuyVAu61D6j+k=
+
+Name: about.html
+SHA-256-Digest: wcXf+LEApEKkOpuw0mSBM3V9jqVs4q4vUPJq02pKf7I=
+
+Name: about_files/lgpl-2.1.txt
+SHA-256-Digest: UdtCZapicIeRLnsFsL+4WWdRO7N6e3KPpEMUrPpUZSo=
+
+Name: lib/c3p0.jar
+SHA-256-Digest: OYlWLo02XwuY2YvyvDhVou0UgT4xAtiS8oTmK4ybwAY=
+
+Name: lib/mchange-commons-java.jar
+SHA-256-Digest: I/oFqULrOGvpTCzCYD4Fyf5xN1HMX3KMrMqG8gMhgD4=
+

@@ -1,0 +1,11 @@
+<Element name="Role" lowerName="role"
+		pluralLowerName="">
+		<Description>
+			A role is a user defined role used in the data service project to define the access permissions to the exposed services.
+		</Description>
+		<ActionRef label="Add Property"/>
+		<ActionRef label="Localize"/>
+		<ActionRef label="Find Model Problems"/>
+		<ActionRef label="Help"/>
+</Element>
+		

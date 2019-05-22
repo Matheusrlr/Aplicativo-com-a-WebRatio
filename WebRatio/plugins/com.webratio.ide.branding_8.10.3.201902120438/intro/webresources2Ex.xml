@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<introContent>
+  	<extensionContent id="com.webratio.ide.ui.eclipseCommunity" name="WebRatio Community" alt-style="css/webresources.properties" style="css/webresources.css" path="webresources/@">
+  	   <group style-id="content-group" id="content-group">
+	       <link style-id="content-link" label="Eclipse community" url="http://org.eclipse.ui.intro/openBrowser?url=http://www.eclipse.org" id="eclipse">
+				  <text>Join the community, read articles and news on Eclipse.org</text> 
+			</link>
+			<group id="rss-news" label="Latest News" expandable="true" expanded="true">
+				  <contentProvider id="rss-viewer" pluginId="org.eclipse.platform" class="org.eclipse.platform.internal.EclipseRSSViewer" /> 
+			</group>
+       </group>
+  	</extensionContent>
+</introContent>

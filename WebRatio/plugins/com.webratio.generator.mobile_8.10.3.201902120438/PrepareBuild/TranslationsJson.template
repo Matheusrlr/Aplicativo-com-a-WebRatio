@@ -1,0 +1,10 @@
+#?delimiters [%, %], [%=, %]
+[% setJSONOutput() %]
+{
+	"locale": {
+		"[%= platformName %]": [ "[%= isoCode %]" ]
+	},
+	"app" : {
+		"dummy" : "dummy"
+	}
+}

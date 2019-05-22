@@ -1,0 +1,16 @@
+#?delimiters <%,%>,<%=,%>
+<% setXMLOutput() %>
+<OutputParameters>
+    <OutputParameter name="clsIds" refId="" label="Class Ids"/>
+    <OutputParameter name="clsLabels" refId="" label="Class Labels"/>
+    <OutputParameter name="attrIds" refId="" label="Attributes Ids"/>
+    <OutputParameter name="attrLabels" refId="" label="Attributes Labels"/>
+    <OutputParameter name="attrTypes" refId="" label="Attributes Types"/>
+    <OutputParameter name="predicateValues" refId="" label="Predicates Values"/>
+    <OutputParameter name="predicateLabels" refId="" label="Predicates Labels"/>
+    <OutputParameter name="aggregateFunctions" refId="" label="Aggregate Functions"/>
+    <OutputParameter name="sortCriteriaValues" refId="" label="Sort Criteria Values"/>
+    <OutputParameter name="sortCriteriaLabels" refId="" label="Sort Criteria Labels"/>
+    <OutputParameter name="booleanOperators" refId="" label="Boolean Operators"/>
+    <OutputParameter name="relativeAttIds" refId="" label="Relative Attributes Ids"/>
+</OutputParameters>

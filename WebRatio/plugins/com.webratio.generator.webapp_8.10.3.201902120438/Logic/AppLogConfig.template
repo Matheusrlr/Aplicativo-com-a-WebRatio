@@ -1,0 +1,26 @@
+#?delimiters <%, %>, <%=, %>
+<%
+import org.apache.commons.io.FileUtils
+
+
+def originalConfigFile = wr.locateResourceFile("Logic/AppLogConfig.properties")
+if(wr.projectType.name() == "WEBPROJECT"){
+  def relPath = (wr.projectType.name() == "ENTERPRISE") ?  ("/" + rootModuleName + ".jar/conf") : ("/WEB-INF/conf") 
+  def configFile = new File(wr.outputPath + relPath + "/AppLogConfig.properties")
+  if (!configFile.exists()) {
+     FileUtils.copyFile(originalConfigFile, configFile)
+  }
+} else if (wr.projectType.name() == "BPM") {
+  def configFile = new File(wr.outputPath + "/conf/AppLogConfig.properties")
+  if (!configFile.exists()) {
+     FileUtils.copyFile(originalConfigFile, configFile)
+  }
+} else {
+  def configFile = new File(wr.outputPath + "/" + rootModuleName + ".jar/conf/AppLogConfig.properties")
+  if (!configFile.exists()) {
+     FileUtils.copyFile(originalConfigFile, configFile)
+  }
+}  
+
+
+%>

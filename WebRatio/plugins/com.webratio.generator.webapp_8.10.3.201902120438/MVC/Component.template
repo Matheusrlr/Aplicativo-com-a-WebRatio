@@ -1,0 +1,61 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.GenerationException
+
+if (component == null) {
+	def title = "Undefined component variable"    
+	def reason = "Unable to generate the Component layout."
+	def hint = "Specify a variable holding a layout:Component"
+	throw new GenerationException(title, reason, [hint], null)
+}
+
+/* Get style */
+def compLayout = getLayout(component, LayoutType.COMPONENT)
+def templatePath = compLayout.path
+def templateParameters = compLayout.parameters
+if (!templatePath) {
+    def title = "Undefined Component Layout"    
+    def reason = "Unable to find the component layout for a view component."
+    def hint = "Specify a component layout for all the view components of the page [id = " + page["id"] + "]"
+    throw new GenerationException(title, reason, [hint], null)
+}
+def templateFile = getLayoutFile(templatePath, LayoutType.COMPONENT, getComponentType(getInteractionElement(component)))
+if (!templateFile) {
+	def title = "Component Layout Not Found"
+	def reason = "Unable to find the component layout \'" + templatePath + "\'"
+	def hint = "Check the project for the missing component layout [name = " + templatePath + "] associated with the view component [id = " + component["id"] + "]"
+	throw new GenerationException(title, reason, [hint], null)
+}
+addUsedTemplate(templatePath)
+
+/* Render the Layout Component in a wrapper */
+printRaw(executeContextTemplate("MVC/Wrapper.template", ["refreshFragmentType": "control", "inspectElementsType": "unit", "allowLazyRefresh": true, "element": component, "content": {
+	
+	/* Visibility condition start */
+	def visibilityCondition = getVisibilityCondition(component)
+	if (visibilityCondition) {
+		%]<c:if test="${[% printJSPTagValue(visibilityCondition) %]}">[%
+	}
+	
+	/* Support AJAX features only if rendered in an HTML page */
+	def componentAjaxSupported = ["html", "xhtml"].contains(pageOutputType.name)
+	
+	/* AJAX Tooltip area start */
+	if (componentAjaxSupported) {
+		printRaw(executeContextTemplate("MVC/Ajax/TooltipAreaStart.template", ["component": component]).trim())
+	}
+	
+	/* Actual Component layout */
+	printRaw(executeTemplate(templateFile.absolutePath, ["params": templateParameters, "templateType": "component"]))
+	
+	/* AJAX Tooltip area end */
+	if (componentAjaxSupported) {
+		printRaw(executeContextTemplate("MVC/Ajax/TooltipAreaEnd.template", ["component": component]).trim())
+	}
+	
+	/* Visibility condition end */
+	if (visibilityCondition) {
+		%]</c:if>[%
+	}
+}]))
+%]

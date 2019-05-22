@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle>
+  <Entry key="JobStatus.JobId">ID</Entry>
+  <Entry key="JobStatus.JobGroup">Group</Entry>
+  <Entry key="JobStatus.JobStatus">Status</Entry>
+  <Entry key="JobStatus.JobDescription">Description</Entry>
+  <Entry key="JobStatus.TriggerId">ID</Entry>
+  <Entry key="JobStatus.TriggerGroup">Group</Entry>
+  <Entry key="JobStatus.TriggerNextFireTimestamp">Next Fire Timestamp</Entry>
+  <Entry key="JobStatus.TriggerDescription">Description</Entry>
+</Bundle>

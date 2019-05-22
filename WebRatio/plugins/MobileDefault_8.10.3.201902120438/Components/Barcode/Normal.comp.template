@@ -1,0 +1,43 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Width" name="width" type="enum" default="card" values="full|inset|card">
+Defines the width of the component inside their container.
+Allowed values are:
+- full: use the full width available
+- inset: add a margin
+- card: add a margin and a shadow
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Use Empty Message" name="use-empty-component-message" type="boolean" default="false">
+Defines the usage of a message for empty components.
+Allowed values are: true or false.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Empty Message Key" name="empty-component-message" type="string" default="emptyComponentMessage">
+Defines the key of the message to use if the component is empty.
+Default value: emptyComponentMessage
+</wr:LayoutParameter>
+[%
+setHTMLOutput()
+def listClass = (params["width"] != "full") ? params["width"] : ""
+listClass = (listClass == "inset") ? "list-" + listClass : listClass
+
+def useEmptyComponentMessage = params["use-empty-component-message"] == "true"
+def emptyComponentMessage = params["empty-component-message"]
+%]
+<div class="<wr:StyleClass/> wr-comp-Barcode">
+	<div ng-if="view.barcode" class="list [%= listClass %]">
+		<wr:Frame>
+			<div class="item item-image">
+				<img wr-blob="view.barcode.image" ng-src="{{ blob.url }}"/>
+				<img ng-if="view.barcode.encodeFailure" src="MobileDefault/images/image-not-available.svg"/>
+			</div>
+		</wr:Frame>
+	</div>
+	[% if (useEmptyComponentMessage) { %]
+		<div ng-if="!view.barcode" class="wr-empty-message list [%= listClass %]">
+			<wr:Frame>
+				<div class="item item-text-wrap">
+					{{ '[%= emptyComponentMessage %]' | wrLocalize }}
+				</div>
+			</wr:Frame>
+		</div>
+	[% } %]
+</div>

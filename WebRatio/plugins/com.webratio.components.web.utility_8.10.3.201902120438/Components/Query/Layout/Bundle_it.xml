@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle>
+  <Entry key="Query.First">primo</Entry>
+  <Entry key="Query.Jump">vai a</Entry>
+  <Entry key="Query.Last">ultimo</Entry>
+  <Entry key="Query.Next">successivo</Entry>
+  <Entry key="Query.NoItemsShownOf">Nessun elemento visualizzato su</Entry>
+  <Entry key="Query.Previous">precedente</Entry>
+  <Entry key="Query.Of">di</Entry>
+  <Entry key="Query.To">a</Entry>
+  <Entry key="Query.From">da</Entry>
+  <Entry key="Query.noDiplayAtrributes">Nessun display attribute selezionato</Entry>
+  <Entry key="Query.wrongExtAttributeCondition">Una o più condizioni sono basate su attributi fuori dal table space</Entry>
+  <Entry key="Query.wrongGrouping">Tutti i display attribute devono essere utilizzati nel raggruppamento o nella funzione aggregata</Entry>
+</Bundle>

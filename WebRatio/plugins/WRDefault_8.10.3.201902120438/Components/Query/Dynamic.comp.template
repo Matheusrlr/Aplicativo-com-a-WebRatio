@@ -1,0 +1,302 @@
+#?delimiters [%, %], [%=, %]
+[%
+setHTMLOutput()
+import org.apache.commons.lang.StringUtils
+def unitId = component["id"]
+
+
+def rowEvents = component.selectNodes("layout:Event[string(@scroll) != 'true' and NavigationFlow/ParameterBinding[starts-with(@source, 'data[]')]]")
+def bottomEvents = component.selectNodes("layout:Event[string(@scroll) != 'true' ]").findAll{!rowEvents.contains(it)}
+
+
+
+def isScrollable = component["blockFactor"] != "" ? "true": "false"
+def firstLink = component.selectSingleNode("layout:Event[contains(@event,'First')]")
+def previousLink = component.selectSingleNode("layout:Event[contains(@event,'Previous')]")
+def blockLink = component.selectSingleNode("layout:Event[contains(@event,'Block')]")
+def nextLink = component.selectSingleNode("layout:Event[contains(@event,'Next')]")
+def lastLink = component.selectSingleNode("layout:Event[contains(@event,'Last')]")
+ 
+def getIconPath(folder, name, extension) {
+   folder = StringUtils.defaultIfEmpty(folder, params["icon-folder"])
+   extension = StringUtils.defaultIfEmpty(extension, params["icon-extension"])
+   return getFilePath(folder, name, extension)
+}
+%]
+
+
+<c:if test="${not(empty <wr:Id context="component"/>) and (<wr:Id context="component"/>.dataSize gt 0)}">
+	<wr:Frame>
+		<div class="plain <wr:StyleClass/>">
+			<div class="plain Query">
+			    [% if (isScrollable == "true") { %]
+                    <c:if test="${<wr:Id context="component"/>.scroller.of gt <wr:Id context="component"/>.scroller.blockFactor}">
+                        <table border="0" cellspacing="1" cellpadding="2">
+                            <tr> 
+                                [% if (firstLink) { %]
+	                                <td class="scrollText">
+	                                    <wr:Visible context="firstLink">
+	                                        <c:choose>
+	                                            <c:when test="${<wr:Id context="component"/>.scroller.current ne <wr:Id context="component"/>.scroller.first}">
+	                                                <wr:Event class="scroll" context="firstLink"/>
+	                                            </c:when>
+	                                            <c:otherwise>
+	                                                [% def firstLinkLayout = getLayout(firstLink, LayoutType.EVENT)
+	                                                   if (firstLinkLayout.parameters["show"] && (firstLinkLayout.parameters["show"] == "icon" || firstLinkLayout.parameters["show"] == "icon & text")) { 
+	                                                       def folder = firstLinkLayout.parameters["icon-folder"]
+	                                                       def extension = firstLinkLayout.parameters["icon-extension"]
+	                                                %]
+	                                                    <table cellspacing="0" cellpadding="0">
+	                                                        <tr>
+	                                                            <td valign="middle">
+	                                                                <img src="[%=getIconPath(folder, getById(firstLink["event"])?.attributeValue("name"), extension) %]" border="0"/>
+	                                                            </td>
+	                                                            [% if (firstLinkLayout.parameters["show"] == "icon & text") { %]
+	                                                            <td>
+	                                                                <spring:message code="Query.First"/>
+	                                                            </td>
+	                                                            [% } %]
+	                                                        </tr>
+	                                                    </table>
+	                                                [% } else { %]
+	                                                    <span><spring:message code="Query.First"/></span>
+	                                                [% } %]
+	                                            </c:otherwise>
+	                                        </c:choose>
+	                                    </wr:Visible>
+	                                </td>
+                                [% } %]
+                                [% if (previousLink) { %]
+	                                <td class="scrollText">
+	                                    <wr:Visible context="previousLink">
+	                                        <c:choose>
+	                                            <c:when test="${<wr:Id context="component"/>.scroller.current ne <wr:Id context="component"/>.scroller.previous}">
+	                                                <wr:Event class="scroll" context="previousLink"/>
+	                                            </c:when>
+	                                            <c:otherwise>
+	                                                [% def previousLinkLayout = getLayout(previousLink, LayoutType.EVENT)
+	                                                   if (previousLinkLayout.parameters["show"] && (previousLinkLayout.parameters["show"] == "icon" || previousLinkLayout.parameters["show"] == "icon & text")) { 
+	                                                      def folder = previousLinkLayout.parameters["icon-folder"]
+	                                                      def extension = previousLinkLayout.parameters["icon-extension"]
+	                                                %]
+	                                                    <table cellspacing="0" cellpadding="0">
+	                                                        <tr>
+	                                                            <td valign="middle">
+	                                                                <img src="[%=getIconPath(folder, getById(previousLink["event"])?.attributeValue("name"), extension) %]" border="0"/>
+	                                                            </td>
+	                                                            [% if (previousLinkLayout.parameters["show"] == "icon & text") { %]
+	                                                                <td>
+	                                                                    <spring:message code="Query.Previous"/>
+	                                                                </td>
+	                                                            [% } %]
+	                                                        </tr>
+	                                                    </table>
+	                                                [% } else { %]
+	                                                    <span><spring:message code="Query.Previous"/></span>
+	                                                [% } %]
+	                                            </c:otherwise>
+	                                        </c:choose>
+	                                    </wr:Visible>
+	                                </td>
+                                [% } %]
+                                <td class="scrollText" nowrap>${<wr:Id context="component"/>.scroller.from} <spring:message code="Query.To"/> ${<wr:Id context="component"/>.scroller.to} <spring:message code="Query.Of"/> ${<wr:Id context="component"/>.scroller.of}</td>
+                                [% if (nextLink) { %]
+	                                <td class="scrollText">
+	                                    <wr:Visible context="nextLink">
+	                                        <c:choose>
+	                                            <c:when test="${<wr:Id context="component"/>.scroller.current ne <wr:Id context="component"/>.scroller.next}">
+	                                                <wr:Event class="scroll" context="nextLink"/>
+	                                            </c:when>
+	                                            <c:otherwise>
+	                                                [% def nextLinkLayout = getLayout(nextLink, LayoutType.EVENT)
+	                                                if (nextLinkLayout.parameters["show"] && (nextLinkLayout.parameters["show"] == "icon" || nextLinkLayout.parameters["show"] == "icon & text")) { 
+	                                                    def folder = nextLinkLayout.parameters["icon-folder"]
+	                                                    def extension = nextLinkLayout.parameters["icon-extension"]
+	                                                %]
+	                                                    <table cellspacing="0" cellpadding="0">
+	                                                        <tr>
+	                                                            <td valign="middle">
+	                                                                <img src="[%=getIconPath(folder, getById(nextLink["event"])?.attributeValue("name"), extension) %]" border="0"/>
+	                                                            </td>
+	                                                            [% if (nextLinkLayout.parameters["show"] == "icon & text") { %]
+	                                                                <td>
+	                                                                    <spring:message code="Query.Next"/>
+	                                                                </td>
+	                                                            [% } %]
+	                                                        </tr>
+	                                                    </table>
+	                                                [% } else { %]
+	                                                    <span><spring:message code="Query.Next"/></span>
+	                                                [% } %]
+	                                            </c:otherwise>
+	                                        </c:choose>
+	                                    </wr:Visible>
+	                                </td>
+                                [% } %]
+                                [% if (lastLink) { %]
+	                                <td class="scrollText">
+	                                    <wr:Visible context="lastLink">
+	                                        <c:choose>
+	                                            <c:when test="${<wr:Id context="component"/>.scroller.current ne <wr:Id context="component"/>.scroller.last}">
+	                                               <wr:Event class="scroll" context="lastLink"/>
+	                                            </c:when>
+	                                            <c:otherwise>
+	                                                [% def lastLinkLayout = getLayout(lastLink, LayoutType.EVENT)
+	                                                if (lastLinkLayout.parameters["show"] && (lastLinkLayout.parameters["show"] == "icon" || lastLinkLayout.parameters["show"] == "icon & text")) { 
+	                                                    def folder = lastLinkLayout.parameters["icon-folder"]
+	                                                    def extension = lastLinkLayout.parameters["icon-extension"]
+	                                                %]
+	                                                    <table cellspacing="0" cellpadding="0">
+	                                                        <tr>
+	                                                            <td valign="middle">
+	                                                                <img src="[%=getIconPath(folder, getById(lastLink["event"])?.attributeValue("name"), extension) %]" border="0"/>
+	                                                            </td>
+	                                                            [% if (lastLinkLayout.parameters["show"] == "icon & text") { %]
+	                                                                <td>
+	                                                                    <spring:message code="Query.Last"/>
+	                                                                </td>
+	                                                            [% } %]
+	                                                        </tr>
+	                                                    </table>
+	                                                [% } else { %]
+	                                                    <span><spring:message code="Query.Last"/></span>
+	                                                [% } %] 
+	                                            </c:otherwise>
+	                                        </c:choose>
+	                                    </wr:Visible>
+	                                </td>
+                                [% } %]
+                            </tr>
+                            [% if (blockLink) { %]
+	                            <tr>  
+	                                <td colspan="5" class="scrollText"> 
+	                                    <wr:Visible context="blockLink">
+	                                        <span><spring:message code="Query.Jump"/></span>
+	                                        <c:forEach var="current" varStatus="status" items="${<wr:Id context="component"/>.scroller.blocks}">
+	                                            <c:set var="index" value="${status.index}"/>
+	                                            <span class="jump">
+	                                                <c:choose>
+	                                                    <c:when test="${current ne <wr:Id context="component"/>.scroller.current}">
+	                                                        <a class="<wr:StyleClass context="blockLink"/> link" href="<wr:URL context="blockLink"/>" onclick="<wr:AjaxURL context="blockLink" />">${current}</a>
+	                                                    </c:when>
+	                                                    <c:otherwise>
+	                                                        ${current}
+	                                                    </c:otherwise>
+	                                                </c:choose>
+	                                            </span>
+	                                        </c:forEach> 
+	                                    </wr:Visible>
+	                                </td>
+	                            </tr>
+                            [% } %]
+                        </table>
+                    </c:if>
+                [%}%]
+				<table>
+					<tr>
+						<td>
+							<table border="0" cellspacing="1" cellpadding="2">
+								<tr>
+								  <th class="header"></th>
+								     <c:forEach var="output" varStatus="status" items="${<wr:Id context="component"/>.outputs}">
+										<th valign="top" class="header" nowrap="nowrap">
+											<c:out value="${output.label}"/>
+										</th>
+                                     </c:forEach>
+                                     [% if (!rowEvents.empty) {%]
+                                         [%for(l in rowEvents){%]
+                                           <wr:Visible context="l"><th class="header"></th></wr:Visible>
+                                         [% } %]
+                                     [% } %]									
+                                </tr>
+								<c:forEach var="current" varStatus="status" items="${<wr:Id context="component"/>.data}">
+									<c:set var="index" value="${status.index}"/>
+									<tr>
+										<td>
+											<img src="WRResources/spacer.gif" class="bullet" border="0" alt=""/>
+										</td>
+										<c:forEach var="output" varStatus="status" items="${<wr:Id context="component"/>.outputs}">
+										<td class="value">
+											<c:choose>
+											   <c:when test="${output.type eq 'boolean'}">
+                                                  <c:choose>
+                                                    <c:when test="${current[output.name]}">
+                                                      <spring:message code="${output.typeId}.yes"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                      <spring:message code="${output.typeId}.no"/>
+                                                    </c:otherwise>
+                                                  </c:choose>
+                                               </c:when>
+                                               <c:when test="${output.dateTime}">
+                                                  <fmt:formatDate value="${current[output.name]}" pattern="${pageScope[output.pattern]}"/>
+                                               </c:when>
+											   <c:when test="${output.localized}">
+                                                  <fmt:formatNumber value="${current[output.name]}" pattern="${pageScope[output.pattern]}"/>
+                                               </c:when>
+                                               <c:when test="${output.type eq 'blob'}">
+                                                   <c:if test="${not (empty current[output.name])}">
+                                                   <c:choose>
+                                                       <c:when test="${fn:startsWith(output.contentType, 'image')}">
+                                                         <img border="0" src="<webratio:BLOB value="${current[output.name]}"/>" alt="<c:out value="${current[output.name].name}"/>"/>
+                                                       </c:when>
+                                                       <c:otherwise>
+                                                         <a border="0" href="<webratio:BLOB value="${current[output.name]}"/>"><c:out value="${current[output.name].name}"/></a>
+                                                       </c:otherwise>
+                                                   </c:choose>
+                                                   </c:if>
+                                               </c:when>
+                                               <c:when test="${output.type eq 'url'}">
+                                                    <c:if test="${not(empty current[output.name])}">
+                                                        <c:choose>
+                                                            <c:when test="${output.contentType eq 'email' or output.contentType eq 'mail'}">
+                                                              <c:set var="encEmail" value="${current[output.name]}"/>
+                                                              <c:set var="encEmail">mailto:<%= java.net.URLEncoder.encode((String)pageContext.getAttribute("encEmail"), "US-ASCII")%></c:set>
+                                                              <a target="_blank" href="<c:out value="${encEmail}"/>"><c:out value="${current[output.name]}"/></a>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                              <a target="_blank" href="<c:out value="${current[output.name]}"/>"><c:out value="${current[output.name]}"/></a>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:if>
+                                               </c:when>
+                                               <c:when test="${output.contentType eq 'text/html'}">
+                                                  <c:out value="${current[output.name]}" escapeXml="false"/>
+                                               </c:when>
+                                               <c:otherwise>
+											      <c:out value="${current[output.name]}"/>
+											   </c:otherwise>
+											</c:choose>
+										</td>
+                                        </c:forEach>
+                                        [% if (!rowEvents.empty) {%]
+                                          [%for(l in rowEvents){%]
+                                            <wr:Visible context="l" position="'index'"><td><wr:Event class="link" context="l"/></td></wr:Visible>
+                                          [% } %]
+                                        [% } %]
+									</tr>
+								</c:forEach>
+							 </table>
+						 </td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</wr:Frame>
+</c:if>
+<c:if test="${not(empty <wr:Id context="component"/>) and not(empty <wr:Id context="component"/>.errors) }">
+    <wr:Frame>
+		<div class="plain <wr:StyleClass/>">
+			<div class="plain Query">
+				<table>
+				  <c:forEach var="current" varStatus="status" items="${<wr:Id context="component"/>.errors}">
+					 <tr>
+						<td><spring:message code="${current}"/></td>
+					 </tr>
+				  </c:forEach>	
+				</table>
+			</div>
+		</div>
+	</wr:Frame>	
+</c:if>
+

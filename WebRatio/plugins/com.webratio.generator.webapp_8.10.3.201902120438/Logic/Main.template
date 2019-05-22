@@ -1,0 +1,610 @@
+#?delimiters [%, %], [%=, %]
+[%
+import org.apache.commons.io.FileUtils
+import com.webratio.generator.GenerationException
+import com.webratio.generator.contributors.GeneratorContributorHelper
+import com.webratio.generator.webapp.output.FileType
+import com.webratio.generator.TimeLogger
+import com.webratio.generator.OrderingScheduler
+
+def registerGenerationException(element, exception, descrName, wr) {
+	descrName = descrName ?: "runtime"
+	def title = "Error generating runtime descriptor"
+	def reason = "Unable to generate the " + descrName + " descriptor for " + element["name"] + " [" + element["id"] + "]"
+	def hint = "Check the project model for errors or warnings"
+	def genExc = new GenerationException(title, reason, [hint], exception)
+	genExc.setTargetId(element["id"])
+	wr.generationExceptions.add(genExc)
+}
+
+def registerProjectGenerationException(exception, message, wr) {
+	def title = "Error generating runtime descriptor"
+	def reason = "Unable to generate the " + message
+	def hint = "Check the project model for errors or warnings"
+	def genExc = new GenerationException(title, reason, [hint], exception)
+	genExc.setTargetId("Project")
+	wr.generationExceptions.add(genExc)
+}
+
+def getCustomDescriptor(id, wr){
+	def descrFile = new File(wr.projectDir, "/WebContent/WEB-INF/descr/" + id + ".descr")
+	if (descrFile.exists()) {
+		wr.descrToSkip.add(id + ".descr")
+		return parseXMLFile(descrFile)
+	}
+	return null;
+}
+
+def getLogicContainerPath(elem) {
+	//def container = elem.selectSingleNode("ancestor-or-self::ServicePort")
+	//if (container) {
+	//	return container["id"] + "/"
+	//}
+	return ""
+}
+
+def createDescriptor(template, parameters, name, customDescriptorName, wr) {
+	
+	/* Extract from a custom descriptor, if possible, or use the internal template */
+	def output = null
+	if (customDescriptorName) {
+		output = getCustomDescriptor(customDescriptorName, wr)
+	}
+	if (!output) {
+		output = parseXMLString(executeTemplate(template, parameters))
+	}
+	
+	/* Append name attribute, if required */
+	if (name && !output.rootElement["name"]) {
+		output.rootElement.addAttribute("name", name)
+	}
+	
+	return output
+}
+
+def addAuxiliarylDescriptor(mainDescr, commentText, elementName, extensible, template, parameters, customDescriptorName, wr) {
+	
+	/* Honor the element if it is already present in the output template */
+	def existingAuxRoot = mainDescr.rootElement.selectSingleNode("*[local-name()='" + elementName + "' and namespace-uri()='" + WR_LOGIC_NS_URI + "']")
+	if (existingAuxRoot && !extensible) {
+		return
+	}
+	
+	/* Extract from a custom descriptor, if possible, or use the internal template */
+	def auxDescr = null
+	if (customDescriptorName) {
+		auxDescr = getCustomDescriptor(customDescriptorName, wr)
+	}
+	if (!auxDescr) {
+		def auxOutput = executeTemplate(template, parameters)?.trim()
+		auxDescr = (auxOutput ? parseXMLString(auxOutput) : null)
+	}
+	
+	/* Append auxiliary root to the main descriptor */
+	if (auxDescr) {
+		def auxRoot = auxDescr.rootElement.detach()
+		auxRoot.setQName(org.dom4j.QName.get(elementName, "wr", WR_LOGIC_NS_URI))
+		if (existingAuxRoot) {
+			existingAuxRoot.addAttribute("class", auxRoot["class"])
+			existingAuxRoot.appendContent(auxRoot)
+		} else {
+			mainDescr.rootElement.addComment(commentText)
+			mainDescr.rootElement.add(auxRoot)
+		}
+	}
+}
+
+def generateCommonDescriptors = (wr.projectType.name() in ["ENTERPRISE", "WEBPROJECT", "BPM"])
+def generatePrivateDescriptors = (wr.projectType.name() in ["WEBMODEL", "MODULE", "WEBPROJECT", "BPM"])
+def privateDescrFolder = wr.projectType.name() != "BPM" ? ("WEB-INF/descr") : ("/descr")
+def commonDescrFolder = privateDescrFolder
+if (wr.projectType.name() == "ENTERPRISE") {
+	commonDescrFolder = rootModuleName + ".jar/descr"
+}
+
+def _steps = 8
+if (generateCommonDescriptors) {
+	_steps += 3
+}
+if (generatePrivateDescriptors) {
+	_steps += 5 + 200		
+}
+eventSocketClient.sendBeginTask("Logic", _steps)
+
+/* Ensure the descriptor folder exists */
+eventSocketClient.sendTaskWorked("Logic", 1)
+
+/* Create or update AppLogConfig.properties */
+executeContextTemplate("Logic/AppLogConfig.template")
+eventSocketClient.sendTaskWorked("Logic", 1)
+TimeLogger.worked("AppLogConfigTemplate")
+
+/* Generate the model service descriptor */
+processOutputFile(commonDescrFolder + "/_model.descr", "model descriptor", wr.project, { modelFile ->
+	try {
+		modelFile.write(serializeXML(executeContextTemplate("Logic/Model.template"), true))
+	} catch (Throwable exc) {
+		registerProjectGenerationException(exc, "model service descriptor", wr)
+	}
+})
+eventSocketClient.sendTaskWorked("Logic", 1)
+TimeLogger.worked("Model")
+
+/* Generate the job manager descriptor */
+processOutputFile(commonDescrFolder + "/_job.manager.descr", "job manager descriptor", wr.project, { jobManagerFile ->
+	try {
+		jobManagerFile.write(serializeXML(executeContextTemplate("Logic/JobManager.template", ["forceMemory": false]), true))
+	} catch(Throwable exc) {
+		registerProjectGenerationException(exc, "job manager service descriptor", wr)
+	}
+})
+eventSocketClient.sendTaskWorked("Logic", 1)
+TimeLogger.worked("JobManager")
+
+/* Generate the XSD descriptor */
+processOutputFile(commonDescrFolder + "/_xsd.descr", "XSD descriptor", wr.project, { xsdFile ->
+	try {
+		xsdFile.write(serializeXML(executeContextTemplate("Logic/XSD.template"), true))
+	} catch (Throwable exc) {
+		registerProjectGenerationException(exc, "XSD service descriptor", wr)
+	}
+})
+eventSocketClient.sendTaskWorked("Logic", 1)
+TimeLogger.worked("XSD")
+
+/* Generate the WS descriptor */
+processOutputFile(commonDescrFolder + "/_ws.descr", "WS descriptor", wr.project, { wsFile ->
+	try {
+		wsFile.write(serializeXML(executeContextTemplate("Logic/WS.template"), true))
+	} catch (Throwable exc) {
+		registerProjectGenerationException(exc, "WS service descriptor", wr)
+	}
+})
+eventSocketClient.sendTaskWorked("Logic", 1)
+TimeLogger.worked("WS")
+
+/* Generate the cache service descriptor */
+processOutputFile(commonDescrFolder + "/_cache.descr", "cache descriptor", wr.project, { modelFile ->
+	try {
+		modelFile.write(serializeXML(executeContextTemplate("Logic/Cache.template"), true))
+	} catch (Throwable exc) {
+		registerProjectGenerationException(exc, "cache service descriptor", wr)
+	}
+})
+eventSocketClient.sendTaskWorked("Logic", 1)
+TimeLogger.worked("Cache")
+
+/* Generate the private descriptors (WEBPROJECT, WEBMODEL, MODULE project types only) */
+if (generatePrivateDescriptors) {
+	wr.outputManager.getFile(privateDescrFolder).mkdirs()
+	
+	/* Auxiliary descriptors */
+	def eventsSupportTemplate = wr.locateResourceFile("Logic/Elements/Auxiliary/EventsSupport.template")
+	def pageParamsTemplate = wr.locateResourceFile("Logic/Elements/Auxiliary/PageParams.template")
+	def formBeanSupportTemplate = wr.locateResourceFile("Logic/Elements/Auxiliary/FormBeanSupport.template")
+	def validationSupportTemplate = wr.locateResourceFile("Logic/Elements/Auxiliary/ValidationSupport.template")
+	def chainCompParamsTemplate = wr.locateResourceFile("Logic/Elements/Auxiliary/ChainCompParams.template")
+	
+	/*
+	 * Generation group definitions
+	 */
+	
+	def descriptorsGeneration = new OrderingScheduler("Private descriptors generation")
+	
+	/* Page descriptors */
+	def pageTemplate = wr.locateResourceFile("Logic/Elements/Page.template")
+	descriptorsGeneration.addGroup("pages", { page ->
+		processOutputFile(FileType.PRIVATE_LOGIC_DESCRIPTOR, page, { outputFile ->
+			try {
+				def output = createDescriptor(pageTemplate, ["page": page], null, page["id"], wr)
+				addAuxiliarylDescriptor(output, "Page Decorator Service", "DecoratorService", false, pageParamsTemplate, ["page": page], page["id"] + ".params", wr)
+				addAuxiliarylDescriptor(output, "Events Support", "EventsSupport", false, eventsSupportTemplate, ["element": page], null, wr)
+				outputFile.writeAsync(serializeXML(output, true))
+			} catch (Throwable exc) {
+				registerGenerationException(page, exc, "page", wr)
+			}
+		})
+	})
+	
+	/* View components descriptors */
+	descriptorsGeneration.addGroup("view components", { viewComp ->
+		def viewCompDir = wr.explorer.viewComponentTypes().getDirectory(getComponentType(viewComp))
+		def logicTemplate = new File(viewCompDir, "Logic/Logic.template")
+		if (logicTemplate.exists()) {
+			processOutputFile(FileType.PRIVATE_LOGIC_DESCRIPTOR, viewComp, { outputFile ->
+				try {
+					def output = createDescriptor(logicTemplate, ["component": viewComp], null, viewComp["id"], wr)
+					if (isFormBased(viewComp)) {
+						addAuxiliarylDescriptor(output, "Validation Support", "ValidationSupport", true, validationSupportTemplate, ["viewComp": viewComp], null, wr)
+						addAuxiliarylDescriptor(output, "Form Bean Support", "FormBeanSupport", false, formBeanSupportTemplate, ["viewComp": viewComp], null, wr)
+					}
+					addAuxiliarylDescriptor(output, "Events Support", "EventsSupport", false, eventsSupportTemplate, ["element": viewComp], null, wr)
+					outputFile.writeAsync(serializeXML(output, true))
+				} catch (Throwable exc) {
+					registerGenerationException(viewComp, exc, "view component", wr)
+				}
+			})
+		}
+	})
+	
+	/* Operations descriptors */
+	descriptorsGeneration.addGroup("operations", { operation ->
+		def operationDir = wr.explorer.operationTypes().getDirectory(getComponentType(operation))
+		def logicTemplate = new File(operationDir, "Logic/Logic.template")
+		if (!logicTemplate.exists()) {
+			return
+		}
+		processOutputFile(FileType.PRIVATE_LOGIC_DESCRIPTOR, operation, { outputFile ->
+			try {
+				def output = createDescriptor(logicTemplate, ["component": operation], operation["name"], operation["id"], wr)
+				addAuxiliarylDescriptor(output, "Operation Decorator Service", "DecoratorService", false, chainCompParamsTemplate, ["chainComp": operation], operation["id"] + ".params", wr)
+				outputFile.writeAsync(serializeXML(output, true))
+			} catch (Throwable exc) {
+				registerGenerationException(operation, exc, "operation", wr)
+			}
+		})
+	})
+	
+	/* Floating events descriptors */
+	def eventLogicTemplatePaths = [
+		"JumpEvent": "Logic/Elements/JumpEvent.template",
+		"LandingEvent": "Logic/Elements/LandingEvent.template",
+		"SetContextEvent": "Logic/Elements/SetContextEvent.template"
+	]
+	descriptorsGeneration.addGroup("floating events", { event ->
+		def logicTemplatePath = eventLogicTemplatePaths[event.name]
+		if (logicTemplatePath) {
+			def logicTemplate = wr.locateResourceFile(logicTemplatePath)
+			processOutputFile(FileType.PRIVATE_LOGIC_DESCRIPTOR, event, { outputFile ->
+				try {
+					def output = createDescriptor(logicTemplate, ["event": event], event["name"], event["id"], wr)
+					addAuxiliarylDescriptor(output, "Event Decorator Service", "DecoratorService", false, chainCompParamsTemplate, ["chainComp": event], event["id"] + ".params", wr)
+					outputFile.writeAsync(serializeXML(output, true))
+				} catch (Throwable exc) {
+					registerGenerationException(event, exc, "event", wr)
+				}
+			})
+		} else {
+			registerGenerationException(event, new RuntimeException("Unknown event type"), "event", wr)
+		}
+	})
+	
+	/* Modules descriptors */
+	def moduleLogicTemplate = wr.locateResourceFile("Logic/Elements/Module.template")
+	descriptorsGeneration.addGroup("modules", { module ->
+		processOutputFile(FileType.PRIVATE_LOGIC_DESCRIPTOR, module, { outputFile ->
+			try {
+				def output = createDescriptor(moduleLogicTemplate, ["module": module], module["name"], module["id"], wr)
+				if (!getClosestTopGenericPage(module)) {
+					addAuxiliarylDescriptor(output, "Module Decorator Service", "DecoratorService", false, chainCompParamsTemplate, ["chainComp": module], module["id"] + ".params", wr)
+				}
+				outputFile.writeAsync(serializeXML(output, true))
+			} catch (Throwable exc) {
+				registerGenerationException(module, exc, "module", wr)
+			}
+		})
+	})
+	
+	/* Actions descriptors */
+	def actionLogicTemplate = wr.locateResourceFile("Logic/Elements/Action.template")
+	descriptorsGeneration.addGroup("actions", { action ->
+		processOutputFile(FileType.PRIVATE_LOGIC_DESCRIPTOR, action, { outputFile ->
+			try {
+				def output = createDescriptor(actionLogicTemplate, ["action": action], action["name"], action["id"], wr)
+				if (!getClosestTopGenericPage(action)) {
+					addAuxiliarylDescriptor(output, "Action Decorator Service",  "DecoratorService", false, chainCompParamsTemplate, ["chainComp": action], action["id"] + ".params", wr)
+				}
+				addAuxiliarylDescriptor(output, "Events Support", "EventsSupport", false, eventsSupportTemplate, ["element": action], null, wr)
+				outputFile.writeAsync(serializeXML(output, true))
+			} catch (Throwable exc) {
+				registerGenerationException(action, exc, "action", wr)
+			}
+		})
+	})
+	
+	/* Action definitions descriptors */
+	def actionDefTemplate = wr.locateResourceFile("Logic/Elements/ActionDefinition.template")
+	descriptorsGeneration.addGroup("action definitions", { actionDef ->
+		processOutputFile(FileType.PRIVATE_LOGIC_DESCRIPTOR, actionDef, { outputFile ->
+			try {
+				def output = executeTemplate(actionDefTemplate, ["actionDef": actionDef])
+				outputFile.writeAsync(serializeXML(output, true))
+			} catch (Throwable exc) {
+				registerGenerationException(actionDef, exc, "action definition", wr)
+			}
+		})
+	})
+	
+	/* Port definitions descriptors */
+	def portDefLogicTemplate = wr.locateResourceFile("Logic/Elements/PortDefinition.template")
+	descriptorsGeneration.addGroup("port definitions", { portDef ->
+		processOutputFile(FileType.PRIVATE_LOGIC_DESCRIPTOR, portDef, { outputFile ->
+			try {
+				def output = createDescriptor(portDefLogicTemplate, ["portDef": portDef], portDef["name"], portDef["id"], wr)
+				addAuxiliarylDescriptor(output, "Port Definition Decorator Service", "DecoratorService", false, chainCompParamsTemplate, ["chainComp": portDef], portDef["id"] + ".params", wr)
+				outputFile.writeAsync(serializeXML(output, true))
+			} catch (Throwable exc) {
+				registerGenerationException(portDef, exc, "port definition", wr)
+			}
+		})
+	})
+	
+	/* Synthetic page collectors descriptors */
+	def wrPageCollLogicTemplate = wr.locateResourceFile("Logic/Elements/WRPageCollector.template")
+	descriptorsGeneration.addGroup("page collectors", { pageColl ->
+		processOutputFile(FileType.PRIVATE_LOGIC_DESCRIPTOR, pageColl, { outputFile ->
+			try {
+				def output = createDescriptor(wrPageCollLogicTemplate, ["pageColl": pageColl], pageColl["name"], pageColl["id"], wr)
+				outputFile.writeAsync(serializeXML(output, true))
+			} catch (Throwable exc) {
+				registerGenerationException(pageColl, exc, "page collector", wr)
+			}
+		})
+	})
+	
+	/* Synthetic chain collectors descriptors */
+	def wrChainCollLogicTemplate = wr.locateResourceFile("Logic/Elements/WRChainCollector.template")
+	descriptorsGeneration.addGroup("chain collectors", { chainColl ->
+		processOutputFile(FileType.PRIVATE_LOGIC_DESCRIPTOR, chainColl, { outputFile ->
+			try {
+				def output = createDescriptor(wrChainCollLogicTemplate, ["chainColl": chainColl], chainColl["name"], chainColl["id"], wr)
+				addAuxiliarylDescriptor(output, "Chain Collector Decorator Service", "DecoratorService", false, chainCompParamsTemplate, ["chainComp": chainColl], chainColl["id"] + ".params", wr)
+				outputFile.writeAsync(serializeXML(output, true))
+			} catch (Throwable exc) {
+				registerGenerationException(chainColl, exc, "chain collector", wr)
+			}
+		})
+	})
+	
+	/* Flows descriptors */
+	def flowTemplate = wr.locateResourceFile("Logic/Elements/Flow.template")
+	descriptorsGeneration.addGroup("flows", { flow ->
+		processOutputFile(FileType.PRIVATE_LOGIC_DESCRIPTOR, flow, { outputFile ->
+			try {
+				def output = executeTemplate(flowTemplate, ["flow": flow])
+				outputFile.writeAsync(serializeXML(output, true))
+			} catch (Throwable exc) {
+				registerGenerationException(flow, exc, "flow", wr)
+			}
+		})
+	})
+	
+	/* Landmark events pseudo-flow descriptors */
+	def landmarkEventFlowTemplate = wr.locateResourceFile("Logic/Elements/LandmarkEventFlow.template")
+	descriptorsGeneration.addGroup("landmark events", { element ->
+		processOutputFile(FileType.LANDMARK_DESCRIPTOR, element, { outputFile ->
+			try {
+				def output = executeTemplate(landmarkEventFlowTemplate, ["element": element])
+				outputFile.writeAsync(serializeXML(output, true))
+			} catch (Throwable exc) {
+				registerGenerationException(element, exc, "landmark", wr)
+			}
+		})
+	})
+	
+	/*
+	 * Generation relationships definition
+	 */
+	
+	/* Generate panel components and flows along with their top panel */
+	def PAGE_COMP_GROUPS = ["view components", "modules", "actions", "page collectors"]
+	descriptorsGeneration.addGroupRelationship("pages", PAGE_COMP_GROUPS, { page ->
+		return getPanelComponents(page)
+	})
+	descriptorsGeneration.addGroupRelationship("pages", "flows", { page ->
+		return getFlowsByTopPanel(page)
+	})
+	
+	/* Generate chain components along with other components and flows from their chain */
+	def CHAIN_COMP_GROUPS = ["operations", "floating events", "modules", "actions", "port definitions", "chain collectors"]
+	descriptorsGeneration.addGroupRelationship(CHAIN_COMP_GROUPS, CHAIN_COMP_GROUPS, { chainComp ->
+		if (!getClosestTopGenericPage(chainComp)) { // exclude in-page modules and actions
+			return wr.explorer.chains().getAllComponents(chainComp)
+		}
+		return [];
+	})
+	descriptorsGeneration.addGroupRelationship(CHAIN_COMP_GROUPS, "flows", { chainComp ->
+		def flows = []
+		if (!getClosestTopGenericPage(chainComp)) { // exclude in-page modules and actions
+			wr.explorer.chains().getAllComponents(chainComp).each { otherChainComp ->
+				flows.addAll(getExitingFlows(otherChainComp))
+			}
+		}
+		return flows
+	})
+	
+	/* Generate members of the same ensemble close to each other */
+	descriptorsGeneration.addGroupRelationship("pages", ["pages", "modules"], { page ->
+		if (com.webratio.model.elements.MElements.isEnsembleMember(page)) {
+			return wr.helpers.runtime.getEnsembleRunInfo(page).memberElements
+		}
+		return null
+	})
+	
+	/* Generate chain components and pages after the page they are close to */
+	descriptorsGeneration.addGroupRelationship("pages", ["pages"] + CHAIN_COMP_GROUPS, { page ->
+		return wr.explorer.panelPropagation().getPanelNearbyElements(page)
+	})
+	
+	/*
+	 * Actual generation sequence
+	 */
+	
+	/* Collect model elements */
+	def topPages = getAllTopPages().findAll{ it.attributeValue("_sel", "") == "t" }
+	def masterContainers = getAllMasterContainers().findAll{ it.attributeValue("_sel", "") == "t" }
+	def viewComps = getAllViewComponents().findAll{ it.attributeValue("_sel", "") == "t" }
+	def operations = getAllOperations().findAll{ it.attributeValue("_sel", "") == "t" }
+	def floatingEvents = getAllFloatingEvents().findAll{ it.attributeValue("_sel", "") == "t" }
+	def modules = getAllModules().findAll{ it.attributeValue("_sel", "") == "t" }
+	def actions = getAllActions().findAll{ it.attributeValue("_sel", "") == "t" }
+	def actionDefs = getAllActionDefinitions().findAll{ it.attributeValue("_sel", "") == "t" }
+	def portDefs = getAllPortDefinitions().findAll{ it.attributeValue("_sel", "") == "t" }
+	def pageColls = getAllWRPageCollectors().findAll{ it.attributeValue("_sel", "") == "t" }
+	def chainColls = getAllWRChainCollectors().findAll{ it.attributeValue("_sel", "") == "t" }
+	def flows = getAllFlows().findAll{ it.attributeValue("_sel", "") == "t" }
+	
+	def landmarkEvents = []
+	for (entrance in getAllPossibleEntranceElements().findAll{ it.attributeValue("_sel", "") == "t" }) {
+		if (isLandmarkElement(entrance) || isDefaultElement(entrance) || isHomeElement(entrance)) {
+			landmarkEvents.add(getCallDelegate(entrance))
+		}
+	}
+	
+	descriptorsGeneration.addElements("pages", topPages)
+	descriptorsGeneration.addElements("pages", masterContainers)
+	descriptorsGeneration.addElements("view components", viewComps)
+	descriptorsGeneration.addElements("operations", operations)
+	descriptorsGeneration.addElements("floating events", floatingEvents)
+	descriptorsGeneration.addElements("modules", modules)
+	descriptorsGeneration.addElements("actions", actions)
+	descriptorsGeneration.addElements("action definitions", actionDefs)
+	descriptorsGeneration.addElements("port definitions", portDefs)
+	descriptorsGeneration.addElements("page collectors", pageColls)
+	descriptorsGeneration.addElements("chain collectors", chainColls)
+	descriptorsGeneration.addElements("flows", flows)
+	descriptorsGeneration.addElements("landmark events", landmarkEvents)
+	
+	eventSocketClient.sendTaskWorked("Logic", 1)
+	TimeLogger.worked("CollectElements")
+	
+	/* Generate all logic descriptors of normal model elements */
+	descriptorsGeneration.process(eventSocketClient, "Logic", 200)
+	eventSocketClient.sendTaskDetails("Logic", "")
+	TimeLogger.worked("NormalDescriptors")
+	
+	/* Generate the auto schedule jobs configuration file */
+	for (scheduler in wr.project.selectNodes("JobScheduler")) {
+		processOutputFile(privateDescrFolder + "/" + scheduler["id"] + ".xml", "jobs descriptor", wr.project, { jobsFile ->
+			try {
+				jobsFile.write(serializeXML(executeContextTemplate("Logic/AutoScheduleJobs.template", ["schedulerId": scheduler["id"]]), true))
+			} catch (Throwable exc) {
+				registerProjectGenerationException(exc, "jobs descriptor", wr)
+			}
+		})
+	}
+	eventSocketClient.sendTaskWorked("Logic", 1)
+	TimeLogger.worked("JobsXML")
+	
+	/* Generate the jobs descriptors */
+	def jobTemplate = wr.locateResourceFile("Logic/Job.template")
+	for (job in wr.project.selectNodes("WebModel/ServiceView/Job").findAll{ it.attributeValue("_sel", "") == "t" }) {
+		processOutputFile(FileType.PRIVATE_LOGIC_DESCRIPTOR, job, { outputFile ->
+			try {
+				def output = executeTemplate(jobTemplate, ["job": job])
+				outputFile.writeAsync(serializeXML(output, true))
+			} catch (Throwable exc) {
+				registerGenerationException(job, exc, "job", wr)
+			}
+		})
+	}
+	eventSocketClient.sendTaskWorked("Logic", 1)
+	TimeLogger.worked("Jobs")
+		
+	/* Generate the authentication service descriptor */
+	processOutputFile(privateDescrFolder + "/_auth.descr", "authentication descriptor", wr.project, { authFile ->
+		try {
+			authFile.write(serializeXML(executeContextTemplate("Logic/Authentication.template"), true))
+		} catch (Throwable exc) {
+			registerProjectGenerationException(exc, "authentication service descriptor", wr)
+		}
+	})
+	eventSocketClient.sendTaskWorked("Logic", 1)
+	TimeLogger.worked("Authentication")
+	
+	/* Generate the access service descriptor */
+	processOutputFile(privateDescrFolder + "/_access.descr", "access descriptor", wr.project, { accessFile ->
+		try {
+			accessFile.write(serializeXML(executeContextTemplate("Logic/Access.template"), true))
+		} catch (Throwable exc) {
+			registerProjectGenerationException(exc, "access service descriptor", wr)
+		}
+	})
+	eventSocketClient.sendTaskWorked("Logic", 1)
+	TimeLogger.worked("Access")
+		
+	/* Generate the service ports descriptors */
+	def servicePortTemplate = wr.locateResourceFile("Logic/ServicePort.template")
+	for (servicePort in wr.project.selectNodes("WebModel/ServiceView/ServicePort").findAll{ it.attributeValue("_sel", "") == "t" }) {
+		processOutputFile(FileType.PRIVATE_LOGIC_DESCRIPTOR, servicePort, { outputFile ->
+			try {
+				def output = executeTemplate(servicePortTemplate, ["port": servicePort])
+				outputFile.writeAsync(serializeXML(output, true))
+			} catch (Throwable exc) {
+				registerGenerationException(servicePort, exc, "service port", wr)
+			}
+		})
+	}
+	eventSocketClient.sendTaskWorked("Logic", 1)
+	TimeLogger.worked("ServicePorts")
+}
+
+/* Generate the common descriptors (WEBPROJECT, ENTERPRISE project types only) */
+if (generateCommonDescriptors) {
+	wr.outputManager.getDescriptorFile(commonDescrFolder).mkdirs()
+	
+	/* Create or update RTXConfig.properties */
+	executeContextTemplate("Logic/RTXConfig.template")
+	eventSocketClient.sendTaskWorked("Logic", 1)
+	TimeLogger.worked("RTXConfigTemplate")
+	
+	/* Generate the localization descriptor */
+	processOutputFile(commonDescrFolder + "/_i18n.descr", "i18n descriptor", wr.project, { i18nFile ->
+		try {
+			i18nFile.write(serializeXML(executeContextTemplate("Logic/I18N.template"), true))
+		} catch (Throwable exc) {
+			registerProjectGenerationException(exc, "i18n service descriptor", wr)
+		}
+	})
+	eventSocketClient.sendTaskWorked("Logic", 1)
+	TimeLogger.worked("I18N")
+	
+	/* Generate the job scheduler descriptor(s) */
+	for (scheduler in wr.project.selectNodes("JobScheduler")) {
+		processOutputFile(commonDescrFolder + "/" + scheduler["id"] + ".descr", "job scheduler descriptor", wr.project, { jobSchedulerFile ->
+			try {
+				jobSchedulerFile.write(serializeXML(executeContextTemplate("Logic/JobScheduler.template", ["scheduler": scheduler]), true))
+			} catch (Throwable exc) {
+				registerProjectGenerationException(exc, "job scheduler service descriptor", wr)
+			}
+		})
+	}
+	eventSocketClient.sendTaskWorked("Logic", 1)
+	TimeLogger.worked("JobScheduler")
+}
+
+/* Execute the logic generation contributors */
+def contributions = GeneratorContributorHelper.getLogicContributors()
+if (!contributions.isEmpty()) {
+	eventSocketClient.sendTaskDetails("Logic", "Waiting for file writes")
+	wr.outputManager.waitForAllWrites()
+	eventSocketClient.sendTaskDetails("Logic", "")
+	contributions.each{it.generate(wr)}
+}
+TimeLogger.worked("BPModel")
+
+/* Copy the XML definitions cache file */
+try {
+	def prjDir = wr.projectDir
+	if (wr.projectType.name() in ["WEBMODEL", "MODULE"]) {
+		prjDir = new File(prjDir.parentFile, wr.project["enterpriseProject"])
+	}
+	def srcFile = new File(prjDir, "Config/XmlDefinitions.cache")
+	if (srcFile.exists()) {
+		def descrFolder = wr.outputPath + "/" + privateDescrFolder
+		if (wr.projectType.name() == "ENTERPRISE") {
+			descrFolder = wr.outputPath + "/" + rootModuleName + ".jar/descr"
+		} else if (wr.projectType.name() in ["WEBMODEL","MODULE"]) {
+			descrFolder = wr.outputPath + "/../" + rootModuleName + ".jar/descr"
+		}
+		def schemasFolder = new File(descrFolder, "../schemas")
+		schemasFolder = schemasFolder.getCanonicalFile()
+		schemasFolder.mkdirs()
+		FileUtils.copyFile(srcFile, new File(schemasFolder, "_xmlDefinitions.cache"))
+	}
+} catch (Throwable exc) {
+	registerProjectGenerationException(exc, "XmlDefinitions.cache", wr)
+}
+eventSocketClient.sendTaskWorked("Logic", 1)
+TimeLogger.worked("XmlDefinitions.cache")
+%]

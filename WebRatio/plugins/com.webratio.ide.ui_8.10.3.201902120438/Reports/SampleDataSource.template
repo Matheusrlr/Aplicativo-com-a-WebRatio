@@ -1,0 +1,143 @@
+#?delimiters [%,%],[%=,%]
+[%
+import com.webratio.ide.ui.reports.ReportModelUtils
+import org.apache.commons.lang.math.NumberUtils
+
+reportUtils = new ReportModelUtils(page.document)
+
+def getSampleValue(attrId, index) {
+    def wrType = reportUtils.getType(attrId)
+    switch (wrType) {
+    case "blob":
+        return index + ".png"
+    case "boolean":
+        return (index > 4)
+    case "date":
+        return "2007-10-" + (index < 9 ? ("0" + Integer.toString(index + 1)) : (index + 1))
+    case "decimal":
+        return "2023." + index
+    case "float":
+        return "1023." + index
+    case "integer":
+        return 100 + index
+    case "password":
+        return "Password" + index
+    case "string":
+        return "String Value " + index
+    case "text":
+        return "Text Value " + index + "\nsplitted between two lines"
+    case "time":
+        return "13:20:" + (10 + index)
+    case "timestamp":
+        return "2007-10-23 " + "13:20:" + (10 + index)
+    case "url":
+        return "http://mycompany.com/page" + index + ".jsp"
+    default:
+        return ""
+    }
+}
+def writeLevelSample(level) {
+    def levelXMLName = reportUtils.toValidClassName(level["name"])
+    def entityXMLName = reportUtils.toValidEntityClassName(level["entity"])
+    %]<[%=levelXMLName%]>
+    [% for(attr in level["displayAttributes"].tokenize(" ")) { %]
+        [% def attrXMLName = reportUtils.toValidFieldName(attr) %]
+		    <i18n.[%=attrXMLName%]>[%= attrXMLName %]</i18n.[%=attrXMLName%]>
+		[% } %]
+    [%  for (sampleIndex in 0..2) { 
+        %]<[%=entityXMLName%]>[%
+          for (attr in level["displayAttributes"].tokenize(" ")) {
+              def attrXMLName = reportUtils.toValidFieldName(attr) %]
+              <[%=attrXMLName%]>[%=getSampleValue(attr, sampleIndex)%]</[%=attrXMLName%]>
+          [% }
+          for (subLevel in level.selectNodes("HierarchyLevel")) {
+              writeLevelSample(subLevel)
+          }
+        %]</[%=entityXMLName%]>[%
+      }
+    %]</[%=levelXMLName%]>[%
+}
+def layoutComponents = page.selectNodes(".//layout:Component")
+def unitsById = [:]
+page.selectNodes(".//ViewComponents/*[self::MultipleDetails or self::Hierarchy or self::Message]").each{unitsById[it["id"]] = it}
+def pageXMLName = toValidClassName(page["name"])
+def i18nPropertyNames = new HashSet()
+def i18nProperties = []
+for (i18nProperty in page.selectNodes("Property[@name='i18n']")) {
+    def i18nPropertyName = toValidFieldName(i18nProperty["value"])
+    if (!i18nPropertyNames.contains(i18nPropertyName) && (i18nPropertyName != "")) {
+    	i18nProperties.add(i18nProperty)
+	    i18nPropertyNames.add(i18nPropertyName)
+	}
+}
+%]
+<Report>
+[%  for (i18Property in i18nProperties){
+   		def messageXMLName = toValidFieldName(i18Property["value"])
+   		def messageKey = i18Property["value"]
+%]
+   		<i18n.global.[%= messageXMLName %]>[%= messageKey %]</i18n.global.[%= messageXMLName %]>
+[%   } %]
+[% for (layoutUnit in layoutComponents) { %]
+  [% def unit = unitsById[layoutUnit["componentId"]] %]
+  [% if ((unit != null) && (unit.name == "MultipleDetails")) { %]
+    [%
+      def unitId = unit["id"]
+      def unitXMLName = toValidClassName(unit["name"])
+      def entityXMLName = reportUtils.toValidEntityClassName(unit["entity"])
+      def instanceCount = NumberUtils.toInt(unit["maxResults"], 10)
+    %]
+    <[%=unitXMLName%] dataSize="[%=instanceCount%]">
+      [% for (layoutAttr in layoutUnit.selectNodes("layout:Attribute")) { %]
+        [% def attrXMLName = reportUtils.toValidFieldName(layoutAttr["attribute"]) %]
+		    <i18n.[%=attrXMLName%]>[%=attrXMLName%]</i18n.[%=attrXMLName%]>
+		[% } %]   
+      [% for (index in 0..(instanceCount - 1)) { %]
+        <[%=entityXMLName%]>
+          [% for (layoutAttr in layoutUnit.selectNodes("layout:Attribute")) { %]
+            [% def attrXMLName = reportUtils.toValidFieldName(layoutAttr["attribute"]) %]
+            <[%=attrXMLName%]>[%=getSampleValue(layoutAttr["attribute"], index)%]</[%=attrXMLName%]>
+          [% } %]
+        </[%=entityXMLName%]>
+      [% } %]
+    </[%=unitXMLName%]>
+  [% } else if ((unit != null) && (unit.name == "Message")) { %]
+    [%
+      def unitId = unit["id"]
+      def unitXMLName = toValidClassName(unit["name"])
+      def instanceCount = 3
+    %]
+    <[%=unitXMLName%] dataSize="[%=instanceCount%]">
+      [% for (index in 0..(instanceCount - 1)) { %]
+        <Message>
+            <text>Sample Text [%=index + 1%]</text>
+        </Message>
+      [% } %]
+    </[%=unitXMLName%]>
+  [% } else if ((unit != null) && (unit.name == "Hierarchy")) { %]
+    [%
+      def unitId = unit["id"]
+      def unitXMLName = toValidClassName(unit["name"])
+      def entityXMLName = reportUtils.toValidEntityClassName(unit["entity"])
+      def instanceCount = NumberUtils.toInt(unit["maxResults"], 10)
+    %]
+    <[%=unitXMLName%] dataSize="[%=instanceCount%]">
+      [% for (attr in unit["displayAttributes"].tokenize(" ")) {  %]
+        [% def attrXMLName = reportUtils.toValidFieldName(attr) %]
+		    <i18n.[%=attrXMLName%]>[%=attrXMLName%]</i18n.[%=attrXMLName%]>
+		[% } %]   
+      [% for (index in 0..(instanceCount - 1)) { %]
+        <[%=entityXMLName%]>
+          [% for (attr in unit["displayAttributes"].tokenize(" ")) { %]
+            [% def attrXMLName = reportUtils.toValidFieldName(attr) %]
+            <[%=attrXMLName%]>[%=getSampleValue(attr, index)%]</[%=attrXMLName%]>
+          [% } %]
+          [% for (level in unit.selectNodes("HierarchyLevel")) {
+            writeLevelSample(level)
+          } %]
+        </[%=entityXMLName%]>
+      [% } %]
+    </[%=unitXMLName%]>
+  [% } %]
+[% } %]
+</Report>

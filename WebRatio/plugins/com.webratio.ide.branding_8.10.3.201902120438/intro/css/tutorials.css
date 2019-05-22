@@ -1,0 +1,41 @@
+a#wr_HelloWorld img { background-image : url('graphics/obj48/wr_obj.png'); }
+a#wr_HelloWorld:hover img { background-image : url('graphics/obj48/wrhov_obj.png'); }
+
+a#wr_Ajax_Refresh img { background-image : url('graphics/obj48/wr_obj.png'); }
+a#wr_Ajax_Refresh:hover img { background-image : url('graphics/obj48/wrhov_obj.png'); }
+
+a#wr_Ajax_Tooltip img { background-image : url('graphics/obj48/wr_obj.png'); }
+a#wr_Ajax_Tooltip:hover img { background-image : url('graphics/obj48/wrhov_obj.png'); }
+
+a#wr_Ajax_Window img { background-image : url('graphics/obj48/wr_obj.png'); }
+a#wr_Ajax_Window:hover img { background-image : url('graphics/obj48/wrhov_obj.png'); }
+
+a#wr_Ajax_Autocomplete img { background-image : url('graphics/obj48/wr_obj.png'); }
+a#wr_Ajax_Autocomplete:hover img { background-image : url('graphics/obj48/wrhov_obj.png'); }
+
+a#wr_Ajax_DragAndDrop img { background-image : url('graphics/obj48/wr_obj.png'); }
+a#wr_Ajax_DragAndDrop:hover img { background-image : url('graphics/obj48/wrhov_obj.png'); }
+
+a#wr_Ajax_Events img { background-image : url('graphics/obj48/wr_obj.png'); }
+a#wr_Ajax_Events:hover img { background-image : url('graphics/obj48/wrhov_obj.png'); }
+
+a#wr_Ajax_FormRefresh img { background-image : url('graphics/obj48/wr_obj.png'); }
+a#wr_Ajax_FormRefresh:hover img { background-image : url('graphics/obj48/wrhov_obj.png'); }
+
+a#wr_DataSource img { background-image : url('graphics/obj48/wr_obj.png'); }
+a#wr_DataSource:hover img { background-image : url('graphics/obj48/wrhov_obj.png'); }
+
+a#wr_SimpleApplication img { background-image : url('graphics/obj48/wr_obj.png'); }
+a#wr_SimpleApplication:hover img { background-image : url('graphics/obj48/wrhov_obj.png'); }
+
+a#wr_Style img { background-image : url('graphics/obj48/wr_obj.png'); }
+a#wr_Style:hover img { background-image : url('graphics/obj48/wrhov_obj.png'); }
+
+a#wr_Content img { background-image : url('graphics/obj48/wr_obj.png'); }
+a#wr_Content:hover img { background-image : url('graphics/obj48/wrhov_obj.png'); }
+
+a#cvs_checkout img { background-image : url('graphics/obj48/migrate_obj.gif'); }
+a#cvs_checkout:hover img { background-image : url('graphics/obj48/migratehov_obj.gif'); }
+
+a#cvs_merge img { background-image : url('graphics/obj48/community_obj.gif'); }
+a#cvs_merge:hover img { background-image : url('graphics/obj48/communityhov_obj.gif'); }

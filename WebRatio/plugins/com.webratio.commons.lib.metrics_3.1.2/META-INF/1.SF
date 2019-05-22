@@ -1,0 +1,45 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: RcE2wBw9NxiKZX+T8D9n3Qw1c7FmH
+ 5/E4cGQy81yKic=
+SHA-256-Digest-Manifest: RE1ze24O5OobOgKO7tZNUyk/iYVSGV9kypY4D2whXCk=
+Created-By: 1.7.0_80 (Oracle Corporation)
+
+Name: lib/metrics-healthcheckssrc.zip
+SHA-256-Digest: KhsO+MLiYRwLFuq/Urywif/3PauSBMXQmqGpfl89H9M=
+
+Name: lib/metrics-core.jar
+SHA-256-Digest: NmiEiSNeQ8zGtLYw9OUEd6VpYp1V+imfc3kkQ0hRm9A=
+
+Name: lib/metrics-servlets.jar
+SHA-256-Digest: 1TkTdaSv5+xtfbkV6mOATsA4/DMytEuX9rxS2nnMTg0=
+
+Name: lib/metrics-jvm.jar
+SHA-256-Digest: 3nIn3LeW2RuOgwGqfmGxr3vYPtnV5x9mA0Ss5CSjO8M=
+
+Name: lib/metrics-servletssrc.zip
+SHA-256-Digest: BWvfHXfpsqR7awDPVR2If8KYzD7ULEpLj8PkFrpgAB0=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: lib/metrics-jvmsrc.zip
+SHA-256-Digest: AfNlBU0vKgXqJrsZVWIRuMGgAsKTTi/NJqGfIsflqNU=
+
+Name: lib/metrics-jsonsrc.zip
+SHA-256-Digest: yk3WrAZto6WPu56clrDJmf75PH/QB1I8c7rFkSpbwqk=
+
+Name: lib/metrics-coresrc.zip
+SHA-256-Digest: el0h/nJx+KCfPCxnkGbJnpVzIcpiu3K7StI5UeN6uyQ=
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: a5fmgH7myHzNji9AMOfHrVh8fy7MOgIdRSUiRZ6EFA4=
+
+Name: lib/metrics-healthchecks.jar
+SHA-256-Digest: bAa/f8YtPLM2aKRB5rMdyLtdww5ibyE0GghRZRS5X9g=
+
+Name: about.html
+SHA-256-Digest: 9TFgeCN3cWlN9O9LZsetLB2NIZJOO4HvB7JlC4Sz0O4=
+
+Name: lib/metrics-json.jar
+SHA-256-Digest: pWsw47O/6OgxURBmDJ8U3LsSCnKstZXNPEAXQjBR500=
+

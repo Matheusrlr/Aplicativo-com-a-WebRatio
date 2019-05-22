@@ -1,0 +1,49 @@
+#?delimiters [%,%],[%=,%]
+[%
+import org.dom4j.DocumentHelper
+
+setXMLOutput()
+
+def domainClassId = element["dataBinding"]
+def domainClass = getByIdOptional(domainClassId)
+def virtual = (domainClass != null) && (domainClass["duration"] == "volatile")
+def selector = element.element("ConditionalExpression")
+
+def predicate = element["predicate"]
+def ignoreCase = element["ignoreCase"] == "true"
+
+%]
+<ValidationRule service="com.webratio.components.web.validation.CollectionValidationRuleService">
+  <Predicate>[%=predicate%]</Predicate>
+  <Values>
+    [%for(value in element.selectNodes("Value")){%]
+      <Value>[%=value["value"]%]</Value>
+    [%}%]
+  </Values>
+  <IgnoreCase>[%=ignoreCase%]</IgnoreCase>
+  [% if (domainClass != null) { %]
+  		<DomainClassId>[%=domainClassId%]</DomainClassId>
+  		<AttributeId>[%=element["attribute"]%]</AttributeId>
+     	[% 	def query = createQuery(domainClass)
+     		def sel = query.selector(selector).selector()
+     	    def expression = sel.getExpression()
+     	    sel.attributeCondition(element["id"] + "ACond","valueCond").attribute(element["attribute"])
+     	    def addNotInKeyCondition = element.parent.parent.name == "Attribute" && getSuperDomainClassHierarchy(element.parent.parent.parent).contains(domainClass)
+     	    if(addNotInKeyCondition){
+     	        sel.keyCondition(element["id"] + "KCond","keyCond").predicate("notIn")
+     	    }
+     	    if(expression){
+     	        expression = element["id"] + "ACond and "+ expression
+     	        if(addNotInKeyCondition){
+     	           expression += " and " +  element["id"] + "KCond"
+     	        }
+     	    	sel.expression(expression)
+     	    }
+     	    printRaw(query.build().asXML())
+        	def inCond = DocumentHelper.createElement("AttributesCondition")
+        	inCond["id"] = element["id"] + "_value"
+        	inCond["attributes"] = element["attribute"]
+        	inCond["predicate"] = (ignoreCase ? "eqIgnoreCase" : "eq")
+        	inCond["implied"] = "false"
+   }%]    
+</ValidationRule>

@@ -1,0 +1,59 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter name="prefix-text" label="Prefix Text" type="string">
+  Bundle key for a prefix text to the attributes.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Use Empty Unit Message" name="use-empty-unit-message" type="boolean" default="false">
+Defines the usage of a message for empty units.
+Allowed values are: true(default) or false.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Empty Unit Message" name="empty-unit-message" type="string" default="emptyUnitMessage">
+Defines the key of the message to use if the component is empty.
+Default value: emptyUnitMessage
+</wr:LayoutParameter>
+[%	setHTMLOutput()
+	def hasEvents = !component.selectNodes("layout:Event").isEmpty()
+	def useEmptyUnitMessage = params["use-empty-unit-message"]
+	def emptyUnitMessage = params["empty-unit-message"]
+%]
+[% if (useEmptyUnitMessage != "true") { %]
+<c:if test="${not(empty <wr:Id context="component"/>) and (<wr:Id context="component"/>.dataSize gt 0)}">
+[% } else { %]
+<c:choose>
+<c:when test="${not(empty <wr:Id context="component"/>) and (<wr:Id context="component"/>.dataSize gt 0)}">
+[% } %]
+	<wr:Frame>
+	  <div class="plain <wr:StyleClass/>">
+	  	<div class="plain Details">
+			<p>
+				[% if (params["prefix-text"] != "") { %]<spring:message code="[%= params["prefix-text"] %]"/> [% } %]
+				<wr:Iterate var="attr" context="component" select="layout:Attribute">
+					<wr:Visible><wr:Value/></wr:Visible>
+				</wr:Iterate>
+			</p>
+			<ul>
+				<wr:Iterate var="event" context="component" select="layout:Event">
+				<wr:Visible>
+				  <li><wr:Event type="link"/></li>
+				</wr:Visible>
+				</wr:Iterate>
+			</ul>
+		</div>
+	  </div>
+	</wr:Frame>
+[% if (useEmptyUnitMessage != "true") { %]
+</c:if>
+[% } else { %]
+</c:when>
+<c:otherwise>
+	<wr:Frame>
+		<div class="plain <wr:StyleClass/>">
+			<div class="plain Details">
+				<p>
+					<spring:message code="[%printJSPTagValue(emptyUnitMessage)%]"/>
+				</p>
+			</div>
+		</div>
+	</wr:Frame>
+</c:otherwise>
+</c:choose>
+[% } %]   

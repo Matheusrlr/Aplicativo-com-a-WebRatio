@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration>
+  <Properties>
+    <Property name="ajaxActivated">true</Property>
+    <Property name="applicationServer">Tomcat</Property>
+    <Property name="cloudDeploy">false</Property>
+    <Property name="dbConfigPath">/tmp/WRDBConfig1885421370439223421.xml</Property>
+    <Property name="defaultEncoding"></Property>
+    <Property name="deployCorePluginDir">/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/configuration/org.eclipse.osgi/131/0/.cp</Property>
+    <Property name="derbySystemHome">/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/workspace/.metadata/.plugins/com.webratio.commons.db/derby</Property>
+    <Property name="enterpriseProjectDir"></Property>
+    <Property name="eventSocketPort">33589</Property>
+    <Property name="excludedProjects" type="list"></Property>
+    <Property name="generationTime">201905221352</Property>
+    <Property name="hostAlwaysAllowed">false</Property>
+    <Property name="i18nBundleKeysFile" type="file"></Property>
+    <Property name="i18nExtraBundleFile" type="file"></Property>
+    <Property name="lockDir">/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/workspace/Data/.Temp~</Property>
+    <Property name="normalizeDescriptors">false</Property>
+    <Property name="outputPath">/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/Tomcat/webapps/Data</Property>
+    <Property name="phases">All</Property>
+    <Property name="productionMode">false</Property>
+    <Property name="projectDir">/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/workspace/Data</Property>
+    <Property name="projectName">Data</Property>
+    <Property name="projectPath">/tmp/Project5063034309212198342.wr</Property>
+    <Property name="projectType">WEBPROJECT</Property>
+    <Property name="rootModuleName"></Property>
+    <Property name="uiPluginDir">/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.ide.ui_8.10.3.201902120438</Property>
+    <Property name="webappPluginDir">/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.generator.webapp_8.10.3.201902120438</Property>
+    <Property name="wrBuildId">201902120438</Property>
+    <Property name="wrModelStatistics">components=1|pages=0</Property>
+    <Property name="wrVersion">8.10.3</Property>
+  </Properties>
+  <Plugins>
+    <Plugin id="com.webratio.commons.base" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.base_1.0.0.201810081230" common="true"/>
+    <Plugin id="com.webratio.commons.dom4j" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.dom4j_1.0.0.201810081230" common="true"/>
+    <Plugin id="com.webratio.commons.lib.antlr" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.antlr_2.7.7" common="true"/>
+    <Plugin id="com.webratio.commons.lib.apache.commons.beanutils" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.apache.commons.beanutils_1.8.3" common="true"/>
+    <Plugin id="com.webratio.commons.lib.apache.commons.codec" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.apache.commons.codec_1.10.0" common="true"/>
+    <Plugin id="com.webratio.commons.lib.apache.commons.collections" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.apache.commons.collections_3.2.2" common="true"/>
+    <Plugin id="com.webratio.commons.lib.apache.commons.fileupload" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.apache.commons.fileupload_1.3.3" common="true"/>
+    <Plugin id="com.webratio.commons.lib.apache.commons.httpclient" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.apache.commons.httpclient_3.1.0.2" common="true"/>
+    <Plugin id="com.webratio.commons.lib.apache.commons.io" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.apache.commons.io_2.4.0" common="true"/>
+    <Plugin id="com.webratio.commons.lib.apache.commons.lang" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.apache.commons.lang_2.6.0" common="true"/>
+    <Plugin id="com.webratio.commons.lib.apache.commons.logging" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.apache.commons.logging_1.2.0" common="true"/>
+    <Plugin id="com.webratio.commons.lib.apache.commons.net" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.apache.commons.net_3.4.0" common="true"/>
+    <Plugin id="com.webratio.commons.lib.apache.httpcomponents" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.apache.httpcomponents_4.5.1" common="true"/>
+    <Plugin id="com.webratio.commons.lib.apache.log4j" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.apache.log4j_1.2.17" common="true"/>
+    <Plugin id="com.webratio.commons.lib.apache.oro" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.apache.oro_2.0.8" common="true"/>
+    <Plugin id="com.webratio.commons.lib.apache.poi" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.apache.poi_3.13.0" common="true"/>
+    <Plugin id="com.webratio.commons.lib.apache.xmlbeans" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.apache.xmlbeans_2.6.0" common="true"/>
+    <Plugin id="com.webratio.commons.lib.c3p0" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.c3p0_0.9.5.2" common="true"/>
+    <Plugin id="com.webratio.commons.lib.dom4j" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.dom4j_1.6.1" common="true"/>
+    <Plugin id="com.webratio.commons.lib.ehcache" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.ehcache_2.10.1" common="true"/>
+    <Plugin id="com.webratio.commons.lib.google.guava" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.google.guava_19.0.0" common="true"/>
+    <Plugin id="com.webratio.commons.lib.groovy" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.groovy_2.4.5" common="true"/>
+    <Plugin id="com.webratio.commons.lib.h2" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.h2_1.4.190" common="true"/>
+    <Plugin id="com.webratio.commons.lib.hibernate" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.hibernate_4.2.21.wr" common="true"/>
+    <Plugin id="com.webratio.commons.lib.itext" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.itext_2.1.7" common="true"/>
+    <Plugin id="com.webratio.commons.lib.jackson2" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.jackson2_2.7.1" common="true"/>
+    <Plugin id="com.webratio.commons.lib.jackson" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.jackson_1.9.13" common="true"/>
+    <Plugin id="com.webratio.commons.lib.javassist" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.javassist_3.20.0" common="true"/>
+    <Plugin id="com.webratio.commons.lib.javax.mail" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.javax.mail_1.5.5" common="true"/>
+    <Plugin id="com.webratio.commons.lib.javax.persistence" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.javax.persistence_1.0.1" common="true"/>
+    <Plugin id="com.webratio.commons.lib.javax.servlet.jsp.jstl" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.javax.servlet.jsp.jstl_1.2.1" common="true"/>
+    <Plugin id="com.webratio.commons.lib.javax.servlet.jsp" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.javax.servlet.jsp_2.2.1" common="true"/>
+    <Plugin id="com.webratio.commons.lib.javax.servlet" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.javax.servlet_3.0.1" common="true"/>
+    <Plugin id="com.webratio.commons.lib.javax.transaction" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.javax.transaction_1.1.0" common="true"/>
+    <Plugin id="com.webratio.commons.lib.javax.wsdl4j" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.javax.wsdl4j_1.6.3" common="true"/>
+    <Plugin id="com.webratio.commons.lib.jaxen" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.jaxen_1.1.6" common="true"/>
+    <Plugin id="com.webratio.commons.lib.jboss.logging" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.jboss.logging_3.1.4" common="true"/>
+    <Plugin id="com.webratio.commons.lib.jcaptcha" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.jcaptcha_1.0.0" common="true"/>
+    <Plugin id="com.webratio.commons.lib.jodatime" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.jodatime_2.9.1" common="true"/>
+    <Plugin id="com.webratio.commons.lib.mimepull" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.mimepull_1.9.6" common="true"/>
+    <Plugin id="com.webratio.commons.lib.quartz" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.quartz_2.1.7" common="true"/>
+    <Plugin id="com.webratio.commons.lib.saxon" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.saxon_6.5.5" common="true"/>
+    <Plugin id="com.webratio.commons.lib.slf4j" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.slf4j_1.7.13" common="true"/>
+    <Plugin id="com.webratio.commons.lib.spring.aop" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.spring.aop_4.2.4" common="true"/>
+    <Plugin id="com.webratio.commons.lib.spring.beans" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.spring.beans_4.2.4" common="true"/>
+    <Plugin id="com.webratio.commons.lib.spring.context.support" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.spring.context.support_4.2.4" common="true"/>
+    <Plugin id="com.webratio.commons.lib.spring.context" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.spring.context_4.2.4" common="true"/>
+    <Plugin id="com.webratio.commons.lib.spring.core" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.spring.core_4.2.4" common="true"/>
+    <Plugin id="com.webratio.commons.lib.spring.expression" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.spring.expression_4.2.4" common="true"/>
+    <Plugin id="com.webratio.commons.lib.spring.web" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.spring.web_4.2.4" common="true"/>
+    <Plugin id="com.webratio.commons.lib.spring.webmvc" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.lib.spring.webmvc_4.2.4" common="true"/>
+    <Plugin id="com.webratio.commons.libs" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.libs_8.10.3.201902120438" common="true"/>
+    <Plugin id="com.webratio.commons.transform" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.commons.transform_8.10.3.201902120438" common="true"/>
+    <Plugin id="com.webratio.components.web.content" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.components.web.content_8.10.3.201902120438" type="components" common="true"/>
+    <Plugin id="com.webratio.components.web.controlflow" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.components.web.controlflow_8.10.3.201902120438" type="components" common="true"/>
+    <Plugin id="com.webratio.components.web.operation" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.components.web.operation_8.10.3.201902120438" type="components" common="true"/>
+    <Plugin id="com.webratio.components.web.session" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.components.web.session_8.10.3.201902120438" type="components" common="true"/>
+    <Plugin id="com.webratio.components.web.utility" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.components.web.utility_8.10.3.201902120438" type="components" common="true"/>
+    <Plugin id="com.webratio.components.web.validation" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.components.web.validation_8.10.3.201902120438" type="components" common="true"/>
+    <Plugin id="com.webratio.components.web.ws" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.components.web.ws_8.10.3.201902120438" type="components" common="true"/>
+    <Plugin id="com.webratio.data" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.data_8.10.3.201902120438" common="true"/>
+    <Plugin id="com.webratio.debug" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.debug_8.10.3.201902120438" common="true"/>
+    <Plugin id="com.webratio.json" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.json_8.10.3.201902120438" common="true"/>
+    <Plugin id="com.webratio.lib.apache.derby" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.lib.apache.derby_8.10.3.201902120438" common="true"/>
+    <Plugin id="com.webratio.lib.apache.lucene" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.lib.apache.lucene_8.10.3.201902120438" common="true"/>
+    <Plugin id="com.webratio.lib.hibernate" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.lib.hibernate_8.10.3.201902120438" common="true"/>
+    <Plugin id="com.webratio.lib.spring" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.lib.spring_8.10.3.201902120438" common="true"/>
+    <Plugin id="com.webratio.log" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.log_8.10.3.201902120438" common="true"/>
+    <Plugin id="com.webratio.model" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.model_8.10.3.201902120438" common="true"/>
+    <Plugin id="com.webratio.rtx" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.rtx_8.10.3.201902120438" common="true"/>
+    <Plugin id="com.webratio.web.mvc" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.web.mvc_8.10.3.201902120438" common="true"/>
+    <Plugin id="com.webratio.ws" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.ws_8.10.3.201902120438" common="true"/>
+    <Plugin id="com.webratio.xsd" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/com.webratio.xsd_8.10.3.201902120438" common="true"/>
+  </Plugins>
+  <Styles>
+    <Style name="Excel" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/Excel_8.10.3.201902120438"/>
+    <Style name="Reports" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/Reports_8.10.3.201902120438"/>
+    <Style name="WRDefault" path="/home/matheus/&#193;rea de Trabalho/1&#186; Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/plugins/WRDefault_8.10.3.201902120438"/>
+  </Styles>
+  <FileEncodings/>
+</Configuration>

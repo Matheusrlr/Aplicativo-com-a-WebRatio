@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="operation" version="1.0.0" idPrefix="ntvmp" namePrefix="Map " label="Map" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" successFlowSource="true" successFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" multipleSuccessFlowCardinality="true"> 
+  	<NativePlugins>
+  		<RequiredPlugin localId="local:googlemaps.zip"/>
+  		<RequiredPlugin localId="local:launchnavigator.zip"/>
+  		<RequiredPlugin localId="local:actionsheet.zip"/>
+  	</NativePlugins> 
+	<Description xml:space="preserve">&lt;p&gt;The Map operation opens the native device application and calculates a path between starting point and ending point specifying the addresses.&lt;/p&gt;
+&lt;p&gt;This component uses:&lt;/p&gt; 
+&lt;ul&gt;
+  &lt;li&gt;the &lt;b&gt;googlemaps&lt;/b&gt; PhoneGap plugin to interact with the device (&lt;a href="https://github.com/webratio/phonegap-googlemaps-plugin"&gt;https://github.com/webratio/phonegap-googlemaps-plugin&lt;/a&gt;)&lt;/li&gt;
+  &lt;li&gt;the &lt;b&gt;google-playservices&lt;/b&gt; libraries for the Android device to use the map (&lt;a href="https://github.com/webratio/google-play-services"&gt;https://github.com/webratio/google-play-services&lt;/a&gt;)&lt;/li&gt;
+  &lt;li&gt;the &lt;b&gt;http-request&lt;/b&gt; PhoneGap plugin for the Android device to use the map&lt;/li&gt;
+  &lt;li&gt;the &lt;b&gt;googlemaps-ios-sdk&lt;/b&gt; PhoneGap plugin for the iOS device to use the map (&lt;a href="https://github.com/webratio/googlemaps-ios-sdk-for-phonegap"&gt;https://github.com/webratio/googlemaps-ios-sdk-for-phonegap&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;</Description>
+	<InputDescription xml:space="preserve" name="Source Address">The source address to use as start point to calculate the path.</InputDescription>
+	<InputDescription xml:space="preserve" name="Destination Address">The destination address to use as end point to calculate the path.</InputDescription>
+</Component>

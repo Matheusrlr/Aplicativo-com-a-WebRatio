@@ -1,0 +1,45 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Width" name="width" type="enum" default="full" values="full|inset|card">
+Defines the width of the component inside their container.
+Allowed values are:
+- full: use the full width available
+- inset: add a margin
+- card: add a margin and a shadow
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Events Style" name="events-style" type="enum" default="none" values="none|button-bar|tabs">
+Defines the style of the events.
+</wr:LayoutParameter>
+[%
+setHTMLOutput()
+def listClass = (params["width"] != "full") ? params["width"] : ""
+listClass = (listClass == "inset") ? "list-" + listClass : listClass
+
+def eventTabs = params["events-style"] == "tabs"
+def hasEvents = (component.selectSingleNode("layout:Event") != null)
+def hasValidation = component.selectSingleNode("VRules/*")
+%]
+<form class="<wr:StyleClass/> wr-comp-Form list [%= listClass %]">
+	<wr:Frame>
+		<wr:Iterate var="field" context="component" select="layout:Field">
+			<wr:Value/>
+		</wr:Iterate>
+		[% if (hasValidation) { %]
+			<ul class="wr-error-list item" ng-if="view.formState.errors.length">
+				<li ng-repeat="error in view.formState.errors track by $index">
+					{{ error }}
+				</li>
+			</ul>
+		[% } %]
+		[% if (hasEvents) { %]
+			<div class="[%= (eventTabs) ? "item " : "" %][%= (params["events-style"] != "none") ? params["events-style"] : "item-buttons" %]">    
+				<wr:Iterate var="event" context="component" select="layout:Event">
+					[% if (eventTabs && !getLayout(event, LayoutType.EVENT).path.endsWith("Tab")) {
+							throwGenerationException("Use Tab event template for ${event['name']} (${event['id']})")
+						}
+					%]
+					<wr:Event/>
+				</wr:Iterate>
+			</div>
+		[% } %]
+	</wr:Frame>
+</form>

@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.9.2
+Bundle-SymbolicName: com.webratio.project.build
+Export-Package: com.webratio.project.build,com.webratio.project.build.
+ tool
+Bundle-Name: WebRatio Project Build
+Bundle-Version: 8.10.3.201902120438
+Bundle-ClassPath: bin.jar
+Require-Bundle: org.apache.ant,com.webratio.commons.dom4j,com.webratio
+ .commons.lib.dom4j,com.webratio.commons.lib.google.guava,com.webratio
+ .generator.helpers,com.webratio.generator.mobile,com.webratio.commons
+ .transform,com.webratio.commons.lib.jsr305,com.webratio.commons.base,
+ com.webratio.commons.lib.apache.httpcomponents,com.webratio.commons.l
+ ib.apache.commons.httpclient,org.eclipse.jgit,com.jcraft.jsch,com.web
+ ratio.commons.lib.jackson2,com.webratio.commons.libs,org.eclipse.ant.
+ ui,org.eclipse.ecf,org.eclipse.ecf.provider.filetransfer,com.webratio
+ .model,com.webratio.model.query
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: WebRatio
+Created-By: 1.8.0-b132 (Oracle Corporation)
+
+Name: META-INF/signature
+SHA-256-Digest: PRYYgqFVErjMMx3lDuv1T8nEp66ZmsJ8BwS19rF+4z4=
+

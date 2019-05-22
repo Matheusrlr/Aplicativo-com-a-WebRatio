@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping auto-import="true" default-cascade="none" default-access="property" default-lazy="true">
+  <class name="com.webratio.webapp.Role" table="`role`" dynamic-update="true" dynamic-insert="true" mutable="true" polymorphism="implicit" select-before-update="false" optimistic-lock="version">
+    <id name="oid" column="`oid`" type="java.lang.Integer">
+      <generator class="com.webratio.hibernate.id.MaxPlusOneIncrementGenerator"/>
+    </id>
+    <property name="roleName" column="`rolename`" type="java.lang.String" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
+    <set name="users" table="`user_role`" inverse="true" sort="unsorted" mutable="true" optimistic-lock="true" embed-xml="true">
+      <key on-delete="noaction">
+        <column name="`role_oid`"/>
+      </key>
+      <many-to-many class="com.webratio.webapp.User" not-found="exception" embed-xml="true" unique="false">
+        <column name="`user_oid`"/>
+      </many-to-many>
+    </set>
+  </class>
+  <!-- mapping for relationship 'users[Role2User]' -->
+  <class entity-name="com.webratio.webapp.Rel_Role_to_users" table="`user_role`" dynamic-update="true" dynamic-insert="true" mutable="true" polymorphism="implicit" select-before-update="false" optimistic-lock="version">
+    <composite-id mapped="false" unsaved-value="undefined">
+      <key-property name="source_oid" column="`role_oid`" type="java.lang.Integer"/>
+      <key-property name="target_oid" column="`user_oid`" type="java.lang.Integer"/>
+    </composite-id>
+  </class>
+</hibernate-mapping>

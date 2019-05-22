@@ -1,0 +1,56 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.GenerationException
+import com.webratio.generator.webapp.output.FileType
+import org.apache.commons.lang.StringUtils
+import java.io.StringReader
+
+processOutputFile(FileType.LAYOUT_REFRESH_PAGE, page, { outputFile ->
+	outputFile.parentFile.mkdirs()
+	def pageId = page["id"] ?: ""
+	def genErrorPageTemplatePath = wr.locateResourcePath("MVC/GenerationErrorPage.template")
+	try {
+		def resourceRegistry = createResourceRegistry()
+		def pageUsedStyles = [] as Set
+		def addUsedTemplate = { templatePath ->
+			def style = StringUtils.substringBefore(templatePath, "/")
+			if (pageUsedStyles.add(style)) {
+				resourceRegistry.addAll(getRequiredResources(style), ["condition": ""], getAvailableResources(style))
+			}
+		}
+		addUsedTemplate("BUILTIN/*")
+		
+		wr.currentTopPage = page
+		
+		pageOutputType = com.webratio.generator.helpers.OutputType.UNKNOWN
+		def text = executeTemplateWithDelayedFragments(wr.locateResourcePath("MVC/Ajax/Ajax.page.template"), ["templateType": "page", "_pageResources": ["registry": resourceRegistry], "addUsedTemplate": addUsedTemplate, "getAuxFileName": { it + "_ajax.jsp" }, "getAuxContentType": { "text/xml; charset=UTF-8" }])
+		def strWriter = new StringWriter()
+		new StringReader(text).filterLine(strWriter) { it.trim().length() != 0 }
+	    if (page.selectSingleNode("Property[@name = 'trim'][@value = 'true']") != null || wr.project.selectSingleNode("Property[@name = 'trim'][@value = 'true']") != null) {
+			def strWriter2 = new StringWriter()
+			new StringReader(strWriter.toString()).transformLine(strWriter2){it.trim()}
+			outputFile.writeAsync(strWriter2.toString().trim(), "UTF-8")
+	    } else {
+			outputFile.writeAsync(strWriter.toString().trim(), "UTF-8")
+	    }
+	    
+	    wr.usedStyles.addAll(pageUsedStyles)
+	} catch (GenerationException e) {
+		def text = executeTemplate(genErrorPageTemplatePath, ["title": e.title, "reason": e.reason, "hints": e.hints, "exception": e.cause])   
+		outputFile.write(text, "UTF-8")
+		e.setTargetId(pageId)
+		wr.generationExceptions.add(e)
+	} catch (Throwable e) {
+		def reason = "WebRatio generated this page with errors."
+		def hint = "Check the WebRatio generation logs for errors encountered generating this page [id = " + pageId + "]"
+		def text = executeTemplate(genErrorPageTemplatePath, ["title": "Page Generated with Errors", "reason": reason, "hints": [hint], "exception": e])
+		try {
+			outputFile.write(text, "UTF-8")
+		} catch (Throwable e2) {
+		}
+		def genExc = new GenerationException("Unexpected error", reason, [hint], e)
+		genExc.setTargetId(pageId)
+		wr.generationExceptions.add(genExc)
+	}
+})
+%]

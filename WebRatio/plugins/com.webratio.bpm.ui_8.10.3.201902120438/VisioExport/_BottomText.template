@@ -1,0 +1,136 @@
+#?delimiters [%,%],[%=,%]
+[% 
+import org.apache.commons.lang.StringUtils
+setXMLOutput() 
+
+shapeIdCounter++;
+
+/*
+INPUTS
+parentWidth = eventDiameter
+parentHeight = eventDiameter
+textWidth = eventTextWidth
+textHeight = eventTextHeight
+text
+*/
+%]
+<!--
+    Bottom Text
+-->    
+<Shape ID='[%=++shapeIdCounter%]' Type='Shape' LineStyle='1' FillStyle='1' TextStyle='3'>
+    <XForm>
+        <PinX>[%=(pinX - ((textWidth - parentWidth) / 2))%]</PinX>
+        <PinY>[%=(pageHeight - pinY - parentHeight - textHeight)%]</PinY>
+        <Width>[%=textWidth%]</Width>
+        <Height>[%=textHeight%]</Height>
+        <LocPinX>0</LocPinX>
+        <LocPinY>0</LocPinY>
+        <Angle>0</Angle>
+        <FlipX>0</FlipX>
+        <FlipY>0</FlipY>
+        <ResizeMode>0</ResizeMode>
+    </XForm>
+    <Event>
+        <TheData F='No Formula'>0</TheData>
+        <TheText F='No Formula'>0</TheText>
+        <EventDblClick F='OPENTEXTWIN()'>0</EventDblClick>
+        <EventXFMod F='No Formula'>0</EventXFMod>
+        <EventDrop F='No Formula'>0</EventDrop>
+    </Event>
+    <vx:Event xmlns:vx='http://schemas.microsoft.com/visio/2006/extension'>
+        <vx:EventMultiDrop F='No Formula'>0</vx:EventMultiDrop>
+    </vx:Event>
+    <Line>
+        <LineWeight F='Inh'>0.01</LineWeight>
+        <LineColor F='Inh'>0</LineColor>
+        <LinePattern>0</LinePattern>
+        <Rounding F='Inh'>0</Rounding>
+        <EndArrowSize F='Inh'>2</EndArrowSize>
+        <BeginArrow F='Inh'>0</BeginArrow>
+        <EndArrow F='Inh'>0</EndArrow>
+        <LineCap F='Inh'>0</LineCap>
+        <BeginArrowSize F='Inh'>2</BeginArrowSize>
+        <LineColorTrans F='Inh'>0</LineColorTrans>
+    </Line>
+    <vx:Line xmlns:vx='http://schemas.microsoft.com/visio/2006/extension'>
+        <vx:LinePattern F='THEMEGUARD(0)'>0</vx:LinePattern>
+    </vx:Line>
+    <Fill>
+        <FillForegnd F='Inh'>1</FillForegnd>
+        <FillBkgnd F='Inh'>0</FillBkgnd>
+        <FillPattern>0</FillPattern>
+        <ShdwForegnd F='Inh'>0</ShdwForegnd>
+        <ShdwBkgnd F='Inh'>1</ShdwBkgnd>
+        <ShdwPattern>0</ShdwPattern>
+        <FillForegndTrans F='Inh'>0</FillForegndTrans>
+        <FillBkgndTrans F='Inh'>0</FillBkgndTrans>
+        <ShdwForegndTrans F='Inh'>0</ShdwForegndTrans>
+        <ShdwBkgndTrans F='Inh'>0</ShdwBkgndTrans>
+        <ShapeShdwType F='Inh'>0</ShapeShdwType>
+        <ShapeShdwOffsetX F='Inh'>0</ShapeShdwOffsetX>
+        <ShapeShdwOffsetY F='Inh'>0</ShapeShdwOffsetY>
+        <ShapeShdwObliqueAngle F='Inh'>0</ShapeShdwObliqueAngle>
+        <ShapeShdwScaleFactor F='Inh'>1</ShapeShdwScaleFactor>
+    </Fill>
+    <vx:Fill xmlns:vx='http://schemas.microsoft.com/visio/2006/extension'>
+        <vx:FillPattern F='THEMEGUARD(0)'>0</vx:FillPattern>
+        <vx:ShdwPattern F='THEMEGUARD(0)'>0</vx:ShdwPattern>
+    </vx:Fill>
+    <TextBlock>
+        <LeftMargin Unit='PT'>0</LeftMargin>
+        <RightMargin Unit='PT'>0</RightMargin>
+        <TopMargin Unit='PT'>0</TopMargin>
+        <BottomMargin Unit='PT'>0</BottomMargin>
+        <VerticalAlign>0</VerticalAlign>
+        <TextBkgnd F='Inh'>0</TextBkgnd>
+        <DefaultTabStop F='Inh'>0.5905511811023622</DefaultTabStop>
+        <TextDirection F='Inh'>0</TextDirection>
+        <TextBkgndTrans F='Inh'>0</TextBkgndTrans>
+    </TextBlock>
+    <Char IX='0'>
+        <Font F='Inh'>4</Font>
+        <Color F='Inh'>0</Color>
+        <Style F='Inh'>0</Style>
+        <Case F='Inh'>0</Case>
+        <Pos F='Inh'>0</Pos>
+        <FontScale F='Inh'>1</FontScale>
+        <Size Unit='PT'>0.08333333333333333</Size>
+        <DblUnderline>0</DblUnderline>
+        <Overline>0</Overline>
+        <Strikethru>0</Strikethru>
+        <Highlight>0</Highlight>
+        <DoubleStrikethrough>0</DoubleStrikethrough>
+        <RTLText>0</RTLText>
+        <UseVertical>0</UseVertical>
+        <Letterspace F='Inh'>0</Letterspace>
+        <ColorTrans F='Inh'>0</ColorTrans>
+        <AsianFont F='Inh'>0</AsianFont>
+        <ComplexScriptFont F='Inh'>0</ComplexScriptFont>
+        <LocalizeFont F='Inh'>0</LocalizeFont>
+        <ComplexScriptSize F='Inh'>-1</ComplexScriptSize>
+        <LangID F='Inh'>1040</LangID>
+    </Char>
+    <Geom IX='0'>
+        <NoFill>0</NoFill>
+        <NoLine>0</NoLine>
+        <NoShow>0</NoShow>
+        <NoSnap>0</NoSnap>
+        <MoveTo IX='1'>
+            <X F='Width*0'>0</X><Y F='Height*0'>0</Y>
+        </MoveTo>
+        <LineTo IX='2'>
+            <X F='Width*1'>1.08267716535433</X><Y F='Height*0'>0</Y>
+        </LineTo>
+        <LineTo IX='3'>
+            <X F='Width*1'>1.08267716535433</X><Y F='Height*1'>0.09842519685039353</Y>
+        </LineTo>
+        <LineTo IX='4'>
+            <X F='Width*0'>0</X><Y F='Height*1'>0.09842519685039353</Y>
+        </LineTo>
+        <LineTo IX='5'>
+            <X F='Width*0'>0</X><Y F='Height*0'>0</Y>
+        </LineTo>
+    </Geom>
+    <Text><cp IX='0'/>[%for(String s : StringUtils.split(text, "\n")) {%][%=s%]
+[%}%]</Text>
+</Shape>

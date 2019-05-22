@@ -1,0 +1,65 @@
+	<Element name="SiteView" lowerName="site view"
+		pluralLowerName="site views">
+		<Description>
+			A site view is a 
+			group of areas 
+			and / or pages devoted to
+			fulfilling the requirements of one or more user groups.
+		</Description>
+
+		<ActionRef label="Add Area" />
+		<ActionRef label="Add Page" />
+		<ActionRef label="Add Action" />
+		<ActionRef label="Add Property" />
+		<ActionRef label="Go to Home" />
+		<ActionRef label="Go to Master Page" />
+		<ActionRef label="Localize" />
+		<ActionRef label="Export Diagram Image..."/>
+		<ActionRef label="Generate Layout Pages Only"/>
+		<ActionRef label="Generate Logic Descriptors Only"/>
+		<ActionRef label="Generate Selection"/>
+		<ActionRef label="Find Model Problems"/>
+		<ActionRef label="Help"/>
+		
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+			<Property label="Home Element">
+				The page or the operation selected as the Home of the
+				Site View
+			</Property>
+			<PropertyRef label="Landmarks" />
+			<PropertyRef label="Visibility Policy"/>
+			<PropertyRef label="Home"/>
+			<PropertyRef label="Protected" />
+			<PropertyRef label="Secure" />
+			<PropertyRef label="Localized" />
+			<PropertyRef label="Custom URL Name"/>
+			<PropertyRef label="Running Profiles" />
+		</PropertyCategory>
+		<PropertyCategory name="Layout">
+			<PropertyRef label="Style" />
+			<PropertyRef label="Page Layout" />
+			<PropertyRef label="Layout Manager" />
+			<PropertyRef label="Grid Layout"/>
+			<PropertyRef label="Frame Layout"/>
+			<PropertyRef label="Cell Layout"/>
+			<PropertyRef label="Attribute Layout"/>
+			<PropertyRef label="Field Layout"/>
+			<PropertyRef label="Event Layout"/>
+			<PropertyRef label="Error Style Page"/>
+			<PropertyRef label="Expire Style Page"/>
+			<PropertyRef label="Login Style Page"/>
+			<PropertyRef label="Component Configuration"/>
+			<PropertyRef label="Old Resources"/>
+		</PropertyCategory>
+		<PropertyCategory name="Condition">
+			<PropertyRef name="Visibility Condition" label="Grid Visibility Cond." />
+			<PropertyRef name="Visibility Condition" label="Cell Visibility Cond."/>
+			<PropertyRef name="Visibility Condition" label="Attribute Visibility Cond."/>
+			<PropertyRef name="Visibility Condition" label="Field Visibility Cond."/>
+			<PropertyRef name="Visibility Condition" label="Field Disable Cond."/>
+			<PropertyRef name="Visibility Condition" label="Event Visibility Cond."/>
+			<PropertyRef name="Visibility Condition" label="Event Disable Cond."/>
+		</PropertyCategory>
+	</Element>

@@ -1,0 +1,100 @@
+#?delimiters [%,%],[%=,%]
+<?xml version="1.0" encoding="UTF-8"?>
+<?webml version="8.2.0.0"?>
+[% setXMLOutput() %]
+<WebProject 
+    xmlns:db="http://www.webratio.com/2006/WebML/Database" 
+    xmlns:gr="http://www.webratio.com/2006/WebML/Graph"
+    xmlns:layout="http://www.webratio.com/2006/WebML/Layout"
+    outputPath="${webapps_loc}/${project_name}"
+    gr:showUnitContent="true"
+    gr:showTooltip="true"
+    httpPort="8080" 
+    httpsPort="8443"
+    enableProjectDependencies="[%=(enableProjectDependencies != null && enableProjectDependencies != "" ? enableProjectDependencies : "true")%]"
+    jobGroupName="WEBRATIO">
+  <DomainModel> 
+    <Class id="User" name="User" duration="persistent" gr:x="20" gr:y="158" gr:hideAttributes="false" attributeOrder="userOID userName password email"> 
+      <Attribute name="oid" id="userOID" type="integer" key="true"/>  
+      <Attribute name="userName" id="userName" type="string"/>  
+      <Attribute name="password" id="password" type="password"/>  
+      <Attribute name="email" id="email" type="string"/> 
+    </Class>  
+    <Class id="Role" name="Role" duration="persistent" gr:x="250" gr:y="178" gr:hideAttributes="false" attributeOrder="roleOID roleName"> 
+      <Attribute name="oid" id="roleOID" type="integer" key="true"/>  
+      <Attribute name="roleName" id="roleName" type="string"/> 
+    </Class>  
+    <Class id="ModelElement" name="ModelElement" duration="persistent" gr:x="472" gr:y="167" gr:hideAttributes="false" attributeOrder="modelElementOID modelElementID modelElementName"> 
+      <Attribute name="oid" id="modelElementOID" type="integer" key="true"/>  
+      <Attribute name="modelElementID" id="modelElementID" type="string"/>  
+      <Attribute name="modelElementName" id="modelElementName" type="string"/> 
+    </Class>  
+    <Association id="User2Role_Role2User" name="User_Role" sourceClass="User" targetClass="Role"> 
+      <AssociationRole1 id="User2Role" name="roles" maxCard="N"/>  
+      <AssociationRole2 id="Role2User" name="users" maxCard="N"/> 
+    </Association>  
+    <Association id="User2DefaultRole_DefaultRole2User" name="User_DefaultRole" sourceClass="User" targetClass="Role"> 
+      <AssociationRole1 id="User2DefaultRole" name="defaultRole" maxCard="1"/>  
+      <AssociationRole2 id="DefaultRole2User" name="defaultUsers" maxCard="N"/> 
+    </Association>  
+    <Association id="Role2DefaultModelElement_DefaultModelElement2Role" name="Role_DefaultModelElement" sourceClass="Role" targetClass="ModelElement"> 
+      <AssociationRole1 id="Role2DefaultModelElement" name="defaultModelElement" maxCard="1"/>  
+      <AssociationRole2 id="DefaultModelElement2Role" name="defaultRoles" maxCard="N"/> 
+    </Association>  
+    <Association id="Role2ModelElement_ModelElement2Role" name="Role_ModelElement" sourceClass="Role" targetClass="ModelElement"> 
+      <AssociationRole1 id="Role2ModelElement" name="modelElements" maxCard="N"/>  
+      <AssociationRole2 id="ModelElement2Role" name="roles" maxCard="N"/> 
+    </Association>
+    [% if (db != null && db.type != "") { %]
+      <db:Database 
+          id="db1"
+          name="[%=db.name%]"
+          type="[%=db.type%]" 
+          url="[%=db.url%]" 
+          username="[%=db.username%]"
+          password="[%=db.password%]"
+          cryptedPassword="[%=db.cryptedPassword%]"
+          jndiName="[%=rtDB.jndiName%]"
+          connectionCount="[%=rtDB.connectionCount%]"
+          runtimeType="[%=rtDB.type%]" 
+          runtimeURL="[%=rtDB.url%]" 
+          runtimeUsername="[%=rtDB.username%]"
+          runtimePassword="[%=rtDB.password%]"
+          runtimeCryptedPassword="[%=rtDB.cryptedPassword%]"/>
+    [% } %]
+  </DomainModel>
+  <WebModel defaultLocale="lcl1" layout:style="WebRatio" layout:inheritParameters="true">
+    <Locale id="lcl1" country="[%=locale.country%]" language="[%=locale.language%]">
+      <PatternConfiguration 
+          type="boolean" 
+          pattern="[%=locale.language == "it" ? "si|no" : "yes|no"%]"/>
+      <PatternConfiguration
+          type="decimal"
+          useNumberPattern="false"
+          maxDecimal="[%=locale.decimal.maxDecimal%]" 
+          minDecimal="[%=locale.decimal.minDecimal%]" 
+          minInteger="[%=locale.decimal.minInteger%]" 
+          useThousandSeparator="[%=locale.decimal.useThousandSeparator%]"/>  
+      <PatternConfiguration type="date" pattern="[%=locale.date.pattern%]"/>
+      <PatternConfiguration
+          type="float"
+          useNumberPattern="false"
+          maxDecimal="[%=locale.float.maxDecimal%]" 
+          minDecimal="[%=locale.float.minDecimal%]" 
+          minInteger="[%=locale.float.minInteger%]" 
+          useThousandSeparator="[%=locale.float.useThousandSeparator%]"/>  
+      <PatternConfiguration 
+          type="integer"
+          useNumberPattern="false"
+          minInteger="[%=locale.integer.minInteger%]" 
+          useThousandSeparator="[%=locale.integer.useThousandSeparator%]"/>
+      <PatternConfiguration type="time" pattern="[%=locale.time.pattern%]"/>
+      <PatternConfiguration type="timestamp" pattern="[%=locale.timestamp.pattern%]"/>
+    </Locale>
+    <ContextParameter id="UserCtxParam" name="UserCtxParam" class="User" type="class"/>
+    <ContextParameter id="RoleCtxParam" name="RoleCtxParam" class="Role" type="class"/>
+    <ContextParameter id="LanguageISOCtxParam" name="LanguageISOCtxParam" type="string"/>
+    <ContextParameter id="CountryISOCtxParam" name="CountryISOCtxParam" type="string"/>
+  </WebModel>
+  <ServiceDataProviders/>
+</WebProject>

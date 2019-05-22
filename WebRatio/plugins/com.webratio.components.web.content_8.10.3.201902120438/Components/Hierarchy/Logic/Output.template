@@ -1,0 +1,40 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+
+def getLevelFragment(elem) {
+    if (elem.name != "Hierarchy") {
+        return getLevelFragment(elem.parent) + elem.attributeValue("id", "") + "data[]."
+    } 
+    return ""   
+}
+def levels = component.selectNodes("self::Hierarchy|descendant-or-self::HierarchyLevel")
+%>
+<OutputParameters>
+<% for (h in levels) { 
+     def namePrefix = "data[]." + getLevelFragment(h)
+     def domainClass = getById(h["dataBinding"]) 
+     for (a in getAttributes(domainClass)) { 
+      %><OutputParameter 
+        name="<%=namePrefix%><%=a["id"]%>"
+        refId="<%=a["id"]%>"
+        type="<%=getTypeExpression(domainClass, a, true, false)%>"
+        label="<%=getLabel(a)%> (<%=h["name"]%>)"
+        possiblyLarge="true"/><% 
+     } 
+     for (role in getOutgoingRoles(domainClass).findAll{!isMany(it)}) { 
+       for (keyAttr in getKeyAttributes(getTargetDomainClass(role))) { 
+        %><OutputParameter 
+           name="<%=namePrefix%><%=role["id"] + "_" + keyAttr["id"]%>"
+           refId="<%=role["id"]%>"
+           label="<%=getLabel(role) + "." + getLabel(keyAttr)%> (<%=h["name"]%>)"
+           mandatory="false"
+           possiblyLarge="true"/><% 
+       }
+     } 
+     h["displayAttributes"].tokenize(" ").findAll{it.contains(".") || it.contains("(")}.each{
+       %><OutputParameter name="<%=namePrefix%>.<%=getAttributeExpressionId(it)%>" refId="importedAttribute" label="<%=getAttributeExpressionImportLabel(it)%>(<%=h["name"]%>)" possiblyLarge="true"/><%
+     }
+   } 
+%>
+</OutputParameters>

@@ -1,0 +1,193 @@
+#?delimiters <%, %>, <%=, %>
+<%
+import java.text.NumberFormat
+import com.webratio.commons.collections.SortedProperties
+import com.webratio.model.domain.DataType
+import org.apache.commons.lang.math.NumberUtils
+import org.apache.commons.lang.StringUtils
+import org.apache.commons.lang.SystemUtils
+import org.apache.commons.io.FileUtils
+import org.apache.commons.io.IOUtils
+
+def globalBundles = [:]
+def componentBundles = [:]
+def projectBundleDir = new File(wr.projectDir, "/Config")
+if(wr.projectType.name() in ["WEBMODEL","MODULE"]){
+   projectBundleDir = new File(wr.projectDir.parentFile, wr.project["enterpriseProject"] + "/Config")
+}
+
+def loadBundle(bundleFile, props) {
+    if (bundleFile.exists()) {
+        def bundle = parseXMLFile(bundleFile).rootElement
+        for (entry in bundle.elements("Entry")) {
+           props.setProperty(entry.attributeValue("key"), entry.valueOf("."))
+        }  
+    }
+}
+
+def cleanupPropertiesFile(file){
+   def lines = file.readLines()
+   if(lines.size() > 2 && lines.get(1).startsWith("#")){
+       lines.remove(1)
+   }
+   file.write(lines.join("\n"))
+}
+
+/* computes element bundle entries */
+def elemsBundle = [:]
+def allElements = []
+allElements.addAll(getAllViewComponents())
+allElements.addAll(getAllOperations())
+allElements.addAll(getAllModules())
+allElements.addAll(getAllActions())
+allElements.addAll(getAllPortDefinitions())
+allElements.addAll(getAllFloatingEvents())
+for (elem in allElements) {
+	elemsBundle.putAll(wr.explorer.webModel().getBundle(elem))
+}
+for (viewComp in getAllViewComponents()) {
+	elemsBundle.putAll(wr.explorer.validation().getValidationBundle(viewComp))
+}
+
+/* prepares locale specific bundles */
+def standardBundlesDir = wr.standardBundlesDir.orNull()
+def locales = wr.project.selectNodes("WebModel/Locale")
+for (localeElem in locales) {
+    def defaultLocale = localeElem.valueOf("@id") == wr.project.valueOf("WebModel/@defaultLocale")
+    def lang = localeElem.attributeValue("language", "")
+    def country = localeElem.attributeValue("country", "")
+    def locale = new Locale(lang, country)
+    def suffix = '_' + lang + '_' + country
+    if (suffix.endsWith('_')) {
+        suffix = suffix.substring(0, suffix.length() - 1)
+    }
+    def props = new SortedProperties()
+    props.putAll(elemsBundle)
+    loadBundle(new File(standardBundlesDir, "Bundle.xml"), props)
+    loadBundle(new File(standardBundlesDir, "Bundle_" + lang + ".xml"), props)
+    loadBundle(new File(standardBundlesDir, "Bundle_" + lang + "_" + country + ".xml"), props)
+    for (dir in wr.explorer.ifComponentTypes().getDefined().collect{ wr.explorer.ifComponentTypes().getDirectory(it) }) {
+        loadBundle(new File(dir, "Layout/Bundle.xml"), props)
+        loadBundle(new File(dir, "Layout/Bundle_" + lang + ".xml"), props)
+        loadBundle(new File(dir, "Layout/Bundle_" + lang + "_" + country + ".xml"), props)
+    }
+    for (dir in wr.explorer.validationRuleTypes().getDefined().collect{ wr.explorer.validationRuleTypes().getDirectory(it) }) {
+        loadBundle(new File(dir, "Layout/Bundle.xml"), props)
+        loadBundle(new File(dir, "Layout/Bundle_" + lang + ".xml"), props)
+        loadBundle(new File(dir, "Layout/Bundle_" + lang + "_" + country + ".xml"), props)
+    }
+    loadBundle(new File(projectBundleDir, "ProjectBundle" + suffix + ".xml"), props)
+    for (pattern in localeElem.selectNodes("PatternConfiguration")){
+    	def typeInfo = wr.explorer.domainModel().getType(pattern["type"])
+        if (DataType.BOOLEAN == typeInfo.baseType) {
+            def booleanValues = pattern["pattern"].tokenize("|")
+            if (booleanValues.size() == 0) {
+                booleanValues.add("yes")
+                booleanValues.add("no")
+            } else if (booleanValues.size() == 1) {
+                booleanValues.add("no")
+            }
+            props.put(pattern["type"] + ".yes", booleanValues[0])
+            props.put(pattern["type"] + ".no", booleanValues[1])
+        }
+    }
+    //adds extra bundle entries
+    if (defaultLocale) {
+        if(i18nExtraBundleFile != null && i18nExtraBundleFile.exists()){
+           def input = null
+           try{
+             def extraProps = new java.util.Properties()
+             input = new java.io.FileInputStream(i18nExtraBundleFile)
+             extraProps.load(input)  
+             for(key in extraProps.keySet()){
+                if(!props.containsKey(key)){
+                   props.put(key, extraProps.get(key))
+                }
+             }  
+           }catch(Throwable t){
+             //ignore exceptions
+           }finally{
+             org.apache.commons.io.IOUtils.closeQuietly(input)
+           } 
+        }
+        if(!props.containsKey("")){
+           props.put("", "")
+        }
+    }
+    
+    //updates unspecified sub-types bundle entries
+    for(subType in wr.project.selectNodes("DomainModel/SubType")){
+       def subTypeErrorMsg = props.getProperty(StringUtils.capitalize(subType["name"]) + "Validation")
+       if(StringUtils.isBlank(subTypeErrorMsg)){
+           subTypeErrorMsg = props.getProperty(StringUtils.capitalize(subType["type"]) + "Validation")
+           if(!StringUtils.isBlank(subTypeErrorMsg)){
+               props.setProperty(StringUtils.capitalize(subType["name"]) + "Validation", subTypeErrorMsg)
+           }       
+       }
+    }
+    
+    //serializes the properties file
+    def fileName = "ApplicationResources" + suffix + ".properties"
+    if(wr.projectType.name() == "WEBPROJECT"){
+      def propsFile = new File(wr.outputPath + "/WEB-INF/classes/" + fileName)
+      def output = null
+      try{
+        output = propsFile.newOutputStream()
+        props.store(output, "Resource Bundle for " + locale)
+        output.flush()
+      }finally{
+        IOUtils.closeQuietly(output)
+      }
+      cleanupPropertiesFile(propsFile)
+    } else if(wr.projectType.name() in ["WEBMODEL","MODULE"]){
+       synchronized(GENERATION_LOCK){
+          def newProps = new Properties()
+          def propsFile = new File(wr.outputPath + "/../" + rootModuleName + ".jar/" + fileName)
+          propsFile.parentFile.mkdirs()
+          if(propsFile.exists()){
+             def input = null
+             try{
+               def oldProps = new Properties()
+               input = new FileInputStream(propsFile)
+               oldProps.load(input)
+               newProps.putAll(oldProps)
+             }finally{
+               IOUtils.closeQuietly(input)
+             }  
+          }
+          newProps.putAll(props)
+          def output = null
+          try{
+             output = propsFile.newOutputStream()
+             newProps.store(output, "Resource Bundle for " + locale)
+             output.flush()
+          }finally{
+             IOUtils.closeQuietly(output)
+          }
+          cleanupPropertiesFile(propsFile)
+       }
+    }
+}
+
+// generates the bundle keys file
+if(i18nBundleKeysFile != null && i18nBundleKeysFile.exists()){
+   if(wr.projectType.name() == "WEBPROJECT"){
+      FileUtils.copyFile(i18nBundleKeysFile, new File(wr.outputPath + "/WEB-INF/classes/bundle.keys"))
+   } else {
+      synchronized(GENERATION_LOCK){
+        def targetI18nBundleKeysFile = new File(wr.outputPath + "/../" + rootModuleName + ".jar/bundle.keys")
+        if(!targetI18nBundleKeysFile.exists()){
+            FileUtils.copyFile(i18nBundleKeysFile, targetI18nBundleKeysFile)
+        } else {
+            def doc1 = parseXMLFile(i18nBundleKeysFile)
+            def doc2 = parseXMLFile(targetI18nBundleKeysFile)
+            for(element in doc2.rootElement.selectNodes("*")){
+               doc1.rootElement.selectSingleNode("*[name()='" + element.name + "' and string(@name) = '" + element["name"] + "']")?.detach()
+               doc1.rootElement.add(element.detach())
+            }
+            writeXMLToFile(doc1, targetI18nBundleKeysFile)
+        }   
+     }
+   } 
+}
+%>

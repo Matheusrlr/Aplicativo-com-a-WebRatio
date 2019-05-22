@@ -1,0 +1,26 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+def componentId = component["id"]
+%>
+<OutputParameters>
+<% 
+for (paramId in component["contextParameters"].split(" ") ) {
+   def param = getById(paramId)
+   if (param != null) {
+      if (param["type"] == "class") {
+         def dclassId = param["class"]
+         for (a in getKeyAttributes(getById(dclassId))) { 
+            def name = componentId + "." + param["id"]
+            if(param["id"] != "UserCtxParam" && param["id"] != "RoleCtxParam"){
+                name += "." + a["id"]
+            }
+            %><OutputParameter name="<%=name%>" refId="<%=a["id"]%>"  type="<%=getTypeExpression(getById(dclassId), a, true, true)%>" label="<%=param["name"]%>.<%=getLabel(a)%>"/><% 
+         }
+      } else { 
+          %><OutputParameter name="<%=componentId%>.<%=paramId%>" refId="<%=paramId%>" label="<%=param["name"]%>"/><% 
+      }
+   }
+}  
+%>
+</OutputParameters>

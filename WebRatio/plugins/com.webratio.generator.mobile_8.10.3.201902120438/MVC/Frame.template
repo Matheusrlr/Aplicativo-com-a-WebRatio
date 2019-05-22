@@ -1,0 +1,23 @@
+#?delimiters [%, %], [%=, %]
+[%
+import org.apache.commons.lang.StringUtils
+
+/* Determine the layout */
+def layout = getLayout(element, LayoutType.FRAME)
+if (!layout.path) {
+	return  // tolerate calls related to elements that have no frame template
+}
+def layoutTemplate = getLayoutFile(layout.path, LayoutType.FRAME)
+if (!layoutTemplate) {
+	throwGenerationException("Frame layout template not found: " + layout.path)
+}
+addUsedTemplate(layout.path)
+
+/* Render the frame, keeping only the requested part */
+def text = executeTemplate(layoutTemplate.absolutePath, ["element": element, "params": layout.params])
+if (frameMode == "start") {
+	printRaw(StringUtils.substringBefore(text, "__wr_FrameContent__"))
+} else {
+	printRaw(StringUtils.substringAfter(text, "__wr_FrameContent__"))
+}
+%]

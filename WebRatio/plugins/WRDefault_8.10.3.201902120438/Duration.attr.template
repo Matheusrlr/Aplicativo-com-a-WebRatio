@@ -1,0 +1,25 @@
+#?delimiters [%, %], [%=, %]
+[% 
+import org.apache.commons.lang.StringUtils
+def attrProp = getFieldName(getById(attr["attribute"]))
+%]
+<c:set var="startedSince" value="${[%=item%].[%=attrProp%]}"/>    
+<%   
+ {
+    java.sql.Timestamp startedSince = (java.sql.Timestamp) pageContext.getAttribute("startedSince");
+    String duration = null;
+    if(startedSince != null){
+      java.sql.Timestamp  end = new java.sql.Timestamp(System.currentTimeMillis());  
+      long delta = end.getTime() - startedSince.getTime();
+      duration = " " + org.apache.commons.lang.time.DurationFormatUtils.formatDuration(delta, "d'd 'H'h 'm'm 's's'");
+      duration = org.apache.commons.lang.StringUtils.replaceOnce(duration, " 0d", "");
+      duration = org.apache.commons.lang.StringUtils.replaceOnce(duration, " 0h", "");
+      duration = org.apache.commons.lang.StringUtils.replaceOnce(duration, " 0m", "");
+      duration = org.apache.commons.lang.StringUtils.replaceOnce(duration, " 0s", "");
+      duration = org.apache.commons.lang.StringUtils.replace(duration, "s", "\"");
+      duration = org.apache.commons.lang.StringUtils.replace(duration, "m", "'").trim();
+    }else{
+      duration = " - ";
+    }
+%><%=duration%>
+<% } %>

@@ -1,0 +1,35 @@
+<Element name="IntermediateThrowingMessageEvent" lowerName="intermediate throwing message event"
+		pluralLowerName="">
+		<Description>
+			A &lt;a href="/Concepts/Elements/Process/Events/MessageEvents/IntermediateThrowingMessageEvent"/&gt; 
+			is a thrower of the message which will be sent from a participant and triggers the Event
+		</Description>
+        
+        <ActionRef label="Add Lane" />
+        <ActionRef label="Add Sequence Flow" />
+        <ActionRef label="Add Message Flow" />
+        <ActionRef label="Add Property" />
+        <ActionRef label="Surround with Group" />
+        <ActionRef label="Move into Embedded Subprocess" />
+        <ActionRef label="Edit Process Parameters..." />
+        <Action label="Change Catching Type to">
+          Convert this event into a different catching event.
+        </Action>
+        <Action label="Change Throwing Type to">
+          Convert this event into a different throwing event.
+        </Action>
+        <ActionRef label="Search References" />
+        <ActionRef label="Help" />
+        
+    <PropertyCategory name="General">
+        <PropertyRef label="Id"/>
+        <PropertyRef label="Code"/>
+        <PropertyRef label="Name"/>
+        <PropertyRef label="Instance Name"/>
+        <PropertyRef label="Target Message Event"/>
+        <!-- In binding similar to EndMessage (B2) -->
+	    <Property label="Input Binding">
+	    	The set of process parameter passed as input to the selected Action Definition.  
+		</Property>
+    </PropertyCategory>
+</Element>

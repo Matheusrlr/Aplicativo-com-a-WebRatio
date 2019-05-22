@@ -1,0 +1,30 @@
+Manifest-Version: 1.0
+Export-Package: org.apache.commons.net,org.apache.commons.net.ftp,org.
+ apache.commons.net.ftp.parser,org.apache.commons.net.imap,org.apache.
+ commons.net.io,org.apache.commons.net.nntp,org.apache.commons.net.ntp
+ ,org.apache.commons.net.pop3,org.apache.commons.net.smtp,org.apache.c
+ ommons.net.telnet,org.apache.commons.net.tftp,org.apache.commons.net.
+ time,org.apache.commons.net.util
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/commons-net.jar
+Bundle-Version: 3.4.0
+Bundle-Name: WebRatio 3rd Party Library - Apache Commons Net
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.apache.commons.net
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: lib/commons-net.jar
+SHA-256-Digest: OM8uyoJri82yNvwfLnngxt2Ofg9cRKO46DmhBlsvvi4=
+
+Name: lib/commons-netsrc.zip
+SHA-256-Digest: i3l2U71OJgRTf1nQK3//Yf1XAJZ7+oZtP3ZZiEUQ3FM=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: EKng77n+iaOyWgHCv9sCK7aeYaQUjWI7+DqcwDqOYVQ=
+

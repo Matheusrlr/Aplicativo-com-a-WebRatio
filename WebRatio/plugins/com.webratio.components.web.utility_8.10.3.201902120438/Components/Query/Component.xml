@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="content|operation" idPrefix="qu" formBased="false" namePrefix="Query " label="Query" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" successFlowSource="true" successFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" canPlaceLayoutComponent="true"> 
+  <DBProperty attributeName="db" label="Persistent DB"> 
+    <Description xml:space="preserve">The database identifier defined into the mapping model.</Description> 
+  </DBProperty>  
+  <EnumProperty label="Volatile DB Scope" attributeName="volatileScope"> 
+    <EnumItem/>  
+    <EnumItem value="application" label="Application"/>  
+    <EnumItem value="session" label="Session"/>  
+    <IsEnabled>return (element["db"] == "")</IsEnabled>  
+    <Description xml:space="preserve">Specifies the volatile database scope to use.</Description> 
+  </EnumProperty>  
+  <BooleanProperty label="Local DB" attributeName="localDatabase"> 
+    <Description xml:space="preserve">If checked, the query is executed on the local volatile database.</Description>  
+    <IsEnabled>return (element.document.rootElement["id"] != "") &amp;&amp; (element["volatileScope"] != "") &amp;&amp; (element["db"] == "")</IsEnabled> 
+  </BooleanProperty>  
+  <EnumProperty attributeName="mode" defaultValue="select"> 
+    <EnumItem value="select" label="Select (static)"/>  
+    <EnumItem value="update" label="Update"/>  
+    <EnumItem value="dynamic" label="Select (dynamic)"/>  
+    <Description xml:space="preserve">Specifies the kind of the query to execute.</Description> 
+  </EnumProperty>  
+  <EnumProperty attributeName="language" defaultValue="HQL"> 
+    <EnumItem value="HQL"/>  
+    <EnumItem value="SQL"/>  
+    <IsEnabled>element["mode"] != "dynamic"</IsEnabled>  
+    <Description xml:space="preserve">Specifies the query language.</Description> 
+  </EnumProperty>  
+  <TextProperty elementName="QueryText" contentType="query" canMoveToFile="true"> 
+    <IsEnabled>element["queryFile"] == "" &amp;&amp; element["mode"] != "dynamic"</IsEnabled>  
+    <Description xml:space="preserve">The SQL/HQL query to execute.</Description> 
+  </TextProperty>  
+  <FileProperty attributeName="queryFile"> 
+    <IsEnabled>element["mode"] != "dynamic"</IsEnabled>  
+    <Description xml:space="preserve">The WebContent file containing the SQL/HQL query to execute.</Description> 
+  </FileProperty>  
+  <IntegerProperty attributeName="blockFactor"> 
+    <IsEnabled>element["mode"] != "update"</IsEnabled>  
+    <Description xml:space="preserve">A numerical value specifying how many objects at a time are scrolled. 
+If this property is unspecified or set to -1, all the available rows are returned.</Description> 
+  </IntegerProperty>  
+  <IntegerProperty attributeName="blockWindow"> 
+    <IsEnabled>element["mode"] != "update"</IsEnabled>  
+    <Description xml:space="preserve">A numerical value specifying the maximum number of flows available to jump to other result blocks.
+Assuming that N is the value of this property, the
+component will show N-1 block flows before the current block, and
+N-1 block flows after the current block. If this property is
+unspecified or set to -1, all the block flows are shown.</Description> 
+  </IntegerProperty>  
+  <IntegerProperty attributeName="maxResults"> 
+    <IsEnabled>element["mode"] == "select" &amp;&amp; element["mode"] != "dynamic"</IsEnabled>  
+    <Description xml:space="preserve">The maximum number of rows to retrieve in the case of select. 
+If unspecified, all rows are retrieved.</Description> 
+  </IntegerProperty>  
+  <OrderingProperty attributeName="outputsOrder" elementsExpr="QueryOutput"> 
+    <IsEnabled>element["mode"] == "select" &amp;&amp; element["mode"] != "dynamic"</IsEnabled>  
+    <Description xml:space="preserve">The order of the query output parameters of the component.</Description> 
+  </OrderingProperty>  
+  <Description xml:space="preserve">The Query component permits to execute a custom edited query using the HQL or SQL query language.
+Moreover it can dynamically compose an HQL query depending on the incoming domain model identifiers, 
+see also the &lt;a href="/Reference/ComponentsReference/com.webratio.components.web.utility/GetDomainModel"/&gt;.
+    </Description>  
+  <SubComponent elementName="QueryInput" idPrefix="qi" ignoreI18N="true" namePrefix="queryInput"> 
+    <TypeProperty label="Type" typeAttributeName="type" subTypeAttributeName="subType"> 
+      <Description xml:space="preserve">The type of the query input parameter.</Description> 
+    </TypeProperty>  
+    <StringProperty attributeName="value"> 
+      <Description xml:space="preserve">The default value in the case the input parameter value is not provided, it can be 
+a single value or a pipe '|' separated list of values.</Description> 
+    </StringProperty>  
+    <BooleanProperty attributeName="required" defaultValue="true"> 
+      <Description xml:space="preserve">Indicates whether the query input is required or not.</Description> 
+    </BooleanProperty>  
+    <Description xml:space="preserve">Defines a query input using the Hibernate notation, for example the query 
+extracting a particular product 'from Product where OID = :oidProd' should have a QueryInput named 'oidProd'.
+</Description>   </SubComponent >    <SubComponent elementName="QueryOutput" idPrefix="qo">     <TypeProperty label="Type" typeAttributeName="type" subTypeAttributeName="subType">       <Description xml:space="preserve">The type of the query output parameter.</Description> 
+    </TypeProperty>  
+    <Description xml:space="preserve">Defines a query output in the case of select.</Description> 
+  </SubComponent >  
+  <IsContextFreeComponent xml:space="preserve">return getIncomingFlows(component).empty</IsContextFreeComponent>  
+  <IsMultiConditionComponent xml:space="preserve">return getIncomingFlows(component).size &gt; 1</IsMultiConditionComponent>  
+  <InputDescription xml:space="preserve" name="QueryInput-Name">The parameter associated to one of the query inputs of the component (&lt;code&gt;Select (static)&lt;/code&gt; and &lt;code&gt;Update&lt;/code&gt; mode only).</InputDescription>  
+  <InputDescription xml:space="preserve" name="Display Attributes Identifiers">The qualified attribute identifiers to select (&lt;code&gt;Select (dynamic)&lt;/code&gt; mode only).</InputDescription>  
+  <InputDescription xml:space="preserve" name="Display Attributes Labels">The output labels identifying selected attributes (&lt;code&gt;Select (dynamic)&lt;/code&gt; mode only).</InputDescription>  
+  <InputDescription xml:space="preserve" name="Aggregate Operators">The aggregate operator of each selected attribute (&lt;code&gt;Select (dynamic)&lt;/code&gt; mode only).</InputDescription>  
+  <InputDescription xml:space="preserve" name="Condition Attributes Identifiers">The conditions qualified attribute identifiers (&lt;code&gt;Select (dynamic)&lt;/code&gt; mode only).</InputDescription>  
+  <InputDescription xml:space="preserve" name="Condition Attributes Predicates">The condition predicate of each attribute condition (&lt;code&gt;Select (dynamic)&lt;/code&gt; mode only).</InputDescription>  
+  <InputDescription xml:space="preserve" name="Condition Values">The condition value of each attribute condition (&lt;code&gt;Select (dynamic)&lt;/code&gt; mode only).</InputDescription>  
+  <InputDescription xml:space="preserve" name="Sort Criteria">The sort criteria of each selected attribute (&lt;code&gt;Select (dynamic)&lt;/code&gt; mode only).</InputDescription>  
+  <InputDescription xml:space="preserve" name="Group by">The grouping flag of each selected attribute (&lt;code&gt;Select (dynamic)&lt;/code&gt; mode only).</InputDescription>  
+  <InputDescription xml:space="preserve" name="Boolean Operator">The boolean operator to use in the case of multiple attribute condition (&lt;code&gt;Select (dynamic)&lt;/code&gt; mode only). The default value is &lt;code&gt;and&lt;/code&gt;</InputDescription>  
+  <InputDescription xml:space="preserve" name="Block Factor">A numerical value specifying how many objects at a time
+are scrolled.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Block Window">A numerical value specifying the maximum number of flows available to jump to other result blocks.
+Assuming that N is the value of this property, the
+component will show N-1 block flows before the current block, and
+N-1 block flows after the current block. If this property is
+unspecified, all the block flows are shown.</InputDescription>  
+  <OutputDescription xml:space="preserve" name="QueryOutput-Name">The values for one of the query outputs of the component (available in the case of &lt;code&gt;select&lt;/code&gt;).</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Update Result">The update result (available in the case of &lt;code&gt;update&lt;/code&gt;).</OutputDescription>  
+  <LayoutEvents xml:space="preserve">
+def eventOrderIds = component.attributeValue("eventOrder", "").tokenize(" ")
+def events = component.selectNodes("Events/*[not(self::OnLoadEvent)]").collect{it["id"]}
+
+def eventIds = []
+eventIds.addAll(eventOrderIds?.findAll{events?.contains(it)})
+eventIds.addAll(events?.findAll{!eventOrderIds?.contains(it)})  
+
+if(component["blockFactor"] != ""){
+   eventIds.add(component["id"] + "First")
+   eventIds.add(component["id"] + "Previous")
+   eventIds.add(component["id"] + "Block")
+   eventIds.add(component["id"] + "Next")
+   eventIds.add(component["id"] + "Last")
+}
+return eventIds
+  </LayoutEvents>  
+  <I18NLabels xml:space="preserve">
+def labels = []
+for (queryOutput in component.selectNodes("QueryOutput")) {
+  def label = [:]
+  label.id = queryOutput["id"]
+  label.key = queryOutput["name"]
+  labels.add(label)
+}
+return labels
+  </I18NLabels>  
+  <AutoExpand xml:space="preserve">
+if(component["blockFactor"] != ""){
+    def useSelectiveRefresh = isSelectiveRefreshViewComponent(component)
+    addScrollEvents(component, useSelectiveRefresh)
+}
+  </AutoExpand>  
+  <BeanDescription xml:space="preserve">
+    &lt;p&gt;The component state object for the Query depends on the declared sub-components and the executed query. 
+For the query 'select name, price from Product' with two QueryOutput (name, price) the component state object consists of the following properties:
+       &lt;ul&gt;
+        &lt;li&gt;&lt;code&gt;int dataSize&lt;/code&gt;: the number of row state objects&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;Object[] data&lt;/code&gt;: the array of row state objects&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;String query&lt;/code&gt;: the pretty formatted query text&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;String[] outputNames&lt;/code&gt;: the array of the query outputs field names(&lt;code&gt;Select (dynamic)&lt;/code&gt; mode only)&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;String[] outputLabels&lt;/code&gt;: the array of the query outputs field labels(&lt;code&gt;Select (dynamic)&lt;/code&gt; mode only)&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;Map[] outputs&lt;/code&gt;: the array of the query outputs state objects(&lt;code&gt;Select (dynamic)&lt;/code&gt; mode only)&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;String[] errors&lt;/code&gt;: the array of occurred errors during query composition (&lt;code&gt;Select (dynamic)&lt;/code&gt; mode only)&lt;/li&gt;
+       &lt;/ul&gt;
+    &lt;/p&gt;
+    &lt;p&gt;The row state object has the following properties:
+       &lt;ul&gt;
+        &lt;li&gt;&lt;code&gt;String name&lt;/code&gt;: the value of the &lt;i&gt;name&lt;/i&gt; field&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;Double price&lt;/code&gt;: the value of the &lt;i&gt;price&lt;/i&gt; field&lt;/li&gt;
+       &lt;/ul&gt;
+    &lt;/p&gt;
+     &lt;p&gt;The output state object has the following properties:
+       &lt;ul&gt;
+        &lt;li&gt;&lt;code&gt;String id&lt;/code&gt;: the attribute identifier&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;String name&lt;/code&gt;: the attribute field name&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;String sortCriteria&lt;/code&gt;: the attribute sort criteria [ASC,DESC] if used within the order by clause&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;String label&lt;/code&gt;: the attribute label&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;String type&lt;/code&gt;: the attribute type&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;String typeId&lt;/code&gt;: the attribute type identifier&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;String contentType&lt;/code&gt;: the attribute content type&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;Boolean dateTime&lt;/code&gt;: the flag indicating whether the attribute is of type date time&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;Boolean localized&lt;/code&gt;: the flag indicating whether the attribute type is a localized type&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;String pattern&lt;/code&gt;: the attribute formatting pattern&lt;/li&gt;
+       &lt;/ul&gt;
+    &lt;/p&gt;
+    </BeanDescription> 
+</Component>

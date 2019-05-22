@@ -1,0 +1,55 @@
+{
+  "service" : "wrm.comp.FormService",
+  "fields" : [ {
+    "id" : "fld1",
+    "fieldType" : "Field",
+    "type" : "string",
+    "labelSlots" : [ ],
+    "outputSlots" : [ ]
+  }, {
+    "id" : "fld2",
+    "fieldType" : "Field",
+    "type" : "password",
+    "labelSlots" : [ ],
+    "outputSlots" : [ ]
+  } ],
+  "_form" : {
+    "_" : "wrm.form.DefaultFormSubService",
+    "formLabel" : "Login",
+    "viewFormRef" : "form",
+    "properties" : {
+      "fld1" : {
+        "type" : "string",
+        "label" : "Username"
+      },
+      "fld2" : {
+        "type" : "password",
+        "label" : "Password"
+      }
+    }
+  },
+  "_validation" : {
+    "_" : "wrm.form.DefaultValidationSubService",
+    "events" : "osbme1",
+    "properties" : {
+      "fld1" : {
+        "rules" : [ {
+          "id" : "mnd1",
+          "descr" : {
+            "service" : "wrm.comp.val.MandatoryValidationRuleService",
+            "messageKeyPrefix" : "MandatoryValidationRule."
+          }
+        } ]
+      },
+      "fld2" : {
+        "rules" : [ {
+          "id" : "mnd2",
+          "descr" : {
+            "service" : "wrm.comp.val.MandatoryValidationRuleService",
+            "messageKeyPrefix" : "MandatoryValidationRule."
+          }
+        } ]
+      }
+    }
+  }
+}

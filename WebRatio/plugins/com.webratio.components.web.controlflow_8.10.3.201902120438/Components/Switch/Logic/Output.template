@@ -1,0 +1,9 @@
+#?delimiters <%,%>,<%=,%>
+<%setXMLOutput()%>
+<OutputParameters>
+  <%if (component["switchValues"] == "roleNames") {%>
+  	<OutputParameter name="switch" label="Role Id"/>
+  <%} else {%>
+  	<OutputParameter name="switch" label="Switch"/>
+  <%}%>
+</OutputParameters>

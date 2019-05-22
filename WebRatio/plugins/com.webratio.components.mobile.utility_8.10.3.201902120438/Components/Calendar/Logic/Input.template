@@ -1,0 +1,52 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+
+def condExpr = component.selectNodes("ConditionalExpression/*")
+def domainClassId = component["dataBinding"]
+def domainClass = getByIdOptional(domainClassId)
+%]
+<InputParameters>
+	[% if (domainClass) {
+		for (cond in condExpr) {
+			if (cond.name == "AttributesCondition" && cond["attributes"]) {
+				if (cond["value"] == "" && !isUnaryPredicate(cond["predicate"])) {
+					def attributes = cond["attributes"].tokenize(" ") %]
+						<InputParameter
+							name = "[%= getConditionalExpressionPartInputName(cond) %]"
+							refId="[%= cond["id"] %]"
+							type="[%= attributes.collect{domainClassId + "." + it}.join("|") %]"
+							label="[%= getAttributesConditionLabel(cond) %]"
+							mandatory="[%= isRequiredConditionalExpressionPart(cond) %]"
+						/>
+					[%
+				}
+			}
+			if (cond.name == "KeyCondition") {
+				for (a in getKeyAttributes(domainClass)) { %]
+					<InputParameter
+						name = "[%= getConditionalExpressionPartInputName(cond, a) %]"
+						refId="[%= cond["id"] %]"
+						type="[%= getAssignableTypeExpression(domainClass, a, true, false) %]"
+						label="[%= getKeyConditionLabel(cond, domainClass, a) %]"
+						mandatory="[%= isRequiredConditionalExpressionPart(cond)%] "
+					/>
+				[% }
+			}
+			if (cond.name == "AssociationRoleCondition" && cond["role"]) {
+				for (a in getKeyAttributes(getSourceDomainClass(getRoleByExpression(cond["role"])))) { %]
+						<InputParameter
+							name = "[%= getConditionalExpressionPartInputName(cond, a) %]"
+							refId="[%= cond["id"] %]"
+							type="[%= getAssignableTypeExpression(getSourceDomainClass(getRoleByExpression(cond["role"])), a, true, true) %]"
+							label="[%= getRoleConditionLabel(cond, a) %]"
+							mandatory="[%= isRequiredConditionalExpressionPart(cond) %]"
+						/>
+				[% }
+			}
+		}
+	} %]
+	<InputParameter name="inputDate" label="Current Date"/>
+	<InputParameter name="currentMonth" label="Current Month"/>
+	<InputParameter name="currentYear" label="Current Year"/>
+</InputParameters>

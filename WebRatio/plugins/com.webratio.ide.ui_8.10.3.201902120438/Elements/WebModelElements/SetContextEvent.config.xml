@@ -1,0 +1,24 @@
+<Element name="SetContextEvent" lowerName="set context event" pluralLowerName="set context events">
+	<Description>
+		Causes the update of one or more Context Parameters with new values.
+		Optionally, removes Context Parameters from the session.
+	</Description>
+	<ActionRef label="Add Property" />
+	<ActionRef label="Localize" />
+	<ActionRef label="Surround with Area" />
+	<ActionRef label="Generate Logic Descriptors Only"/>
+	<ActionRef label="Generate Selection"/>
+	<ActionRef label="Find Model Problems"/>
+	<PropertyCategory name="General">
+		<PropertyRef label="Identifier" />
+		<PropertyRef label="Name" />
+		<Property label="Reset">
+			If checked, all Context Parameters for which an input is not supplied are
+			removed from session.
+		</Property>
+		<Property label="Context Parameters">
+			The Context Parameters to be set or reset.
+			<Button name="Clear"/>
+		</Property>
+	</PropertyCategory>
+</Element>

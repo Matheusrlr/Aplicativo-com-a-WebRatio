@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Descriptor service="com.webratio.rtx.ws.WSService" name="WS Service">
+  <WebServiceProviders></WebServiceProviders>
+  <WebServicesModel tnsURI="" soapVersion="1.1" soapBindingStyle="rcpLiteral"></WebServicesModel>
+  <DataServicesModel>
+    <Class id="cls1">
+      <Permission method="R"></Permission>
+      <Permission method="C"></Permission>
+      <Permission method="D"></Permission>
+      <Permission method="U"></Permission>
+    </Class>
+    <Class id="cls4">
+      <Permission method="R"></Permission>
+      <Permission method="C"></Permission>
+      <Permission method="D"></Permission>
+      <Permission method="U"></Permission>
+    </Class>
+    <Class id="cls2">
+      <Permission method="R"></Permission>
+      <Permission method="C"></Permission>
+      <Permission method="D"></Permission>
+      <Permission method="U"></Permission>
+    </Class>
+    <Class id="cls5">
+      <Permission method="C"></Permission>
+      <Permission method="U"></Permission>
+      <Permission method="R"></Permission>
+      <Permission method="D"></Permission>
+    </Class>
+    <Class id="cls3">
+      <Permission method="C"></Permission>
+      <Permission method="D"></Permission>
+      <Permission method="R"></Permission>
+      <Permission method="U"></Permission>
+    </Class>
+  </DataServicesModel>
+  <UserServicesModel userClass="User" tokenDuration="" operations="login" attributes="" assignedRoles=""/>
+</Descriptor>

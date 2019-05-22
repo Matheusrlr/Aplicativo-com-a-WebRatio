@@ -1,0 +1,21 @@
+#?delimiters <%,%>,<%=,%>
+<% setXMLOutput() 
+def webProject = component.selectSingleNode("ancestor::WebProject")
+%>
+<OutputParameters>
+   
+   <OutputParameter name="username" label="Username"/>
+   <OutputParameter name="password" label="Password"/>
+   
+   <OutputParameter name="errorMessage" label="Error Message"/>
+   <OutputParameter name="exception" label="Exception"/>
+   
+   <OutputParameter name="modelElement"  type="" label="Model Element"/>
+   
+   <OutputParameter name="roleNames" type="" label="Role Names"/>
+   
+   <% if (webProject["enableAuthorizationToken"] == "true") { %>
+   		<OutputParameter name="token"  type="" label="Token"/>
+   		<OutputParameter name="userIdentity"  type="" label="User Identity"/>
+   <%}%>
+</OutputParameters>

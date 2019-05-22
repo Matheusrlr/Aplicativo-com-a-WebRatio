@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+
+	<!-- ================================================================================================================== -->
+	<!-- Simple TAG -->
+	<!-- ================================================================================================================== -->
+
+	<Tag name="InputParameters" prefix="" body="true" inline="false">
+		<Description>
+			The root node containing all InputParameter nodes.
+		</Description>
+	</Tag>
+
+	<Tag name="InputParameter" prefix="" body="false" inline="true" scriptKinds="comp">
+		<Description>The input parameter of the component.</Description>
+		<Attribute name="name" def="true" required="true" defValue="">
+			The name of the input parameter
+		</Attribute>
+		<Attribute name="type" def="true" required="true" defValue="">
+			The type of the input parameter.
+		</Attribute>
+		<Attribute name="label" def="true" required="true" defValue="">
+			The shown label of the parameter.
+		</Attribute>
+		<Attribute name="mandatory" def="false" defValue="true">
+			Indicates whether this input parameter is mandatory.
+		</Attribute>
+	</Tag>
+	
+	
+	<Tag name="InputParameter" prefix="" body="false" inline="true" scriptKinds="vrule">
+		<Description>The input parameter of the validation rule.</Description>
+		<Attribute name="name" def="true" required="true" defValue="">
+			The name of the input parameter
+		</Attribute>
+		<Attribute name="type" def="true" required="true" defValue="">
+			The type of the input parameter.
+		</Attribute>
+		<Attribute name="label" def="true" required="true" defValue="">
+			The shown label of the parameter.
+		</Attribute>
+		<Attribute name="mandatory" def="false" defValue="true">
+			Indicates whether this input parameter is mandatory.
+		</Attribute>
+	</Tag>
+
+	<!-- ================================================================================================================== -->
+	<!-- Groovy statements                                                                                                   -->
+	<!-- ================================================================================================================== -->
+
+	<Function name="XML Expression Filter" declaration="setXMLOutput()" image="FILTER" contentType="script">
+		<Description>
+			The XML expression filter declaration statement.
+		</Description>
+		<Value>setXMLOutput()</Value>
+	</Function>
+
+</Configuration>

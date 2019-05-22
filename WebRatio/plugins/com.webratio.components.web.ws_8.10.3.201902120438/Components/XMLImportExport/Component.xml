@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="operation" formBased="false" idPrefix="xcu" namePrefix="XML I/O  " label="XML Import Export" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" successFlowSource="true" successFlowTarget="true"> 
+  <EnumProperty attributeName="mode" defaultValue="import" figureDisplayOrder="1" changeFigureIcon="true"> 
+    <EnumItem value="import"/>  
+    <EnumItem value="export"/>  
+    <Description xml:space="preserve">Specifies the component operating mode.</Description> 
+  </EnumProperty>  
+  <DomainClassProperty attributeName="dataBinding" includeDerived="false" figureDisplayOrder="2" isXsd="true"> 
+    <Description xml:space="preserve">The class holding data of the root XML document element.</Description> 
+  </DomainClassProperty>  
+  <XSDElementProperty attributeName="rootElement" figureDisplayOrder="3" classIdExpr="@dataBinding"> 
+    <IsEnabled>return element["mode"] == "export"</IsEnabled>  
+    <Description xml:space="preserve">The root element to export.</Description> 
+  </XSDElementProperty>  
+  <BooleanProperty attributeName="deleteAllBefore"> 
+    <IsEnabled>return element["mode"] == "import"</IsEnabled>  
+    <Description>If checked, the component removes all the already present class volatile instances before each execution.</Description> 
+  </BooleanProperty>  
+  <BooleanProperty attributeName="validateDocuments"> 
+    <IsEnabled>return element["mode"] == "export"</IsEnabled>  
+    <Description>If checked, the component will validate the generated documents.</Description> 
+  </BooleanProperty>  
+  <Description>The XML I/O components let you to import/export objects described by and XML having a certain XSD.</Description>  
+  <InputDescription xml:space="preserve" name="Entity-Name XML">The XML document used to fill class tree starting from a certain class.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Role-Name Keys">TThe key attributes used to connect the handled objects through the domain model association.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Entity-Name Objects">The class objects used to generate the output XML document.</InputDescription>  
+  <OutputDescription xml:space="preserve" name="(Element-Name|ComplexType-Name) XML">The generates XML document.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Entity Keys">The import classes key attribute values.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Error Message">The occurred error message in case of erros.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Exception">The occurred exception.</OutputDescription> 
+</Component>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="content" formBased="false" idPrefix="dau" namePrefix="Details " label="Details" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true"  errorFlowTarget="true"  successFlowTarget="true" canPlaceLayoutComponent="true" canPlaceLayoutAttributes="true" canPlaceLayoutEvents="true"> 
+  <DomainClassProperty attributeName="dataBinding" includeDerived="true" figureDisplayOrder="1"> 
+    <Description xml:space="preserve">The class from which the content of the component is drawn.</Description> 
+  </DomainClassProperty>  
+  <AttributesProperty classIdExpr="@dataBinding" attributeName="displayAttributes" allAttributeName="displayAll" includeDerived="true" enabledImportExtraAttributes="true"> 
+    <Description xml:space="preserve">The list of class attributes displayed by the component.</Description>  
+    <IsEnabled>return (element["dataBinding"] != "")</IsEnabled> 
+  </AttributesProperty>  
+  <ConditionalExpression classIdExpr="../../@dataBinding" elementName="ConditionalExpression" defaultPolicy="true" figureDisplayOrder="2" automatic="true"> 
+    <Description xml:space="preserve">The set of selection criteria that retrieves the instances of the class of the component.</Description> 
+  </ConditionalExpression>  
+  <Description xml:space="preserve">Detail components display a set of attributes, which provides a meaningful view of a
+single instance of a given class of the domain model. 
+The definition of a details requires:
+&lt;ul&gt;
+  &lt;li&gt;The specification of the class to which the component refers and 
+of a conditional expression used to identify the instance displayed in the component.&lt;/li&gt;
+  &lt;li&gt;The selection of the attributes to be included in the component.&lt;/li&gt;
+&lt;/ul&gt;</Description>  
+  <InputDescription xml:space="preserve" name="Condition-Name">The parameter associated to one of the Conditional Expressions
+of the component.</InputDescription>  
+  <OutputDescription xml:space="preserve" name="Attribute-Name">One of attributes of the component's class.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="ForeignKey-Name">The value for one of the foreign key attributes of the object 
+connected to the extracted object.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Data Size">The integer value indicating if a class state object has been retrieved by the query. Possible values are: 1, 0</OutputDescription>  
+  <LayoutAttributes xml:space="preserve">if (component["displayAll"] == "true") {
+    def domainClass = getById(component["dataBinding"])    
+    def attrIdSet = new HashSet(getAttributes(domainClass).findAll{(it["key"] != "true") &amp;&amp; (it["type"] != "password")}.collect{it["id"]})
+    def ids = []
+    for (ent in getSuperDomainClassHierarchy(domainClass).reverse()) {
+      for(attributeId in ent["attributeOrder"].tokenize(" ")) {
+         def attribute = getById(attributeId)
+         if (attribute != null &amp;&amp; attribute["key"] != "true" &amp;&amp; attribute["type"] != "password") {
+            ids.add(attributeId)
+         }
+      }
+    }
+    attrIdSet.removeAll(ids)
+    ids.addAll(attrIdSet)
+    return ids 
+} else {
+    return component["displayAttributes"].tokenize(" ")
+}
+  </LayoutAttributes>  
+  <IsContextFreeComponent xml:space="preserve">return getIncomingFlows(component).empty</IsContextFreeComponent>  
+  <IsMultiConditionComponent xml:space="preserve">if (getIncomingFlows(component).size() &lt;= 1) {
+    return false
+}
+
+def sel = component.element("ConditionalExpression")
+if(sel == null){
+  return false
+}
+def count = sel.elements("AssociationRoleCondition").size() + sel.elements("KeyCondition").size()
+for (cond in sel.elements("AttributesCondition")) {
+    def pred = cond["predicate"]
+    if ((cond["value"] == "") &amp;&amp; !isUnaryPredicate(pred)) {
+        count++
+    }
+}
+return count &gt; 1
+
+</IsMultiConditionComponent>    <LayoutAttributeItem xml:space="preserve">def unitId = layoutAttribute["componentId"]
+if (unitId == "") {
+    unitId = layoutAttribute.valueOf("../@componentId")
+}
+return (unitId + ".data")</LayoutAttributeItem>  
+  <BeanDescription xml:space="preserve">
+	&lt;p&gt;The component state object for the Details consists of the following properties:
+	   &lt;ul&gt;
+  		&lt;li&gt;&lt;code&gt;int dataSize&lt;/code&gt;: the number of class state objects (zero or one)&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Object data&lt;/code&gt;: the class state object&lt;/li&gt;
+  	   &lt;/ul&gt;
+	&lt;/p&gt;
+	&lt;p&gt;The class state object depends on the class the component is based on. For example, the class 
+	&lt;i&gt;Product&lt;/i&gt; of Acme application is associated with a state object having the following properties:
+	   &lt;ul&gt;
+  		&lt;li&gt;&lt;code&gt;Integer OID&lt;/code&gt;: the value of the &lt;i&gt;oid&lt;/i&gt; attribute&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Integer code&lt;/code&gt;: the value of the &lt;i&gt;code&lt;/i&gt; attribute&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;String description&lt;/code&gt;: the value of the &lt;i&gt;description&lt;/i&gt; attribute&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;String name&lt;/code&gt;: the value of the &lt;i&gt;name&lt;/i&gt; attribute&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Double price&lt;/code&gt;: the value of the &lt;i&gt;price&lt;/i&gt; attribute&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Object thumbnail&lt;/code&gt;: the value of the &lt;i&gt;thumbnail&lt;/i&gt; attribute&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Boolean highlighted&lt;/code&gt;: the value of the &lt;i&gt;highlighted&lt;/i&gt; attribute&lt;/li&gt;
+  	   &lt;/ul&gt;
+	&lt;/p&gt;
+</BeanDescription> </Component>

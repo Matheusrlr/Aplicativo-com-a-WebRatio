@@ -1,0 +1,646 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.webratio.ide"
+      label="WebRatio IDE Feature"
+      version="8.10.3.201902120438"
+      provider-name="WebRatio"
+      plugin="com.webratio.ide.branding">
+   <install-handler handler=""/>
+
+   <description>
+      WebRatio integrated development environment.
+   </description>
+
+   <copyright>
+      (c) Copyright 2001-2019 WebRatio s.r.l. All Rights Reserved
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <includes
+         id="org.eclipse.gef"
+         version="3.9.101.201408150207"/>
+
+   <includes
+         id="com.webratio.commons"
+         version="1.0.0.201810081230"/>
+
+   <includes
+         id="com.webratio.services"
+         version="1.1.0.201802231629"/>
+
+   <includes
+         id="org.eclipse.gef.source"
+         version="3.9.101.201408150207"/>
+
+   <includes
+         id="org.eclipse.draw2d"
+         version="3.9.101.201408150207"/>
+
+   <includes
+         id="org.eclipse.equinox.p2.user.ui"
+         version="2.2.0.v20140911-0143"/>
+
+   <includes
+         id="org.eclipse.platform"
+         version="4.4.0.v20140925-0400"/>
+
+   <includes
+         id="org.eclipse.platform.source"
+         version="4.4.0.v20140925-0400"/>
+
+   <includes
+         id="org.eclipse.jdt"
+         version="3.10.0.v20140925-0400"/>
+
+   <includes
+         id="org.eclipse.pde"
+         version="3.10.0.v20140925-0400"/>
+
+   <includes
+         id="org.eclipse.sdk"
+         version="4.4.0.v20140925-0400"/>
+
+   <requires>
+      <import feature="org.eclipse.gef" version="0.0.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.pde" version="0.0.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.jdt" version="0.0.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.platform" version="0.0.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.sdk" version="0.0.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.draw2d" version="0.0.0" match="greaterOrEqual"/>
+      <import feature="com.webratio.commons" version="0.0.0" match="greaterOrEqual"/>
+      <import feature="com.webratio.services" version="0.0.0" match="greaterOrEqual"/>
+   </requires>
+
+   <plugin
+         id="com.webratio.commons.db"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.commons.libs"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.commons.mf.model"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.commons.mf.ui"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.commons.transform"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.commons.doc"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.commons.mf.ui.views.properties.tabbed"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.commons.mf.ui.compare"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.commons.startup"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.ide.core"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.ide.styles"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.ide.ui"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.ide.units"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.generator.helpers"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.generator.mobile"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.generator.webapp"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.rtx"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.log"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.data"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.components.web.ws"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.ide.ui.doc.user"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.components.web.session"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.ide.ui.compare"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.ide.ui.dbsync"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.ide.transform"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.ide.derivation"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.ide.branding"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="WRDefault"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="WebRatio"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="Multiflex"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="Reports"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="Excel"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.components.web.content"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.components.web.controlflow"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.components.web.operation"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.components.web.utility"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.components.mobile.content"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.components.mobile.events"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.components.mobile.operation"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.components.mobile.utility"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.components.mobile.validation"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.ide.ui.samples"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.debug"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.ide.components.core"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.ide.components.ui"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.ide.store.core"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.ide.store.ui"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.ide.store.installer"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.ide.debug.core"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.ide.debug.ui"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.lib.hibernate"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.mf.core"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.mf.ui"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.components.web.validation"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.bpm.core"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.bpm.ui"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.bpm.ui.doc.user"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.bpm.ui.compare"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.bpm.ui.samples"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.bpm.signal.core"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.bpm.signal.ui"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.bpm.signal.ui.compare"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.cloud"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.cloud2"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.eclipse.cloud.core"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.eclipse.cloud.ui"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.ide.deploy.core"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.ide.deploy.ui"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.xsd"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.json"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.ws"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.ide.xsd.ui"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"
+         unpack="false"/>
+
+   <plugin
+         id="com.webratio.lib.apache.derby"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.lib.apache.lucene"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.lib.spring"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.web.mvc"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.model"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.model.query"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.mobile.libs"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.mobile.mvc"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.mobile.runtime"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.ide.mobile.ui"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="MobileDefault"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.components.mobile.validation"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.mobile.nodejs.linux.x86_64"
+         download-size="0"
+         install-size="0"
+         version="1.5.4"/>
+
+   <plugin
+         id="com.webratio.mobile.nodejs.macosx"
+         download-size="0"
+         install-size="0"
+         version="1.5.4"/>
+
+   <plugin
+         id="com.webratio.mobile.nodejs.win32.x86_64"
+         download-size="0"
+         install-size="0"
+         version="1.5.4"/>
+
+   <plugin
+         id="com.webratio.project.build"
+         download-size="0"
+         install-size="0"
+         version="8.10.3.201902120438"/>
+
+   <plugin
+         id="com.webratio.bpm.engine"
+         download-size="0"
+         install-size="0"
+         version="1.5.1.201902120438"/>
+
+</feature>

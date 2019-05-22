@@ -1,0 +1,7 @@
+#?delimiters <%,%>,<%=,%>
+<%setXMLOutput()%>
+<InputParameters>
+   <% for (par in component.selectNodes("CollectorParameter")) { %>
+       <InputParameter name="<%=par["id"]%>" label="<%=par["name"]%>" mandatory="false"/>
+   <% } %>        
+</InputParameters>

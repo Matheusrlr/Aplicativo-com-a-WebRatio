@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Descriptor service="com.webratio.components.web.utility.datasource.QueryService" name="Query 1">
+  <DataSource>db1</DataSource>
+  <Language>SQL</Language>
+  <Mode>select</Mode>
+  <Results maxResults="" blockFactor="" blockWindow=""/>
+  <QueryOutput name="nome" label="nome" id="qo1" type="string"/>
+  <QueryOutput name="descricao" label="descricao" id="qo2" type="string"/>
+  <QueryInput name="keys" id="qi1" type="integer" required="true"/>
+  <QueryFile>Database_190508_145711.sql</QueryFile>
+  <!--Operation Decorator Service-->
+  <wr:DecoratorService xmlns:wr="http://www.webratio.com/2013/WebML/Logic" service="com.webratio.rtx.components.DefaultOperationDecoratorService">
+    <ModelName>Query 1</ModelName>
+    <ParentContainer>ad2</ParentContainer>
+    <NavigationAncestors/>
+    <Secure>false</Secure>
+    <Localized>false</Localized>
+    <CheckPermission>false</CheckPermission>
+    <LinkIdRequired>true</LinkIdRequired>
+    <OperationParams>
+      <OperationParam component="qu1">qu1.qi1</OperationParam>
+      <Params/>
+    </OperationParams>
+    <Outgoing>
+      <Link resultCode="success">sf2</Link>
+      <Link resultCode="error">ef1</Link>
+    </Outgoing>
+    <IsLinkHistoryRecorded>true</IsLinkHistoryRecorded>
+    <DomainModelValidationEnabled>true</DomainModelValidationEnabled>
+  </wr:DecoratorService>
+</Descriptor>

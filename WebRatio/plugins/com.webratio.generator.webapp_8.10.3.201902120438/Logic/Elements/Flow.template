@@ -1,0 +1,81 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+
+/* Compute flow runtime information */
+def runInfo = createSerializableProxy(wr.helpers.runtime.getFlowRunInfo(flow))
+%]
+<Descriptor service="com.webratio.rtx.links.DefaultLinkService">
+	<Target>[%= runInfo.realTargetId %]</Target>
+	<Secure>[%= runInfo.targetSecure %]</Secure>
+	<Source>[%= runInfo.sourceId %]</Source>
+	[% if (runInfo.sourcePanelId) { %]
+		<SourcePage>[%= runInfo.sourcePanelId %]</SourcePage>
+	[% } %]
+	<ReachableAlternativePages>
+		[% for (subPage in runInfo.reachableXorSubPages) { %]
+			<ReachableAlternativePage protected="[%= subPage.protected %]">[%= subPage.id %]</ReachableAlternativePage>
+		[% } %]
+	</ReachableAlternativePages>
+	[% if (runInfo.navigator) { %]
+		<Navigates>true</Navigates>
+	[% } %]
+	[% if (runInfo.companion) { %]
+		<Companion>true</Companion>
+	[% } %]
+	<StartPageIdRequiredByTarget>[%= runInfo.startPanelIdRequiredByTarget %]</StartPageIdRequiredByTarget>
+	[% if (runInfo.fullRefresh) { %]
+		<PreservedContextParams>
+			<Params>[%= runInfo.fullRefreshPreservedParameters.collect{ it.id }.join("|") %]</Params>
+		</PreservedContextParams>
+	[% } %]
+	[% if (runInfo.selectiveRefresh) { %]
+		<PreservedContextParams selectiveRefresh="true">
+			<Params>[%= runInfo.selectiveRefreshPreservedParameters.collect{ it.id }.join("|") %]</Params>
+		</PreservedContextParams>
+	[% } %]
+	<ContextPropagations>
+		[% for (propag in runInfo.contextPropagations) { %]
+			<ContextPropagation
+				targetParam="[%= propag.targetParam %]"
+				[% if (propag.targetSessionParam) { %]targetSessionParam="[%= propag.targetSessionParam %]"[% } %]
+				[% if (propag.append) { %]append="true"[% } %]
+				[% if (propag.savePrevious) { %]save="true"[% } %]
+				[% if (propag.value != null) { %]value="[%= propag.value %]"[% } %]
+				[% if (propag.sourceComponentId) { %]sourceComponentId="[%= propag.sourceComponentId %]"[% } %]
+				[% if (propag.sourceParam) { %]sourceParam="[%= propag.sourceParam %]"[% } %]
+				[% if (propag.sourceSessionParam) { %]sourceSessionParam="[%= propag.sourceSessionParam %]"[% } %]
+				[% if (propag.sourceBindingId) { %]sourceLinkParam="[%= propag.sourceBindingId %]"[% } %]
+			/>
+		[% } %]
+	</ContextPropagations>
+	[% if (!runInfo.panelCloseActions.isEmpty() || runInfo.panelOpenAction) { %]
+		<PageActions>
+			[% for (action in runInfo.panelCloseActions) { %]
+				<[% if (action.prepare) { %]Prepare[% } %]Close pages="[%= action.panelIds.join("|") %]"/>
+			[% } %]
+			[% if (runInfo.panelOpenAction) { %]
+				[%
+					def action = runInfo.panelOpenAction
+					def winCfg = action.windowConfiguration
+				%]
+				<Open page="[%= action.panelId %]"/>
+				[% if (winCfg) { %]
+					<WindowConfiguration
+						title="[%= winCfg.title %]"
+						[% if (winCfg.titleLocalized) { %]titleLocalized="true"[% } %]
+						[% for (param in winCfg.params) { %]
+							[%= param.key %]="[%= param.value %]"
+						[% } %]
+					/>
+				[% } %]
+			[% } %]
+		</PageActions>
+	[% } %]
+	[% if (runInfo.followingFlowId) { %]
+		<FollowingLink>[%= runInfo.followingFlowId %]</FollowingLink>
+	[% } %]
+	[% if (flow["newWindow"] == "true" && flow.selectSingleNode("Property[@name='newMultiSession' and @value='true']") && wr.project.selectSingleNode("Property[@name='enableMultiSession' and @value='true']") != null) { %]
+		<NewMultiSession>true</NewMultiSession>
+	[% } %]
+</Descriptor>

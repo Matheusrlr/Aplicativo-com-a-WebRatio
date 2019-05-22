@@ -1,0 +1,5 @@
+#?delimiters [%, %], [%=, %]
+<div class="frame">
+	<div class="frame-title"><wr:Label context="element"/></div>
+	<div class="frame-content"><wr:FrameContent/></div>
+</div>

@@ -1,0 +1,44 @@
+<Element name="MobileProject" lowerName="mobile project"
+		pluralLowerName="">
+		<Description>
+			A Mobile Project maintains the model information of your Web Application. 
+			The project includes information about
+			Domain Model and WebModel elements.
+		</Description>
+		<ActionRef label="Add Property"/>
+		<ActionRef label="Localize"/>
+		<ActionRef label="Find Model Problems"/>
+		<ActionRef label="Help"/>
+		<PropertyCategory name="Mobile">
+			<PropertyRef label="Output Path"/>
+			<Property label="Login Definition">
+				Login Definition
+			</Property>
+			<Property label="Back-end Base URL">
+				Back-end Base URL
+			</Property>	
+			<Property label="Check Credential on Resume">
+				Check Credential on Resume
+			</Property>		
+			<Property label="App Name">
+				App Name
+			</Property>				
+		</PropertyCategory>
+		<PropertyCategory name="Layout">
+			<PropertyRef label="Style" />
+			<PropertyRef label="Page Layout" />
+			<PropertyRef label="Grid Layout"/>
+			<PropertyRef label="Frame Layout"/>
+			<PropertyRef label="Cell Layout"/>
+			<PropertyRef label="Attribute Layout"/>
+			<PropertyRef label="Field Layout"/>
+			<PropertyRef label="Event Layout"/>
+			<PropertyRef label="Error Style Page"/>
+			<PropertyRef label="Expire Style Page"/>
+			<PropertyRef label="Login Style Page"/>
+			<PropertyRef label="Component Configuration"/>
+			<PropertyRef label="Old Resources"/>
+			<PropertyRef label="Inherit Parameters"/>
+		</PropertyCategory>
+</Element>
+		

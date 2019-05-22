@@ -1,0 +1,540 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setHTMLOutput()
+import org.apache.commons.lang.*
+import org.apache.commons.lang.exception.ExceptionUtils
+import org.apache.commons.lang.StringEscapeUtils
+import org.apache.commons.collections.map.ListOrderedMap
+
+
+// input: pageNode
+pageId = pageNode["id"]
+currentFile = pageId2fileNameMap[pageId]  // for <a href="FILE.html#a">...</a> use pageId2fileNameMap
+
+
+escapeHtml = { s ->
+    return StringEscapeUtils.escapeHtml(s)
+}
+
+
+/*
+ *
+ *
+ * CREATE DIAGRAM SECTION
+ *
+ *
+ */
+createDiagramSection = { section -> 
+
+def sheetKind_identifier = pageNode["sheetKind_identifier"]
+def sheetKind_pagePrefix = pageNode["sheetKind_pagePrefix"]
+def sheetKind_anchorPrefix = pageNode["sheetKind_anchorPrefix"]
+def sheetKind_imgPrefix = pageNode["sheetKind_imgPrefix"]
+def imgId = StringUtils.removeStart(pageId, sheetKind_pagePrefix) 
+def mapId = sheetKind_imgPrefix + imgId
+def debugInfo = (section.name + " for " + pageId)
+
+def image = imgId2fileRelPath.get(sheetKind_imgPrefix + imgId)
+def id2title = id2titleMaps.get(sheetKind_imgPrefix+imgId);
+def id2coord = id2coordMaps.get(sheetKind_imgPrefix+imgId);
+def idFigure = idFigureMaps.get(imgId);
+idFigure = (idFigure != null ? new ArrayList(idFigure) : new ArrayList());
+//idFigure.remove(imgId); // skip the ref to the current mainModel
+	
+	if (image != null && id2title != null && id2coord != null && idFigure != null && !idFigure.isEmpty()) {
+
+%>
+<div class="DiagramSection">
+<!--
+************************************************************************************************************
+* START SECTION <%=debugInfo%>
+************************************************************************************************************
+-->
+<div class="DiagramSection_Map">
+<map name="map_<%=mapId%>">
+<%
+
+		for(id in idFigure) {
+			def title = id2title.get(id)
+			if (title == null) {
+				// skip without title (unexpected)
+				continue
+			}
+			def hRef = ""
+			def anchorName = elementIdToAnchorNames.get(sheetKind_identifier).get(id)
+			if (anchorName != null) {
+	            def targetPageId = StringUtils.substringBefore(anchorName, "#")
+	            def anchorRefName = StringUtils.substringAfter(anchorName, "#")
+				
+				def targetFile = pageId2fileNameMap[targetPageId];
+				if (targetFile == null) {
+					println ("ErrorCode=2 Target file not found : " + targetPageId); // TODO:remove!!!!
+				}
+				if (targetFile != currentFile) {
+					hRef += targetFile
+				}
+				hRef += ("#" + anchorRefName);
+				def hRefMapKey = targetPageId + "#" + anchorRefName
+				if (!usedFullAnchorNames.contains(hRefMapKey)) {
+					hRef = ""
+					println ("createDiagramSection.ErrorCode=4 Href not found : " + hRefMapKey); // TODO:remove!!!!
+				}
+			}
+			def coordSet = id2coord.get(id)
+			for(coord in coordSet) {
+				if (coord != null) {
+%>  <area alt="<%=title%>" title="<%=title%>" <%if (hRef != "") {%>href="<%=hRef%>"<%} %> shape=rect coords="<%=coord%>">
+<%
+				}
+			}
+
+		}
+%></map>
+</div>
+<div class="DiagramSection_Image"><img src="<%=StringUtils.replace(image, "\\", "/")%>" usemap="#map_<%=mapId%>"></div>
+<!--
+************************************************************************************************************
+* END SECTION <%=debugInfo%>
+************************************************************************************************************
+-->
+</div><%
+
+	}
+}
+
+
+
+
+
+/*
+ *
+ *
+ * CREATE TITLE OR ANCHOR
+ *
+ *
+ */
+createTitle = { child ->
+
+def title = child["title"]
+
+def anchorName = child["anchorName"]
+
+if (title != "") {
+
+	%><!-- TITLE '<%=title%>' --><%=title%><%	
+
+} else if (anchorName != "") {
+
+	%><!-- ANCHOR NAME '<%=anchorName%>' --><a name="<%=anchorName%>"></a><%	
+
+} 
+
+}
+
+
+/*
+ *
+ *
+ * CREATE ITEM
+ *
+ *
+ */
+createItem = { item, section ->
+
+// ************************************************************************************************************
+// print <img src="..." /><a href="targetFile.html#anchorRefName">label</a><div>COMMENT....</div>
+// replacing the '\n' char with <br> tag
+// ************************************************************************************************************
+	def img = item["img"]
+	
+	def anchorRefTemp = item["anchorRefTemp"]
+	def externalLink = item["externalLink"]
+	def targetPageId = ""
+	def anchorRefName = ""
+	def decodedRef = (anchorRefTemp != "" ? anchorReferenceDecoderMap.get(anchorRefTemp) : null)
+	if (decodedRef != null) {
+		targetPageId = decodedRef[0]
+		anchorRefName = decodedRef[1]
+	}
+	def needHRef = (anchorRefName != "")
+	def isElementName = ("true" == item["isElementName"])
+	
+	if (img != "") {
+		%><img src="<%=img%>" class="ElementIcon"/><%
+	}
+	
+	def tag = item["tag"]
+	if (tag != "") {
+		%><div class="ElementQName"><%=tag%></div><%
+	}
+
+	if (needHRef) {
+		def hRef = ""
+		def targetFile = pageId2fileNameMap[targetPageId];
+		if (targetFile == null) {
+			println ("ErrorCode=1 Target file not found : " + targetPageId); // TODO:remove!!!!
+		}
+		if (targetFile != currentFile) {
+			hRef += targetFile
+		}
+		hRef += ("#" + anchorRefName);
+		def hRefMapKey = targetPageId + "#" + anchorRefName
+		if (usedFullAnchorNames.contains(hRefMapKey)) {
+			%><a href="<%=hRef%>"><%
+		} else {
+			println ("ErrorCode=3 Href not found : " + hRefMapKey); // TODO:remove!!!!
+			needHRef = false
+		}
+	} else if (externalLink != "") {
+		%><a href="<%=externalLink%>"><%
+	}
+	
+	def label = item["label"]
+	if (label != "") {
+		if (isElementName) {
+			%><div class="ElementName"><%=label%></div><%
+		} else {
+			%><%=label%><%
+		}
+	}
+	
+	if (needHRef || (externalLink != "")) {
+		%></a><%
+	}
+
+
+	def addElementComment = true;
+	def comment = "";
+	for(commentChild in item.selectNodes("Comment")) {
+		if (comment != "") {
+			comment += "\n";
+		}		
+		comment += commentChild.valueOf("string(.)");
+	}
+	if (comment == "") {
+		addElementComment = false;
+		if ("HeaderSection" == item.parent.parent.name) {// look for ".setCreateAnyWay" in java code
+			addElementComment = true;
+		}
+	}
+	if (addElementComment) {
+		def newComment = StringUtils.replace(escapeHtml(comment), "\n", "<br>")
+		%><div class="ElementComment"><% 
+			if (comment != "") {
+				printRaw (newComment)
+			} 
+		%></div><%
+	}
+
+}
+
+
+/*
+ *
+ *
+ * CREATE CARD
+ *
+ *
+ */
+createCard = { card, section ->
+
+// getCells
+def getCells = { row, keys ->
+	def cells = [];
+	def tempMap = [:];
+	for(cell in row.selectNodes("Cell")) {
+		tempMap.put(cell["columnKey"], cell)
+	}
+	def currentCell = null;
+	for(columnKey in keys) {
+		def cell = tempMap[columnKey]
+		if (cell != null) {
+			currentCell = cell;
+			cells.add(cell)
+		} else if (currentCell != null) {
+			def colspanValue = currentCell["colspan"]
+			def colspan = (colspanValue != "" ? Integer.parseInt(colspanValue) : 1);
+			colspan++;
+			currentCell.setAttributeValue("colspan", Integer.toString(colspan))
+		}
+	}
+	return cells;
+}
+
+// ************************************************************************************************************
+// retrieve rows
+// ************************************************************************************************************
+	def rows = card.selectNodes("Row");
+	if (rows.isEmpty()) {
+		return;
+	}
+	
+
+// ************************************************************************************************************
+// init columns
+// ************************************************************************************************************
+	def cardName = card["name"]
+	def cardClassName = card["className"]
+	def columns = new ListOrderedMap()
+	for(column in card.selectNodes("Column")) {
+		def columnKey = column["key"]
+		def columnLabel = column["label"]
+		columns.put(columnKey, columnLabel)
+	}
+	
+	
+%>
+<!-- CARD<% 
+if (card["name"] != "") {
+	%> '<%=card["name"]%>' <%=cardClassName%><%
+}%> -->
+<table<%
+	if (cardClassName != "") {  
+		%> class="<%=cardClassName%>"<%  
+	}
+%> cellpadding="0" cellspacing="0"><%
+
+
+// ************************************************************************************************************
+// print card header
+// ************************************************************************************************************
+if (card["hideCardHeader"] != "true") {
+
+%>
+<tr><%
+    	def colCnt = 0;
+	for(columnKey in columns.asList()) {
+%><th class="colCnt<%=colCnt%>"><%=columns[columnKey]%></th><%
+		colCnt++;		
+	}
+%></tr><%		
+}
+	
+	
+// ************************************************************************************************************
+// print rows
+// ************************************************************************************************************
+	for(row in rows) {
+	
+		def cells = getCells(row, columns.asList())
+%>
+<tr><%
+
+
+// ************************************************************************************************************
+// print cells
+// ************************************************************************************************************
+		for(cell in cells) {
+			def colspanValue = cell["colspan"]
+			def className = cell["className"]
+%><td<% 
+if (className != "") {  
+
+    String newClassName = className;
+    int rowspan = 0;
+    if (className.indexOf("rowspan") >= 0) {
+    	
+    
+    	newClassName = "";
+        for (String clName : StringUtils.split(className)) {
+            if (clName.startsWith("rowspan")) {
+                try { // TODO:remove
+                    String s = clName.substring("rowspan".length());
+                    rowspan = Integer.parseInt(s);
+                } catch (Throwable e) {
+                }
+            } else {
+                newClassName += (" " + clName);
+            }
+        }
+        newClassName = newClassName.trim();
+
+    }
+	if (rowspan > 1) {
+		%> rowspan="<%=rowspan%>"<%  
+	}
+	if (newClassName != "") {
+		%> class="<%=className%>"<%  
+	}
+}
+if (colspanValue != "") {  
+	%> colspan="<%=colspanValue%>"<%  
+}
+%>><%
+
+// ************************************************************************************************************
+// print items
+// ************************************************************************************************************
+			for(cellChild in cell.selectNodes("*")) {
+				printRaw(redirect(cellChild, section))
+			}
+%></td><%
+		}
+%>
+</tr><%		
+	}
+	
+%>
+</table><%
+
+}
+
+
+
+
+/*
+ *
+ *
+ * CREATE DIV
+ *
+ *
+ */
+createDiv = { child, section  ->
+
+def className = child["className"]
+def children = child.selectNodes("*")
+
+if ("HeaderSection_LyJmp" == className) {
+	def anchorRefTmpLyJmp = child.valueOf("Item[string('anchorRefTemp') != '']/@anchorRefTemp")
+	def decodedRefLyJmp = (anchorRefTmpLyJmp != "" ? anchorReferenceDecoderMap.get(anchorRefTmpLyJmp) : null)
+	if (decodedRefLyJmp == null) {
+		// skip
+		return;
+	}
+}
+
+%>
+<div <%
+if (className != "") {
+	%>class="<%=className%>"<%
+}
+%>><%
+
+
+// ************************************************************************************************************
+// print items
+// ************************************************************************************************************
+for(divChild in children) {
+	printRaw(redirect(divChild, section))
+}
+
+%></div><%
+
+
+}
+
+
+
+
+
+
+/*
+ *
+ *
+ * CREATE SECTION
+ *
+ *
+ */
+createSection = { section ->
+
+def debugInfo = (section.name + " for " + pageId)
+
+%>
+<!--
+************************************************************************************************************
+* START SECTION <%=debugInfo%>
+************************************************************************************************************
+--><%
+
+for(child in section.selectNodes("*")) {
+	printRaw(redirect(child, section))
+}
+%>
+<!--
+************************************************************************************************************
+* END SECTION <%=debugInfo%>
+************************************************************************************************************
+--><%
+
+
+}
+
+
+
+
+
+/*
+ *
+ *
+ * REDIRECT
+ *
+ *
+ */
+redirect = { container, section  ->
+
+if ("Title" == container.name) {
+
+// ************************************************************************************************************
+// title
+// ************************************************************************************************************
+	printRaw(createTitle(container))
+
+} else if ("Item" == container.name) {
+
+// ************************************************************************************************************
+// item
+// ************************************************************************************************************
+	printRaw(createItem(container, section))
+
+} else if("Card" == container.name) {
+
+// ************************************************************************************************************
+// card
+// ************************************************************************************************************
+	printRaw(createCard(container, section))
+
+} else	if ("Div" == container.name) {
+
+// ************************************************************************************************************
+// div
+// ************************************************************************************************************
+	printRaw(createDiv(container, section))
+
+}
+
+
+
+}	
+
+
+
+
+
+
+
+/*
+ *
+ *
+ * MAIN
+ *
+ *
+ */
+//try {
+
+	// retrieve sections
+	def sections = pageNode.selectNodes("*")
+	%><div class="BeginOfPage Id_<%=pageId%>"><%
+	
+	for(section in sections) {
+		if ("DiagramSection" == section.name) {
+			printRaw(createDiagramSection(section));
+		} else {
+			printRaw(createSection(section))
+		}
+	
+	}
+
+	%></div><%
+//} catch (Throwable tr) {
+//    tr.printStackTrace();
+%><div class="EndOfPage"></div>

@@ -1,0 +1,6 @@
+# Delete History
+DeleteHistory=${QTABLE_PREFIX}DELETE_HISTORY
+deleteHistoryOid=OID
+deleteHistoryObjectId=OBJECT_ID
+deleteHistoryClassId=CLASS_ID
+deleteHistoryDeletedAt=DELETED_AT

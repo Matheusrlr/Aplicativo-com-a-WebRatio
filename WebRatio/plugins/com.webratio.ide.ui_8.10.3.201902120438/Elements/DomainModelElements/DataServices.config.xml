@@ -1,0 +1,24 @@
+<Element name="DataServices" lowerName="data services" pluralLowerName="data services">
+	<Description>
+		    	The data service contains all classes exposed through REST Data Services.
+	</Description>
+	<ActionRef label="Help"/>
+	<PropertyCategory name="General">
+		<Property label="Data Services Database">
+	    	The source database for Data Services.
+		</Property>
+		<Property label="Data Services Schema">
+	    	The source database schema for Data Services.
+		</Property>
+		<Property label="Data Services Table Prefix">
+	    	If set, all the names of tables exported by the Database Synchronizer operation are prefixed with the specified value.
+		</Property>
+		<Property label="Services Configuration">
+	    	If set, determines for each defined Role in the project, the operations exposed as data service for the selected Class of the Domain Model.
+		</Property>
+		<Property label="Caching">
+	    	Defines the general caching option for Read services requests.
+			This option can be tailored for each published service by changing the same property on the corresponding published class.
+		</Property>
+	</PropertyCategory>
+</Element>

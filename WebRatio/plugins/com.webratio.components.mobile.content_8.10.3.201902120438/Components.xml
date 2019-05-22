@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Components priority="1100" label="View Components"> 
+  <Group> 
+    <Component>Details</Component>  
+  </Group>  
+  <Group> 
+    <Component>List</Component>  
+	<Component>Hierarchy</Component>  
+  </Group>  
+  <Group> 
+    <Component>Form</Component>
+  </Group>  
+  <Group> 
+    <Component>Message</Component>  
+    <Component>ViewComponent</Component> 
+  </Group>
+
+  <Warning key="NO_DISPLAY_ATTRIBUTES" severity="WARNING">Unspecified attributes to display for the unit</Warning>  
+  <Warning key="NO_FIELDS" severity="WARNING">Unspecified fields for the unit</Warning> 
+
+</Components>

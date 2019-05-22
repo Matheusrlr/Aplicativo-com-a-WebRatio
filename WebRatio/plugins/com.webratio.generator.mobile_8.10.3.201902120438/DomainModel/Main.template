@@ -1,0 +1,57 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.GenerationException
+import com.fasterxml.jackson.core.JsonProcessingException
+import com.fasterxml.jackson.databind.node.JsonNodeFactory
+
+eventSocketClient.sendBeginTask("DomainModel", 100)
+
+def domainModel = wr.project.selectSingleNode("DomainModel")
+
+def dclasses = domainModel.selectNodes(".//Class")
+def associations = domainModel.selectNodes(".//Association")
+def roles = domainModel.selectNodes(".//AssociationRole1 | .//AssociationRole2")
+def dbName = domainModel.valueOf("Property[@name = 'DBName']/@value") ?: wr.projectDir.name
+
+/* Create the client data entities schema */
+processOutputFile("www/app/entitySet.js", "client data schema", wr.project) { outputFile ->
+	def output = executeContextTemplate("DomainModel/EntitySet.template", ["dclasses": dclasses, "dbName": dbName])
+	outputFile.writeAsync(serializeJavaScript(output), "UTF-8")
+}
+
+/* Create the Data service descriptor */
+processOutputFile("www/services/_data.json", "data service descriptor", wr.project) { outputFile ->
+	def output = executeContextTemplate("DomainModel/Data.template", ["dclasses": dclasses, "associations": associations, "dbName": dbName])
+	outputFile.writeAsync(serializeJSON(output), "UTF-8")
+}
+
+/* Create the Data Synchronization service descriptor */
+processOutputFile("www/services/_datasync.json", "data synchronization service descriptor", wr.project) { outputFile ->
+	def output = executeContextTemplate("DomainModel/DataSync.template", [:])
+	outputFile.writeAsync(serializeJSON(output), "UTF-8")
+}
+
+/* Create the Data Tracker service descriptor */
+processOutputFile("www/services/_datatrack.json", "data tracker service descriptor", wr.project) { outputFile ->
+	def output = executeContextTemplate("DomainModel/DataTracker.template", [:])
+	outputFile.writeAsync(serializeJSON(output), "UTF-8")
+}
+
+/* Create or update the initial data file */
+processOutputFile("www/conf/initialData.json", "initial data file", wr.project) { initialDataFile ->
+	def initialData = null
+	if (initialDataFile.exists()) {
+		try {
+			initialData = parseJSONFile(initialDataFile)
+		} catch (JsonProcessingException e) {
+			e.printStackTrace()
+		}
+	}
+	if (initialData == null) {
+		initialData = JsonNodeFactory.instance.objectNode()
+	}
+	initialDataFile.writeAsync(executeContextTemplate("DomainModel/UpdateInitialData.template", ["initialData": initialData, "dclasses": dclasses, "associations": associations]), "UTF-8")
+}
+
+eventSocketClient.sendTaskWorked("DomainModel", 100)
+%]

@@ -1,0 +1,34 @@
+#?delimiters [%, %], [%=, %]
+[% setJSONOutput() %]
+[% 	def ce = component.selectSingleNode("ConditionalExpression")
+	def condExprs = ""
+	if(ce){
+		condExprs = getConditionalExpressionJson( getById(component["dataBinding"]), ce )
+	}
+	def output = (getOutputAttributes(component, "data.", null) + component["displayAttributes"].tokenize(" "))
+%]
+{
+	"service": "wrm.comp.DetailsService",
+	"entity": "[%= component["dataBinding"] %]",
+		[% if (ce) { %]
+				"condExprs":  [% printRaw(condExprs) %],
+		[% } %]
+	"output": [
+					[% 
+						def importedKeyInOutput
+						def bindName
+						def normalizedId
+						output.eachWithSeparator(","){ it -> 
+							importedKeyInOutput = (it.indexOf('_') != -1 ? true : false)
+							normalizedId = (importedKeyInOutput ? it.replace("_",".") : it)
+							bindName =  (normalizedId.indexOf('.') != -1 ? getAttributeExpressionId(normalizedId) : normalizedId )
+						 	%] 
+								{
+									"ref": "[%= normalizedId %]",
+									"viewName": "[%= getFieldName(bindName) %]",
+									"bindName": [% if (importedKeyInOutput) { %] "[%= it %]" [% } else { %] "[%= bindName %]" [% } %]
+								}
+			 			[% } 
+			 		%]
+		 		]
+}

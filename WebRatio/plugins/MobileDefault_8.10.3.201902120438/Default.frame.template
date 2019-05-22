@@ -1,0 +1,26 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Background Color" name="background-color" type="enum" values="default|white|gray|blue|light blue|green|yellow|red|violet|black" default="default">
+Defines the background color of the frame title.
+</wr:LayoutParameter>
+[%
+setHTMLOutput()
+def colors = [
+	"white" : "light",
+	"gray" : "stable",
+	"blue" : "positive",
+	"light blue" : "calm",
+	"green" : "balanced",
+	"yellow" : "energized",
+	"red" : "assertive",
+	"violet" : "royal",
+	"black" : "dark"]
+	
+def classes = []
+classes.add("item")
+classes.add("item-divider")
+
+if (params["background-color"] != "default") 
+	classes.add(colors[params["background-color"]] + "-bg")
+%]
+<div class="[%= classes.join(" ") %]"><wr:Label context="element"/></div>
+<wr:FrameContent/>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="content|operation" formBased="false" idPrefix="scu" namePrefix="Script " label="Script" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" successFlowSource="true" successFlowTarget="true" canPlaceLayoutComponent="true" canPlaceLayoutEvents="true" customIcon="true"> 
+  <FileProperty label="Script File" attributeName="script" extension="groovy"> 
+    <Description xml:space="preserve">A file containing the script code. Useful in case of multiple components sharing the 
+same script code.</Description> 
+  </FileProperty>  
+  <TextProperty label="Script Text" elementName="ScriptText" contentType="script" canMoveToFile="true"> 
+    <IsEnabled>return (element["script"] == "")</IsEnabled>  
+    <Description xml:space="preserve">The script code. It is ignored if the Script File property is set.</Description> 
+  </TextProperty>  
+  <SubComponent elementName="ScriptInput" idPrefix="sci" namePrefix="input" label="input" ignoreI18N="true"> 
+    <Description xml:space="preserve">An input parameter of the component. In order to 
+    avoid to explicitly specify the Script Inputs, they can be declared at the beginning of the component script:
+    &lt;br/&gt;&lt;code&gt;#input type1 input1, type2 input2&lt;/code&gt;&lt;br/&gt; The variable names must respect the 
+    Java code conventions for variable names. Names can optionally be preceded by a supported Java type identifier: in that case,
+	incoming input values will be automatically constrained to the specified type.</Description> 
+  </SubComponent >  
+  <SubComponent elementName="ScriptOutput" idPrefix="sco" namePrefix="output" label="output" ignoreI18N="true"> 
+    <Description xml:space="preserve">An output parameter of the component. In order to 
+    avoid to explicitly specify the Script Outputs, they can be declared at the beginning of the component script:
+    &lt;br/&gt;&lt;code&gt;#output type1 output1, type2 output2&lt;/code&gt;&lt;br/&gt; The variable names must respect the 
+    Java code conventions for variable names. Names can optionally be preceded by a supported Java type identifier: in that case,
+	assigned output values will be automatically constrained to the specified type.</Description> 
+  </SubComponent >  
+  <IsContextFreeComponent xml:space="preserve">return getIncomingFlows(component).empty</IsContextFreeComponent>  
+  <IsMultiConditionComponent xml:space="preserve">return getIncomingFlows(component).size &gt; 1</IsMultiConditionComponent>  
+  <Description xml:space="preserve">The Script component is designed to execute a block of arbitrary code. The typical 
+usage of the script component is for transforming a set of input parameters into a 
+set of output parameters.
+
+&lt;p&gt;The input parameters of the Script can be explicitly specified on the component or in the script, 
+providing a valid Java identifier as name. The same happens for output 
+parameters, declared explicitly on the component. 
+The script executed by the component is an arbitrary piece of code written with 
+the Groovy programming language 
+(see http://groovy.codehaus.org for more details on Groovy).&lt;/p&gt;
+
+&lt;p&gt;The script starts with a set of variables into its context, whose names are 
+the same names of the declared input parameters.
+The script is then required to return a java.util.Map as output, containing a set 
+of key/value pairs: the names of such keys must be the same names of the 
+declared output parameters.&lt;/p&gt;
+
+&lt;p&gt;If input parameters have been declared with a type, their value will be automatically
+constrained to the appropriate type or a runtime error will occur.
+Similarly, output parameters passed in the returned java.util.Map will be constrained
+to the appropriate type when so required.&lt;/p&gt;
+
+&lt;p&gt;The &lt;b&gt;resultCode&lt;/b&gt; variable can always be specified as output
+parameter. It is an implicit variable allowing to explicitly handle the failure
+(resultCode = "error") or the success (resultCode = "success") of the script.
+&lt;/p&gt;
+
+&lt;p&gt;There are other implicit variables that can be used in the Script:
+	&lt;ul&gt;
+		&lt;li&gt;&lt;code&gt;groovy.lang.Binding binding&lt;/code&gt;: the data elements accessed by the script. It is normally used to avoid 
+		the declaration of multiple couplings on the same element. The script inputs are returned as is as outputs:
+	&lt;br/&gt;&lt;code&gt;#input input1, input2&lt;/code&gt;&lt;br/&gt;
+	&lt;code&gt;#output output1, output2&lt;/code&gt;&lt;br/&gt;&lt;br/&gt;
+	&lt;code&gt;return binding.getVariables()&lt;/code&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;code&gt;Map localContext&lt;/code&gt;: a map of name-to-object bindings, preloaded with values of parameters (having scope = page).&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Map sessionContext&lt;/code&gt;: a map of name-to-object bindings, preloaded with values of parameters (having scope = session).&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;RTXManager rtx&lt;/code&gt;: the shared runtime manager.&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Log log&lt;/code&gt;: the access point to the log system.&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;ScriptService service&lt;/code&gt;: the script component runtime service.&lt;/li&gt;
+  	&lt;/ul&gt;
+&lt;/p&gt;
+	</Description>  
+  <BeanDescription xml:space="preserve">
+	&lt;p&gt;The component state object for the Script consists of the following property:
+	   &lt;ul&gt;
+  		&lt;li&gt;&lt;code&gt;Object result&lt;/code&gt;: the result of the Groovy script&lt;/li&gt;
+  	   &lt;/ul&gt;
+	&lt;/p&gt;
+	</BeanDescription> 
+</Component>

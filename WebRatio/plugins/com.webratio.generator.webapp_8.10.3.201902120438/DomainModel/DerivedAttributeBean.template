@@ -1,0 +1,69 @@
+#?delimiters <%, %>, <%=, %>
+<%
+  // ==== INPUTS ====================================================
+  // attribute
+  // ================================================================
+  import org.apache.commons.lang.StringUtils
+  
+  setJavaOutput()
+  def className = getClassInfo(attribute.parent).simpleName + "_" + toValidClassName(getFieldName(attribute)) + "Bean"
+  def jcs = attribute.selectNodes("db:JoinColumn")
+  def attrJavaType = (attribute.valueOf("@db:clob") == "true") ? "String" : getJavaType(attribute["type"])
+  def propSuffix = ("blob" == attribute["type"]) ? "Ref" : ""
+  def dbBlob = ("blob" == attribute["type"]) && ("database" == attribute["storageType"])
+%>package <%=getPackageName(attribute.parent)%>;
+
+public class <%=className%> implements java.io.Serializable {
+    /** Serial version identifier. */
+    private static final long serialVersionUID = 1L;
+
+    <% for (jc in jcs) { %>
+      <%def keyAttr = getById(jc, "attribute")%>
+	  private <%=getJavaType(keyAttr["type"])%> _<%=getFieldName(keyAttr)%>;
+	<% } %>
+
+    private <%=attrJavaType%> value;
+       
+    
+    <% for (jc in jcs) { %>
+      <%def keyAttr = getById(jc, "attribute")%>
+	  <%def fieldName = getFieldName(keyAttr)%>
+	  <%def capitalFieldName = StringUtils.capitalize(fieldName) %>
+	  <%def type = getJavaType(keyAttr["type"])%>
+	  
+	  public <%=type%> get<%=capitalFieldName%>() {
+         return _<%=fieldName%>;
+      }
+    
+      public void set<%=capitalFieldName%>(<%=type%> _<%=fieldName%>) {
+         this._<%=fieldName%> = _<%=fieldName%>;
+      }
+	<% } %>
+    
+    public <%=attrJavaType%> getValue<%=propSuffix%>() {
+         return value;
+    }
+    
+    public void setValue<%=propSuffix%>(<%=attrJavaType%> value) {
+         this.value = value;
+    }
+    
+    
+    <%if(dbBlob){%>
+      private java.sql.Blob blob;
+      
+      public java.sql.Blob getValueBinary() {
+         return blob;
+      }
+    
+      public void setValueBinary(java.sql.Blob blob) {
+         this.blob = blob;
+      }
+      
+    <%}%>
+    
+    
+    public String toString(){
+      return (value != null) ? value.toString() : "";
+    }
+}

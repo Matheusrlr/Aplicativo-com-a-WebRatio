@@ -1,0 +1,22 @@
+#?delimiters [%, %], [%=, %]
+[%
+/*
+ * Initialization of the generation environment
+ */ 
+ 
+/* Set the target platforms */
+if (wr.appConfig.targetingEmulator) {
+	wr.setTargetPlatforms(["mobileEmulator"]) // TODO consider splitting platforms and emulator also on 'wr'
+} else {
+	wr.setTargetPlatforms(wr.appConfig.targetPlatforms)
+}
+
+/* Determine whether Runtime sources are available */
+wr.rtxSourcesAvailable = ["lib:wrm.src.js", "lib:mvc.src.js"].every { 
+	try {
+		return wr.locateResourceFile(it).isFile()
+	} catch (e) {
+		return false
+	}
+}
+%]

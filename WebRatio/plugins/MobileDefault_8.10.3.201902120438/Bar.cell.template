@@ -1,0 +1,95 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Background Color" name="background-color" type="enum" values="white|gray|blue|light blue|green|yellow|red|violet|black" default="blue">
+Defines the color of the toolbar.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Title Alignment" name="title-alignment" type="enum" values="left|center|right" default="center">
+Defines the screen title alignment.
+</wr:LayoutParameter>
+[%
+def inTop = (cell.valueOf("ancestor::layout:CustomLocation[1]/@name") == "Top Bar")
+def inBottom = (cell.valueOf("ancestor::layout:CustomLocation[1]/@name") == "Bottom Bar")
+
+def titleAlignement = 'align-title="' + params["title-alignment"] + '"'
+
+def colors = [
+	"white": "light",
+	"gray": "stable",
+	"blue": "positive",
+	"light blue": "calm",
+	"green": "balanced",
+	"yellow": "energized",
+	"red": "assertive",
+	"violet": "royal",
+	"black": "dark"]
+	
+def bgColor = colors[params["background-color"]]
+
+def titleElement = cell.selectSingleNode("(layout:Attribute|layout:Fragment)[1]")
+
+def buttonsLeftOpen = false
+def buttonsRightOpen = false
+def buttonsLeftPrinted = false
+def titlePrinted = false
+%]
+[% if (inTop) { %]
+	<ion-header-bar class="bar-[%= bgColor %]" [%= titleAlignement %]>
+[% } else if (inBottom) { %]
+	<ion-footer-bar keyboard-attach class="bar-[%= bgColor %] hide-on-keyboard-open" [%= titleAlignement %]>
+[% } %]
+
+	<wr:Iterate var="element" context="cell" select="layout:Component|layout:Field|layout:Event|layout:Attribute|layout:Fragment|layout:Grid[@containerType='cell']">
+		[% if (element.getName() == "Event" || element.getName() == "Grid") { %]
+		
+			[% if (!buttonsLeftPrinted && !buttonsLeftOpen && !titlePrinted) { 
+				buttonsLeftOpen = true
+			%]
+				<div class="buttons">
+			[% } else if (!buttonsLeftOpen && !buttonsRightOpen) { 
+				buttonsRightOpen = true
+			%]
+				<div class="buttons pull-right">
+			[% } %]
+			<wr:Element context="element"/>
+			
+		[% } else if (element.getName() == "Fragment" || element.getName() == "Attribute") { %]
+		
+			[% if (!titlePrinted) { %]
+				[% if (buttonsLeftOpen) { %]
+					</div>
+				[% 	buttonsLeftPrinted = true
+					buttonsLeftOpen = false
+				   } %]
+				[% titlePrinted = true %]
+				<h1 class="title"> 
+					<wr:Value context="element"/>
+				</h1>
+			[% } else { %]
+				<wr:Value context="element"/>
+			[% } %]
+			
+		[% } else if (element.getName() == "Field" || element.getName() == "Component") { %]
+		
+			[% 
+			
+			throwGenerationException(element.getName() + " is not supported in Bar Template")
+
+			if (buttonsLeftOpen) { %]
+				</div>
+			[% 	buttonsLeftPrinted = true
+				buttonsLeftOpen = false
+			   } %]
+				<wr:Element context="element"/>
+			
+		[% } %]
+	</wr:Iterate>
+	
+	[% if (buttonsLeftOpen || buttonsRightOpen) { %]
+		</div>
+	[% } %]
+
+	
+[% if (inTop) { %]
+	</ion-header-bar>
+[% } else if (inBottom) { %]
+	</ion-footer-bar>
+[% } %]

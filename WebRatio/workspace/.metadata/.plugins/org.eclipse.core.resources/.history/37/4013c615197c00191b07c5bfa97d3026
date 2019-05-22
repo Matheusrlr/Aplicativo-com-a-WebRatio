@@ -1,0 +1,141 @@
+<DomainModel xmlns:db="http://www.webratio.com/2006/WebML/Database" xmlns:gr="http://www.webratio.com/2006/WebML/Graph">
+  <Class id="User" name="User" duration="persistent" gr:x="20" gr:y="150" gr:hideAttributes="false" attributeOrder="userOID userName password email token tokenExpirationDate secretKey" db:database="db1" db:table="user" db:isView="false">
+    <Attribute name="oid" id="userOID" type="integer" key="true" db:column="oid"/>
+    <Attribute name="userName" id="userName" type="string" db:column="username"/>
+    <Attribute name="password" id="password" type="password" db:column="password" key="false"/>
+    <Attribute name="email" id="email" type="string" db:column="email"/>
+    <Attribute id="token" name="Token" type="string" db:column="token"/>
+    <Attribute id="tokenExpirationDate" name="Token Expiration Date" type="timestamp" db:column="token_expiration_date"/>
+    <Attribute id="secretKey" name="secretKey" type="string" db:column="secretkey"/>
+    <Comment xml:space="preserve">A user represents one mobile application user. In addition to the standard information such as username, password and email, a user is also characterized by a token. The token is a string that authorizes the usage of all services published by the backend application. The token is automatically set by the backend application at login. The token may have a limited duration, that's why a token expiration date can be set. The secret key is the encryption key used when transferring files between the mobile application and the backend.</Comment>
+  </Class>
+  <Class id="Role" name="Role" duration="persistent" gr:x="355" gr:y="200" gr:hideAttributes="false" attributeOrder="roleOID roleName" db:database="db1" db:table="role">
+    <Attribute name="oid" id="roleOID" type="integer" key="true" db:column="oid"/>
+    <Attribute name="roleName" id="roleName" type="string" db:column="rolename"/>
+    <Comment xml:space="preserve">A role represents an application role managed by the backend application. This class is automatically filled in by the backend application with all Roles elements modeled in the project.</Comment>
+  </Class>
+  <Class id="Device" name="Device" duration="persistent" attributeOrder="deviceOid deviceId notificationDeviceId deviceModel devicePlatform devicePlatformVersion deviceBrowser" gr:x="35" gr:y="-60" db:database="db1" db:table="device">
+    <Attribute id="deviceOid" name="oid" type="integer" key="true" db:column="oid"/>
+    <Attribute id="deviceId" name="Device ID" type="string" db:column="device_id"/>
+    <Attribute id="notificationDeviceId" name="Notification Device ID" type="string" db:column="notification_device_id"/>
+    <Attribute id="deviceModel" name="Model" type="string" db:column="model"/>
+    <Attribute id="devicePlatform" name="Platform" type="string" db:column="platform"/>
+    <Attribute id="devicePlatformVersion" name="Platform Version" type="string" db:column="platform_version"/>
+    <Attribute id="deviceBrowser" name="Browser" type="string" db:column="browser"/>
+    <Comment xml:space="preserve">A device represents a mobile phone or a tablet on which there's an app that interacts with the backend application. A device is identified through the Device ID, which is automatically calculated from the backend application. Other information about the device: the Model (e.g. iPhone 6), the Platform (iOS/Android) and its version (e.g. 8.1.3), the installed Browser (e.g. Mozilla/5.0). Finally the Notification Device ID identifies the device for sending push notifications to the installed app; it must be sent by the mobile application at login.</Comment>
+  </Class>
+  <Association id="User2Role_Role2User" name="User_Role" sourceClass="User" targetClass="Role" db:database="db1" db:table="user_role">
+    <AssociationRole1 id="User2Role" name="roles" maxCard="N">
+      <db:JoinColumn attribute="userOID" name="user_oid"/>
+    </AssociationRole1>
+    <AssociationRole2 id="Role2User" name="users" maxCard="N">
+      <db:JoinColumn attribute="roleOID" name="role_oid"/>
+    </AssociationRole2>
+  </Association>
+  <Association id="User2Device_Device2User" name="User_Device" sourceClass="User" targetClass="Device" db:database="db1" db:table="device">
+    <AssociationRole1 id="User2Device" name="UserToDevice" maxCard="N">
+      <db:JoinColumn attribute="userOID" name="user_oid"/>
+    </AssociationRole1>
+    <AssociationRole2 id="Device2User" name="DeviceToUser" maxCard="1">
+      <db:JoinColumn attribute="deviceOid" name="oid"/>
+    </AssociationRole2>
+  </Association>
+  <DataServices db:dataServicesDatabase="db1">
+    <ServiceClass class="cls1">
+      <ServiceRole>
+        <ServiceMethod method="read"/>
+        <ServiceMethod method="create"/>
+        <ServiceMethod method="delete"/>
+        <ServiceMethod method="update"/>
+      </ServiceRole>
+    </ServiceClass>
+    <ServiceClass class="cls4">
+      <ServiceRole>
+        <ServiceMethod method="read"/>
+        <ServiceMethod method="create"/>
+        <ServiceMethod method="delete"/>
+        <ServiceMethod method="update"/>
+      </ServiceRole>
+    </ServiceClass>
+    <ServiceClass class="cls2">
+      <ServiceRole>
+        <ServiceMethod method="read"/>
+        <ServiceMethod method="create"/>
+        <ServiceMethod method="delete"/>
+        <ServiceMethod method="update"/>
+      </ServiceRole>
+    </ServiceClass>
+    <ServiceClass class="cls5">
+      <ServiceRole>
+        <ServiceMethod method="create"/>
+        <ServiceMethod method="update"/>
+        <ServiceMethod method="read"/>
+        <ServiceMethod method="delete"/>
+      </ServiceRole>
+    </ServiceClass>
+    <ServiceClass class="cls3">
+      <ServiceRole>
+        <ServiceMethod method="create"/>
+        <ServiceMethod method="delete"/>
+        <ServiceMethod method="read"/>
+        <ServiceMethod method="update"/>
+      </ServiceRole>
+    </ServiceClass>
+  </DataServices>
+  <UserServices>
+    <UserServiceOperation type="login"/>
+  </UserServices>
+  <Class id="cls1" name="Menu" duration="persistent" gr:x="415" gr:y="-125" attributeOrder="cls1#att1 cls1#att26 cls1#att27" db:database="db1" db:table="menu">
+    <Attribute id="cls1#att1" name="oid" key="true" specialBehavior="implicitOid" type="integer" db:column="oid"/>
+    <Attribute id="cls1#att26" name="createdAt" type="timestamp" specialBehavior="createTimestamp" db:column="createdat"/>
+    <Attribute id="cls1#att27" name="updatedAt" type="timestamp" specialBehavior="updateTimestamp" db:column="updatedat"/>
+  </Class>
+  <Class id="cls2" name="Feedback" duration="persistent" attributeOrder="cls2#att2 cls2#att9 cls2#att8 cls2#att7 cls2#att6 cls2#att5 cls2#att4 cls2#att3 cls2#att28 cls2#att29" gr:x="590" gr:y="140" db:database="db1" db:table="feedback">
+    <Attribute id="cls2#att2" name="oid" key="true" specialBehavior="implicitOid" type="integer" db:column="oid"/>
+    <Attribute id="cls2#att3" name="sugestao" type="string" db:column="sugestao"/>
+    <Attribute id="cls2#att4" name="sexo" type="boolean" db:column="sexo"/>
+    <Attribute id="cls2#att5" name="data_nasc" type="date" db:column="data_nasc"/>
+    <Attribute id="cls2#att6" name="email" type="string" db:column="email"/>
+    <Attribute id="cls2#att7" name="matr&#237;cula" type="string" db:column="matricula"/>
+    <Attribute id="cls2#att8" name="sobrenome" type="string" db:column="sobrenome"/>
+    <Attribute id="cls2#att9" name="nome" type="string" db:column="nome"/>
+    <Attribute id="cls2#att28" name="createdAt" type="timestamp" specialBehavior="createTimestamp" db:column="createdat"/>
+    <Attribute id="cls2#att29" name="updatedAt" type="timestamp" specialBehavior="updateTimestamp" db:column="updatedat"/>
+  </Class>
+  <Class id="cls4" name="Estabelecimentos" duration="persistent" attributeOrder="cls4#att14 cls4#att20 cls4#att19 cls4#att18 cls4#att17 cls4#att16 cls4#att15 cls4#att21 cls4#att24 cls4#att25" gr:x="940" gr:y="85" db:database="db1" db:table="topico">
+    <Attribute id="cls4#att14" name="oid" key="true" specialBehavior="implicitOid" type="integer" db:column="oid" db:idGenerator="identity"/>
+    <Attribute id="cls4#att15" name="valor" type="integer" db:column="valor"/>
+    <Attribute id="cls4#att16" name="telefone" type="string" db:column="telefone"/>
+    <Attribute id="cls4#att17" name="link" type="url" db:column="link"/>
+    <Attribute id="cls4#att18" name="endereco" type="string" db:column="endereco"/>
+    <Attribute id="cls4#att19" name="descricao" type="string" db:column="descricao"/>
+    <Attribute id="cls4#att20" name="nome" type="string" db:column="nome"/>
+    <Attribute id="cls4#att21" name="logo" type="blob" db:column="logo"/>
+    <Attribute id="cls4#att24" name="createdAt" type="timestamp" specialBehavior="createTimestamp" db:column="createdat"/>
+    <Attribute id="cls4#att25" name="updatedAt" type="timestamp" specialBehavior="updateTimestamp" db:column="updatedat"/>
+  </Class>
+  <db:Database id="db1" name="database" type="MySQL" url="jdbc:mysql://localhost:3306/database" username="root" password="dGF0YXUyNS4uLA==" validateConnection="false" cryptedPassword="true">
+  </db:Database>
+  <Class gr:x="360" gr:y="-5" id="cls5" name="Categoria" duration="persistent" attributeOrder="cls5#att30 cls5#att31 cls5#att32 cls5#att33 cls5#att34 cls5#att35" db:database="db1" db:table="categoria_2">
+    <Attribute id="cls5#att30" key="true" name="oid" type="integer" db:column="oid" db:idGenerator="identity"/>
+    <Attribute id="cls5#att33" name="imagem" type="blob" db:column="imagem"/>
+    <Attribute id="cls5#att32" name="descricao" type="string" db:column="descricao"/>
+    <Attribute id="cls5#att31" name="nome" type="string" db:column="nome"/>
+    <Attribute id="cls5#att34" name="createdAt" type="timestamp" specialBehavior="createTimestamp" db:column="createdat"/>
+    <Attribute id="cls5#att35" name="updatedAt" type="timestamp" specialBehavior="updateTimestamp" db:column="updatedat"/>
+  </Class>
+  <Class gr:x="945" gr:y="-95" id="cls3" name="Tipo" duration="persistent" attributeOrder="cls3#att10 cls3#att11 cls3#att12 cls3#att13" db:database="db1" db:table="tipo">
+    <Attribute id="cls3#att10" key="true" name="oid" type="integer" db:column="oid" db:idGenerator="assigned"/>
+    <Attribute id="cls3#att11" name="nome" type="string" db:column="nome"/>
+    <Attribute id="cls3#att12" name="createdAt" type="timestamp" specialBehavior="createTimestamp" db:column="createdat"/>
+    <Attribute id="cls3#att13" name="updatedAt" type="timestamp" specialBehavior="updateTimestamp" db:column="updatedat"/>
+  </Class>
+  <Association id="as1" name="Categoria_Tipo" sourceClass="cls5" targetClass="cls3" db:database="db1" db:table="categoria_2">
+    <AssociationRole1 id="as1#role1" name="CategoriaToTipo" maxCard="N"/>
+    <AssociationRole2 id="as1#role2" name="TipoToCategoria" maxCard="1"/>
+  </Association>
+  <Association id="as2" name="Tipo_Topico" sourceClass="cls3" targetClass="cls4" db:database="db1" db:table="topico" db:isView="false">
+    <AssociationRole1 id="as2#role3" name="TipoToTopico" maxCard="N"/>
+    <AssociationRole2 id="as2#role4" name="TopicoToTipo" maxCard="1"/>
+  </Association>
+</DomainModel>

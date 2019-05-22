@@ -1,0 +1,809 @@
+<Properties>
+	<Property label="JNDI Name">
+		When a connection pool is used, it specifies the name used 
+		for retrieving (at run-time) a JDBC javax.sql.DataSource 
+		from the JNDI context of the application server.
+	</Property>
+	<Property label="Connections">
+		The number of permitted database connections. If unspecified, a default value (15) is used.
+	</Property>
+	<Property label="Validate Connection">
+		If checked, the connection pool validate database connections before returning them.
+	</Property>
+	<Property label="Validation Query">
+		The optional query used to validate the database connections.
+	</Property>
+	<Property label="Transaction Isolation">
+		Sets the JDBC transaction isolation level. Possible values are:
+		&lt;ul&gt;
+			&lt;li&gt;&lt;b&gt;Database Default&lt;/b&gt;: the default database isolation level.&lt;/li&gt;
+			&lt;li&gt;&lt;b&gt;None&lt;/b&gt;: transactions are not supported.&lt;/li&gt;
+			&lt;li&gt;&lt;b&gt;Read Committed&lt;/b&gt;: dirty reads are prevented; non-repeatable reads and phantom reads can occur.&lt;/li&gt;
+			&lt;li&gt;&lt;b&gt;Read Uncommitted&lt;/b&gt;: dirty reads, non-repeatable reads and phantom reads can occur.&lt;/li&gt;
+			&lt;li&gt;&lt;b&gt;Repeatable Read&lt;/b&gt;: dirty reads and non-repeatable reads are prevented; phantom reads can occur.&lt;/li&gt;
+			&lt;li&gt;&lt;b&gt;Serializable&lt;/b&gt;: dirty reads, non-repeatable reads and phantom reads are prevented.&lt;/li&gt;
+		&lt;/ul&gt;
+	</Property>
+	<Property label="Connection Provider">
+		The &lt;a href="http://www.hibernate.org"&gt;Hibernate&lt;/a&gt; connection provider which 
+		wraps a specific JDBC connection pool. If unspecified, the 
+		predefined <code>com.webratio.rtx.hibernate.C3P0ConnectionProvider</code> class 
+		is used, which wraps the well-known &lt;a href="http://jakarta.apache.org/commons/dbcp/"&gt;
+		Apache Commons DBCP pool&lt;/a&gt;.
+	</Property>
+	<Property label="Ignore Schema">
+		If checked, the Hibernate mapping will be generated without the schema information.
+	</Property>
+	<Property label="Custom Descriptor">
+		If checked, it indicates that a custom descriptor is stored in the 
+		"WebContent/WEB-INF/descr" folder of the project, which in turn is copied in the 
+		output path each time the project is generated.
+		&lt;p&gt;
+		The Edit button <Button name="Browse"/> opens the 
+		custom descriptor file if it is already in the "WebContent/WEB-INF/descr" folder. If no 
+		custom descriptor file exists in this folder, but it exists in the descriptors folder in 
+		the output path, it is possible to copy it in the "WebContent/WEB-INF/descr" project 
+		folder and edit it.
+		&lt;/p&gt;
+	</Property>
+	<Property label="Custom URL Name">
+		Instead of the identifier, it is possible to use a custom name in the URL 
+		that will be used to reach the <ElementRef/>.
+		The custom URL name must not contain whitespaces, 
+		non-ascii characters or other special characters like /, ?.
+	</Property>
+	<Property label="Horizontal Align">
+		Specifies the alignment of data and the justification of text in a cell. Possible values are:
+		&lt;ul&gt;
+			&lt;li&gt;Left: Left-justify text&lt;/li&gt;
+			&lt;li&gt;Center: Center-justify text&lt;/li&gt;
+			&lt;li&gt;Right: Right-justify text&lt;/li&gt;
+			&lt;li&gt;Justify: Double-justify text&lt;/li&gt;
+			&lt;li&gt;Char: Aligns text around a specific character. If a user agent doesn't support character alignment, 
+			behavior in the presence of this value is unspecified&lt;/li&gt;
+		&lt;/ul&gt;
+	</Property>
+	<Property label="Vertical Align">
+		Sets the vertical alignment of an element in a cell. Possible values are:
+		&lt;ul&gt;
+			&lt;li&gt;Top: The top of the element is aligned with the top of the tallest element on the line&lt;/li&gt;
+			&lt;li&gt;Middle: The element is placed in the middle of the parent element&lt;/li&gt;
+			&lt;li&gt;Bottom: The bottom of the element is aligned with the lowest element on the line&lt;/li&gt;
+			&lt;li&gt;Baseline: The element is placed on the baseline of the parent element&lt;/li&gt;
+		&lt;/ul&gt;
+	</Property>
+	<Property label="Width">
+		Sets the width of the <ElementRef/> (e.g. 80%, 100px).
+	</Property>
+	<Property label="Height">
+		Sets the height of the <ElementRef/> (e.g. 80%, 100px).
+	</Property>
+	<Property label="Padding">
+		Sets the amount of pixels between the border and the contents of the table cells.
+	</Property>
+	<Property label="CSS Style">
+		The css style attribute for the <ElementRef/> (e.g. width:80%; height:80%).
+	</Property>
+	<Property label="Style Class">
+		The CSS class assigned to the <ElementRef />.
+	</Property>
+	<Property label="Error Style Page">
+		The page to show when an unexpected error, such as an uncaught exception, occurs
+		in the application. 
+		<Button name="Edit"/>
+	</Property>
+	<Property label="Expire Style Page">
+		The page to show when attempting to navigate after the user session has expired,
+		requiring the user to restart from an home page. 
+		<Button name="Edit"/>
+	</Property>
+	<Property label="Login Style Page">
+		The page to show when the user attempts to directly access a protected area without
+		first logging in. The page requires to fill in credentials before continuing.
+		<Button name="Edit"/>
+	</Property>
+	<Property label="Identifier">
+		The internal ID of the <ElementRef /> in the Project.
+	</Property>
+	<Property label="Name">
+		The user-defined
+		<ElementRef />
+		name. Although not strictly necessary, it is good design
+		practice to choose distinct names for different
+		<ElementRefs />.
+	</Property>
+	<Property label="Home">
+		If checked, the <ElementRef/> is set as the home <ElementRef/>.
+	</Property>
+	<Property label="Role Name">
+		The user-defined name of the <ElementRef />. 
+		It can be modified, but a default value is system-generated from the names 
+		of the source and destination classes. 
+		Although not strictly necessary, it is good design practice to choose 
+		distinct labels for different <ElementRefs />.
+	</Property>
+	<Property label="Source Class">
+		The class from which starts the <ElementRef/>.
+	</Property>
+	<Property label="Target Class">
+		The class to which ends the <ElementRef/>.
+	</Property>
+	<Property label="Source">
+		The element from which starts the <ElementRef/>.
+	</Property>
+	<Property label="Target">
+		The element to which ends the <ElementRef/>.
+	</Property>	
+	<Property label="Target Component">
+		The component or page to which ends the <ElementRef/>.
+	</Property>
+	<Property label="Cardinality">
+		The maximum number of association instances that the 
+		class of the <ElementRef /> must have. Valid values 
+		are &lt;b&gt;one&lt;/b&gt; and &lt;b&gt;many&lt;/b&gt;.
+	</Property>
+	<Property label="Derivation">
+		The derivation query defining the population of the class.
+		It is applicable only for sub classes. 
+		&lt;p&gt;
+		Clicking on the Edit button <Button name="Browse"/> starts the 
+		&lt;a href="/Reference/WizardsAndDialogs/DerivationWizard"/&gt;, 
+		which provides assistance in editing the derivation query.
+		&lt;/p&gt;
+		<Button name="Clear"/>
+	</Property>
+	<Property label="Attribute Derivation">
+		The derivation query defining the value of the attribute. 
+		&lt;p&gt;
+		Clicking on the Edit button <Button name="Browse"/> starts the 
+		&lt;a href="/Reference/WizardsAndDialogs/DerivationWizard"/&gt;, 
+		which provides assistance in editing the derivation query.
+		&lt;/p&gt;
+		<Button name="Clear"/> 
+	</Property>
+	<Property label="Association Derivation">
+		The derivation query defining the members of the association 
+		role. 
+		&lt;p&gt;
+		Clicking on the Edit button <Button name="Browse"/> starts the 
+		&lt;a href="/Reference/WizardsAndDialogs/DerivationWizard"/&gt;, 
+		which provides assistance in editing the derivation query.
+		&lt;/p&gt;
+		<Button name="Clear"/>
+	</Property>
+	<Property label="Database">
+		The source database.
+	</Property>
+	<Property label="Schema">
+		The source database schema.
+	</Property>
+	<Property label="Table">
+		Once the source database has been specified, a source table 
+		can be chosen from those contained in the selected data 
+		source.
+	</Property>
+	<Property label="Column">
+		Identifies the column of the table set as the source table of 
+		the class owning the attribute to be used as a source for 
+		the selected attribute.
+	</Property>
+	<Property label="Join Criteria">
+		Identifies the join columns in the mapping of the <ElementRef />.
+		The Edit button <Button name="Browse"/> opens the 
+		&lt;a href="/Reference/WizardsAndDialogs/JoinCriteriaSelectionDialog"/&gt;, 
+		which allows to set the join columns.
+	</Property>
+	<Property label="Component Computations">
+		Computation modes to use for components of the target page when it is selectively
+		refreshed by this flow.
+	</Property>
+	<Property label="Landmarks">
+		The sorted list of landmark elements contained within the <ElementRef />. 
+		The Edit button <Button name="Browse"/> opens the 
+		&lt;a href="/Reference/WizardsAndDialogs/OrderingDialog"/&gt;, which permits to 
+		sort the landmark elements.
+	</Property>
+	<Property label="Protected">
+		If checked, the access to all the pages and operations
+		contained at any level inside the
+		<ElementRef />
+		is permitted only to users belonging to a group entitled to
+		access the
+		<ElementRef />
+		. If the HTTP request of the user does not already contain his
+		credentials, e.g., in the form of an authenticated user OID and
+		group OID, a login form is automatically displayed for the user
+		to provide his username and password.
+	</Property>
+	<Property label="Secure">
+		If checked, all the pages contained at any level inside the
+		<ElementRef />
+		are accessed using the secure HTTP protocol, instead of the
+		normal HTTP protocol.
+	</Property>
+	<Property label="Localized">
+		If checked, all the pages contained at any level inside the
+		<ElementRef />
+		are considered multi-lingual. Therefore, the code
+		generator automatically produces the page templates using
+		localizable custom tags instead of plain strings or texts.
+	</Property>
+	<Property label="Landmark">
+		If checked, the
+		<ElementRef />
+		is globally visible to all the pages of the enclosing super area
+		or site view.
+	</Property>
+	<Property label="Default">
+		If checked, the
+		<ElementRef />
+		is the default
+		<ElementRef />
+		of the enclosing super area or site view.
+	</Property>
+	<Property label="Default SubPage">
+		If checked, the
+		Sub Page
+		is the default
+		Page
+		of the enclosing super alternative or page.
+	</Property>
+	<Property label="Default Page">
+		The page selected as the default Page of the
+		<ElementRef/>
+	</Property>
+	<Property label="Default Element">
+		The page or area selected as the default Page or Area of the
+		<ElementRef/>
+	</Property>
+	<Property label="Type">
+		The <ElementRef/>'s type. Admissible types are: 
+		&lt;ul&gt;
+			&lt;li&gt;Blob&lt;/li&gt;
+			&lt;li&gt;Boolean&lt;/li&gt;
+			&lt;li&gt;Date&lt;/li&gt;
+			&lt;li&gt;Decimal&lt;/li&gt;
+			&lt;li&gt;Float&lt;/li&gt;
+			&lt;li&gt;Text&lt;/li&gt;
+			&lt;li&gt;Integer&lt;/li&gt;
+			&lt;li&gt;Password&lt;/li&gt;
+			&lt;li&gt;String&lt;/li&gt;
+			&lt;li&gt;Time&lt;/li&gt;
+			&lt;li&gt;Timestamp&lt;/li&gt;
+			&lt;li&gt;URL&lt;/li&gt;
+		&lt;/ul&gt;
+	</Property>
+	<Property label="SubType">
+		The <ElementRef/>'s type. Admissible types are: 
+		&lt;ul&gt;
+			&lt;li&gt;Boolean&lt;/li&gt;
+			&lt;li&gt;Date&lt;/li&gt;
+			&lt;li&gt;Decimal&lt;/li&gt;
+			&lt;li&gt;Float&lt;/li&gt;
+			&lt;li&gt;Integer&lt;/li&gt;
+			&lt;li&gt;Time&lt;/li&gt;
+			&lt;li&gt;Timestamp&lt;/li&gt;
+		&lt;/ul&gt;
+	</Property>
+	<Property label="Slot Value">
+		A user-defined constant to be used as the value of the slot. 
+		If the property is left empty, the slot must be filled with the 
+		value of a parameter associated with one of the input flows 
+		of the entry component containing the slot's <ElementRef/>.
+	</Property>
+	<Property label="Label">
+		If checked, the slot value is displayed to the user in the rendition 
+		of the <ElementRef/>.
+	</Property>
+	<Property label="Output">
+		If checked, the slot value is submitted as part of the <ElementRef/>'s 
+		data, when the user submits the form.
+	</Property>
+	<Property label="Predicate">
+		The comparison operator used to build the validity predicate 
+		that the user input must satisfy. The built-in operators 
+		can be applied to a validation rule associated with a 
+		single <ElementRef/>. The available operators are:
+		&lt;ul&gt;
+			&lt;li&gt;beginsWith&lt;/li&gt;  
+			&lt;li&gt;boolean&lt;/li&gt;  
+			&lt;li&gt;byte&lt;/li&gt;  
+			&lt;li&gt;contains&lt;/li&gt;  
+			&lt;li&gt;creditCard&lt;/li&gt;  
+			&lt;li&gt;Custom Rule&lt;/li&gt;  
+			&lt;li&gt;date&lt;/li&gt;  
+			&lt;li&gt;decimal&lt;/li&gt;  
+			&lt;li&gt;EMail&lt;/li&gt;  
+			&lt;li&gt;endsWith&lt;/li&gt;  
+			&lt;li&gt;Equal&lt;/li&gt;  
+			&lt;li&gt;Equal to Field&lt;/li&gt;  
+			&lt;li&gt;float&lt;/li&gt;  
+			&lt;li&gt;floatRange&lt;/li&gt;  
+			&lt;li&gt;Greater or Equal&lt;/li&gt;  
+			&lt;li&gt;Greater Than"&lt;/li&gt;  
+			&lt;li&gt;in&lt;/li&gt;  
+			&lt;li&gt;integer&lt;/li&gt;  
+			&lt;li&gt;intRange&lt;/li&gt;  
+			&lt;li&gt;Less or Equal&lt;/li&gt;  
+			&lt;li&gt;Less Than&lt;/li&gt;  
+			&lt;li&gt;long&lt;/li&gt;  
+			&lt;li&gt;match&lt;/li&gt;  
+			&lt;li&gt;maxLength&lt;/li&gt;  
+			&lt;li&gt;minLength&lt;/li&gt;  
+			&lt;li&gt;Not Equal&lt;/li&gt;  
+			&lt;li&gt;notContains&lt;/li&gt;  
+			&lt;li&gt;Not Equal to Field&lt;/li&gt;  
+			&lt;li&gt;notIn&lt;/li&gt;  
+			&lt;li&gt;notNull&lt;/li&gt;  
+			&lt;li&gt;null&lt;/li&gt;  
+			&lt;li&gt;short&lt;/li&gt;  
+			&lt;li&gt;time&lt;/li&gt;  
+			&lt;li&gt;timestamp&lt;/li&gt;
+		&lt;/ul&gt;
+		The Custom Rule options refers to a user-defined validation predicate.
+	</Property>
+	<Property label="Condition Predicate">
+		The available values are:
+		&lt;ul&gt;
+			&lt;li&gt;In&lt;/li&gt;
+			&lt;li&gt;Not In&lt;/li&gt;
+		&lt;/ul&gt;
+	</Property>
+	<Property label="Condition Type">
+		The property possible values are:
+		&lt;ul&gt;
+			&lt;li&gt;Required&lt;/li&gt;
+			&lt;li&gt;Implied&lt;/li&gt;
+		&lt;/ul&gt;
+	</Property>
+	<Property label="Preselected Value">
+		A value to be shown to the user as the default option when 
+		the page is accessed. If the specified value does not belong 
+		to the list of values preloaded in the <ElementRef/>, the property is ignored.
+	</Property>
+	<Property label="Rule Value">
+		A user-defined constant to be used in the logical condition checked 
+		by the validation rule. If the value is date, time or timestamp, 
+		the value to be entered in the Value property of the Validation Rule 
+		must be in the following format: 
+		&lt;ul&gt;
+			&lt;li&gt;date: yyyy-MM-dd&lt;/li&gt;
+			&lt;li&gt;time: hh:mm:ss&lt;/li&gt;
+			&lt;li&gt;timestamp: yyyy-MM-dd hh:mm:ss.SSS&lt;/li&gt;
+		&lt;/ul&gt;
+	</Property>
+	<Property label="Error Message">
+		A user-defined text that is displayed to the user when validation fails. 
+		The error message supports the usage of special keywords (eg. fieldName, fieldValue, componentName) which are 
+		replaced at runtime by the value entered by the user. See the <ElementRef/> documentation for more
+		specific keywords declaration. 
+	</Property>
+	<Property label="Class Name">
+		If the Custom Rule option is selected in the Predicate property, it denotes the 
+		fully qualified name of the class implementing the custom validation rule.
+	</Property>
+	<Property label="Code">
+		The property is enabled when the parent component of the <ElementRef/> supports multiple 
+		<ElementRefs/>.
+	</Property>
+	<Property label="Port Code">
+		The code used to uniquely identify the OK, KO, or output port of a referenced module. 
+	</Property>
+	<Property label="Binding">
+		If checked, the binding of the output parameters of the 
+		source component with the input parameters of the destination 
+		component is inferred automatically by WebRatio Platform; if unchecked, 
+		the binding of the output parameters of the source component
+		with the input parameters of the destination component must be
+		specified by the developer, using the &lt;b&gt;Binding&lt;/b&gt;  
+		property.
+		<Button name="Coupling"/>
+	</Property>
+	<Property label="Preloaded">
+		if checked, the <ElementRef/> can be preloaded with a value shown 
+		to the user when the page is accessed. The preload value is 
+		the concatenation of the values stored in the slots associated 
+		with the <ElementRef/>.
+	</Property>
+	<Property label="Modifiable">
+		If checked, the <ElementRef/> can be modified by the user; otherwise 
+		it is fixed. Unverifiable fields should be always preloaded.
+	</Property>
+	<Property label="Hidden">
+		If checked, the <ElementRef/> is not shown to the user, but its preload 
+		value is submitted with the form's content. Hidden <ElementRefs/> 
+		should be always preloaded.
+	</Property>
+	
+	<Property label="Layout Manager">
+		TODO missing description ...
+	</Property>
+
+	<Property label="Style">
+		The list of the style projects 
+		defined in the workspace.
+	</Property>
+	<Property label="Page Layout" >
+		The list of the page layouts 
+		defined in the style projects.
+		<Button name="Layout Parameters"/>
+		<Button name="Edit"/>
+	</Property>
+	<Property label="Screen Layout" >
+        The list of the screen layouts defined in the style projects.
+		<Button name="Layout Parameters"/>
+		<Button name="Edit"/>
+	</Property>
+	<Property label="Grid Layout">
+		The list of the grid layouts 
+		defined in the style projects.
+		<Button name="Layout Parameters"/>
+		<Button name="Edit"/>
+	</Property>
+	
+	<Property label="Frame Layout">
+		The list of the frame layouts 
+		defined in the style projects.
+		<Button name="Layout Parameters"/>
+		<Button name="Edit"/>
+	</Property>
+	<Property label="Cell Layout">
+		The list of the cell layouts 
+		defined in the style projects.
+		<Button name="Layout Parameters"/>
+		<Button name="Edit"/>
+	</Property>
+	<Property label="Component Layout">
+		The list of the component layouts 
+		defined in the style projects.
+		<Button name="Layout Parameters"/>
+		<Button name="Edit"/>
+	</Property>
+	<Property label="Attribute Layout">
+		The list of the attribute layouts 
+		defined in the style projects.
+		<Button name="Layout Parameters"/>
+		<Button name="Edit"/>
+		<Button name="Conditional Attribute Layout"/>
+	</Property>
+	<Property label="Field Layout">
+		The list of the field layouts 
+		defined in the style projects.
+		<Button name="Layout Parameters"/>
+		<Button name="Edit"/>
+		<Button name="Conditional Field Layout"/>
+	</Property>
+	<Property label="Event Layout">
+		The list of the flow layouts 
+		defined in the style projects.
+		<Button name="Layout Parameters"/>
+		<Button name="Edit"/>
+		<Button name="Conditional Event Layout"/>
+	</Property>
+	<Property label="Visibility Condition">
+		The list of the activation expressions
+		or boolean variables
+		defined in the project, if any.
+		<Button name="Negated Expression"/>
+		<Button name="Conditional Visibility"/>
+	</Property>
+	<Property label="Page Visibility Condition">
+		The list of the 
+		activation expressions or boolean variables
+		defined in the project, in the top ancestor page (or self) and in the 
+		master page (or self), if any.
+		<Button name="Negated Expression"/>
+		<Button name="Conditional Visibility"/>
+	</Property>
+	<Property label="Component Configuration">
+		<Button name="Component Configuration"/>
+	</Property>
+	<Property label="Boolean Operator">
+		If the selector needs more than one condition, this property defines whether 
+		the different conditions are considered either in conjunction (AND logical operator)  
+		or in disjunction (OR logical operator).
+	</Property>
+	<Property label="Title">
+		The <ElementRef/> label shown in the generated application.
+	</Property>
+	<Property label="Component">
+		The <ElementRef/> parent is a &lt;a href="LayoutComponent"/&gt;. It 
+		identifies the component which the <ElementRef/> belongs to. This information is required 
+		when the <ElementRef/> is placed alone in a cell.
+	</Property>
+	<Property label="DB Type">
+		Named version of the database management system that 
+		implements the data source. The drop down property shows 
+		all the databases supported by WebRatio Platform and their version.
+	</Property>
+	<Property label="URL">
+		Specify the URL of the data source, respecting the syntax of the selected JDBC 
+		driver. 
+		The URL must identify a valid JDBC source accessible by the computer 
+		on which WebRatio Platform is running.
+	</Property>
+	<Property label="Username">
+		The username used to access the data source.
+	</Property>
+	<Property label="Password">
+		The password used to access the data source. If checked, the
+		password is encrypted.
+	</Property>
+	<Property label="Ignore Master Page">
+		If checked, the master page of the <ElementRef/> is ignored.
+	</Property>
+	<Property label="Preserve Form">
+		If checked, the form information is preserved after the operations are 
+		executed successfully.
+	</Property>
+	<Property label="Visibility Policy">
+		It is possible to choose the policy to use for rendering the 
+		flows towards unaccessible target modules; the available 
+		policies are:
+		&lt;ul&gt;
+			&lt;li&gt;Hide Incoming Flows&lt;/li&gt;
+			&lt;li&gt;Show Always Incoming Flows&lt;/li&gt;
+			&lt;li&gt;Disable Incoming Flows&lt;/li&gt;
+		&lt;/ul&gt;
+	</Property>
+	<Property label="Output Path">
+		The Browse button <Button name="Browse"/> opens the 
+		&lt;a href="/Reference/WizardsAndDialogs/OutputPathSelectionDialog"/&gt;. 
+		It permits to set a valid directory name in the host where the application is deployed. 
+		This directory is used to store the page templates built by the WebRatio Platform code 
+		generator. This directory will also store the auxiliary XML files used by the 
+		WebRatio Platform runtime services to execute the application.
+		<Button name="Clear"/>
+	</Property>
+	<Property label="Login Definition">
+		The reference to the model component set as Login Action Definition.
+	</Property>	
+	<Property label="Back-end Base URL">
+		The endpoint URL of the back-end to be used for data synchronization.
+	</Property>
+	<Property label="Check Credentials on Resume">
+		If checked the user credentials are verified at every Mobile Application resume.
+	</Property>		
+	<Property label="App Name">
+		The user-defined name for the Mobile Application.
+	</Property>	
+	<Property label="HTTP Port">
+		The port of the deployment host where the HTTP server is installed.
+	</Property>
+	<Property label="HTTPS Port">
+		The port of the deployment host where the HTTPS server is installed.
+	</Property>
+	<Property label="HTTP Request Helper">
+		The class that manages the HTTP Request. It is able to extract the request parameters 
+		and to control the CRC, if any.
+	</Property>
+	<Property label="Default Application Encoding">
+		Character encoding used by the application for reading the contents (body) of
+		incoming requests.&lt;br/&gt;
+		If 'Use Default URL Encoding' is not checked, this is also the encoding used for
+		&lt;i&gt;writing&lt;/i&gt; URLs.&lt;br/&gt;
+		Default value: UTF-8
+	</Property>
+	<Property label="Server Name">
+		The server name where the application is published. The name is used to compute 
+		absolute URLs.
+	</Property>
+	<Property label="Use Absolute URL">
+		If checked, the URLs are generated as absolute URLs (i.e., http://ServerName:Port/ApplicationName)
+	</Property>
+	<Property label="Max Upload File Size">
+		The maximum size (in bytes) of a file to be accepted as a file upload.  
+		Can be expressed as a number followed by a "K", "M", or "G", which are 
+		interpreted to mean kilobytes, megabytes, or gigabytes, respectively.
+		If unspecified, the default value 8M is used.
+	</Property>
+	<Property label="Resource Servlet Path">
+		The path identifying the resource servlet providing access to remote
+		resources (default is /wr-resource).
+	</Property>
+	<Property label="Session Timeout">
+		The number of minutes after which sessions in this Web application expire.
+		If unspecified, the value stored in the web.xml configuration file is used
+		(default 30 minutes).
+	</Property>
+	<Property label="Use Default URL Encoding">
+		Controls the encoding used for &lt;i&gt;writing&lt;/i&gt; URLs.&lt;br/&gt;
+		If not checked, the one specified as 'Default Application Encoding' is used.&lt;br/&gt;
+		If checked, the one specified as 'Default Server Encoding' is used.
+		
+		&lt;p&gt;This property affects the &lt;i&gt;writing&lt;/i&gt; of request URLs. On the
+		other hand, the encoding used for &lt;i&gt;reading&lt;/i&gt; URLs is ultimately
+		controlled by the application server configuration, which is itself reflected in the
+		'Default Server Encoding' property.&lt;/p&gt;
+		
+		&lt;p&gt;If the two encodings do not match, it is possible for URLs to get corrupted,
+		most notably affecting query string parameters. With 'Protect URL' checked, the server
+		may even mistake a corrupted character for a security issue.&lt;/p&gt;
+	</Property>
+	<Property label="Protect URL">
+		If checked, the WebRatio Platform code generator appends to all the 
+		URLs of the application pages with a not null query string a checksum postfix, 
+		which prevents malicious users from issuing HTTP requests with invented 
+		parameter values. The WebRatio Platform runtime support recognizes invalid URLs 
+		and averts the malicious request to an error page.
+	</Property>
+	<Property label="Protect BLOB">
+		If checked, the WebRatio Platform code generator encodes all the URLs of the file 
+		resources (e.g., images and documents) with a prefix mapped to a file 
+		delivery servlet. This servlet controls the validity of the file URL 
+		and prevents malicious users from issuing HTTP requests with invented 
+		file names. The file delivery servlet recognizes invalid URLs and averts 
+		the malicious request to an error page.
+	</Property>
+	<Property label="Digest Id">
+		A user-defined string, replacing the Digest Id in the WebRatio Platform runtime support.
+	</Property>
+	<Property label="Digest with Session Id">
+		The control code is generated using the digest algorithm implemented 
+		by the Java class com.sun.crypto.provider.SunJCE, 
+		a default seed hard-wired in the WebRatio Platform runtime support, 
+		and the user's session id. In this way, a secured URL cannot be reused 
+		after the expiration of the user's session.
+	</Property>
+	<Property label="Digest Type">
+		The possible values are:
+		&lt;ul&gt;
+			&lt;li&gt;&lt;b&gt;CRC&lt;/b&gt;: the control code is generated using the CRC algorithm&lt;/li&gt;
+			&lt;li&gt;&lt;b&gt;Provider&lt;/b&gt;: the control code is generated using the digest algorithm implemented by 
+			the Java class com.sun.crypto.provider.SunJCE&lt;/li&gt;
+		&lt;/ul&gt;
+	</Property>
+	<Property label="Digest Provider">
+		The control code is generated using the selected digest provider.
+	</Property>
+	<Property label="Digest Algorithm">
+		The control code is generated using the selected digest algorithm.
+		&lt;p&gt;The Browse button <Button name="Browse"/> opens the Runtime Preference Page to manage the 
+		digest algorithms.&lt;/p&gt;
+	</Property>
+	<Property label="Enable Admin Area">
+		If checked, the administration area is generated, which permits to insert into
+		the database the identifiers of protected modules defined in the model.
+	</Property>
+	<Property label="Admin Path">
+		The arbitrary name used to access the administration area. To access the area write 
+		http://Host:Port/AppName/AdminPath.do in the URL.
+		If not specified, the default path 'WRAdmin/Home.do' is used.
+	</Property>
+	<Property label="Admin Username">
+		The username used to access the administration area. If not specified, the
+		default username 'manager' is used. 
+	</Property>
+	<Property label="Admin Password">
+		The password used to acces the adminstration area. If not specified, the
+		default password 'm4n4g3r' is used.
+	</Property>
+	<Property label="Old Resources">
+		Resources that in older versions of WebRatio Platform were automatically
+		linked to the <ElementRef/> and its contents by the removed Linked Resources
+		property. The listed resources should be migrated to the new resource management
+		system: see the Migration Guide for details.
+		The Select Resources button <Button name="Browse"/> opens a dialog for inspecting the
+		list of resources. The Clear All Resources button removes all memory of old resources
+		from the <ElementRef/>.
+	</Property>
+	<Property label="Inherit Parameters">
+		If checked, the values of layout parameters not set on a layout element are inherited from
+		ancestor elements. If unchecked (default), the values of layout parameters for an element
+		are not inherited if at least one parameter is directly set on the element.    
+	</Property>
+	<Property label="Schema Mask">
+		The regular expression used to retrieve the database schemas.
+	</Property>
+	<Property label="Table Mask">
+		The regular expression used to retrieve the database tables.
+	</Property>
+	<Property label="Show SQL in Console">
+		If checked, shows the SQL that the application is executing.
+	</Property>
+	<Property label="Read Indexes">
+		If checked, the refresh database action retrieves tables indexes.
+	</Property>
+	<Property label="Read Procedures">
+		If checked, the refresh database action retrieves stored procedures.
+	</Property>
+	<Property label="Table Export Prefix">
+		If set, all the names of tables exported by the Database Synchronizer operation
+		are prefixed with the specified value.
+	</Property>
+	<Property label="View Export Prefix">
+		If set, all the names of views exported by the Database Synchronizer operation
+		are prefixed with the specified value.
+	</Property>
+	<Property label="Disable View Export Suffix">
+		If checked, all the names of views exported by the Database Synchronizer operation
+		no longer receive the &lt;b&gt;_VIEW&lt;/b&gt; suffix.
+	</Property>
+	<Property label="Enable URL Fragments">
+		If checked, the URLs produced at run-time are enriched with a set of
+		context parameters in order to improve the URLs produced at run-time.
+	</Property>
+	<Property label="Global URL Fragment">
+		A sequence of context parameters able to improve the URLs produced at run-time.
+	</Property>
+	<Property label="URL Fragment">
+		A sequence of component input parameters and variables able to improve the URLs produced at run-time. 
+	</Property>
+	<Property label="Flow Order">
+		The list of outgoing flows of the <ElementRef/>. 
+		The order of flows is exploited by the code generator to construct the 
+		portion of the page containing the anchors of the outgoing 
+		flows of the current <ElementRef/>.
+		The Select button <Button name="Browse"/> opens the 
+		&lt;a href="/Reference/WizardsAndDialogs/OrderingDialog"/&gt;, which permits to 
+		order the flows.
+	</Property>
+	<Property label="Event Order">
+		The list of events defined for the <ElementRef/>. 
+		The Sort button <Button name="Sort"/> opens the 
+		&lt;a href="/Reference/WizardsAndDialogs/OrderingDialog"/&gt;, which permits to 
+		order the events.
+	</Property>	
+	<Property label="Bundle Store Type">
+		It indicates where bundle data (keys and messages) is stored.
+		The possible values are:
+		&lt;ul&gt;
+			&lt;li&gt;File: bundle data is edited in the model using the 
+			localization dialog and is stored into static resource bundle files in the
+			generated application;&lt;/li&gt;
+			&lt;li&gt;Database: bundle data is stored in the database using
+			a predefined class;&lt;/li&gt;
+		&lt;/ul&gt;
+	</Property>
+	<Property label="Bundle Refresh Timeout">
+		The number of minutes after which bundle data stored in the database
+		are reloaded. If unspecified, the default value is 10 minutes.
+		Ignored if the bundle store type is File.
+	</Property>
+	<Property label="Running Profiles">
+		The list of running profiles valid for the model element.
+		The Select button <Button name="Browse"/> opens the 
+		Running Profiles Selection Dialog which permits to 
+		select one or more running profile.
+	</Property>
+	<Property label="Browser Integration">
+		Generates the application with browser integration support. Requires using a 
+		web browser supporting the WebRatio Browser Integration plugin.
+	</Property>
+	<Property label="Inspect Elements">
+		Enables locating layout elements in generated pages directly from the web browser. Requires
+		Browser Integration.
+	</Property>
+	
+	<Property label="XSD Resource">
+		The referenced XSD resource.
+		The Select button opens the selection dialog showing all the available 
+		XSD resources grouped by XSD Provider defined within the project.
+	</Property>
+	<Property label="XSD Type">
+		The referenced XSD type.
+		The Edit button <Button name="Edit"/> opens the selection dialog showing all the XSD types declared within the
+		selected XSD resource.
+	</Property>
+	<Property label="XSD Element">
+		The referenced XSD element. Can be a '/' separated list of sub-sequent nested XSD elements.
+		The drop down shows all the available elements starting from the parent XSD type. 
+	</Property>
+	<Property label="Show">
+		If checked, the <ElementRef/> is shown in the main editor.
+	</Property>	
+	<Property label="Roles">
+		If this <ElementRef /> is protected, it contains the list of user-defined roles having the access rights to see this <ElementRef />. 
+		If no Roles are defined, this property is automatically set to the "Authenticated User" default role.
+	</Property>		
+
+
+
+	<Property label="URL Path">
+		TODO:*@URL Path
+	</Property>		
+
+
+
+
+</Properties>

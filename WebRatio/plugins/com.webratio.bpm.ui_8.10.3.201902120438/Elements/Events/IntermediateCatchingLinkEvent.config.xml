@@ -1,0 +1,26 @@
+<Element name="IntermediateCatchingLinkEvent" lowerName="intermediate catching link event"
+		pluralLowerName="">
+		<Description>
+			A &lt;a href="/Concepts/Elements/Process/Events/LinkEvents/IntermediateCatchingLinkEvent"/&gt; is a mechanism for connecting two sections of a Process. Link Events can be used to create looping situations or to avoid long Sequence Flow lines
+		</Description>
+        
+        <ActionRef label="Add Lane" />
+        <ActionRef label="Add Sequence Flow" />
+        <ActionRef label="Add Property" />
+        <ActionRef label="Surround with Group" />
+        <ActionRef label="Move into Embedded Subprocess" />
+        <ActionRef label="Edit Process Parameters..." />
+        <Action label="Change Catching Type to">
+          Convert this event into a different catching event.
+        </Action>
+        <Action label="Change Throwing Type to">
+          Convert this event into a different throwing event.
+        </Action>
+        <ActionRef label="Search References" />
+        <ActionRef label="Help" />
+        
+    <PropertyCategory name="General">
+        <PropertyRef label="Id"/>
+        <PropertyRef label="Name"/>
+    </PropertyCategory>
+</Element>

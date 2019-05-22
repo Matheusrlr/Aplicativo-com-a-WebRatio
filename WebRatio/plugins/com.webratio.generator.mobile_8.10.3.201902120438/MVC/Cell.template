@@ -1,0 +1,17 @@
+#?delimiters [%, %], [%=, %]
+[%
+
+/* Determine the layout */
+def layout = getLayout(cell, LayoutType.CELL)
+if (!layout.path) {
+	throwGenerationException("Cell has no layout defined")
+}
+def layoutTemplate = getLayoutFile(layout.path, LayoutType.CELL)
+if (!layoutTemplate) {
+	throwGenerationException("Cell layout template not found: " + layout.path)
+}
+addUsedTemplate(layout.path)
+
+/* Actual Cell layout */
+printRaw(executeTemplate(layoutTemplate.absolutePath, ["params": layout.parameters, "templateType": "cell"]))
+%]

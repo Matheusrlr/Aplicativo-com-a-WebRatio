@@ -1,0 +1,40 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Background Color" name="background-color" type="enum" values="white|gray|blue|light blue|green|yellow|red|violet|black" default="blue">
+Defines the color of the toolbar.
+</wr:LayoutParameter>
+[%
+def inTop = (cell.valueOf("ancestor::layout:CustomLocation[1]/@name") == "Top Bar")
+def inBottom = (cell.valueOf("ancestor::layout:CustomLocation[1]/@name") == "Bottom Bar")
+
+
+def colors = [
+	"white" : "light",
+	"gray" : "stable",
+	"blue" : "positive",
+	"light blue" : "calm",
+	"green" : "balanced",
+	"yellow" : "energized",
+	"red" : "assertive",
+	"violet" : "royal",
+	"black" : "dark"]
+	
+def bgColor = colors[params["background-color"]]
+
+%]
+[% if (inTop) { %]
+	<ion-header-bar class="bar-[%= bgColor %]">
+[% } else if (inBottom) { %]
+	<ion-footer-bar class="bar-[%= bgColor %] hide-on-keyboard-open">
+[% } %]
+	
+	<div class="button-bar">
+		<wr:Iterate var="event" context="cell" select="layout:Event">
+			<wr:Event/>
+		</wr:Iterate>
+	</div>
+	
+[% if (inTop) { %]
+	</ion-header-bar>
+[% } else if (inBottom) { %]
+	</ion-footer-bar>
+[% } %]

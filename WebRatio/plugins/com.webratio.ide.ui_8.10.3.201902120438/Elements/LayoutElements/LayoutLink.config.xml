@@ -1,0 +1,27 @@
+  <Element name="LayoutLink" lowerName="layout flow"
+		pluralLowerName="layout flows">
+		<Description>
+			A layout flow
+			is a component &lt;a href="/Reference/ElementsReference/WebModelElements/NavigationFlow"&gt;Flow&lt;/a&gt;
+			displayed by the component or by the page, or simply placed in a &lt;a href="Cell"/&gt;.
+		</Description>
+		<ActionRef label="Add Property" />
+		<ActionRef label="Localize" />
+		<ActionRef label="Open in Browser" />
+		<ActionRef label="Help"/>
+		
+		<PropertyCategory name="Layout">
+			<PropertyRef label="Label" name="Title"/>
+			<PropertyRef label="Style" />
+			<PropertyRef label="Event Layout"/>
+			<PropertyRef label="Style Class"/>
+			<PropertyRef label="Component"/>
+			<Property label="Alternative Text">
+               The alternative text to be displayed in case the flow cannot be rendered.
+			</Property>
+		</PropertyCategory>
+		<PropertyCategory name="Condition">
+			<PropertyRef name="Page Visibility Condition" label="Event Visibility Cond."/>
+			<PropertyRef name="Page Visibility Condition" label="Event Disable Cond."/>
+		</PropertyCategory>
+	</Element>

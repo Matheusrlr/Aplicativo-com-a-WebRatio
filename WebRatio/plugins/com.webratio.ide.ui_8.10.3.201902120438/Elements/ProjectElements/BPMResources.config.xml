@@ -1,0 +1,28 @@
+  <Element name="BPMResources" lowerName="BPMN resources"
+		pluralLowerName="BPMN resources">
+		<Description>
+			The BPM resources
+			defines the BPMN resources referenced by the Web Project. The list of referenced resources are 
+			updated during the BPM to Web Project synchronization. 
+		</Description>
+		<SubElement name="BPMResource" lowerName="BPM resource"
+			pluralLowerName="BPMN resources">
+			<Description>	
+				A BPM Resource 
+				represents a BPM diagram file referenced by this Web Project.
+			</Description>
+			<ActionRef label="Add Property"/>
+			<ActionRef label="Help"/>		
+			<PropertyCategory name="General">
+				<PropertyRef label="Identifier" />
+				<PropertyRef label="Name" />
+				<Property label="UUID">
+				   The universal unique identifier of the BPM resource.
+				</Property>
+				<Property label="Path">
+				   The workspace relative path of the BPM resource.
+				</Property>
+				<PropertyRef label="Running Profiles" />
+			</PropertyCategory>
+		</SubElement>
+	</Element>

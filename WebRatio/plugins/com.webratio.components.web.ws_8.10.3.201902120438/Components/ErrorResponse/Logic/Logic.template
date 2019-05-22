@@ -1,0 +1,17 @@
+#?delimiters [%,%],[%=,%]
+[%
+import org.apache.commons.lang.StringUtils
+setXMLOutput()
+def normalizedName = com.webratio.generator.helpers.XMLUtils.normalizeTagName(component["name"])
+%]
+<Descriptor service="com.webratio.components.web.ws.ErrorResponseService" name="[%=normalizedName%]">
+	<StatusCode>[%=StringUtils.defaultIfEmpty(component["statusCode"], "500")%]</StatusCode>
+	<ContentType>[%=StringUtils.defaultIfEmpty(component["contentType"], "XML")%]</ContentType>
+    <BodyParameters>
+     [% 
+       for (parameter in component.selectNodes("ResponseBodyParameter")) { 
+         printRaw(StringUtils.remove(parameter.asXML(), "_sel=\"t\""))
+       }
+     %]
+    </BodyParameters>
+</Descriptor>

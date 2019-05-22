@@ -1,0 +1,22 @@
+#?delimiters [%,%],[%=,%]
+<?xml version="1.0" encoding="UTF-8"?>
+<?webml version="8.2.0.0"?>
+[% setXMLOutput() %]
+<WebProject 
+    xmlns:db="http://www.webratio.com/2006/WebML/Database" 
+    xmlns:gr="http://www.webratio.com/2006/WebML/Graph"
+    xmlns:layout="http://www.webratio.com/2006/WebML/Layout"
+    gr:showUnitContent="true"
+    gr:showTooltip="true"
+    moduleDomainName="${project_name}"
+    id="[%=projectId%]"
+    enterpriseProject="[%=enterpriseProject%]">
+  <WebModel layout:style="WebRatio" layout:inheritParameters="true">[%
+    if (viewsInfo != null) { 
+    	for(viewInfo in viewsInfo) { %]
+	<[%=viewInfo.tag%] id="[%=viewInfo.id%]" name="[%=viewInfo.name%]"/>[% 
+    	}
+    } %]
+  </WebModel>
+  <ServiceDataProviders/>
+</WebProject>

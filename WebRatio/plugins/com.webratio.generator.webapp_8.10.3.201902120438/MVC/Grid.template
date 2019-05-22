@@ -1,0 +1,49 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.GenerationException
+
+if (grid == null) {
+    return  // tolerate a missing grid
+}
+
+/* Get style */
+def layoutManager = getLayoutManager(grid)
+def gridLayout = getLayout(grid, LayoutType.GRID)
+def templatePath = layoutManager.gridLayout?.path ?: gridLayout.path
+def templateParameters = layoutManager.gridLayout?.path ? layoutManager.gridLayout?.parameters : gridLayout.parameters
+if (!templatePath) {
+    def title = "Undefined Grid Layout"    
+    def reason = "Unable to find the grid layout for the grid."
+    def hint = "Specify a grid layout or a layout manager either for the grid of the page [id = " + page["id"] + "] or for one of its ancestors"
+    throw new GenerationException(title, reason, [hint], null)
+}
+def templateFile = getLayoutFile(templatePath, LayoutType.GRID)
+if (!templateFile) {
+    def title = "Grid Layout Not Found"
+    def reason = "Unable to find the grid layout \'" + templatePath + "\'"
+    def hint = "Check the project for the missing grid layout [name = " + templatePath + "] associated with the grid of the page [id = " + page["id"] + "]"
+    throw new GenerationException(title, reason, [hint], null)
+}
+addUsedTemplate(templatePath)
+
+/* Let the Layout Manager extend grid attributes */
+layoutManager.parentInheritedAttributes.each { attr -> grid[attr] = grid.parent[attr] }
+
+/* Render the Grid in a wrapper */
+printRaw(executeContextTemplate("MVC/Wrapper.template", ["refreshFragmentType": "control", "element": grid, "content": {
+	
+	/* Visibility condition start */
+	def visibilityCondition = getVisibilityCondition(grid)
+	if (visibilityCondition) {
+		%]<c:if test="${[% printJSPTagValue(visibilityCondition) %]}">[%
+	}
+	
+	/* Actual Grid layout */
+	printRaw(executeTemplate(templateFile.absolutePath, ["params": templateParameters, "templateType": "grid"]))
+	
+	/* Visibility condition end */
+	if (visibilityCondition) {
+		%]</c:if>[%
+	}
+}]))
+%]

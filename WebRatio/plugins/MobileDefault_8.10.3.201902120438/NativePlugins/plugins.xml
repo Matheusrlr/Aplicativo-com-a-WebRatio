@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugins>
+
+	<plugin name="ionic-keyboard"
+		url="https://github.com/webratio/phonegap-plugin-ionic-keyboard.git"
+		tag="2.2.1.1wr" />
+
+	<plugin name="actionsheet"
+		url="https://github.com/webratio/phonegap-plugin-actionsheet.git"
+		tag="2.3.3.1wr" />
+
+	<plugin name="datepicker"
+		url="https://github.com/webratio/phonegap-plugin-datepicker.git"
+		tag="0.9.2.1wr" />
+
+</plugins>

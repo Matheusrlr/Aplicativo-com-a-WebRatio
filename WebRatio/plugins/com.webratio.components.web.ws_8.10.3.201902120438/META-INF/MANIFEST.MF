@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.9.2
+Bundle-SymbolicName: com.webratio.components.web.ws;singleton:=true
+Export-Package: com.webratio.components.web.ws,com.webratio.components
+ .web.ws.beans,com.webratio.components.web.ws.xsd.objects
+Bundle-Name: Service Components
+Bundle-Version: 8.10.3.201902120438
+Bundle-ClassPath: com.webratio.components.web.ws.jar
+Require-Bundle: com.webratio.commons.libs,com.webratio.rtx,com.webrati
+ o.ide.units,com.webratio.xsd,com.webratio.json,com.webratio.ws,com.we
+ bratio.web.mvc,com.webratio.commons.lib.quartz,com.webratio.lib.hiber
+ nate,com.webratio.commons.dom4j,com.webratio.commons.lib.javax.servle
+ t,com.webratio.commons.base,com.webratio.commons.lib.jackson2,com.web
+ ratio.data,com.webratio.log
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: WebRatio
+Created-By: 1.8.0-b132 (Oracle Corporation)
+
+Name: plugin.xml
+SHA-256-Digest: Lc6ujk9UB1vcGsTENv8ctAUP4uSv7McUSeeA6KDGW2E=
+
+Name: META-INF/signature
+SHA-256-Digest: PRYYgqFVErjMMx3lDuv1T8nEp66ZmsJ8BwS19rF+4z4=
+

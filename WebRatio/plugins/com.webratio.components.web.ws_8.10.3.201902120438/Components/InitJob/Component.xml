@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Component type="operation" onlyForServiceView="true" version="1.0.0" idPrefix="iju" namePrefix="Init Job " label="Init Job" successFlowSource="true" dataFlowSource="true" navigationFlowSource="true" > 
+  <SubComponent elementName="JobInputParameter" idPrefix="iji" namePrefix="Job Input Parameter " ignoreI18N="false" figureDisplayOrder="1"> 
+    <Description xml:space="preserve">An input parameter of the job. The value of the parameter can be
+    specified through input parameters on Schedule Jobs referencing the job.</Description> 
+  </SubComponent >  
+  <Description xml:space="preserve">The Init Job is the entry point of a scheduled job where the
+operation chain starts from.  
+  </Description>  
+  
+  <OutputDescription xml:space="preserve" name="Job Instance Identifier">The current job instance identifier.</OutputDescription>
+  <OutputDescription xml:space="preserve" name="Job Instance Group Name">The current job instance group name.</OutputDescription>
+  <OutputDescription xml:space="preserve" name="Job Instance Full Identifier">The current job instance full identifier (group.name).</OutputDescription>
+  
+  <OutputDescription xml:space="preserve" name="JobInputParameter-Name">One of the job's input parameters.</OutputDescription> 
+</Component>

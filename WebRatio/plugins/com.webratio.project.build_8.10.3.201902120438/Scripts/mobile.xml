@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Mobile Build">
+
+	<import file="ant-contrib.xml" />
+
+	<property environment="env" />
+
+	<!--
+	Input properties
+	
+	  platform                        One of: 'ios', 'android', 'windows'
+	  release                         Set to 'true' for performing a release build - Default is empty
+	  nodejs.dir                      Full path to Node.js installation containing the Phonegap package
+	  application.dir                 Full path to the source application files
+	  mobile.plugins                  Cordova plugin install specs, separated by comma - Default to no spec
+	  build.dir                       Output directory - Default is application.dir with platform name added
+
+	  windows.arch                    Architecture to build for: 'x86', 'x64', 'ARM' 
+	  windows.device                  Launch on physical device - Default is to launch on development PC
+	  windows.publisherId             App publisher RDN which must match the certificate subject
+	  windows.certificateKeyFile      Full or Cordova-relative path to a PFX file for signing
+	  windows.certificateThumbprint   Thumbprint of the certificate - Default is empty
+	
+	-->
+
+	<property name="release" value="" />
+	<property name="mobile.plugins" value="" />
+	<property name="build.dir" value="${application.dir}.${platform}" />
+	<property name="windows.certificateThumbprint" value="" />
+
+	<target name="init">
+		<fail unless="platform" message="Unspecified property 'platform'" />
+		<fail unless="nodejs.dir" message="Unspecified property 'nodejs.dir'" />
+		<fail unless="application.dir" message="Unspecified property 'application.dir'" />
+
+		<condition property="isWindows">
+			<os family="windows" />
+		</condition>
+		<condition property="isUnix">
+			<or>
+				<os family="unix" />
+				<os family="mac" />
+			</or>
+		</condition>
+		<if>
+			<istrue value="${isWindows}" />
+			<then>
+				<property name="phoneGapExe" value="phonegap.cmd" />
+				<property name="cordovaExe" value="cordova.cmd" />
+				<if>
+					<isset property="env.Path" />
+					<then>
+						<property name="envPathVar" value="Path" />
+						<property name="envPath" value="${env.Path}" />
+					</then>
+					<else>
+						<property name="envPathVar" value="PATH" />
+						<property name="envPath" value="${env.PATH}" />
+					</else>
+				</if>
+			</then>
+			<else>
+				<property name="phoneGapExe" value="phonegap" />
+				<property name="cordovaExe" value="cordova" />
+				<property name="envPathVar" value="PATH" />
+				<property name="envPath" value="${env.PATH}" />
+			</else>
+		</if>
+	</target>
+
+	<macrodef name="phonegap">
+		<attribute name="dir" />
+		<attribute name="command" />
+		<sequential>
+			<exec executable="${nodejs.dir}/node_modules/.bin/${phoneGapExe}" dir="@{dir}" failonerror="true" failifexecutionfails="true">
+				<env key="${envPathVar}" path="${nodejs.dir};${nodejs.dir}/bin;${nodejs.dir}/node_modules/.bin;${envPath};" />
+				<env key="NODE_PATH" path="${nodejs.dir}/node_modules" />
+				<arg line="@{command}" />
+			</exec>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="cordova">
+		<attribute name="dir" />
+		<attribute name="command" />
+		<sequential>
+			<exec executable="${nodejs.dir}/node_modules/phonegap/node_modules/.bin/${cordovaExe}" dir="@{dir}" failonerror="true" failifexecutionfails="true" outputproperty="cordovaOutputProperty">
+				<env key="${envPathVar}" path="${nodejs.dir};${nodejs.dir}/bin;${nodejs.dir}/node_modules/.bin;${nodejs.dir}/node_modules/phonegap/node_modules/.bin;${envPath};" />
+				<env key="NODE_PATH" path="${nodejs.dir}/node_modules" />
+				<arg line="@{command}" />
+			</exec>
+			<propertyregex property="runError" input="${cordovaOutputProperty}" regexp="Deploying app package\.\.\.[\r\n]+ERROR\s+(?:running one or more of the platforms:\s+)?((?s:.+))" select="\1" />
+			<fail if="runError" message="Error running application: ${runError}" />
+		</sequential>
+	</macrodef>
+
+	<target name="prepareBuildDir" depends="init">
+		<delete dir="${build.dir}" failonerror="false" />
+		<copy todir="${build.dir}" overwrite="true">
+			<fileset dir="${application.dir}">
+				<include name="hooks/**" />
+				<include name="platforms_merges/${platform}/**" />
+				<include name="res/${platform}/**" /> <!-- webratio-specific -->
+				<include name="resources/**" />
+				<include name="translations/**" />
+				<include name="www/**" />
+				<include name="config.xml" />
+				<include name="build.json" />
+				<include name="package.json" />
+			</fileset>
+		</copy>
+
+		<!-- installs plug-ins -->
+		<echo level="info">Installing native plugins</echo>
+		<for list="${mobile.plugins}" param="spec" delimiter=",">
+			<sequential>
+				<phonegap dir="${build.dir}" command="plugin add @{spec} --nofetch --nosave" />
+			</sequential>
+		</for>
+	</target>
+
+
+	<target name="buildApp" depends="init">
+		<condition property="buildModeSwitch" value="--release" else="--debug">
+			<equals arg1="${release}" arg2="true" />
+		</condition>
+		<antcall target="buildApp.${platform}" />
+	</target>
+
+	<target name="buildApp.windows">
+		<fail unless="windows.arch" message="Unspecified property 'windows.arch'" />
+		<fail unless="windows.publisherId" message="Unspecified property 'windows.publisherId'" />
+		<fail unless="windows.certificateKeyFile" message="Unspecified property 'windows.certificateKeyFile'" />
+		<phonegap dir="${build.dir}" command="platform add windows@5.0.0 --force" />
+		<phonegap dir="${build.dir}" command="build windows ${buildModeSwitch} -- --appx=uap --archs=${windows.arch} --publisherId=&quot;${windows.publisherId}&quot; --packageCertificateKeyFile=&quot;${windows.certificateKeyFile}&quot; --packageThumbprint=${windows.certificateThumbprint}" />
+		<echo level="info">Windows build completed!!!</echo>
+	</target>
+
+	<target name="runApp" depends="init">
+		<condition property="buildModeSwitch" value="--release" else="--debug">
+			<equals arg1="${release}" arg2="true" />
+		</condition>
+		<antcall target="runApp.${platform}" />
+	</target>
+
+	<target name="runApp.windows">
+		<condition property="launchWindowsMode" value="--device" else="">
+			<isset property="windows.device"/>
+		</condition>
+		<fail unless="windows.arch" message="Unspecified property 'windows.arch'" />
+		<cordova dir="${build.dir}" command="run windows --nobuild ${buildModeSwitch} ${launchWindowsMode} -- --appx=uap --archs=${windows.arch}" />
+	</target>
+
+</project>

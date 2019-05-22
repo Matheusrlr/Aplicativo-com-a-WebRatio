@@ -1,0 +1,8 @@
+#?delimiters [%,%],[%=,%]
+[%setXMLOutput()%]
+<Descriptor service="com.webratio.components.web.controlflow.LoopService">
+  <IterationSize>[%= component["iterationSize"]%]</IterationSize>
+  [% for (secArray in component.elements("SecondaryArray")) { %]
+    <SecondaryArray id="[%=secArray["id"]%]"/>
+  [% } %]
+</Descriptor>

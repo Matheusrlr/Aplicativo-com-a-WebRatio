@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="DBMetaData" default="main">
+
+	<import file="${webratio.classpath.file}" />
+
+	<path id="classpath">
+		<path refid="webratio.classpath" />
+		<filelist dir="${driverDir}" files="${driverFiles}" />
+		<pathelement location="bin" />
+		<pathelement location="bin.jar" />
+		<pathelement path="${metaDataProviderClasspath}" />
+	</path>
+
+	<target name="main">
+		<property name="encoding" value="" />
+		<java classname="com.webratio.commons.db.utils.DBUtils" failonerror="true" classpathref="classpath" fork="true">
+			<jvmarg value="-Xmx128m" />
+			<arg value="eventSocketPort=${eventSocketPort}" />
+			<arg value="outputPath=${outputPath}" />
+			<arg value="outputLogPath=${outputPath}.log" />
+			<arg value="driverClass=${driverClass}" />
+			<arg value="url=${url}" />
+			<arg value="username=${username}" />
+			<arg value="password=${password}" />
+			<!-- optional arguments (only for script execution)-->
+			<arg value="sqlScript=${sqlScript}" />
+			<arg value="encoding=${encoding}" />
+			<arg value="autoCommit=${autoCommit}" />
+			<arg value="statementSeparator=${statementSeparator}" />
+			<arg value="onError=${onError}" />
+			<arg value="derby.system.home=${derby.system.home}" />
+		</java>
+	</target>
+
+</project>

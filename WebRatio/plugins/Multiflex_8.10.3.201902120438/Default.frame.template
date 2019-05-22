@@ -1,0 +1,8 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Title size" name="title-size" type="enum" values="normal|small" default="normal"/>
+[%  
+	def titleSize = params["title-size"] == "normal" ? "h1" : "h2"
+	
+%]
+<[%= titleSize %]><wr:Label context="element"/></[%= titleSize %]>
+<wr:FrameContent/>

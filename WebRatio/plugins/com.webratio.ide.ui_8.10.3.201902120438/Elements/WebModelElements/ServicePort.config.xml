@@ -1,0 +1,34 @@
+  <Element name="ServicePort" lowerName="service port"
+		pluralLowerName="service ports">
+		<Description>
+			A service port
+			is a collection of Web service operations.
+  		    pages.
+		</Description>
+		<ActionRef label="Add Property" />
+		<ActionRef label="Generate Logic Descriptors Only"/>
+		<ActionRef label="Generate Selection"/>
+		<ActionRef label="Find Model Problems"/>
+		<ActionRef label="Help"/>
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<Property label="Name">
+				The port name; the name of the port defines 
+				the endpoint URL of the published operations included in 
+				the port itself.
+			</Property>
+            <Property label="SOAP Version">
+                The SOAP protocol version used used by SOAP services (default 1.1).
+            </Property>
+            <Property label="SOAP Binding Style">
+                The binding style used by SOAP services. 
+                The possible values are: RPC Literal (default) or Document Literal. 
+            </Property>
+         	<Property label="Secure">
+				If checked, all the operations contained at any level inside 
+				the port are accessed using the secure HTTP protocol, instead 
+				of the normal HTTP protocol.
+			</Property>
+			<PropertyRef label="Running Profiles" />
+		</PropertyCategory>
+	</Element>

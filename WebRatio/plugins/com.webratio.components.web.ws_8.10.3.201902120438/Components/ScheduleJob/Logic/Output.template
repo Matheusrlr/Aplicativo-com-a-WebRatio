@@ -1,0 +1,5 @@
+#?delimiters <%,%>,<%=,%>
+<%setXMLOutput()%>
+<OutputParameters>
+  <OutputParameter name="jobInstanceId" label="Job Instance Full Identifier"/>
+</OutputParameters>

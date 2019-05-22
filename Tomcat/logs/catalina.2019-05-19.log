@@ -1,0 +1,34 @@
+mai 19, 2019 8:34:46 PM org.apache.catalina.core.AprLifecycleListener init
+INFORMAÇÕES: The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: /usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+mai 19, 2019 8:34:46 PM org.apache.coyote.AbstractProtocol init
+INFORMAÇÕES: Initializing ProtocolHandler ["http-bio-8080"]
+mai 19, 2019 8:34:46 PM org.apache.coyote.AbstractProtocol init
+INFORMAÇÕES: Initializing ProtocolHandler ["http-bio-8443"]
+mai 19, 2019 8:34:46 PM org.apache.coyote.AbstractProtocol init
+INFORMAÇÕES: Initializing ProtocolHandler ["ajp-bio-8009"]
+mai 19, 2019 8:34:46 PM org.apache.catalina.startup.Catalina load
+INFORMAÇÕES: Initialization processed in 813 ms
+mai 19, 2019 8:34:46 PM org.apache.catalina.core.StandardService startInternal
+INFORMAÇÕES: Starting service Catalina
+mai 19, 2019 8:34:46 PM org.apache.catalina.core.StandardEngine startInternal
+INFORMAÇÕES: Starting Servlet Engine: Apache Tomcat/7.0.53
+mai 19, 2019 8:34:46 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFORMAÇÕES: Deploying web application directory /home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/Tomcat/webapps/manager
+mai 19, 2019 8:34:47 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFORMAÇÕES: Deploying web application directory /home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/Tomcat/webapps/docs
+mai 19, 2019 8:34:47 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFORMAÇÕES: Deploying web application directory /home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/Tomcat/webapps/examples
+mai 19, 2019 8:34:47 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFORMAÇÕES: Deploying web application directory /home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/Tomcat/webapps/ROOT
+mai 19, 2019 8:34:47 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFORMAÇÕES: Deploying web application directory /home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/Tomcat/webapps/Data
+mai 19, 2019 8:34:52 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFORMAÇÕES: Deploying web application directory /home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/Tomcat/webapps/host-manager
+mai 19, 2019 8:34:52 PM org.apache.coyote.AbstractProtocol start
+INFORMAÇÕES: Starting ProtocolHandler ["http-bio-8080"]
+mai 19, 2019 8:34:52 PM org.apache.coyote.AbstractProtocol start
+INFORMAÇÕES: Starting ProtocolHandler ["http-bio-8443"]
+mai 19, 2019 8:34:52 PM org.apache.coyote.AbstractProtocol start
+INFORMAÇÕES: Starting ProtocolHandler ["ajp-bio-8009"]
+mai 19, 2019 8:34:52 PM org.apache.catalina.startup.Catalina start
+INFORMAÇÕES: Server startup in 6225 ms

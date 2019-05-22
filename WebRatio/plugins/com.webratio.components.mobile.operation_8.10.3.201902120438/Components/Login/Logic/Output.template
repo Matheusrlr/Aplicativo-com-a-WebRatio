@@ -1,0 +1,14 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+
+def bindingFlow = binding.variables["bindingFlow"]
+def showErrorOutputs = (!bindingFlow || bindingFlow?.getName() in ["ErrorFlow", "DataFlow"])
+%]
+<OutputParameters>
+
+	[% if (showErrorOutputs) { %]
+		<OutputParameter name="errorMessage" label="Error Message" type="ErrorMessage"/>
+	[% } %]
+
+</OutputParameters>

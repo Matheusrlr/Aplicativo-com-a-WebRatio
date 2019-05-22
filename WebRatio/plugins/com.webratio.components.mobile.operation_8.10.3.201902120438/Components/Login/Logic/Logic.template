@@ -1,0 +1,10 @@
+#?delimiters [%, %], [%=, %]
+[%
+setJSONOutput()
+
+def userDclass = getById("MUser")
+%]
+{
+	"service": "wrm.comp.LoginService",
+	"onlySaveCredentials": [%= !(userDclass["serverClass"] as boolean) %]
+}

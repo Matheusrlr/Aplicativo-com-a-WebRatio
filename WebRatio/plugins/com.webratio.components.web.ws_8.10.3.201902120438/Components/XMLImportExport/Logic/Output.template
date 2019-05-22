@@ -1,0 +1,32 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import org.dom4j.DocumentFactory
+
+setXMLOutput()
+def mode = component["mode"]
+def domainClass = getById(component["dataBinding"])
+%>
+<OutputParameters>
+<% if(domainClass != null){%>
+<%if(mode == "export"){%>
+   <%
+     def docOutputLabel = domainClass["name"] + " XML Documents(s)"
+     if(component["rootElement"] != ""){
+       docOutputLabel = component["rootElement"]
+       if(docOutputLabel.contains('}')){
+          docOutputLabel = docOutputLabel.substring(docOutputLabel.indexOf("}") + 1)
+       } 
+       docOutputLabel += " XML(s)"
+     }
+   %>
+ 
+   <OutputParameter name="xmlDocument" type="<%=component["dataBinding"]%>.xml" image="DOM_TYPE" label="<%=docOutputLabel%>"/>  
+<% } else if(mode == "import"){%>
+   <% for (a in getKeyAttributes(domainClass)) { %>
+       <OutputParameter name="<%=a["id"]%>" type="<%=getTypeExpression(domainClass, a, true, false)%>" refId="<%=a["id"]%>" label="<%=a["name"]%>"/>
+   <% } %>
+<% } %>
+<% } %>  
+  <OutputParameter name="errorMessage" label="Error Message"/>
+  <OutputParameter name="exception" label="Exception"/>
+</OutputParameters>

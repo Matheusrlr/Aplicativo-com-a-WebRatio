@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: com.webratio.commons.jersey
+Export-Package: com.webratio.commons.jersey,com.webratio.commons.jerse
+ y.media.multipart
+Bundle-Name: WebRatio Jersey Extensions
+Bundle-Version: 1.0.0.201810081230
+Bundle-ClassPath: com.webratio.commons.jersey.jar
+Require-Bundle: com.webratio.commons.lib.javax.ws.rs,com.webratio.comm
+ ons.lib.jersey,com.webratio.commons.lib.google.guava,com.webratio.com
+ mons.lib.jackson,com.webratio.commons.lib.javax.inject,com.webratio.c
+ ommons.lib.hk2
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: WebRatio
+
+Name: about.html
+SHA-256-Digest: vuFwTp1xHKAQWF+DRiSVx6xqpwOvJaUcOSfU9wQtY+A=
+
+Name: com.webratio.commons.jersey.jar
+SHA-256-Digest: igdn4hLHZuzdyO0MDH32N63OLdw6ksT1ZdZP5N9t8l0=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+

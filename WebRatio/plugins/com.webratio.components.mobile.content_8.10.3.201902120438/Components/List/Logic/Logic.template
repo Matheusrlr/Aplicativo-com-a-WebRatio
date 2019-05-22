@@ -1,0 +1,67 @@
+#?delimiters [%, %], [%=, %]
+[%  import org.apache.commons.lang.math.NumberUtils
+	setJSONOutput() 
+%]
+[% 	def ce = component.selectSingleNode("ConditionalExpression")
+	def condExprs = ""
+	if (ce) {
+		condExprs = getConditionalExpressionJson( getById(component["dataBinding"]), ce )
+	}
+	def preCe = component.selectSingleNode("PreConditionalExpression")
+	def preCondExprs = ""
+	if (preCe) {
+		preCondExprs = getConditionalExpressionJson( getById(component["dataBinding"]), preCe )
+	}
+	
+	def maxResults = component["maxResults"] ? NumberUtils.toInt(component["maxResults"], -1) : 0
+	if (maxResults < 0) {
+		maxResults = 0
+	}
+	def sortAttributes = component.selectNodes("SortAttribute")
+	def output = (getOutputAttributes(component, "data.", null) + component["displayAttributes"].tokenize(" "))
+	def distinct = (component["distinct"] == "true" ? true : false)
+	
+%]
+{
+	"service": "wrm.comp.ListService",
+	"entity": "[%= component["dataBinding"] %]",
+	[% if (!distinct) { 
+		if (component["checkable"] == "true") { %]
+			"checkable": true,
+			[% if (preCe) { %]
+			"preCondExprs":  [% printRaw(preCondExprs) %],
+	 	[% } %]
+		[% } 
+	} %]
+	"maxResults": [%= maxResults %],
+		[% if (ce) { %]
+			"condExprs":  [% printRaw(condExprs) %],
+	 	[% } %]
+	"distinct": [%= distinct %],
+	"output" : [
+					[% 
+						def importedKeyInOutput
+						def bindName
+						def normalizedId
+						output.eachWithSeparator(","){ it -> 
+							importedKeyInOutput = (it.indexOf('_') != -1 ? true : false)
+							normalizedId = (importedKeyInOutput ? it.replace("_",".") : it)
+							bindName =  (normalizedId.indexOf('.') != -1 ? getAttributeExpressionId(normalizedId) : normalizedId )
+						 	%] 
+								{
+									"ref": "[%= normalizedId %]",
+									"viewName": "[%= getFieldName(bindName) %]",
+									"bindName": [% if (importedKeyInOutput) { %] "[%= it %]" [% } else { %] "[%= bindName %]" [% } %]
+								}
+			 			[% } 
+			 		%]
+		 		],
+	"order": [
+				[% sortAttributes.eachWithSeparator(","){ it -> 	%] 
+					{
+						"property": "[%= it["attribute"] %]",
+						"reverse": [%= it["order"] == "descending" %]
+					 } 
+				 [% } %]
+			 ]
+}

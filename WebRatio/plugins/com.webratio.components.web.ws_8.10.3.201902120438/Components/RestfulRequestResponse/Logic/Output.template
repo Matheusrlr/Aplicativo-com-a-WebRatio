@@ -1,0 +1,60 @@
+#?delimiters [%,%],[%=,%]
+[%
+import com.webratio.generator.contributors.GeneratorContributorHelper
+import org.apache.commons.lang.StringUtils
+
+setXMLOutput()
+def componentId = component["id"]
+def webServiceOperation = component["webServiceOperation"]
+def bindingFlow = binding.variables["bindingFlow"]
+def showErrorCoupling = bindingFlow==null || "ErrorFlow" == bindingFlow?.getQName()?.getQualifiedName()
+%]
+
+<OutputParameters>
+[%if(!StringUtils.isBlank(webServiceOperation)){ 
+	def binaryResponse = false
+	for(param in GeneratorContributorHelper.getOutputParameters(component, wr)){
+		 if (param.name == "responseBlob") {
+		 	binaryResponse = true
+		 }
+         %]<OutputParameter name="map([%=param.name%])" label="[%=param.label%]" type="[%=param.type%]" mandatory="[%=param.mandatory%]" image="[%=param.imageName%]">
+              [%if(param.description){%]<Description>[%=param.description%]</Description>[%}%]
+           </OutputParameter>[%
+    }
+    if (!binaryResponse) {%]
+    	<OutputParameter name="responseBody" label="Response Message"/>[%
+    } 
+} else {
+	   
+	   if(component["responseContentType"] == "JSON"){ 
+		 %]<OutputParameter name="json" label="Response JSON Message"/>[%
+	   } else if(component["responseContentType"] == "TEXT")  {
+		 %]<OutputParameter name="text" label="Response Text Message"/>[%
+	   } else if(component["responseContentType"] == "XML") {
+	   	 %]<OutputParameter name="xml" label="Response XML Message"/>[%
+	   }
+	   %]<OutputParameter name="blobs" label="Response BLOB(s)" image="BLOB"/>[%
+	   for (rp in component.selectNodes("ResponseBodyParameter")) {
+	     %]<OutputParameter name="[%=rp["name"]%]" label="[%=rp["name"]%]"/>[%
+         for(param in GeneratorContributorHelper.getOutputParameters(rp, wr)){
+            %]<OutputParameter name="[%=param.name%]" label="[%=rp["name"]%] - [%=param.label%]" type="[%=param.type%]" mandatory="[%=param.mandatory%]" image="[%=param.imageName%]">
+                [%if(param.description){%]<Description>[%=param.description%]</Description>[%}%]
+              </OutputParameter>[%
+         }
+       }  
+       
+       // response headers    
+       for (h in component.selectNodes("ResponseHeader")) {
+	       %]<OutputParameter name="[%=h["id"]%]" label="[%=h["name"]%] [Header]" refId="[%=h['id']%]"/>[%
+	   }              
+    }
+%]
+
+ <OutputParameter name="statusCode" label="HTTP Status Code"/>
+
+[%if(showErrorCoupling){%]
+  <OutputParameter name="errorMessage" label="Error Message"/>
+  <OutputParameter name="exception" label="Exception"/>
+[%}%]  
+  
+</OutputParameters>

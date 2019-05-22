@@ -1,0 +1,53 @@
+<Element name="ContextParameter" lowerName="context parameter"
+		pluralLowerName="context parameters">
+		<Description>
+			A Context Parameter is an 
+			application-level variable used to store values during a user's session or for
+			the entire duration of the application.
+		</Description>
+		<ActionRef label="Add Property" />
+		<ActionRef label="Localize" />
+		<ActionRef label="Generate Layout Pages Only"/>
+		<ActionRef label="Generate Logic Descriptors Only"/>
+		<ActionRef label="Generate Selection"/>
+		<ActionRef label="Search References"/>
+		<ActionRef label="Find Model Problems"/>
+		<ActionRef label="Help"/>
+		
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+			<Property label="Type">
+				The type of the value stored in the parameter, if the context. 
+				Admissible types are: 
+				&lt;ul&gt;
+					&lt;li&gt;String&lt;/li&gt;
+					&lt;li&gt;Password&lt;/li&gt;
+					&lt;li&gt;Text&lt;/li&gt;
+					&lt;li&gt;Integer&lt;/li&gt;
+					&lt;li&gt;Decimal&lt;/li&gt;
+					&lt;li&gt;Float&lt;/li&gt;
+					&lt;li&gt;Date&lt;/li&gt;
+					&lt;li&gt;Entity&lt;/li&gt;
+					&lt;li&gt;Time&lt;/li&gt;
+					&lt;li&gt;Timestamp&lt;/li&gt;
+					&lt;li&gt;Boolean&lt;/li&gt;
+					&lt;li&gt;URL&lt;/li&gt;
+					&lt;li&gt;Blob&lt;/li&gt;
+				&lt;/ul&gt;
+				If the selected type is &lt;b&gt;Entity&lt;/b&gt;, the parameter is defined 
+				over a class.
+			</Property>
+			<Property label="Class">
+				It is used when the parameter holds the &lt;b&gt;oid&lt;/b&gt; of an 
+				class instance (e.g., the predefined context parameters UserCtxParam 
+				and GroupCtxParam).
+			</Property>
+			<Property label="Use URL">
+				If checked, the session parameter are held by the URL.
+			</Property>
+			<Property label="Cookie Storage Provider">
+				Specifies the Cookie Storage Provide used to save parameter&apos;value using client side cookies.
+			</Property>
+		</PropertyCategory>
+	</Element>

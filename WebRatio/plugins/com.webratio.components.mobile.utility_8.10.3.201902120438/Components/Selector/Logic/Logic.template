@@ -1,0 +1,51 @@
+#?delimiters [%, %], [%=, %]
+[%  import org.apache.commons.lang.math.NumberUtils
+	setJSONOutput()
+%]
+[% 	def ce = component.selectSingleNode("ConditionalExpression")
+	def condExprs = ""
+	if(ce){
+		condExprs = getConditionalExpressionJson( getById(component["dataBinding"]), ce )
+	}
+	def sortAttributes = component.selectNodes("SortAttribute")
+	
+	def maxResults = component["maxResults"] ? NumberUtils.toInt(component["maxResults"], -1) : 0
+	if (maxResults < 0) {
+		maxResults = 0
+	}
+	def output = (getOutputAttributes(component, "data.", null) + component["distinctAttributes"].tokenize(" "))
+%]
+{
+	"service": "wrm.comp.SelectorService",
+	"entity": "[%= component["dataBinding"] %]",
+		[% if (ce) { %]
+			"condExprs":  [% printRaw(condExprs) %],
+	 	[% } %]
+	"maxResults": [%= maxResults %],
+	"distinct": [% if (component["distinct"] == "true") { %] true [% } else { %] false [% } %],
+	"output": [
+					[% 
+						def importedKeyInOutput
+						def bindName
+						def normalizedId
+						output.eachWithSeparator(","){ it -> 
+							importedKeyInOutput = (it.indexOf('_') != -1 ? true : false)
+							normalizedId = (importedKeyInOutput ? it.replace("_",".") : it)
+							bindName =  (normalizedId.indexOf('.') != -1 ? getAttributeExpressionId(normalizedId) : normalizedId )
+						 	%] 
+								{
+									"ref": "[%= normalizedId %]",
+									"viewName": "[%= getFieldName(bindName) %]",
+									"bindName": [% if (importedKeyInOutput) { %] "[%= it %]" [% } else { %] "[%= bindName %]" [% } %]
+								}
+			 			[% } 
+			 		%]
+		 		],
+	"order": [[% sortAttributes.eachWithSeparator(","){ it -> %] 
+					{
+						"property": "[%= it["attribute"] %]",
+						"reverse": [%= it["order"] == "descending" %]
+					 } 
+				 [% } 
+			 %]]
+}

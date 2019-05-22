@@ -1,0 +1,32 @@
+<Toolbar xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" gr:x="410" gr:y="165" id="av1#tlb2" name="Menu">
+  <ViewComponents/>
+  <Events>
+    <OnSelectEvent id="av1#tlb2#oslte10" name="Menu">
+      <NavigationFlow id="av1#tlb2#oslte10#nf10" to="av1#scr5" automaticCoupling="true"/>
+    </OnSelectEvent>
+    <OnSelectEvent id="av1#tlb2#oslte11" name="Categorias">
+      <NavigationFlow id="av1#tlb2#oslte11#nf11" to="av1#scr1" automaticCoupling="true"/>
+    </OnSelectEvent>
+    <OnSelectEvent id="av1#tlb2#oslte14" name="T&#243;picos">
+      <NavigationFlow id="av1#tlb2#oslte14#nf14" to="av1#scr2" automaticCoupling="true"/>
+    </OnSelectEvent>
+  </Events>
+  <layout:CustomLocation name="Top Bar">
+    <layout:Grid containerType="cell">
+      <layout:Row>
+        <layout:Cell>
+          <layout:Event eventType="HomeEvent"/>
+        </layout:Cell>
+      </layout:Row>
+    </layout:Grid>
+  </layout:CustomLocation>
+  <layout:CustomLocation name="Bottom Bar">
+    <layout:Grid containerType="cell">
+      <layout:Row>
+        <layout:Cell>
+          <layout:Event eventType="BackEvent"/>
+        </layout:Cell>
+      </layout:Row>
+    </layout:Grid>
+  </layout:CustomLocation>
+</Toolbar>

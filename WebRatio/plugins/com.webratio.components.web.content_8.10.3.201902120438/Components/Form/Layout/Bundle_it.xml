@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle>
+  <Entry key="selectionfield.noselection">Nessuna selezione</Entry>
+  <Entry key="multiselectionfield.selectAll">Seleziona tutti</Entry>
+  <Entry key="multiselectionfield.deselectAll">Deseleziona tutti</Entry>
+</Bundle>

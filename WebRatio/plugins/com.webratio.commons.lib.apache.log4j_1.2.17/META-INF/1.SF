@@ -1,0 +1,21 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: pcomihZOKW0iSYXMHinr0TVdgT5Z5
+ 0UCyj+GcARKKoo=
+SHA-256-Digest-Manifest: hlh6jB08ufjzkDLtHy36EHzp4wiXFYPnoI6Uj8XTKDA=
+Created-By: 1.7.0_75 (Oracle Corporation)
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: a5fmgH7myHzNji9AMOfHrVh8fy7MOgIdRSUiRZ6EFA4=
+
+Name: lib/log4jsrc.zip
+SHA-256-Digest: F1jIvOUabE0ks8bwqIHnxAO90cHyeDK6hAhSlc7FRdM=
+
+Name: lib/log4j.jar
+SHA-256-Digest: /7CqsJKF8qXvyU7nAaSywAqaeSRZllUXyW6R571HD30=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: about.html
+SHA-256-Digest: V35AYbbCzoywzJ41k7vNs74HwvBpkZWP9kGqXT9w45w=
+

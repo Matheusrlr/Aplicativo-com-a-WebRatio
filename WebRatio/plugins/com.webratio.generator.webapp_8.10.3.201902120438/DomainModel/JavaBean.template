@@ -1,0 +1,432 @@
+#?delimiters <%, %>, <%=, %>
+<%
+  // ==== INPUTS ====================================================
+  // entity
+  // ================================================================
+  import org.apache.commons.lang.StringUtils
+  
+  setJavaOutput()
+  
+  def getKeyAtts(entity){
+    return wr.explorer.domainModel().getAllKeyAttributes(entity)
+  }
+  
+  def isFKMapped(role, entity) {
+    def rel = role.parent
+    if (entity.valueOf("@db:table") != rel.valueOf("@db:table")) {
+        return false
+    } else {
+        def roleKeys = new HashSet(role.selectNodes("db:JoinColumn").collect{[it.valueOf("@attribute"), it.valueOf("@name")]})
+        def entKeys = null
+        if (entity.is(getTopSuperDomainClass(entity))) {
+            entKeys = new HashSet(entity.selectNodes("Attribute[@key = \'true\']").collect{[it.valueOf("@id"), it.valueOf("@db:column")]})
+        } else {
+            entKeys = new HashSet(entity.selectNodes("Generalization/db:JoinColumn").collect{[it.valueOf("@attribute"), it.valueOf("@name")]})
+        }
+        return roleKeys == entKeys
+    }
+  }
+  
+  def getAttributeJavaType(attr){
+     if(attr["key"] == "true" && attr["type"] == "decimal"){
+        def idGen = attr.valueOf("@db:idGenerator") 
+        if(idGen == "sequence" || idGen == "identity"){
+            return "Number"
+        }   
+     }
+     return getJavaType(attr["type"])
+  }
+  
+  def getImportPath(attr, visitedAtts = new HashSet()){
+    def derivQuery = StringUtils.substringAfter(attr["derivationQuery"], "::Self.")
+    def path = StringUtils.substringBeforeLast(derivQuery, ".").tokenize(".")
+    def lastSegment = StringUtils.substringAfterLast(derivQuery, ".")
+    def targetAttr = getById(lastSegment) 
+    visitedAtts.add(attr)
+    if(isSimpleDerived(targetAttr) && !visitedAtts.contains(targetAttr) && targetAttr["formula"] == ""){
+      def path2 = getImportPath(targetAttr, visitedAtts)
+      if(!path.contains(path2[-1])){
+        path.addAll(path2)
+      }
+    }else{
+      path.add(lastSegment)
+    }
+    return path
+  }
+  
+  def entityClass = getClassInfo(entity)
+  def keyAtts = getKeyAtts(entity)
+  def subEntity = (getSuperDomainClass(entity) != null)
+  def extendsClause = ""
+  if (subEntity) {
+      extendsClause = "extends " + getClassInfo(getSuperDomainClass(entity)).name
+  }
+  def outgoingRoles = getDirectOutgoingRoles(entity)
+  def atts = entity.selectNodes("Attribute")
+  def indexed = entity.valueOf("boolean(Property[@name = 'index'])")
+  
+  def fkFields = [:] 
+  def singleKeyRoles =  getDirectOutgoingRoles(entity).findAll{getKeyAtts(getTargetDomainClass(it)).size() > 1}
+  singleKeyRoles = singleKeyRoles.findAll{isValidMapping(it) && isFKMapped(it,entity)}
+  for (role in singleKeyRoles) { 
+    def fieldName = getFieldName(role)
+    def inverseRole = getOppositeRole(role)
+    def relTable = role.valueOf("../@db:table")
+    def targetEntity = getTargetDomainClass(role)
+    def targetKeyAttrIds = getKeyAtts(targetEntity).collect{it["id"]}
+    def targetJoinCols = targetKeyAttrIds.collect{inverseRole.selectNodes("db:JoinColumn[@attribute = '" + it + "']")}.flatten()
+    for (jc in targetJoinCols) { 
+      def attr = getById(jc, "attribute")
+      fkFields.put("Rel_" + fieldName + "_" + getFieldName(attr), getById(jc, "attribute"))
+    }
+  } 
+  
+  
+  
+%>package <%=getPackageName(entity)%>;
+
+public class <%=entityClass.simpleName%>
+    <%=extendsClause%> implements java.io.Serializable {
+
+    /** Serial version identifier. */
+    private static final long serialVersionUID = 1L;
+	
+<% for (attr in atts) { %>
+  <% def fieldName = getFieldName(attr) %>
+  <% if (attr["type"] != "blob") { %>
+    private <%=getAttributeJavaType(attr)%> _<%=fieldName%>;
+  <% } else { %>
+    
+    private java.lang.String _<%=fieldName%>Ref;
+    
+    private java.lang.Object _<%=fieldName%>;
+    
+    <%if(attr["storageType"] == "database"){%>
+       private java.sql.Blob _<%=fieldName%>Binary;
+    <%}%>
+ 
+  <% } %>
+  <% if(attr.valueOf("@db:clob") == "true"){ %>
+    private java.sql.Clob _<%=fieldName%>CLOB;
+  <% } %>
+  
+  <% if(isDerived(attr) && !isSimpleDerived(attr)){ %>
+    private <%=getClassInfo(attr.parent).name%>_<%=toValidClassName(fieldName)%>Bean _<%=fieldName%>Bean;
+  <% } %>
+<% } %>
+
+
+<% for (role in outgoingRoles) { %>
+  <% def fieldName = getFieldName(role) 
+     def isDerived = isDerived(role) || ("true" == role.parent.valueOf("@db:isView"))
+     def forceBridgeTable = isDerived
+     def inverseRole = getOppositeRole(role)
+     if(isDerived){
+      if (!isMany(role) || !isMany(inverseRole)){
+        def sourceEntity = getSourceDomainClass(role)
+        def targetEntity = getTargetDomainClass(role)
+        def sourceTable = getSchema(sourceEntity) + "." + sourceEntity.valueOf("@db:table")
+        def targetTable = getSchema(targetEntity) + "." + targetEntity.valueOf("@db:table") 
+        def qRelTable = getSchema(role.parent) + "." + role.valueOf("../@db:table")
+        if( sourceTable == qRelTable || targetTable == qRelTable){
+           forceBridgeTable = false
+        }
+      }            
+     }
+   %>
+  <% if (isMany(role) || forceBridgeTable) { %>
+    private java.util.Set _<%=fieldName%> = new java.util.HashSet();
+  <% } else { %>
+    <% def targetEntity = getTargetDomainClass(role) %>
+    private <%=getClassInfo(targetEntity).name%> _<%=fieldName%>;
+  <% } %>
+<% } %>
+
+
+
+<% if (indexed) { %>
+    private float _searchScore;
+<% } %>
+
+<% for (attr in atts) { %>
+  <% 
+    def fieldName = getFieldName(attr)
+    def capitalFieldName = StringUtils.capitalize(fieldName)
+    def type = getAttributeJavaType(attr)
+    def customSetterProperty = attr.selectSingleNode("Property[@name = 'setter']")
+    def customGetterProperty = attr.selectSingleNode("Property[@name = 'getter']")
+  %>
+  <% if (attr["type"] == "blob") { %>
+      public java.lang.String get<%=capitalFieldName%>Ref() {
+         return _<%=fieldName%>Ref;
+      }
+
+      public void set<%=capitalFieldName%>Ref(java.lang.String _<%=fieldName%>Ref) {
+         this._<%=fieldName%>Ref = _<%=fieldName%>Ref;
+      }
+    
+      <%if(attr["storageType"] == "database"){%>
+         public java.sql.Blob get<%=capitalFieldName%>Binary() {
+           return _<%=fieldName%>Binary;
+         }
+   
+         public void set<%=capitalFieldName%>Binary(java.sql.Blob _<%=fieldName%>Binary) {
+           this._<%=fieldName%>Binary = _<%=fieldName%>Binary;
+         }
+      <%}%>
+    
+      public java.lang.Object get<%=capitalFieldName%>() {
+         return _<%=fieldName%>;
+      }
+
+      public void set<%=capitalFieldName%>(java.lang.Object  _<%=fieldName%>) {
+         this._<%=fieldName%> = _<%=fieldName%>;
+      }
+  <% } else { %>
+    public <%=type%> get<%=capitalFieldName%>() {
+      <% if (customGetterProperty != null) {
+        printRaw(StringUtils.replace(customGetterProperty["value"], "\$field", "_" + fieldName))
+      } else if(isDerived(attr) && attr["formula"] == ""){
+           %>if(_<%=fieldName%> != null){
+              return _<%=fieldName%>;
+           }<%
+           def targetClasses = []
+           def vars = []
+           def sourceVars = ["this"]
+           def getters = []
+           def targetAttr = attr
+           if(isSimpleDerived(attr)){
+              def roles = getImportPath(attr)
+              targetAttr = getById(roles.pop()) 
+			  roles = roles.collect{getById(it)} 
+              def chain = ""
+              for(role in roles){
+                   targetClasses.add("java.lang.Object")
+                   if(!vars.empty){
+                     sourceVars.add(chain)
+                   }
+                   chain += role["id"]
+                   def targetEntity = getTargetDomainClass(role)
+                   def targetEntityClassName = getClassInfo(targetEntity).name
+                   vars.add(chain + "Object")
+                   getters.add(".get" + StringUtils.capitalize(getFieldName(role)) + "()")
+                   targetClasses.add(targetEntityClassName)
+                   sourceVars.add(chain + "Object")
+                   vars.add(chain)
+                   getters.add(" instanceof java.util.Set ? (((java.util.Set)${sourceVars[-1]}).isEmpty() ? null : ("+targetEntityClassName+") ((java.util.Set)${sourceVars[-1]}).iterator().next()) : (" + targetEntityClassName + ") " + sourceVars[-1])
+              }
+           }
+           if(isDerived(targetAttr) && targetAttr["formula"] == ""){
+              targetClasses.add(getClassInfo(targetAttr.parent).name + "_" + toValidClassName(getFieldName(targetAttr)) + "Bean")
+              if(isSimpleDerived(attr)){
+                sourceVars.add(vars[-1])
+              }
+              vars.add("__" + getFieldName(targetAttr))
+              getters.add(".get" + StringUtils.capitalize(getFieldName(targetAttr)) + "Bean()")
+              getters.add(".getValue()")   
+           }else{
+              getters.add(".get" + StringUtils.capitalize(getFieldName(targetAttr)) + "()")
+           }
+           def targetAttributeType = getAttributeJavaType(targetAttr)
+           if(type == targetAttributeType || type == "java.lang.String"){
+             for(index in 0..(targetClasses.size - 1)){
+              %><%=targetClasses[index]%> <%=vars[index]%> = <%=sourceVars[index]%><%=getters[index]%>;
+                if(<%=vars[index]%> != null){
+              <% 
+             }
+             if(type != targetAttributeType && type == "java.lang.String"){
+                %>return (<%=vars[-1]%><%=getters[-1]%> != null) ? <%=vars[-1]%><%=getters[-1]%>.toString() : null;<%
+             }else{
+                %>return <%=vars[-1]%><%=getters[-1]%>;<%
+             }
+             targetClasses.each{%>}<%}
+           } %>
+           return _<%=fieldName%>; <%
+      } else { %>
+          return _<%=fieldName%>;
+      <% } %>
+    }
+
+    public void set<%=capitalFieldName%>(<%=type%> _<%=fieldName%>) {
+      <% if (customSetterProperty != null) {
+        printRaw(StringUtils.replace(customSetterProperty["value"], "\$field", "_" + fieldName))
+      } else { %>
+        this._<%=fieldName%> = _<%=fieldName%>;
+      <% } %>
+    }
+    
+  <% } %>
+  
+  <% if(attr.valueOf("@db:clob") == "true"){ %>
+	public java.sql.Clob get<%=capitalFieldName%>CLOB() {
+        return _<%=fieldName%>CLOB;
+    }
+
+    public void set<%=capitalFieldName%>CLOB(java.sql.Clob  _<%=fieldName%>CLOB) {
+        this._<%=fieldName%>CLOB = _<%=fieldName%>CLOB;
+    }
+  <% } %>
+  
+  <% if(isDerived(attr) && !isSimpleDerived(attr)){ %>
+    <% def attrClassName = getClassInfo(attr.parent).name + "_" + toValidClassName(fieldName) + "Bean" %> 
+  
+    public <%=attrClassName%> get<%=capitalFieldName%>Bean() {
+        return _<%=fieldName%>Bean;
+    }
+
+    public void set<%=capitalFieldName%>Bean(<%=attrClassName%>  _<%=fieldName%>Bean) {
+        this._<%=fieldName%>Bean = _<%=fieldName%>Bean;
+    }
+  <% } %>
+<% } %>
+
+<%
+   for (fkField in fkFields.keySet()) {
+      def attr = fkFields.get(fkField)
+      def capitalFieldName = StringUtils.capitalize(fkField)
+      def attrJavaType = getAttributeJavaType(attr)
+      %>
+      private <%=attrJavaType%> _<%=fkField%>;
+      
+      public <%=attrJavaType%> get<%=capitalFieldName%>() {
+        return _<%=fkField%>;
+      }
+
+      public void set<%=capitalFieldName%>(<%=attrJavaType%>  _<%=fkField%>) {
+        this._<%=fkField%> = _<%=fkField%>;
+      }
+      <%
+   }
+%>
+
+<% for (role in outgoingRoles) { %>
+  <% def targetEntity = getTargetDomainClass(role)
+     def targetEntityClass = getClassInfo(targetEntity) 
+     def fieldName = getFieldName(role) 
+     def capitalFieldName = StringUtils.capitalize(fieldName) 
+     def isDerived = isDerived(role) || ("true" == role.parent.valueOf("@db:isView"))
+     def inverseRole = getOppositeRole(role)
+     def forceBridgeTable = isDerived
+     if(isDerived){
+       if (!isMany(role) || !isMany(inverseRole)){
+         def sourceEntity = getSourceDomainClass(role)
+         def sourceTable = getSchema(sourceEntity) + "." + sourceEntity.valueOf("@db:table")
+         def targetTable = getSchema(targetEntity) + "." + targetEntity.valueOf("@db:table") 
+         def qRelTable = getSchema(role.parent) + "." + role.valueOf("../@db:table")
+         if( sourceTable == qRelTable || targetTable == qRelTable){
+           forceBridgeTable = false
+         }
+       }            
+     }
+  %>
+  <% if (isMany(role) || forceBridgeTable) { %>
+    public java.util.Set get<%=capitalFieldName%>() {
+        return _<%=fieldName%>;
+    }
+
+    public void set<%=capitalFieldName%>(java.util.Set _<%=fieldName%>) {
+        this._<%=fieldName%> = _<%=fieldName%>;
+    }
+  <% } else { %>
+    public <%=targetEntityClass.name%> get<%=capitalFieldName%>() {
+        return _<%=fieldName%>;
+    }
+
+    public void set<%=capitalFieldName%>(<%=targetEntityClass.name%> _<%=fieldName%>) {
+        this._<%=fieldName%> = _<%=fieldName%>;
+    }
+    <%if("volatile" == entity["duration"]){%>
+      <%
+        def targetKeyAtts = getKeyAtts(targetEntity)
+        for(keyAttr in targetKeyAtts){
+      %> 
+    public java.lang.Object get<%=StringUtils.capitalize(role["id"])%>_<%=keyAttr["id"]%>() {
+      return (_<%=fieldName%> != null) ? _<%=fieldName%>.get<%=StringUtils.capitalize(getFieldName(keyAttr))%>() : null;
+    }
+      <%}%>
+    <%}%>
+  <% } %>
+<% } %>
+
+<% if (indexed) { %>
+    public float getSearchScore() {
+        return _searchScore;
+    }
+    
+    public void setSearchScore(float _searchScore) {
+        this._searchScore = _searchScore;
+    }
+<% } %>
+
+  public String toString() {
+      java.lang.StringBuffer sb = new java.lang.StringBuffer();
+      sb.append(super.toString());
+      int n = sb.length() - 1;
+      if (sb.charAt(n) == ']') {
+          sb.setCharAt(n, ',');
+      } else {
+          sb.append('[');
+      }
+<% for (attr in atts) { %>
+  <% def fieldName = getFieldName(attr) %>
+      if (_<%=fieldName%> != null) sb.append("<%=fieldName%>=" + _<%=fieldName%> + ',');
+<% } %>
+      n = sb.length() - 1;
+      if (sb.charAt(n) == ',') {
+          sb.setCharAt(n, ']');
+      } else if (sb.charAt(n) == '[') {
+          sb.deleteCharAt(n);
+      }
+      return sb.toString();
+  }
+
+<% if (!subEntity) { %>
+  public boolean equals(java.lang.Object obj) {
+      if (!(obj instanceof <%=entityClass.name%>)) {
+          return false;
+      }
+      <%=entityClass.name%> __other = (<%=entityClass.name%>) obj;
+  <% if (!keyAtts.empty) { %>
+      java.lang.Object key = null;
+      java.lang.Object otherKey = null;
+    <% for (keyAttr in keyAtts) { %>
+      key = this.get<%=StringUtils.capitalize(getFieldName(keyAttr))%>();
+      otherKey = __other.get<%=StringUtils.capitalize(getFieldName(keyAttr))%>();
+      if (key == null) {
+          if (otherKey != null) {
+              return false;
+          }
+      } else {
+          if (otherKey == null) {
+              return false;
+          } else if (!key.equals(otherKey)) {
+              return false;
+          }
+      }
+    <% } %>
+      return true;
+  <% } else { %>
+      return (this == __other);
+  <% } %>
+  }
+<% } %>
+
+<% if (!subEntity) { %>
+  public int hashCode() {
+  <% if (!keyAtts.empty) { %>
+      int hashCode = 0;
+      java.lang.Object key = null;
+    <% for (keyAttr in keyAtts) { %>
+      key = this.get<%=StringUtils.capitalize(getFieldName(keyAttr))%>();
+      if (key != null) {
+          hashCode |= key.hashCode();
+      }
+    <% } %>
+      return hashCode;
+  <% } else { %>
+      return super.hashCode();
+  <% } %>
+  }
+<% } %>
+
+}

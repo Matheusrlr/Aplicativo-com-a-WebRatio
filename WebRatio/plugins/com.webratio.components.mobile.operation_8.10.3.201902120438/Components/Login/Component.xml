@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component  type="operation" formBased="false" idPrefix="lgu" namePrefix="Login " label="Login" dataFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" successFlowSource="true" successFlowTarget="true" multipleErrorFlowCardinality="true"> 
+  <ErrorFlowCodes xml:space="preserve">return ["Internal Error"]</ErrorFlowCodes>
+  <Description xml:space="preserve">A login operation verifies the user's credentials (username and password)
+to grant access to the reserved sections of the mobile application.
+The login operation takes in input a username and a password; 
+if verification succeeds, the login operation redirects the user to the home page or operation
+of the app view.
+A user has access to a protected resource only if it belongs to one of the groups listed in the Roles property.
+  </Description>
+  <InputDescription xml:space="preserve" name="Username">The username of the user wishing to login.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Password">The password of the user wishing to login.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Granted Token">The token of the user that refers to the authorization.</InputDescription>  
+</Component>

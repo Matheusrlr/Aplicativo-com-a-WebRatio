@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle>
+  <Entry key="CaptchaValidationRule.error"> the entered value did not match what was displayed</Entry>
+</Bundle>

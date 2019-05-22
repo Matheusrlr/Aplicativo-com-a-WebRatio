@@ -1,0 +1,7 @@
+#?delimiters [%,%],[%=,%]
+[% setJSONOutput() %]
+{
+	"service": "wrm.comp.val.RegularExpressionValidationRuleService",
+	"regex": "[%= element["regex"] %]",
+	"ignoreCase": [%= element["ignoreCase"] == "true" %]
+}

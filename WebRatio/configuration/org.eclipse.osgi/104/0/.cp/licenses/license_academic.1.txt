@@ -1,0 +1,344 @@
++----------------- 
+| Academic License 
+---------------- 
+IMPORTANT. This is a license agreement (the "Agreement") between You 
+(Licensee)and WebRatio s.r.l. ("WebRatio" or Licensor), a company 
+incorporated in Italy, whose registered number is 02624270134 and whose 
+registered office is at Piazzale Cadorna 10, Milano, governing the use 
+of WebRatio Platform (the "Program"), as defined below, including any 
+link-time and run-time module, and any system documentation and/or 
+development process documentation as defined below. 
+
+DEFINITIONS 
+
+Agreement: it is this academic license agreement, coming into force 
+after you have signed the License Order and when you break the media 
+seal, click on the "accept" button, enters "yes" (or flag on the 
+checkbox button) in response to the electronic license acceptance 
+inquiry, install, or download the academic license. This legally binds 
+You and WebRatio to both the above recitals and the terms and conditions 
+set forth below. 
+
+Licensee: In order to be qualified for the applicability of this 
+Agreement, You shall: (i) be a Student or Professor of a Faculty or 
+Department involved in teaching or researching in Computer Science or 
+Computer Engineering and (ii) You shall use the Program only for 
+academic and educational purposes relating to Your activities as a 
+Student or Professor of a Faculty or Department involved in teaching or 
+researching in Computer Science or Computer Engineering 
+
+Program: it includes all or any of the following programs: WebRatio BPM 
+Platform Community Edition; WebRatio Mobile Platform Community Edition; 
+WebRatio Mobile Platform Professional Edition; WebRatio Web Platform 
+Community Edition; WebRatio Web Platform Professional Edition; WebRatio 
+Enterprise Platform. 
+
+Documentation: it includes any link-time and run-time module, and any 
+system documentation and/or development process documentation 
+(including, but not limited to, documentation on computer readable 
+media, the technical documentation of the Program, templates used by the 
+Program and granted in source format). For instance, it includes 
+specifications published in WebRatio Platform Manuals and Tutorials by 
+WebRatio. 
+
+Competing Program: it is an application development environment 
+translating visual specifications of Mobile and Web sites into 
+executable specifications of any kind. 
+
+Content: all information, text, messages or other materials you post or 
+otherwise transmit via the “Program”. 
+
+Third Party Plug-ins: they are third party software components included 
+by the Program. 
+
+Defects: errors, bugs, defects of the Program. 
+
+WebRatio Intellectual Property Rights: all the intellectual and 
+industrial property rights, the Trademarks, any distinctive sign or 
+brand, the Suggestions, the Information and Know how relating to the 
+Program and/or the Documentation and /or WebRatio as well. 
+
+All the said rights belong to WebRatio. 
+
+Personal data: your personal data, you have provided to Webratio for the 
+fulfilment of this Agreement. 
+
+1. GENERAL GRANT OF LICENSE. 
+
+1.1 Webratio is the exclusive owner of all rights, title and interest of 
+the Program and of Documentation and grants to You a nonexclusive, 
+non-transferable, free of charge and single-user license to use the 
+“Program” for lawful academic and educational purposes relating to Your 
+activities as a Student or Professor of a Faculty or Department involved 
+in teaching or researching in Computer Science or Computer Engineering. 
+The license above is granted only exclusively within the time extension 
+specified in Article 5 below. 
+
+1.2 The Program may not be used for any profit-making purpose, such as, 
+for example, purposes relating to your trade and/or Your business, the 
+development of commercial applications, including applications developed 
+for institution's own internal use, such as administrative applications 
+for the institution. You may not distribute, sublicense or otherwise 
+transfer the Program. You further agree not to use and/or distribute any 
+application developed by using the Program. 
+
+2. USE OF PROGRAM AND TERMS FOR SOURCE CODE 
+
+2.1 According to art. 64 ter of Italian Law n. 633/1941 (Copyright Law) 
+You are not authorised to carry out the operations ruled in letters a) 
+and b) of art. 64 bis unless the said operations are necessary for the 
+normal use of the Program (e.g. for error correction). 
+
+Therefore, You are not allowed to: modify, port, adapt, duplicate, 
+translate, decompile or reverse engineering the “Program”. 
+
+In any case You may not attempt to discover the source code of the 
+Program. 
+
+2.2 Unless it has been expressly authorized by WebRatio in writing, you 
+shall not copy the Program, except as reasonably required for back-up 
+operations, according to art. 64 ter n. 2 Copyright Law: in such a case, 
+it is understood that each copy shall contain mention of proper 
+copyrights, proprietary rights and confidentiality notices belonging to 
+WebRatio. 
+
+In the event of any termination of this Agreement (as set up by art. 5 
+below) you shall immediately: a. return to WebRatio all copies of the 
+Program and certify to WebRatio that any and all copies of the Program 
+have been erased from your pc memory; 
+
+b. remove the Program from Your computer and erase and/or destroy any 
+support (magnetic, optic or else, including but not limited to any 
+tapes, magnetic diskettes, hard disks, CDs, DVDs, etc.) within which You 
+have embodied and/or registered the Program or a part of it. 
+
+2.3 Notwithstanding the provisions above (art. 2.1. and 2.2), in the 
+case the Program is expressly described as "Enterprise", you are 
+entitled (i) to modify the source files of the application generated by 
+the Program; and (ii) to use the source code enclosed in the Program to 
+the limited extent of creating derivative works, modifying and extending 
+the templates used by the Program. 
+
+You agree not to use the Source Code, binaries, its algorithms, or any 
+information learned from the Source Code in any Competing Program. 
+
+Moreover, You cannot transfer in any way the Documentation to any third 
+parties. 
+
+2.4 You may not rent, lease or use the Program in a service bureau 
+capacity or timesharing. 
+
+2.5 Upon your request, WebRatio shall provide you with the information 
+necessary to achieve the interoperability of the “Program” with other 
+software programs. 
+
+You may use the said information supplied by WebRatio for the sole 
+purpose of the interoperability. You may not disclose the information to 
+any third party or use the information in a manner that infringes our 
+copyright or Intellectual Property Rights or a copyright or Intellectual 
+Property Rights of one of our licensors. 
+
+2.6 You are not entitled to assign, sublicense, lease this Agreement 
+and/or anyone of the rights granted hereunder whether it is in whole or 
+in part without WebRatio's prior written consent. 
+
+2.7 You are aware that the Program contains professional and 
+confidential WebRatio know-how. Therefore, you agree not to use the 
+Program in conjunction with a Competing Program. 
+
+2.8 You further agree not to disclose, transfer, or otherwise provide to 
+any third party any portion of the Program without the express written 
+consent of WebRatio. 
+
+3. REMOTE SERVICES 
+
+3.1 The Program allows you to use remote services provided by Amazon 
+Service Inc. and by Mac Stadium Inc. (hereinafter called “Service 
+Providers”) whose servers are localized in U.E. and U.S.A., 
+respectively. Such remote services are able to generate artefacts 
+suitable for the publishing on Mobile Stores (such as Apple Store and 
+Google Play Store) and they involve the transfer of your Content to the 
+Services Providers servers according to this rule: if You generate an 
+App for Android system the service provider is Amazon; if you generate 
+an App for IOS system the service provider is Mac Stadium. 
+
+3.2 WebRatio is the licensee of Service Providers with reference to the 
+remote services and the servers. Therefore Amazon Service Inc. and Mac 
+Stadium Inc. are the sole responsible for the correct operations and 
+maintenance of the said servers and the said remote services. 
+
+3.3 In the case you choose to use remote services above, the use of the 
+Program will also be ruled by the terms and conditions of the following 
+license agreements readable at http://amazon.com/agreement, 
+aws.amazon.com/serviceterms and http://macstadium.com/tos. 
+
+3.4 WebRatio will access and process your Content, whose you are data 
+controller, only if it is necessary for : a. responding to request of 
+assistance; b. preventing or addressing fraud or illicit in general, c. 
+security or technical purposes. 
+
+In these cases, you undertake that WebRatio acts in its quality of your 
+data processor under the Privacy Code. 
+
+4. THIRD PARTY COMPONENTS 
+
+4.1.The Program contains several Third Party Plug-ins governed by the 
+terms and condition contained in files named "about.html" in plug-ins 
+directories. You undertake that, by using or not uninstalling such Third 
+Party Plug-ins after the initial installation of such Third Party 
+Plug-ins (thereby giving You access to the applicable terms and 
+conditions), You are bound by such terms and conditions. 
+
+4.2 Without specific permission, Third Party Plug-ins may be used solely 
+in conjunction with, and as part of, the Program, and they may not be 
+unbundled and/or used separately. 
+
+4.3 WebRatio undertakes that those terms and conditions do not prevent 
+You from using the Program for the purposes as stated in Art. 1 above. 
+
+5. TERMINATION 
+
+5.1 This Agreement shall be effective when you break the media seal, 
+click on the "accept" button, enters "yes" (or flag on the checkbox 
+button) in response to the electronic license acceptance inquiry, 
+install, or download the academic license and it will terminate three 
+hundred sixty five (365)calendar days thereafter. 
+
+5.2 WebRatio may terminate your license at any time: 
+
+i) immediately, in the event You breach the obligation (in whole or in 
+part) set forth by articles n. 1, 2, 4, 8 of this Agreement; 
+
+ii) by giving a prior 10 (ten) written notice in the event you breach 
+the other provisions of this Agrement. 
+
+5.3. This Agreement may also be terminated in the case that the 
+Agreements between WebRatio and the Service Providers terminate. 
+
+6. UPDATES AND SUPPORTS 
+
+This Agreement does not grant You rights upon any improvements, 
+modifications, enhancements, updates of the Program, or other support 
+services that may be subject to a separate license. 
+
+7. LIMITED WARRANTIES AND LIABILITIES 
+
+7.1 As your testing and performance evaluation of this Program is 
+granted to You without charge, You understand that the Program and 
+limited technical support are being provided to you 'as is', without any 
+warranties (expressed or implied) whatsoever, including but not limited 
+to any implied warranties or conditions of merchantability, quality, 
+non-infringement, performance, or fitness for any particular purpose. 
+Furthermore, WebRatio accepts no liability for damages you may suffer as 
+a result of the technical support provided or not provided, or the use 
+of the Program, including any damages claimed by You, based on any third 
+party claims. 
+
+7.2 In no events, WebRatio will be liable for any direct, indirect, 
+special, punitive, exemplary or consequential damage (including without 
+limitations lost profits or lost savings). Besides, WebRatio does not 
+warrant orguarantee to provide support or maintenance services for the 
+Program. 
+
+7.3 WebRatio does not warrant or guarantee that the operability of any 
+of Your application running with the Program will be maintained with any 
+subsequent or generally available version of the Program or that any 
+version of the Program will ever be made available or marketed. 
+
+7.4 You are free to provide WebRatio with Suggestion with respect to the 
+Program. In such case, You undertake that Webratio: (i) may use all 
+Suggestions You provide to Webratio in connection with this Agreement in 
+any way and for any purpose; (II) may include such Suggestions in any 
+WebRatio Program; (iii) is entitled of any Intellectual and Industrial 
+Property Right with respect to any such Suggestions, without accounting 
+you. 
+
+If the Program is expressly described as "Alpha", "Beta" or "Nightly" 
+You specifically agree that You understand that the Program may not 
+perform with complete functionality, may be undergoing testing, may be 
+inconsistently available, may have software 'bugs' and may have other 
+issues affecting availability and functionality. 
+
+8. CUSTOMER RESPONSIBILITIES 
+
+8.1 You undertakes you are the sole responsible for using the Program in 
+compliance with the applicable data protection laws, intellectual 
+property and industrial property laws and according to the Amazon (artt. 
+1, 4, 19, 20) and Mac Stadium licensee agreements set forth above at 
+art. 3. 
+
+8.2 You undertake you are the sole responsible for using the Program in 
+compliance with all the copyright notices included in the Program and 
+with WebRatio Intellectual Property Rights. 
+
+8.3. You are the sole responsible for: 
+
+a. any Content You post or otherwise transmit via the “Program”; 
+
+b. the development, operation, maintenance, and use of Your Content; 
+
+c. properly using the Program and maintaining appropriate security, 
+protection and backup of Your Content; 
+
+d. maintaining the confidentiality of Your login credentials, if any, 
+and your account: therefore, you are fully responsible for any and all 
+activities that occur under Your login or account. You agree and 
+acknowledge that Your login may only be used by one person, a single 
+login shared by multiple people is not permitted; 
+
+e. defending us against any claim made or brought against us by the 
+Service Providers or any third parties alleging that your Content 
+breaches this Agreement, infringes or misappropriates the rights of a 
+third party or violates the applicable law: in such a case, you will 
+indemnify us for any damages awarded against us, and for attorney’s fees 
+incurred by us, in connection with any such a claim. 
+
+9. DATA PROTECTION 
+
+You undertake and authorise that WebRatio processes your personal data 
+according to the Information ex art. 13 Legislative Decree no. 196 of 
+2003 (Privacy Code) readable at the link 
+http://www.webratio.com/site/content/-/privacy-statement 
+
+10. MISCELLANEA 
+
+10.1 This Agreement represents the complete and exclusive statement of 
+the agreements concerning the license between the parties, supersedes 
+all prior agreements and understandings and may be modified by WebRatio 
+only in writing. 
+
+10.2 If any provision of this Agreement is held to be unenforceable or 
+illegal under certain circumstances for any reason, such decision shall 
+not affect the validity or enforceability of such provisions under other 
+circumstances or the remaining provisions hereof and such provisions 
+shall be reformed only to the extent necessary to make them enforceable 
+under such circumstances. 
+
+11. APPLICABLE LAW 
+
+This Agreement and any disputes arising out of or in relation to or in 
+connection with it shall be governed and construed by the substantive 
+laws of the Republic of Italy. 
+
+12. JURISDICTION 
+
+Any controversy and/or claim arising out or relating to this Agreement 
+shall be subject to the exclusive jurisdiction of the Courts of Milan. 
+
+WebRatio s.r.l. 
+
+Licensee 
+
++----------------------------------------
+| Third-party Software License Agreements
++----------------------------------------
+This Program contains several component software products ("Third Party
+Plug-ins"). Except as otherwise specifically authorized, Third Party Plug-ins
+are provided for use solely in conjunction with, and as part of, the Program,
+and may not be unbundled and/or used separately.
+
+The terms and conditions governing Third Party Plug-ins are contained in files
+named "about.html" in plug-ins directories. By using or not uninstalling such
+Third Party Plug-ins after the initial installation of such Third Party Plug-ins
+(thereby giving You access to the applicable terms and conditions), You are
+agreeing to such terms and conditions.

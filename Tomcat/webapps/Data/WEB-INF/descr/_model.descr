@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Descriptor service="com.webratio.rtx.model.ModelService" crc="" enterpriseApplication="false">
+  <WebRatioVersion>8.10.3</WebRatioVersion>
+  <WebRatioBuildId>201902120438</WebRatioBuildId>
+  <WebRatioProjectName>Data</WebRatioProjectName>
+  <ApplicationServer httpPort="8080" httpsPort="8443" defaultApplicationEncoding="UTF-8" defaultServerEncoding="ISO-8859-1" useDefaultURLEncoding="false" serverName="" useAbsoluteUrl="false" maxUploadFileSize="12M" urlExt=".do" defaultCookieTimeout="30"/>
+  <WebModel defaultLoginPage="WRDefault_Default.login.jsp" defaultExpirePage="WRDefault_Default.expire.jsp" defaultErrorPage="WRDefault_Default.error.jsp">
+    <ModuleView id="tlads0">
+      <ActionDefinition id="ad2" name="Retrieve"/>
+    </ModuleView>
+    <ModuleView id="tlmds0"/>
+  </WebModel>
+  <SessionParameters></SessionParameters>
+  <ServiceDataProviders></ServiceDataProviders>
+  <LinkPreservedParameters>
+    <LinkPreservedParameter>boxed</LinkPreservedParameter>
+    <LinkPreservedParameter>fllbck</LinkPreservedParameter>
+  </LinkPreservedParameters>
+  <DefaultFileEncoding/>
+  <Statistics components="1" pages="0"/>
+  <AutoLoadServices>_i18n|_job.manager</AutoLoadServices>
+  <Roles></Roles>
+</Descriptor>

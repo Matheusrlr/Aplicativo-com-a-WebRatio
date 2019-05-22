@@ -1,0 +1,23 @@
+<Element name="ServiceClass" lowerName="service class" pluralLowerName="service classes">
+	<Description>
+		    	A service class is a reference to a class in the Domain Model for which a service can be exposed.
+	</Description>
+	<ActionRef label="Help"/>
+	<PropertyCategory name="General">
+		<Property label="Class">
+	    	The reference to the Class defined in the Domain Model for which the data services are enabled.
+		</Property>
+		<Property label="Attributes">
+	    	The list of attributes exposed by the data service for the selected class.
+		</Property>
+		<Property label="Associations">
+	    	The list of associations exposed by the data services for the selected class.
+		</Property>
+		<Property label="Service Configuration">
+	    	The table configuring which operations are available for a specific role.
+		</Property>
+		<Property label="Caching">
+	    	Defines the general caching option for Read services requests of the current class.
+		</Property>
+	</PropertyCategory>
+</Element>

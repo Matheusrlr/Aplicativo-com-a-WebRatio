@@ -1,0 +1,30 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+def module = portDef.selectSingleNode("ancestor::HybridModuleDefinition[string(@contentPage) = '']")
+%]
+<Descriptor service="com.webratio.web.mvc.module.CollectorService">
+	[% if (portDef.name == "InputPortDefinition") { %]
+		<Type>INPUT</Type>
+	[% } else if (portDef.name == "OutputPortDefinition") { %]
+		<Type>OUTPUT</Type>
+		[% if (module) { %]
+			<JumpToModuleInstance>true</JumpToModuleInstance>
+		[% } %]
+	[% } else if (portDef.name == "SuccessPortDefinition") { %]
+		<Type>OK</Type>
+	[% } else if (portDef.name == "ErrorPortDefinition") { %]
+		<Type>KO</Type>
+		<ResultCode>error</ResultCode>
+	[% } %]
+	[% for (par in portDef.elements("PortDefinitionParameter")) { %]
+		<Parameter
+			name="[%= par["name"] %]"
+			[% if (par["value"]) { %]
+				value="[%= par["value"] %]"
+			[% } %]
+		>
+			[%= par["id"] %]
+		</Parameter>
+	[% } %]
+</Descriptor>

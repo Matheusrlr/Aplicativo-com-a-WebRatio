@@ -1,0 +1,37 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: com.webratio.commons.libs
+Require-Bundle: org.eclipse.jdt.core,org.eclipse.ant.core;visibility:=
+ reexport,com.webratio.commons.lib.javassist;visibility:=reexport,com.
+ webratio.commons.lib.apache.commons.logging;visibility:=reexport,com.
+ webratio.commons.lib.apache.commons.codec;visibility:=reexport,com.we
+ bratio.commons.lib.apache.commons.beanutils;visibility:=reexport,com.
+ webratio.commons.lib.apache.commons.collections;visibility:=reexport,
+ com.webratio.commons.lib.apache.commons.dbcp;visibility:=reexport,com
+ .webratio.commons.lib.apache.commons.lang;visibility:=reexport,com.we
+ bratio.commons.lib.apache.commons.io;visibility:=reexport,com.webrati
+ o.commons.lib.apache.commons.net;visibility:=reexport,com.webratio.co
+ mmons.lib.apache.commons.pool;visibility:=reexport,com.webratio.commo
+ ns.lib.apache.log4j;visibility:=reexport,com.webratio.commons.lib.apa
+ che.poi;visibility:=reexport,com.webratio.commons.lib.saxon,com.webra
+ tio.lib.hibernate,com.webratio.commons.lib.dom4j;visibility:=reexport
+ ,com.webratio.commons.lib.google.guava,com.webratio.commons.lib.jsr30
+ 5
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Eclipse-BuddyPolicy: registered
+Bundle-Vendor: WebRatio
+Ant-Version: Apache Ant 1.9.2
+Export-Package: com.webratio.commons.base,com.webratio.commons.base.re
+ flect,com.webratio.commons.collect,com.webratio.commons.collections,c
+ om.webratio.commons.dom4j,com.webratio.commons.lang,com.webratio.comm
+ ons.net,com.webratio.commons.sql,org.eclipse.jdt.core,org.eclipse.jdt
+ .internal.antadapter
+Bundle-Name: WebRatio Commons Libraries Plug-in
+Bundle-Version: 8.10.3.201902120438
+Bundle-ClassPath: com.webratio.commons.libs.jar,lib/jdtCompilerAdapter
+ .jar
+Created-By: 1.8.0-b132 (Oracle Corporation)
+
+Name: META-INF/signature
+SHA-256-Digest: PRYYgqFVErjMMx3lDuv1T8nEp66ZmsJ8BwS19rF+4z4=
+

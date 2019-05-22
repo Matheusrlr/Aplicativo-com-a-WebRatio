@@ -1,0 +1,137 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Show Header" name="show-header" type="boolean" default="true">
+Defines the rendition of the header on the top.
+Allowed values are: true (default) or false.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Use Alternate Rows" name="use-alternate" type="boolean" default="false">
+Defines the usage of alternates colours for each line.
+Allowed values are: true or false(default).
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Use Empty Unit Message" name="use-empty-unit-message" type="boolean" default="false">
+Defines the usage of a message for empty units.
+Allowed values are: true(default) or false.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Empty Unit Message" name="empty-unit-message" type="string" default="emptyUnitMessage">
+Defines the key of the message to use if the component is empty.
+Default value: emptyUnitMessage
+</wr:LayoutParameter>
+[%
+import org.apache.commons.lang.StringUtils
+
+setHTMLOutput()
+def unitId = component["id"]
+
+def useEmptyUnitMessage = params["use-empty-unit-message"]
+def emptyUnitMessage = params["empty-unit-message"]
+def showHeader = params["show-header"]
+def useAlternate = params["use-alternate"]
+def attributes = component.selectNodes("layout:Attribute")
+def unitEvent = component.selectSingleNode("layout:Event")
+def unitEventIsAjax = isAjaxEvent(unitEvent)
+def myIndex = component.hashCode()
+%]
+[% if (useEmptyUnitMessage != "true") { %]
+<c:if test="${not(empty <wr:Id context="component"/>) and (<wr:Id context="component"/>.dataSize gt 0)}">
+[% } else { %]
+<c:choose>
+<c:when test="${not(empty <wr:Id context="component"/>) and (<wr:Id context="component"/>.dataSize gt 0)}">
+[% } %]
+	<wr:Frame>
+	  <div class="plain <wr:StyleClass/>">
+		 <div class="plain SimpleList">
+			    <table cellspacing="0">		
+			         [% if (showHeader == "true") { %]	 
+			         	<tr>
+				         	  <th class="<wr:StyleClass/> header<c:if test="${<wr:Id context="component"/>.currentIndex eq index}">Current</c:if>[% if (useAlternate == "true") { %]<c:if test="${index mod 2 eq 0}">Alternate</c:if>[% } %]"></th>
+				          	  <wr:Iterate var="attr" context="component" select="layout:Attribute">
+									<th class="<wr:StyleClass/> header<c:if test="${<wr:Id context="component"/>.currentIndex eq index}">Current</c:if>[% if (useAlternate == "true") { %]<c:if test="${index mod 2 eq 0}">Alternate</c:if>[% } %]">
+								    	<wr:Label/>
+								   </th>
+				          	  </wr:Iterate>	
+				          	  <wr:Iterate var="attr" context="component" select="layout:Event[position() != 1]">
+								<th class="<wr:StyleClass/> header<c:if test="${<wr:Id context="component"/>.currentIndex eq index}">Current</c:if>[% if (useAlternate == "true") { %]<c:if test="${index mod 2 eq 0}">Alternate</c:if>[% } %]"></th>
+				          	  </wr:Iterate>					          	  		         		
+			         	</tr>
+			         [% } %]     			            
+			            <c:forEach var="current" varStatus="status" items="${<wr:Id context="component"/>.data}">
+			              <c:set var="index" value="${status.index}"/>
+							<tr class="row<c:if test="${<wr:Id context="component"/>.currentIndex eq index}">Current</c:if>[% if (useAlternate == "true") { %]<c:if test="${index mod 2 eq 0}">Alternate</c:if>[% } %]">	
+				            
+				              <c:choose>
+				                <c:when test="${<wr:Id context="component"/>.currentIndex eq index}">
+				                 <td>
+				          	      <input type="radio" name="<wr:Id context="component"/>_[%= myIndex%]" onclick="[% if (unitEventIsAjax) { %]<wr:AjaxURL context="unitEvent"/>[% } else { %]window.location.href = [%if(areUrlFragmentsEnabled()){%]'<%=wrBaseURI%>' + [%}%]this.value[% } %]" value="<wr:URL context="unitEvent"/>" checked/>
+				                 </td>			      
+				          	    </c:when>
+				          	    <c:otherwise>
+				                 <td>			          	    
+				          	      <input type="radio" name="<wr:Id context="component"/>_[%= myIndex%]" onclick="[% if (unitEventIsAjax) { %]<wr:AjaxURL context="unitEvent"/>[% } else { %]window.location.href = [%if(areUrlFragmentsEnabled()){%]'<%=wrBaseURI%>' + [%}%]this.value[% } %]" value="<wr:URL context="unitEvent"/>"/>
+				                 </td>	
+				          	    </c:otherwise>
+				          	  </c:choose>
+				          	  <wr:Iterate var="attr" context="component" select="layout:Attribute">
+								<td class="<wr:StyleClass/> value<c:if test="${<wr:Id context="component"/>.currentIndex eq index}">Current</c:if>[% if (useAlternate == "true") { %]<c:if test="${index mod 2 eq 0}">Alternate</c:if>[% } %]">				
+									<wr:Value />
+								</td>
+				          	  </wr:Iterate>
+				          	  <wr:Iterate var="attr" context="component" select="layout:Event[position() != 1]">
+				                  <td>
+						   			<c:choose>
+						   				<c:when test="${<wr:Id context="component"/>.currentIndex eq index}">
+						   					[% if (useAlternate == "true") { %]
+						   						<c:choose>
+						   							<c:when test="${index mod 2 eq 0}">
+														<wr:Event class="linkCurrentAlternate"/>
+													</c:when>
+													<c:otherwise>
+														<wr:Event class="linkCurrent"/>
+													</c:otherwise>
+						   						</c:choose>
+											[% } else { %]
+												<wr:Event class="linkCurrent"/>								
+											[% } %]
+						   				</c:when>
+						   				<c:otherwise>
+						   					[% if (useAlternate == "true") { %]
+						   						<c:choose>
+						   							<c:when test="${index mod 2 eq 0}">
+														<wr:Event class="linkAlternate"/>
+													</c:when>
+													<c:otherwise>
+														<wr:Event class="link"/>
+													</c:otherwise>
+						   						</c:choose>
+											[% } else { %]
+												<wr:Event class="link"/>								
+											[% } %]
+						   				</c:otherwise>
+						   			</c:choose>	
+				                  </td>
+				          	  </wr:Iterate>				          	  
+			          	  </tr>
+			            </c:forEach>
+			    </table>
+			 </div>
+	   </div>
+	</wr:Frame>
+[% if (useEmptyUnitMessage != "true") { %]
+</c:if>
+[% } else { %]
+</c:when>
+<c:otherwise>
+	<wr:Frame>
+		<div class="plain <wr:StyleClass/>">
+			<div class="plain SimpleList">
+				<table>
+				    <tr>
+				      <td>
+							<spring:message code="[%printJSPTagValue(emptyUnitMessage)%]"/>
+				      </td>
+				    </tr>
+				</table>
+			</div>
+		</div>
+	</wr:Frame>
+</c:otherwise>
+</c:choose>
+[% } %]  

@@ -1,0 +1,25 @@
+{
+  "service" : "wrm.comp.DetailsService",
+  "entity" : "cls3",
+  "condExprs" : {
+    "property" : "att20",
+    "operator" : "in",
+    "valueInput" : "kcond1.att20",
+    "config" : {
+      "oneImpliedInputRequired" : false
+    }
+  },
+  "output" : [ {
+    "ref" : "att25",
+    "viewName" : "telefone",
+    "bindName" : "att25"
+  }, {
+    "ref" : "att21",
+    "viewName" : "nome",
+    "bindName" : "att21"
+  }, {
+    "ref" : "att23",
+    "viewName" : "endereco",
+    "bindName" : "att23"
+  } ]
+}

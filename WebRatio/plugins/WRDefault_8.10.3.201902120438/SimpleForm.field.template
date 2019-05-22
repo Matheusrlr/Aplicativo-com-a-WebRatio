@@ -1,0 +1,172 @@
+#?delimiters [%, %], [%=, %]
+[%
+def type = field["type"]
+def contentType = field["contentType"]
+def fieldId = field["field"]
+def modifiable = (field["modifiable"] == "true")
+def plain = getById(field["field"])?.name == "Field"
+def selection = getById(field["field"])?.name == "SelectionField"
+def multiSelection = getById(field["field"])?.name == "MultiSelectionField"
+def fieldProp = field["field"] + ((isLocalizedType(type) && plain) ? "_locale" : "")
+def subType = getByIdOptional(field["subType"])
+def typeId = (field["subType"] != "") ? field["subType"] : type
+def formBean = getFormBeanName(page)
+def passwordStrengthness = field.selectSingleNode("VRules/PasswordStrengthValidationRule")
+
+def printFieldMode = { mode ->
+	def templateFile = getLayoutFile(getLayout(field, LayoutType.FIELD).path, LayoutType.FIELD)
+	printRaw(executeTemplate(templateFile.absolutePath, [ field: field, mode: mode, styleClass: styleClass ]));
+}
+
+if (mode == "full") { %]
+<div class="fullField">
+	[% printFieldMode("label") %]
+	[% printFieldMode("value") %]
+	[% printFieldMode("error") %]
+</div>
+[% } else if (mode == "error") { %]
+<form:errors path="[%=fieldProp%]" cssClass="<wr:StyleClass context="field"/> error"/>
+[% } else if (mode == "label") { %]
+<span class="<wr:StyleClass context="field"/> header"><wr:Label context="field"/></span>
+[% } else if (plain) {
+	if (type == "boolean") {
+		if (modifiable) { %]
+			<form:radiobutton cssClass="[%=cssClass%]" path="[%=fieldProp%]" value="true"/>
+			<spring:message code="[%=typeId%].yes"/>
+			<form:radiobutton cssClass="[%=cssClass%]" path="[%=fieldProp%]" value="false"/>
+			<spring:message code="[%=typeId%].no"/>
+		[% } else { %]		
+			<form:hidden path="[%=fieldProp%]"/>
+			<c:choose>
+			  <c:when test="${[%=getFormBeanName(page)%].[%=fieldProp%]}">
+			    <spring:message code="[%=typeId%].yes"/>
+			  </c:when>
+			  <c:otherwise>
+			    <spring:message code="[%=typeId%].no"/>
+			  </c:otherwise>
+			</c:choose>
+		[% } %]
+	[% } else if (type == "text") { %]
+		<form:textarea id="[%= fieldProp %]" cssClass="[%=cssClass%]" cols="35" rows="8" path="[%=fieldProp%]" readonly="[%=!modifiable%]"/>		
+		[% if (contentType == "text/html") { %]
+			<wr:RequireResource ref="cksource-ckeditor">
+				<script type="text/javascript">
+					if (CKEDITOR.instances['[%= fieldProp %]']) {
+						CKEDITOR.instances['[%= fieldProp %]'].destroy(true);
+					}
+					CKEDITOR.replace('[%= fieldProp %]', {
+						width    : 350,
+						height   : 200,
+						toolbar  : 'WebRatioDefault',
+						language : '<%= com.webratio.web.mvc.WebConstants.PAGE_LOCALE_KEY.get(pageContext).getLanguage() %>',
+						baseHref : '<%= wrBaseURI %>',
+						readOnly : [%=!modifiable%]
+					});
+				</script>
+			</wr:RequireResource>
+		[% } %]
+	[% } else if (type == "blob") { %]
+		<form:hidden path="[%=fieldProp%].preload"/>
+		[% if (modifiable) { %]
+			<form:input id="[%= fieldProp %]" type="file" cssClass="[%=cssClass%]" path="[%=fieldProp%]"/>
+		[% } %]
+		<c:if test="${not(empty [%=getFormBeanName(page)%].[%=fieldProp%].preload)}">
+		  <form:checkbox cssClass="[%=cssClass%]" path="[%=fieldProp%].clear"/> clear <a target="blank" href="<webratio:BLOB value="${[%=getFormBeanName(page)%].[%=fieldProp%].preload}"/>">preview</a>
+		</c:if>
+	[% } else if (type == "password") { %]
+		<form:password id="[%= fieldProp %]" size="[%= inputSize %]" cssClass="[%=cssClass%]" path="[%=fieldProp%]" readonly="[%=!modifiable%]" redisplay="false" autocomplete="off" 
+		[% if(passwordStrengthness){ %]data-security-validation="[%= htmlId %]_validation"[% } %]/>
+		[% if(passwordStrengthness){ %]
+			<wr:RequireResource ref="wr-password-strengthness-js"/>
+			<wr:RequireResource ref="wr-password-strengthness-css"/>
+			<script id="[%= htmlId %]_validation" type="application/json">
+			{
+				"securityLevel": "[%= passwordStrengthness["securityLevel"] %]",
+				"customOptions": {
+					"minLength": [%= passwordStrengthness["minLength"] %],
+					"maxLength": [%= passwordStrengthness["maxLength"] %],
+					"useNumbers": [%= passwordStrengthness["useNumbers"] %],
+					"useLowerLetters": [%= passwordStrengthness["useLowerCaseCharacters"] %],
+					"useCapitalLetters": [%= passwordStrengthness["useUpperCaseCharacters"] %],
+					"useSpecialCharacters": [%= passwordStrengthness["useSpecialCharacters"] %]
+					
+				},
+				"messages": {
+					"title": "<spring:message code="PasswordStrengthValidationRule.boxTitle"/>",
+					"useNumbers": "<spring:message code="PasswordStrengthValidationRule.numbersCriteria"/>",
+					"useLowerLetters": "<spring:message code="PasswordStrengthValidationRule.lowerCharCriteria"/>",
+					"useCapitalLetters": "<spring:message code="PasswordStrengthValidationRule.capitalCharCriteria"/>",
+					"useSpecialCharacters": "<spring:message code="PasswordStrengthValidationRule.specialCharCriteria"/>",
+					"noRepetitions": "<spring:message code="PasswordStrengthValidationRule.noRepetitionCriteria"/>",
+					"charactersWord": "<spring:message code="PasswordStrengthValidationRule.charactersWord"/>"
+				}
+			}
+			</script>			
+		[% } %]
+	[% } else { %]
+		<form:text id="[%= fieldProp %]" cssClass="[%=cssClass%]" path="[%=fieldProp%]" readonly="[%=!modifiable%]"/>
+		[% if ((type == "date" || type == "time" || type == "timestamp") && modifiable) { %]
+			<wr:RequireResource ref="wr-calendar-utils"/>
+			[% if (type == "date" || type == "timestamp") { %]
+				<wr:RequireResource ref="jquery-ui-datepicker-lang"/>
+			[% } %]
+			[% if (type == "time" || type == "timestamp") { %]
+				<wr:RequireResource ref="richardson-timepicker-lang"/>
+			[% } %]
+			<script type="text/javascript">
+				jQuery(function($) { 								
+					var pattern = $.wr.calendar.[%= type %]ConfigFromJava("${[%= typeId%]Pattern}");
+					$('#[%= fieldProp %]').[%= (type == "timestamp") ? "datetime" : type %]picker({
+						showOn: "button",
+						showWeek: true,
+						buttonImage: "Resources/calendar.gif",
+						buttonImageOnly: true,
+						showButtonPanel: true,
+					[% if (type == "date") { %]
+						dateFormat: pattern.dateFormat,
+						firstDay: <%= java.util.Calendar.getInstance(com.webratio.web.mvc.WebConstants.PAGE_LOCALE_KEY.get(pageContext)).getFirstDayOfWeek() - 1 %>
+					[% } else if (type == "time") { %]
+						timeFormat: pattern.timeFormat,
+						ampm: pattern.ampm
+					[% } else { %]
+						dateFormat: pattern.dateFormat,
+						firstDay: <%= java.util.Calendar.getInstance(com.webratio.web.mvc.WebConstants.PAGE_LOCALE_KEY.get(pageContext)).getFirstDayOfWeek() - 1 %>,
+						timeFormat: pattern.timeFormat,
+						ampm: pattern.ampm,
+						separator: pattern.separator
+					[% } %]
+					});
+				});
+			</script>
+  		[% } %]
+	[% } %]
+[% } else if (selection) { 
+		// selection field variables
+		def itemsProperty = field["field"] + "Items"
+		if (type == "boolean") { %]
+			<form:select id="[%= fieldProp %]" cssClass="[%=cssClass%]" path="[%=fieldProp%]">
+			  <form:option value="false">
+			    <spring:message code="[%=typeId%].no"/>
+			  </form:option>
+			  <form:option value="true">
+			    <spring:message code="[%=typeId%].yes"/>
+			  </form:option>
+			</form:select>
+		[% } else { %]
+			<form:select id="[%= fieldProp %]" cssClass="[%=cssClass%]" path="[%= fieldProp %]">
+			  <form:option value=""><spring:message code="selectionfield.noselection"/></form:option>
+			  <form:options items="${[%=formBean%].[%=itemsProperty%]}" itemValue="value" itemLabel="label"/>
+			</form:select>
+		[% } %]
+[% } else if (multiSelection) { %]
+	   <table>
+		  <c:forEach var="current" varStatus="status" items="${[%=fieldProp%]Items}">
+		    <tr>
+		      <td [%= cssClass ? "class=\"${cssClass}\"" : "" %]>
+                <form:checkbox id="[%=fieldProp%]" cssClass="[%=cssClass%]" path="[%=fieldProp%]" value="${current.value}"/>
+  		        <c:out value="${current.label}"/>
+		      </td>
+		    </tr>
+		  </c:forEach>
+		</table>			
+[% } %]

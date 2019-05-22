@@ -1,0 +1,21 @@
+#?delimiters [%, %], [%=, %]
+[%
+setJSONOutput()
+
+def dclassId = component["dataBinding"]
+def dclass = getById(dclassId)
+def isMappedUserDclass = (dclassId == "MUser" && dclass["serverClass"])
+def conditionalExpr = component.selectSingleNode("ConditionalExpression")
+def bulk = (component["bulk"] == "true")
+%]
+{
+	"service": "wrm.comp.UpdateService",
+	"entity": "[%= dclassId %]",
+	[% if (isMappedUserDclass) { %]
+		"userService": true,
+	[% } %]
+	[% if (conditionalExpr) { %]
+		"condExprs": [% printRaw(getConditionalExpressionJson(dclass, conditionalExpr)) %],
+	[% } %]
+	"bulk": [%= bulk%]
+}

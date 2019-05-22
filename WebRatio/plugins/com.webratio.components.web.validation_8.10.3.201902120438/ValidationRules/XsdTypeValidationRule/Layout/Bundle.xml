@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle>
+    <Entry key="XsdTypeValidationRule.mandatory">mandatory value</Entry>
+
+	<Entry key="XsdTypeValidationRule.invalid.boolean">the value must be a valid boolean</Entry>
+	<Entry key="XsdTypeValidationRule.invalid.date">the value must be a valid date</Entry>
+	<Entry key="XsdTypeValidationRule.invalid.decimal">the value must be a valid number</Entry>
+	<Entry key="XsdTypeValidationRule.invalid.float">the value must be a valid float</Entry>
+	<Entry key="XsdTypeValidationRule.invalid.timestamp">the value must be a valid timestamp</Entry>
+	<Entry key="XsdTypeValidationRule.invalid.time">the value must be a valid time</Entry>
+	<Entry key="XsdTypeValidationRule.invalid.integer">the value must be a valid integer</Entry>
+	<Entry key="XsdTypeValidationRule.positive.value">the value must be a positive number</Entry>
+	<Entry key="XsdTypeValidationRule.negative.value">the value must be a negative number</Entry>
+
+    <Entry key="XsdTypeValidationRule.min.inclusive">the value must be greater than or equal to ${value}</Entry>
+	<Entry key="XsdTypeValidationRule.min.exclusive">the value must be greater than ${value}</Entry>
+	<Entry key="XsdTypeValidationRule.max.inclusive">the value must be less than or equal to ${value}</Entry>
+	<Entry key="XsdTypeValidationRule.max.exclusive">the value must be smaller than ${value}</Entry>
+	
+	<Entry key="XsdTypeValidationRule.invalid.enum">the value must be one of: ${values}</Entry>
+
+	<Entry key="XsdTypeValidationRule.invalid.length">the entered value length must be ${length} characters</Entry>
+	<Entry key="XsdTypeValidationRule.min.length">the value length must be at least ${length} characters</Entry>
+	<Entry key="XsdTypeValidationRule.max.length">the value length must be at least ${length} characters</Entry>
+	<Entry key="XsdTypeValidationRule.fraction.digits">the value must have at most ${digits} fraction digits</Entry>
+	<Entry key="XsdTypeValidationRule.total.digits">the value must have at most ${digits} total digits</Entry>
+	<Entry key="XsdTypeValidationRule.invalid.pattern">the value must have the format ${pattern}</Entry>
+</Bundle>

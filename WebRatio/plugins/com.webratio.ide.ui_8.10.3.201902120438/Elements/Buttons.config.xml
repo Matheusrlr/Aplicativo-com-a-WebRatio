@@ -1,0 +1,89 @@
+<Buttons>
+	<Button name="Layout Parameters">
+		&lt;p&gt;The Layout Parameters button 
+		(&lt;img src="PLUGIN_ID=com.webratio.ide.styles/icons/obj16/param_obj.png"/&gt;) opens the 
+		&lt;a href="/Reference/WizardsAndDialogs/LayoutParametersSelectionDialog"/&gt;. It allows to 
+		define parameters for the selected layout template.&lt;/p&gt;
+	</Button>
+	<Button name="Edit">
+		&lt;p&gt;The Show/Edit button 
+		(&lt;img src="PLUGIN_ID=com.webratio.commons.mf.ui/icons/full/elcl16/edit.png"/&gt;) 
+		permits to see and to edit the selected layout template.&lt;/p&gt;
+	</Button>
+	<Button name="Edit Expression">
+		&lt;p&gt;The Edit button 
+		(&lt;img src="PLUGIN_ID=com.webratio.commons.mf.ui/icons/full/elcl16/edit.png"/&gt;)  opens the 
+		&lt;a href="/Reference/WizardsAndDialogs/EditConditionExpressionDialog"&gt;Edit Activation Expression Dialog&lt;/a&gt;  that 
+		permits writing the condition script.&lt;/p&gt;
+	</Button>
+	<Button name="Move to File">
+		&lt;p&gt;The Move to File button 
+		(&lt;img src="PLUGIN_ID=com.webratio.commons.mf.ui/icons/full/elcl16/move_to_file.png"/&gt;)  
+		moves the code into a file.&lt;/p&gt;
+	</Button>
+	<Button name="Conditional Visibility">
+		&lt;p&gt;The Conditional Visibility button 
+		(&lt;img src="PLUGIN_ID=com.webratio.ide.ui/icons/full/obj16/conditional_obj.png"/&gt;) 
+		opens the Conditional Visibility Dialog. It allows to 
+		define specific rules that permit to assign a visibility/disable 
+	    condition to multiple elements at the same time.&lt;/p&gt;
+	</Button>
+	<Button name="Negated Expression">
+		&lt;p&gt;The Negated button 
+		(&lt;img src="PLUGIN_ID=com.webratio.ide.ui/icons/full/elcl16/negated.png"/&gt;)
+		allows to quickly use the negated version of the selected expression without the 
+		need of declaring a very similar expression which differs from the selected one
+		just for a &lt;b&gt;not&lt;/b&gt; clause.&lt;/p&gt;
+	</Button>
+	<Button name="Conditional Attribute Layout">
+		&lt;p&gt;The Conditional Layouts button 
+		(&lt;img src="PLUGIN_ID=com.webratio.ide.ui/icons/full/obj16/conditional_obj.png"/&gt;) 
+		opens the 
+		&lt;a href="/Reference/WizardsAndDialogs/ConditionalLayoutsDialog"/&gt;. It allows to 
+		define more specific rule for the selected Attribute Layout.&lt;/p&gt;
+	</Button>
+	<Button name="Conditional Field Layout">
+		&lt;p&gt;The Conditional Layouts button 
+		(&lt;img src="PLUGIN_ID=com.webratio.ide.ui/icons/full/obj16/conditional_obj.png"/&gt;) 
+		opens the 
+		&lt;a href="/Reference/WizardsAndDialogs/ConditionalLayoutsDialog"/&gt;. It allows to 
+		define more specific rule for the selected Field Layout.&lt;/p&gt;
+	</Button>
+	<Button name="Conditional Event Layout">
+		&lt;p&gt;The Conditional Layouts button 
+		(&lt;img src="PLUGIN_ID=com.webratio.ide.ui/icons/full/obj16/conditional_obj.png"/&gt;) 
+		opens the 
+		&lt;a href="/Reference/WizardsAndDialogs/ConditionalLayoutsDialog"/&gt;. It allows to 
+		define more specific rule for the selected Event Layout.&lt;/p&gt;
+	</Button>
+	<Button name="Component Configuration">
+		&lt;p&gt;The Configure button (&lt;img src="PLUGIN_ID=com.webratio.ide.units/icons/obj16/unit_obj.png"/&gt;) 
+		opens the Component Layout Configuration Dialog.
+		It permits to associate a Component Layout to 
+		each type of component choosing it among
+		the available component layouts. 
+		If you do not select a component layout at the <ElementRef/> level, the component layout is inherited.&lt;/p&gt;
+	</Button>
+	<Button name="Browse">
+		(&lt;img src="PLUGIN_ID=com.webratio.commons.mf.ui/icons/full/elcl16/browse.png"/&gt;)
+	</Button>
+	<Button name="Browse Script">
+	    &lt;p&gt;The Browse button 
+		(&lt;img src="PLUGIN_ID=com.webratio.commons.mf.ui/icons/full/elcl16/browse.png"/&gt;) permits to select a script file
+		from the workspace.&lt;/p&gt;
+	</Button>
+	<Button name="Edit Script">
+	    &lt;p&gt;The Edit button 
+		(&lt;img src="PLUGIN_ID=com.webratio.commons.mf.ui/icons/full/elcl16/edit.png"/&gt;) opens the script editor on the selected workspace file.&lt;/p&gt;
+	</Button>
+	<Button name="Clear">
+		&lt;p&gt;The Clear button (&lt;img src="PLUGINS_ROOT/org.eclipse.ui/icons/full/obj16/delete_obj.gif"/&gt;) 
+		clears the property.&lt;/p&gt;
+	</Button>
+	<Button name="Coupling">
+	    &lt;p&gt;The Open Binding Parameters button 
+	    (&lt;img src="PLUGIN_ID=com.webratio.ide.ui/icons/full/clcl16/params_coupling.png"/&gt;) 
+	    opens the &lt;a href="/Reference/WizardsAndDialogs/CouplingDialog"&gt;Parameters Binding Dialog&lt;/a&gt;  for defining 
+		the parameter binding of the flow.&lt;/p&gt;
+	</Button>
+</Buttons>

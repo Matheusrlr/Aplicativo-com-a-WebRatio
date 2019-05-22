@@ -1,0 +1,11 @@
+#?delimiters <%,%>,<%=,%>
+<%setXMLOutput()%>
+<ValidationRule service="com.webratio.components.web.validation.PasswordStrengthValidationRuleService">
+   <SecurityLevel><%= element["securityLevel"] %></SecurityLevel>
+   <MinLength><%= element["minLength"] %></MinLength>
+   <MaxLength><%= element["maxLength"] %></MaxLength>
+   <UseNumbers><%= element["useNumbers"] %></UseNumbers>
+   <UseLowerCaseCharacters><%= element["useLowerCaseCharacters"] %></UseLowerCaseCharacters>
+   <UseUpperCaseCharacters><%= element["useUpperCaseCharacters"] %></UseUpperCaseCharacters>
+   <UseSpecialCharacters><%= element["useSpecialCharacters"] %></UseSpecialCharacters>
+</ValidationRule>

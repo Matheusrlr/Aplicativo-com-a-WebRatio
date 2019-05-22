@@ -1,0 +1,55 @@
+  <Element name="Grid" lowerName="grid"
+		pluralLowerName="grids">
+		<Description>
+			A grid
+			is the platform- and language-independent specification of a 
+			table where the content components and sub pages of a page can be positioned.
+		</Description>
+		<Action label="Add Row">
+			Adds a new row to the grid if there isn't any row.
+		</Action>
+		<ActionRef label="Add Property" />
+		<ActionRef label="Localize" />
+		<ActionRef label="Open in Browser" />
+		<ActionRef label="Help"/>
+		
+		<PropertyCategory name="Layout">
+			<Property label="Page Id">
+				The parent page identifier.
+			</Property>
+			<Property label="Page Name">
+				The parent page name.
+			</Property>
+			<Property label="Rows">
+				The number of grid rows.
+			</Property>
+			<Property label="Cols">
+				The number of grid columns.
+			</Property>
+			<PropertyRef label="Style" />
+			<PropertyRef label="Grid Layout"/>
+			<PropertyRef label="Frame Layout"/>
+			<PropertyRef label="Cell Layout"/>
+			<PropertyRef label="Attribute Layout"/>
+			<PropertyRef label="Field Layout"/>
+			<PropertyRef label="Event Layout"/>
+			<PropertyRef label="Component Configuration"/>
+			<PropertyRef label="Horizontal Align"/>
+			<PropertyRef label="Width"/>
+			<PropertyRef label="Height"/>
+			<PropertyRef name="Padding" label="Cell Padding"/>
+			<Property label="Cell Spacing">
+				Sets the space between cells.
+			</Property>
+			<PropertyRef label="CSS Style"/>
+		</PropertyCategory>
+		<PropertyCategory name="Condition">
+			<PropertyRef name="Page Visibility Condition" label="Grid Visibility Cond." />
+			<PropertyRef name="Page Visibility Condition" label="Cell Visibility Cond."/>
+			<PropertyRef name="Page Visibility Condition" label="Attribute Visibility Cond."/>
+			<PropertyRef name="Page Visibility Condition" label="Field Visibility Cond."/>
+			<PropertyRef name="Page Visibility Condition" label="Field Disable Cond."/>
+			<PropertyRef name="Page Visibility Condition" label="Event Visibility Cond."/>
+			<PropertyRef name="Page Visibility Condition" label="Event Disable Cond."/>
+		</PropertyCategory>
+	</Element>

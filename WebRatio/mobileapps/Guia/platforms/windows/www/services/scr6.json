@@ -1,0 +1,69 @@
+{
+  "_" : "wrm.core.PanelService",
+  "masters" : [ "tlb2" ],
+  "navigations" : {
+    "0" : {
+      "nc" : true,
+      "flows" : "scr6",
+      "fr" : true
+    },
+    "1" : {
+      "nc" : true,
+      "flows" : "scr6.link",
+      "fr" : true
+    },
+    "2" : {
+      "flows" : "scr6.auto-link",
+      "fr" : true
+    },
+    "3" : {
+      "flows" : "scr6.auto-link"
+    },
+    "4" : {
+      "flows" : "nf8",
+      "fr" : true
+    },
+    "5" : {
+      "flows" : "nf8"
+    }
+  },
+  "knownEffects" : "#pr#",
+  "propagationSequence" : "",
+  "propagations" : { },
+  "components" : {
+    "enu1" : {
+      "fb" : true,
+      "conds" : [ {
+        "fr" : false,
+        "navs" : "3",
+        "effects" : "#pr#"
+      } ],
+      "rf" : [ {
+        "all" : true,
+        "fr" : true,
+        "navs" : "0|1|4"
+      }, {
+        "all" : true,
+        "navs" : "5"
+      } ]
+    }
+  },
+  "events" : {
+    "oslte9" : {
+      "component" : "enu1",
+      "type" : "OnSelectEvent",
+      "flow" : {
+        "id" : "nf9",
+        "navTo" : "scr5",
+        "bindTo" : "dau2",
+        "preserve" : ""
+      }
+    }
+  },
+  "autoFlow" : {
+    "preserve" : ""
+  },
+  "autoFlowFull" : {
+    "preserve" : ""
+  }
+}

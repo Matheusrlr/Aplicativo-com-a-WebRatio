@@ -1,0 +1,52 @@
+#?delimiters [%, %], [%=, %]
+[% 
+import com.webratio.generator.resolvers.WebAppEntityResolver
+import org.dom4j.Namespace
+import org.dom4j.QName
+
+if (!root) { %]
+	<Descriptor service="com.webratio.rtx.page.LayoutService">
+	</Descriptor>
+[% } else {
+	
+	/* Function for getting the runtime name of a resource */
+	def getRuntimeName = { resource ->
+		return resource.style + "/" + resource.name
+	}
+	
+	/* Collect all resources, mapping them by runtime name */
+	def resourceElems = [:]
+	def addResourceElem = { elem ->
+		def previous = resourceElems.put(elem["name"], elem)
+		if (previous) {
+			previous.detach()
+		}
+	}
+	root.elements("Resource").each { addResourceElem(it) }
+	
+	/* Update resources of each used style */
+	wr.usedStyles.each { style ->
+		getAvailableResourceLists(style).values().each { resources ->
+			resources.eachWithIndex { resource, i ->
+				def baseResource = (i < resources.size() - 1 ? resources.get(i + 1) : null)
+				
+				/* Create element */
+				def resourceElem = root.addElement("Resource")
+				resourceElem.addAttribute("name", getRuntimeName(resource))
+				if (baseResource) {
+					resourceElem.addAttribute("base", getRuntimeName(baseResource))
+				}
+				if (resource.element.selectSingleNode("RuntimeContent")) { 
+					def contentScriptElem = resourceElem.addElement("ContentScript")
+					contentScriptElem.addAttribute(QName.get("space", Namespace.XML_NAMESPACE), "preserve")
+					contentScriptElem.setText(resource.element.valueOf("RuntimeContent"))
+				}
+				
+				/* Add to map, detaching previous element */
+				addResourceElem(resourceElem)
+			}
+		}
+	}
+	
+	printRaw(serializeXML(root.document, true))
+} %]

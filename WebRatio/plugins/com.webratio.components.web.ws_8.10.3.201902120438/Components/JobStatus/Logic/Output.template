@@ -1,0 +1,15 @@
+#?delimiters <%,%>,<%=,%>
+<%setXMLOutput()%>
+<OutputParameters>
+  <OutputParameter name="instanceId" label="Job Instance Identifier"/>
+  <OutputParameter name="group" label="Job Group"/>
+  
+  <OutputParameter name="triggers[].instanceId" label="Trigger Instance Identifier (n-th)"/>
+  <OutputParameter name="triggers[].group" label="Trigger Group (n-th)"/>
+  <OutputParameter name="triggers[].nextFireTimestamp" label="Trigger Next Fire Timestamp (n-th)"/>
+
+  <OutputParameter name="triggerInstanceIds" label="Trigger Instance Identifiers"/>
+  <OutputParameter name="triggerGroups" label="Trigger Groups"/>
+  <OutputParameter name="triggerNextFireTimestamps" label="Trigger Next Fire Timestamps"/>
+
+</OutputParameters>

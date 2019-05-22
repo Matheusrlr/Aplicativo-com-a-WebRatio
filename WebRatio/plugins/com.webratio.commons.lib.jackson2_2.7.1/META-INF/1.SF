@@ -1,0 +1,51 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: br+mIcJiebZKdLikn7J5uZZxTr7jK
+ psDFbUMeeiy9TE=
+SHA-256-Digest-Manifest: jW82GxhUw7SrLndtD69Nief3p78JkJa4PKG0C2wTLZc=
+Created-By: 1.7.0_80 (Oracle Corporation)
+
+Name: lib/jackson-module-jaxb-annotationssrc.zip
+SHA-256-Digest: wRLnOGy4DEni2TMB7lJslJJYIWdwcaIf/5pLchU941A=
+
+Name: lib/jackson2-core.jar
+SHA-256-Digest: dzHQb2KQWTksldLJFuYq122+D8qNZgB1oe7egczKTe0=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: lib/jackson2-databindsrc.zip
+SHA-256-Digest: LKh9GN3+jb8x5QH2lsnPjUudlqF/c+/ucT7/MXQ7dt8=
+
+Name: lib/jackson-module-jaxb-annotations.jar
+SHA-256-Digest: XBWCLSvGkih1rwKSnR3XiiM1edsg4IZlsdd4dNWB6kE=
+
+Name: lib/jackson2-annotations.jar
+SHA-256-Digest: rE2jaxb1eUqVWprlqWSnAf61/cFReb/iOzNHH9od9Gc=
+
+Name: lib/jackson2-databind.jar
+SHA-256-Digest: a41IkG0C9U3/lEhB9nGU+ri+emMHaAa7OrWeqzjTFJw=
+
+Name: lib/jackson2-jaxrs-basesrc.zip
+SHA-256-Digest: IZRkB+N29T46OKJhLWV3hdLWkQf6N/Krtc6md9XaL3g=
+
+Name: lib/jackson2-jaxrs-json-provider.jar
+SHA-256-Digest: LzHS8yoTkGTDqIJchL8uWFAS3oUr/22xRXWuBLKARfE=
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: a5fmgH7myHzNji9AMOfHrVh8fy7MOgIdRSUiRZ6EFA4=
+
+Name: lib/jackson2-coresrc.zip
+SHA-256-Digest: th29vjzcipiuN/7LXcn8yi7MoO3hBGaQZEhfLEhMM4U=
+
+Name: lib/jackson2-annotationssrc.zip
+SHA-256-Digest: amZOFBHFa4sQJMaRO+prl0xqtaTeZXvRpJ+1RDaRjO4=
+
+Name: about.html
+SHA-256-Digest: 7kGYPi8l1IfB1cwS9ZHSgQGb0Y4wiAoJMLrlx9q9Lo4=
+
+Name: lib/jackson2-jaxrs-base.jar
+SHA-256-Digest: 8f9qn0SoAqnWhYVHaeibS2huBwKPyEz4CS+Df0S5inE=
+
+Name: lib/jackson2-jaxrs-json-providersrc.zip
+SHA-256-Digest: QFX0LB6VOI5e+zVhFWF/8BK07jxM3L3BfJ/upLX3zXo=
+

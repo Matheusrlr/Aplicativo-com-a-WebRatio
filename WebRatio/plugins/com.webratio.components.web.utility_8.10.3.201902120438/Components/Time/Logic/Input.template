@@ -1,0 +1,10 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+def componentId = component["id"]
+%>
+<InputParameters>
+  <InputParameter name="<%=componentId%>.time" label="Input Time"/>
+  <InputParameter name="<%=componentId%>.date" label="Input Date"/>
+  <InputParameter name="<%=componentId%>.timeStamp" label="Input TimeStamp"/>
+</InputParameters>

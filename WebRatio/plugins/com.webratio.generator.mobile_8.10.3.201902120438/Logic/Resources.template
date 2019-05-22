@@ -1,0 +1,84 @@
+#?delimiters [%, %], [%=, %]
+[%
+setJSONOutput()
+
+/* Collect all hard-coded bundle keys */
+def bundleKeys = [] as Set
+bundleKeys.addAll(wr.explorer.intModel().getGenericBundleKeys())
+bundleKeys.addAll(wr.explorer.intModel().getNotificationsBundleKeys())
+bundleKeys.addAll(wr.explorer.intModel().getValidationBundleKeys())
+wr.project.elements("BundleKey").each{ bundleKeys.add(it["name"]) }
+
+/* Prepare default locale-neutral resources contributed by the model */
+def elemBundleMap = new TreeMap()
+getAllViewComponents().each {
+	elemBundleMap.putAll(wr.explorer.intModel().getBundle(it))
+	elemBundleMap.putAll(wr.explorer.validation().getValidationBundle(it))
+}
+getAllOperations().each { elemBundleMap.putAll(wr.explorer.intModel().getBundle(it)) }
+getAllModules().each { elemBundleMap.putAll(wr.explorer.intModel().getBundle(it)) }
+getAllActions().each { elemBundleMap.putAll(wr.explorer.intModel().getBundle(it)) }
+getAllPortDefinitions().each { elemBundleMap.putAll(wr.explorer.intModel().getBundle(it)) }
+getAllFloatingEvents().each { elemBundleMap.putAll(wr.explorer.intModel().getBundle(it)) }
+
+/* Prepare resources for each locale */
+def standardBundlesDir = wr.standardBundlesDir.orNull()
+for (locale in wr.project.selectNodes("WebModel/Locale")) {
+    def language = locale["language"]
+    def country = locale["country"]
+    if (!language) {
+    	throwGenerationError("Locale has no language - " + locale)
+    }
+    def localeObj = new Locale(language, country ?: "")
+    
+	def suffixes = ["", "_${language}"]
+	if (country) {
+		suffixes.add("_${language}_${country}")
+	}
+	
+	def bundleMap = new TreeMap()
+	bundleMap.putAll(elemBundleMap)
+	
+	/* Function for loading bundle files into a map (generic to specific) */
+	def loadBundles = { dir, pathPrefix, dontFilterKeys = false ->
+		for (suffix in suffixes) {
+			def bundleFile = new File(dir, pathPrefix + suffix + ".xml")
+			if (bundleFile.isFile()) {
+				def bundle = parseXMLFile(bundleFile).rootElement
+				for (entry in bundle.elements("Entry")) {
+					def key = entry["key"]
+					if (dontFilterKeys || bundleKeys.contains(key)) {
+						bundleMap.put(key, entry.valueOf("."))
+					}
+				}
+			}
+		}
+	}
+	
+	/* Load standard bundles, components' bundle and then project-specific bundles */
+	if (standardBundlesDir) {
+    	loadBundles(standardBundlesDir, "Bundle")
+    }
+	for (dir in wr.explorer.ifComponentTypes().getDefined().collect{ wr.explorer.ifComponentTypes().getDirectory(it) }) {
+		loadBundles(dir, "Layout/Bundle", true)
+	}
+	for (dir in wr.explorer.validationRuleTypes().getDefined().collect{ wr.explorer.validationRuleTypes().getDirectory(it) }) {
+		loadBundles(dir, "Layout/Bundle", true)
+	}
+    loadBundles(wr.projectDir, "Config/ProjectBundle", true)
+	
+	/* Generate the resources file */
+	processOutputFile("www/conf/resources" + suffixes[suffixes.size() - 1] + ".json", "resources for " + localeObj, wr.project) { outputFile ->
+		def output = executeTemplate {
+		%]
+			{
+				[% bundleMap.entrySet().eachWithSeparator(",") { entry -> %]
+					"[%= entry.key %]": "[%= entry.value %]"
+				[% } %]
+			}
+		[%
+		}
+		outputFile.writeAsync(serializeJSON(output), "UTF-8")
+	}
+}
+%]

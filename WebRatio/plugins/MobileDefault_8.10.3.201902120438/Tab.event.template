@@ -1,0 +1,66 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Color" name="color" type="enum" values="default|white|gray|blue|light blue|green|yellow|red|violet|black" default="default">
+Defines the color of the event.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Show" name="show" type="enum" values="text|icon|icon on top|icon &amp; text|text &amp; icon" default="text">
+Defines the content of the event.
+Allowed values are:
+- text (default)
+- icon
+- icon on top
+- icon & text
+- text & icon
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Icon" name="icon" type="text">
+Defines the icon to be shown in the event label.
+The list of supported icons is available at http://ionicons.com
+</wr:LayoutParameter>
+[%
+setHTMLOutput()
+def colors = [
+	"white" : "light",
+	"gray" : "stable",
+	"blue" : "positive",
+	"light blue" : "calm",
+	"green" : "balanced",
+	"yellow" : "energized",
+	"red" : "assertive",
+	"violet" : "royal",
+	"black" : "dark"]
+	
+def showText = params["show"].contains("text") || params["show"] == "icon on top"
+
+/* Decide the classes to apply */
+def classes = []
+classes.add("tab-item")
+
+	
+if (params["show"].contains("icon") && params["icon"] != "") {
+	if (params["show"] == "icon & text") {
+		classes.add("icon-left")
+	} else if (params["show"] == "icon on top") {
+		classes.add("icon-top")
+	} else if (params["show"] == "text & icon") {
+		classes.add("icon-right")
+	} else if (params["show"] == "icon") {
+		classes.add("icon-only")
+	}
+}
+
+if (params["color"] != "default") 
+	classes.add(colors[params["color"]])
+%]
+<a 
+	class="[%= classes.join(" ") %] [%= styleClass %]"
+	ng-click="[%= getEventThrowExpression(event, "{ position: ${position} }") %]"
+>
+	[% if (params["show"].startsWith("icon")) { %]
+		<span class="icon ion-[%= params["icon"] %]"></span>
+	[% } %]
+	[% if (showText) { %]
+		<wr:Label context="event"/>
+	[% } %]
+	[% if (params["show"] == "text & icon") { %]
+		<span class="icon ion-[%= params["icon"] %]"></span>
+	[% } %]
+</a>

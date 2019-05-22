@@ -1,0 +1,52 @@
+<project name="WebAppGeneratorTest" default="main" basedir=".">
+
+	<property name="java.home" value="C:/Java/jdk1.5.0" />
+	<property name="vmargs" value=" -Xms40m -Xmx384m -XX:PermSize=64m -XX:MaxPermSize=128m" />
+	<property name="webratio.home" value="C:/WebRatio/WebRatio Enterprise 7.0.1/WebRatio" />
+	<property name="timeout" value="600000" />
+	<!-- 10 minutes -->
+	<property name="workspace.home" value="C:/WebRatio/WebRatio Enterprise 7.0.1/workspace" />
+	<property name="project.name" value="Calendar" />
+	<property name="project.names.to.refresh" value="CalendarStyle,CalendarUnits" />
+	<property name="deployment.plan.name" value="DP1" />
+	<property name="webratio.version" value="7.0.1.201110141430" />
+
+	<target name="check">
+		<property name="jvm" value="${java.home}/bin/java.exe" />
+		<condition property="web\ratio.home.ok">
+			<available file="${webratio.home}/WebRatio.exe" />
+		</condition>
+		<fail unless="webratio.home.ok">Invalid property webratio.home: WebRatio.exe 
+not found in ${webratio.home}</fail>
+		<condition property="workspace.home.ok">
+			<available file="${workspace.home}/.metadata/.plugins/com.webratio.commons.startup/SerialFile.properties" />
+		</condition>
+		<fail unless="workspace.home.ok">Invalid property workspace.home: activation not found in 
+${workspace.home}/.metadata/.plugins/com.webratio.commons.startup/SerialFile.properties.
+Please note that WebRatio must run on a *activated* workspace. 
+    </fail>
+	</target>
+
+	<target name="main" depends="check">
+		<echo message="In case of error, please check ${workspace.home}/.metadata/.log, 
+${basedir}/output.log, ${webratio.home}/configuration/*.log" />
+		<java fork="true" dir="." timeout="${timeout}" jvm="${jvm}" logError="true" classname="org.eclipse.core.launcher.Main" output="output.log">
+			<classpath>
+				<fileset dir="${webratio.home}/plugins">
+					<include name="org.eclipse.equinox.launcher_*.jar" />
+				</fileset>
+			</classpath>
+			<arg line="-application com.webratio.ide.ui.webAppGenerator" />
+			<arg line="-consolelog" />
+			<arg line="-clear" />
+			<arg line="-data '${workspace.home}'" />
+			<arg line="-webratioProject '${project.name}'" />
+			<arg line="-projectsToRefresh '${project.names.to.refresh}'" />
+			<arg line="-webratioDeploymentPlan '${deployment.plan.name}'" />
+			<arg line="-webratioVersion '${webratio.version}'" />
+			<jvmarg line="${vmargs}" />
+		</java>
+	</target>
+
+</project>
+

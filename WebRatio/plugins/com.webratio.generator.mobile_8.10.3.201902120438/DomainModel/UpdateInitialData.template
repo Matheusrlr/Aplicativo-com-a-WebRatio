@@ -1,0 +1,232 @@
+#?delimiters [%, %], [%=, %]
+[%
+def root = initialData
+
+def keysByDclass = [:]
+
+def INSTANCE_COUNT = 6
+def ASSOC_INSTANCE_1N_MULTIPLIER = 2
+def ASSOC_INSTANCE_NN_MULTIPLIER = 2
+def INITIAL_DATE_CONST = 1404378082000
+def INITIAL_DECIMAL_CONST = 12
+def SAMPLE_BLOB_FILE_NAMER = { index -> "DomainModel/SampleBlobs/image" + (index % 5) + ".png" }
+def SAMPLE_TEXT_FILE_NMAER = { index -> "DomainModel/SampleTexts/text" + (index % 5) + ".txt" }
+def IGNORED_DCLASS_IDS = ["MUser", "MRole"] as Set
+
+/*
+ * JSON access
+ */
+
+def getObjectArray = { dclassOrAssoc ->
+	def arrayName = (dclassOrAssoc.name == "Association" ? getAssociationClassInfo(dclassOrAssoc) : getClassInfo(dclassOrAssoc)).mappedName 
+	def array = root.get(arrayName)
+	if (array == null) {
+		array = root.arrayNode()
+		root.put(arrayName, array)
+		array = root.get(arrayName)
+	}
+	return array
+}
+
+def getArrayElement = { array, i ->
+	def object
+	while ((object = array[i]) == null) {
+		array.addObject()
+	}
+	return object
+}
+
+def initField = { object, field, value ->
+	def currentFieldValue = object.get(field)
+	if (currentFieldValue == null) {
+		if (value instanceof java.util.List) {
+			def array = object.arrayNode()
+			value.each { array.add(it) }
+			object.put(field, array)
+		} else {
+			object.put(field, value)
+		}
+	}
+}
+
+/*
+ * Attribute value generation
+ */
+
+def generateSampleBlobValue = { index, contentType ->
+	def file = wr.locateResourceFile(SAMPLE_BLOB_FILE_NAMER(index))
+	def b64 = com.google.common.io.BaseEncoding.base64().encode(com.google.common.io.Files.toByteArray(file))
+	return "data:${contentType};base64," + b64;
+}
+
+def generateSampleTextValue = { index ->
+	def file = wr.locateResourceFile(SAMPLE_TEXT_FILE_NMAER(index))
+	def text = com.google.common.io.Files.toString(file, com.google.common.base.Charsets.UTF_8)
+	return text;
+}
+
+def createAttributeValue = { dclass, object, attribute, i ->
+	def attributeType = attribute["type"]
+	switch (attributeType) {
+		case "blob":
+			return generateSampleBlobValue(i, "image/png")
+    	case "boolean":
+			return (i % 2 == 0);
+		case "date":
+			def date = new java.util.Date(INITIAL_DATE_CONST + (i * 900000000))
+			return new java.text.SimpleDateFormat("yyyy-MM-dd").format(date) 
+		case "decimal":
+			return INITIAL_DECIMAL_CONST * (i + 1)
+		case "float":
+			return (i + 1) / (i + 2)
+		case "integer":
+        	return i + 1
+        case "password":
+			return "password" + (i + 1)
+		case "string":
+			return dclass["name"] + " " + attribute["name"] + " " + (i + 1)
+        case "text":
+			return generateSampleTextValue(i)
+		case "time":
+			def date = new java.util.Date(INITIAL_DATE_CONST + (i * 900000000))
+			return new java.text.SimpleDateFormat("HH:mm:ss").format(date) 
+		case "timestamp":
+			return INITIAL_DATE_CONST + (i * 900000000) 
+		case "url":
+			return "http://www.example.com/" + getClassInfo(dclass).simpleName + "/" + (i + 1)
+		default:
+			throw new AssertionError("Unsupported type ${attributeType}")
+	}
+}
+
+def createKeyAttributeValue = { dclass, object, attribute, i ->
+	def keys = keysByDclass.get(dclass)
+	if (keys == null) {
+		keys = new java.util.LinkedHashSet()
+		keysByDclass.put(dclass, keys)
+	}
+	
+	/* Track and reuse the current key, if present */
+	def objectKeyNode = object.get(attribute["name"])
+	if (objectKeyNode != null) {
+		def objectKeyValue;
+		if (objectKeyNode.isInt()) {
+			objectKeyValue = objectKeyNode.intValue()
+		} else {
+			objectKeyValue = objectKeyNode.textValue()
+		}
+		keys.add(objectKeyValue)
+		return objectKeyValue;
+	}
+	
+	/* Generate a new unique key and track it */
+	def attempts = 0
+	value = createAttributeValue(dclass, object, attribute, attempts++)
+	while (!keys.add(value)) {
+		value = createAttributeValue(dclass, object, attribute, attempts++)
+	}
+	
+	return value
+}
+
+/*
+ * Update data for all classes
+ */
+
+for (dclass in dclasses) {
+	if (dclass["id"] in IGNORED_DCLASS_IDS) {
+		continue
+	}
+	
+	def objects = getObjectArray(dclass)
+	def objectsCount = Math.max(objects.size(), INSTANCE_COUNT)
+	
+	for (i in 0..(objectsCount - 1)) {
+		def object = getArrayElement(objects, i)
+		for (attribute in getAttributes(dclass)) {
+			if (attribute["key"] == "true") {
+				def value = createKeyAttributeValue(dclass, object, attribute, i)
+				initField(object, getFieldName(attribute), value)
+			} else if (!attribute["specialBehavior"]) {	
+				def value = createAttributeValue(dclass, object, attribute, i)
+				initField(object, getFieldName(attribute), value)
+			}
+		}
+	}
+}
+
+/*
+ * Update data for all associations
+ */
+
+def populateBridgedAssociation = { assoc, multiplier ->
+	def role1 = assoc.selectSingleNode("AssociationRole1")
+	def role2 = assoc.selectSingleNode("AssociationRole2")
+	
+	def nearRole = role1
+	def nearDclass = getSourceDomainClass(role1)
+	def farDclass = getSourceDomainClass(role2)
+	
+	def keysListsByObject = [:]
+	def nearObjects = getObjectArray(nearDclass)
+	def farKeys = keysByDclass.get(getSourceDomainClass(role2))
+	def step = Math.ceil(farKeys.size() / nearObjects.size())
+	for (i in (0..(nearObjects.size() * multiplier - 1))) {
+		def nearObject = nearObjects[(int)(i / multiplier)]
+		def keyIndex = (int)((i * step) % farKeys.size())
+		def keysList = keysListsByObject[nearObject]
+		if (!keysList) {
+			keysListsByObject[nearObject] = keysList = []
+		}
+		keysList.add(farKeys[keyIndex])
+	}
+	
+	keysListsByObject.each { nearObject, keysList ->
+		initField(nearObject, getFieldName(nearRole), keysList)
+	}
+}
+
+def populateCollapsedAssociation = { assoc, multiplier ->
+	def role1 = assoc.selectSingleNode("AssociationRole1")
+	def role2 = assoc.selectSingleNode("AssociationRole2")
+	
+	def nearRole, nearDclass, farDclass
+	if (!isForeignKeyRole(role1)) {
+		nearRole = role2
+		nearDclass = getSourceDomainClass(role2)
+		farDclass = getSourceDomainClass(role1)
+	} else {
+		nearRole = role1
+		nearDclass = getSourceDomainClass(role1)
+		farDclass = getSourceDomainClass(role2)
+	}
+	
+	def nearObjects = getObjectArray(nearDclass)
+	def farKeys = keysByDclass.get(farDclass)
+	for (i in (0..(nearObjects.size() - 1))) {
+		def keyIndex = (int)(i / multiplier)
+		if (keyIndex < farKeys.size()) {
+			initField(nearObjects[i], getFieldName(nearRole), farKeys[keyIndex])
+		}
+	}
+}
+
+for (assoc in associations) {
+	if (getSourceDomainClass(assoc)["id"] in IGNORED_DCLASS_IDS || getTargetDomainClass(assoc)["id"] in IGNORED_DCLASS_IDS) {
+		continue
+	}
+	
+	def card1 = assoc.valueOf("AssociationRole1/@maxCard")
+	def card2 = assoc.valueOf("AssociationRole2/@maxCard")
+	if (card1 == "N" && card2 == "N") {
+		populateBridgedAssociation(assoc, ASSOC_INSTANCE_NN_MULTIPLIER)
+	} else if (card1 == "1" && card2 == "1") {
+		populateCollapsedAssociation(assoc, 1)
+	} else {
+		populateCollapsedAssociation(assoc, ASSOC_INSTANCE_1N_MULTIPLIER)
+	}
+}
+
+/* Serialize the updated JSON document */
+printRaw(serializeJSON(root))
+%]

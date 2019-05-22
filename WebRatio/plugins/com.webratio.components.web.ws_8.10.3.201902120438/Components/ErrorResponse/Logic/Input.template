@@ -1,0 +1,36 @@
+#?delimiters [%,%],[%=,%]
+[%
+
+import com.webratio.generator.contributors.GeneratorContributorHelper
+
+setXMLOutput()
+def componentId = component.valueOf("@id")
+def params = component.selectNodes("ResponseBodyParameter")
+%]
+<InputParameters>
+  <InputParameter name="[%=componentId%].faultMessage" label="Fault Message"/>
+  <InputParameter name="[%=componentId%].faultException" label="Fault Exception"/>
+  
+  [% if (params.empty) { %]
+    [%if(component["contentType"] == "XML"){%] 
+       <InputParameter name="[%=componentId%].soapEnvelope" label="XML Document" image="DOM_OBJECT"/>  
+    [%} else { %]
+       <InputParameter name="[%=componentId%].jsonDocument" type="json" label="JSON Document" image="JSON_OBJECT"/>
+    [%}%] 
+  [% } else { %]
+    [% for (erp in params) { 
+      def subParams = GeneratorContributorHelper.getInputParameters(erp, wr)
+      if(subParams.empty){
+        %]<InputParameter name="[%=erp["id"]%]" label="[%=erp["name"]%]" refId="[%=erp["id"]%]"/>[%
+      }
+      for(param in subParams){
+          %]<InputParameter name="[%=param.name%]" label="[%=erp["name"]%] - [%=param.label%]" type="[%=param.type%]" mandatory="[%=param.mandatory%]" image="[%=param.imageName%]">
+              [%if(param.description){%]<Description>[%=param.description%]</Description>[%}%]
+            </InputParameter> 
+          [%
+        }
+      %]
+    [% }  %]
+  [% } %]
+  <InputParameter name="[%=componentId%].statusCode" label="HTTP Status Code" image="HEADER"/>  
+</InputParameters>

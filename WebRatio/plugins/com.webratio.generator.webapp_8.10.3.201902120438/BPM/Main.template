@@ -1,0 +1,56 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.io.IOHelper
+import com.webratio.generator.resolvers.WebAppEntityResolver
+import org.apache.commons.io.FileUtils
+import org.apache.commons.lang.StringUtils
+import com.webratio.generator.TimeLogger
+
+def _steps = 3
+eventSocketClient.sendBeginTask("BPM", _steps)
+
+/* Copy BPM resources */
+def processesDir = new java.io.File(wr.projectDir, "Processes")
+def signalsDir = new java.io.File(wr.projectDir, "Signals")
+if (processesDir.exists()) {
+    def selectedProcesses = StringUtils.split(bpmSelectedProcesses, "|")
+    for(processFile in processesDir.listFiles()){
+       if(processFile.name.endsWith(".bpm")){
+         def processName = processFile.name - ".bpm"
+         if(StringUtils.isBlank(bpmSelectedProcesses) || selectedProcesses.contains(processName)){
+           FileUtils.copyFile(processFile, new java.io.File(wr.outputPath, "processes/" + processFile.name))
+         }
+       }
+    }	
+}
+if (signalsDir.exists()) {
+	IOHelper.copyDirectory(signalsDir, new java.io.File(wr.outputPath, "signals"), IOHelper.CVS_AWARE_FILTER, IOHelper.THUMBS_FILE_FILTER)
+}
+eventSocketClient.sendTaskWorked("BPM", 1)
+TimeLogger.worked("Business Model")
+
+
+/* Create MANIFEST.MF */
+processOutputFile("META-INF/MANIFEST.MF", "MANIFEST.MF", wr.project, { manifestFile ->
+	try {
+		manifestFile.write(executeContextTemplate("BPM/Manifest.template"))
+	} catch (Throwable exc) {
+		registerProjectGenerationException(exc, "MANIFEST.MF", wr)
+	}
+})
+eventSocketClient.sendTaskWorked("BPM", 1)
+TimeLogger.worked("MANIFEST.MF")
+
+/* Create BusinessModel.xml */
+processOutputFile("BusinessModel.xml", "BusinessModel.xml", wr.project, { modelFile ->
+	try {
+		modelFile.write(executeContextTemplate("BPM/BusinessModel.template"))
+	} catch (Throwable exc) {
+		registerProjectGenerationException(exc, "BusinessModel.xml", wr)
+	}
+})
+eventSocketClient.sendTaskWorked("BPM", 1)
+TimeLogger.worked("BusinessModel.xml")
+
+
+%]

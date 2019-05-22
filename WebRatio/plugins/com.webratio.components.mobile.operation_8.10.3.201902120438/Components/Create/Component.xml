@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component  type="operation" formBased="false" idPrefix="cru" namePrefix="Create " label="Create" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" successFlowSource="true" successFlowTarget="true" defaultLabel="Create {label(id(@dataBinding))}"> 
+    <DomainClassProperty attributeName="dataBinding" includeDerived="false" figureDisplayOrder="1">
+		<Description xml:space="preserve">The class for which a new instance is created.</Description>
+	</DomainClassProperty>
+    <BooleanProperty attributeName="bulk" label="Bulk">
+		<Description xml:space="preserve">If checked, the component is able to perform multiple object creations at once.</Description>
+	</BooleanProperty>
+	<Description xml:space="preserve">A create component enables the creation of a class instance.
+A create component specification consists of two parts:
+&lt;ul&gt;
+  &lt;li&gt;The specification of the class for which the instance must be created.&lt;/li&gt;
+  &lt;li&gt;The values to use for the attributes of the new class instance.&lt;/li&gt;
+&lt;/ul&gt;</Description>
+	<InputDescription xml:space="preserve" name="Attribute Name">The value(s) to use for filling an attribute of the new class instance. 
+In case of bulk creation, the rules driving the creation of instances are the following: 
+&lt;ul&gt;
+  &lt;li&gt;if all the attribute values are arrays of length L, the operation exactly creates L different instances.&lt;/li&gt;
+  &lt;li&gt;if arrays of length L are inter-mixed with either arrays of length one or plain values, again L
+     different instances are created; single values are replicated all over the L instances.&lt;/li&gt;
+  &lt;li&gt;it is an error if arrays of different lengths (greater than one) feed the operation.&lt;/li&gt;
+&lt;/ul&gt;
+</InputDescription>    <InputDescription xml:space="preserve" name="1:N Association Name">The value to use to perform also a connect operation in the
+same instruction.</InputDescription>  
+  <OutputDescription xml:space="preserve" name="New Object">The key attributes values of the newly create object. The parameter is valid
+only if the operation succeeds; therefore it cannot be used
+in Error Flows.</OutputDescription>
+</Component>

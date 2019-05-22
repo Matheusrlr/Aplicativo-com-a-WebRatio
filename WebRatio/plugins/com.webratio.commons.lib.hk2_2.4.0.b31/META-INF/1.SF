@@ -1,0 +1,33 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: yUfQcZJ4vdIjwN8HhygM2dhpmG1/s
+ 9dAK5QHw06h0F8=
+SHA-256-Digest-Manifest: jY578QUEM2IKbuQNx1udgY65WBndUVSYCouk5BrPNUA=
+Created-By: 1.7.0_80 (Oracle Corporation)
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: about.html
+SHA-256-Digest: q1FxPhKLxjWluidEONSDp4akgvVPAQ3Uih8UgKm02qg=
+
+Name: lib/hk2-apisrc.zip
+SHA-256-Digest: qDi/t+cJWd+sDIiSMp7CZtR32K/9cDFML1C9r5rodMI=
+
+Name: lib/hk2-locatorsrc.zip
+SHA-256-Digest: 41GUWlGb91EZCzLiqox6Oa3xuPrdOgFAcS25Epb4o9E=
+
+Name: about_files/CDDL+GPL_1_1.txt
+SHA-256-Digest: NFIiKQAL3lQjW2k5eebuBpM0CAaKrMQ86D+AKjma4AQ=
+
+Name: lib/hk2-api.jar
+SHA-256-Digest: 7It4p2VTYFxZBRLIAhl9nlCt+w7jWisk8yx+f8Yg7Yg=
+
+Name: lib/hk2-utils.jar
+SHA-256-Digest: FtencaX0VWBDdyBTplR8vg0jhu3XWutBF1UzvpN5XF4=
+
+Name: lib/hk2-locator.jar
+SHA-256-Digest: rL+6Vjq095HMTjxYvvNY5bEkaYh9Kft4HN42AvPtxvU=
+
+Name: lib/hk2-utilssrc.zip
+SHA-256-Digest: rgC6lzXsaairJ8CIzABlKxztt6+8QzzRxK9pX1D9Bao=
+

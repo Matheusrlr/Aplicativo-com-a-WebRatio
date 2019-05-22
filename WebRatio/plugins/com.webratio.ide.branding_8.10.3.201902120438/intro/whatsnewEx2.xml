@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<introContent>
+  	<extensionContent id="com.webratio.ide.ui.updates" name="WebRatio Updates" alt-style="css/whatsnew.properties" style="css/whatsnew.css" path="whatsnew/@">
+  	   <group style-id="content-group" id="content-group">
+       		<link style-id="content-link" label="New Updates" url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.webratio.ide.ui.doc.user/HTML/Tasks/Updates.html" id="wr_updates">
+          		<text>Get the latest updates from WebRatio.com</text>
+       		</link>
+       		<!--
+       		<link style-id="content-link" label="WebRatio Wiki" url="http://org.eclipse.ui.intro/openBrowser?url=http://wiki.webratio.com" id="wr_wiki">
+          		<text>Find useful information on the WebRatio Wiki</text>
+       		</link>
+       		-->
+       		<link style-id="content-link" label="WebRatio resources" url="http://org.eclipse.ui.intro/openBrowser?url=http://www.webratio.com" id="wr_community">
+          		<text>Read articles and news on WebRatio.com</text>
+       		</link>
+       		<!--
+	       <group id="wr_rss_news" label="Latest News" expandable="true" expanded="true">
+			  <contentProvider id="wr_rss_viewer" pluginId="com.webratio.ide.ui" class="com.webratio.ide.ui.intro.WebRatioRSSViewer">
+			  </contentProvider>
+	       </group>
+	       -->
+       </group>
+  	</extensionContent>
+</introContent>

@@ -1,0 +1,40 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import com.webratio.generator.io.DescriptorFile
+import org.apache.commons.lang.StringUtils
+import com.webratio.generator.TimeLogger
+import com.webratio.generator.GenerationException
+import com.webratio.generator.resolvers.FakeEntityResolver
+  
+def registerProjectGenerationException(exception, message, wr){
+    def title = "Deploy Error"
+    def reason = "Unable to generate the " + message
+    def hint = "Check the project model for errors or warnings"
+    def genExc = new GenerationException(title, reason, [hint], exception)
+    genExc.setTargetId("Project")
+    wr.generationExceptions.add(genExc)
+}    
+
+eventSocketClient.sendBeginTask("EnterpriseProject", 2)  
+def appServerPluginDir = deployCorePluginDir + "/ApplicationServers/" + applicationServer
+
+/* generates the jboss-deployment-structure.xml */
+try {
+  def jbossAppXmlFile = wr.outputManager.getDescriptorFile("META-INF/jboss-deployment-structure.xml")
+  jbossAppXmlFile.write(serializeXML(executeTemplate(new File(appServerPluginDir + "/jboss-deployment-structure.xml.template")), true, FakeEntityResolver.INSTANCE))
+} catch(Throwable exc) {
+  registerProjectGenerationException(exc, "jboss-deployment-structure.xml", wr)
+}
+TimeLogger.worked("jboss-deployment-structure.xml")
+
+/* generates the aplication.xml */
+try {
+  def appXmlFile = wr.outputManager.getDescriptorFile("META-INF/application.xml")
+  appXmlFile.write(serializeXML(executeTemplate(new File(appServerPluginDir + "/application.xml.template")), true, FakeEntityResolver.INSTANCE))
+  eventSocketClient.sendTaskWorked("EnterpriseProject", 1)
+} catch(Throwable exc) {
+  registerProjectGenerationException(exc, "application.xml", wr)
+}
+TimeLogger.worked("application.xml")
+
+%>

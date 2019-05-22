@@ -1,0 +1,11 @@
+#?delimiters [%, %], [%=, %]
+[%
+if (templateType == "component") {
+	%][%= component["styleClass"] %][%
+} else if (templateType == "attribute") {
+	%][%= attr["styleClass"] %][%
+} else if (templateType == "event") {
+	%][%= event["styleClass"] %][%
+} else if (templateType == "field") {
+	%][%= field["styleClass"] %][%
+}%]

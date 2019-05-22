@@ -1,0 +1,10 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+%]
+
+<OutputParameters>
+	<OutputParameter name="format" label="Format" />
+	<OutputParameter name="value" label="Value" />
+	<OutputParameter name="valueType" label="Value Type" />	
+</OutputParameters>

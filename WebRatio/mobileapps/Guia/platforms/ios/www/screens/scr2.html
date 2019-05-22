@@ -1,0 +1,66 @@
+<!-- directive: wr-screen scr2 -->
+<div>
+	<button type="button" class="button " ng-click="screen.throwEvent($event, 'HomeEvent', null, { position: $index })">
+	{{ 'event.Home' | wrLocalize }}
+	</button>
+	<ion-content class="has-header wr-safe-area">
+		<!-- directive: wr-component pwu2 -->
+		<div class=" wr-comp-List">
+			<div ng-if="view.data &amp;&amp; view.data.length" class="list ">
+				<div class="item item-divider">{{ 'List 2' | wrLocalize }}</div>
+				<div class="item" ng-repeat="current in view.data">
+					<h2>{{ current.nome }}</h2>
+					<p>{{ current.descricao }}</p>
+					<div class="item-buttons">    
+						<button type="button" class="button " ng-click="screen.throwEvent($event, 'OnSelectEvent', 'oslte7', { position: $index })">
+						{{ 'voltar' | wrLocalize }}
+						</button>
+						<button type="button" class="button " ng-click="screen.throwEvent($event, 'OnSelectEvent', 'oslte13', { position: $index })">
+						{{ 'Detalhes' | wrLocalize }}
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end_directive: wr-component --><!-- directive: wr-component dau3 -->
+		<div class=" wr-comp-Details">
+			<div ng-if="view.data" class="list card">
+				<div class="item item-divider">{{ 'Detalhes T\u00F3picos' | wrLocalize }}</div>
+				<div class="item ">
+					<h2>{{ view.data.nome }}</h2>
+					<p>{{ view.data.descricao }}</p>
+				</div>
+				<div class="item item-attribute item-body">
+					{{ 'endereco' | wrLocalize }}
+					<p>{{ view.data.endereco }}</p>
+				</div>
+				<div class="item item-attribute item-body">
+					{{ 'link' | wrLocalize }}
+					<p><a wr-external-open target="_system" ng-href="{{ view.data.link }}">{{ view.data.link }}</a></p>
+				</div>
+				<div class="item item-attribute item-body">
+					{{ 'telefone' | wrLocalize }}
+					<p>{{ view.data.telefone }}</p>
+				</div>
+				<div class="item item-attribute item-body">
+					{{ 'valor' | wrLocalize }}
+					<p>{{ view.data.valor | number : 'wr-integer' }}</p>
+				</div>
+				<div class="item item-image">
+					<span wr-blob="view.data.logo" class="wr-attr-image ">
+					<img ng-show="blob.url" ng-src="{{ blob.url }}" />
+					<span ng-show="blob.loading" class="wr-placeholder icon ion-load-d"></span>
+					<span ng-show="blob.failed" class="wr-placeholder icon ion-alert-circled"></span>
+					</span>
+				</div>
+				<div class="item-buttons">    
+					<button type="button" class="button " ng-click="screen.throwEvent($event, 'OnSelectEvent', 'oslte12', { position: $index })">
+					{{ 'voltar t\u00F3picos' | wrLocalize }}
+					</button>
+				</div>
+			</div>
+		</div>
+		<!-- end_directive: wr-component -->
+	</ion-content>
+</div>
+<!-- end_directive: wr-screen -->

@@ -1,0 +1,188 @@
+#?delimiters [%, %], [%=, %]
+[%
+setJSOutput()
+
+/* Collect custom properties that configure emulation */
+def emulatorProperties = [:]
+wr.project.selectNodes("Property[starts-with(@name, 'Emulator.')]").each { property ->
+	emulatorProperties[property["name"] - ~/^Emulator\./] = property["value"]
+}
+
+%]
+wrx = window.wrx || {};
+wrx.EmulatorSupport = (function() {
+	
+	var IGNORED_STUBS = {
+	};
+	
+	function createAllStubs() {
+		var allStubs = {};
+		
+		function addStubs(stubs) {
+			var nativeObjName
+			for (nativeObjName in stubs) {
+				if (!stubs.hasOwnProperty(nativeObjName)) {
+					continue;
+				}
+				if (allStubs[nativeObjName]) {
+					console.error("Found conflicting emulator stubs for native object '" + nativeObjName + "'");
+				}
+				allStubs[nativeObjName] = stubs[nativeObjName];
+			}
+		}
+		
+		[% appInfo.plugins.selected.each() { plugin ->
+			def stubFile = new File(plugin.directory, "webratio/emulation_stub.js")
+			if (stubFile.isFile()) { %]
+				
+				(function() {
+					console.log("Enabling emulation of plugin [%= plugin.pluginId %]");
+					[% printRaw(stubFile.getText()) %]
+					addStubs(createStubs(Object.create(emulatorContext, {
+						loadScriptFile: {
+							value: function(path) {
+								var doc = this.rippleWindow.document;
+								var head = doc.getElementsByTagName("head")[0];
+								var script = doc.createElement("SCRIPT");
+								script.setAttribute("src", "app/emulation_libs/[%= plugin.pluginId %]/" + path);
+								head.appendChild(script);
+							}
+						}
+					})));
+				})();
+				
+			[% }
+		} %]
+		
+		return allStubs;
+	}
+	
+	function getRippleWindow() {
+		var win = window.parent;
+		return (!!win.ripple ? win : null);
+	}
+	
+	function getRippleCordovaBridge() {
+		var rippleWindow = getRippleWindow();
+		return rippleWindow && rippleWindow.ripple("platform/cordova/2.0.0/bridge");
+	}
+	
+	function enableRippleSupport() {
+		var bridge = getRippleCordovaBridge();
+		if (!bridge) {
+			return;
+		}
+		var allStubs = createAllStubs();
+		
+		function createWrappedFunction(stubFn) {
+			return function(successCB, errorCB, args) {
+				successCB = successCB || function() {};
+				errorCB = errorCB || function() {};
+				try {
+					Promise.resolve(stubFn.apply(this, args)).then(successCB, errorCB);
+				} catch (e) {
+					errorCB(e);
+				}
+			};
+		}
+		
+		var nativeObjName
+		for (nativeObjName in allStubs) {
+			if (!allStubs.hasOwnProperty(nativeObjName)) {
+				continue;
+			}
+			var stub = allStubs[nativeObjName];
+			
+			var wrappedStub = {};
+			var functionName;
+			for (functionName in stub) {
+				var stubFn = stub[functionName];
+				if (!IGNORED_STUBS[nativeObjName + "/" + functionName]) {
+					wrappedStub[functionName] = createWrappedFunction(stubFn);
+				}
+			}
+			
+			bridge.merge(nativeObjName, wrappedStub);
+		}
+	}
+	
+	function configureManagement() {
+		console.log("Configuring app management module");
+		angular.module("wr.mvc.mgmt.AppManagement").config(function(wrAppManagementConfigProvider) {
+			wrAppManagementConfigProvider.set(
+				[% printRaw(serializeJSON(executeContextTemplate("Framework/ManagementConfig.template"))) %]
+			);
+		});
+	}
+	
+	function getConfigOverrides() {
+		return new Promise(function(resolve, reject) {
+			resolveLocalFileSystemURL(cordova.file.dataDirectory + "wr-config.json", function(fileEntry) {
+				fileEntry.file(function(file) {
+					var fr = new FileReader();
+					fr.onload = function() {
+						resolve(fr.result);
+					};
+					fr.onerror = reject;
+					fr.readAsText(file);
+				}, reject);
+			}, reject);
+		}).then(function(configText) {
+			var config = JSON.parse(configText);
+			console.log("Overriding app configuration: " + JSON.stringify(config));
+			return config;
+		}, function(e) {
+			return {};
+		});
+	}
+	
+	var _startListeners = [];
+	
+	var emulatorContext = {
+		rippleWindow: getRippleWindow(),
+		properties: {
+			[% emulatorProperties.entrySet().eachWithSeparator(",") { property -> %]
+				"[%= property.key %]": "[%= property.value %]"
+			[% } %]
+		},
+		addStartListener: function(fn) {
+			_startListeners.push(fn);
+		}
+	};
+	
+	var _resultingModule = {
+		start: function() {
+			enableRippleSupport();
+			configureManagement();
+			
+			function invokeListeners() {
+				if (!angular.element(window.document).injector()) {
+					setTimeout(invokeListeners, 15); // delay until Angular is ready
+					return;
+				}
+				_startListeners.forEach(function(listener) {
+					listener();
+				});
+			}
+			invokeListeners();
+		},
+		getConfigOverrides: getConfigOverrides
+	};
+	
+	[% def addExtension(fileName) { %]
+		(function() {
+			var _additions = (function() {
+				[% printRaw(wr.locateResourceFile("Framework/EmulatorExtensions/" + fileName).getText()) %]
+			})();
+			for (var p in _additions) {
+				if (_additions.hasOwnProperty(p)) {
+					_resultingModule[p] = _additions[p];
+				}
+			}
+		})();
+	[% } %]
+	
+	[% addExtension("ScreenSwitchUI.js") %]
+	
+	return _resultingModule;
+})();

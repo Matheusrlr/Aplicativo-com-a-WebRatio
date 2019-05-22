@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<VERSIONS>
+  <VERSION id="3.0.17" automatic-conversion="yes">
+    <CHANGE description="Added booleanOperator to all type of  SELECTORs"/>
+    <CHANGE description="Added booleanOperator to SELECTORCONDITION"/>
+  </VERSION>
+  <VERSION id="3.0.18" automatic-conversion="yes">
+    <CHANGE description="Removed the attributes 'id' and 'name' from 'CASE' children of 'SWITCHUNIT'"/>
+  </VERSION>
+  <VERSION id="3.0.19" automatic-conversion="yes">
+    <CHANGE description="Added 'Duration' attribute on ENTITY structure element"/>
+  </VERSION>
+  <VERSION id="3.0.20" automatic-conversion="yes">
+    <CHANGE description="Added 'double-deploy-path' project option"/>
+  </VERSION>
+  <VERSION id="3.0.21" automatic-conversion="yes">
+    <CHANGE description="Added landmarks attribute over SITEVIEW and AREA elements"/>
+  </VERSION>
+  <VERSION id="3.0.22" automatic-conversion="no">
+    <CHANGE description="Renamed 'SiteView' entity to 'Module'"/>
+    <CHANGE description="Renamed 'SiteViewID' attribute to 'ModuleID'"/>
+    <CHANGE description="Renamed 'Group_SiteView' relationship to 'Group_DefaultModule'"/>
+    <CHANGE description="Added 'Group_Module' relationship"/>
+    <CHANGE description="Use the db sync function in order to update the mapping" highlight="yes"/>
+  </VERSION>
+  <VERSION id="3.1.0" automatic-conversion="no">
+    <CHANGE description="Removed graph meta data elements"/>
+    <CHANGE description="Removed metastructure"/>
+    <CHANGE description="Removed Loop Back Parameters"/>
+    <CHANGE description="Changed some localization pattern names"/>
+  </VERSION>
+  <VERSION id="3.1.1" automatic-conversion="yes">
+    <CHANGE description="Added 'ModuleName' attribute to 'Module'"/>
+  </VERSION>
+  <VERSION id="3.1.2" automatic-conversion="yes">
+    <CHANGE description="Convert old style protected property"/>
+  </VERSION>
+  <VERSION id="4.2.0" automatic-conversion="yes">
+    <CHANGE description="Remove obsolete graphmetadata attributes"/>
+  </VERSION> 
+  <VERSION id="4.3.0" automatic-conversion="yes">
+    <CHANGE description="Added missing presentation attributes, fields, links"/>
+  </VERSION>
+  <VERSION id="4.3.1" automatic-conversion="yes">
+    <CHANGE description="Remove obsolete graphmetadata attributes"/>
+  </VERSION> 
+  <VERSION id="4.3.2" automatic-conversion="yes">
+    <CHANGE description="Fixed graphmetadata attributes"/>
+  </VERSION>
+  <VERSION id="4.3.3" automatic-conversion="yes">
+    <CHANGE description="Fixed multiselection field coupling bug"/>
+  </VERSION>
+  <VERSION id="4.3.4" automatic-conversion="yes">
+    <CHANGE description="Fixed selection field coupling bug"/>
+  </VERSION>
+</VERSIONS>

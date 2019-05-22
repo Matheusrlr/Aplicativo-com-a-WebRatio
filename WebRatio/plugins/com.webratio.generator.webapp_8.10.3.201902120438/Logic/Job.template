@@ -1,0 +1,31 @@
+#?delimiters [%,%],[%=,%]
+[%
+
+setXMLOutput()
+
+def sessionSchedulePolcies = ["onSessionCreate", "onSessionDestroy", "onUserLogin", "onUserLogout"]
+def syncExecPolicies = ["onSessionDestroy", "onUserLogout"]
+
+def initJob = job.selectSingleNode("Operations/InitJob")
+%]
+<Descriptor service="com.webratio.rtx.jobs.DefaultJobService" name="[%=job["name"]%]">
+  <Scheduler>[%=job["scheduler"]%]</Scheduler>
+  <InitJob id="[%=initJob["id"]%]" name="[%=initJob["name"]%]">
+    [%for(parameter in initJob.selectNodes("JobInputParameter")){%]
+      <Parameter id="[%=parameter["id"]%]" name="[%=parameter["name"]%]"/>
+    [%}%]
+  </InitJob>
+  <Triggers>
+    [%
+      for(trigger in job.selectNodes("Trigger")){
+        def schedulePolicy = trigger["schedulePolicy"]
+        if(sessionSchedulePolcies.contains(schedulePolicy)){
+           def syncExec = (trigger["syncExec"] != "false") || syncExecPolicies.contains(schedulePolicy)
+           %]<SessionTrigger id="[%=trigger["id"]%]" name="[%=trigger["name"]%]" policy="[%=schedulePolicy%]" synchronous="[%=syncExec%]"/>[%
+        }else{
+           %]<Trigger id="[%=trigger["id"]%]" name="[%=trigger["name"]%]"/>[%
+        }
+      }
+    %]  
+  </Triggers>
+</Descriptor>

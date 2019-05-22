@@ -1,0 +1,70 @@
+a#updates img { background-image : url(graphics/obj48/updates_obj.gif); }
+a#updates:hover img { background-image : url(graphics/obj48/updateshov_obj.gif); }
+
+a#eclipse img { background-image : url(graphics/obj48/community_obj.gif); }
+a#eclipse:hover img { background-image : url(graphics/obj48/communityhov_obj.gif); }
+
+a#migration img { background-image : url(graphics/obj48/migrate_obj.gif); }
+a#migration:hover img { background-image : url(graphics/obj48/migratehov_obj.gif); }
+
+a#wr_noteworthy img { background-image : url(graphics/obj48/wrwhatsnew_obj.png); }
+a#wr_noteworthy:hover img { background-image : url(graphics/obj48/wrwhatsnewhov_obj.png); }
+
+a#wr_updates img { background-image : url(graphics/obj48/wrupdates_obj.png); }
+a#wr_updates:hover img { background-image : url(graphics/obj48/wrupdateshov_obj.png); }
+
+a#wr_community img { background-image : url(graphics/obj48/wrusers_obj.png); }
+a#wr_community:hover img { background-image : url(graphics/obj48/wrusershov_obj.png); }
+
+a#wr_wiki img { background-image : url(graphics/obj48/wrwiki_obj.png); }
+a#wr_wiki:hover img { background-image : url(graphics/obj48/wrwikihov_obj.png); }
+
+a#wr_discussion_group img { background-image : url(graphics/obj48/wrusers_obj.png); }
+a#wr_discussion_group:hover img { background-image : url(graphics/obj48/wrusershov_obj.png); }
+
+a#wr_linkedin_group img { background-image : url(graphics/obj48/wrlinkedingroup_obj.png); }
+a#wr_linkedin_group:hover img { background-image : url(graphics/obj48/wrlinkedingrouphov_obj.png); }
+
+a#wr_migration img { background-image : url(graphics/obj48/wrmigrate_obj.png); }
+a#wr_migration:hover img { background-image : url(graphics/obj48/wrmigratehov_obj.png); }
+
+a#wr_bpm_migration img { background-image : url(graphics/obj48/wrmigrate_obj.png); }
+a#wr_bpm_migration:hover img { background-image : url(graphics/obj48/wrmigratehov_obj.png); }
+
+div#wr_rss_news {
+	position: relative;
+	top: -25px;
+	margin-bottom: -25px;
+	margin-left: 52px;
+}
+
+#wr_rss_news .div-label {
+	font-size: 9pt;
+}
+
+#wr_rss_news .provided-content {
+}
+
+#wr_rss_news .status-text {
+	font-weight: normal;
+	color: #909090;
+	font-size: 8pt;
+}
+
+ul#eclipse-news {
+	list-style-type: none;
+	list-style-image: url("graphics/arrow.gif");
+	margin-left: 10px;
+	margin-top: 5px;
+}
+
+ul#eclipse-news li {
+}
+
+ul#eclipse-news a {
+	font-weight: normal;
+}
+
+ul#eclipse-news a:hover {
+	text-decoration: underline;
+}

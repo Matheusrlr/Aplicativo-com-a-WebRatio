@@ -1,0 +1,7 @@
+{
+  "service" : "wrm.comp.HierarchyService",
+  "entity" : "cls3",
+  "order" : [ ],
+  "maxResults" : 0,
+  "levels" : [ ]
+}

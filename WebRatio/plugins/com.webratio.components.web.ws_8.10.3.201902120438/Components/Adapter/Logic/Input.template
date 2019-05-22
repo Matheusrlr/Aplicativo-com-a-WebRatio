@@ -1,0 +1,29 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import org.dom4j.DocumentFactory
+import org.apache.commons.lang.math.NumberUtils
+import com.webratio.generator.helpers.SpecialUtils
+
+setXMLOutput()
+
+def componentId = component.valueOf("@id")
+def index = NumberUtils.toInt(component.valueOf("@inputDocCount"), 0)
+def xslFile = null
+if (component.valueOf("@xslFile") != "") {
+    xslFile = getContentFile(component.valueOf("@xslFile"))
+}
+%>
+<InputParameters>
+  <% if (index > 1) { %>
+    <% for (i in 1..index) { %>
+    <InputParameter name="<%=componentId%>.inputDocument<%=i%>" type="xml" label="Input XML Document nr. <%=i%>"/>
+  <% }  %>    
+  <% } else {%>
+      <InputParameter name="<%=componentId%>.inputDocument" type="xml" label="Input XML Document"/>
+  <% }  %>
+  <% if (xslFile != null) { %>  
+    <% for (p in SpecialUtils.getTransformationInputs(xslFile)) { %>
+      <InputParameter name="<%=componentId%>.<%=p%>" label="<%=p%>"/>
+    <% } %>
+  <% } %>
+</InputParameters>

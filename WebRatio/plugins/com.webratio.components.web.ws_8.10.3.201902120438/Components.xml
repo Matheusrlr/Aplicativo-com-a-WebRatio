@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Components priority="400">
+	<Group>
+		<Component>Adapter</Component>
+		<Component>RequestResponse</Component>
+		<Component>Solicit</Component>
+		<Component>Response</Component>
+		<Component>ErrorResponse</Component>
+		<Component>RestfulRequestResponse</Component>
+	</Group>
+	<Group>
+		<Component>GetXML</Component>
+		<Component>XMLImportExport</Component>
+		<Component>JSONImportExport</Component>
+	</Group>
+	<Group>
+		<Component>ScheduleJob</Component>
+		<Component>CancelJob</Component>
+		<Component>InitJob</Component>
+		<Component>JobStatus</Component>
+	</Group>
+</Components>

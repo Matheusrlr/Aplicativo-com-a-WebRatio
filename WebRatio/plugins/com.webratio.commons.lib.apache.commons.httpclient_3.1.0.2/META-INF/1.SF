@@ -1,0 +1,30 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: mFp8GZfEd1dR7Pp9ON6uIjESb0xZK
+ SSnCZuVvRzpu7Y=
+SHA-256-Digest-Manifest: eLn3X0xKRQDuJ/NneyVy+xtSC/5+LkmNUGscI4i1ZDc=
+Created-By: 1.7.0_79 (Oracle Corporation)
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: a5fmgH7myHzNji9AMOfHrVh8fy7MOgIdRSUiRZ6EFA4=
+
+Name: lib/commons-httpclientsrc.zip
+SHA-256-Digest: QR+rKeZn33Tb8cEP57e2rG4xfrCXxfiDYBIHVtVk0uY=
+
+Name: lib/commons-httpclient-contrib-ssl.jar
+SHA-256-Digest: IszpCM+o9rcI3xz6YR7p9nqRhFJxw70U4YUwAlMqBso=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: about.html
+SHA-256-Digest: JRT8q71S9DnzojY072TW+Z+fBHkG0pfXpEotUU9KqTc=
+
+Name: lib/commons-httpclient.jar
+SHA-256-Digest: hKxHQnqG0NLrL9FuLdhBqJYb+xKu2bx9WeF59OmJbMM=
+
+Name: lib/auth-helper.jar
+SHA-256-Digest: 2cwp7VXnOz+qaX9DxLwIkm9W0aIWzsQnSG/EQ/epWgk=
+
+Name: lib/auth-helpersrc.zip
+SHA-256-Digest: DwVTO2t4y+IJ9gb5HmoZ0l1jG7jpnVcGWH7L3C4z1NY=
+

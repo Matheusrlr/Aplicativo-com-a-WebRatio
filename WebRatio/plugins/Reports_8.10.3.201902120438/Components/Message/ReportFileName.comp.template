@@ -1,0 +1,10 @@
+#?delimiters [%, %], [%=, %]
+[%setXMLOutput()%]
+[%
+def unitId = component["id"]
+def unitXMLName = toValidClassName(component["name"])
+%]
+<c:forEach var="current" varStatus="status" items="${<wr:Id context="component"/>.data}">
+  <c:set var="index" value="${status.index}"/>
+  <ReportFileName><c:out value="${current}"/></ReportFileName>
+</c:forEach>

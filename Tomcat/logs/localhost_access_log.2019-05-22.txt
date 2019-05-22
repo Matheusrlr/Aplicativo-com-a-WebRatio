@@ -1,0 +1,16 @@
+127.0.0.1 - - [22/May/2019:13:52:58 -0300] "GET /Data HTTP/1.1" 302 -
+127.0.0.1 - - [22/May/2019:13:52:58 -0300] "GET /Data/ HTTP/1.1" 302 -
+127.0.0.1 - - [22/May/2019:13:52:58 -0300] "GET /Data/swagger.do HTTP/1.1" 200 3433
+127.0.0.1 - - [22/May/2019:13:59:22 -0300] "GET /Data/data/Categoria HTTP/1.1" 200 838
+127.0.0.1 - - [22/May/2019:13:59:22 -0300] "GET /Data/data/Tipo HTTP/1.1" 200 256
+127.0.0.1 - - [22/May/2019:13:59:22 -0300] "GET /Data/data/Estabelecimentos HTTP/1.1" 200 926
+127.0.0.1 - - [22/May/2019:14:01:08 -0300] "GET /Data/data/Categoria HTTP/1.1" 200 836
+127.0.0.1 - - [22/May/2019:14:01:08 -0300] "GET /Data/data/Estabelecimentos HTTP/1.1" 200 926
+127.0.0.1 - - [22/May/2019:14:01:08 -0300] "GET /Data/data/Tipo HTTP/1.1" 200 256
+127.0.0.1 - - [22/May/2019:14:58:21 -0300] "GET /Data/data/Tipo HTTP/1.1" 200 255
+127.0.0.1 - - [22/May/2019:14:58:21 -0300] "GET /Data/data/Categoria HTTP/1.1" 200 838
+127.0.0.1 - - [22/May/2019:14:58:21 -0300] "GET /Data/data/Estabelecimentos HTTP/1.1" 200 926
+127.0.0.1 - - [22/May/2019:14:59:20 -0300] "GET /Data/data/Tipo?delta=2019-05-22T14%3A58%3A21.352-0300 HTTP/1.1" 200 158
+127.0.0.1 - - [22/May/2019:14:59:20 -0300] "GET /Data/data/Estabelecimentos?delta=2019-05-22T14%3A58%3A21.357-0300 HTTP/1.1" 200 154
+127.0.0.1 - - [22/May/2019:14:59:20 -0300] "GET /Data/data/Categoria?delta=2019-05-22T14%3A58%3A21.353-0300 HTTP/1.1" 200 152
+127.0.0.1 - - [22/May/2019:14:59:20 -0300] "GET /Data/data/Tipo HTTP/1.1" 500 41

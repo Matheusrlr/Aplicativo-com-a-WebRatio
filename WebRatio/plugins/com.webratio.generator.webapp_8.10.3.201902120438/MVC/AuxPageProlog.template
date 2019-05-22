@@ -1,0 +1,39 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.GenerationException
+import org.apache.commons.lang.StringUtils
+
+/* Get style */
+def pageLayout = getLayout(page, LayoutType.PAGE)
+def templatePath = pageLayout.path
+def templateParameters = pageLayout.parameters
+if (!templatePath) {
+	def title = "Undefined Page Layout"    
+	def reason = "Unable to find the page layout for the page."
+	def hint = "Specify a page layout either for this page [id = " + page["id"] + "] or for one of its ancestors"
+	throw new GenerationException(title, reason, [hint], null)
+}
+def templateFile = getLayoutFile(templatePath, LayoutType.PAGE)
+if (!templateFile) {
+	def title = "Page Layout Not Found"
+	def reason = "Unable to find the page layout \'" + templatePath + "\'"
+	def hint = "Check the project for the missing page layout [name = " + templatePath + "] associated with this page [id = " + page["id"] + "]"
+	throw new GenerationException(title, reason, [hint], null)
+}
+addUsedTemplate(templatePath)
+
+/* Print tag libraries from TagLibs.template, or sniffed from page template, or the "usual" ones */
+def styleDir = getStyleDirectory(StringUtils.substringBefore(templatePath, "/"))
+def customTagLibsTemplateFile = styleDir ? new File(styleDir, "TagLibs.template") : null
+if (customTagLibsTemplateFile.exists()) {
+	printRaw(executeTemplate(customTagLibsTemplateFile, ["page": page]))
+} else {
+	%]<wr:Resources types="jspdeclaration"/>[%
+}
+
+/* Print additional tag libraries from TagLibs.txt */
+def customTagLibsFile = styleDir ? new File(styleDir, "TagLibs.txt") : null
+if (customTagLibsFile.exists()) {
+	printRaw(customTagLibsFile.getText())
+}
+%]

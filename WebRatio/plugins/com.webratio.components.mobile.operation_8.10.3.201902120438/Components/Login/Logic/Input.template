@@ -1,0 +1,17 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+
+def userDclass = getById("MUser")
+def usernameAttr = getById("mUsername")
+%]
+<InputParameters>
+	
+	<InputParameter name="username" label="Username" type="[%= getAssignableTypeExpression(userDclass, usernameAttr, true, false) %]" mandatory="true" />
+	<InputParameter name="password" label="Password" type="_User.password" mandatory="true" />
+	
+	[% if (!userDclass["serverClass"]) { %]
+		<InputParameter name="token" label="Granted Token"/>
+	[% } %]
+	
+</InputParameters>

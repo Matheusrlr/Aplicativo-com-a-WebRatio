@@ -1,0 +1,36 @@
+#?delimiters [%, %], [%=, %]
+[%
+/** Applies to: View Component (form-based) */
+setXMLOutput()
+
+/* Parse the form descriptor */
+def formDescr
+def viewCompDirectory = wr.explorer.viewComponentTypes().getDirectory(getComponentType(viewComp))
+def formBeanTemplate = new File(viewCompDirectory, "/Logic/FormBean.template")
+if (formBeanTemplate.exists()) {
+	formDescr = parseXMLString(executeTemplate(formBeanTemplate, ["component": viewComp]))
+} else {
+	return
+}
+
+/* Compute form bean fields and navigation flows (which may create implied form properties) */
+def fields = formDescr.rootElement.elements().collect{ it.detach() }
+def navFlows = getExitingFlows(viewComp, FlowType.NAVIGATION)
+
+/* Do not generate anything when not necessary */
+if (fields.isEmpty() && navFlows.isEmpty()) {
+	return
+}
+%]
+<FormBeanSupport class="com.webratio.rtx.form.DefaultFormBeanSupport">
+	[% for (field in fields) { %]
+		[% printRaw(serializeXML(field, false)) %]
+	[% } %]
+	
+	[% for (flow in navFlows) { %]
+		<Property name="[%= flow["id"] %]" type="java.lang.String"/>
+		[% if (isSelectiveRefreshEvent(flow.parent)) { %]
+			<Property name="[%= flow["id"] %]_sr" type="java.lang.String"/>
+		[% } %]
+	[% } %]
+</FormBeanSupport>

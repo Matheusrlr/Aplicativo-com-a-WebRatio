@@ -1,0 +1,56 @@
+#?delimiters [%, %], [%=, %]
+[%
+setJSONOutput()
+
+def runInfo = createSerializableProxy(wr.helpers.runtime.getActionRunInfo(action))
+def preservingScreenSet = getPreservingScreenSet(action)
+def actionEvents = action.selectNodes("(Events/SuccessEvent | Events/ErrorEvent)")
+%]
+{
+	"_": "wrm.core.ActionService",
+	
+	[% if (runInfo.permissionElement) { %]
+		"protected": [
+			[% runInfo.permissionRoles.eachWithSeparator(",") { role -> %]
+				"[%= role %]"
+			[% } %]
+		],
+	[% } %]
+	
+	"definition": "[%= action["definition"] %]",
+	
+	[% if (preservingScreenSet) { %]
+		"fence": "[%= preservingScreenSet["id"] %]",
+	[% } %]
+	
+	"flows": {
+		[% actionEvents.eachWithSeparator(",") { actionEvent -> %]
+			[%
+				def actionFlow = actionEvent.element("NavigationFlow")
+				def dataFlows = actionEvent.selectNodes("DataFlow")
+			%]
+			[% if (actionFlow) { %]
+				"[%= actionEvent["definition"] %]": [% printRaw(executeContextTemplate("Logic/Flow.template", ["flow": actionFlow])) %]
+			[% } %]
+			[% if (!dataFlows.isEmpty()) { %]
+				[% if (actionFlow) { %]
+					,
+				[% } %]
+				"[%= actionEvent["definition"] %]*": [
+					[% dataFlows.eachWithSeparator(",") { dataFlow -> %]
+						[% printRaw(executeContextTemplate("Logic/Flow.template", ["flow": dataFlow])) %]
+					[% } %]
+				]
+			[% } %]
+		[% } %]
+	},
+	
+	"notifications": {
+		[% actionEvents.eachWithSeparator(",") { actionEvent ->
+			def notificationMessageKey = actionEvent["notificationMessage"]
+			if (notificationMessageKey) { %]
+				"[%= actionEvent["definition"] %]": "[%= notificationMessageKey %]"
+			[% } %]
+		[% } %]
+	}
+}

@@ -1,0 +1,79 @@
+Manifest-Version: 1.0
+Export-Package: com.fasterxml.jackson.annotation,com.fasterxml.jackson
+ .core,com.fasterxml.jackson.core.base,com.fasterxml.jackson.core.filt
+ er,com.fasterxml.jackson.core.format,com.fasterxml.jackson.core.io,co
+ m.fasterxml.jackson.core.json,com.fasterxml.jackson.core.sym,com.fast
+ erxml.jackson.core.type,com.fasterxml.jackson.core.util,com.fasterxml
+ .jackson.databind,com.fasterxml.jackson.databind.annotation,com.faste
+ rxml.jackson.databind.cfg,com.fasterxml.jackson.databind.deser,com.fa
+ sterxml.jackson.databind.deser.impl,com.fasterxml.jackson.databind.de
+ ser.std,com.fasterxml.jackson.databind.exc,com.fasterxml.jackson.data
+ bind.ext,com.fasterxml.jackson.databind.introspect,com.fasterxml.jack
+ son.databind.jsonFormatVisitors,com.fasterxml.jackson.databind.jsonsc
+ hema,com.fasterxml.jackson.databind.jsontype,com.fasterxml.jackson.da
+ tabind.jsontype.impl,com.fasterxml.jackson.databind.module,com.faster
+ xml.jackson.databind.node,com.fasterxml.jackson.databind.ser,com.fast
+ erxml.jackson.databind.ser.impl,com.fasterxml.jackson.databind.ser.st
+ d,com.fasterxml.jackson.databind.type,com.fasterxml.jackson.databind.
+ util,com.fasterxml.jackson.jaxrs.annotation,com.fasterxml.jackson.jax
+ rs.base,com.fasterxml.jackson.jaxrs.cfg,com.fasterxml.jackson.jaxrs.j
+ son,com.fasterxml.jackson.jaxrs.json.annotation,com.fasterxml.jackson
+ .jaxrs.util,com.fasterxml.jackson.module.jaxb,com.fasterxml.jackson.m
+ odule.jaxb.deser,com.fasterxml.jackson.module.jaxb.ser
+Require-Bundle:  com.webratio.commons.lib.javax.ws.rs
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/jackson2-core.jar,lib/jackson2-databind.jar,lib/
+ jackson2-annotations.jar,lib/jackson2-jaxrs-base.jar,lib/jackson2-jax
+ rs-json-provider.jar,lib/jackson-module-jaxb-annotations.jar
+Bundle-Version: 2.7.1
+Bundle-Name: WebRatio 3rd Party Library - Jackson
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.jackson2
+Eclipse-RegisterBuddy: com.webratio.commons.lib.javax.ws.rs
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+
+Name: lib/jackson-module-jaxb-annotationssrc.zip
+SHA-256-Digest: fh7byJgBTXOv5PcuMcZb5WbVYbnm19+DQInABAaSo/Q=
+
+Name: lib/jackson2-core.jar
+SHA-256-Digest: Umq2KdoQO/LJPnK9VB18NOSYGCRgxW1fSLA9uskbHfk=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: lib/jackson2-databindsrc.zip
+SHA-256-Digest: Ci1IiEk5x1BnH/iWea3pEO4iv+YsP35FAD10ziJBuYg=
+
+Name: lib/jackson-module-jaxb-annotations.jar
+SHA-256-Digest: 66juW6n+34bb4MC2+S2Ejze1qrCluZ6KYQaEDnF2Lio=
+
+Name: lib/jackson2-annotations.jar
+SHA-256-Digest: QFx+TM7xHNjsWlS/xFJCwAbOx+6GL8AB0ZMD4exmPaA=
+
+Name: lib/jackson2-databind.jar
+SHA-256-Digest: IVAi7thr3mLo/16bBCl6anqJbficgFdqoikeXhFCqUs=
+
+Name: lib/jackson2-jaxrs-basesrc.zip
+SHA-256-Digest: zwtir9hYADgKqRNwEivv5rXJ0rWfdeH7cPIQVDmcsIQ=
+
+Name: lib/jackson2-jaxrs-json-provider.jar
+SHA-256-Digest: cQTsAX0CLo299QqhPeXi3GlXBz05F6bfhHfdLjrImNQ=
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: lib/jackson2-coresrc.zip
+SHA-256-Digest: bgrlvVKt5uEZIpUFu9Ijqxw9sG2wCw9rRsLZ02tSE+c=
+
+Name: lib/jackson2-annotationssrc.zip
+SHA-256-Digest: x7jxSNE8DcqCj5WFzjkAJml/2UrQg45ncWcg8frS7yU=
+
+Name: about.html
+SHA-256-Digest: Ra+XFyxQlSNHABUa3YO4KO2cTdX6MquUMCSZff6vf2g=
+
+Name: lib/jackson2-jaxrs-base.jar
+SHA-256-Digest: dR7r0trVF4r2lAjYqvNXdinWBLN3YrHNKIMFJHQHTKM=
+
+Name: lib/jackson2-jaxrs-json-providersrc.zip
+SHA-256-Digest: bUKO9Xkeo6VMkRRS87IHmKzu8OYEqkdJrcgODkOzRac=
+

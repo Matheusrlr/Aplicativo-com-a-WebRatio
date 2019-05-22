@@ -1,0 +1,19 @@
+  <Element name="Job" lowerName="job"
+		pluralLowerName="jobs">
+		<Description>
+			A Job
+			is a sequence of operations and operation groups to be scheduled at a
+			specific time or interval.
+		</Description>
+		<ActionRef label="Add Trigger" />
+		<ActionRef label="Add Property" />
+		<ActionRef label="Generate Logic Descriptors Only"/>
+		<ActionRef label="Generate Selection"/>
+		<ActionRef label="Find Model Problems"/>
+		<ActionRef label="Help"/>
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+			<PropertyRef label="Running Profiles" />
+		</PropertyCategory>
+	</Element>

@@ -1,0 +1,80 @@
+{
+  "_" : "wrm.core.PanelService",
+  "navigations" : {
+    "0" : {
+      "nc" : true,
+      "flows" : "scr4",
+      "fr" : true
+    },
+    "1" : {
+      "nc" : true,
+      "flows" : "scr4.link",
+      "fr" : true
+    },
+    "2" : {
+      "flows" : "scr4.auto-link",
+      "fr" : true
+    },
+    "3" : {
+      "flows" : "scr4.auto-link"
+    },
+    "4" : {
+      "flows" : "nf7",
+      "fr" : true
+    },
+    "5" : {
+      "flows" : "nf7"
+    }
+  },
+  "knownEffects" : "#pr#",
+  "propagationSequence" : "",
+  "propagations" : { },
+  "components" : {
+    "pwu4" : {
+      "fb" : true,
+      "conds" : [ {
+        "fr" : false,
+        "navs" : "5",
+        "effects" : "-"
+      }, {
+        "fr" : false,
+        "effects" : "#pr#"
+      } ],
+      "rf" : [ {
+        "all" : true,
+        "fr" : true,
+        "navs" : "4",
+        "inputs" : "pwu4:maxResults"
+      }, {
+        "all" : true,
+        "navs" : "5",
+        "inputs" : "pwu4:maxResults"
+      }, {
+        "all" : true,
+        "fr" : true,
+        "navs" : "0|1"
+      } ]
+    }
+  },
+  "events" : {
+    "oslte1" : {
+      "component" : "pwu4",
+      "type" : "OnSelectEvent",
+      "flow" : {
+        "id" : "nf4",
+        "navTo" : "scr5",
+        "bindTo" : "pwu2",
+        "preserve" : "",
+        "bind" : {
+          "maxResults" : "data.att5"
+        }
+      }
+    }
+  },
+  "autoFlow" : {
+    "preserve" : "pwu4:maxResults"
+  },
+  "autoFlowFull" : {
+    "preserve" : "pwu4:maxResults"
+  }
+}

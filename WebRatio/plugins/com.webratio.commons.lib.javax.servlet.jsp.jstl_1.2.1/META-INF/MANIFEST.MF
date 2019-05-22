@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Export-Package: javax.servlet.jsp.jstl.core,javax.servlet.jsp.jstl.fmt
+ ,javax.servlet.jsp.jstl.sql,javax.servlet.jsp.jstl.tlv
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/jstl.jar
+Bundle-Version: 1.2.1
+Bundle-Name: WebRatio 3rd Party Library - JSTL API
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.javax.servlet.jsp.jstl
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: lib/jstlsrc.zip
+SHA-256-Digest: aRYy+t/shn3dWGFuMJk28ck59+ni9DmyUlKmHxDxv+A=
+
+Name: lib/jstl.jar
+SHA-256-Digest: +P4VjKpsIgu8LZTaCHc68QGQnaAv9hclOSt8YD3Wk+A=
+
+Name: about.html
+SHA-256-Digest: JqVfo7h9vRYpscUyuC1vGbfLAB+lIEsecb4XAKacviY=
+
+Name: about_files/CDDL+GPL.txt
+SHA-256-Digest: cMY5g9SNG44frMYbx+Hau6mOvkBm9aZlZ6bztqAiGPQ=
+

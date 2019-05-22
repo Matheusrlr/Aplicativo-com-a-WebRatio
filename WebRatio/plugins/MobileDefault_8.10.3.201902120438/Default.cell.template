@@ -1,0 +1,4 @@
+#?delimiters [%, %], [%=, %]
+<wr:Iterate var="cellElem" context="cell" select="layout:Component|layout:Field|layout:Event|layout:Attribute|layout:Fragment|layout:Grid">
+	<wr:Element/>
+</wr:Iterate>

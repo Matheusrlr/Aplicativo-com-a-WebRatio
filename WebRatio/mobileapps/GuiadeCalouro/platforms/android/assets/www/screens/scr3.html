@@ -1,0 +1,18 @@
+<!-- directive: wr-screen scr3 -->
+<div>
+	<ion-content class=" wr-safe-area">
+		<!-- directive: wr-component pwu1 -->
+		<div class=" wr-comp-List">
+			<div ng-if="view.data &amp;&amp; view.data.length" class="list ">
+				<div class="item item-divider">{{ 'Categorias' | wrLocalize }}</div>
+				<div class="item item-icon-right" ng-repeat="current in view.data" ng-click="screen.throwEvent($event, 'OnSelectEvent', 'oslte4', { position: $index })">
+					<h2>{{ current.nome }}</h2>
+					<p>{{ current.decricao }}</p>
+					<span class="icon ion-chevron-right"></span>
+				</div>
+			</div>
+		</div>
+		<!-- end_directive: wr-component -->
+	</ion-content>
+</div>
+<!-- end_directive: wr-screen -->

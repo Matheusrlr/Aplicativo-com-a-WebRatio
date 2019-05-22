@@ -1,0 +1,173 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.GenerationException
+
+/** Applies to: View Component (form-based) */
+setJSONOutput()
+
+/* Compute the validation flow configurations */
+def flowConfigsByElement = [:]
+for (flowConfig in viewComp.selectNodes(".//VRValidationLink")) {
+	def element = flowConfig.parent
+	def list = flowConfigsByElement[element]
+	if (!list) {
+		flowConfigsByElement.put(element, list = [])
+	}
+	list.add(flowConfig)
+}
+
+/* Compute validation rules */
+def vRulesByElement = [:]
+for (vRulesBag in viewComp.selectNodes(".//VRules")) {
+	def vRulesList = []
+	def element = vRulesBag.parent
+	for (vRule in getByIdsOptional(element, "validationOrder")) {
+		vRulesList.add(vRule)
+	}
+	for (vRule in vRulesBag.elements()) {
+		if (!vRulesList.contains(vRule)) {
+			vRulesList.add(vRule)
+		}
+	}
+	if (!vRulesList.isEmpty()) {
+		vRulesByElement.put(element, vRulesList)
+	}
+}
+
+/* Parse the form descriptor */
+def formPropertyDescrs = []
+def viewCompDirectory = wr.explorer.viewComponentTypes().getDirectory(getComponentType(viewComp))
+def formTemplate = new File(viewCompDirectory, "/Logic/Form.template")
+if (formTemplate.exists()) {
+	def formDescr = parseXMLString(executeTemplate(formTemplate, ["component": viewComp]))
+	formPropertyDescrs.addAll(formDescr.selectNodes("/Form/Property"))
+}
+
+/* Do not generate anything when not necessary */
+if (flowConfigsByElement.isEmpty() && vRulesByElement.isEmpty()) {
+	return
+}
+
+/* Compute the set of default validating events */
+def defaultValidatingEvents = [] as Set
+defaultValidatingEvents.addAll(getDefaultValidationFlows(viewComp).collect{ it.parent })
+if (flowConfigsByElement[viewComp]) {
+	for (flowConfig in flowConfigsByElement[viewComp]) {
+		def event = getById(flowConfig, "linkId").parent
+		if (flowConfig["action"] == "skip") {
+			defaultValidatingEvents.remove(event)
+		} else {
+			defaultValidatingEvents.add(event)
+		}
+	}
+}
+%]
+{
+	"_": "wrm.form.DefaultValidationSubService",
+	
+	"events": "[%= defaultValidatingEvents.collect{ it["id"] }.join("|") %]",
+	
+	[% if (vRulesByElement[viewComp]) { %]	
+		"rules": [
+			[% vRulesByElement[viewComp].eachWithSeparator(",") { vRule -> %]
+				[% printValidationRuleBlock(vRule, flowConfigsByElement[vRule]) %]
+			[% } %]
+		],
+	[% } %]
+	
+	"properties": {
+		[% formPropertyDescrs.eachWithSeparator(",") { formPropertyDescr -> %]
+			[%
+				def fieldId = formPropertyDescr["fieldId"]
+				if (!fieldId) {
+					return // skip property not tied to field
+				}
+				def field = getById(fieldId)
+				def flowConfigs = flowConfigsByElement[field]
+				def vRules = vRulesByElement[field]
+			%]
+			"[%= formPropertyDescr["name"] %]": {
+				
+				[% if (flowConfigs && !flowConfigs.isEmpty()) { %]
+					"events": [% printEventConfiguration(flowConfigs) %],
+				[% } %]
+				
+				[% if (vRules) { %]	
+					"rules": [
+						[% vRules.eachWithSeparator(",") { vRule -> %]
+							[% printValidationRuleBlock(vRule, flowConfigsByElement[vRule]) %]
+						[% } %]
+					]
+				[% } %]
+				
+			}
+		[% } %]
+	}
+	
+	[%
+		/* Helper for printing the configuration of a validation rule */
+		def printValidationRuleBlock(vRule, flowConfigs) {
+			def inputs = getValidationRuleInputParameters(vRule)
+			
+			try {
+			
+				/* Generate the validation rule descriptor */
+				def vRuleDirectory = wr.explorer.validationRuleTypes().getDirectory(getComponentType(vRule))
+				def vRuleLogicTemplate = new File(vRuleDirectory, "Logic/Logic.template")
+				def vRuleDescr = parseJSONString(executeTemplate(vRuleLogicTemplate, ["element": vRule]))
+				vRuleDescr.put("messageKeyPrefix", vRule.name + ".")
+				%]
+				{
+					"id": "[%= vRule["id"] %]",
+					
+					[% if (flowConfigs && !flowConfigs.isEmpty()) { %]
+						"events": [% printEventConfiguration(flowConfigs) %],
+					[% } %]
+					
+					[% if (!inputs.isEmpty()) { %]
+						"inputs": "[%= inputs.collect{ it["name"] }.join("|") %]",
+					[% } %]
+					
+					[% if (vRule["errorMessage"]) { %]
+						"errorMessage": "[%= vRule["errorMessage"] %]",
+					[% } %]
+					
+					"descr": [% printRaw(serializeJSON(vRuleDescr)) %]
+				}
+				[%
+				def moduleName = vRuleDescr.get("service")?.textValue()
+				if (!moduleName) {
+					throw throwGenerationException("Logic descriptor does not declare the service name")
+				}
+				wr.usedServiceModules.add(moduleName.replace(".", "/"))
+				%]
+			[% } catch (Exception e) {
+				def title = "Error generating validation rule logic descriptor"
+				def reason = "An error occurred while generating the logic descriptor for ${vRule}."
+				def genExc = new GenerationException(title, reason, [], e)
+				genExc.setTargetId(vRule["id"])
+				wr.generationExceptions.add(genExc)
+			}
+		}
+		
+		/* Helper for printing flow configuration in terms of events */
+		def printEventConfiguration(flowConfigs) {
+			%]
+			{
+				[% flowConfigs.eachWithSeparator(",") { flowConfig -> %]
+					[%
+						def event = getById(flowConfig, "linkId").parent
+						def validates = (flowConfig["action"] != "skip")
+					%]
+					"[%= event["id"] %]": [%= validates %]
+				[% } %]
+				
+				[% if (!flowConfigs.isEmpty()) { %],
+					"_live": false
+				[% } %]
+			}
+			[%
+		}
+	%]
+
+}

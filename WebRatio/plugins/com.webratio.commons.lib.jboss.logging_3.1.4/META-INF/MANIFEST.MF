@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Export-Package: org.jboss.logging
+Require-Bundle: com.webratio.commons.lib.apache.log4j,com.webratio.com
+ mons.lib.slf4j
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/jboss-logging.jar
+Bundle-Version: 3.1.4
+Bundle-Name: WebRatio 3rd Party Library - JBoss Logging
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.jboss.logging
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: lib/jboss-loggingsrc.zip
+SHA-256-Digest: rpbcku3b0ecnYjrs0BVruhBRTAgcOHXiLR8C1jgzZQQ=
+
+Name: about.html
+SHA-256-Digest: Pckc30OWiJFWrqvT/8FKTm/niljG4Ykca/RpiOxNt18=
+
+Name: about_files/lgpl-2.1.txt
+SHA-256-Digest: 3GJlINzVOiL3J68+5Cx3DlbJemT+OtsGN5nYqwMv5VE=
+
+Name: lib/jboss-logging.jar
+SHA-256-Digest: SGo2AO/ihtfjgOVw+Ol8rKCxStg2fEo4oyYaCNww3Ug=
+

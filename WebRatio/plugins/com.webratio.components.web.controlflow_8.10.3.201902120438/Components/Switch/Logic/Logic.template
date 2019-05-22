@@ -1,0 +1,16 @@
+#?delimiters [%,%],[%=,%]
+[%
+setXMLOutput()
+def okFlowCodes = new HashSet(getOutgoingFlows(component, FlowType.SUCCESS).collect{it["code"]})
+%]
+<Descriptor service="com.webratio.components.web.controlflow.SwitchService">
+  [% 
+  	  if (component["switchValues"] == "roleNames") {%]
+  		<SwitchOnRoles>true</SwitchOnRoles>
+  	[%} else {
+  		for (c in component.selectNodes("Case[string(@value) != '']").findAll{okFlowCodes.contains(it["value"])}) { %]
+    		<Code>[%=c["value"]%]</Code>
+  	  [%}
+  	}%]
+  <DefaultCase>[%=okFlowCodes.contains("")%]</DefaultCase>
+</Descriptor>

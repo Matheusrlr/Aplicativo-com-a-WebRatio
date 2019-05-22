@@ -1,0 +1,23 @@
+  <Element name="LayoutAttribute" lowerName="layout attribute"
+		pluralLowerName="layout attributes">
+		<Description>
+			A layout attribute
+			is an entity &lt;a href="/Reference/ElementsReference/DomainModelElements/Attribute"/&gt; 
+			displayed by the component or simply placed in a &lt;a href="Cell"/&gt;.
+		</Description>
+		<ActionRef label="Localize" />
+		<ActionRef label="Add Property" />
+		<ActionRef label="Open in Browser" />
+		<ActionRef label="Help"/>
+		
+		<PropertyCategory name="Layout">
+			<PropertyRef label="Label" name="Title"/>
+			<PropertyRef label="Style" />
+			<PropertyRef label="Attribute Layout"/>
+			<PropertyRef label="Style Class"/>
+			<PropertyRef label="Component"/>
+		</PropertyCategory>
+		<PropertyCategory name="Condition">
+			<PropertyRef name="Page Visibility Condition" label="Attribute Visibility Cond."/>
+		</PropertyCategory>
+	</Element>

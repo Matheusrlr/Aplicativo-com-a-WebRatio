@@ -1,0 +1,45 @@
+#?delimiters [%, %], [%=, %]
+[%
+/** Applies to: View Component (form-based) */
+setJSONOutput()
+if (!isFormBased(viewComp)) {
+	return
+}
+
+/* Parse the form descriptor */
+def formDescr
+def viewCompDirectory = wr.explorer.viewComponentTypes().getDirectory(getComponentType(viewComp))
+def formTemplate = new File(viewCompDirectory, "/Logic/Form.template")
+if (formTemplate.exists()) {
+	formDescr = parseXMLString(executeTemplate(formTemplate, ["component": viewComp]))
+} else {
+	formDescr = null
+}
+
+/* Collect form information */
+def viewFormRef = formDescr ? formDescr.rootElement["viewRef"] : null
+def properties = formDescr ? formDescr.rootElement.elements().collect{ it.detach() } : []
+%]
+{
+	"_": "wrm.form.DefaultFormSubService",
+	
+	"formLabel": "[%= viewComp["name"] ?: viewComp["id"] %]",
+	
+	[% if (viewFormRef) { %]
+		"viewFormRef": "[%= viewFormRef %]",
+	[% } %]
+	
+	"properties": {
+		[% properties.eachWithSeparator(",") { property -> %]
+			"[%= property["name"] %]": {
+				[%
+					def field = getByIdOptional(property["fieldId"])
+				%]
+				[% if (field) { %]
+					"type": "[%= field.getName() == "Field" ? field["type"] : "string" %]",
+					"label": "[%= field["name"] ?: field["id"] %]"
+				[% } %]
+			}
+		[% } %]
+	}
+}

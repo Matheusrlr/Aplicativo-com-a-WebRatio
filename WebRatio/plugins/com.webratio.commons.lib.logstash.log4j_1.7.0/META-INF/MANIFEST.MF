@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Export-Package: net.logstash.log4j,net.logstash.log4j.data
+Require-Bundle: com.webratio.commons.lib.jsonsmart,com.webratio.common
+ s.lib.apache.commons.lang,com.webratio.commons.lib.apache.log4j
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/jsonevent-layout.jar
+Bundle-Version: 1.7.0
+Bundle-Name: WebRatio 3rd Party Library - logstash log4j extensions
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.logstash.log4j
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: KhVlAGpu1+0cBKrnXZ6fOywDdSYC/8tr5ZRlJS8/NCk=
+
+Name: lib/jsonevent-layout.jar
+SHA-256-Digest: SDhfjr9VQ9WUx/YJhygA12jM4K2XSlZDSSbdo9reyes=
+
+Name: lib/jsonevent-layoutsrc.zip
+SHA-256-Digest: OatV8/ecOUXdBxzZCpJRmOXCIlCrSbrEkn2zGdjMLHE=
+

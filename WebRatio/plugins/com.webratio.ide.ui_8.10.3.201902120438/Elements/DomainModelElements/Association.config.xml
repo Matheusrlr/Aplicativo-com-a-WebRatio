@@ -1,0 +1,176 @@
+<Element name="Association" lowerName="association"
+		pluralLowerName="associations">
+		<Description>	
+			Associations are binary semantic associations between classes, 
+			as in the popular Class Association database design model. 
+			Associations have a name and consists of two roles: 
+			  &lt;ul&gt;
+				 &lt;li&gt;
+					 &lt;img src="PLUGIN_ID=com.webratio.ide.ui/icons/full/obj16/rel_obj.png"/&gt;
+					 &lt;a href="#AssociationRole1">  Association Role1 &lt;/a&gt;
+				 &lt;/li&gt;
+				 &lt;li&gt;
+					 &lt;img src="PLUGIN_ID=com.webratio.ide.ui/icons/full/obj16/rel_obj.png"/&gt;
+					 &lt;a href="#AssociationRole2">  Association Role2 &lt;/a&gt;
+				 &lt;/li&gt;
+		      &lt;/ul&gt;
+			The roles represent the
+			same semantic association "as seen" from each of the two participant 
+			classes. Roles have a name and have cardinality constraints, which 
+			express how many instances of the class must/can take part to the 
+			association.
+    	</Description>
+    	<ActionRef label="Remove Mapping"/>
+    	<ActionRef label="Add Property"/>
+    	<ActionRef label="Localize"/>
+    	<ActionRef label="Open Generated Code"/>
+    	<ActionRef label="Go to Metadata"/>
+    	<ActionRef label="Go to Source"/>
+		<ActionRef label="Go to Target"/>
+		<ActionRef label="Straighten Connections" />
+		<ActionRef label="Separate Overlapping Connections" />
+		<ActionRef label="Generate Selection"/>
+		<ActionRef label="Search References"/>
+    	<ActionRef label="Find Model Problems"/>
+		<ActionRef label="Help"/>
+		
+    	<PropertyCategory name="General">
+    		<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+			<PropertyRef label="Source Class"/>
+			<Property label="Direct Role Name">
+				The user-defined name of the &lt;a href="#AssociationRole1"&gt;Association Role1&lt;/a&gt;. 
+				It can be modified, but a default value is system-generated from the names 
+				of the source and destination classes. 
+				Although not strictly necessary, it is good design practice to choose 
+				distinct labels for different association roles.
+			</Property>
+			
+			<PropertyRef label="Direct Max Card." name="Cardinality"/>
+			<PropertyRef label="Direct Derivation" name="Association Derivation"/>
+			<PropertyRef label="Target Class"/>
+			<Property label="Inverse Role Name">
+				The user-defined name of the &lt;a href="#AssociationRole2"&gt;Association Role2&lt;/a&gt;. 
+				It can be modified, but a default value is system-generated from the names 
+				of the source and destination classes. 
+				Although not strictly necessary, it is good design practice to choose 
+				distinct labels for different association roles.
+			</Property>
+			<PropertyRef label="Inverse Max Card." name="Cardinality"/>
+			<PropertyRef label="Inverse Derivation" name="Association Derivation"/>
+			<Property label="Direct Cascade Del.">
+		    	If checked, the run-time removal of an instance of the source class will cause the removal 
+				of the associated instances of the target class.
+			</Property>
+			<Property label="Inverse Cascade Del.">
+		    	If checked, the run-time removal of an instance of the target class will cause the removal 
+				of the associated instances of the source class.
+			</Property>
+		</PropertyCategory>
+	    	
+		<PropertyCategory name="Mapping">
+			<Property label="Project">
+				Reference to one Data Service Project.
+			</Property>
+			<Property label="Server Source Class">
+				The reference to the service class from which starts the association. 
+			</Property>
+			<Property label="Server Target Class">
+				The reference to the service class to which ends the association. 
+			</Property>
+			<Property label="Server Association">
+				Reference to the server association of the service class. The Select button <Button name="Browse"/> opens the
+				dialog which allows to choose the associations from the referenced service classes.
+			</Property>			
+			<PropertyRef label="Database"/>
+			<PropertyRef label="Schema"/>
+			<PropertyRef label="Table"/>
+			<Property label="Database View">
+			   If checked, the association is mapped on a database view.
+			</Property>
+			<PropertyRef label="Columns" name="Join Criteria"/>		
+		</PropertyCategory>
+		
+		<PropertyCategory name="XSD">
+			<PropertyRef label="XSD Element" />
+		</PropertyCategory>
+		
+		<SubElement name="AssociationRole1" lowerName="association role1" pluralLowerName="association roles">
+			<Description>	
+			   Association Role1 represents the direct role between two classes
+    	    </Description>
+    	    <ActionRef label="Remove Mapping"/>
+    		<ActionRef label="Add Property"/>
+    		<ActionRef label="Localize"/>
+    		<ActionRef label="Open Generated Code"/>
+    	    <PropertyCategory name="General">
+	    	    <PropertyRef label="Identifier" />
+	    	    <PropertyRef label="Name" />
+	    	    <PropertyRef label="Source Class"/>
+	    	    <PropertyRef label="Target Class"/>
+	    	    <PropertyRef label="Maximum Cardinality" name="Cardinality"/>
+	    	    <Property label="Inverse Role Name">
+					The user-defined name of the &lt;a href="#AssociationRole2"&gt;Association Role2&lt;/a&gt;. 
+					It can be modified, but a default value is system-generated from the names 
+					of the source and destination classes. 
+					Although not strictly necessary, it is good design practice to choose 
+					distinct labels for different association roles.
+				</Property>
+				<PropertyRef label="Derivation" name="Association Derivation"/>
+				<Property label="Cascade Delete">
+				    If checked, the run-time removal of an instance of the source class will cause the removal 
+				    of the associated instances of the target class.
+				</Property>
+			</PropertyCategory>
+			<PropertyCategory name="Mapping">
+				<Property label="Project">
+					Reference to one Data Service Project.
+				</Property>
+				<Property label="Server Source Class">
+					The reference to the server class from which starts the association role. 
+				</Property>
+				<Property label="Server Association Role">
+					Reference to the server association role of the server class.
+				</Property>			
+			</PropertyCategory>
+		</SubElement>
+		<SubElement name="AssociationRole2" lowerName="association role2" pluralLowerName="association roles">
+			<Description>	
+			   Association Role2 represents the inverse role between two classes
+    	    </Description>
+    	    <ActionRef label="Remove Mapping"/>
+    		<ActionRef label="Add Property"/>
+    		<ActionRef label="Localize"/>
+    		<ActionRef label="Open Generated Code"/>
+    	    <PropertyCategory name="General">
+	    	    <PropertyRef label="Identifier" />
+	    	    <PropertyRef label="Name" />
+	    	    <PropertyRef label="Source Class"/>
+	    	    <PropertyRef label="Target Class"/>
+	    	    <PropertyRef label="Maximum Cardinality" name="Cardinality"/>
+	    	    <Property label="Inverse Role Name">
+					The user-defined name of the &lt;a href="#AssociationRole1"&gt;Association Role2&lt;/a&gt;. 
+					It can be modified, but a default value is system-generated from the names 
+					of the source and destination classes. 
+					Although not strictly necessary, it is good design practice to choose 
+					distinct labels for different association roles.
+				</Property>
+				<PropertyRef label="Derivation" name="Association Derivation"/>
+				<Property label="Cascade Delete">
+				    If checked, the run-time removal of an instance of the source class will cause the removal 
+				    of the associated instances of the target class.
+				</Property>
+			</PropertyCategory>
+			<PropertyCategory name="Mapping">
+				<Property label="Project">
+					Reference to one Data Service Project.
+				</Property>
+				<Property label="Server Source Class">
+					The reference to the server class from which starts the association role. 
+				</Property>
+				<Property label="Server Association Role">
+					Reference to the server association role of the server class.
+				</Property>			
+			</PropertyCategory>
+		</SubElement>
+	</Element>

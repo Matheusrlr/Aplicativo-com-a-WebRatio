@@ -1,0 +1,26 @@
+#?delimiters [%,%],[%=,%]
+[%
+import org.apache.commons.lang.StringUtils;
+setXMLOutput()
+def paramIds = []
+for (paramId in component["contextParameters"].split(" ")) {
+  def param = getById(paramId)
+  if (param != null) {
+     if (param["type"] == "class") {
+     	def dclassId = param["class"]
+        for (a in getKeyAttributes(getById(dclassId))) { 
+        	if (param["id"] != "UserCtxParam" && param["id"] != "RoleCtxParam") { 
+	           paramIds.add(param["id"] + "." + a["id"]);
+	        } else {
+	           paramIds.add(param["id"]);	
+	        }
+        }
+      } else { 
+         paramIds.add(param["id"]);
+      }
+  }
+}
+%]
+<Descriptor service="com.webratio.components.web.session.GetContextService">
+   <ContextParameters>[%= StringUtils.join(paramIds, "|")%]</ContextParameters>
+</Descriptor>

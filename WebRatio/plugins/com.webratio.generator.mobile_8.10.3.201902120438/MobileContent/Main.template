@@ -1,0 +1,21 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.io.IOHelper
+
+eventSocketClient.sendBeginTask("MobileContent", 100)
+
+/* Ensure presence of an empty WebRatio.properties */
+processOutputFile("www/conf/WebRatio.properties", "WebRatio.properties", wr.project) { wrPropsFile ->
+	if (!wrPropsFile.exists()) {
+		wrPropsFile.createNewFile();
+	}
+}
+
+/* Copy the "MobileContent" directory */
+def contentDir = wr.explorer.contentFiles().getFile(".")
+if (contentDir.isDirectory()) {
+	IOHelper.copyDirectory(contentDir, wr.outputManager.getFile("www"), [IOHelper.CVS_AWARE_FILTER], [])
+}
+
+eventSocketClient.sendTaskWorked("MobileContent", 100)
+%]

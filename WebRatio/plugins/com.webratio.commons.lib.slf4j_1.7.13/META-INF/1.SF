@@ -1,0 +1,27 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: nne6h5BmBZdfJTN2TxiaFRkAwyEuY
+ z2ljnFh1oXyUDU=
+SHA-256-Digest-Manifest: q5n8idXQylAhvNi8ziExvXtwYURQbKhDQzm4c/GdgTA=
+Created-By: 1.7.0_80 (Oracle Corporation)
+
+Name: lib/slf4j-log4j12.jar
+SHA-256-Digest: UfGFbCrESrys/MqvheCeGVv8+1+r0Yd1MsHzVkTx8p0=
+
+Name: lib/slf4j-apisrc.zip
+SHA-256-Digest: cB6pHoRYTIBp6Oc+lUsQ3QmwqZPM1rfb3Kpti3NXQ2E=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: lib/slf4j-log4j12src.zip
+SHA-256-Digest: 94q7FAxolKsJhtgKXY44SsMcfRs6oUQoqFQAug7pM/4=
+
+Name: about.html
+SHA-256-Digest: +LXdl0rDYn9wym2x2U6FyhbdO6a9hC+yy7LU+613qQE=
+
+Name: about_files/slf4j.txt
+SHA-256-Digest: btopeOmUsM6hB9qT2n3Do8+CRU64Xi+W9EkotRlVTYM=
+
+Name: lib/slf4j-api.jar
+SHA-256-Digest: CnASNq/ZtMca3+bw1+vPDcKtkzFCkLKhqs8YhK7IowY=
+

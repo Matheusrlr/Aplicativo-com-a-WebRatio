@@ -1,0 +1,80 @@
+#?delimiters [%, %], [%=, %]
+[% setHTMLOutput() %]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="viewport-fit=cover, width=device-width, user-scalable=no,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta http-equiv="Content-Security-Policy" content="[% printRaw(executeContextTemplate("MVC/ContentSecurityPolicy.template")) %]">
+	
+	<title>[%= wr.appConfig.name %]</title>
+	
+	[% if (wr.debugMode) { %]
+		<!-- Debug -->
+		<script src="app/debug.js"></script>
+	[% } %]
+	
+	[% if (!wr.bareWebapp) { %]
+		<!-- Mobile Framework -->
+		<script src="cordova.js"></script>
+	[% } %]
+	
+	<!-- Production libraries -->
+	<script src="app/lib/bluebird.js"></script>
+	<script src="app/lib/xdata.js"></script>
+	<script src="app/lib/xdata-websql.js"></script>
+	<script src="app/lib/jaydata.js"></script>
+	<script src="app/lib/jaydata-promise.js"></script>
+	<script src="app/lib/SqLiteProvider.js"></script>
+	<script src="app/lib/angular.js"></script>
+	<script src="app/lib/angular-route.js"></script>
+	<script src="app/lib/angular-animate.js"></script>
+	<script src="app/lib/angular-sanitize.js"></script>
+	<script src="app/lib/angular-ui-router.js"></script>
+	<script src="app/lib/globalize-bundle.js"></script>
+	
+	<!-- Generated JS files -->
+	<script src="app/entitySet.js"></script>
+	[% if (wr.emulatorSupport) { %]
+		<script src="app/emulatorSupport.js"></script>
+	[% } %]
+	
+	<!-- WebRatio Runtime -->
+	[% if (wr.rtxSourcesAvailable && wr.appConfig.sourceDeployed) { %]
+		<script src="app/runtime/wrm.src.js"></script>
+		<script src="app/runtime/mvc.src.js"></script>
+	[% } else { %]
+		<script src="app/runtime/wrm.js"></script>
+		<script src="app/runtime/mvc.js"></script>
+	[% } %]
+	
+	<!-- Runtime Modules -->
+	<script src="app/runtime/components.js"></script>
+	
+	<!-- Contributed resources -->
+	[% printRaw(executeContextTemplate("MVC/Resources.template", [\
+		"entries": resourceRegistry.getSortedEntries() \
+	])) %]
+	
+</head>
+<body class="[%= (wr.project["fullScreen"] == "true") ? "fullscreen" : "" %]">
+	
+	<wr-view>
+	</wr-view>
+	
+	<div wr-feedback ng-cloak>
+		<div 
+			ng-if="feedback.data" 
+			ng-click="feedback.throwEvent($event, 'Accept')"
+			class="feedback wr-slide-in-down">
+			<div class="title">{{ feedback.data.title }}</div>
+			<div class="message">{{ feedback.data.message }}</div>
+			<button class="close button button-clear icon ion-close-round" ng-click="feedback.close($event)"></button>
+		</div>
+	</div>
+	
+	<script src="app/bootstrap.js"></script>
+	
+</body>
+</html>

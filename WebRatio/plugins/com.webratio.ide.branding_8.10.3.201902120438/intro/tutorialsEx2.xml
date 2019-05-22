@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<introContent>
+  <!-- Extension to the SDK Tutorials Page. -->
+  <extensionContent id="com.webratio.ide.ui.doc.user.ajax" name="WebRatio AJAX Features" alt-style="css/tutorials.properties" style="css/tutorials.css" path="tutorials/@">
+    <group id="wr_ajax" style-id="content-group">
+       <link url="http://org.eclipse.ui.intro/showStandby?partId=org.eclipse.platform.cheatsheet&amp;input=com.webratio.ide.ui.doc.user.ajax.refresh" label="The AJAX Selective Page Refresh" id="wr_Ajax_Refresh" style-id="content-link">
+        <text>Learn how to use the Selective Page Refresh AJAX feature to reload only some portions of a page.</text>
+      </link>
+      <link url="http://org.eclipse.ui.intro/showStandby?partId=org.eclipse.platform.cheatsheet&amp;input=com.webratio.ide.ui.doc.user.ajax.tooltip" label="The AJAX Tooltip" id="wr_Ajax_Tooltip" style-id="content-link">
+        <text>Learn how to create a tooltip and associate it to a unit in the Web project.</text>
+      </link>
+      <link url="http://org.eclipse.ui.intro/showStandby?partId=org.eclipse.platform.cheatsheet&amp;input=com.webratio.ide.ui.doc.user.ajax.autocomplete" label="The AJAX Autocomplete" id="wr_Ajax_Autocomplete" style-id="content-link">
+        <text>Learn how to create a suggestion list for a form field. The tutorial shows how to use the basic autocompletion feature and an advanced version of the same feature.</text>
+      </link>
+      <link url="http://org.eclipse.ui.intro/showStandby?partId=org.eclipse.platform.cheatsheet&amp;input=com.webratio.ide.ui.doc.user.ajax.window" label="The AJAX Window" id="wr_Ajax_Window" style-id="content-link">
+        <text>Learn how to embed the content of a page in an AJAX window.</text>
+      </link>
+      <link url="http://org.eclipse.ui.intro/showStandby?partId=org.eclipse.platform.cheatsheet&amp;input=com.webratio.ide.ui.doc.user.ajax.event" label="The AJAX Events" id="wr_Ajax_Events" style-id="content-link">
+        <text>Learn how to associate events (e.g. focus, blur, change) on form fields.</text>
+      </link>
+      <link url="http://org.eclipse.ui.intro/showStandby?partId=org.eclipse.platform.cheatsheet&amp;input=com.webratio.ide.ui.doc.user.ajax.dragAndDrop" label="The AJAX Drag and Drop" id="wr_Ajax_DragAndDrop" style-id="content-link">
+        <text>Learn how to model the Drag &amp; Drop feature in a page.</text>
+      </link>
+      <link url="http://org.eclipse.ui.intro/showStandby?partId=org.eclipse.platform.cheatsheet&amp;input=com.webratio.ide.ui.doc.user.ajax.formRefresh" label="The AJAX Selective Form Refresh" id="wr_Ajax_FormRefresh" style-id="content-link">
+        <text>Learn how to model a form in which only the fields that change value are reloaded.</text>
+      </link> 
+     </group>   
+  </extensionContent>
+</introContent>

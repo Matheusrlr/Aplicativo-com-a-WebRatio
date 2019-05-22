@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Components priority="100"> 
+  <Group> 
+    <Component>Details</Component>  
+    <Component>MultipleDetails</Component>  
+    <Component>Scroller</Component> 
+  </Group>  
+  <Group> 
+    <Component>SimpleList</Component>  
+    <Component>List</Component>  
+    <Component>CheckableList</Component>  
+    <Component>Hierarchy</Component>  
+    <Component>RecursiveHierarchy</Component> 
+  </Group>  
+  <Group> 
+    <Component>Form</Component>  
+    <Component>MultipleForm</Component> 
+  </Group>  
+  <Group> 
+    <Component>Calendar</Component>  
+    <Component>Message</Component>  
+    <Component>Alphabet</Component>  
+    <Component>ViewComponent</Component> 
+  </Group>  
+  <Warning key="NO_DISPLAY_ATTRIBUTES" severity="WARNING">Unspecified attributes to display for the component</Warning>  
+  <Warning key="NO_FIELDS" severity="WARNING">Unspecified fields for the component</Warning> 
+</Components>

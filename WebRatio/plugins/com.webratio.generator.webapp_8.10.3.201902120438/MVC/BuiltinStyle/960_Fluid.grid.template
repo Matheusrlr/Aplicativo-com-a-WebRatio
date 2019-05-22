@@ -1,0 +1,589 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Column Count" name="column-count" type="enum" values="12|16|24" default="12">
+Number of columns for laying out the grid.
+Allowed values are: 12, 16, 24.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Print Frame (INTERNAL)" name="-print-frame" type="enum" values="false|true" default="false">
+Whether to print a frame around the grid.
+</wr:LayoutParameter>
+[%
+import org.apache.commons.lang.math.NumberUtils
+import org.apache.commons.lang.StringUtils
+
+def columns = Integer.parseInt(params["column-count"])
+
+def responsiveGrid = grid.selectSingleNode("ancestor-or-self::*[Property[@name = 'responsive-grid' and @value='true']]") != null
+
+/*
+ * Included resources
+ */
+
+if (isRoot()) {
+	if (responsiveGrid) {
+		if (columns == 24) {
+			%]<wr:RequireResource ref="wr-gs-responsive-24"/>[%
+		} else if (columns == 16) {
+			%]<wr:RequireResource ref="wr-gs-responsive-16"/>[%
+		} else if (columns == 12) {
+			%]<wr:RequireResource ref="wr-gs-responsive-12"/>[%
+		} else {
+			throwGenerationError("Invalid root column count: " + columns)
+		}
+		%]<wr:RequireResource ref="wr-ui-gridresponsive"/>[%
+	} else {
+		if (columns == 24) {
+			%]<wr:RequireResource ref="wr-960gs-24"/>[%
+		} else if (columns == 16) {
+			%]<wr:RequireResource ref="wr-960gs-16"/>[%
+		} else if (columns == 12) {
+			%]<wr:RequireResource ref="wr-960gs-12"/>[%
+		} else {
+			throwGenerationError("Invalid root column count: " + columns)
+		}
+		%]<wr:RequireResource ref="wr-ui-gridsystem"/>[%
+	}
+}
+
+/*
+ * Computation
+ */
+
+def isEmptyCell(cell) {
+	return cell.selectSingleNode("layout:Component|layout:Attribute|layout:Field|layout:Event|layout:Grid|layout:SubPage") == null
+}
+
+def getAt(list, index, newValueFactory = null) {
+	def result = list[index]
+	if (result == null && newValueFactory != null) {
+		list[index] = result = newValueFactory()
+	}
+	return result
+}
+
+def insertCell(matrix, r, c, cell, masterInfo = null) {
+	def row = getAt(matrix, r, { return [] })
+	if (row[c] == null) {
+		def info = [:]
+		info.r = r
+		info.c = c
+		if (masterInfo != null) {
+			info.top = masterInfo.top
+			info.left = masterInfo.left
+			info.width = masterInfo.width
+			info.height = masterInfo.height
+		} else {
+			info.top = r
+			info.left = c
+	        info.width = NumberUtils.toInt(cell["colspan"], 1)
+	        info.height = NumberUtils.toInt(cell["rowspan"], 1)
+		}
+		if (!isEmptyCell(cell)) {
+			info.cell = cell
+		}
+        row[c] = info
+        return info
+	}
+	return null
+}
+
+def insertMatrix(matrix, r, c, newMatrix) {
+	newMatrix.eachWithIndex { newRow, newi ->
+		def row = getAt(matrix, r + newi, { return [] })
+		newRow.eachWithIndex { newInfo, newj ->
+			row[c + newj] = newInfo
+		}
+	}
+}
+
+def forceVirtualRows(matrix) {
+	def strategies = []
+	matrix.each { row ->
+		def acrossInfos = row.findAll { info -> info.cell && (info.top + info.height - 1 > info.r) }.unique { info -> info.cell }
+		if (!acrossInfos.empty) {
+			def area = 0
+			def shrinks = acrossInfos.collect { info ->
+				def offset = (info.top + info.height - 1) - info.r
+				def up = ((offset / info.height) <= 0.5)
+				offset = up ? offset : info.height - offset
+				area += info.width * offset
+				return [info: info, offset: offset, up: up]
+			}
+			strategies.add([shrinks: shrinks, area: area])
+		}
+	}
+	if (strategies.empty) {
+		throwGenerationException("Found no way to force a virtual row by shrinking elements")
+	}
+	strategies.min { it.area }.shrinks.each {
+		shrinkItem(matrix, it.info, it.offset, it.up)	
+	}
+}
+
+def shrinkItem(matrix, info, offset, up) {
+	def rBase = matrix[0][0].r
+	def cBase = matrix[0][0].c
+	def overrideInfo = { newInfo ->
+		for (r in ((newInfo.top)..(newInfo.top + newInfo.height - 1))) {
+			def row = matrix[r - rBase]
+			for (c in ((newInfo.left)..(newInfo.left + newInfo.width - 1))) {
+				def rowInfo = row[c - cBase]
+				rowInfo.cell = newInfo.cell
+				rowInfo.top = newInfo.top
+				rowInfo.left = newInfo.left
+				rowInfo.width = newInfo.width
+				rowInfo.height = newInfo.height
+			}
+		}
+	}
+	def oldInfo = info.clone()
+	overrideInfo([ \
+		cell: oldInfo.cell,
+		top: (up ? oldInfo.top : (oldInfo.top + offset)), \
+		left: oldInfo.left, \
+		width: oldInfo.width, \
+		height: oldInfo.height - offset \
+	])
+	overrideInfo([ \
+		cell: null,
+		top: (up ? (oldInfo.top + oldInfo.height - offset) : oldInfo.top), \
+		left: oldInfo.left, \
+		width: oldInfo.width, \
+		height: offset \
+	])
+}
+
+def findVirtualRows(matrix) {
+	def result = []
+	def vr = 0
+	matrix.each { row ->
+		def vrow = getAt(result, vr, { return [] })
+		vrow.add(row)
+		if (row.find { info -> info.cell && (info.top + info.height - 1 > info.r) } == null) {
+			vr++
+		}
+	}
+	return result
+}
+
+def findVirtualCols(matrix) {
+	def boundaries = []
+	matrix.each { row ->
+		row.eachWithIndex { info, c ->
+			if (boundaries[c] != false) {
+				def aligned = !(info.left + info.width - 1 > info.c)
+				boundaries[c] = (boundaries[c] ?: true) && aligned
+			}
+		}
+	}
+	
+	def vcs = []
+	initVcs: {
+		def vc = 0
+		for (def i = 0; i < boundaries.size(); i++) {
+			if (boundaries[i]) {
+				vcs[i] = vc++;
+			} else {
+				vcs[i] = vc
+			}
+		}
+	}
+	
+	def result = []
+	matrix.eachWithIndex { row, r ->
+		row.eachWithIndex { info, c ->
+			def vc = vcs[c]
+			def vcol = getAt(result, vc, { return [] })
+			def vcolRow = getAt(vcol, r, { return [] })
+			vcolRow.add(info)
+		}
+	}
+	
+	return result
+}
+
+def mergeVirtualCols(vcol1, vcol2) {
+	def vrows1 = findVirtualRows(vcol1)
+	def vrows2 = findVirtualRows(vcol2)
+	def w = vrows1[0][0].size()
+	def merged = []
+	def h1 = 0, h2 = 0
+	def alignmentsCount = 0
+	while (!vrows1.empty || !vrows2.empty) {
+		if (h1 <= h2 && !vrows1.empty) {
+			def vrow = vrows1.remove(0)
+			insertMatrix(merged, h1, 0, vrow)
+			h1 += vrow.size()
+		} else if (h2 <= h1 && !vrows2.empty) {
+			def vrow = vrows2.remove(0)
+			insertMatrix(merged, h2, w, vrow)
+			h2 += vrow.size()
+		}
+		if (h1 == h2) {
+			alignmentsCount++
+		}
+	}
+	return ((alignmentsCount > 1) ? merged : null)
+}
+
+def findMergedVirtualCols(matrix) {
+	def cols = findVirtualCols(matrix)
+	for (def i = 0; i < cols.size() - 1; i++) {
+		def merged = mergeVirtualCols(cols[i], cols[i + 1])
+		if (merged != null) {
+			cols.remove(i + 1)
+			cols[i] = merged
+			i--
+		}
+	}
+	return cols
+}
+
+def getMatrixItem(matrix) {
+	def result = null
+	def isSpan = { info -> info.top != info.r || info.left != info.c }
+	for (row in matrix) {
+		for (info in row) {
+			if (!isSpan(info)) {
+				if (info.cell) {
+					if (result != null && result.cell != info.cell) {
+						return null		// disallow multiple elements
+					}
+				} else {
+					if (result != null) {
+						continue		// ignore trailing space
+					}
+				}
+				result = info
+			}
+		}
+	}
+	return result
+}
+
+def getMatrixWidth(matrix) {
+	return matrix.first().size()
+}
+
+def getMatrixHeight(matrix) {
+	return matrix.size()
+}
+
+/*
+ * Rendering
+ */
+
+def render(matrix, params = [:], containerStack = [], atomicDepth = 0, depth = 0) {
+	if (params.renderItem == null || params.renderContainer == null) {
+		throwGenerationException("Must specify both render functions")
+	}
+	params.width = params.width ?: getMatrixWidth(matrix)
+	params.prefix = params.prefix ?: 0
+	params.suffix = params.suffix ?: 0
+	params.alpha = params.alpha ?: false
+	params.omega = params.omega ?: false
+	params.clear = params.clear ?: false
+	
+	/* Compute the actual width per matrix column */
+	def widthUnit = params.width / getMatrixWidth(matrix)
+	if (widthUnit != widthUnit as int) {
+		throwGenerationException("Template grid must be a multiple of layout Grid column count")
+	}
+	
+	/* Split the matrix into rows (for 2-deep atoms, force division) */
+	if (atomicDepth >= 2) {
+		forceVirtualRows(matrix)
+		atomicDepth = 0
+	}
+	def rows = findVirtualRows(matrix)
+	
+	/* Use a container if there are multiple rows or forced from caller */
+	def useContainer = (!containerStack.empty && containerStack.last() != "CONT") && rows.size() > 1
+	
+	/* Render rows sequentially, clearing after each one */
+	def content = {
+		rows.eachWithIndex { row, rowIndex ->
+			
+			/* Split the row into columns */
+			def cols = findMergedVirtualCols(row)
+			
+			/* Collapse spaces into prefixes and suffixes of visible columns */
+			def pendingSpace = 0
+			def colInfos = []
+			cols.each { col ->
+				def item = getMatrixItem(col)
+				if (item && !item.cell) {
+					if (colInfos.empty) {
+						pendingSpace += item.width
+					} else {
+						colInfos.last().suffix += item.width
+					}
+				} else {
+					colInfos.add([col: col, item: item, prefix: pendingSpace, suffix: 0])
+					pendingSpace = 0
+				}
+			}
+			
+			/* Record a split if there is more than one column */
+			if (colInfos.size() > 1) {
+				containerStack.push("SPLIT")
+			}
+			try {
+			
+				/* Render visible columns sequentially */
+				colInfos.eachWithIndex { colInfo, colIndex ->
+					def colLast = colIndex >= colInfos.size() - 1
+					def colAlpha = (atomicDepth == 0) && colIndex <= 0
+					def colOmega = (atomicDepth == 0) && colLast
+					def col = colInfo.col
+					def item = colInfo.item
+					
+					/* Prepare column parameters */
+					def colParams = [
+						prefix: colInfo.prefix,
+						suffix: colInfo.suffix,
+						alpha: colAlpha,
+						omega: colOmega,
+						clear: (colLast && atomicDepth == 0)
+					]
+					
+					/* If column contains items, render them now, otherwise recurse */
+					if (item) {
+						colParams.width = item.width * widthUnit
+						pushSizeInfo([width: colParams.width])
+						try {
+							params.renderItem(item.cell, colParams)
+						} finally {
+							popSizeInfo()
+						}
+					} else {
+						def atomic = getMatrixWidth(col) >= getMatrixWidth(matrix) && getMatrixHeight(col) >= getMatrixHeight(matrix)
+						colParams.width = getMatrixWidth(col) * widthUnit
+						colParams.renderItem = params.renderItem
+						colParams.renderContainer = params.renderContainer
+						pushSizeInfo([width: colParams.width, ref: colParams.width])
+						try {
+							render(col, colParams, containerStack, atomic ? atomicDepth + 1 : atomicDepth, depth + 1) // recurse
+						} finally {
+							popSizeInfo()
+						}
+					}
+				}
+			
+			} finally {
+				if (colInfos.size() > 1) {
+					containerStack.pop();
+				}
+			}
+		}
+	}
+
+	if (depth == 0) {
+		pushSizeInfo([ref: params.width])
+	}
+	try {
+		if (useContainer) {
+			containerStack.push("CONT")
+			try {
+				params.renderContainer(content, params)
+			} finally {
+				containerStack.pop()
+			}
+		} else {
+			content()
+		}
+	} finally {
+		if (depth == 0) {
+			popSizeInfo()
+		}
+	}
+}
+
+def pushSizeInfo(info) {
+	if (!binding.variables["_960_Fluid_grid_sizes"]) {
+		_960_Fluid_grid_sizes = []
+	}
+	_960_Fluid_grid_sizes.add(info)
+}
+
+def popSizeInfo() {
+	if (binding.variables["_960_Fluid_grid_sizes"]) {
+		def l = _960_Fluid_grid_sizes
+		l.remove(l.size() - 1)
+	}
+}
+
+def isRoot() {
+	def sizes = binding.variables["_960_Fluid_grid_sizes"] ?: []
+	return sizes.isEmpty()
+}
+
+def computeWidthFraction(index = -1) {
+	def sizes = binding.variables["_960_Fluid_grid_sizes"] ?: []
+	def width = -1, ref = -1, refIndex = -1
+	for (i in (index >= 0 ? index : sizes.size() - 1)..0) {
+		def size = sizes.get(i)
+		if (width >= 0 || index == 0) {
+			if (size.ref != null) {
+				ref = size.ref
+				refIndex = i
+				break
+			}
+		}
+		if (width < 0 && size.width != null) {
+			width = size.width
+		}
+	}
+	if (refIndex < 0) {
+		throwGenerationException("Width reference not found")
+	} else if (width < 0) {
+		width = ref
+	}
+	if (refIndex > 0) {
+		return computeWidthFraction(refIndex) * ((width as double) / ref) // recurse
+	} else {
+		return ((width as double) / ref)
+	}
+}
+
+def getResponsiveClass(element, propertyName, classPrefix) {
+	def responsiveSize = element.selectSingleNode("Property[@name='" + propertyName + "']/@value")?.getText()
+	if (responsiveSize) {
+	  return " " + classPrefix + responsiveSize
+	}
+	return ""
+}
+
+def computeResponsiveClasses(content) {
+	def classes = ""
+	if (content) {
+		def element = content.selectSingleNode("layout:Unit|layout:Field|layout:Link|layout:Attribute|layout:Grid|layout:SubPage")
+		if (element.getQualifiedName() == "layout:Grid" && "cell".equals(element.attributeValue("containerType"))) {
+			element = element.selectSingleNode("layout:Row[1]/layout:Cell[1]")
+		}
+		classes += getResponsiveClass(element, 'responsive-xs', 'col-xs-')
+		classes += getResponsiveClass(element, 'responsive-xs-offset', 'col-xs-offset-')
+		classes += getResponsiveClass(element, 'responsive-xs-offset-right', 'col-xs-offset-right-')
+		
+		classes += getResponsiveClass(element, 'responsive-md', 'col-md-')
+		classes += getResponsiveClass(element, 'responsive-md-offset', 'col-md-offset-')
+		classes += getResponsiveClass(element, 'responsive-md-offset-right', 'col-md-offset-right-')
+		
+		classes += getResponsiveClass(element, 'responsive-lg', 'col-lg-')
+		classes += getResponsiveClass(element, 'responsive-lg-offset', 'col-lg-offset-')
+		classes += getResponsiveClass(element, 'responsive-lg-offset-right', 'col-lg-offset-right-')
+		
+	}
+	return classes
+}
+
+def computeClearfixClasses(content) {
+	def classes = ""
+	if (content) {
+		def element = content.selectSingleNode("layout:Unit|layout:Field|layout:Link|layout:Attribute|layout:Grid|layout:SubPage")
+		if (element.getQualifiedName() == "layout:Grid" && "cell".equals(element.attributeValue("containerType"))) {
+			element = element.selectSingleNode("layout:Row[1]/layout:Cell[1]")
+		}
+		
+		if (element.selectSingleNode("Property[@name='responsive-xs-clearfix']")) {
+			classes += " visible-xs-block"
+		}
+		if (element.selectSingleNode("Property[@name='responsive-sm-clearfix']")) {
+			classes += " visible-sm-block"
+		}
+		if (element.selectSingleNode("Property[@name='responsive-md-clearfix']")) {
+			classes += " visible-md-block"
+		}
+		if (element.selectSingleNode("Property[@name='responsive-lg-clearfix']")) {
+			classes += " visible-lg-block"
+		}
+		
+		if (element.selectSingleNode("Property[@name='responsive-xs-hidden-clearfix']")) {
+			classes += " hidden-xs"
+		}
+		if (element.selectSingleNode("Property[@name='responsive-sm-hidden-clearfix']")) {
+			classes += " hidden-sm"
+		}
+		if (element.selectSingleNode("Property[@name='responsive-md-hidden-clearfix']")) {
+			classes += " hidden-md"
+		}
+		if (element.selectSingleNode("Property[@name='responsive-lg-hidden-clearfix']")) {
+			classes += " hidden-lg"
+		}
+		
+	}
+	return classes
+}
+%]
+
+[%
+
+/* Compute the grid matrix */
+def gridMatrix = []
+grid.selectNodes("layout:Row").eachWithIndex { row, r ->
+	row.selectNodes("layout:Cell").eachWithIndex { cell, c ->
+		def info = insertCell(gridMatrix, r, c, cell)
+		if (info != null) {
+			for (r2 in (r)..(r + info.height - 1)) {
+				for (c2 in (c)..(c + info.width - 1)) {
+					if (r2 != r || c2 != c) {
+						insertCell(gridMatrix, r2, c2, cell, info)
+					}
+				}
+			}
+		}
+	}
+}
+
+if (params["-print-frame"] == "true") {
+    printRaw(executeContextTemplate("MVC/Frame.template", ["element" : grid, "frameMode" : "start"]))
+}
+%]
+<div class="container_[%= columns %][% if (responsiveGrid && isRoot()) { %] container_responsive[% } %]">
+[% if (responsiveGrid) { %]	<div class="row">[% } %]
+	[%
+		def renderItemOrContainer = { content, p ->
+			if (responsiveGrid) {
+				def actualWidth = Math.max(1, Math.floor(computeWidthFraction() * 24)) as int
+				def hasNestedContent = (content instanceof Closure) 
+				def responsiveClasses = hasNestedContent ? "" : computeResponsiveClasses(content)
+				def clearfixClasses = hasNestedContent ? "" : computeClearfixClasses(content) %]
+				<div class="col-sm-[%= p.width %][% if (p.prefix > 0) { %] col-sm-offset-[%= p.prefix %][% } %][% if (p.suffix > 0) { %] col-sm-offset-right-[%= p.suffix %][% } %][%= responsiveClasses %][% if (hasNestedContent) { %] container_[%= p.width %][% } %] agrd_[%= actualWidth %]">
+				[% if (hasNestedContent) { %]
+					<div class="row">
+						[% content() %]
+					</div>
+				[% } else if (content) { %]
+					<wr:Cell context="content"/>
+				[% } %]
+				</div>
+				[% if (p.clear || !clearfixClasses.isEmpty()) { %]
+					<div class="clearfix[%= clearfixClasses %]"></div>
+				[% }
+			} else {
+			def actualWidth = Math.max(1, Math.floor(computeWidthFraction() * 24)) as int
+			def hasNestedContent = (content instanceof Closure) %]
+			<div class="grid_[%= p.width %][% if (p.prefix > 0) { %] prefix_[%= p.prefix %][% } %][% if (p.suffix > 0) { %] suffix_[%= p.suffix %][% } %][% if (p.alpha) { %] alpha[% } %][% if (p.omega) { %] omega[% } %][% if (hasNestedContent) { %] container_[%= p.width %][% } %] agrd_[%= actualWidth %]">
+			[% if (hasNestedContent) { %]
+				[% content() %]
+			[% } else if (content) { %]
+				<wr:Cell context="content"/>
+			[% } %]
+			</div>
+			[% if (p.clear) { %]
+				<div class="clear"></div>
+			[% }
+		}
+		}
+		render(gridMatrix, [ \
+			width: columns, \
+			renderItem: renderItemOrContainer, \
+			renderContainer: renderItemOrContainer \
+		])
+	%]
+[% if (responsiveGrid) { %]	</div>[% } %]
+</div>
+[%
+if (params["-print-frame"] == "true") {
+    printRaw(executeContextTemplate("MVC/Frame.template", ["element" : grid, "frameMode" : "end"]))
+}
+%]

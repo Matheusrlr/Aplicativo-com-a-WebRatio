@@ -1,0 +1,326 @@
+#?delimiters [%,%],[%=,%]
+[%
+import org.apache.commons.lang.StringUtils
+
+setXMLOutput()
+
+def isLocalDomainModelElement(element){
+  if(element["ownerProjectId"] != ""){
+     return false
+  }
+  element = element.getParent()
+  if(element != null){
+     return isLocalDomainModelElement(element)
+  }
+  return true
+}
+
+def getDuration(ent) {
+    if (ent["duration"] == "volatile" || ent["volatileDB"] == "true") {
+        if (ent["volatileScope"] == "application") {
+            return "volatileApplication"
+        } else {
+            return "volatileSession"
+        }
+    } else {
+        return "persistent"
+    }
+}
+
+def isSimpleImportedAttribute(attr){
+  return attr != null && attr["derivationQuery"].startsWith("simpleImported::")
+}
+
+def getImportPath(attr, visitedAtts = new HashSet()){
+  def derivQuery = StringUtils.substringAfter(attr["derivationQuery"], "::Self.")
+  def path = StringUtils.substringBeforeLast(derivQuery, ".").tokenize(".")
+  def lastSegment = StringUtils.substringAfterLast(derivQuery, ".")
+  def targetAttr = getById(lastSegment) 
+  visitedAtts.add(attr)
+  if(isSimpleImportedAttribute(targetAttr) && !visitedAtts.contains(targetAttr)){
+     def path2 = getImportPath(targetAttr, visitedAtts)
+     if(!path.contains(path2[-1])){
+       path.addAll(path2)
+     }
+  }else{
+    path.add(lastSegment)
+  }
+  return path
+}
+
+def writeClassAttributes(domainClass){
+   def superClass = domainClass.valueOf("Generalization/@superClass")
+   def concatSeparator = domainClass.valueOf("Property[@name = 'concatSeparator']/@value")
+   def basePackage = getPackageName()
+   def classPkg = getPackageName(domainClass)
+   if(basePackage == classPkg){
+      classPkg = null
+   }
+   %]id="[%=domainClass["id"]%]" 
+     name="[%=domainClass["name"]%]"
+     className="[%=getClassInfo(domainClass)%]"
+     duration="[%=getDuration(domainClass)%]" 
+     dataSource="[%=getDataSourceId(domainClass)%]" 
+   [% 
+   if(classPkg){%] packageName="[%=classPkg%]"[%}
+   if(superClass != ""){%] superClass="[%=superClass%]"[%} 
+   if(domainClass.valueOf("@db:isView") == "true"){%] view="true"[%} 
+   if(concatSeparator != ""){%] concatSeparator="[%=concatSeparator%]"[%}
+   if(isDerived(domainClass)){%] derived="true"[%}
+   if(wr.project.selectSingleNode("./DomainModel/DataServices/ServiceClass[@class='"+domainClass["id"]+"']")){%] 
+      stateAware="true"
+   [%}
+}
+
+
+def writeAttributeAttributes(attr){
+  def fieldName = getFieldName(attr)
+  %]
+    id="[%=attr["id"]%]" 
+    key="[%=attr["key"] == "true" && attr["ownerId"] != "true"%]" 
+    name="[%=attr["name"]%]" 
+    fieldName="[%=fieldName%]" 
+    type="[%=attr["type"]%]" 
+    javaType="[%=getJavaType(attr["type"])%]" 
+  [%
+  def derived = isDerived(attr)
+  def complexDerived = derived && !isSimpleDerived(attr)
+  def simpleImported = derived && !complexDerived && attr["formula"] == ""
+  def importPath = simpleImported  ? getImportPath(attr) : []
+  if(attr["type"] == "blob"){
+     def storageType = StringUtils.defaultIfEmpty(attr["storageType"], "file")
+     if(simpleImported){
+        storageType = getById(importPath[-1])["storageType"]
+     }
+     
+     def uploadPolicy = StringUtils.defaultIfEmpty(attr["uploadPolicy"], "managed")
+     def deletePolicy = StringUtils.defaultIfEmpty(attr["deletePolicy"], "no action")
+     def uploadPath = (attr["uploadPath"] != "") ? StringUtils.removeStart(attr["uploadPath"], "/") : ""
+     def fileUploader = attr["fileUploader"]
+     if(attr.parent["duration"] == "volatile" || attr.parent["volatileDB"] == "true"){
+        uploadPath = "virtual/" + (StringUtils.isBlank(uploadPath) ? attr.parent["id"] : uploadPath)  
+        storageType = "file"
+     }
+     uploadPath = StringUtils.removeEnd(uploadPath, "/")   
+     def blobPrefix = (complexDerived) ? "value" : fieldName
+     %] storageType="[%=storageType%]"[%
+     %] uploadPolicy="[%=uploadPolicy%]"[%
+     %] deletePolicy="[%=deletePolicy%]"[%
+     %] refFieldName="[%=blobPrefix + "Ref"%]"[%
+     if(storageType == "database"){
+       %] useRefColumn="[%=attr.valueOf("@db:column") != ""%]"[%
+       %] binaryFieldName="[%=blobPrefix + "Binary"%]"[%
+     }
+     %] defBlobName="[%=attr["defBlobName"]%]"[%
+     if(uploadPath != ""){%] uploadPath="[%=uploadPath%]"[%}
+     if(fileUploader != ""){%] fileUploader="[%=fileUploader%]"[%}
+  } else if(attr["type"] == "password" && attr.parent["duration"] != "volatile"){
+     def cryptAlgorithm = attr.valueOf("@db:cryptAlgorithm")
+     if(cryptAlgorithm != ""){
+     	  if (cryptAlgorithm=="com.webratio.rtx.crypto.DES3UnicodeCryptImplementation") {
+     	  		cryptAlgorithm = "com.webratio.data.crypto.DES3Unicode"
+     	  } else if (cryptAlgorithm == "com.webratio.rtx.crypto.NullableDES3UnicodeCryptImplementation") {
+     	  		cryptAlgorithm = "com.webratio.data.crypto.NullableDES3Unicode"
+     	  } else if (cryptAlgorithm == "com.webratio.rtx.crypto.DESCryptImplementation") {
+     	  		cryptAlgorithm = "com.webratio.data.crypto.DES"
+     	  } else if (cryptAlgorithm == "com.webratio.rtx.core.PBKDF2WithHmacSHA1CryptImplementation") {
+     	  		cryptAlgorithm = "com.webratio.data.crypto.PBKDF2WithHmacSHA1CryptImplementation"
+     	  }
+       %] cryptAlgorithm="[%=cryptAlgorithm%]"[%
+     }
+  } else if(attr["type"] == "boolean"){
+     if(attr.parent["duration"] != "volatile"){
+       %] trueValue="[%=attr.valueOf("@db:trueValue")%]"[%
+       %] falseValue="[%=attr.valueOf("@db:falseValue")%]"[%
+     }
+     def xsdTrueValue = attr.valueOf("@wrxsd:trueValue")
+     def xsdFalseValue = attr.valueOf("@wrxsd:falseValue")
+     if(!StringUtils.isBlank(xsdTrueValue)){%] xsdTrueValue="[%=xsdTrueValue%]"[%}
+     if(!StringUtils.isBlank(xsdFalseValue)){%] xsdFalseValue="[%=xsdFalseValue%]"[%}      
+  } else if(attr["type"] == "text" && attr.parent["duration"] != "volatile"){
+     %] clob="[%=attr.valueOf("@db:clob")%]"[%
+     %] clobFieldName="[%=getFieldName(attr) + "CLOB"%]"[%
+  }
+  if(attr["subType"] != ""){%] subType="[%=attr["subType"]%]"[%}
+  if(attr["contentType"] != ""){%] contentType="[%=attr["contentType"]%]"[%}
+  if(attr.valueOf("@db:charLength") != ""){%] fixedCharLength="[%=attr.valueOf("@db:charLength")%]"[%}
+  if(simpleImported){
+     %] importPath="[%=importPath.join(".")%]"[%
+     %] refAttribute="[%=importPath[-1]%]"[%
+     %] derivationQuery="[%=attr["derivationQuery"]%]"[%
+  }else if(derived){
+     def derivationQuery = attr["derivationQuery"]
+     if(StringUtils.isBlank(derivationQuery) && !StringUtils.isBlank(attr.valueOf("@db:table"))){
+        derivationQuery="external::" + attr.valueOf("@db:table") + "." + attr.valueOf("@db:column")
+     }
+     %] derivationQuery="[%=derivationQuery%]"[%     
+  }
+  if(!StringUtils.isBlank(attr["transformerClass"])){
+     %] transformerClass="[%=attr["transformerClass"]%]"[%
+  }
+  if(!StringUtils.isBlank(attr["defaultValue"])){
+     %] defaultValue="[%=attr["defaultValue"]%]"[%
+  }
+  if(attr["specialBehavior"] != ""){
+    %] specialId="[%=attr["specialBehavior"]%]"[% 
+  }
+}
+
+def isUserAware(roleId) {
+  def userServices = wr.project.selectSingleNode("DomainModel/UserServices")
+  if (userServices == null) {
+  	return false
+  }
+  def roleChains = userServices["associationRoles"]
+  if (StringUtils.isBlank(roleChains)) {
+    return false
+  }
+  for (roleChain in StringUtils.split(roleChains)) {
+    if (StringUtils.contains(roleChain, roleId + ".") || StringUtils.endsWith(roleChain, roleId)) {
+      return true
+    }
+  }
+  return false
+}
+
+def getUserRoleChains(classId) {
+  def userServices = wr.project.selectSingleNode("DomainModel/UserServices")
+  if (userServices == null) {
+  	return null
+  }
+  def userAssociations = userServices["associationRoles"]
+  if (StringUtils.isBlank(userAssociations)) {
+    return null
+  }
+  def roleChains = []
+  for (roleChain in StringUtils.split(userAssociations)) {
+    for(associationRole in wr.project.selectNodes("DomainModel//Association[@sourceClass='" + classId + "']/AssociationRole2")) {
+    	def roleId = associationRole["id"]
+    	if (StringUtils.contains(roleChain, roleId + ".") || StringUtils.endsWith(roleChain, roleId)) {
+           def partialRoleChain = StringUtils.substring(roleChain, 0, StringUtils.indexOf(roleChain, roleId) + roleId.length())
+           def inverseRoleChain = ""
+           for (token in StringUtils.split(partialRoleChain, ".")) {
+              def currentAssociationRole = wr.project.selectSingleNode("DomainModel//AssociationRole1[@id='" + token + "']|DomainModel//AssociationRole2[@id='" + token + "']")
+              if (currentAssociationRole.getName() == "AssociationRole2") {
+              	inverseRoleChain += currentAssociationRole.parent.valueOf("AssociationRole1/@id") + "."
+              } else {
+              	inverseRoleChain += currentAssociationRole.parent.valueOf("AssociationRole2/@id") + "."
+              }
+           }
+           roleChains.add(inverseRoleChain.substring(0, inverseRoleChain.lastIndexOf(".")))
+	    }
+	}
+	for(associationRole in wr.project.selectNodes("DomainModel//Association[@targetClass='" + classId + "']/AssociationRole1")) {
+		def roleId = associationRole["id"]
+    	if (StringUtils.contains(roleChain, roleId + ".") || StringUtils.endsWith(roleChain, roleId)) {
+           def partialRoleChain = StringUtils.substring(roleChain, 0, StringUtils.indexOf(roleChain, roleId) + roleId.length())
+           def inverseRoleChain = ""
+           for (token in StringUtils.split(partialRoleChain, ".")) {
+          	  def currentAssociationRole = wr.project.selectSingleNode("DomainModel//AssociationRole1[@id='" + token + "']|DomainModel//AssociationRole2[@id='" + token + "']")
+              if (currentAssociationRole.getName() == "AssociationRole2") {
+              	inverseRoleChain += currentAssociationRole.parent.valueOf("AssociationRole1/@id") + "."
+              } else {
+              	inverseRoleChain += currentAssociationRole.parent.valueOf("AssociationRole2/@id") + "."
+              }
+           }
+           roleChains.add(inverseRoleChain.substring(0, inverseRoleChain.lastIndexOf(".")))
+	    }
+	}
+  }
+  return StringUtils.join(roleChains.toArray(), "|")
+}
+
+
+
+%]<DomainModel packageName="[%=getPackageName()%]" volatileKeyPolicy="[%=wr.project.valueOf("DomainModel/@volatileKeyPolicy")%]" useQualifiedEntities="[%=wr.project.valueOf("DomainModel/@useQualifiedEntities")%]">
+  <!-- DATASOURCES -->
+  <PojoDataSource id="application_beans" duration="volatileApplication" volatileKeyPolicy="[%=wr.project.valueOf("DomainModel/@volatileKeyPolicy")%]"/>    
+  <PojoDataSource id="session_beans" duration="volatileSession" volatileKeyPolicy="[%=wr.project.valueOf("DomainModel/@volatileKeyPolicy")%]"/>
+        
+  [%
+  for(db in wr.project.selectNodes("/WebProject/DomainModel/db:Database[string(@ownerProjectId)='']").sort{it["id"]}){
+     def duration = db["duration"]
+     %]<DatabaseDataSource id="[%=db["id"]%]" 
+                 url="[%=db["url"]%]" 
+                 schema="[%=db["schema"]%]" 
+                 [%if(duration != ""){%] duration="[%=duration + StringUtils.capitalize(StringUtils.defaultIfEmpty(db["scope"], "session"))%]"[%}%]
+                 [%if(db["cloudDbName"] != ""){%] cloudDbName="[%=db["cloudDbName"]%]"[%}%]
+                 type="[%=db["type"]%]">
+                 [%db.selectNodes("Property").each{%]<Property name="[%=it["name"]%]" value="[%=it["value"]%]"/>[%}%]
+     </DatabaseDataSource>[%                  
+  }
+  %]
+  
+  [%
+     def blobRepositories = wr.project.selectNodes("/WebProject/DomainModel/BlobRepository[string(@ownerProjectId)='']").sort{it["id"]}
+     if(!blobRepositories.empty){ 
+       %]<!-- BLOB REPOSITORIES -->[%
+       for(sdp in blobRepositories){
+           %]<BlobRepository[%sdp.attributes().findAll{it["name"] != "_sel" && it["name"] != "type"}.each{%] [%=it["name"]%]="[%=it["value"]%]"[%}%]>[%
+               sdp.selectNodes("Property").each{%]<Property name="[%=it["name"]%]" value="[%=it["value"]%]"/>[%}
+           %]</BlobRepository>[%
+       }
+     }
+  %]
+  
+  <!-- CLASSES -->[%
+  for(domainClass in wr.project.selectNodes("DomainModel//Class").findAll{isLocalDomainModelElement(it)}.sort{it["id"]}) {
+    def userRoleChains = getUserRoleChains(domainClass["id"]) 
+    %]<Class [%writeClassAttributes(domainClass)%] [%if(!StringUtils.isBlank(userRoleChains)){%]userRoleChains="[%=userRoleChains%]"[%}%]>[%
+      for(attr in domainClass.selectNodes("Attribute").sort{it["id"]}) { 
+         %]<Attribute [%writeAttributeAttributes(attr)%]>[%
+         attr.selectNodes("Property").each{%]<Property name="[%=it["name"]%]" value="[%=it["value"]%]"/>[%}
+	     %]</Attribute>[%  
+	  } 
+      def outgoingRoles = getOutgoingRoles(domainClass)
+      if(!outgoingRoles.empty){
+        %]<OutgoingRoles>[%=outgoingRoles.collect{it["id"]}.join("|")%]</OutgoingRoles>[%
+        %]<InverseRoles>[%=outgoingRoles.findAll{!isAliveRole(it)}.collect{it["id"]}.join("|")%]</InverseRoles>[%
+      }
+      domainClass.selectNodes("Property").each{%]<Property name="[%=it["name"]%]" value="[%=it["value"]%]"/>[%}
+    %]</Class>[%
+  }
+  
+  %]
+  <!-- ASSOCIATION ROLES -->[%
+  for(role in wr.project.selectNodes("DomainModel/Association[string(@ownerProjectId)='']/*").sort{it["id"]}) {
+     if (role.name == "AssociationRole1") {
+      %]<AssociationRole 
+           id="[%=role["id"]%]" 
+           name="[%=role["name"]%]"
+           associationLogicName="[%=toValidClassName(role.parent["name"])%]"
+           inverseId="[%=role.parent.valueOf("AssociationRole2/@id")%]"
+           source="[%=role.parent["sourceClass"]%]" 
+           target="[%=role.parent["targetClass"]%]" 
+           maxCard="[%=isMany(role) ? "many" : "1"%]"
+           fieldName="[%=getFieldName(role)%]" 
+           derived="[%= role["derivationQuery"] != "" || role.parent.valueOf("@db:isView") == "true"%]"
+           dataSource="[%=getDataSourceId(role.parent)%]"
+           [%if(role["cascadeDelete"] == "true"){ %] cascadeDelete="true"[%}%]
+           [%if(role.valueOf("../@db:isView") == "true"){%] view="true"[%}%] 
+           direct="[%=isAliveRole(role)%]"
+           userAware="[%=isUserAware(role["id"]) || isUserAware(role.parent.valueOf("AssociationRole2/@id"))%]">[%
+		   role.selectNodes("Property").each{%]<Property name="[%=it["name"]%]" value="[%=it["value"]%]"/>[%}		
+           %]</AssociationRole>[%  		   
+     } else if (role.name == "AssociationRole2") { 
+      %]<AssociationRole 
+           id="[%=role["id"]%]"
+           name="[%=role["name"]%]"
+           associationLogicName="[%=toValidClassName(role.parent["name"])%]"
+           inverseId="[%=role.parent.valueOf("AssociationRole1/@id")%]"
+           source="[%=role.parent["targetClass"]%]" 
+           target="[%=role.parent["sourceClass"]%]" 
+           maxCard="[%=isMany(role) ? "many" : "1"%]"
+           fieldName="[%=getFieldName(role)%]"
+           derived="[%= role["derivationQuery"] != "" || role.parent.valueOf("@db:isView") == "true"%]"
+           dataSource="[%=getDataSourceId(role.parent)%]"
+           [%if(role["cascadeDelete"] == "true"){ %] cascadeDelete="true"[%}%]
+           [%if(role.valueOf("../@db:isView") == "true"){%] view="true"[%}%]
+           direct="[%=isAliveRole(role)%]"
+           userAware="[%=isUserAware(role["id"]) || isUserAware(role.parent.valueOf("AssociationRole1/@id"))%]">[%
+           role.selectNodes("Property").each{%]<Property name="[%=it["name"]%]" value="[%=it["value"]%]"/>[%}		
+           %]</AssociationRole>[%
+     } 
+  }
+%]
+</DomainModel>    

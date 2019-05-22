@@ -1,0 +1,20 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+
+def actionDef = getById(action, "definition")
+def actionDefQId = actionDef["id"]
+def projectId = actionDef.valueOf("ancestor::*/@ownerProjectId")
+if (projectId) {
+	actionDefQId = projectId + ":" + actionDefQId 
+}
+def inputPortDef = actionDef.selectSingleNode("InputPortDefinition")
+%]
+<Descriptor service="com.webratio.web.mvc.module.ModuleService">
+	<Module operation="true" singleLayout="false">[%= actionDefQId %]</Module>
+	<InputCollectorId>[%= inputPortDef ? inputPortDef["id"] : "" %]</InputCollectorId>
+	[% def inputParameters = inputPortDef ? inputPortDef.elements("PortDefinitionParameter") : [] %]
+	[% for (inPar in inputParameters) { %]
+		<InputParameter>[%= inPar["id"] %]</InputParameter>
+	[% } %]
+</Descriptor>

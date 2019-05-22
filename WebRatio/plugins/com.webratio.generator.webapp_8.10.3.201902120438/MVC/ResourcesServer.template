@@ -1,0 +1,37 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.model.layout.resources.Type
+
+setHTMLOutput()
+
+/*
+ * Functions for each type of entry
+ */
+def processors = [:]
+
+/* JSP declaration */
+processors[Type.JSP_DECLARATION] = { entry, printText ->
+	%]
+	[% printText() %]
+[% }
+
+/*
+ * Actual printing of resource code
+ */
+
+/* Print resources in the correct order */
+entries.each { entry ->
+	
+	/* Use text content, the only one permitted */
+	def printContent = {
+		printRaw(entry.resource.element.valueOf("string(TextContent)"))
+	}
+	
+	/* Print the resource */
+	def processor = processors[entry.resource.type]
+	if (processor) {
+		processor(entry, printContent)
+		printRaw("\r\n")
+	}
+}
+%]

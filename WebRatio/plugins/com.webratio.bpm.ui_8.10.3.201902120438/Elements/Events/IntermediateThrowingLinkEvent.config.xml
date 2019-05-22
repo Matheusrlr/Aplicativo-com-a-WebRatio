@@ -1,0 +1,37 @@
+<Element name="IntermediateThrowingLinkEvent" lowerName="intermediate throwing link event"
+		pluralLowerName="">
+		<Description>
+			A &lt;a href="/Concepts/Elements/Process/Events/LinkEvents/IntermediateThrowingLinkEvent"/&gt; is a mechanism for connecting two sections of a Process. Link Events can be used to create looping situations or to avoid long Sequence Flow lines
+		</Description>
+        
+        <ActionRef label="Add Lane" />
+        <ActionRef label="Add Property" />
+        <ActionRef label="Surround with Group" />
+        <ActionRef label="Move into Embedded Subprocess" />
+        <ActionRef label="Edit Process Parameters..." />
+        <Action label="Change Catching Type to">
+          Convert this event into a different catching event.
+        </Action>
+        <Action label="Change Throwing Type to">
+          Convert this event into a different throwing event.
+        </Action>
+        <ActionRef label="Search References" />
+        <ActionRef label="Help" />
+        
+    <PropertyCategory name="General">
+        <PropertyRef label="Id"/>
+        <PropertyRef label="Name"/>
+        <Property label="Catching Link">
+	      The associated catching link.
+	      &lt;p&gt;
+	      The Select button <Button name="Select"/> opens the 
+	      &lt;a href="/Reference/WizardsAndDialogs/CatchingLinkSelectionDialog"/&gt;.
+	      &lt;/p&gt;
+	      &lt;p&gt;
+	      The Go to Catching Link button <Button name="Go to Catching Link"/> jumps
+	      to the referenced catching link.
+	      &lt;/p&gt;
+	      <Button name="Clear"/>
+        </Property>
+    </PropertyCategory>
+</Element>

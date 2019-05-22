@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: com.webratio.commons.eclipse.gef
+Export-Package: com.webratio.commons.eclipse.gef,com.webratio.commons.
+ eclipse.gef.actions,com.webratio.commons.eclipse.gef.commands
+Bundle-Name: WebRatio Eclipse GEF Extensions
+Bundle-Version: 1.0.0.201810081230
+Bundle-ClassPath: com.webratio.commons.eclipse.gef.jar
+Require-Bundle: org.eclipse.gef,org.eclipse.ui
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: WebRatio
+
+Name: about.html
+SHA-256-Digest: vuFwTp1xHKAQWF+DRiSVx6xqpwOvJaUcOSfU9wQtY+A=
+
+Name: com.webratio.commons.eclipse.gef.jar
+SHA-256-Digest: tI2XvJFtAOhbeD7hREYqrjSsg2cbB32ZZBW5tPKZLxM=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+

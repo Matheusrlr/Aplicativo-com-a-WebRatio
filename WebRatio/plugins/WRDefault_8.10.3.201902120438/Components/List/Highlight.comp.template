@@ -1,0 +1,683 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Show Header" name="show-header" type="boolean" default="true">
+Defines the rendition of the header on the top.
+Allowed values are: true (default) or false.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Show Attributes Name" name="show-attribute-name" type="boolean" default="false">
+Defines the rendition of the attributes names.
+Allowed values are: true or false(default).
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Show Bullet" name="show-bullet" type="boolean" default="true">
+Defines the rendition of a bullet next to each line.
+Allowed values are: true or false(default).
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Use Alternate Rows" name="use-alternate" type="boolean" default="false">
+Defines the usage of alternates colours for each line.
+Allowed values are: true or false(default).
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Links Position" name="link-position" type="enum" values="left|right|on_bullet|on_row" default="right">
+Defines the rendition of the sub levels links.
+Allowed values are:
+- right (default): places the links on the right
+- left: places the links on the left
+- on_bullet: places the first link on the bullet
+- on_row: places the first link on the attributes
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Scrolling Position" name="scrolling-position" type="enum" values="top|bottom|both" default="top">
+Defines where to position the scroll links.
+Allowed values are:
+- top (default): places the links at the top
+- bottom: places the links at the bottom
+- both: places the links at the top and bottom
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Buttons Position" name="button-position" type="enum" values="top|bottom|both" default="bottom">
+Defines where to position the buttons to render submit links.
+Allowed values are:
+- top: places the buttons at the top
+- bottom (default): places the buttons at the bottom
+- both: places the buttons at the top and bottom
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Show Jump Links" name="show-jump-links" type="boolean" default="true">
+Defines whether to show the jumps links of the scroller or not.
+Allowed values are: true(default) or false.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Select All" name="select-all" type="boolean" values="true|false" default="false">
+Defines the rendition of a link that allows
+to select or deselect all the checkboxes of
+the component.
+Allowed values are: true or false(default).
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Use Empty Unit Message" name="use-empty-unit-message" type="boolean" default="false">
+Defines the usage of a message for empty units.
+Allowed values are: true(default) or false.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Empty Unit Message" name="empty-unit-message" type="string" default="emptyUnitMessage">
+Defines the key of the message to use if the component is empty.
+Default value: emptyUnitMessage
+</wr:LayoutParameter>
+
+[%
+import org.apache.commons.lang.StringUtils
+import org.apache.commons.lang.math.NumberUtils
+
+setHTMLOutput()
+
+def unitId = component["id"]
+def blockFactor = component["blockFactor"]
+def isSortable = component["sortable"]
+def isScrollable = blockFactor != "" ? "true": "false"
+
+def unitEvent = component.selectNodes("layout:Event[string(@_exp) != 't']").find{!isButton(it)}
+def layoutId = getLayoutId(component)
+
+def showHeader = params["show-header"]
+def showAttributeName = params["show-attribute-name"]
+def useAlternate = params["use-alternate"]
+def showBullet = params["show-bullet"]
+def linkPosition = params["link-position"]
+def buttonPosition = params["button-position"]
+def showJumpLinks = params["show-jump-links"]
+def scrollingPosition = params["scrolling-position"]
+def selectAll = params["select-all"]
+def useEmptyUnitMessage = params["use-empty-unit-message"]
+def emptyUnitMessage = params["empty-unit-message"]
+
+def firstEvent = component.selectSingleNode("layout:Event[contains(@event,'First')]")
+def previousEvent = component.selectSingleNode("layout:Event[contains(@event,'Previous')]")
+def blockEvent = component.selectSingleNode("layout:Event[contains(@event,'Block')]")
+def nextEvent = component.selectSingleNode("layout:Event[contains(@event,'Next')]")
+def lastEvent = component.selectSingleNode("layout:Event[contains(@event,'Last')]")
+def checkable = "true" == component["checkable"] && "true" != component["distinct"]
+
+def lastAttribute = component.selectSingleNode("layout:Attribute[last()]")
+if (lastAttribute == null || lastAttribute["type"] != "boolean") {
+	throwGenerationException("Highlight template requires a boolean as last layout attribute.")
+}
+
+//returns true if the given event must be rendered as a form button
+def isButton(event){
+  def navFlow = getByIdOptional(event["event"])?.selectSingleNode("NavigationFlow")
+  if(navFlow == null){
+    return false
+  }
+  def parameterBindings = navFlow.selectNodes("ParameterBinding").collect{it["source"]}
+  if(parameterBindings.isEmpty()){
+    parameterBindings = getAutomaticParameterBindings(navFlow).collect{it["source"]}
+  }
+  for(param in parameterBindings){
+    if(param?.endsWith("Checked")){
+      return true;
+    }
+  }
+  return false
+}
+
+def buttonsCount = component.selectNodes("layout:Event").findAll{ isButton(it) }.size();
+%]
+
+[% 
+def getIconPath(linkLayout) {
+	folder = linkLayout.parameters["icon-folder"]
+	name = StringUtils.defaultIfEmpty(linkLayout.parameters["icon-name"], linkLayout.contextElement?.attributeValue("name"))
+	extension = linkLayout.parameters["icon-extension"]
+	return getFilePath(folder, name, extension)
+}
+%]
+
+[% if (useEmptyUnitMessage != "true") { %]
+<c:if test="${not(empty <wr:Id context="component"/>) and (<wr:Id context="component"/>.dataSize gt 0)}">
+[% } else { %]
+<c:choose>
+<c:when test="${not(empty <wr:Id context="component"/>) and (<wr:Id context="component"/>.dataSize gt 0)}">
+[% } %]
+	<wr:Frame>
+		<div class="plain <wr:StyleClass/>">
+			<div class="plain List">
+				[% if (checkable) { %]
+					<table>
+						<tr>
+							<td colspan="[%= buttonsCount ?: 1 %]" class="error"><form:errors path="<wr:Id context="component"/>Checked" /></td>
+						</tr>
+						[% if (buttonPosition == "top" || buttonPosition == "both") { %]
+							<tr>
+								<wr:Iterate var="ev" context="component" select="layout:Event">
+									[% if (isButton(ev)) { %]
+										<wr:Visible>
+											<td><wr:Event class="button" type="button" context="ev"/></td>
+										</wr:Visible>	
+									[% } %]
+								</wr:Iterate>
+							</tr>
+						[% } %]
+					</table>
+				[% } %]
+				[% if (isScrollable == "true" && (scrollingPosition == "top" || scrollingPosition == "both")) { %]
+					<c:if test="${<wr:Id context="component"/>.scroller.of gt [%= blockFactor %]}">
+						<table border="0" cellspacing="1" cellpadding="2">
+						   <tr> 
+								[% if (firstEvent) { %]
+									<td class="scrollText">
+								        <c:choose>
+								            <c:when test="${<wr:Id context="component"/>.scroller.current ne <wr:Id context="component"/>.scroller.first}">
+							     	            <wr:Event class="scroll" context="firstEvent"/>
+								            </c:when>
+								            <c:otherwise>
+								            	[% def firstEventLayout = getLayout(firstEvent, LayoutType.EVENT)
+								            	if (firstEventLayout.parameters["show"] && (firstEventLayout.parameters["show"] == "icon" || firstEventLayout.parameters["show"] == "icon & text")) { %]
+								            		<table cellspacing="0" cellpadding="0">
+														<tr>
+															<td valign="middle">
+																<img src="[%=getIconPath(firstEventLayout) %]" border="0"/>
+															</td>
+															[% if (firstEventLayout.parameters["show"] == "icon & text") { %]
+															<td><spring:message code="PowerIndex.First"/></td>
+															[% } %]
+														</tr>
+													</table>
+								            	[% } else { %]
+								           			<span><spring:message code="PowerIndex.First"/></span>
+								           		[% } %]
+								           		</c:otherwise>
+								        </c:choose>
+								    </td>
+							    [% } %]
+							    [% if (previousEvent) { %]
+								    <td class="scrollText">
+								        <c:choose>
+							                <c:when test="${<wr:Id context="component"/>.scroller.current ne <wr:Id context="component"/>.scroller.previous}">
+								    	        <wr:Event class="scroll" context="previousEvent"/>
+							                </c:when>
+							                <c:otherwise>
+							                [% def previousEventLayout = getLayout(previousEvent, LayoutType.EVENT)
+								            	if (previousEventLayout.parameters["show"] && (previousEventLayout.parameters["show"] == "icon" || previousEventLayout.parameters["show"] == "icon & text")) { %]
+								            		<table cellspacing="0" cellpadding="0">
+														<tr>
+															<td valign="middle">
+																<img src="[%=getIconPath(previousEventLayout) %]" border="0"/>
+															</td>
+															[% if (previousEventLayout.parameters["show"] == "icon & text") { %]
+															<td><spring:message code="PowerIndex.Previous"/></td>
+															[% } %]
+														</tr>
+													</table>
+								            	[% } else { %]
+								           			<span><spring:message code="PowerIndex.Previous"/></span>
+								           		[% } %]
+								           	</c:otherwise>
+							            </c:choose>
+								    </td>
+							    [% } %]
+							    <td class="scrollText" nowrap>${<wr:Id context="component"/>.scroller.from} <spring:message code="PowerIndex.To"/> ${<wr:Id context="component"/>.scroller.to} <spring:message code="PowerIndex.Of"/> ${<wr:Id context="component"/>.scroller.of}</td>
+							    [% if (nextEvent) { %]
+								    <td class="scrollText">
+								        <c:choose>
+							                <c:when test="${<wr:Id context="component"/>.scroller.current ne <wr:Id context="component"/>.scroller.next}">
+					    			    	    <wr:Event class="scroll" context="nextEvent"/>
+					    		            </c:when>
+						    	            <c:otherwise>
+						    	            	[% def nextEventLayout = getLayout(nextEvent, LayoutType.EVENT)
+								            	if (nextEventLayout.parameters["show"] && (nextEventLayout.parameters["show"] == "icon" || nextEventLayout.parameters["show"] == "icon & text")) { %]
+								            		<table cellspacing="0" cellpadding="0">
+														<tr>
+															<td valign="middle">
+																<img src="[%=getIconPath(nextEventLayout) %]" border="0"/>
+															</td>
+															[% if (nextEventLayout.parameters["show"] == "icon & text") { %]
+															<td><spring:message code="List.Next"/></td>
+															[% } %]
+														</tr>
+													</table>
+								            	[% } else { %]
+								           			<span><spring:message code="List.Next"/></span>
+								           		[% } %]
+						    	            </c:otherwise>
+						    	        </c:choose>
+								    </td>
+							    [% } %]
+							    [% if (lastEvent) { %]
+								    <td class="scrollText">
+								    	<c:choose>
+					    		            <c:when test="${<wr:Id context="component"/>.scroller.current ne <wr:Id context="component"/>.scroller.last}">
+						    		    	    <wr:Event class="scroll" context="lastEvent"/>
+							                </c:when>
+							                <c:otherwise>
+							                	[% def lastEventLayout = getLayout(lastEvent, LayoutType.EVENT)
+								            	if (lastEventLayout.parameters["show"] && (lastEventLayout.parameters["show"] == "icon" || lastEventLayout.parameters["show"] == "icon & text")) { %]
+								            		<table cellspacing="0" cellpadding="0">
+														<tr>
+															<td valign="middle">
+																<img src="[%=getIconPath(lastEventLayout) %]" border="0"/>
+															</td>
+															[% if (lastEventLayout.parameters["show"] == "icon & text") { %]
+															<td><spring:message code="List.Last"/></td>
+															[% } %]
+														</tr>
+													</table>
+								            	[% } else { %]
+								           			<span><spring:message code="List.Last"/></span>
+								           		[% } %] 
+							               </c:otherwise>
+							            </c:choose>
+								    </td>
+							    [% } %]
+						   </tr>
+						   [% if (showJumpLinks == "true" && blockEvent) {%]
+							   <tr>  
+								    <td colspan="5" class="scrollText"> 
+									    <span><spring:message code="List.Jump"/></span>
+									    <c:forEach var="current" varStatus="status" items="${<wr:Id context="component"/>.scroller.blocks}">
+									      <c:set var="index" value="${status.index}"/>
+									      <span class="jump">
+									      <c:choose>
+									        <c:when test="${current ne <wr:Id context="component"/>.scroller.current}">
+									          <a class="<wr:StyleClass context="blockEvent"/> link" href="<wr:URL context="blockEvent"/>"  onclick="<wr:AjaxURL context="blockEvent" />">${current}</a>
+									        </c:when>
+									        <c:otherwise>
+									          ${current}
+									        </c:otherwise>
+									      </c:choose>
+									      </span>
+								    	</c:forEach> 
+								    </td>
+							   </tr>
+						    [% } %]
+						 </table>
+					</c:if>
+				[% } %]
+				<table border="0" cellspacing="1" cellpadding="2">
+					[% if (showHeader == "true") {%]
+						<!-- begin header -->
+						<tr>
+						[% if (checkable) {%]
+							 [% if (selectAll == "true") {%]
+								<th class="<wr:StyleClass/> header">
+									<script>multiChoiceMap["[%= layoutId%]"] = "all";</script>
+									<a href="" onmouseover="this.cursor='pointer'" onmouseout="this.cursor='default'" onclick="return toggleCheckboxes('[%= layoutId%]', 'Checked')"> <img id="[%= layoutId%]image" src="WRResources/spacer.gif" class="selectAll" border="0" /></a>
+								</th>
+							[% } else {%]
+								<th class="<wr:StyleClass/> header"></th>
+							[% } %]
+						[%}%]
+						[% if (showBullet == "true") {%]
+							<th class="<wr:StyleClass/> header"></th>
+						[% } %]
+						[% if (linkPosition == "left") { %]
+							<wr:Iterate var="ev" context="component" select="layout:Event[string(@_exp) != 't']">
+								[% if (!isButton(ev)) { %]
+									<wr:Visible><th class="<wr:StyleClass/> header"></th></wr:Visible>
+								[% } %]
+							</wr:Iterate>
+						[% }  %]
+						<wr:Iterate var="att" context="component" select="layout:Attribute[position() < last()]">
+							<wr:Visible>
+       					    [% if (showAttributeName == "true") {%]
+							  <th class="<wr:StyleClass/> header"></th>
+							[% } %]
+					        <th nowrap="nowrap" class="<wr:StyleClass/> header">
+					        [% if (isSortable == "true") { %]
+					         [% def sortLink = component.selectSingleNode("layout:Event[@event='" + component["id"] + att["attribute"] + "']")
+						         if(sortLink != null) { %]
+						            <wr:Event context="sortLink" class="sort" type="sort"/>
+						         [% } else { %]
+						            <wr:Label/>
+						         [% } %]
+						     [% } else { %]
+						     	<wr:Label/>
+						     [% } %]
+					        </th>
+	                        </wr:Visible>
+					    </wr:Iterate>
+						<wr:Iterate var="ev" context="component" select="layout:Event[string(@_exp) != 't']">
+							[% if (!isButton(ev) && (linkPosition == "right" || ((linkPosition == "on_row" || linkPosition == "on_bullet") && index > 0))) { %]
+								<wr:Visible><th class="<wr:StyleClass/> header"></th></wr:Visible>
+							[% } %]
+						</wr:Iterate>	
+						</tr>
+						<!-- end header -->
+					[% } %]
+				<!-- instances -->
+				<c:forEach var="current" varStatus="status" items="${<wr:Id context="component"/>.data}">
+					<c:set var="index" value="${status.index}"/>
+						<tr class="row<c:if test="${<wr:Id context="component"/>.currentIndex eq index}">Current</c:if>[% if (useAlternate == "true") { %]<c:if test="${index mod 2 eq 0}">Alternate</c:if>[% } %][% if (lastAttribute) {%] <c:if test="${not(current.[%= getFieldName(lastAttribute["attribute"]) %])}">not-</c:if>highlight[% } %]">	
+						[% if (checkable) {%]
+							[% if ((linkPosition == "on_row") && (unitEvent != null)) {%]
+							   <td class="<wr:StyleClass context="unitEvent"/> link<c:if test="${<wr:Id context="component"/>.currentIndex eq index}">Current</c:if>[% if (useAlternate == "true") { %]<c:if test="${index mod 2 eq 0}">Alternate</c:if>[% } %]">
+							[% } else {%]
+							   <td class="<wr:StyleClass/> value<c:if test="${<wr:Id context="component"/>.currentIndex eq index}">Current</c:if>[% if (useAlternate == "true") { %]<c:if test="${index mod 2 eq 0}">Alternate</c:if>[% } %]">				
+							[% } %]
+							  <form:checkbox id="[%= layoutId%]_${index}" path="<wr:Id context="component"/>Checked" cssClass="checkBox"><c:out value="${<wr:Id context="component"/>.key[index]}"/>
+							</td>
+						[%}%]
+						
+						[% if (showBullet == "true") {
+						 if ((linkPosition == "on_bullet" || linkPosition == "on_row") && unitEvent != null) { %]
+						        <td class="<wr:StyleClass context="unitEvent"/> link<c:if test="${<wr:Id context="component"/>.currentIndex eq index}">Current</c:if>[% if (useAlternate == "true") { %]<c:if test="${index mod 2 eq 0}">Alternate</c:if>[% } %]">
+						        	<wr:Visible context="unitEvent" position="'index'">
+										<a href="<wr:URL context="unitEvent"/>" class="link<c:if test="${<wr:Id context="component"/>.currentIndex eq index}">Current</c:if>[% if (useAlternate == "true") { %]<c:if test="${index mod 2 eq 0}">Alternate</c:if>[% } %]" onclick="<wr:AjaxURL context="unitEvent" />" [%if (unitEvent?.attributeValue("newWindow") == "true") { %] target="_blank" [% } %]>
+									</wr:Visible>
+						            <img src="WRResources/spacer.gif" class="bullet<c:if test="${<wr:Id context="component"/>.currentIndex eq index}">Current</c:if>[% if (useAlternate == "true") { %]<c:if test="${index mod 2 eq 0}">Alternate</c:if>[% } %]" border="0" alt="<wr:Label context="unitEvent"/>"/>					
+									<wr:Visible context="unitEvent" position="'index'">
+										</a>
+									</wr:Visible>
+							    </td>
+						  [% } else { %]
+								<td class="<wr:StyleClass/> value<c:if test="${<wr:Id context="component"/>.currentIndex eq index}">Current</c:if>[% if (useAlternate == "true") { %]<c:if test="${index mod 2 eq 0}">Alternate</c:if>[% } %]">
+									<img src="WRResources/spacer.gif" class="bullet<c:if test="${<wr:Id context="component"/>.currentIndex eq index}">Current</c:if>[% if (useAlternate == "true") { %]<c:if test="${index mod 2 eq 0}">Alternate</c:if>[% } %]" border="0" alt="<wr:Label context="unitEvent"/>"/>
+								</td>
+						  [% } 
+					    } %]
+								
+							[% if (linkPosition == "left") { %]
+								<wr:Iterate var="ev" context="component" select="layout:Event[string(@_exp) != 't']">
+									[% if (!isButton(ev)) { %]
+										<wr:Visible position="'index'">
+										[% if ((linkPosition == "on_row") && (unitEvent != null)) {%]
+										   <td class="<wr:StyleClass context="unitEvent"/> link<c:if test="${<wr:Id context="component"/>.currentIndex eq index}">Current</c:if>[% if (useAlternate == "true") { %]<c:if test="${index mod 2 eq 0}">Alternate</c:if>[% } %]">
+										[% } else {%]
+										   <td class="<wr:StyleClass/> value<c:if test="${<wr:Id context="component"/>.currentIndex eq index}">Current</c:if>[% if (useAlternate == "true") { %]<c:if test="${index mod 2 eq 0}">Alternate</c:if>[% } %]">				
+										[% } %]
+								   			<c:choose>
+								   				<c:when test="${<wr:Id context="component"/>.currentIndex eq index}">
+								   					[% if (useAlternate == "true") { %]
+								   						<c:choose>
+								   							<c:when test="${index mod 2 eq 0}">
+																<wr:Event class="linkCurrentAlternate"/>
+															</c:when>
+															<c:otherwise>
+																<wr:Event class="linkCurrent"/>
+															</c:otherwise>
+								   						</c:choose>
+													[% } else { %]
+														<wr:Event class="linkCurrent"/>								
+													[% } %]
+								   				</c:when>
+								   				<c:otherwise>
+								   					[% if (useAlternate == "true") { %]
+								   						<c:choose>
+								   							<c:when test="${index mod 2 eq 0}">
+																<wr:Event class="linkAlternate"/>
+															</c:when>
+															<c:otherwise>
+																<wr:Event class="link"/>
+															</c:otherwise>
+								   						</c:choose>
+													[% } else { %]
+														<wr:Event class="link"/>								
+													[% } %]
+								   				</c:otherwise>
+								   			</c:choose>
+										</td>
+								    	</wr:Visible>
+							    	[% } %]
+								</wr:Iterate>
+							[% } %]
+							<wr:Iterate var="attr" context="component" select="layout:Attribute[position() < last()]">
+								<wr:Visible position="'index'">
+								[% if (showAttributeName == "true") {%]
+									<th class="<wr:StyleClass/> header<c:if test="${<wr:Id context="component"/>.currentIndex eq index}">Current</c:if>[% if (useAlternate == "true") { %]<c:if test="${index mod 2 eq 0}">Alternate</c:if>[% } %]">
+								    	<wr:Label/>
+								   </th>
+								[% } %]
+								[% if ((linkPosition == "on_row") && (unitEvent != null)) {%]
+								   <td class="<wr:StyleClass context="unitEvent"/> link<c:if test="${<wr:Id context="component"/>.currentIndex eq index}">Current</c:if>[% if (useAlternate == "true") { %]<c:if test="${index mod 2 eq 0}">Alternate</c:if>[% } %] [%= attr["type"]%]">
+									<wr:Visible context="unitEvent" position="'index'">
+										<a href="<wr:URL context="unitEvent"/>" class="<wr:StyleClass context="unitEvent"/> link<c:if test="${<wr:Id context="component"/>.currentIndex eq index}">Current</c:if>[% if (useAlternate == "true") { %]<c:if test="${index mod 2 eq 0}">Alternate</c:if>[% } %]" onclick="<wr:AjaxURL context="unitEvent" />" [%if (unitEvent?.attributeValue("newWindow") == "true") { %] target="_blank" [% } %]>
+									</wr:Visible>
+									<wr:Value/>
+									<wr:Visible context="unitEvent" position="'index'">
+										</a>
+									</wr:Visible>
+								   </td>
+								[% } else {%]
+								   <td class="<wr:StyleClass/> value<c:if test="${<wr:Id context="component"/>.currentIndex eq index}">Current</c:if>[% if (useAlternate == "true") { %]<c:if test="${index mod 2 eq 0}">Alternate</c:if>[% } %] [%= attr["type"]%]">				
+										<wr:Value />
+								   </td>
+								[% } %]
+								</wr:Visible>
+							</wr:Iterate>
+						   <wr:Iterate var="ev" context="component" select="layout:Event[string(@_exp) != 't']">
+							[% if (!isButton(ev)) { %]
+						      <wr:Visible position="'index'">
+						   		[% if ((linkPosition == "on_row" || linkPosition == "on_bullet") && index > 0) { %]
+									<td class="<wr:StyleClass context="unitEvent"/> link<c:if test="${<wr:Id context="component"/>.currentIndex eq index}">Current</c:if>[% if (useAlternate == "true") { %]<c:if test="${index mod 2 eq 0}">Alternate</c:if>[% } %]">
+							   			<c:choose>
+							   				<c:when test="${<wr:Id context="component"/>.currentIndex eq index}">
+							   					[% if (useAlternate == "true") { %]
+							   						<c:choose>
+							   							<c:when test="${index mod 2 eq 0}">
+															<wr:Event class="linkCurrentAlternate"/>
+														</c:when>
+														<c:otherwise>
+															<wr:Event class="linkCurrent"/>
+														</c:otherwise>
+							   						</c:choose>
+												[% } else { %]
+													<wr:Event class="linkCurrent"/>								
+												[% } %]
+							   				</c:when>
+							   				<c:otherwise>
+							   					[% if (useAlternate == "true") { %]
+							   						<c:choose>
+							   							<c:when test="${index mod 2 eq 0}">
+															<wr:Event class="linkAlternate"/>
+														</c:when>
+														<c:otherwise>
+															<wr:Event class="link"/>
+														</c:otherwise>
+							   						</c:choose>
+												[% } else { %]
+													<wr:Event class="link"/>								
+												[% } %]
+							   				</c:otherwise>
+							   			</c:choose>
+						   			</td>
+							    [% } else if (linkPosition != "on_row" && linkPosition != "on_bullet" && linkPosition != "left") {%]
+									<td class="<wr:StyleClass/> value<c:if test="${<wr:Id context="component"/>.currentIndex eq index}">Current</c:if>[% if (useAlternate == "true") { %]<c:if test="${index mod 2 eq 0}">Alternate</c:if>[% } %]">
+										<c:choose>
+							   				<c:when test="${<wr:Id context="component"/>.currentIndex eq index}">
+							   					[% if (useAlternate == "true") { %]
+							   						<c:choose>
+							   							<c:when test="${index mod 2 eq 0}">
+															<wr:Event class="linkCurrentAlternate"/>
+														</c:when>
+														<c:otherwise>
+															<wr:Event class="linkCurrent"/>
+														</c:otherwise>
+							   						</c:choose>
+												[% } else { %]
+													<wr:Event class="linkCurrent"/>								
+												[% } %]
+							   				</c:when>
+							   				<c:otherwise>
+							   					[% if (useAlternate == "true") { %]
+							   						<c:choose>
+							   							<c:when test="${index mod 2 eq 0}">
+															<wr:Event class="linkAlternate"/>
+														</c:when>
+														<c:otherwise>
+															<wr:Event class="link"/>
+														</c:otherwise>
+							   						</c:choose>
+												[% } else { %]
+													<wr:Event class="link"/>								
+												[% } %]
+							   				</c:otherwise>
+							   			</c:choose>
+						   			</td>
+								[% } %]
+						      </wr:Visible>
+							[% } %]
+						   </wr:Iterate>
+						</tr>
+					</c:forEach>
+				</table>
+				[% if (isScrollable == "true" && (scrollingPosition == "bottom" || scrollingPosition == "both")) { %]
+					<c:if test="${<wr:Id context="component"/>.scroller.of gt [%= blockFactor %]}">
+						<table border="0" cellspacing="1" cellpadding="2">
+						   <tr> 
+								[% if (firstEvent) { %]
+								    <td class="scrollText">
+								        <c:choose>
+								            <c:when test="${<wr:Id context="component"/>.scroller.current ne <wr:Id context="component"/>.scroller.first}">
+							     	            <wr:Event class="scroll" context="firstEvent"/>
+								            </c:when>
+								            <c:otherwise>
+								            	[% def firstEventLayout = getLayout(firstEvent, LayoutType.EVENT)
+								            	   if (firstEventLayout.parameters["show"] && (firstEventLayout.parameters["show"] == "icon" || firstEventLayout.parameters["show"] == "icon & text")) { %]
+								            		<table cellspacing="0" cellpadding="0">
+														<tr>
+															<td valign="middle">
+																<img src="[%=getIconPath(firstEventLayout) %]" border="0"/>
+															</td>
+															[% if (firstEventLayout.parameters["show"] == "icon & text") { %]
+															<td><spring:message code="List.First"/></td>
+															[% } %]
+														</tr>
+													</table>
+								            	[% } else { %]
+								           			<span><spring:message code="List.First"/></span>
+								           		[% } %]
+								           		</c:otherwise>
+								        </c:choose>
+								    </td>
+							    [% } %]
+							    [% if (previousEvent) { %]
+								    <td class="scrollText">
+								        <c:choose>
+							                <c:when test="${<wr:Id context="component"/>.scroller.current ne <wr:Id context="component"/>.scroller.previous}">
+								    	        <wr:Event class="scroll" context="previousEvent"/>
+							                </c:when>
+							                <c:otherwise>
+							                [% def previousEventLayout = getLayout(previousEvent, LayoutType.EVENT)
+								            	if (previousEventLayout.parameters["show"] && (previousEventLayout.parameters["show"] == "icon" || previousEventLayout.parameters["show"] == "icon & text")) { %]
+								            		<table cellspacing="0" cellpadding="0">
+														<tr>
+															<td valign="middle">
+																<img src="[%=getIconPath(previousEventLayout) %]" border="0"/>
+															</td>
+															[% if (previousEventLayout.parameters["show"] == "icon & text") { %]
+															<td><spring:message code="List.Previous"/></td>
+															[% } %]
+														</tr>
+													</table>
+								            	[% } else { %]
+								           			<span><spring:message code="List.Previous"/></span>
+								           		[% } %]
+								           	</c:otherwise>
+							            </c:choose>
+								    </td>
+							    [% } %]
+							    [% if (blockEvent) { %]
+							    <td class="scrollText" nowrap>${<wr:Id context="component"/>.scroller.from} <spring:message code="List.To"/> ${<wr:Id context="component"/>.scroller.to} <spring:message code="List.Of"/> ${<wr:Id context="component"/>.scroller.of}</td>
+							    [% } %]
+							    [% if (nextEvent) { %]
+								    <td class="scrollText">
+								        <c:choose>
+							                <c:when test="${<wr:Id context="component"/>.scroller.current ne <wr:Id context="component"/>.scroller.next}">
+					    			    	    <wr:Event class="scroll" context="nextEvent"/>
+					    		            </c:when>
+						    	            <c:otherwise>
+						    	            	[% def nextEventLayout = getLayout(nextEvent, LayoutType.EVENT)
+								            	if (nextEventLayout.parameters["show"] && (nextEventLayout.parameters["show"] == "icon" || nextEventLayout.parameters["show"] == "icon & text")) { %]
+								            		<table cellspacing="0" cellpadding="0">
+														<tr>
+															<td valign="middle">
+																<img src="[%=getIconPath(nextEventLayout) %]" border="0"/>
+															</td>
+															[% if (nextEventLayout.parameters["show"] == "icon & text") { %]
+															<td><spring:message code="List.Next"/></td>
+															[% } %]
+														</tr>
+													</table>
+								            	[% } else { %]
+								           			<span><spring:message code="List.Next"/></span>
+								           		[% } %]
+						    	            </c:otherwise>
+						    	        </c:choose>
+								    </td>
+							    [% } %]
+							    [% if (lastEvent) { %]
+								    <td class="scrollText">
+								    	<c:choose>
+					    		            <c:when test="${<wr:Id context="component"/>.scroller.current ne <wr:Id context="component"/>.scroller.last}">
+						    		    	    <wr:Event class="scroll" context="lastEvent"/>
+							                </c:when>
+							                <c:otherwise>
+							                	[% def lastEventLayout = getLayout(lastEvent, LayoutType.EVENT)
+								            	if (lastEventLayout.parameters["show"] && (lastEventLayout.parameters["show"] == "icon" || lastEventLayout.parameters["show"] == "icon & text")) { %]
+								            		<table cellspacing="0" cellpadding="0">
+														<tr>
+															<td valign="middle">
+																<img src="[%=getIconPath(lastEventLayout) %]" border="0"/>
+															</td>
+															[% if (lastEventLayout.parameters["show"] == "icon & text") { %]
+															<td><spring:message code="List.Last"/></td>
+															[% } %]
+														</tr>
+													</table>
+								            	[% } else { %]
+								           			<span><spring:message code="List.Last"/></span>
+								           		[% } %] 
+							               </c:otherwise>
+							            </c:choose>
+								    </td>
+							    [% } %]
+						   </tr>
+						   [% if (showJumpLinks == "true") {%]
+							   <tr>  
+								    <td colspan="5" class="scrollText"> 
+									    <span><spring:message code="List.Jump"/></span>
+									    <c:forEach var="current" varStatus="status" items="${<wr:Id context="component"/>.scroller.blocks}">
+									      <c:set var="index" value="${status.index}"/>
+									      <span class="jump">
+									      <c:choose>
+									        <c:when test="${current ne <wr:Id context="component"/>.scroller.current}">
+									          <a class="<wr:StyleClass context="blockEvent"/> link" href="<wr:URL context="blockEvent"/>"  onclick="<wr:AjaxURL context="blockEvent" />">${current}</a>
+									        </c:when>
+									        <c:otherwise>
+									          ${current}
+									        </c:otherwise>
+									      </c:choose>
+									      </span>
+								    	</c:forEach> 
+								    </td>
+							   </tr>
+						    [% } %]
+						 </table>
+					</c:if>
+				[% } %]
+				[% if (checkable && (buttonPosition == "bottom" || buttonPosition == "both")) { %]
+					<table>
+						<tr>
+							<wr:Iterate var="ev" context="component" select="layout:Event">
+								[% if (isButton(ev)) { %]
+									<wr:Visible>
+										<td><wr:Event class="button" type="button" context="ev"/></td>
+									</wr:Visible>	
+								[% } %]
+							</wr:Iterate>
+						</tr>
+					</table>
+				[% } %]
+			</div>
+		</div>
+	</wr:Frame>
+[% if (useEmptyUnitMessage != "true") { %]
+</c:if>
+[% } else { %]
+</c:when>
+<c:otherwise>
+	<wr:Frame>
+		<div class="plain <wr:StyleClass/>">
+			<div class="plain List">
+				<table>
+				    <tr>
+				      <td><spring:message code="[%printJSPTagValue(emptyUnitMessage)%]"/></td>
+				    </tr>
+				</table>
+			</div>
+		</div>
+	</wr:Frame>
+</c:otherwise>
+</c:choose>
+[% } %]

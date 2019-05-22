@@ -1,0 +1,30 @@
+Manifest-Version: 1.0
+Export-Package: org.dom4j,org.dom4j.bean,org.dom4j.datatype,org.dom4j.
+ dom,org.dom4j.dtd,org.dom4j.io,org.dom4j.jaxb,org.dom4j.rule,org.dom4
+ j.rule.pattern,org.dom4j.swing,org.dom4j.tree,org.dom4j.util,org.dom4
+ j.xpath,org.dom4j.xpp
+Require-Bundle: com.webratio.commons.lib.jaxen
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/dom4j.jar
+Bundle-Version: 1.6.1
+Bundle-Name: WebRatio 3rd Party Library - dom4j
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.dom4j
+Eclipse-RegisterBuddy: com.webratio.commons.lib.jaxen
+Bundle-RequiredExecutionEnvironment: J2SE-1.4
+
+Name: lib/dom4j.jar
+SHA-256-Digest: WTVS/+o8WCPGYCR4tQAqfFJf2QSjxE8avkBlwi7frHM=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about_files/dom4j.txt
+SHA-256-Digest: qdtVuRcY7MVc4dclI/kyEVl6xJLLFnEuD6g2zCvF/bs=
+
+Name: about.html
+SHA-256-Digest: RzmsbU2mBueKf/5toO7ES4A2KEY5UlAxoEFaXiE91xs=
+
+Name: lib/dom4jsrc.zip
+SHA-256-Digest: TTcnX4CZGje+Rg5zsBiQFy+C/VYSU7ohMLYqel0HIi0=
+

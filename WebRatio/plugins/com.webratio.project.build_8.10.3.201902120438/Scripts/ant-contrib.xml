@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Ant Contrib">
+
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+		<classpath>
+			<pathelement location="../lib/ant-contrib.jar" />
+		</classpath>
+	</taskdef>
+
+</project>

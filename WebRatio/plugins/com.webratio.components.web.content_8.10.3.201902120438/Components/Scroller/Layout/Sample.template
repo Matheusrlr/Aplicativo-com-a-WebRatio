@@ -1,0 +1,10 @@
+#?delimiters [%, %], [%=, %]
+[%
+setHTMLOutput()
+def blockFactor = component["blockFactor"]
+def firstLink = component.selectSingleNode("layout:Event[contains(@event,'First')]")
+def previousLink = component.selectSingleNode("layout:Event[contains(@event,'Previous')]")
+def blockLink = component.selectSingleNode("layout:Event[contains(@event,'Block')]")
+def nextLink = component.selectSingleNode("layout:Event[contains(@event,'Next')]")
+def lastLink = component.selectSingleNode("layout:Event[contains(@event,'Last')]")
+%]

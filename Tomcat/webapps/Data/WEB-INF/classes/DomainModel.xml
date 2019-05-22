@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<DomainModel packageName="com.webratio.webapp" volatileKeyPolicy="" useQualifiedEntities="">
+  <!-- DATASOURCES -->
+  <PojoDataSource id="application_beans" duration="volatileApplication" volatileKeyPolicy=""/>
+  <PojoDataSource id="session_beans" duration="volatileSession" volatileKeyPolicy=""/>
+  <DatabaseDataSource id="application_vdb" url="jdbc:h2:mem:application_vdb" schema="" duration="volatileApplication" type="H2 (in-memory)"></DatabaseDataSource>
+  <DatabaseDataSource id="db1" url="jdbc:mysql://localhost:3306/database" schema="" type="MySQL"></DatabaseDataSource>
+  <DatabaseDataSource id="session_vdb" url="jdbc:h2:mem:session_vdb" schema="" duration="volatileSession" type="H2 (in-memory)"></DatabaseDataSource>
+  <!-- CLASSES -->
+  <Class id="DeleteHistory" name="WRDeleteHistory" className="com.webratio.webapp.WRDeleteHistory" duration="persistent" dataSource="db1">
+    <Attribute id="deleteHistoryClassId" key="false" name="classId" fieldName="classId" type="string" javaType="java.lang.String"/>
+    <Attribute id="deleteHistoryDeletedAt" key="false" name="deletedAt" fieldName="deletedAt" type="timestamp" javaType="java.sql.Timestamp"/>
+    <Attribute id="deleteHistoryObjectId" key="false" name="objectId" fieldName="objectId" type="string" javaType="java.lang.String"/>
+    <Attribute id="deleteHistoryOid" key="true" name="OID" fieldName="OID" type="integer" javaType="java.lang.Integer"/>
+  </Class>
+  <Class id="Device" name="Device" className="com.webratio.webapp.Device" duration="persistent" dataSource="db1">
+    <Attribute id="deviceBrowser" key="false" name="Browser" fieldName="browser" type="string" javaType="java.lang.String"/>
+    <Attribute id="deviceId" key="false" name="Device ID" fieldName="deviceID" type="string" javaType="java.lang.String"/>
+    <Attribute id="deviceModel" key="false" name="Model" fieldName="model" type="string" javaType="java.lang.String"/>
+    <Attribute id="deviceOid" key="true" name="oid" fieldName="oid" type="integer" javaType="java.lang.Integer"/>
+    <Attribute id="devicePlatform" key="false" name="Platform" fieldName="platform" type="string" javaType="java.lang.String"/>
+    <Attribute id="devicePlatformVersion" key="false" name="Platform Version" fieldName="platformVersion" type="string" javaType="java.lang.String"/>
+    <Attribute id="notificationDeviceId" key="false" name="Notification Device ID" fieldName="notificationDeviceID" type="string" javaType="java.lang.String"/>
+    <OutgoingRoles>Device2User</OutgoingRoles>
+    <InverseRoles/>
+  </Class>
+  <Class id="Role" name="Role" className="com.webratio.webapp.Role" duration="persistent" dataSource="db1">
+    <Attribute id="roleName" key="false" name="roleName" fieldName="roleName" type="string" javaType="java.lang.String"/>
+    <Attribute id="roleOID" key="true" name="oid" fieldName="oid" type="integer" javaType="java.lang.Integer"/>
+    <OutgoingRoles>Role2User</OutgoingRoles>
+    <InverseRoles>Role2User</InverseRoles>
+  </Class>
+  <Class id="User" name="User" className="com.webratio.webapp.User" duration="persistent" dataSource="db1">
+    <Attribute id="email" key="false" name="email" fieldName="email" type="string" javaType="java.lang.String"/>
+    <Attribute id="password" key="false" name="password" fieldName="password" type="password" javaType="java.lang.String"/>
+    <Attribute id="secretKey" key="false" name="secretKey" fieldName="secretKey" type="string" javaType="java.lang.String"/>
+    <Attribute id="token" key="false" name="Token" fieldName="token" type="string" javaType="java.lang.String"/>
+    <Attribute id="tokenExpirationDate" key="false" name="Token Expiration Date" fieldName="tokenExpirationDate" type="timestamp" javaType="java.sql.Timestamp"/>
+    <Attribute id="userName" key="false" name="userName" fieldName="userName" type="string" javaType="java.lang.String"/>
+    <Attribute id="userOID" key="true" name="oid" fieldName="oid" type="integer" javaType="java.lang.Integer"/>
+    <OutgoingRoles>User2Role|User2Device</OutgoingRoles>
+    <InverseRoles>User2Device</InverseRoles>
+  </Class>
+  <Class id="cls1" name="Menu" className="com.webratio.webapp.Menu" duration="persistent" dataSource="db1" stateAware="true">
+    <Attribute id="att1" key="true" name="oid" fieldName="oid" type="integer" javaType="java.lang.Integer" specialId="implicitOid"/>
+    <Attribute id="att26" key="false" name="createdAt" fieldName="createdAt" type="timestamp" javaType="java.sql.Timestamp" specialId="createTimestamp"/>
+    <Attribute id="att27" key="false" name="updatedAt" fieldName="updatedAt" type="timestamp" javaType="java.sql.Timestamp" specialId="updateTimestamp"/>
+    <OutgoingRoles>role6</OutgoingRoles>
+    <InverseRoles>role6</InverseRoles>
+  </Class>
+  <Class id="cls2" name="Feedback" className="com.webratio.webapp.Feedback" duration="persistent" dataSource="db1" stateAware="true">
+    <Attribute id="att2" key="true" name="oid" fieldName="oid" type="integer" javaType="java.lang.Integer" specialId="implicitOid"/>
+    <Attribute id="att28" key="false" name="createdAt" fieldName="createdAt" type="timestamp" javaType="java.sql.Timestamp" specialId="createTimestamp"/>
+    <Attribute id="att29" key="false" name="updatedAt" fieldName="updatedAt" type="timestamp" javaType="java.sql.Timestamp" specialId="updateTimestamp"/>
+    <Attribute id="att3" key="false" name="sugestao" fieldName="sugestao" type="string" javaType="java.lang.String"/>
+    <Attribute id="att4" key="false" name="sexo" fieldName="sexo" type="boolean" javaType="java.lang.Boolean" trueValue="" falseValue=""/>
+    <Attribute id="att5" key="false" name="data_nasc" fieldName="dataNasc" type="date" javaType="java.sql.Date"/>
+    <Attribute id="att6" key="false" name="email" fieldName="email" type="string" javaType="java.lang.String"/>
+    <Attribute id="att7" key="false" name="matr&#237;cula" fieldName="matrCula" type="string" javaType="java.lang.String"/>
+    <Attribute id="att8" key="false" name="sobrenome" fieldName="sobrenome" type="string" javaType="java.lang.String"/>
+    <Attribute id="att9" key="false" name="nome" fieldName="nome" type="string" javaType="java.lang.String"/>
+    <OutgoingRoles>role5</OutgoingRoles>
+    <InverseRoles/>
+  </Class>
+  <Class id="cls3" name="Tipo" className="com.webratio.webapp.Tipo" duration="persistent" dataSource="db1" stateAware="true">
+    <Attribute id="att10" key="true" name="oid" fieldName="oid" type="integer" javaType="java.lang.Integer"/>
+    <Attribute id="att11" key="false" name="nome" fieldName="nome" type="string" javaType="java.lang.String"/>
+    <Attribute id="att12" key="false" name="createdAt" fieldName="createdAt" type="timestamp" javaType="java.sql.Timestamp" specialId="createTimestamp"/>
+    <Attribute id="att13" key="false" name="updatedAt" fieldName="updatedAt" type="timestamp" javaType="java.sql.Timestamp" specialId="updateTimestamp"/>
+    <Attribute id="att22" key="true" name="oid_categoria" fieldName="oidCategoria" type="integer" javaType="java.lang.Integer"/>
+    <OutgoingRoles>role4|role7</OutgoingRoles>
+    <InverseRoles>role4</InverseRoles>
+  </Class>
+  <Class id="cls4" name="Estabelecimentos" className="com.webratio.webapp.Estabelecimentos" duration="persistent" dataSource="db1" stateAware="true">
+    <Attribute id="att14" key="true" name="oid" fieldName="oid" type="integer" javaType="java.lang.Integer" specialId="implicitOid"/>
+    <Attribute id="att15" key="false" name="valor" fieldName="valor" type="integer" javaType="java.lang.Integer"/>
+    <Attribute id="att16" key="false" name="telefone" fieldName="telefone" type="string" javaType="java.lang.String"/>
+    <Attribute id="att17" key="false" name="link" fieldName="link" type="url" javaType="java.lang.String"/>
+    <Attribute id="att18" key="false" name="endereco" fieldName="endereco" type="string" javaType="java.lang.String"/>
+    <Attribute id="att19" key="false" name="descricao" fieldName="descricao" type="string" javaType="java.lang.String"/>
+    <Attribute id="att20" key="false" name="nome" fieldName="nome" type="string" javaType="java.lang.String"/>
+    <Attribute id="att21" key="false" name="logo" fieldName="logo" type="blob" javaType="java.lang.String" storageType="file" uploadPolicy="managed" deletePolicy="no action" refFieldName="logoRef" defBlobName=""/>
+    <Attribute id="att24" key="false" name="createdAt" fieldName="createdAt" type="timestamp" javaType="java.sql.Timestamp" specialId="createTimestamp"/>
+    <Attribute id="att25" key="false" name="updatedAt" fieldName="updatedAt" type="timestamp" javaType="java.sql.Timestamp" specialId="updateTimestamp"/>
+    <Attribute id="att36" key="false" name="oid_tipo" fieldName="oidTipo" type="integer" javaType="java.lang.Integer"/>
+    <OutgoingRoles>role3</OutgoingRoles>
+    <InverseRoles/>
+  </Class>
+  <Class id="cls5" name="Categoria" className="com.webratio.webapp.Categoria" duration="persistent" dataSource="db1" stateAware="true">
+    <Attribute id="att30" key="true" name="oid" fieldName="oid" type="integer" javaType="java.lang.Integer"/>
+    <Attribute id="att31" key="false" name="nome" fieldName="nome" type="string" javaType="java.lang.String"/>
+    <Attribute id="att32" key="false" name="descricao" fieldName="descricao" type="string" javaType="java.lang.String"/>
+    <Attribute id="att33" key="false" name="imagem" fieldName="imagem" type="blob" javaType="java.lang.String" storageType="file" uploadPolicy="managed" deletePolicy="no action" refFieldName="imagemRef" defBlobName=""/>
+    <Attribute id="att34" key="false" name="createdAt" fieldName="createdAt" type="timestamp" javaType="java.sql.Timestamp" specialId="createTimestamp"/>
+    <Attribute id="att35" key="false" name="updatedAt" fieldName="updatedAt" type="timestamp" javaType="java.sql.Timestamp" specialId="updateTimestamp"/>
+    <OutgoingRoles>role8</OutgoingRoles>
+    <InverseRoles>role8</InverseRoles>
+  </Class>
+  <!-- ASSOCIATION ROLES -->
+  <AssociationRole id="Device2User" name="DeviceToUser" associationLogicName="UserDevice" inverseId="User2Device" source="Device" target="User" maxCard="1" fieldName="deviceToUser" derived="false" dataSource="db1" direct="true" userAware="false"/>
+  <AssociationRole id="Role2User" name="users" associationLogicName="UserRole" inverseId="User2Role" source="Role" target="User" maxCard="many" fieldName="users" derived="false" dataSource="db1" direct="false" userAware="false"/>
+  <AssociationRole id="User2Device" name="UserToDevice" associationLogicName="UserDevice" inverseId="Device2User" source="User" target="Device" maxCard="many" fieldName="userToDevice" derived="false" dataSource="db1" direct="false" userAware="false"/>
+  <AssociationRole id="User2Role" name="roles" associationLogicName="UserRole" inverseId="Role2User" source="User" target="Role" maxCard="many" fieldName="roles" derived="false" dataSource="db1" direct="true" userAware="false"/>
+  <AssociationRole id="role3" name="EstabelecimentosToTipo" associationLogicName="EstabelecimentosTipo" inverseId="role4" source="cls4" target="cls3" maxCard="1" fieldName="estabelecimentosToTipo" derived="false" dataSource="db1" direct="true" userAware="false"/>
+  <AssociationRole id="role4" name="TipoToEstabelecimentos" associationLogicName="EstabelecimentosTipo" inverseId="role3" source="cls3" target="cls4" maxCard="many" fieldName="tipoToEstabelecimentos" derived="false" dataSource="db1" direct="false" userAware="false"/>
+  <AssociationRole id="role5" name="FeedbackToMenu" associationLogicName="FeedbackMenu" inverseId="role6" source="cls2" target="cls1" maxCard="1" fieldName="feedbackToMenu" derived="false" dataSource="db1" direct="true" userAware="false"/>
+  <AssociationRole id="role6" name="MenuToFeedback" associationLogicName="FeedbackMenu" inverseId="role5" source="cls1" target="cls2" maxCard="many" fieldName="menuToFeedback" derived="false" dataSource="db1" direct="false" userAware="false"/>
+  <AssociationRole id="role7" name="TipoToCategoria" associationLogicName="TipoCategoria" inverseId="role8" source="cls3" target="cls5" maxCard="1" fieldName="tipoToCategoria" derived="false" dataSource="db1" direct="true" userAware="false"/>
+  <AssociationRole id="role8" name="CategoriaToTipo" associationLogicName="TipoCategoria" inverseId="role7" source="cls5" target="cls3" maxCard="many" fieldName="categoriaToTipo" derived="false" dataSource="db1" direct="false" userAware="false"/>
+</DomainModel>

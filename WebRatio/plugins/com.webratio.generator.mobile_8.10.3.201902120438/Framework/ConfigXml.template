@@ -1,0 +1,2 @@
+#?delimiters [%, %], [%=, %]
+[% printRaw(executeContextTemplate("PrepareBuild/ConfigXml.template")) %]

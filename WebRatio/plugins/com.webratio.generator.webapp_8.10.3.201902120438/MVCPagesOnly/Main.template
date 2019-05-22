@@ -1,0 +1,51 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import com.webratio.generator.io.IOHelper
+import com.webratio.generator.resolvers.WebAppEntityResolver
+
+def _steps = 2
+_steps += (1 + 120) // from Layout.template
+eventSocketClient.sendBeginTask("MVCPagesOnly", _steps)
+
+wr.usedStyles = new HashSet()
+wr.errorPages = new HashSet()
+wr.expirePages = new HashSet()
+wr.loginPages = new HashSet()
+
+/* Generate the layout */
+def layoutTemplatePath = wr.locateResourcePath("MVC/Layout.template")
+executeTemplate(layoutTemplatePath, ["eventTaskName" : "MVCPagesOnly"])
+eventSocketClient.sendTaskWorked("MVCPagesOnly", 1)
+
+/* Create or updates the layout descriptor */
+processOutputFile("WEB-INF/descr/_layout.descr", "layout descriptor", wr.project, { layoutFile ->
+	try {
+		layoutFile.parentFile.mkdirs()
+	    if (!layoutFile.exists()) {
+	    	layoutFile.write(executeContextTemplate("MVC/LayoutDescr.template", ["root": null]))
+	    }
+	    def rootElement = parseXMLFile(layoutFile, WebAppEntityResolver.INSTANCE).rootElement
+	    layoutFile.write(executeContextTemplate("MVC/LayoutDescr.template", ["root": rootElement]))
+	} catch (Throwable e) {
+		e.printStackTrace()
+	}
+})
+eventSocketClient.sendTaskWorked("MVCPagesOnly", 1)
+
+/* Copy sub-folders of used styles */
+def outputDir = new File(wr.outputPath)
+def usedStyleList = []
+if (wr.usedStyles.remove("WRDefault")) {
+    usedStyleList.add("WRDefault")
+}
+usedStyleList.addAll(wr.usedStyles)
+for (style in usedStyleList) {
+	def styleDir = getStyleDirectory(style)
+	def styleOutputDirPath = getStyleOutputDirectoryPath(style)
+	if (styleOutputDirPath) {
+		IOHelper.copyDirectory(new java.io.File(styleDir, styleOutputDirPath), new java.io.File(outputDir, styleOutputDirPath), IOHelper.CVS_AWARE_FILTER, IOHelper.THUMBS_FILE_FILTER)
+	} else {
+		IOHelper.copyDirectory(styleDir, outputDir, IOHelper.STYLE_DIR_FILTER, IOHelper.CVS_AWARE_FILTER, IOHelper.STYLE_FILE_FILTER, IOHelper.THUMBS_FILE_FILTER)
+	}
+}
+%>

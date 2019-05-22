@@ -1,0 +1,21 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: p8JsFj0RzhO2vfMr90MDvGaGYW44I
+ 2/1qW/pI/dGGs0=
+SHA-256-Digest-Manifest: uySKzhi1XfYsiytcH3SDuJ+jLd7ie2olbazcDbI8g+M=
+Created-By: 1.7.0_80 (Oracle Corporation)
+
+Name: lib/guavasrc.zip
+SHA-256-Digest: 8QgxczX4qVssgxFt2NZYFcyb4o3WVGt4pFeTciUxeHY=
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: a5fmgH7myHzNji9AMOfHrVh8fy7MOgIdRSUiRZ6EFA4=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: about.html
+SHA-256-Digest: WEromXuqfCKeOdpGuK4fM4g1j7S2liRMg2coFiuaWpc=
+
+Name: lib/guava.jar
+SHA-256-Digest: yATIZB/ujj2mhNLCQ3vFZ6zb+PLZVvg2gLIsT4LR34Y=
+

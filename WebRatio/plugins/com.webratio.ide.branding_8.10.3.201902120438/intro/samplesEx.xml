@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<introContent>
+  <!-- Extension to the SDK Samples Page. -->
+  <extensionContent id="com.webratio.ide.ui.samplesEx" name="BPM" alt-style="css/samples.properties" style="css/samples.css" path="samples/@">
+    <group id="wr" style-id="content-group">      
+       <link label="Expense Report" url="http://org.eclipse.ui.intro/runAction?class=com.webratio.ide.ui.samples.actions.RunNewWizardAction&amp;pluginId=com.webratio.ide.ui.samples&amp;newWizardId=com.webratio.bpm.ui.samples.wizards.ExpenseReportWizard" id="wr_exprep" style-id="content-link">
+          <text>A simple process for creating and approving expense reports inside a company.</text>
+       </link>
+       <link label="Vacation Request" url="http://org.eclipse.ui.intro/runAction?class=com.webratio.ide.ui.samples.actions.RunNewWizardAction&amp;pluginId=com.webratio.ide.ui.samples&amp;newWizardId=com.webratio.bpm.ui.samples.wizards.VacationRequestWizard" id="wr_vacreq" style-id="content-link">
+          <text>A simple process for requesting vacation inside a company.</text>
+       </link>
+    </group>
+  </extensionContent>
+</introContent>

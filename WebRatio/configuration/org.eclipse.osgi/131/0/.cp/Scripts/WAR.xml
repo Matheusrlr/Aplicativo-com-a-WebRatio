@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="WAR" default="main">
+
+	<target name="delete_folder" if="delete_output_folder">
+		<delete dir="${OUTPUT_FOLDER}" failonerror="true" />
+	</target>
+
+	<target name="war_with_manifest" if="manifest_file_exists">
+		<war  basedir="${OUTPUT_FOLDER}" destfile="${OUTPUT_FOLDER}/../${FILE_NAME}" webxml="${OUTPUT_FOLDER}/WEB-INF/web.xml" excludes="WEB-INF/descr/_redeploy" manifest="${OUTPUT_FOLDER}/META-INF/MANIFEST.MF" />
+	</target>
+
+	<target name="war_without_manifest" unless="manifest_file_exists">
+		<war basedir="${OUTPUT_FOLDER}" destfile="${OUTPUT_FOLDER}/../${FILE_NAME}" webxml="${OUTPUT_FOLDER}/WEB-INF/web.xml" excludes="WEB-INF/descr/_redeploy" />
+	</target>
+
+	<target name="main">
+		<delete file="${OUTPUT_FOLDER}/../${FILE_NAME}" failonerror="true" />
+		<available file="${OUTPUT_FOLDER}/META-INF/MANIFEST.MF" property="manifest_file_exists" />
+		<antcall target="war_with_manifest" />
+		<antcall target="war_without_manifest" />
+		<antcall target="delete_folder" />
+	</target>
+
+</project>

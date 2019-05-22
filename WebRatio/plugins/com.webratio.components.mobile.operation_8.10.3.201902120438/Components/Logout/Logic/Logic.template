@@ -1,0 +1,6 @@
+#?delimiters [%, %], [%=, %]
+[% setJSONOutput() %]
+{
+	"service": "wrm.comp.LogoutService",
+	"removeUsername": [%= component["removeUsername"] == "true" %]
+}

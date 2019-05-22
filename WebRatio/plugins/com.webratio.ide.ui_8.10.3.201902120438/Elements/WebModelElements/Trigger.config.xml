@@ -1,0 +1,60 @@
+<Element name="Trigger" lowerName="trigger" pluralLowerName="triggers">
+	<Description>
+		A trigger can be added to  
+		&lt;a href="/Reference/ElementsReference/WebModelElements/Job"&gt;jobs&lt;/a&gt; in
+		order to define at model time a pre-programmed schedule on which to run the job.&lt;br /&gt;
+		&lt;br /&gt;
+	</Description>
+	<ActionRef label="Add Property" />
+	<ActionRef label="Generate Logic Descriptors Only"/>
+	<ActionRef label="Generate Selection"/>
+	<ActionRef label="Find Model Problems"/>
+	<ActionRef label="Help"/>
+
+	<PropertyCategory name="General">
+		<PropertyRef label="Identifier" />
+		<PropertyRef label="Name" />
+		<Property label="Schedule Policy">
+			Specifies the schedule policy to use. Common policies are further configurable
+			through the other properties. The &lt;b&gt;Custom Cron Expression&lt;/b&gt; policy
+			enables the use of a custom cron expression for maximum flexibility.
+		</Property>
+		<Property label="Synchronous Execution">
+		    In case of session event triggering (&lt;b&gt;On Session Create&lt;/b&gt;, &lt;b&gt;On User Login&lt;/b&gt;)
+		    indicates whether the job must be executed in a synchronous or asynchronous way.
+		</Property>
+		<Property label="Hours">
+			For schedule policies requiring an exact time, specifies the hours part of the time
+			as a number in the range 0-23. For the &lt;b&gt;Every X Hours&lt;/b&gt; policy, specifies
+			the number of hours	between executions of the job.
+		</Property>
+		<Property label="Minutes">
+			For schedule policies requiring an exact time, specifies the minutes part of the time
+			as a number in the range 0-59. For the &lt;b&gt;Every X Minutes&lt;/b&gt; policy, specifies
+			the number of minutes between executions of the job.
+		</Property>
+		<Property label="Seconds">
+			For schedule policies requiring an exact time, specifies the seconds part of the time
+			as a number in the range 0-59. For the &lt;b&gt;Every X Seconds&lt;/b&gt; policy, specifies
+			the number of seconds between executions of the job.
+		</Property>
+		<Property label="Day of Week">
+			For the &lt;b&gt;Once a Week&lt;/b&gt; policy, specifies the day of the week on which
+			to execute the job.
+		</Property>
+		<Property label="Day">
+			For policies requiring it, specifies a day of the month as a number in the range 1-31.
+		</Property>
+		<Property label="Month">
+			For policies requiring it, specifies a month.
+		</Property>
+		<Property label="Year">
+			For policies requiring it, specifies a year as a positive number.
+		</Property>
+		<Property label="Cron Expression">
+			When using a predefined schedule policy, this property shows the expression used to 
+			configure the underlying Quartz job scheduler. The &lt;b&gt;Custom Cron Expression&lt;/b&gt;
+			policy allows the user to manually enter &lt;a href=&quot;http://wiki.opensymphony.com/display/QRTZ1/CronTriggers+Tutorial#CronTriggersTutorial-Format&quot;&gt;custom cron expressions&lt;/a&gt;.
+		</Property>
+	</PropertyCategory>
+</Element>

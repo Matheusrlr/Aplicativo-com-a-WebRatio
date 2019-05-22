@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<introContent>
+  	<extensionContent id="com.webratio.ide.ui" name="WebRatio" alt-style="css/overview.properties" style="css/overview.css" path="overview/@">
+  		<group style-id="content-group" id="content-group">
+			<link style-id="content-link" label="WebRatio development" url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.webratio.ide.ui.doc.user/HTML/Overview.html" id="wr">
+          		<text>Learn how to develop Web applications using WebRatio</text>
+       		</link>
+			<link style-id="content-link" label="BPM development" url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.webratio.bpm.ui.doc.user/HTML/Overview.html" id="bpm">
+          		<text>Learn how to model business processes using WebRatio</text>
+       		</link>
+       	</group>
+  	</extensionContent>
+</introContent>

@@ -1,0 +1,24 @@
+#?delimiters [%, %], [%=, %]
+[% 
+import org.apache.commons.lang.StringUtils
+
+def type = attr["type"]
+def subType = attr["subType"]
+def contentType = attr["contentType"]
+def typeId = (subType != "") ? subType : type
+def pattern = typeId + "Pattern"
+def attrProp = getFieldName(attr["attribute"])
+
+if ((type == "string") || (type == "text")) { %]
+	<c:out value="${[%=item%].[%=attrProp%]}"/>
+[% } else if ((type == "float") || (type == "integer") || (type == "decimal")) { %]
+	<fmt:formatNumber value="${[%=item%].[%=attrProp%]}" pattern="${[%=pattern%]}"/>
+[% } else if ((type == "date") || (type == "time") || (type == "timestamp")) { %]
+	<fmt:formatDate value="${[%=item%].[%=attrProp%]}" pattern="${[%=pattern%]}"/>
+[% } else if (type == "blob") { %]
+  <c:set var="blob" value="${[%=item%].[%=attrProp%]}"/><%com.webratio.web.mvc.reports.ReportTag.writeBLOBFilePath(pageContext, "blob");%>
+[% } else if (type == "boolean") { %]
+<c:if test="${not(empty [%=item%].[%=attrProp%])}"><c:choose><c:when test="${[%=item%].[%=attrProp%]}"><spring:message code="[%=typeId%].yes"/></c:when><c:otherwise><spring:message code="[%=typeId%].no"/></c:otherwise></c:choose></c:if>
+[% } else { %]
+<c:out value="${[%=item%].[%=attrProp%]}"/>
+[% } %]

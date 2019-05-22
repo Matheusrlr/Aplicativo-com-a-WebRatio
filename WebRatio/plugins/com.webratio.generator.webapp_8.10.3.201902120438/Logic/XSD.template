@@ -1,0 +1,87 @@
+#?delimiters [%,%],[%=,%]
+[%
+import org.apache.commons.lang.StringUtils
+import org.apache.commons.io.FileUtils
+import com.webratio.generator.helpers.ImportResolverHelper
+setXMLOutput()
+
+def xsdOutputPath = wr.outputPath
+if(wr.projectType.name() == "WEBPROJECT"){
+   xsdOutputPath += "/WEB-INF"
+} else if(wr.projectType.name() == "ENTERPRISE"){
+   xsdOutputPath += "/" + rootModuleName + ".jar"
+} else if (wr.projectType.name() != "BPM") {
+   xsdOutputPath += "/../" + rootModuleName + ".jar"
+}
+xsdOutputPath += "/schemas/"
+
+def servicePrefix = ""
+if(wr.projectType.name() in ["WEBMODEL","MODULE"]){
+  servicePrefix = "Local"
+}
+%]
+
+<Descriptor service="com.webratio.rtx.xsd.[%=servicePrefix%]XsdService" name="XSD Service">
+  
+   <XsdProviders>
+    [%for(provider in wr.project.selectNodes("ServiceDataProviders/XsdProvider[string(@ownerProjectId)='']")){%]
+      <XsdProvider id="[%=provider["id"]%]" name="[%=provider["name"]%]">
+	    [%for(res in provider.selectNodes("XsdResource")){%]
+	      [%def resType = res["resourceType"]%]
+	      [%if(!StringUtils.isBlank(res["file"])){%]
+	         [%def path = res["file"]
+	           if(path.startsWith("/")){
+	              path = path.substring(1)
+	           } else {
+	              path = projectName + "/" + path
+	           }                       
+	         %]
+	         <XsdResource id="[%=res["id"]%]" name="[%=res["name"]%]" file="true"[%if(!StringUtils.isBlank(resType)){%] resourceType="[%=resType%]"[%}%]>[%=path%]</XsdResource>
+	         [%
+	           def srcFile = new java.io.File(wr.projectDir, "/../" + path);
+	           FileUtils.copyFile(srcFile, new java.io.File(xsdOutputPath + path))
+	           for(path2 in ImportResolverHelper.collectImportedResources(wr.projectDir, srcFile)){
+	               def srcFile2 = new java.io.File(wr.projectDir, "/../" + path2)
+	               FileUtils.copyFile(srcFile2, new java.io.File(xsdOutputPath + path2))
+	           }         
+	         %]
+	      [%}else{%]
+	         <XsdResource id="[%=res["id"]%]" name="[%=res["name"]%]"[%if(!StringUtils.isBlank(resType)){%] resourceType="[%=resType%]"[%}%]>[%=res["uri"]%]</XsdResource>
+	      [%}%]
+	    [%}%]
+      </XsdProvider>
+    [%}%]
+   </XsdProviders>
+   
+   <XsdMapping>
+      [%
+        def ownerPrjCond = ""
+        if(wr.projectType.name() in ["WEBMODEL","MODULE"]){
+           ownerPrjCond = "[string(ancestor-or-self::*/@ownerProjectId)='']"
+        }      
+      %]
+      [%for(domainClass in wr.project.selectNodes("DomainModel//Class[string(@wrxsd:provider) != '']" + ownerPrjCond)){%]
+         <Entity id="[%=domainClass["id"]%]" provider="[%=domainClass.valueOf("@wrxsd:provider")%]" type="[%=domainClass.valueOf("@wrxsd:type")%]">
+            [%for(attribute in domainClass.selectNodes("Attribute[string(@wrxsd:element) != '']")){%]
+              [%
+                def booleanValues = ""
+                if("boolean" == attribute["type"]){
+                   def xsdTrueValue = attribute.valueOf("@wrxsd:trueValue")
+                   def xsdFalseValue = attribute.valueOf("@wrxsd:falseValue")
+                   if(xsdTrueValue != "" && xsdFalseValue != ""){
+                     booleanValues = xsdTrueValue + "|" + xsdFalseValue  
+                   }
+                }
+              %]
+              <Attribute id="[%=attribute["id"]%]" element="[%=attribute.valueOf("@wrxsd:element")%]" [%if(booleanValues != ""){%]booleanValues="[%=booleanValues%]"[%}%]/>
+            [%}%]
+         </Entity>
+      [%}%]
+      [%for(role in wr.project.selectNodes("DomainModel/Association[string(@wrxsd:element) != '']" + ownerPrjCond)){%]
+         <AssociationRole id="[%=getById(role, "id").valueOf("AssociationRole1/@id")%]" element="[%=role.valueOf("@wrxsd:element")%]"/>
+      [%}%]      
+   </XsdMapping>
+   
+</Descriptor>
+
+

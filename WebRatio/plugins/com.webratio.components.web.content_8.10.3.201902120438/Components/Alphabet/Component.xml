@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="content" idPrefix="alphu" namePrefix="Alphabet " label="Alphabet" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" successFlowTarget="true" errorFlowTarget="true" canPlaceLayoutComponent="true"> 
+  <DomainClassProperty attributeName="dataBinding" includeDerived="true" figureDisplayOrder="1" removable="true"> 
+    <Description>The class from which the content of the component is drawn.</Description> 
+  </DomainClassProperty>  
+  <AttributeProperty attributeName="attribute" classIdExpr="@dataBinding" includeDerived="true"> 
+    <Description xml:space="preserve">The attribute whose starting characters have to be collected.</Description>  
+    <IsEnabled>return (element["dataBinding"] != "")</IsEnabled> 
+  </AttributeProperty>  
+  <StringProperty label="Special Characters" attributeName="specialCharacters"> 
+    <Description xml:space="preserve">If the class is not specified, defines the string of special characters (i.e. !$?) 
+     to provide as outputs.</Description>  
+    <IsEnabled>return (element["dataBinding"] == "")</IsEnabled> 
+  </StringProperty>  
+  <ConditionalExpression elementName="ConditionalExpression" classIdExpr="../../@dataBinding" defaultPolicy="true" figureDisplayOrder="2"> 
+    <Description xml:space="preserve">The set of selection criteria that retrieves the instances of the class of the component.</Description> 
+  </ConditionalExpression>  
+  <BooleanProperty attributeName="useNumbers" defaultValue="false" label="Use Numbers"> 
+    <Description xml:space="preserve">If checked, instances starting with numbers are considered.</Description> 
+  </BooleanProperty>  
+  <Description xml:space="preserve">Alphabet components search the instances of a class and show the starting characters 
+   of a specific attribute, as well as the number of occurrences of each character.
+   An alphabet component specification consists of two parts:
+   &lt;ul&gt;
+     &lt;li&gt;The specification of the class to which the component refers and, optionally, 
+   of a conditional expression used to restrict the set of instances contributing to the content 
+   of the component.&lt;/li&gt;
+     &lt;li&gt;The attribute whose starting characters have to be collected.&lt;/li&gt;
+   &lt;/ul&gt;
+   &lt;p&gt;
+   An Alphabet component can be defined without the 
+   specification of a class. In this case it shows the alphabet and possibly numbers and special characters.
+   &lt;/p&gt;
+   &lt;p&gt;
+   Usually, the Alphabet component is used in conjunction with an Simple List showing the class instances whose attribute begins with the letter selected 
+   from the alphabet. The Simple List should present an Attributes Condition with predicate "Begins with (Ignore Case)".&lt;/p&gt;</Description>  
+  <InputDescription xml:space="preserve" name="Condition-Name">The parameter associated to one of the Conditional Expressions
+of the component.</InputDescription>  
+  <OutputDescription xml:space="preserve" name="Attribute-Name">The value of one of the class attributes for the object selected
+from the Alphabet component.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Selected Letter">The selected alphabet letter.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Attribute-Name">The values for one of the class attributes of the extracted objects</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="ForeignKey-Name">The values of one of the foreign key attributes of the objects 
+connected to the extracted objects.</OutputDescription>  
+  <IsContextFreeComponent xml:space="preserve">return getIncomingFlows(component).empty</IsContextFreeComponent>  
+  <IsMultiConditionComponent xml:space="preserve">if (getIncomingFlows(component).size() &lt;= 1) {
+    return false
+}
+
+def sel = component.element("ConditionalExpression")
+if(sel == null){
+  return false
+}
+def count = sel.elements("AssociationRoleCondition").size() + sel.elements("KeyCondition").size()
+for (cond in sel.elements("AttributesCondition")) {
+    def pred = cond["predicate"]
+    if ((cond["value"] == "") &amp;&amp; !isUnaryPredicate(pred)) {
+        count++
+    }
+}
+return count &gt; 1</IsMultiConditionComponent>  
+  <BeanDescription xml:space="preserve">
+	&lt;p&gt;The component state object for the Alphabet component consists of the following properties:
+	   &lt;ul&gt;
+  		&lt;li&gt;&lt;code&gt;int dataSize&lt;/code&gt;: the number of class state objects&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;List data&lt;/code&gt;: the list of maps containing the letter (key) with the related values and 
+  		the &lt;code&gt;dataSize&lt;/code&gt; of the values&lt;/li&gt;
+  	   &lt;/ul&gt;
+	&lt;/p&gt;
+	&lt;p&gt;The class state object depends on the class the component is based on. For example, the class 
+	&lt;i&gt;Category&lt;/i&gt; of Acme application is associated with a state object having the following properties:
+	   &lt;ul&gt;
+  		&lt;li&gt;&lt;code&gt;Character data.letterChar&lt;/code&gt;: the value of the &lt;i&gt;letter&lt;/i&gt;&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;String[] data.letter&lt;/code&gt;: the output values for the &lt;i&gt;letter&lt;/i&gt;&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Integer data.dataSize&lt;/code&gt;: the value of the &lt;i&gt;dataSize&lt;/i&gt; for the specific letter&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Object[] attN2F94ABArray&lt;/code&gt;: the array of values of the &lt;i&gt;oid&lt;/i&gt; attribute&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Object[] att19Array&lt;/code&gt;: the array of values of the &lt;i&gt;category&lt;/i&gt; attribute&lt;/li&gt;
+  	   &lt;/ul&gt;
+	&lt;/p&gt;
+</BeanDescription> </Component>

@@ -1,0 +1,27 @@
+<Element name="AttributesRestrictionCondition" lowerName="attributes condition" pluralLowerName="attributes conditions">
+	<Description>
+		    	A condition based on an attribute value. 
+				The Value property is mandatory if the chosen predicate requires an input value to compute the boolean result. 
+	</Description>
+	<ActionRef label="Help"/>
+	<PropertyCategory name="General">
+		<Property label="Attributes">
+	    	The set of attributes available as output parameters.
+		</Property>
+		<Property label="Predicate">
+	    	The predicate used in the condition.
+		</Property>
+		<Property label="Ignore Case">
+	    	If checked, the predicate evaluation is performed ignoring case sensitivity.
+		</Property>
+		<Property label="Boolean Operator">
+	    	The boolean operator used to concatenate conditions produced by applying the condition on multiple values.
+		</Property>
+		<Property label="Value">
+	    	The condition's constant value.
+		</Property>
+		<Property label="Required">
+	    	Indicates if the condition is required or implied.
+		</Property>
+	</PropertyCategory>
+</Element>

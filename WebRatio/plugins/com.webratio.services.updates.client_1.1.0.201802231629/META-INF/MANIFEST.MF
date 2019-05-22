@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: com.webratio.services.updates.client
+Export-Package: com.webratio.services.updates.client
+Bundle-Name: WebRatio Updates API
+Bundle-Version: 1.1.0.201802231629
+Bundle-ClassPath: com.webratio.services.updates.client.jar
+Require-Bundle: com.webratio.commons.lib.google.guava,com.webratio.com
+ mons.lib.apache.httpcomponents,com.webratio.commons.lib.apache.common
+ s.logging,com.webratio.commons.lib.jsr305
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: WebRatio
+
+Name: com.webratio.services.updates.client.jar
+SHA-256-Digest: MBVgUbI/DMnycv15mkwKWCF99XIl4aWQfqgR8pttAdY=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+

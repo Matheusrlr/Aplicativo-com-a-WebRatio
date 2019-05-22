@@ -1,0 +1,7 @@
+#?delimiters [%,%],[%=,%]
+[%setXMLOutput()%]
+<Descriptor service="com.webratio.components.web.controlflow.ParameterCollectorService">
+   [% for (par in component.selectNodes("CollectorParameter")) { %]
+       <Parameter id="[%=par["id"]%]" name="[%=par["name"]%]">[%=par["value"]%]</Parameter>
+   [% } %]        
+</Descriptor>

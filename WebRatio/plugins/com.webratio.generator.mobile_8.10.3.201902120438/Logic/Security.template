@@ -1,0 +1,39 @@
+#?delimiters [%, %], [%=, %]
+[%
+setJSONOutput()
+
+def protectionUsed = !getAllProtectedElements().isEmpty()
+def mappingUsed = getAllDomainClasses().find{ it["serverClass"] }
+def securityUsed = (protectionUsed || mappingUsed)
+def loginElement = getLoginElement()
+if (securityUsed && !loginElement) {
+	throwGenerationException("A login screen is required when using protection or remote data mapping")
+}
+def requireAllowRoles = (wr.project.selectNodes("./Roles/Role").size() == 1? true : false)
+def loginActionDef = getLoginActionDefinition()
+%]
+{
+	"_": "wrm.core.SecurityService",
+	
+	"requireAllowRoles": [%= requireAllowRoles %]
+	
+	[% if (securityUsed) { %],
+		[% executeWithSeparator(",") { %]
+			"authScreen": "[%= loginElement["id"] %]"
+		[% } { %]
+			[% if (loginActionDef) { %]
+				"authActionDefinition": "[%= loginActionDef["id"] %]"
+			[% } %]
+		[% } %]
+	[% } %]
+	
+	[% if (securityUsed) { %],
+		"accountManager": {
+			"packageName": "[%= wr.appConfig.accountManagerPackageName ?: wr.appConfig.id %]"
+			[% if (wr.appConfig.accountManagerShared) { %],
+				"groupId": "[%= wr.appConfig.accountManagerSharingGroupId %]",
+				"teamId": "[%= wr.appConfig.accountManagerSharingTeamId %]"
+			[% } %]
+		}
+	[% } %]
+}

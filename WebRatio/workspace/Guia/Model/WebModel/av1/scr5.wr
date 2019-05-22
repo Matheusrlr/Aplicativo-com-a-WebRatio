@@ -1,0 +1,39 @@
+<Screen xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" gr:x="50" gr:y="-85" id="av1#scr5" name="Menu">
+  <ViewComponents>
+    <Details gr:x="0" gr:y="0" id="av1#scr5#dau2" name="Menu" dataBinding="cls3" displayAttributes="cls3#att22" eventOrder="av1#scr5#dau2#oslte5 av1#scr5#dau2#oslte8">
+      <ConditionalExpression id="av1#scr5#dau2#sc2" defaultPolicy="fill" booleanOperator="and">
+        <KeyCondition id="av1#scr5#dau2#sc2#kcond2" name="KeyCondition2" predicate="in" implied="false"/>
+      </ConditionalExpression>
+      <Events>
+        <OnSelectEvent id="av1#scr5#dau2#oslte5" name="1">
+          <NavigationFlow id="av1#scr5#dau2#oslte5#nf5" to="av1#scr1#pwu1" automaticCoupling="true"/>
+        </OnSelectEvent>
+        <OnSelectEvent id="av1#scr5#dau2#oslte8" name="feedback">
+          <NavigationFlow id="av1#scr5#dau2#oslte8#nf8" to="av1#scr6#enu1" automaticCoupling="true"/>
+        </OnSelectEvent>
+      </Events>
+    </Details>
+  </ViewComponents>
+  <layout:Grid containerType="grid">
+    <layout:Row>
+      <layout:Cell colspan="12">
+        <layout:Component componentId="av1#scr5#dau2">
+          <layout:Attribute attribute="cls3#att22"/>
+          <layout:Event event="av1#scr5#dau2#oslte5" eventType="OnSelectEvent"/>
+          <layout:Event event="av1#scr5#dau2#oslte8" eventType="OnSelectEvent"/>
+        </layout:Component>
+      </layout:Cell>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+  </layout:Grid>
+</Screen>

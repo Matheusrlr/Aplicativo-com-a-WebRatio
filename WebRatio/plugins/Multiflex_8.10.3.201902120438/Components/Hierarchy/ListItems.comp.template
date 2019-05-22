@@ -1,0 +1,91 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Use Empty Unit Message" name="use-empty-unit-message" type="boolean" default="false">
+Defines the usage of a message for empty units.
+Allowed values are: true(default) or false.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Empty Unit Message" name="empty-unit-message" type="string" default="emptyUnitMessage">
+Defines the key of the message to use if the component is empty.
+Default value: emptyUnitMessage
+</wr:LayoutParameter>
+[%
+	import org.apache.commons.lang.StringUtils
+	def styleClass = component["styleClass"]
+	def useEmptyUnitMessage = params["use-empty-unit-message"]
+	def emptyUnitMessage = params["empty-unit-message"]
+	
+	def position = "level1"
+%]
+
+[% // iterates recursively on the hierarchicalLevels
+   def getSubLevelsLayout(hLevel, position, levelCount) { 
+	  
+	  def levelId = hLevel["id"]
+	  position = position + ",level" + levelCount
+	  def currentLevel = "level" + levelCount + "current"
+	  def styleClass = component["styleClass"]
+%]
+<div class="plain HierarchyLevel">
+	<ul>
+	      <c:forEach items="${level[%=levelCount -1 %]current.[%=levelId%]data}" var="level[%=levelCount%]current"
+			varStatus="level[%=levelCount%]status">
+		    <c:set var="level[%=levelCount%]" value="${level[%=levelCount%]status.index}" />
+		    <li>
+	      		<wr:Iterate var="attr" context="hLevel" select="layout:Attribute">
+		        	<wr:Value item="currentLevel"/>
+	          	</wr:Iterate>
+	          	<wr:Iterate var="ev" context="hLevel" select="layout:Event">
+					<wr:Event  class="link" position="position"/>
+		        </wr:Iterate> 
+		        <wr:Iterate var="subLevel" context="hLevel" select="HierarchyLevel">
+					[% getSubLevelsLayout(subLevel, position, levelCount + 1) %]
+				 </wr:Iterate> 
+	      	</li>
+		  </c:forEach>
+	</ul>
+</div>
+[% } %]
+[% if (useEmptyUnitMessage != "true") { %]
+<c:if test="${not(empty <wr:Id context="component"/>) and (<wr:Id context="component"/>.dataSize gt 0)}">
+[% } else { %]
+<c:choose>
+<c:when test="${not(empty <wr:Id context="component"/>) and (<wr:Id context="component"/>.dataSize gt 0)}">
+[% } %]
+	<wr:Frame>
+		<div class="plain <wr:StyleClass/>">
+	  		<div class="plain Hierarchy">
+				<ul>
+				    <c:forEach var="level1current" varStatus="level1status" items="${<wr:Id context="component"/>.data}">
+						<c:set var="level1" value="${level1status.index}" />
+				      	<li>
+				      		<wr:Iterate var="attr" context="component" select="layout:Attribute">
+					        	<wr:Value item="'level1current'"/>
+				          	</wr:Iterate>
+				          	<wr:Iterate var="ev" context="component" select="layout:Event">
+								<wr:Event  class="link" position="position"/>
+					        </wr:Iterate> 
+					        <wr:Iterate var="hLevel" context="component" select="HierarchyLevel">
+								[% getSubLevelsLayout(hLevel, "level1", 2) %]
+						  	</wr:Iterate>
+				      	</li>
+				    </c:forEach>
+				</ul>
+			</div>
+		</div>
+	</wr:Frame>
+[% if (useEmptyUnitMessage != "true") { %]
+</c:if>
+[% } else { %]
+</c:when>
+<c:otherwise>
+	<wr:Frame>
+		<div class="plain <wr:StyleClass/>">
+	  		<div class="plain Hierarchy">
+				<ul>
+					<li><spring:message code="[%printJSPTagValue(emptyUnitMessage)%]"/></li>
+				</ul>
+			</div>
+		</div>
+	</wr:Frame>
+</c:otherwise>
+</c:choose>
+[% } %]   

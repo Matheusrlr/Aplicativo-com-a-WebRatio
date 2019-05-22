@@ -1,0 +1,6 @@
+#?delimiters <%,%>,<%=,%>
+<% setXMLOutput() %>
+<InputParameters>
+    <InputParameter name="<%=component["id"]%>.classId" label="Class Id"/>
+    <InputParameter name="<%=component["id"]%>.attributesIds" label="Attributes Ids"/>
+</InputParameters>

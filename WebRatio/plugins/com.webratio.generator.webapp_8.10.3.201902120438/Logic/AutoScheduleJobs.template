@@ -1,0 +1,141 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import org.apache.commons.lang.StringUtils
+import org.apache.commons.lang.math.NumberUtils
+
+setXMLOutput()
+def jobs = wr.project.selectNodes("WebModel/ServiceView/Job[Operations/InitJob][Trigger]").findAll{it["scheduler"] == schedulerId}
+%>
+<job-scheduling-data xmlns="http://www.quartz-scheduler.org/xml/JobSchedulingData"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.quartz-scheduler.org/xml/JobSchedulingData http://www.quartz-scheduler.org/xml/job_scheduling_data_2_0.xsd"
+    version="2.0">
+    
+    <processing-directives>
+        <overwrite-existing-data>true</overwrite-existing-data>
+    </processing-directives>
+
+<schedule>
+<% for (job in jobs) { 
+     if(job.selectSingleNode("Trigger[@schedulePolicy!='onSessionCreate'][@schedulePolicy!='onSessionDestroy'][@schedulePolicy!='onUserLogin'][@schedulePolicy!='onUserLogout']") == null){
+        continue
+     }    
+     def triggers = job.elements("Trigger")
+  %>
+   <job>
+      <name><%=job["id"]%></name>
+      <group>${GROUP_NAME}</group>
+      <description><%=job["name"]%></description>
+      <job-class>com.webratio.rtx.jobs.QuartzJob</job-class>
+      <durability>false</durability>
+      <recover>false</recover>
+      <job-data-map>
+        <entry>
+          <key>jobInstanceId</key>
+          <value><%=job["id"]%></value>
+        </entry>
+      </job-data-map>
+    </job>  
+    <%
+      def cronExpression = { trigger ->
+          def schedulePolicy = trigger["schedulePolicy"]
+          if ("custom" == schedulePolicy) {
+              return trigger["cronExpression"]
+          } else if ("startup" == schedulePolicy) {
+              return "startup"
+          } else {
+              final String[] DAY_VALUES = ["","sun","mon","tue","wed","thu","fri","sat"]
+              final String[] MONTH_VALUES = ["","jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"]
+              def hours = trigger["hours"]
+              def minutes = trigger["minutes"]
+              def seconds = trigger["seconds"]
+              def dayOfWeekIndex = DAY_VALUES.findIndexOf { it == trigger["dayOfWeek"] }
+              def day = trigger["day"]
+              def month = MONTH_VALUES.findIndexOf { it == trigger["month"] }
+              def year = trigger["year"]
+              if ("everyXSeconds" == schedulePolicy) {
+                  return "everyXSeconds." + seconds
+              } else if ("everyXMinutes" == schedulePolicy) {
+                  return "everyXMinutes." + minutes
+              } else if ("everyXHours" == schedulePolicy) {
+                  return "everyXHours." + hours
+              } else if ("everyDay" == schedulePolicy) {
+                  return "" + seconds + ' ' + minutes + ' ' + hours + " * * ?"
+              } else if ("onceAWeek" == schedulePolicy && dayOfWeekIndex > 0) {
+                  return "" + seconds + ' ' + minutes + ' ' + hours + " ? * " + DAY_VALUES[dayOfWeekIndex].toUpperCase()
+              } else if ("onceAMonth" == schedulePolicy) {
+                  return "" + seconds + ' ' + minutes + ' ' + hours + ' ' + day + " * ?"
+              } else if ("onceAYear" == schedulePolicy && month > 0) {
+                  return "" + seconds + ' ' + minutes + ' ' + hours + ' ' + day + ' ' + month + " ?"
+              } else if ("specificDate" == schedulePolicy && month > 0) {
+                  return "" + seconds + ' ' + minutes + ' ' + hours + ' ' + day + ' ' + month + " ? " + year
+              } else {
+                  return ""
+              }
+          }
+      }
+    %>
+    <% for (trigger in triggers) { 
+      if(["onSessionCreate", "onSessionDestroy", "onUserLogin", "onUserLogout"].contains(trigger["schedulePolicy"])){
+         continue
+      }     
+      def cronExpr = cronExpression(trigger) 
+      if (cronExpr == "startup") { %>
+        <trigger>
+          <simple>
+            <name><%=trigger["id"]%></name>
+            <group>${GROUP_NAME}</group>
+            <job-name><%=job["id"]%></job-name>
+            <job-group>${GROUP_NAME}</job-group>
+            <repeat-count>0</repeat-count>
+		    <repeat-interval>0</repeat-interval>
+          </simple>
+        </trigger>
+      <% } else if (cronExpr.startsWith("everyXSeconds.")) { %>
+        <trigger>
+          <simple>
+            <name><%=trigger["id"]%></name>
+            <group>${GROUP_NAME}</group>
+            <job-name><%=job["id"]%></job-name>
+            <job-group>${GROUP_NAME}</job-group>
+            <repeat-count>-1</repeat-count>
+            <repeat-interval><%=NumberUtils.toInt(cronExpr - "everyXSeconds.", 0) * 1000%></repeat-interval>
+          </simple>
+        </trigger>
+      <% } else if (cronExpr.startsWith("everyXMinutes.")) { %>
+        <trigger>
+          <simple>
+            <name><%=trigger["id"]%></name>
+            <group>${GROUP_NAME}</group>
+            <job-name><%=job["id"]%></job-name>
+            <job-group>${GROUP_NAME}</job-group>
+            <repeat-count>-1</repeat-count>
+            <repeat-interval><%=NumberUtils.toInt(cronExpr - "everyXMinutes.", 0) * 60 * 1000%></repeat-interval>
+          </simple>
+        </trigger>
+      <% } else if (cronExpr.startsWith("everyXHours.")) { %>
+        <trigger>
+          <simple>
+            <name><%=trigger["id"]%></name>
+            <group>${GROUP_NAME}</group>
+            <job-name><%=job["id"]%></job-name>
+            <job-group>${GROUP_NAME}</job-group>
+            <repeat-count>-1</repeat-count>
+            <repeat-interval><%=NumberUtils.toInt(cronExpr - "everyXHours.", 0) * 60 * 60 * 1000%></repeat-interval>
+          </simple>
+        </trigger>
+      <% } else { %>
+        <trigger>
+          <cron>
+            <name><%=trigger["id"]%></name>
+            <group>${GROUP_NAME}</group>
+            <job-name><%=job["id"]%></job-name>
+            <job-group>${GROUP_NAME}</job-group>
+            <cron-expression><%=cronExpr%></cron-expression>
+          </cron>
+        </trigger>
+      <% } %>
+    <% } %>
+<% } %>
+</schedule>
+</job-scheduling-data>

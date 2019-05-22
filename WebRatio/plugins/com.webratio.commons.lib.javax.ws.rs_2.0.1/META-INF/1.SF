@@ -1,0 +1,21 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: wP/bXgRXBGyAFio7is9gdmwnt3khf
+ 7a0E3nysbqQGno=
+SHA-256-Digest-Manifest: ShsuCFjAh4qAo0csspzly0G9K9f4EMlxxp0a58kI4QY=
+Created-By: 1.7.0_80 (Oracle Corporation)
+
+Name: lib/javax.ws.rs-apisrc.zip
+SHA-256-Digest: RtV/mH87wxgmEkUWMH5DCePAYPBT+uNiKUxxETKAEZ8=
+
+Name: lib/javax.ws.rs-api.jar
+SHA-256-Digest: Bhn9a5zuHfZzjW44R7Dh5d+qacnUGyECSo+Qbfx65cw=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: about.html
+SHA-256-Digest: fQt5YrQNhKXvbHTBKV1KZqqJaZT+nCWGxRyjKfmg1DI=
+
+Name: about_files/CDDL+GPL_1_1.txt
+SHA-256-Digest: NFIiKQAL3lQjW2k5eebuBpM0CAaKrMQ86D+AKjma4AQ=
+

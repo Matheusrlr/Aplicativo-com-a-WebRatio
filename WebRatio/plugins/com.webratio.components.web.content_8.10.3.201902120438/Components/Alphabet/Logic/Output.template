@@ -1,0 +1,28 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+def componentId = component["id"]
+def classId = component["dataBinding"]
+def domainClass = getByIdOptional(classId)
+%>
+<OutputParameters>
+  <OutputParameter name="data[].letter" type="attribute" label="Selected Letter"/>
+  <% if (domainClass) { %>
+    <% for (a in getAttributes(domainClass)) { %>
+      <OutputParameter 
+          name="data[].<%=a["id"]%>Array"
+          refId="<%=a["id"]%>"
+          type="<%=getTypeExpression(domainClass, a, false, true)%>"
+          label="<%=getLabel(a)%>"/>
+    <% } %>
+    <% for (role in getOutgoingRoles(domainClass).findAll{!isMany(it)}) { %> 
+      <% for (keyAttr in getKeyAttributes(getTargetDomainClass(role))) { %>
+        <OutputParameter 
+            name="data[].<%=role["id"] + "_" + keyAttr["id"]%>Array"
+            refId="<%=role["id"]%>"
+            label="<%=getLabel(role) + "." + getLabel(keyAttr)%>"
+            mandatory="false"/>
+      <% } %>
+    <% } %>
+  <% } %> 
+</OutputParameters>

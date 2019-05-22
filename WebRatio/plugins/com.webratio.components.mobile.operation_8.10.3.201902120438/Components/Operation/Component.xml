@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component  type="operation" formBased="false" idPrefix="opu" namePrefix="Mobile Op " label="No Op" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" successFlowSource="true" successFlowTarget="true"> 
+  <StringProperty attributeName="type"> 
+    <Description xml:space="preserve">The type of operation, with no specific meaning.</Description> 
+  </StringProperty>  
+  <Description xml:space="preserve">A placeholder for a operation with no business logic.</Description> 
+</Component>

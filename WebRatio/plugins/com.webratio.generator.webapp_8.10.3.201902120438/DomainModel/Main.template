@@ -1,0 +1,184 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import com.webratio.generator.GenerationException
+import com.webratio.generator.webapp.output.FileType
+import com.webratio.generator.resolvers.HibernateEntityResolver
+import com.webratio.generator.java.JavaHelper
+import com.webratio.generator.TimeLogger
+
+def registerProjectGenerationException(exception, message, wr){
+    def title = "Error generating runtime descriptor"
+    def reason = "Unable to generate the " + message
+    def hint = "Check the project model for errors or warnings"
+    def genExc = new GenerationException(title, reason, [hint], exception)
+    genExc.setTargetId("Project")
+    wr.generationExceptions.add(genExc)
+}
+
+def domainModelFolderPath = wr.outputPath
+def relativeDomainModelFolderPath = ""
+
+if(wr.projectType.name() in ["WEBMODEL","MODULE","WEBPROJECT"]){
+   domainModelFolderPath += "/WEB-INF/classes"
+   relativeDomainModelFolderPath += "/WEB-INF/classes"
+} else if (wr.projectType.name() == "BPM") {
+   domainModelFolderPath += "/classes"
+   relativeDomainModelFolderPath += "/classes"
+}
+
+def configTemplatePath = wr.locateResourcePath("DomainModel/HibernateConfig.template")
+def javaBeanTemplatePath = wr.locateResourcePath("DomainModel/JavaBean.template")
+def derAttributeBeanTemplatePath = wr.locateResourcePath("DomainModel/DerivedAttributeBean.template")
+def mappingTemplatePath = wr.locateResourcePath("DomainModel/HibernateMapping.template")
+def booleanTypeTemplatePath = wr.locateResourcePath("DomainModel/BooleanType.template")
+def fixedCharTypeTemplatePath = wr.locateResourcePath("DomainModel/FixedCharType.template")
+def javaCompileScriptPath = wr.locateResourcePath("DomainModel/JavaCompile.xml")
+def packagePath = getPackageName().replace("." as char, "/" as char)
+def domainModel = wr.project.selectSingleNode("DomainModel")
+def entities = wr.project.selectNodes("DomainModel//Class").findAll{it["_sel"] == "t" && it["ownerProjectId"] == ""}
+def booleanAttributes = wr.project.selectNodes("DomainModel//Class[string(@ownerProjectId)='']/Attribute[@type = 'boolean']").findAll{it["_sel"] == "t"}
+def charStringAttributes = wr.project.selectNodes("DomainModel//Class[string(@ownerProjectId)='']/Attribute[@type = 'string' or @type = 'password' or @type = 'url' or @type = 'blob']").findAll{it["_sel"] == "t" && it.valueOf("@db:charLength") != ""}
+def derivedAttributes = wr.project.selectNodes("DomainModel//Class[string(@ownerProjectId)='']/Attribute[string(@db:table) != '']").findAll{it["_sel"] == "t"}
+def dbs = wr.project.selectNodes("DomainModel/db:Database[string(@ownerProjectId)='']")
+def javaFiles = [] 
+
+def getFilePath(element){
+   return getPackageName(element).replace("." as char, "/" as char)
+}
+
+if(domainModel["_sel"] == "t"){
+   try{
+      org.apache.commons.io.FileUtils.deleteDirectory(new File(domainModelFolderPath + "/" + getFilePath(domainModel)))
+   }catch(Exception e){
+      //ignore exceptions
+   }  
+}
+
+eventSocketClient.sendBeginTask("DomainModel", (derivedAttributes.size() + entities.size() * 2 + booleanAttributes.size() + charStringAttributes.size() + dbs.size() + 2))
+for (attribute in derivedAttributes) {
+    def text = executeTemplate(derAttributeBeanTemplatePath, ["attribute":attribute])
+    def attrEntityClass = getClassInfo(attribute.parent) 
+    def file = new File(domainModelFolderPath + "/" + attrEntityClass.name.replaceAll("\\.", "/") + "_" + toValidClassName(getFieldName(attribute)) + "Bean.java")
+    file.parentFile.mkdirs()
+    javaFiles.add(file)
+    new StringReader(text).filterLine(file.newWriter()){it.trim().length() != 0}
+    eventSocketClient.sendTaskWorked("DomainModel", 1)
+}
+for (entity in entities) {
+	processOutputFile(FileType.JAVA_CLASS, entity, { file ->
+	    def text = executeTemplate(javaBeanTemplatePath, ["entity":entity])
+	    file.parentFile.mkdirs()
+	    javaFiles.add(file)
+	    new StringReader(text).filterLine(file.newWriter()){it.trim().length() != 0}
+    })
+    eventSocketClient.sendTaskWorked("DomainModel", 1)
+}
+for (entity in entities.findAll{it["duration"] != "volatile"}) {
+	if (isValidMapping(entity)) {
+		processOutputFile(FileType.HIBERNATE_MAPPING, entity, { file ->
+			def text = executeTemplate(mappingTemplatePath, ["entity":entity])
+			file.parentFile.mkdirs()
+			file.write(serializeXML(text, true, HibernateEntityResolver.INSTANCE))
+		})
+	}
+	eventSocketClient.sendTaskWorked("DomainModel", 1)
+}
+for (attr in booleanAttributes) {
+    if(attr.valueOf("@db:trueValue") != "" || attr.valueOf("@db:falseValue") != ""){ 
+        def text = executeTemplate(booleanTypeTemplatePath, ["attr":attr])
+        def typeName = "BooleanType_" + attr["id"]
+        def file = new File(domainModelFolderPath + "/" + packagePath + "/types/" + typeName + ".java")
+        file.parentFile.mkdirs()
+        javaFiles.add(file)
+        new StringReader(text).filterLine(file.newWriter()){it.trim().length() != 0}
+    } 
+    eventSocketClient.sendTaskWorked("DomainModel", 1)
+}
+def charLengths = new HashSet()
+for (attr in charStringAttributes) {
+    def charLength = attr.valueOf("@db:charLength")
+    if(!charLengths.contains(charLength)){
+	    charLengths.add(charLength)
+	    def text = executeTemplate(fixedCharTypeTemplatePath, ["attr":attr])
+	    def typeName = "FixedChar_" + charLength
+	    def file = new File(domainModelFolderPath + "/" + packagePath + "/types/" + typeName + ".java")
+	    file.parentFile.mkdirs()
+	    javaFiles.add(file)
+	    new StringReader(text).filterLine(file.newWriter()){it.trim().length() != 0}
+	}
+	eventSocketClient.sendTaskWorked("DomainModel", 1)
+}
+for (db in dbs) {
+	processOutputFile(FileType.HIBERNATE_CONFIGURATION, db, { file ->
+	    def text = executeTemplate(configTemplatePath, ["db":db])
+	    file.parentFile.mkdirs()
+	    file.write(serializeXML(text, true, HibernateEntityResolver.INSTANCE))
+    })
+    eventSocketClient.sendTaskWorked("DomainModel", 1)
+}
+
+JavaHelper.formatJavaFiles(javaFiles)
+eventSocketClient.sendTaskWorked("DomainModel", 1)
+
+if (!entities.empty) {
+    def oldSysOut = null
+    def baos = null
+    try {
+        org.eclipse.ant.core.AntRunner antRunner = new org.eclipse.ant.core.AntRunner();
+        def antProps = [:]
+        antProps.put("srcPath", domainModelFolderPath + "/" + packagePath)
+        antProps.put("targetPath", domainModelFolderPath)
+        antProps.put("ant.file", javaCompileScriptPath)
+        antProps.put("hibernateLibDir", wr.generationConfig.valueOf("Plugins/Plugin[@id='com.webratio.commons.lib.hibernate']/@path") + "/lib")
+        antProps.put("slf4jLibDir", wr.generationConfig.valueOf("Plugins/Plugin[@id='com.webratio.commons.lib.slf4j']/@path") + "/lib")
+        antProps.put("dom4jLibDir", wr.generationConfig.valueOf("Plugins/Plugin[@id='com.webratio.commons.lib.dom4j']/@path") + "/lib")
+        antRunner.setBuildFileLocation(new File(javaCompileScriptPath).absolutePath)
+        antRunner.addUserProperties(antProps)
+        antRunner.addBuildLogger("org.apache.tools.ant.DefaultLogger")
+        oldSysOut = System.out
+        baos = new ByteArrayOutputStream()
+        System.setOut(new PrintStream(baos, true, "UTF-8"))
+        antRunner.run()
+    } catch (Throwable e) {
+        if (oldSysOut != null) {
+            System.setOut(oldSysOut)
+            System.out.println(new String(baos.toByteArray(), "UTF-8"))
+            new File(projectDir + "/.Temp~/DataModelJavaCompile.log").write(new String(baos.toByteArray(), "UTF-8"))
+        }
+        def genExc = new GenerationException("Error", "Unable to compile domain class Java Beans", [], e)
+        genExc.setTargetId("Project")
+        wr.generationExceptions.add(genExc)
+    } finally {
+        if (oldSysOut != null) {
+            System.setOut(oldSysOut)
+        }
+    }
+}
+TimeLogger.worked("Hibernate")
+
+/* generates the domain model descriptor */
+def domainModelFileName = (wr.projectType.name() in ["WEBMODEL","MODULE"]) ? ("DomainModel_" + wr.project["id"] + ".xml") : "DomainModel.xml"
+processOutputFile(relativeDomainModelFolderPath + "/" + domainModelFileName, "domain model descriptor", wr.project, { modelFile ->
+	try {
+		modelFile.write(serializeXML(executeContextTemplate("DomainModel/DomainModel.template"), true))
+		eventSocketClient.sendTaskWorked("DomainModel", 1)
+	} catch(Throwable exc) {
+		registerProjectGenerationException(exc, "domain model descriptor", wr)
+	}
+})
+TimeLogger.worked("DomainModel")
+
+
+/* generates the domain model validator descriptor */
+def domainModelValidatorFileName = (wr.projectType.name() in ["WEBMODEL","MODULE"]) ? ("DomainModelValidator" + wr.project["id"] + ".xml") : "DomainModelValidator.xml"
+processOutputFile(relativeDomainModelFolderPath + "/" + domainModelValidatorFileName, "domain model validator descriptor", wr.project, { modelFile ->
+	try {
+		modelFile.write(serializeXML(executeContextTemplate("DomainModel/DomainModelValidator.template"), true))
+		eventSocketClient.sendTaskWorked("DomainModel", 1)
+	} catch(Throwable exc) {
+		registerProjectGenerationException(exc, "domain model validator descriptor", wr)
+	}
+})
+TimeLogger.worked("DomainModelValidator")
+
+%>

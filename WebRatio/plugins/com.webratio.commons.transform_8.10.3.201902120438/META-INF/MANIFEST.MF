@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: com.webratio.commons.transform
+Require-Bundle: com.webratio.commons.libs,com.webratio.commons.lib.sax
+ on,com.webratio.commons.lib.antlr,com.webratio.commons.dom4j,com.webr
+ atio.commons.lib.groovy,com.webratio.commons.lib.apache.commons.colle
+ ctions,com.webratio.commons.lib.apache.commons.lang,com.webratio.comm
+ ons.lib.apache.commons.io,com.webratio.commons.lib.dom4j,com.webratio
+ .commons.lib.google.guava,com.webratio.commons.base,com.webratio.comm
+ ons.lib.jsr305,com.webratio.commons.lib.jackson2
+Bundle-ManifestVersion: 2
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Eclipse-BuddyPolicy: registered
+Bundle-Vendor: WebRatio
+Ant-Version: Apache Ant 1.9.2
+Export-Package: com.webratio.commons.transform,com.webratio.commons.tr
+ ansform.groovy,com.webratio.commons.transform.groovy.convert,com.webr
+ atio.commons.transform.groovy.convert.tree,com.webratio.commons.trans
+ form.groovy.mixin,com.webratio.commons.transform.xslt
+Bundle-Name: WebRatio Transform Plug-in
+Bundle-Version: 8.10.3.201902120438
+Bundle-ClassPath: com.webratio.commons.transform.jar
+Created-By: 1.8.0-b132 (Oracle Corporation)
+
+Name: META-INF/signature
+SHA-256-Digest: PRYYgqFVErjMMx3lDuv1T8nEp66ZmsJ8BwS19rF+4z4=
+

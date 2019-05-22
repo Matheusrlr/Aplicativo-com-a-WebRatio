@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="content|operation" formBased="false" idPrefix="seu" namePrefix="Selector " label="Selector" dataFlowSource="true" navigationFlowSource="false" dataFlowTarget="true" navigationFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" successFlowSource="true" successFlowTarget="true" multipleSuccessFlowCardinality="true" defaultLabel="Select {label(id(@dataBinding))}"> 
+  <SuccessFlowCodes xml:space="preserve">return ["Not Found"]</SuccessFlowCodes>
+  <DomainClassProperty attributeName="dataBinding" includeDerived="true" figureDisplayOrder="1"> 
+    <Description xml:space="preserve">The class from which the content of the component is drawn.</Description> 
+  </DomainClassProperty>  
+  <ConditionalExpression classIdExpr="../../@dataBinding" elementName="ConditionalExpression" defaultPolicy="true" figureDisplayOrder="2"> 
+    <Description xml:space="preserve">The set of selection criteria that retrieves the instances of the class of the component.</Description> 
+  </ConditionalExpression>  
+  <SortAttributesProperty label="Sort Attributes" elementName="SortAttribute" attributeName="attribute" classIdExpr="@dataBinding"> 
+    <Description xml:space="preserve">The sorting criteria used to retrieve the objects in the component.</Description>  
+    <IsEnabled>return (element["dataBinding"] != "")</IsEnabled> 
+  </SortAttributesProperty>  
+  <BooleanProperty attributeName="distinct"> 
+    <Description xml:space="preserve">If checked, objects with duplicate attribute values are removed
+from the content of the selector.</Description>  
+    <IsEnabled>return (element["dataBinding"] != "")</IsEnabled> 
+  </BooleanProperty>  
+  <AttributesProperty label="Attributes" classIdExpr="@dataBinding" attributeName="distinctAttributes" includeDerived="true" enabledImportExtraAttributes="true"> 
+    <Description xml:space="preserve">The set of attributes available as output parameters.</Description> 
+  </AttributesProperty>  
+  <IntegerProperty attributeName="maxResults"> 
+    <Description xml:space="preserve">The maximum number of rows to retrieve.
+If unspecified, all rows are retrieved.</Description> 
+  </IntegerProperty>  
+  <Description xml:space="preserve">The Selector component allows to specify the logic of a selector in a hypertext without 
+the necessity to display in the page the extracted values. 
+This component is somehow similar to the multiple details, but it doesn't include the concept
+of Shown Attributes, because its aim is to extract objects from the data source
+based on one or more conditions, either on associations or attributes, without 
+the need to show the extracted value. The selector component can be used either 
+as an operation or as a view component, and therefore can be positioned either 
+outside or inside the page.</Description>  
+  <InputDescription xml:space="preserve" name="Condition-Name">The parameter associated to one of the Conditional Expressions
+of the component.</InputDescription>  
+  <OutputDescription xml:space="preserve" name="Attribute-Name">The values for one of the class attributes of the objects extracted
+in the Selector.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="ForeignKey-Name">The values for one of the foreign key attributes of the objects 
+connected to the extracted objects.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Data Size">The number of class state objects retrieved by the query.</OutputDescription>  
+  <IsContextFreeComponent xml:space="preserve">return getIncomingFlows(component).empty</IsContextFreeComponent>  
+  <IsMultiConditionComponent xml:space="preserve">if (getIncomingFlows(component).size() &lt;= 1) {
+    return false
+}
+
+def sel = component.element("ConditionalExpression")
+if(sel == null){
+  return false
+}
+def count = sel.elements("AssociationRoleCondition").size() + sel.elements("KeyCondition").size()
+for (cond in sel.elements("AttributesCondition")) {
+    def pred = cond["predicate"]
+    if ((cond["value"] == "") &amp;&amp; !isUnaryPredicate(pred)) {
+        count++
+    }
+}
+return count &gt; 1</IsMultiConditionComponent> 
+</Component>

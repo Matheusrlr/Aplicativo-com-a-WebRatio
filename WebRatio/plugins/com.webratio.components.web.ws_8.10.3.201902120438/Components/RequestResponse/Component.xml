@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="operation" formBased="false" idPrefix="rru" namePrefix="Request Response " label="Request Response" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" successFlowSource="true" successFlowTarget="true"> 
+  
+  <WebServiceProviderProperty label="" attributeName="webServiceProvider" figureDisplayOrder="1" hideFigureWhenEmpty="true" type="WSDL">
+	<Description xml:space="preserve">The Web Service Provider exposing operations.</Description>
+  </WebServiceProviderProperty>
+  
+  <WebServiceOperationProperty label="" attributeName="webServiceOperation" webServiceIdExpr="@webServiceProvider" figureDisplayOrder="1" hideFigureWhenEmpty="true">
+	<IsEnabled>return (element["webServiceProvider"] != "")</IsEnabled>
+	<Description xml:space="preserve">The web service operation to invoke.</Description>
+  </WebServiceOperationProperty>
+  
+  <StringProperty label="Endpoint URL" attributeName="endpointURL"> 
+    <Description xml:space="preserve">Specifies the endpoint URL of the Web service being invoked.</Description> 
+  </StringProperty>    
+  
+  <EnumProperty label="" attributeName="soapVersion" defaultValue="1.1"> 
+    <EnumItem value="1.1" label=""/>  
+    <EnumItem value="1.2" label=""/>  
+    <Description xml:space="preserve">Specifies the SOAP version, default value is 1.1.</Description> 
+    <IsEnabled>return (element["webServiceOperation"] == "")</IsEnabled>
+  </EnumProperty>
+  
+  <StringProperty label="" attributeName="soapActionURI"> 
+    <IsEnabled>return (element["webServiceOperation"] == "")</IsEnabled>
+    <Description xml:space="preserve">Specifies the SOAP action URI of the Web service.</Description> 
+  </StringProperty>    
+  
+  <EnumProperty label="" attributeName="inputType" defaultValue="none"> 
+    <EnumItem value="none" label=""/>  
+    <EnumItem value="document" label=""/>  
+    <Description xml:space="preserve">Specifies how the SOAP request message is built. Two options
+are available:
+&lt;ul&gt;
+  &lt;li&gt;&lt;i&gt;None&lt;/i&gt;: to be used to invoke the Web service through its
+Method Name and, if required, through its Method
+Namespace URI.&lt;/li&gt;
+  &lt;li&gt;&lt;i&gt;Document&lt;/i&gt;: to be used if the SOAP message to be sent
+is provided at run-time as input parameter of the operation.&lt;/li&gt;
+&lt;/ul&gt;</Description> 
+  </EnumProperty>
+    
+  <StringProperty label="" attributeName="methodName" figureDisplayOrder="1"> 
+    <IsEnabled>return (element["webServiceOperation"] == "") &amp;&amp; (element["inputType"] == "none")</IsEnabled>  
+    <Description xml:space="preserve">Local name of the Web service method being invoked; available
+only if the Input Type property is set to &lt;i&gt;None&lt;/i&gt;.</Description> 
+  </StringProperty>  
+  
+  <StringProperty label="Method Namespace URI" attributeName="methodNSURI"> 
+    <IsEnabled>return (element["webServiceOperation"] == "") &amp;&amp; (element["inputType"] == "none")</IsEnabled>  
+    <Description xml:space="preserve">Namespace URI of the Web service method being invoked;
+available only if the Input Type property is set to &lt;i&gt;None&lt;/i&gt;.</Description> 
+  </StringProperty>   
+  
+  <FileProperty label="Input Transformation" attributeName="inputXSLFile" extension="xml.template"> 
+    <IsEnabled>return (element["inputType"] == "document")</IsEnabled>  
+    <Description xml:space="preserve">XSL or Groovy template file to be used to pre-transform the document received
+as input parameter; available only if the Input Type property
+is set to &lt;i&gt;Document&lt;/i&gt;.</Description> 
+  </FileProperty> 
+  
+  <BooleanProperty attributeName="oneWay"> 
+    <Description xml:space="preserve">Indicates whether the component must invoke the Web service ignoring any response message.</Description> 
+  </BooleanProperty>
+   
+  <BooleanProperty label="" attributeName="fullEnvelopeOutput"> 
+    <IsEnabled>return (element["oneWay"] != "true")</IsEnabled>  
+    <Description xml:space="preserve">Indicates whether the full SOAP response envelope is being
+retained for the purpose of either transforming it (see
+next property) or sending it to the next component in the operation
+chain. If this property is not set, the first child element
+of the SOAP body is taken into account.</Description> 
+  </BooleanProperty>  
+  
+  <FileProperty label="Output Transformation" attributeName="outputXSLFile" extension="xml.template">
+    <IsEnabled>return (element["oneWay"] != "true")</IsEnabled> 
+    <Description xml:space="preserve">XSL or Groovy template file to be used to post-transform the SOAP response.</Description> 
+  </FileProperty>  
+  
+  <BooleanProperty label="Sign Request Message" attributeName="signRequestMsg"> 
+    <Description xml:space="preserve">Indicates whether the request message must include the Authorization header
+ required for a protected web service invocation. If checked the component will expose the authorization code input parameters.
+ For more details about the Authorization code see the class &lt;b&gt;com.webratio.web.mvc.security.AuthorizationHelper&lt;/b&gt;.</Description> 
+  </BooleanProperty>
+  
+ <EnumProperty label="HTTP Authentication" attributeName="httpAuthentication">
+		<EnumItem value="" label="None" />
+		<EnumItem value="true" label="Basic" />
+		<EnumItem value="NTLM" label="NTLM" />
+	    <Description xml:space="preserve">Sets the HTTP authentication method.</Description>
+  </EnumProperty>
+      
+  <StringProperty label="HTTP Auth Username" attributeName="username"> 
+    <IsEnabled>return (element["httpAuthentication"] == "true" || element["httpAuthentication"] == "NTLM")</IsEnabled> 
+    <Description xml:space="preserve">The HTTP authentication username.</Description> 
+  </StringProperty>  
+  
+  <PasswordProperty label="HTTP Auth Password" attributeName="password" cryptedAttributeName="cryptedPassword"> 
+    <IsEnabled>return (element["httpAuthentication"] == "true" || element["httpAuthentication"] == "NTLM")</IsEnabled>
+    <Description xml:space="preserve">The HTTP authentication password.</Description>
+  </PasswordProperty>     
+  
+  <StringProperty label="HTTP Auth Host" attributeName="httpAuthHost"> 
+    <IsEnabled>return (element["httpAuthentication"] == "NTLM")</IsEnabled> 
+    <Description xml:space="preserve">The HTTP authentication host for NTLM security, if unspecified the deploy host name is used instead.</Description> 
+  </StringProperty>  
+  
+  <StringProperty label="HTTP Auth Domain" attributeName="httpAuthDomain"> 
+    <IsEnabled>return (element["httpAuthentication"] == "NTLM")</IsEnabled> 
+    <Description xml:space="preserve">The HTTP authentication domain for NTLM security.</Description> 
+  </StringProperty>  
+  
+  <StringProperty label="SSL Protocol" attributeName="sslProtocol"> 
+    <Description xml:space="preserve">Specifies the SSL protocol to use (e.g. TLSv1.1, TLSv1.2) in case of secure connection.</Description> 
+  </StringProperty>
+  
+  <IntegerProperty attributeName="timeout">  
+    <Description xml:space="preserve">Sets the timeout until a connection is established. A value of zero 
+      means the timeout is not used. The default value is zero.</Description> 
+  </IntegerProperty>
+  
+  <IntegerProperty label="SO Timeout" attributeName="soTimeout"> 
+    <Description xml:space="preserve">Sets the default socket timeout in milliseconds which is the 
+     timeout for waiting for data. A timeout value of zero is interpreted as an infinite timeout. 
+    </Description> 
+  </IntegerProperty> 
+  
+  <BooleanProperty attributeName="compressRequest" label = "Compress Request">
+  	<Description>If checked the request body is compressed using the GZIP encoding.</Description>
+  </BooleanProperty>
+  
+  <OrderingProperty attributeName="parameterOrder" elementsExpr="RequestResponseParameter"> 
+    <IsEnabled>return (element["webServiceOperation"] == "") &amp;&amp; (element.selectSingleNode("RequestResponseParameter") != null)</IsEnabled> 
+    <Description xml:space="preserve">The order of the request parameters.</Description> 
+  </OrderingProperty>
+  
+  <SubComponent elementName="RequestHeader" idPrefix="rrh" namePrefix="RequestHeader" label="Request Header" figureDisplayOrder="3"> 
+    <Description xml:space="preserve">Defines an header to send to the invoked service.</Description>  
+    <StringProperty attributeName="value">
+       <Description xml:space="preserve">The default header value if not provided at runtime.</Description>
+    </StringProperty> 
+  </SubComponent > 
+  
+  <SubComponent elementName="SoapHeader" idPrefix="sh" namePrefix="SOAPHeader" ignoreI18N="true">
+	<FileProperty label="Template File" attributeName="templateFile" extension="xml.template"> 
+       <Description xml:space="preserve">File containing an Groovy template used to create the header XML document fragment.</Description> 
+    </FileProperty>
+	<TextProperty label="Text Value" elementName="Value">
+	   <IsEnabled>return (element["templateFile"] == "")</IsEnabled>
+	   <Description xml:space="preserve">The SOAP header constant value (XML).</Description>
+	</TextProperty>
+	<Description xml:space="preserve">A SOAP header to include in the SOAP request.</Description>
+  </SubComponent >
+  
+  <SubComponent elementName="RequestResponseParameter" idPrefix="rrp" namePrefix="Parameter" label="Request Parameter"> 
+    <IsEnabled>return (element["webServiceOperation"] == "")</IsEnabled>
+    <StringProperty label="Namespace URI" attributeName="nsURI"> 
+      <Description xml:space="preserve">The namespace URI of the XML parameter.</Description> 
+    </StringProperty>
+    <StringProperty label="" attributeName="value"> 
+       <Description xml:space="preserve">A user-defined constant to be used as the default value of the parameter.</Description> 
+    </StringProperty>
+    <Description xml:space="preserve">Defines an input parameter for the component. The request parameters
+are taken into account only if the &lt;b&gt;Input Type&lt;/b&gt;
+property is set to &lt;b&gt;None&lt;/b&gt;.</Description> 
+  </SubComponent > 
+  
+  <Description xml:space="preserve">A Request Response component is used to invoke a Web service and to manage the 
+corresponding response message.</Description>  
+  <InputDescription xml:space="preserve" name="Input XML Document">The XML document being sent to the service (optionally
+pre-transformed with the input transformation).</InputDescription>
+  <InputDescription xml:space="preserve" name="EndPoint URL">The endpoint URL of the Web service being invoked.</InputDescription>
+  <InputDescription xml:space="preserve" name="Parameter-Name">If a transformation file is not specified and the INPUT TYPE is set
+  to NONE, the request parameters explicitly declared on the component are used as inputs.
+  Otherwise, the input are the transformation input parameters declared in the transformation file.
+
+In XSL files, input parameters are declared with standard &amp;lt;xsl:param&amp;gt; elements
+and made accessible as XSL variables.
+
+In Groovy files each input parameter is declared through a &amp;lt;wr:Input&amp;gt; tag and
+made available to template code as a value in the pre-defined map inputParams (e.g. inputParams.myParam).</InputDescription>
+
+  <InputDescription xml:space="preserve" name="HTTP Security Username">The username used to handle the HTTP authentication.</InputDescription>
+  <InputDescription xml:space="preserve" name="HTTP Security Password">The password used to handle the HTTP authentication.</InputDescription>
+  <InputDescription xml:space="preserve" name="HTTP Security Host">The host used to handle the NTLM HTTP authentication.</InputDescription>
+  <InputDescription xml:space="preserve" name="HTTP Security Domain">The domain used to handle the NTLM HTTP authentication.</InputDescription>
+
+
+  <InputDescription xml:space="preserve" name="Authorization Code">The pre-computed Authorization code.</InputDescription>
+  <InputDescription xml:space="preserve" name="Authorization Username">The username used to compute the Authorization code.</InputDescription>
+  <InputDescription xml:space="preserve" name="Authorization Password">The password used to compute the Authorization code.</InputDescription>
+    
+  <OutputDescription xml:space="preserve" name="Output XML Document">The XML document received as response from the service
+(optionally post-transformed with the output transformation).</OutputDescription>
+  <OutputDescription xml:space="preserve" name="Transformation Parameter Name">The name of each transformation output parameter declared in the
+transformation file.
+
+In XSL files, a output parameter named myParam is declared by
+adding to the &amp;lt;xsl:stylesheet&amp;gt; element an immediate
+child element:
+&amp;lt;out:output-param name="myParam"/&amp;gt;
+where the prefix out must be associated with the following
+namespace URI:
+http://www.webml.org/webservices/output
+At run-time the output of the XSL transformation is analyzed,
+at any level, to find occurrences of the same element
+(&amp;lt;out:output-param&amp;gt;), but enriched with the XML
+attribute value, to define the run-time values of the associated
+component's output parameter.
+
+In Groovy files, a output parameter is defined through a special
+&amp;lt;wr:Input name="myParam"/&amp;gt; tag, usually placed at the top of the
+document. At run-time, values can be assigned to outputs by putting
+them inside the pre-defined outputParams map:
+outputParams.myParam = value.</OutputDescription>
+  <OutputDescription xml:space="preserve" name="Request XML Document">The XML document sent to the web service.</OutputDescription>
+  <OutputDescription xml:space="preserve" name="Response XML Document">The XML document received from the web service without any transformation.</OutputDescription>
+  <OutputDescription xml:space="preserve" name="Error Message">The message produced by the component in case of error.</OutputDescription>
+  <OutputDescription xml:space="preserve" name="Exception">The exception thrown by the component in case of error.</OutputDescription>
+</Component>

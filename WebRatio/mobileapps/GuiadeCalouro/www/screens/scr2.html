@@ -1,0 +1,42 @@
+<!-- directive: wr-screen scr2 -->
+<div>
+	<ion-content class=" wr-safe-area">
+		<!-- directive: wr-component enu1 -->
+		<form class=" wr-comp-Form list ">
+			<div class="item item-divider">{{ 'Login' | wrLocalize }}</div>
+			<label class="item item-input " ng-class="{ 'has-errors' : view.formState.fld1.invalid }">
+				<span class="input-label" ng-class="{ 'has-errors' : view.formState.fld1.invalid }">
+				{{ 'Username' | wrLocalize }}
+				</span>
+				<div class="wr-input-wrapper">
+					<input type="text" ng-model="view.form.fld1" wr-form-property />
+					<ul class="wr-error-list" ng-if="view.formState.fld1.errors.length">
+						<li ng-repeat="error in view.formState.fld1.errors track by $index">
+							{{ error }}
+						</li>
+					</ul>
+				</div>
+			</label>
+			<label class="item item-input " ng-class="{ 'has-errors' : view.formState.fld2.invalid }">
+				<span class="input-label" ng-class="{ 'has-errors' : view.formState.fld2.invalid }">
+				{{ 'Password' | wrLocalize }}
+				</span>
+				<div class="wr-input-wrapper">
+					<input type="password" ng-model="view.form.fld2" wr-form-property />
+					<ul class="wr-error-list" ng-if="view.formState.fld2.errors.length">
+						<li ng-repeat="error in view.formState.fld2.errors track by $index">
+							{{ error }}
+						</li>
+					</ul>
+				</div>
+			</label>
+			<div class="item-buttons">    
+				<button type="submit" class="button " ng-click="screen.throwEvent($event, 'OnSubmitEvent', 'osbme1', { position: $index })">
+				{{ 'Login' | wrLocalize }}
+				</button>
+			</div>
+		</form>
+		<!-- end_directive: wr-component -->
+	</ion-content>
+</div>
+<!-- end_directive: wr-screen -->

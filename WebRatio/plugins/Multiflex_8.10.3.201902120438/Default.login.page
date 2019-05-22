@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<% 	
+    response.setHeader("Cache-Control", "no-store,no-cache, must-revalidate");
+    response.setDateHeader("Expires", -1);
+    response.setHeader("Pragma", "No-cache");
+%>
+<html>
+<head>
+  <base href="<%=request.getContextPath()%>/"/>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="revisit-after" content="2 days" />
+  <meta name="robots" content="index,follow" />
+  <meta name="publisher" content="Your publisher infos here ..." />
+  <meta name="copyright" content="Your copyright infos here ..." />
+
+  <meta name="author" content="Design: G. Wolfgang www.1-2-3-4.info / Author: Your author infos here ..." />
+  <meta name="distribution" content="global" />
+  <meta name="description" content="Your page description here ..." />
+  <meta name="keywords" content="Your keywords, keywords, keywords, here ..." />
+  <link rel="stylesheet" type="text/css" media="screen,projection,print" href="./css/layout2_setup.css" />
+  <link rel="stylesheet" type="text/css" media="screen,projection,print" href="./css/layout2_text.css" />
+  <link rel="icon" type="image/x-icon" href="./img/favicon.ico" />
+  <title>Login Required</title>
+</head>
+<!-- Global IE fix to avoid layout crash when single word size wider than column width -->
+<!--[if IE]><style type="text/css"> body {word-wrap: break-word;}</style><![endif]-->
+<body>
+<form:form action="form_login.do" enctype="multipart/form-data">
+<form:hidden path="lastURL"/>
+  <!-- Main Page Container -->
+  <div class="page-container">
+
+   <!-- For alternative headers START PASTE here -->
+    <!-- A. HEADER -->      
+    <div class="header">
+      <!-- A.1 HEADER TOP -->
+      <div class="header-top">
+        <!-- Sitelogo and sitename -->
+        <a class="sitelogo" href="index.jsp" title="Go to Start page"></a>
+        <div class="sitename">
+          <h1><a href="index.jsp" title="Go to Start page">WebRatio</a></h1>
+
+          <h2>Changing the IT Equations</h2>
+        </div>
+        <!-- Navigation Level 1 -->
+        <div class="nav1">&nbsp;</div>
+      </div>
+      <!-- A.2 HEADER MIDDLE -->
+      <div class="header-middle">    
+        <!-- Site message -->
+        <div class="sitemessage">
+
+        </div>        
+      </div>
+      <!-- A.3 HEADER BOTTOM -->
+      <div class="header-bottom">
+        <!-- Navigation Level 2 (Drop-down menus) -->
+        <div class="nav2">
+        </div>
+	  </div>
+      <!-- A.4 HEADER BREADCRUMBS -->
+      <!-- Breadcrumbs -->
+      <div class="header-breadcrumbs">
+        <ul>
+        	<li>Please Login</li>
+
+        </ul>
+        <!-- Search form -->                  
+        <div class="searchform">
+        </div>
+      </div>
+    </div>
+    <!-- For alternative headers END PASTE here -->
+    <!-- B. MAIN -->
+    <div class="main">
+
+      <!-- B.1 MAIN NAVIGATION -->
+      <div class="main-navigation">
+        <!-- Navigation Level 3 -->
+        <div class="round-border-topright"></div>
+        <h1 class="first">Please Login</h1>
+        <!-- Navigation with grid style -->
+        <dl class="nav3-grid">
+        </dl>                        
+	</div>
+
+      <!-- B.2 MAIN CONTENT -->
+      <div class="main-content">
+        <!-- Pagetitle -->
+        <h1 class="pagetitle">Please Login</h1>
+<div class="column3-unit-left">
+	    <p>
+
+	      <label for="fld14" class="left">Username</label>
+		<form:input cssClass="field" path="userName"/>
+		</p>
+		<p>
+
+	    </p>
+	    <p>
+	      <label for="fld20" class="left">Password</label>
+
+		<form:password cssClass="field" path="password"/>
+		</p>
+		<p>
+
+	    </p>
+        <p>
+	
+		<input class="button" type="submit" value="Enter">
+	
+        </p>
+</div>
+<div class="column3-unit-middle">
+</div>
+<div class="column3-unit-right">
+	<p></p>
+</div>
+<hr class="clear-contentunit" />
+
+      </div>
+      <!-- B.3 SUBCONTENT -->
+      <div class="main-subcontent">
+      </div>
+    </div>
+    <!-- C. FOOTER AREA -->      
+    <div class="footer">
+      <p>Copyright &copy; 2006 Your Company | All Rights Reserved</p>
+
+      <p class="credits">Original design by <a href="http://www.1-2-3-4.info" title="Designer Homepage">G. Wolfgang</a> | Adapted by <a href="http://www.webratio.com" title="http://www.webratio.com">WebRatio srl</a> | Powered by <a href="http://www.webratio.com" title="http://www.webratio.com">WebRatio</a> | <a href="http://validator.w3.org/check?uri=referer" title="Validate XHTML code">W3C XHTML 1.0</a> | <a href="http://jigsaw.w3.org/css-validator/" title="Validate CSS code">W3C CSS 2.0</a></p>
+    </div>      
+  </div> 
+
+</form:form>
+</body>
+</html>

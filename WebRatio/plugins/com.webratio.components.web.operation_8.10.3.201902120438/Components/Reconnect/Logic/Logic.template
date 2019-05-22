@@ -1,0 +1,49 @@
+#?delimiters [%,%],[%=,%]
+[%
+setXMLOutput()
+
+def roleId = component["association"]
+def associationRole = getById(roleId)
+
+def sourceDomainClass = getSourceDomainClass(associationRole)
+def sourceKeyAttributes = getKeyAttributes(sourceDomainClass).collect{it["id"]}
+def sourceConditionalExpression = component.element("SourceConditionalExpression")
+
+def targetDomainClass = getTargetDomainClass(associationRole)
+def targetKeyAttributes = getKeyAttributes(targetDomainClass).collect{it["id"]}
+def targetConditionalExpression = component.element("TargetConditionalExpression")
+def dtargetConditionalExpression = component.element("DisconnectTargetConditionalExpression")
+
+%]
+<Descriptor service="com.webratio.components.web.operation.datasource.ReconnectService">
+
+[% 
+if (associationRole == null) {
+  %]<Error>Could not find a association role identified by '[%=roleId%]'</Error>[%
+} 
+%]<AssociationRole>[%=roleId%]</AssociationRole>[%
+%]<DataSource>[%=getDataSourceId(associationRole)%]</DataSource>[%
+  
+if (sourceDomainClass == null) { 
+  %]<Error>Could not find the source domain-class of the association role '[%=roleId%]'</Error>[%
+} else {
+  printRaw(createQuery(sourceDomainClass).select(sourceKeyAttributes).selector(sourceConditionalExpression).build("SourceQuery").asXML()) 
+} 
+
+if (targetDomainClass == null) {
+  %]<Error>Could not find the target domain-class of the association role '[%=roleId%]'</Error>[%
+} else {
+  printRaw(createQuery(targetDomainClass).select(targetKeyAttributes).selector(targetConditionalExpression).build("TargetQuery").asXML())
+}
+
+if (dtargetConditionalExpression != null) {
+  printRaw(createQuery(targetDomainClass).select(targetKeyAttributes).selector(dtargetConditionalExpression).build("DisconnectTargetQuery").asXML())
+} else {
+  def query = createQuery(targetDomainClass).select(targetKeyAttributes)
+  query.selector().associationCondition(component["id"] + ".autodts.rcond","dtrcond").role(roleId)
+  printRaw(query.build("DisconnectTargetQuery").addAttribute("automaticDisconnect", "true").asXML())
+} 
+
+%]
+
+</Descriptor>

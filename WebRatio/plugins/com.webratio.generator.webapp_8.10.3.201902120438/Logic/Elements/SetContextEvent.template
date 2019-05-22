@@ -1,0 +1,23 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+
+def paramIds = []
+for (param in getByIds(event, "contextParameters")) {
+	if (param["type"] == "class") {
+		for (a in getKeyAttributes(getById(param, "class"))) { 
+			if (param["id"] != "UserCtxParam" && param["id"] != "RoleCtxParam") { 
+				paramIds.add(param["id"] + "." + a["id"]);
+			} else {
+				paramIds.add(param["id"]);	
+			}
+		}
+	} else { 
+		paramIds.add(param["id"]);
+	}
+}
+%]
+<Descriptor service="com.webratio.components.web.session.SetContextService">
+	<Reset>[%= event["reset"] == "true" %]</Reset>
+	<ContextParameters>[%= paramIds.join("|") %]</ContextParameters>
+</Descriptor>

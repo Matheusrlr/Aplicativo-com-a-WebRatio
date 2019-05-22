@@ -1,0 +1,40 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Background Color" name="background-color" type="enum" values="white|gray|blue|light blue|green|yellow|red|violet|black" default="blue">
+Defines the color of the toolbar.
+</wr:LayoutParameter>
+[%
+def inTop = (cell.valueOf("ancestor::layout:CustomLocation[1]/@name") == "Top Bar")
+def inBottom = (cell.valueOf("ancestor::layout:CustomLocation[1]/@name") == "Bottom Bar")
+
+def colors = [
+	"white" : "light",
+	"gray" : "stable",
+	"blue" : "positive",
+	"light blue" : "calm",
+	"green" : "balanced",
+	"yellow" : "energized",
+	"red" : "assertive",
+	"violet" : "royal",
+	"black" : "dark"]
+	
+// TODO support striped (need to know the current tab)
+
+def wrapperClass = "tabs-" + colors[params["background-color"]]
+wrapperClass += inTop ? " tabs-top" : ""
+
+def currentTab = cell.selectNodes("layout:Event").find{getInteractionElement(it)?.selectSingleNode("NavigationFlow/@to")?.getText() == screen["id"]}
+%]
+<div class="[%= wrapperClass %]">
+	<div class="tabs[%= inBottom ? " hide-on-keyboard-open" : "" %]">
+		<wr:Iterate var="event" context="cell" select="layout:Event">
+			[% 	if (!getLayout(event, LayoutType.EVENT).path.endsWith("Tab")) {
+					throwGenerationException("Use Tab event template for ${event['name']} (${event['id']})")
+				}
+			if (event == currentTab) { %]
+				<wr:Event class="active"/>
+			[% } else { %]
+				<wr:Event/>
+			[% } %]
+		</wr:Iterate>
+	</div>
+</div>

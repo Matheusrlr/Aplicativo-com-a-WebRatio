@@ -1,0 +1,17 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+def componentId = component["id"]
+def classId = component["dataBinding"]
+def domainClass = getById(classId)
+%>
+<OutputParameters>
+ <% for (a in getKeyAttributes(domainClass)) { %>
+    <OutputParameter 
+        name="<%=a["id"]%>Array"
+        refId="<%=a["id"]%>"
+        type="<%=getTypeExpression(domainClass, a, true, false)%>"
+        label="<%=getLabel(a)%>"/>
+  <% } %>
+  <OutputParameter name="dataSize" label="Data Size"/>
+</OutputParameters>

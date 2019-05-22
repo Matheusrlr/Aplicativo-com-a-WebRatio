@@ -1,0 +1,15 @@
+#?delimiters <%,%>,<%=,%>
+<%setXMLOutput()%>
+<OutputParameters>
+ <%if(component["mode"] == "write" || component["mode"] == "update"){%>
+     <OutputParameter name="excel" label="Excel BLOB" possiblyLarge="true"/>
+ <% } %>
+ <%if(component["mode"] == "read" || component["mode"] == "update"){%>
+    <% for(cellInfo in component.selectNodes("CellInfo")){ %>
+      <OutputParameter name="<%=cellInfo["id"]%>_codes" label="<%=cellInfo["name"]%> - Codes"/>
+      <OutputParameter name="<%=cellInfo["id"]%>Array" label="<%=cellInfo["name"]%>"/>
+    <%}%>
+    <OutputParameter name="cellValues" label="Cell Values"/>
+    <OutputParameter name="cellCodes" label="Cell Codes"/>
+ <% } %>
+</OutputParameters>

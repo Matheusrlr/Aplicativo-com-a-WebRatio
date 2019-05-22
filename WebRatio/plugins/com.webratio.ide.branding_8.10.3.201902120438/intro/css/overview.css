@@ -1,0 +1,11 @@
+a#wr img { background-image : url('graphics/obj48/wr_obj.png'); }
+a#wr:hover img { background-image : url('graphics/obj48/wrhov_obj.png'); }
+
+a#bpm img { background-image : url('graphics/obj48/wr_obj.png'); }
+a#bpm:hover img { background-image : url('graphics/obj48/wrhov_obj.png'); }
+
+#content-group a#basics img { background-image : url('graphics/obj48/wrfolder_obj.png'); }
+#content-group a#basics:hover img { background-image : url('graphics/obj48/wrfolderhov_obj.png'); }
+
+#content-group a#team img { background-image : url('graphics/obj48/wrusers_obj.png'); }
+#content-group a#team:hover img { background-image : url('graphics/obj48/wrusershov_obj.png'); }

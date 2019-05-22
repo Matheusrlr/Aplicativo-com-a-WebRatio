@@ -1,0 +1,33 @@
+<Element name="Signal" lowerName="signal" pluralLowerName="">
+  <Description>
+    A &lt;a href="/Concepts/Elements/Signal"/&gt; is a generic, simple form of
+    communication within and across pools and across process diagrams. 
+  </Description>
+  <Action label="Add" >
+    Adds a new parameter.
+  </Action>
+  <Action label="Remove" >
+    Removes the selected parameter.
+  </Action>
+  <Action label="Up" >
+    Moves up the parameter in the list.
+  </Action>
+  <Action label="Down" >
+    Moves down the parameter in the list.
+  </Action>
+  <PropertyCategory name="General">
+    <Property label="Parameter Name">
+      The name of the parameter.
+    </Property>
+    <Property label="Type">
+      The type of the parameter, chosen between a set of predefined types.
+    </Property>
+    <Property label="Project Documentation">
+      The project documentation associated with the signal or with each parameter.
+    </Property>
+    <Property label="Analyst Notes">
+      The analyst notes associated with the signal or with each parameter.
+    </Property>
+  </PropertyCategory>
+</Element>
+		

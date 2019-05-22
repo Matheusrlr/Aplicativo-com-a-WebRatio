@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="operation" formBased="false" idPrefix="adu" namePrefix="Adapter " label="Adapter" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" successFlowSource="true" successFlowTarget="true"> 
+  <FileProperty label="Transformation File" attributeName="xslFile" extension="xml.template" figureDisplayOrder="1"> 
+    <Description xml:space="preserve">File containing an XSL or Groovy template used to transform the document(s) before sending.</Description> 
+  </FileProperty>  
+  <IntegerProperty label="Nr. of Input Documents" attributeName="inputDocCount"> 
+    <Description xml:space="preserve">Defines the number of expected input documents; if not
+specified, a single input document is expected; if specified
+and greater than 1, at run-time a new document is built,
+having a predefined &amp;lt;root&amp;gt; element, with all the input
+documents added as children of the predefined root</Description> 
+  </IntegerProperty>  
+  <Description xml:space="preserve">An adapter component allows to apply a transformation on an incoming XML document, 
+providing the transformed XML document as output.</Description>  
+  <InputDescription xml:space="preserve" name="Input XML Document(s)">The document being transformed. If the property NR. OF
+INPUT DOCUMENTS is greater than 1, the operation exposes a
+suitable number of input parameters, each named INPUT
+XML DOCUMENT NR. XYZ.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Transformation Parameter-Name">The name of each transformation input parameter
+declared in the transformation file.
+
+In XSL files, input parameters are declared with standard &amp;lt;xsl:param&amp;gt; elements
+and made accessible as XSL variables.
+
+In Groovy files each input parameter is declared through a &amp;lt;wr:Input&amp;gt; tag and
+made available to template code as a value in the pre-defined map inputParams (e.g. inputParams.myParam).
+</InputDescription>    <OutputDescription xml:space="preserve" name="Output XML Document">The XML document resulting from the transformation.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Transformation Parameter-Name">The name of each transformation output parameter declared in the
+transformation file.
+
+In XSL files, a output parameter named myParam is declared by
+adding to the &amp;lt;xsl:stylesheet&amp;gt; element an immediate
+child element:
+&amp;lt;out:output-param name="myParam"/&amp;gt;
+where the prefix out must be associated with the following
+namespace URI:
+http://www.webml.org/webservices/output
+At run-time the output of the XSL transformation is analyzed,
+at any level, to find occurrences of the same element
+(&amp;lt;out:output-param&amp;gt;), but enriched with the XML
+attribute value, to define the run-time values of the associated
+operation's output parameter.
+
+In Groovy files, a output parameter is defined through a special
+&amp;lt;wr:Input name="myParam"/&amp;gt; tag, usually placed at the top of the
+document. At run-time, values can be assigned to outputs by putting
+them inside the pre-defined outputParams map:
+outputParams.myParam = value.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Error Message">The message produced by the operation in case of error.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Exception">The exception thrown by the operation in case of error.</OutputDescription> 
+</Component>

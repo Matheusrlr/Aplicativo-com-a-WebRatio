@@ -1,0 +1,242 @@
+#?delimiters [%,%],[%=,%]
+[%
+import org.apache.commons.lang.StringUtils
+import org.apache.commons.io.FileUtils
+import com.webratio.generator.helpers.ImportResolverHelper
+setXMLOutput()
+
+def servicePrefix = ""
+if(wr.projectType.name() in ["WEBMODEL","MODULE"]){
+  servicePrefix = "Local"
+}
+
+def wsdlOutputPath = wr.outputPath
+if(wr.projectType.name() == "WEBPROJECT"){
+   wsdlOutputPath += "/WEB-INF"
+} else if(wr.projectType.name() == "ENTERPRISE"){
+   wsdlOutputPath += "/" + rootModuleName + ".jar"
+} else if (wr.projectType.name() != "BPM") {
+   wsdlOutputPath += "/../" + rootModuleName + ".jar"
+}
+wsdlOutputPath += "/schemas/"
+
+
+def printDescription(element){
+    def commentElement = element.selectSingleNode("Comment") 
+    if(commentElement != null) { 
+      %]<Description xml:space="preserve">[%=commentElement.getText()%]</Description>[% 
+    } 
+}
+
+%]
+
+<Descriptor service="com.webratio.rtx.ws.[%=servicePrefix%]WSService" name="WS Service">
+  
+   <WebServiceProviders>
+    [%for(provider in wr.project.selectNodes("ServiceDataProviders/WebServiceProvider[string(@ownerProjectId)='']")){%]
+      [%if(!StringUtils.isBlank(provider["file"])){%]
+         [%def path = provider["file"]
+           if(path.startsWith("/")){
+              path = path.substring(1)
+           }else {
+              path = projectName + "/" + path
+           }                       
+         %]
+         <WebServiceProvider id="[%=provider["id"]%]" name="[%=provider["name"]%]" type="[%=StringUtils.defaultIfEmpty(provider["resourceType"], "WSDL")%]" locationType="file">schemas/[%=path%]</WebServiceProvider>
+         [%
+           def srcFile = new java.io.File(wr.projectDir, "/../" + path)
+           FileUtils.copyFile(srcFile, new java.io.File(wsdlOutputPath + path))         
+           for(path2 in ImportResolverHelper.collectImportedResources(wr.projectDir, srcFile)){
+               def srcFile2 = new java.io.File(wr.projectDir, "/../" + path2)
+               FileUtils.copyFile(srcFile2, new java.io.File(wsdlOutputPath + path2))
+           }           
+         %]         
+      [%}else{%]
+         <WebServiceProvider id="[%=provider["id"]%]" name="[%=provider["name"]%]" type="[%=StringUtils.defaultIfEmpty(provider["resourceType"], "WSDL")%]" locationType="uri">[%=provider["uri"]%]</WebServiceProvider>
+      [%}%]
+    [%}%]
+   </WebServiceProviders>
+   
+   <WebServicesModel tnsURI="[%=wr.project["wsTnsUri"]%]" 
+                     soapVersion="[%=StringUtils.defaultIfEmpty(wr.project["wsSoapVersion"], "1.1")%]"
+                     soapBindingStyle="[%=StringUtils.defaultIfEmpty(wr.project["wsSoapBindingStyle"], "rcpLiteral")%]">
+    [% for(port in wr.project.selectNodes("WebModel/ServiceView/ServicePort")) { %]
+       [%
+        def soapVersion = StringUtils.defaultIfEmpty(port["soapVersion"], port.parent["soapVersion"])        
+        def soapBindingStyle = StringUtils.defaultIfEmpty(port["soapBindingStyle"], port.parent["soapBindingStyle"])
+       %]
+       <ServicePort id="[%=port["id"]%]" 
+             serviceViewId="[%=port.parent["id"]%]" 
+             serviceViewName="[%=port.parent["name"]%]"
+             name="[%=com.webratio.generator.helpers.XMLUtils.normalizeTagName(port["name"])%]" 
+             path="[%=com.webratio.generator.helpers.XMLUtils.normalizeTagName(port.parent["name"])%]/[%=com.webratio.generator.helpers.XMLUtils.normalizeTagName(port["name"])%]" 
+             [%if(getEffectiveSecureElement(port) != null){%]secure="true"[%}%] 
+             [%if(!StringUtils.isBlank(soapVersion)){%]soapVersion="[%=soapVersion%]"[%}%]
+             [%if(!StringUtils.isBlank(soapBindingStyle)){%]soapBindingStyle="[%=soapBindingStyle%]"[%}%]>
+             [% printDescription(port) %]
+           [% for(solicit in port.selectNodes("Operations/Solicit")) { %]
+              [%
+                def responses = getReachableComponents(solicit).findAll{it.name=="Response"}
+                def errorResponses = getReachableComponents(solicit).findAll{it.name=="ErrorResponse"}
+                def operationKey = ""
+				def requestMethod = "GET"
+				def requestHeaders = []
+				def requestHeadersStr = ""
+				if(solicit["invocationStyle"] == "" || solicit["invocationStyle"] == "SOAP"){                
+                	requestMethod = "POST"
+                	operationKey = "{" + solicit["nsURI"] + "}" + com.webratio.generator.helpers.XMLUtils.normalizeTagName(solicit["name"])
+                	if(soapBindingStyle.startsWith("document")){
+                    	def tempKey = [] 
+                    	for(param in solicit.selectNodes("RequestBodyParameter")){
+                            if(param["xsdType"].endsWith("[Element]")){
+                          		def typeName = StringUtils.substringBefore(param["xsdType"], "[")
+                          		typeName = StringUtils.defaultIfEmpty(StringUtils.substringAfterLast(typeName, "}"), typeName)
+                          		tempKey.add(typeName)
+                        	} else {
+                          		tempKey.add(param["name"])
+                        	}  
+                    	}
+                    	tempKey.sort()
+                    	operationKey = tempKey.join("|") 
+                	}
+               	} else {
+               	    requestMethod = solicit["requestMethod"]
+               		def tokens = com.webratio.generator.helpers.XMLUtils.normalizeTagName(solicit["name"]).tokenize("/")
+               		operationKey = solicit["requestMethod"]
+               		for(token in tokens){
+             			operationKey += '|' + token
+               		}
+               		for(header in solicit.selectNodes("Header")) {
+               			requestHeaders.add(header["name"])
+               		}
+               		requestHeadersStr = requestHeaders.join("|")
+               	}
+              %]
+              
+              <Operation id="[%=solicit["id"]%]" 
+                         name="[%=com.webratio.generator.helpers.XMLUtils.normalizeTagName(solicit["name"])%]" 
+                         [%if(solicit["protected"] == "true" || solicit["protectedByToken"] == "true"){%]protected="true"[%}%] 
+                         soapAware="[%=solicit["invocationStyle"] != "REST"%]"
+                         restAware="[%=solicit["invocationStyle"] == "REST"%]"
+                         contentType="[%=StringUtils.defaultIfEmpty(solicit["contentType"], "XML")%]"
+                         requestMethod="[%=requestMethod%]"
+                         key="[%=operationKey%]"
+                         [%if(!StringUtils.isEmpty(requestHeadersStr)){%] headers="[%=requestHeadersStr%]"[%}%]>
+                [% printDescription(solicit) %]
+                
+                [%if(!StringUtils.isBlank(solicit["nsURI"])){%]
+                   <NamespaceUri>[%=solicit["nsURI"]%]</NamespaceUri>
+                [%}%]
+                
+                [% for(response in responses) {
+                    def responseHeaders = []
+                    def responseHeadersStr = ""
+                    for(header in response.selectNodes("Header")) {
+                       responseHeaders.add(header["name"])
+                    }
+                    responseHeadersStr = responseHeaders.join("|")%]
+                	<Output id="[%=response["id"]%]"  
+                	        name="[%=com.webratio.generator.helpers.XMLUtils.normalizeTagName(response["name"])%]" 
+                	        nsURI="[%=response["nsURI"]%]"
+                	        contentType="[%=StringUtils.defaultIfEmpty(response["contentType"], "XML")%]"  
+                		    statusCode="[%=response["statusCode"]%]"
+                		    [%if(!StringUtils.isEmpty(responseHeadersStr)){%] headers="[%=responseHeadersStr%]" [%}%]/>
+                [%}%]
+                
+                [%for(errorResponse in errorResponses){%]
+					<Fault id="[%=errorResponse["id"]%]" 
+					       name="[%=com.webratio.generator.helpers.XMLUtils.normalizeTagName(errorResponse["name"])%]" 
+					       contentType="[%=StringUtils.defaultIfEmpty(errorResponse["contentType"], "XML")%]"
+					       statusCode="[%=errorResponse["statusCode"]%]"/>
+                [%}%]
+              </Operation>
+           [%}%]
+        </ServicePort>
+    [% } %]
+   </WebServicesModel>
+   
+  
+  [%def dataServices = wr.project.selectSingleNode("DomainModel/DataServices")
+    if(dataServices != null) {%]
+   		<DataServicesModel>
+        	[%def serviceClassList = wr.project.selectNodes("./DomainModel/DataServices/ServiceClass")%]
+   			[% for(serviceClass in serviceClassList) {%]
+   				<Class id="[%=serviceClass["class"]%]">
+   					[%
+   						for(permission in serviceClass.selectNodes("./ServiceRole[count(@role)=0]/ServiceMethod")){%]
+   						   <Permission method="[%=StringUtils.upperCase(StringUtils.substring(permission["method"], 0, 1))%]"
+   						   	  [%if(permission["method"] == "create" && !StringUtils.isEmpty(permission["assignedUserAssociationRoles"])) {%] assignedAssociations="[%=permission["assignedUserAssociationRoles"]%]" [%}%]>
+   						      [%def permissionRestrictions = permission.selectSingleNode("DataServiceRestriction")
+   						        if(permissionRestrictions){
+   						           def query = createQuery(getById(serviceClass["class"]))
+   						           def selector = query.selector(permissionRestrictions).selector()
+   						           printRaw(query.build().asXML())
+   						        }%]
+   						   </Permission>
+   						[%}
+   						def restrictions = serviceClass.selectSingleNode("./ServiceRole[count(@role)=0]/DataServiceRestriction")
+   						if(restrictions) {
+   				   	 		def query = createQuery(getById(serviceClass["class"]))
+   				   	 		def selector = query.selector(restrictions).selector()
+   				   	 		printRaw(query.build().asXML())
+   				 		}
+   				 		for(attr in StringUtils.split(serviceClass["attributes"])) {%]
+   						<Attribute id="[%=attr%]"/>
+   					[%}
+   				  	 for(associationRole in StringUtils.split(serviceClass["associationRoles"])) {%]
+   				   		 <AssociationRole id="[%=associationRole%]"/>
+   				   	[%}
+   				   	for(serviceRole in serviceClass.selectNodes("./ServiceRole[count(@role) != 0]")){
+				   		def roleElement = wr.project.selectSingleNode("./Roles/Role[@id='"+ serviceRole["role"] +"']")
+				   		def serviceRoleName = roleElement["name"]
+				   		def roleId = roleElement["id"]
+				   		%]
+   				   		<Role id="[%=roleId%]" name="[%=serviceRoleName%]">
+   				   		[%
+   				   			for(rolePermission in serviceRole.selectNodes("./ServiceMethod")){%]
+   						      <Permission method="[%=StringUtils.upperCase(StringUtils.substring(rolePermission["method"], 0, 1))%]"
+   						      [%if(rolePermission["method"] == "create" && !StringUtils.isEmpty(rolePermission["assignedUserAssociationRoles"])) {%] assignedAssociations="[%=rolePermission["assignedUserAssociationRoles"]%]" [%}%]>
+   						         [%def permissionRestrictions = rolePermission.selectSingleNode("DataServiceRestriction")
+   						           if(permissionRestrictions){
+   						              def query = createQuery(getById(serviceClass["class"]))
+   						              def selector = query.selector(permissionRestrictions).selector()
+   						              printRaw(query.build().asXML())
+   						           }%]
+   						     </Permission>
+   						    [%}
+   				   			def roleRestrictions = serviceRole.selectSingleNode("DataServiceRestriction")
+   							if(roleRestrictions) {
+   				   	 			def query = createQuery(getById(serviceClass["class"]))
+   				   	 			def selector = query.selector(roleRestrictions).selector()
+   				   	 			printRaw(query.build().asXML())
+   				 			}%]
+   				 	   </Role>
+   				   [%}%]
+   				</Class>
+   	    [%}%]
+   		</DataServicesModel>
+   	[%}%]
+   
+   [%def userServices = wr.project.selectSingleNode("DomainModel/UserServices")
+     if(userServices != null) {
+     	def userServiceOperations = userServices.selectNodes("UserServiceOperation")
+     	def operations = new LinkedHashSet()
+     	operations.add("login")
+     	operations.addAll(userServiceOperations.collect{it["type"]})
+     	def attributes = new LinkedHashSet()
+     	attributes.addAll(StringUtils.split(userServices["attributes"]))
+     	def assignedRoles = new LinkedHashSet()
+     	for(userOperation in userServiceOperations) {
+     		assignedRoles.addAll(StringUtils.split(userOperation["assignedRoles"]))
+     	}
+   	 %]
+   		<UserServicesModel userClass="[%=StringUtils.defaultIfEmpty(userServices["userClass"], "User")%]" 
+        	               tokenDuration="[%=userServices["tokenDuration"]%]" 
+            	           operations="[%=operations.join("|")%]"
+            	           attributes="[%=attributes.join("|")%]"
+            	           assignedRoles="[%=assignedRoles.join("|")%]"
+            	           [%if(!StringUtils.isEmpty(userServices["associationRoles"])){%]associationRoles="[%=userServices["associationRoles"]%]"[%}%]/>
+   [%}%]
+</Descriptor>
+
+

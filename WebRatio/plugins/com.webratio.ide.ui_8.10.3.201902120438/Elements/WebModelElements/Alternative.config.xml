@@ -1,0 +1,21 @@
+   <Element name="Alternative" lowerName="alternative"
+		pluralLowerName="alternative pages">
+		<Description>
+			An Alternative page 
+			is a container of sub pages that are displayed one at a time, in alternative.
+		</Description>
+		<ActionRef label="Add Page" />
+		<ActionRef label="Add Property" />
+		<ActionRef label="Localize" />
+		<ActionRef label="Open in Browser" />
+		<ActionRef label="Generate Layout Pages Only"/>
+		<ActionRef label="Generate Logic Descriptors Only"/>
+		<ActionRef label="Generate Selection"/>
+		<ActionRef label="Find Model Problems"/>
+		<ActionRef label="Help"/>
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+			<PropertyRef label="Default Page"/>
+		</PropertyCategory>
+	</Element>

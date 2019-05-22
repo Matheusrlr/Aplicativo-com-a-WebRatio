@@ -1,0 +1,46 @@
+#?delimiters [%,%],[%=,%]
+[%
+import org.apache.commons.lang.StringUtils
+setXMLOutput()
+
+def dbId = component["db"]
+if(StringUtils.isBlank(dbId) && !StringUtils.isBlank(component["volatileScope"])) {
+	if(component["volatileScope"] == "application") {
+   		dbId = "application_vdb"
+   	} else if(component["volatileScope"] == "session") {
+  	    dbId = "session_vdb"
+  	} 
+  	if(component["localDatabase"] == "true"){
+  	   dbId += "_" + wr.project.valueOf("@id")
+  	}
+}
+%]
+<Descriptor service="com.webratio.components.web.utility.datasource.QueryService">
+  <DataSource>[%=dbId%]</DataSource>
+  <Language>[%= component["language"]%]</Language>
+  <Mode>[%= component["mode"]%]</Mode>
+  <Results maxResults="[%=component["maxResults"]%]" blockFactor="[%=component["blockFactor"]%]" blockWindow="[%=component["blockWindow"]%]"/>
+  
+  [%if(component["mode"] == "dynamic" || component["mode"] == "select"){%]
+      [%
+        def outputs = component["outputsOrder"].tokenize(" ").collect{getById(it)}
+        outputs.addAll(component.selectNodes("QueryOutput").findAll{!outputs.contains(it)})
+      %]
+      [%for(queryOutput in outputs){%]
+        <QueryOutput name="[%= toValidFieldName(queryOutput["name"])%]"  label="[%=queryOutput["name"]%]" id="[%=queryOutput["id"]%]" type="[%=StringUtils.defaultIfEmpty(queryOutput["type"], "string")%]"/>
+      [%}%]
+  [%}%] 
+  
+  [%if(component["mode"] != "dynamic"){%]
+      [%for(queryInput in component.selectNodes("QueryInput")){%]
+         <QueryInput name="[%= toValidFieldName(queryInput["name"])%]" id="[%=queryInput["id"]%]" type="[%=StringUtils.defaultIfEmpty(queryInput["type"], "string")%]" required="[%=queryInput["required"]%]">[%=queryInput["value"]%]</QueryInput>
+      [%}%]
+      
+      [% if(component["queryFile"] != ""){ %]
+         <QueryFile>[%= component["queryFile"]%]</QueryFile>
+      [% } else { %]
+         [% printRaw(serializeXML(component.selectSingleNode("QueryText"), false)) %]
+      [% } %]
+  [% } %]
+  
+</Descriptor>

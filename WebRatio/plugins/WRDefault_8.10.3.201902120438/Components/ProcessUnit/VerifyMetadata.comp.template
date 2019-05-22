@@ -1,0 +1,113 @@
+#?delimiters [%, %], [%=, %]
+[%setHTMLOutput()
+
+def createEvent = component.selectSingleNode("layout:Event[@name='create']")
+def updateEvent = component.selectSingleNode("layout:Event[@name='update']")
+def forceUpdateEvent = component.selectSingleNode("layout:Event[@name='forceUpdate']")
+def deleteEvent = component.selectSingleNode("layout:Event[@name='delete']")
+def diagramEvent = component.selectSingleNode("layout:Event[@name='diagram']")
+
+def updateAllEvent = component.selectSingleNode("layout:Event[@name='updateAll']")
+def deleteAllEvent = component.selectSingleNode("layout:Event[@name='deleteAll']")
+
+def layoutId = getLayoutId(component)
+
+%]
+<wr:RequireResource ref="wrdefault-bpm-style"/>
+<c:if test="${not(empty <wr:Id context="component"/>)}">
+<wr:Frame>
+<div class="plain <wr:StyleClass/>">
+ <div class="plain ProcessUnit">
+	<c:if test="${not(empty <wr:Id context="component"/>.status)}">
+	<div class="process-status status-${<wr:Id context="component"/>.status}-icon">
+         <spring:message code="Process.metadata.${<wr:Id context="component"/>.status}"/>
+	</div>	
+	</c:if>
+	
+	<table class="process-list full">
+       <thead>
+       <tr>
+            <th class="<wr:StyleClass/> header nowrap text-center">
+                <script>multiChoiceMap["[%= layoutId%]"] = "all"</script>
+                <a href="" onmouseover="this.cursor='pointer'" onmouseout="this.cursor='default'" onclick="return toggleCheckboxes('[%= layoutId%]', 'Checked')"> <img id="[%= layoutId%]image" src="WRResources/spacer.gif" class="unSelectAll" border="0" /></a>
+            </th>
+			<th class="<wr:StyleClass/> header nowrap">Process</th>
+			<th class="<wr:StyleClass/> header nowrap">Version</th>
+			<th class="<wr:StyleClass/> header nowrap">Status</th>	
+			<th class="<wr:StyleClass/> header nowrap text-center" colspan="3">Commands</th>
+		</tr>
+		</thead>
+		<c:if test="${not(empty <wr:Id context="component"/>.data)}">
+		<tbody>
+		   <c:forEach var="current" varStatus="status" items="${<wr:Id context="component"/>.data}">
+		      <c:set var="index" value="${status.index}"/>
+		      <c:set var="processStatus" value="${current.status}"/>
+		      <tr class="row">
+		         <td class="<wr:StyleClass/> value nowrap text-center status-${processStatus}">
+		           <c:choose>
+		             <c:when test="${current.status eq 'invalid'}">
+		                <form:checkbox disabled="true" path="<wr:Id context="component"/>Checked" cssClass="checkBox" value="${current.key}"/>
+		             </c:when>
+		             <c:otherwise>
+		                <form:checkbox id="[%= layoutId%]_${index}" path="<wr:Id context="component"/>Checked" cssClass="checkBox" value="${current.key}"/>
+		             </c:otherwise>
+		           </c:choose>
+		         </td>
+		         
+		         <td class="<wr:StyleClass/> value status-${processStatus}"><c:out value="${current.[%=getFieldName("processName")%]}"/></td>
+		         <td class="<wr:StyleClass/> value status-${processStatus}"><c:out value="${current.[%=getFieldName("processVersion")%]}"/></td>
+		         <td class="<wr:StyleClass/> value status-${processStatus}">${current.status}</td>
+		         <td class="<wr:StyleClass/> value status-${processStatus} nowrap text-center">
+		         <c:choose>
+		           <c:when test="${current.status eq 'new'}">
+		               <wr:Event class="link nowrap" context="createEvent"/>
+		           </c:when>
+		           <c:when test="${current.status eq 'invalid'}">
+		               <wr:Event class="link nowrap" context="forceUpdateEvent"/>
+		           </c:when>
+		           <c:when test="${current.status eq 'outdated'}">
+		               <wr:Event class="link nowrap" context="updateEvent"/>
+		           </c:when>
+		           <c:otherwise>
+		               <table><tr><td><img src="Resources/update_dis.png" alt="<wr:Label context="updateEvent"/>" title="<wr:Label context="updateEvent"/>"/></td></tr></table>
+		           </c:otherwise>
+		         </c:choose>
+		         </td>
+		         <td class="<wr:StyleClass/> value status-${processStatus} nowrap text-center">
+		         <c:choose>
+		           <c:when test="${current.status ne 'new'}">
+		             <wr:Event class="link nowrap" context="deleteEvent"/>
+		           </c:when>
+		           <c:otherwise><img src="Resources/delete_dis.png" alt="<wr:Label context="deleteEvent"/>" title="<wr:Label context="deleteEvent"/>"/></c:otherwise>
+		         </c:choose>
+		         </td>
+		         <td class="<wr:StyleClass/> value status-${processStatus} text-center"><wr:Event class="link" context="diagramEvent"/></td>
+		      </tr>
+		      <c:if test="${not(empty current.details)}">
+		      <tr>
+		        <td colspan="7" class="status-${processStatus} detail" style="padding-left:50px">
+		            <ul>
+		            <c:forEach var="detail" items="${current.details}">
+		              <li><c:out value="${detail}"/></li>
+		            </c:forEach>
+		            </ul>
+		        </td>
+		      </tr>
+		      </c:if>
+		   </c:forEach>
+		</tbody>
+		</c:if>
+	</table>	
+    
+    <table>
+      <tr>
+        <td><wr:Event class="button" context="updateAllEvent" type="button"/></td>
+        <td><wr:Event class="button" context="deleteAllEvent" type="button"/></td>
+        <td class="error" colspan="2"><form:errors path="<wr:Id context="component"/>Checked" /></td>
+      </tr>
+    </table>         
+    
+   </div>
+  </div>   
+</wr:Frame>
+</c:if>   

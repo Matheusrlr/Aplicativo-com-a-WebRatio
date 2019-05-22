@@ -1,0 +1,79 @@
+#?delimiters [%,%],[%=,%]
+[%
+import org.apache.commons.lang.StringUtils
+import com.webratio.generator.GenerationException
+
+setXMLOutput()
+
+%]<DomainModelValidator>  
+	[% for(domainClass in getAllDomainClasses()) {
+		  if(!(domainClass.selectNodes(".//VRules").isEmpty())) {%]
+		  	 <Class id="[%=domainClass["id"]%]">
+		  	 [% def vrules = domainClass.selectNodes("./VRules/*") %]
+		  	 [% if(!vrules.empty) {%]
+		  	 	   <VRules>
+		  	 	   	[%for(vRule in vrules){
+		  	 	   		def vRuleDirectory = wr.explorer.validationRuleTypes().getDirectory(getComponentType(vRule))
+						def vRuleLogicTemplate = new File(vRuleDirectory, "Logic/Logic.template")
+						try {
+							   def vRuleDescr = parseXMLString(executeTemplate(vRuleLogicTemplate, ["element": vRule])).rootElement.detach()
+							   vRuleDescr.setName(vRule.name)
+			                   vRuleDescr.addAttribute("id", vRule["id"])
+			                   vRuleDescr.addAttribute("name", vRule["name"])
+			                   if (vRule["errorMessage"]) {
+				                  vRuleDescr.addAttribute("customErrorMessage", "true")
+			                   } 
+			                   def inputs = getValidationRuleInputParameters(vRule).collect{ it["name"] }.join("|")
+			                   if (inputs) {
+								 vRuleDescr.addAttribute("inputs", inputs)
+							   }
+							  printRaw(serializeXML(vRuleDescr, false))
+						   } catch (Exception e2) {
+							 def title = "Error generating validation support"
+							 def reason = "Unable to generate the validation support descriptor for " + domainClass["name"] + " [" + domainClass["id"] + "]"
+							 def hint = "Check the project model for errors or warnings"
+							 def genExc = new GenerationException(title, reason, [hint], e2)
+							 genExc.setTargetId(domainClass["id"])
+							 wr.generationExceptions.add(genExc)
+						}
+		  	 	   	}%]
+		  	 	   </VRules>
+		  	 	   [%}
+		  	 	   for(attribute in domainClass.selectNodes("./Attribute")) {
+		  	 	   	    def attrVRules = attribute.selectNodes("./VRules/*")
+		  	 	   	    if(!attrVRules.empty) {%]
+		  	 	   	    	<Attribute id="[%=attribute["id"]%]">
+		  	 	   	    		<VRules>
+									[%for(vRule in attrVRules) {
+										def vRuleDirectory = wr.explorer.validationRuleTypes().getDirectory(getComponentType(vRule))
+										def vRuleLogicTemplate = new File(vRuleDirectory, "Logic/Logic.template")
+										try {
+							   				def vRuleDescr = parseXMLString(executeTemplate(vRuleLogicTemplate, ["element": vRule])).rootElement.detach()
+							   				vRuleDescr.setName(vRule.name)
+			                   				vRuleDescr.addAttribute("id", vRule["id"])
+			                   				vRuleDescr.addAttribute("name", vRule["name"])
+			                   				if (vRule["errorMessage"]) {
+				                  				vRuleDescr.addAttribute("customErrorMessage", "true")
+			                   				} 
+			                   				def inputs = getValidationRuleInputParameters(vRule).collect{ it["name"] }.join("|")
+			                   				if (inputs) {
+								 				vRuleDescr.addAttribute("inputs", inputs)
+							   				}
+							  				printRaw(serializeXML(vRuleDescr, false))
+						   				} catch (Exception e2) {
+							 				def title = "Error generating validation support"
+							 				def reason = "Unable to generate the validation support descriptor for " + domainClass["name"] + " [" + domainClass["id"] + "]"
+							 				def hint = "Check the project model for errors or warnings"
+							 				def genExc = new GenerationException(title, reason, [hint], e2)
+							 				genExc.setTargetId(domainClass["id"])
+							 				wr.generationExceptions.add(genExc)
+										}	
+									}%]		  	 	   	    		
+			  	 	   	    	</VRules>
+		  	 	   	    	</Attribute>
+		  	 	   	    [%}
+		  	       }%]
+		  	 </Class>
+		  [%}
+	   }%]
+</DomainModelValidator>    

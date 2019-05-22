@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Descriptor service="com.webratio.rtx.cache.CacheService" name="Cache Service">
+  <DataServiceCaching cacheId="defaultCache"/>
+  <ServiceClass id="cls1" cacheId="defaultCache"/>
+  <ServiceClass id="cls4" cacheId="defaultCache"/>
+  <ServiceClass id="cls2" cacheId="defaultCache"/>
+  <ServiceClass id="cls5" cacheId="defaultCache"/>
+  <ServiceClass id="cls3" cacheId="defaultCache"/>
+</Descriptor>

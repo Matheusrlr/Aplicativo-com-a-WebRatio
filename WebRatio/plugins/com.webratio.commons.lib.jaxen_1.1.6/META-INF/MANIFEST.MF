@@ -1,0 +1,30 @@
+Manifest-Version: 1.0
+Export-Package: org.jaxen,org.jaxen.dom,org.jaxen.dom4j,org.jaxen.expr
+ ,org.jaxen.expr.iter,org.jaxen.function,org.jaxen.function.ext,org.ja
+ xen.function.xslt,org.jaxen.javabean,org.jaxen.jdom,org.jaxen.pattern
+ ,org.jaxen.saxpath,org.jaxen.saxpath.base,org.jaxen.saxpath.helpers,o
+ rg.jaxen.util,org.jaxen.xom,org.w3c.dom
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/jaxen.jar
+Bundle-Version: 1.1.6
+Eclipse-BuddyPolicy: registered
+Bundle-Name: WebRatio 3rd Party Library - Jaxen
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.jaxen
+Bundle-RequiredExecutionEnvironment: J2SE-1.4
+
+Name: lib/jaxensrc.zip
+SHA-256-Digest: lOFAGy2oBDmzn9QEEuoMS4fcWJLz1CgMmFudl//6BEg=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: lib/jaxen.jar
+SHA-256-Digest: WsnHS7s5ZLNKiGumsbbAsNw+vuvB3EpElCp2Y0SQs+s=
+
+Name: about.html
+SHA-256-Digest: 2E09jCCafEYIbH/DVd/0D0dniMO9c+pGJOeEmEUG3po=
+
+Name: about_files/jaxen.txt
+SHA-256-Digest: T2U9HPaB71dU1q4V6XdFPkrJlcAUhfkE6mbdJFh2Oow=
+

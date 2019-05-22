@@ -1,0 +1,120 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Event Icon" name="event-icon" type="text" default="chevron-right">
+Defines the icon to be shown when there is only one event on the second level.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Use Empty Message" name="use-empty-component-message" type="boolean" default="false">
+Defines the usage of a message for empty components.
+Allowed values are: true or false.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Empty Message Key" name="empty-component-message" type="string" default="emptyComponentMessage">
+Defines the key of the message to use if the component is empty.
+Default value: emptyComponentMessage
+</wr:LayoutParameter>
+[%
+setHTMLOutput()
+
+def attrs = component.selectNodes("layout:Attribute")
+def attrsCount = attrs.size()
+def avatar = (attrsCount && attrs[0]["type"] == "blob" && (attrs[0]["contentType"] == "" || attrs[0]["contentType"].startsWith("image"))) ? attrs[0] : null
+def title = attrs.find{it["type"] != "blob"}
+def subtitle = attrs.find{it["type"] != "blob" && it != title}
+
+def wrPosition = []
+wrPosition.push("{data:dataIndex}")
+
+def useEmptyComponentMessage = params["use-empty-component-message"] == "true"
+def emptyComponentMessage = params["empty-component-message"]
+%]
+<div class="<wr:StyleClass/> wr-comp-Hierarchy">
+	<ion-list ng-if="view.data && view.data.length">
+		<wr:Frame>
+			<div ng-repeat="current in view.data" ng-init="dataIndex = $index">
+				<ion-item class="[%= (avatar) ? "item-avatar" : "" %] item-icon-right" ng-click="$parent._rowActive = !$parent._rowActive" ng-class="{active: $parent._rowActive}">
+					
+					[% if (avatar) { %]
+						<wr:Value context="avatar" class="item-image"/>
+					[% } %]
+					[% if (title) { %]
+						<h2><wr:Value context="title"/></h2>
+					[% } %]
+					[% if (subtitle) { %]
+						<p><wr:Value context="subtitle"/></p>
+					[% } %]
+					<i class="icon" ng-class="$parent._rowActive ? 'ion-chevron-up' : 'ion-chevron-down'"></i>
+					
+					<wr:Iterate var="event" context="component" select="layout:Event">
+						[% if (!getLayout(event, LayoutType.EVENT).path.endsWith("IonButton")) {
+								throwGenerationException("Use IonButton event template for ${event['name']} (${event['id']})")
+							} %]
+						<wr:Event position="wrPosition.toString()"/>
+					</wr:Iterate>
+				</ion-item>
+				
+				<wr:Iterate var="level" context="component" select="./HierarchyLevel">
+					[% printLayoutLevel(level, 2, wrPosition) %]
+				</wr:Iterate>
+			</div>
+		</wr:Frame>
+	</ion-list>
+	[% if (useEmptyComponentMessage) { %]
+		<div ng-if="!view.data || !view.data.length" class="wr-empty-message list">
+			<wr:Frame>
+				<div class="item item-text-wrap">
+					{{ '[%= emptyComponentMessage %]' | wrLocalize }}
+				</div>
+			</wr:Frame>
+		</div>
+	[% } %]
+</div>
+[%
+def printLayoutLevel(currLevel, levelDeepth, parentPosition) {
+	levelDeepth++
+	def currLevid = currLevel["id"]
+	def innerPosition = parentPosition
+	innerPosition.push( "{" + currLevid + "data:" + currLevid + "Index}" )
+	
+	def attrs = currLevel.selectNodes("layout:Attribute")
+	def attrsCount = attrs.size()
+	def avatar = (attrsCount && attrs[0]["type"] == "blob" && (attrs[0]["contentType"] == "" || attrs[0]["contentType"].startsWith("image"))) ? attrs[0] : null
+	def title = attrs.find{it["type"] != "blob"}
+	def subtitle = attrs.find{it["type"] != "blob" && it != title}
+	
+	def events = currLevel.selectNodes("layout:Event")
+	def selectEvent = events.size() == 1 ? events[0] : null
+	def hasEvents = events.size() > 0
+	%]
+	<div ng-if="current.[%= currLevel["id"] %]data.length" ng-show="_rowActive">
+		<div ng-repeat="current in current.[%= currLevel["id"] %]data" ng-init="[%= currLevid %]Index = $index">
+			<ion-item 
+				class="[%= (avatar) ? "item-avatar" : "" %][% if (selectEvent && params["event-icon"] != "") { %] item-icon-right[% } %]" 
+				[% if (selectEvent) { %]
+					ng-click="[%= getEventThrowExpression(selectEvent, "{ position: ${innerPosition.toString()} }") %]"
+				[% } %]
+			>
+				[% if (avatar) { %]
+					<wr:Value context="avatar" class="item-image"/>
+				[% } %]
+				
+				[% if (title) { %]
+					<h[%= levelDeepth %]><wr:Value context="title"/></h[%= levelDeepth %]>
+				[% } %]
+				
+				[% if (subtitle) { %]
+					<p><wr:Value context="subtitle"/></p>
+				[% } %]
+				
+				[% if (selectEvent && params["event-icon"] != "") { %]
+					<span class="icon ion-[%= params["event-icon"] %]"></span>
+				[% } else  if (hasEvents && !selectEvent) { %]
+					<wr:Iterate var="event" context="currLevel" select="layout:Event">
+						[% if (!getLayout(event, LayoutType.EVENT).path.endsWith("IonButton")) {
+								throwGenerationException("Use IonButton event template for ${event['name']} (${event['id']})")
+							} %]
+						<wr:Event position="innerPosition.toString()"/>
+					</wr:Iterate>
+				[% } %]
+			</ion-item>
+		</div>
+	</div>
+	[%
+} %]

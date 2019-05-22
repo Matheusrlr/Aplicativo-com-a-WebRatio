@@ -1,0 +1,12 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+%>
+<OutputParameters>
+  <OutputParameter name="subjectArray" label="Email Subject (Array)"/>
+  <OutputParameter name="bodyArray" label="Email Body (Array)"/>
+  <OutputParameter name="failureReasons" label="Failure Reasons"/>
+  <OutputParameter name="invalidAddresses" label="Invalid Addresses"/>
+  <OutputParameter name="exceptions" label="Exceptions"/>
+  <OutputParameter name="messageIdArray" label="Email ID (Array)"/>
+</OutputParameters>

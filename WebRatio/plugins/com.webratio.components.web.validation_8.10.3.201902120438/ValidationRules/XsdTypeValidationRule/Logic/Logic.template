@@ -1,0 +1,14 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import org.apache.commons.lang.StringUtils
+setXMLOutput()
+
+def xsdType = element["xsdType"]
+if(xsdType.indexOf("[") > 0){
+  xsdType = xsdType.substring(0, xsdType.indexOf("[")).trim()
+}
+%>
+<ValidationRule service="com.webratio.components.web.validation.XsdTypeValidationRuleService">
+  <XsdProvider><%=element["xsdProvider"]%></XsdProvider>
+  <XsdType><%=xsdType%></XsdType>  
+</ValidationRule>

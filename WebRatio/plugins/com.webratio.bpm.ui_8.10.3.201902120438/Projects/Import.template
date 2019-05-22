@@ -1,0 +1,491 @@
+#?delimiters [%,%],[%=,%]
+<?xml version="1.0" encoding="UTF-8"?>
+<?bpm version="1.0.0"?>
+[%
+import org.apache.commons.lang.StringUtils
+import org.apache.commons.lang.math.NumberUtils
+import org.dom4j.QName
+import org.dom4j.io.SAXReader
+setXMLOutput()
+
+idMap = [:]
+paramMap = [:]
+paramIndex = 0
+
+def bpmDiagram = new SAXReader().read(sourceBPMFile).rootElement
+def gmfDiagram = new SAXReader().read(sourceGMFFile).rootElement
+def gmfById = [:]
+for (elem in gmfDiagram.selectNodes("//element")) {
+    def xmiId = StringUtils.substringAfterLast(elem["href"], "#")
+    if (xmiId != "") {
+        gmfById[xmiId] = elem
+    }
+}
+def getGMF = { elem ->
+    def xmiId = elem.attributeValue(QName.get("id", "xmi", "http://www.omg.org/XMI"))
+    def gmfElem = gmfById[xmiId]
+    if (gmfElem == null) {
+        throw new RuntimeException("Could not find GMF element for xmi:id=" + xmiId)
+    }
+    return gmfElem
+}
+
+def getXmiType = { elem ->
+    return elem.attributeValue(QName.get("type", "xmi", "http://www.omg.org/XMI"))
+}
+
+def getX = { elem ->
+    def gmf = getGMF(elem)
+    return NumberUtils.toInt(gmf.valueOf("../layoutConstraint/@x"))
+}
+
+def getHeight = { elem ->
+    def gmf = getGMF(elem)
+    return NumberUtils.toInt(gmf.valueOf("../layoutConstraint/@height"))
+}
+
+def getCode = { elem ->
+    def gmf = getGMF(elem)
+    return gmf.valueOf("../eAnnotations[@source = 'Code']/details[@key = 'code']/@value")
+}
+
+def getExpression = { elem ->
+    def gmf = getGMF(elem)
+    return gmf.valueOf("../eAnnotations[@source = 'Expression']/details[@key = 'expression']/@value")
+}
+
+
+def importDescription = { e ->
+    def gmf = getGMF(e)
+    def value = gmf.valueOf("../eAnnotations[@source = 'Description']/details[@key = 'description']/@value")
+    if (value != "") {
+        %]<Description xml:space="preserve">[%=value%]</Description>[%
+    }
+}
+
+def importComment = { e ->
+    def gmf = getGMF(e)
+    def value = gmf.valueOf("../eAnnotations[@source = 'Comment']/details[@key = 'comment']/@value")
+    if (value != "") {
+        %]<Comment xml:space="preserve">[%=value%]</Comment>[%
+    }
+}
+
+def getInputParameters = { elem ->
+    def gmf = getGMF(elem)
+    def params = gmf.valueOf("../eAnnotations[@source = 'InputParameters']/details[@key = 'inputParameters']/@value").tokenize("|")
+    def newParams = []
+    for (param in params) {
+        def newParam = paramMap[param]
+        if (newParam == null) {
+            println "Invalid input parameter: " + param
+        } else {
+            newParams.add(newParam)
+        }
+    }
+    return newParams.join(" ")
+}
+
+def getOutputParameters = { elem ->
+    def gmf = getGMF(elem)
+    def params = gmf.valueOf("../eAnnotations[@source = 'OutputParameters']/details[@key = 'outputParameters']/@value").tokenize("|")
+    def newParams = []
+    for (param in params) {
+        def newParam = paramMap[param]
+        if (newParam == null) {
+            println "Invalid output parameter: " + param
+        } else {
+            newParams.add(newParam)
+        }
+    }
+    return newParams.join(" ")
+}
+
+def getStartingName = { elem ->
+    def gmf = getGMF(elem)
+    return gmf.valueOf("../eAnnotations[@source = 'StartingName']/details[@key = 'startingName']/@value")
+}
+
+def getY = { elem ->
+    def gmf = getGMF(elem)
+    return NumberUtils.toInt(gmf.valueOf("../layoutConstraint/@y"))
+}
+
+def getExecution = { elem ->
+    def gmf = getGMF(elem)
+    def gmfExec = gmf.valueOf("../eAnnotations[@source = 'Execution']/details[@key = 'execution']/@value")
+    if (gmfExec == "") {
+        return "userExecution"
+    } else {
+        return gmfExec
+    }
+}
+def getConditionType = { elem ->
+    def gmf = getGMF(elem)
+    return gmf.valueOf("../eAnnotations[@source = 'ConditionType']/details[@key = 'conditionType']/@value")
+}
+def isUntracked = { elem ->
+    def gmf = getGMF(elem)
+    def gmfExec = gmf.valueOf("../eAnnotations[@source = 'Untracked']/details[@key = 'untracked']/@value")
+    return (gmfExec == "true")
+}
+
+def isDefault = { elem ->
+    return (elem["isDefault"] == "true")
+}
+
+def isTextAnnotation = { ta, lane ->
+    def laneY = getY(lane)
+    def laneHeight = getHeight(lane)
+    def taY = getY(ta)
+    return ((taY >= laneY) && (taY <= (laneY + laneHeight)))
+}
+
+def getNote = { elem ->
+    def gmf = getGMF(elem)
+    def gmfNote = gmf.valueOf("../eAnnotations[@source = 'Note']/details[@key = 'note']/@value")
+    if (gmfNote == "caseNote") {
+        return "processInstanceNote"
+    } else if (gmfNote == "nextActivityNote") {
+        return "nextActivityNote"
+    } else {
+       return ""
+    }
+}
+
+def getParameterIdRef = { elem ->
+    def gmf = getGMF(elem)
+    def param = gmf.valueOf("../eAnnotations[@source = 'Parameter']/details[@key = 'parameter']/@value")
+    if (param != "") {
+        def newParam = paramMap[param]
+        if (newParam == null) {
+            println "Invalid input parameter: " + param
+        } else {
+            return newParam
+        }
+    }
+    return ""
+}
+
+def usedIds = new HashSet()
+def idStack = new Stack()
+
+def pushId = { elem ->
+    def prefix = null
+    if (elem.name == "pools") {
+        prefix = "pool"
+    } else if (elem.name == "lanes") {
+        prefix = "lane"
+    } else if (elem.name == "sequenceEdges") {
+        prefix = "fcon"
+    } else if (elem.name == "artifacts") {
+        prefix = "txa"
+    } else if (elem.name == "vertices" && getXmiType(elem) == "bpmn:SubProcess") {
+        prefix = "spr"
+    } else if (elem.name == "vertices" && elem["activityType"] == "") {
+        prefix = "task"
+    } else if (elem.name == "vertices" && elem["activityType"] == "Task") {
+        prefix = "task"
+    } else if (elem.name == "vertices" && elem["activityType"] == "EventStartLink") {
+        prefix = "strsig"
+    } else if (elem.name == "vertices" && elem["activityType"] == "EventStartEmpty") {
+        prefix = "strev"
+    } else if (elem.name == "vertices" && elem["activityType"] == "GatewayDataBasedExclusive") {
+        prefix = "gateex"
+    } else if (elem.name == "vertices" && elem["activityType"] == "EventEndTerminate") {
+        prefix = "endter"
+    } else if (elem.name == "vertices" && elem["activityType"] == "EventIntermediateEmpty") {
+        prefix = "intemp"
+    } else if (elem.name == "vertices" && elem["activityType"] == "EventEndLink") {
+        prefix = "endsig"
+    } else if (elem.name == "vertices" && elem["activityType"] == "GatewayParallel") {
+        prefix = "gatepa"
+    } else {
+        throw new RuntimeException("Unexpected element on createId: " + elem.name + " activityType: " + elem["activityType"])
+    }
+    int index = 0
+    while (true) {
+        index++
+        def idList = []
+        idList.addAll(idStack)
+        idList.add(prefix + index)
+        def candidateId = idList.join("#")
+        if (!usedIds.contains(candidateId)) {
+            usedIds.add(candidateId)
+            idStack.push(prefix + index)
+            def xmiId = elem.attributeValue(QName.get("id", "xmi", "http://www.omg.org/XMI"))
+            idMap[xmiId] = idStack.join("#")
+            return
+        }
+    }
+}
+
+def popId = {
+    idStack.pop()
+}
+
+def peekId = {
+    return idStack.join("#")
+}
+
+def name = { s ->
+     return StringUtils.join(StringUtils.split(s), " ")
+}
+
+def setNotification = { elem ->
+    def gmf = getGMF(elem)
+    def value = gmf.valueOf("../eAnnotations[@source = 'Notification']/details[@key = 'notification']/@value")
+    println "notification= " + value
+    if (value=="Message" ){
+    %] embeddedNotification="true" [%
+    }
+    if (value=="Mail" ){
+    %] mailNotification="true" [%
+    }
+}
+
+def importFlowConnectors = { e ->
+    for (edge in e.selectNodes("../sequenceEdges").findAll{it["source"] == e["id"]}) {
+        pushId(edge)
+        %]<FlowConnector id="[%=peekId()%]" name="[%=name(edge["name"])%]" to="#id#[%=edge["target"]%]#id#" default="[%=isDefault(edge)%]" expression="[%=getExpression(edge)%]"[%setNotification(edge)%]>[%=importComment(edge)%]</FlowConnector>[%
+        popId()
+    }
+}
+ 
+def importTask = { e, minY ->
+    pushId(e)
+    %]<Task id="[%=peekId()%]" name="[%=name(e["name"])%]" execution="[%=getExecution(e)%]"  gr:x="[%=getX(e)%]" gr:y="[%=getY(e) - minY%]" bpmId="[%=getUUID()%]" code="[%=getCode(e)%]" inputParameters="[%=getInputParameters(e)%]" outputParameters="[%=getOutputParameters(e)%]" defaultName="[%=getStartingName(e)%]" note="[%=getNote(e)%]">
+    [% importFlowConnectors(e) %]
+    [% importDescription(e) %]
+    [% importComment(e) %]
+    </Task>[%
+    popId()
+}
+
+def importTextAnnotation = { e, minY ->
+    pushId(e)
+    %]<TextAnnotation id="[%=peekId()%]" gr:x="[%=getX(e)%]" gr:y="[%=getY(e) - minY%]" xml:space="preserve">[%=e["name"]%]</TextAnnotation>[%
+    popId()
+}
+
+def importSubProcess = { e, minY ->
+    pushId(e)
+    %]<SubProcess id="[%=peekId()%]" name="[%=name(e["name"])%]" gr:x="[%=getX(e)%]" gr:y="[%=getY(e) - minY%]" bpmId="[%=getUUID()%]">
+    [% importFlowConnectors(e) %]
+    [% importDescription(e) %]
+    [% importComment(e) %]
+    </SubProcess>[%
+    popId()
+}
+
+def importStartEvent = { e, minY ->
+    pushId(e)
+    %]<StartEvent id="[%=peekId()%]" name="[%=name(e["name"])%]" publishProcess="true" manualExecution="[%=isUntracked(e)%]" gr:x="[%=getX(e)%]" gr:y="[%=getY(e) - minY%]" bpmId="[%=getUUID()%]" code="[%=getCode(e)%]" defaultName="[%=getStartingName(e)%]">
+    [% importFlowConnectors(e) %]
+    [% importDescription(e) %]
+    [% importComment(e) %]
+    </StartEvent>[%
+    popId()
+}
+
+def importIntermediateEvent = { e, minY ->
+    pushId(e)
+    %]<IntermediateEvent id="[%=peekId()%]" name="[%=name(e["name"])%]" manualExecution="[%=isUntracked(e)%]" gr:x="[%=getX(e)%]" gr:y="[%=getY(e) - minY%]" bpmId="[%=getUUID()%]" code="[%=getCode(e)%]" defaultName="[%=getStartingName(e)%]">
+    [% importFlowConnectors(e) %]
+    [% importDescription(e) %]
+    [% importComment(e) %]
+    </IntermediateEvent>[%
+    popId()
+}
+
+def importStartSignal = { e, minY ->
+    pushId(e)
+    %]<StartSignal id="[%=peekId()%]" name="[%=name(e["name"])%]" manualExecution="[%=isUntracked(e)%]" gr:x="[%=getX(e)%]" gr:y="[%=getY(e) - minY%]" bpmId="[%=getUUID()%]" code="[%=getCode(e)%]" defaultName="[%=getStartingName(e)%]">
+    [% importFlowConnectors(e) %]
+    [% importDescription(e) %]
+    [% importComment(e) %]
+    </StartSignal>[%
+    popId()
+}
+
+def importLocalParameters = { gateway ->
+    def gmf = getGMF(gateway)
+    def params = gmf.valueOf("../eAnnotations[@source = 'Parameters']/details[@key = 'parameters']/@value")
+    for (param in params.tokenize("|")) {
+        paramIndex++
+        def paramTokens = param.tokenize("[").collect{it - "]"}
+        def values = paramTokens[2].tokenize(",")
+        // paramMap[paramTokens[0]] = "${peekId()}#prm${paramIndex}"  
+        %]<Parameter id="[%=peekId()%]#prm[%=paramIndex%]" name="[%=paramTokens[0]%]" type="[%=paramTokens[1]%]" bpmId="[%=getUUID()%]">[%
+        for (value in values) {
+            %]<CaseValue value="[%=value%]"/>[%
+        }
+        %]</Parameter>[%
+    }
+}
+
+def importExclusiveGateway = { e, minY ->
+    pushId(e)
+    %]<ExclusiveGateway id="[%=peekId()%]" name="[%=name(e["name"])%]" execution="[%=getExecution(e)%]"  gr:x="[%=getX(e)%]" gr:y="[%=getY(e) - minY%]" bpmId="[%=getUUID()%]" code="[%=getCode(e)%]" conditionType="[%=getConditionType(e)%]" parameters="[%=getParameterIdRef(e)%]" inputParameters="[%=getInputParameters(e)%]" outputParameters="[%=getOutputParameters(e)%]" note="[%=getNote(e)%]">
+    [% importFlowConnectors(e) %]
+    [% importLocalParameters(e) %]
+    [% importDescription(e) %]
+    [% importComment(e) %]
+    </ExclusiveGateway>[%
+    popId()
+}
+def importParallelGateway = { e, minY ->
+    pushId(e)
+    %]<ParallelGateway id="[%=peekId()%]" name="[%=name(e["name"])%]" gr:x="[%=getX(e)%]" gr:y="[%=getY(e) - minY%]" bpmId="[%=getUUID()%]" code="[%=getCode(e)%]">
+    [% importFlowConnectors(e) %]
+    [% importDescription(e) %]
+    [% importComment(e) %]
+    </ParallelGateway>[%
+    popId()
+}
+
+def importEndEvent = { e, minY ->
+    pushId(e)
+    %]<EndEvent id="[%=peekId()%]" name="[%=name(e["name"])%]" gr:x="[%=getX(e)%]" gr:y="[%=getY(e) - minY%]" bpmId="[%=getUUID()%]" defaultName="[%=getStartingName(e)%]">
+    [% importFlowConnectors(e) %]
+    [% importDescription(e) %]
+    [% importComment(e) %]
+    </EndEvent>[%
+    popId()
+}
+
+def importEndSignal = { e, minY ->
+    pushId(e)
+    %]<EndSignal id="[%=peekId()%]" name="[%=name(e["name"])%]" gr:x="[%=getX(e)%]" gr:y="[%=getY(e) - minY%]" bpmId="[%=getUUID()%]">
+    [% importFlowConnectors(e) %]
+    [% importDescription(e) %]
+    [% importComment(e) %]
+    </EndSignal>[%
+    popId()
+}
+
+def findVerticesNotInLane = { pool ->
+    def laneIds = pool.selectNodes("lanes").collect{it["id"]} as HashSet
+    def vertices = pool.selectNodes("vertices") as HashSet
+    def boundVertices = vertices.findAll{ v ->
+        laneIds.any{
+            v["lanes"].startsWith(it)
+        }
+    } as HashSet
+    vertices.removeAll(boundVertices)
+    return vertices
+}
+
+def importParameters = { pool ->
+    def gmf = getGMF(pool)
+    def params = gmf.valueOf("../eAnnotations[@source = 'Parameters']/details[@key = 'parameters']/@value")
+    for (param in params.tokenize("|")) {
+        paramIndex++
+        def paramTokens = param.tokenize("[").collect{it - "]"}
+        def values = (paramTokens.size() >= 3) ? paramTokens[2].tokenize(",") : []
+        paramMap[paramTokens[0]] = "${peekId()}#prm${paramIndex}"  
+        %]<Parameter id="[%=peekId()%]#prm[%=paramIndex%]" name="[%=paramTokens[0]%]" type="[%=paramTokens[1]%]" bpmId="[%=getUUID()%]">[%
+        for (value in values) {
+            %]<CaseValue value="[%=value%]"/>[%
+        }
+        %]</Parameter>[%
+    }
+}
+
+
+
+%]
+<BPMProject xmlns:gr="http://www.webratio.com/2006/WebML/Graph" name="Default" bpmId="[%=getUUID(this)%]" gr:showTooltip="true">
+[% for (pool in bpmDiagram.selectNodes("pools")) { %]
+  [% pushId(pool) %]  
+  <Pool id="[%=peekId()%]" name="[%=name(pool["name"])%]" bpmId="[%=getUUID()%]" code="[%=getCode(pool)%]" defaultName="[%=getStartingName(pool)%]">
+  [% importParameters(pool) %]
+  [%
+    def verticesNotInLane = findVerticesNotInLane(pool)
+    if (!verticesNotInLane.empty) {
+        throw new RuntimeException(verticesNotInLane.size() + " vertices in a pool are not bound to a lane: ${verticesNotInLane.collect{it["id"]}.join(", ")}. Please re-save the diagram")
+    }
+  %]
+  [% for (lane in pool.selectNodes("lanes").sort{getY(it)}) { %]
+    [% pushId(lane) %]
+    <Lane id="[%=peekId()%]" name="[%=name(lane["name"])%]"[%setNotification(lane)%] bpmId="[%=getUUID()%]">
+    [%
+        def minY = Integer.MAX_VALUE
+        for (v in pool.selectNodes("vertices").findAll{it["lanes"].startsWith(lane["id"])}) {
+           switch (v["activityType"]) {
+           case "":
+           case "Task":
+           case "SubProcess":
+           case "EventStartLink":
+           case "EventStartEmpty":
+           case "EventIntermediateEmpty":
+           case "GatewayDataBasedExclusive":
+           case "GatewayParallel":
+           case "EventEndTerminate":
+           case "EventEndLink":
+               minY = Math.min(minY, getY(v))
+               break
+           default:
+               println "TODO: " + v["activityType"]
+           } 
+       }
+       minY -= 20
+       minY = Math.max(0, minY)
+    %]
+    [% for (v in pool.selectNodes("vertices").findAll{it["lanes"].startsWith(lane["id"])}) {
+           switch (v["activityType"]) {
+           case "":
+               if (getXmiType(v) == "bpmn:SubProcess") {
+                   importSubProcess(v, minY)
+               } else {
+                   importTask(v, minY)
+               }
+               break
+           case "Task":
+               importTask(v, minY)
+               break
+           case "SubProcess":
+               importSubProcess(v, minY)
+               break
+           case "EventStartLink":
+               importStartSignal(v, minY)
+               break
+           case "EventStartEmpty":
+               importStartEvent(v, minY)
+               break
+           case "EventIntermediateEmpty":
+               importIntermediateEvent(v, minY)
+               break
+           case "GatewayDataBasedExclusive":
+               importExclusiveGateway(v, minY)
+               break
+           case "GatewayParallel":
+               importParallelGateway(v, minY)
+               break
+           case "EventEndTerminate":
+               importEndEvent(v, minY)
+               break
+           case "EventEndLink":
+               importEndSignal(v, minY)
+               break
+           default:
+               println "TODO: " + v["activityType"]
+           }
+       }
+       for (ta in pool.selectNodes("artifacts").findAll{isTextAnnotation(it, lane)}) {
+           minY = Math.min(minY, getY(ta))               
+           importTextAnnotation(ta, minY)
+       } %]
+       [% importDescription(lane) %]
+       [% importComment(lane) %]
+    </Lane>
+    [% popId() %]
+    [% importDescription(pool) %]
+    [% importComment(pool) %]
+  [% } %]
+  </Pool>
+  [% popId() %]
+[% } %]
+[% importDescription(bpmDiagram) %]
+[% importComment(bpmDiagram) %]
+</BPMProject>

@@ -1,0 +1,163 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import com.webratio.generator.GenerationException
+import com.webratio.generator.io.OutputManager
+import com.webratio.commons.net.EventSocketClient
+import com.webratio.commons.net.JobCanceledException
+import org.apache.commons.lang.StringUtils
+import org.apache.commons.lang.exception.ExceptionUtils
+import com.webratio.commons.transform.groovy.EvaluateException
+import com.webratio.generator.io.IOHelper
+import org.dom4j.DocumentHelper
+import com.webratio.generator.TimeLogger
+import org.apache.commons.io.FileUtils
+
+setXMLOutput()
+
+wr.outputManager.setForceChanges(!wr.normalizeDescriptors)
+wr.outputManager.setWriteExceptionHandler { file, e ->
+	def title = "Error writing file"
+	def reason = "Error writing to output file " + file
+	def genExc = new GenerationException(title, reason, [], e)
+	genExc.setTargetId("Project")
+	wr.generationExceptions.add(genExc)
+}
+wr.descrToSkip = [] as Set
+_wr_registry.setFileChecksEnabledForCurrentThread(false)
+
+// defines the generation tasks
+def tasks = ["Project", "Libs", "DomainModel", "Logic", "MVC", "WebContent"]
+if (phases != "All") {
+    tasks = ["Project"]
+    tasks.addAll(phases.tokenize("|"))
+    tasks.add("WebContent")
+}
+def taskTimes = null
+if (phases == "Logic"){
+  taskTimes = ["Project":5, "Logic":85, "WebContent":10]
+} else if (phases == "MVCPagesOnly"){
+  taskTimes = ["Project":5, "MVCPagesOnly":85, "WebContent":10]
+} else {
+  taskTimes = ["Project":5, "DomainModel":10, "Logic":45, "MVC":35, "MVCPagesOnly":35, "Libs":4, "WebContent":1]
+}
+
+if(wr.projectType.name() == "ENTERPRISE"){
+   if (phases == "Logic"){
+     tasks = ["Project", "EnterpriseProject", "Logic", "WebContent"]
+     taskTimes = ["Project":5, "EnterpriseProject":45, "Logic":45, "WebContent":5]
+   } else  if (phases == "MVCPagesOnly"){
+     tasks = [ "Project", "MVCPagesOnly", "WebContent"]
+     taskTimes = ["Project":5, "MVCPagesOnly":85, "WebContent":10]
+   } else {
+     tasks = ["Project", "EnterpriseProject", "Logic", "Libs", "WebContent", "MVC"]
+     taskTimes = ["Project":5, "EnterpriseProject":35, "Logic":40, "Libs":10, "WebContent":5, "MVC":5]
+   }  
+} else if(wr.projectType.name() == "DATAMODEL"){
+   tasks = ["Project", "DomainModel", "WebContent"]
+   taskTimes = ["Project":5, "DomainModel":93, "WebContent":2]
+} else if(wr.projectType.name() in ["WEBMODEL","MODULE"]){
+   if (phases == "Logic"){
+      taskTimes["Logic"] += 10
+   } else if (phases == "MVCPagesOnly"){
+      taskTimes["MVCPagesOnly"] += 10
+   } else {
+      taskTimes["Logic"] += 5
+      taskTimes["MVC"] += 5
+   }    
+} else if(wr.projectType.name() == "BPM"){
+   tasks = ["Project", "Libs", "DomainModel", "Logic", "WebContent", "BPM"]
+   taskTimes = ["Project":5, "DomainModel":10, "Logic":45, "Libs":4, "WebContent":1, "BPM":35]
+}
+
+/* Execute main tasks */
+eventSocketClient = new EventSocketClient(eventSocketPort)
+try {
+	eventSocketClient.connect("localhost");
+	eventSocketClient.sendBeginTask("Main", tasks.collect{taskTimes[it]}.sum())
+	TimeLogger.start()
+	for (task in tasks) {
+	    TimeLogger.startTask(task)
+	    eventSocketClient.sendCreateSubTask("Main", task, taskTimes[task])
+	    executeContextTemplate("/" + task.replace("MVC", "MVC") + "/Main.template")
+	    eventSocketClient.sendTaskDetails(task, "Waiting for file writes")
+	    wr.outputManager.waitForAllWrites()
+	    eventSocketClient.sendTaskDone(task)
+	    TimeLogger.taskDone()
+	}
+	TimeLogger.workDone()
+} catch (JobCanceledException e) {
+	/* Swallow */
+} catch (Throwable e) {
+    def genExc = new GenerationException("Error", "Unable to generate the Web application", [], e)
+    genExc.setTargetId("Project")
+    wr.generationExceptions.add(genExc)
+} finally {
+	wr.outputManager.dispose()
+	_wr_registry.unsetFileChecksEnabledForCurrentThread()
+	
+    //copies the updated web.xml
+    try{
+       def tempWebXMLFile = wr.getOptional("temp.webxml").orNull()
+       if (tempWebXMLFile != null) {
+          def webXmlFile = (wr.projectType.name() == "ENTERPRISE") ? (wr.outputPath + "/" +rootModuleName + ".war/WEB-INF/web.xml") : (wr.outputPath + "/WEB-INF/web.xml")
+          FileUtils.copyFile(tempWebXMLFile, new File(webXmlFile), false)
+          executeQuietly{tempWebXMLFile.delete()}
+       }
+    }catch(Exception e){
+        def genExc = new GenerationException("Error", "Unable to generate the application module web.xml", [], e)
+        genExc.setTargetId("Project")
+        wr.generationExceptions.add(genExc)
+    }
+    
+    //verifies the presence of generation exceptions
+    try {
+    	eventSocketClient.sendTaskDone("Main")
+    } catch (JobCanceledException e) {
+    }
+    eventSocketClient.disconnect();
+    def genElem = DocumentHelper.createDocument().addElement("Generation")
+    def multiFileIdConversionMap = IOHelper.deserializeMap(wr.multiFileIdConversionMap)
+    def modulesIdConversionMap = IOHelper.deserializeMap(wr.modulesIdConversionMap)
+    for (exc in wr.generationExceptions) {
+        def realId = StringUtils.defaultIfEmpty(modulesIdConversionMap?.get(exc.targetId), exc.targetId)
+        realId = StringUtils.defaultIfEmpty(multiFileIdConversionMap?.get(realId), realId)
+        def excElem = genElem.addElement("Exception")
+        
+        def throwables = ExceptionUtils.getThrowableList(exc)
+        def excIndex = ExceptionUtils.indexOfType(exc, GenerationException.class)
+        def evalExceptions = throwables.findAll { it instanceof EvaluateException }
+        exc = excIndex >= 0 ? throwables[excIndex] : exc
+        def cause = exc.cause
+		if (!(cause instanceof EvaluateException)) {
+			cause = new EvaluateException(cause, getClass())
+		}
+        
+        excElem.addAttribute("target", realId)
+        excElem.addElement("Title").setText(StringUtils.defaultString(exc.title))
+        excElem.addElement("Reason").setText(StringUtils.defaultString(exc.reason))
+        for (hint in exc.hints) {
+            excElem.addElement("Hint").setText(StringUtils.defaultString(hint))
+        }
+		addCauseStackTrace: {
+        	def sw = new java.io.StringWriter()
+        	cause.printEvaluateStackTrace(new java.io.PrintWriter(sw, true))
+        	excElem.addElement("Cause").setText(sw.toString())
+        }
+        
+        /* Serialize Groovy evaluation problem */
+        if (!evalExceptions.isEmpty()) {
+        	def problem = evalExceptions.last().problem
+        	def problemElem = excElem.addElement("TemplateEvaluateProblem")
+        	problemElem.addAttribute("description", problem.description)
+        	if (problem.file) {
+	        	problemElem.addAttribute("file", problem.file.absolutePath)
+	        	problemElem.addAttribute("start", problem.location.start.count + "," + problem.location.start.line + "," + problem.location.start.column)
+	        	problemElem.addAttribute("end", problem.location.end.count + "," + problem.location.end.line + "," + problem.location.end.column)
+        	}
+        }
+    }
+    def genFile = new File(wr.projectDir, "/.Temp~/Generation.xml")
+    genFile.parentFile.mkdirs()
+    genFile.write(serializeXML(genElem, false))
+}
+%>

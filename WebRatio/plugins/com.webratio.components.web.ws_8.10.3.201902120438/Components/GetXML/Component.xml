@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="content|operation" formBased="false" idPrefix="gxu" namePrefix="Get XML " label="Get XML" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" successFlowSource="true" successFlowTarget="true"> 
+  <EnumProperty label="Source Type" attributeName="sourceType" defaultValue="static"> 
+    <EnumItem value="static" label="Static URL"/>  
+    <EnumItem value="dynamic" label="Dynamic URL"/>  
+    <EnumItem value="blob" label="BLOB"/>  
+    <EnumItem value="text" label="Text"/>  
+    <Description xml:space="preserve">Specifies if the source XML document will be provided
+either as property at design type (&lt;i&gt;Static URL&lt;/i&gt;) or as input parameter
+at run-time (&lt;i&gt;Dynamic URL&lt;/i&gt;), or as BLOB file (&lt;i&gt;BLOB&lt;/i&gt;),
+or as a textual content (&lt;i&gt;Text&lt;/i&gt;).</Description> 
+  </EnumProperty>  
+  <StringProperty label="Static URL" attributeName="url"> 
+    <IsEnabled>return (element["sourceType"] == "static")</IsEnabled>  
+    <Description xml:space="preserve">Specifies the URL of the document being parsed; available
+only if the URL Type property is set to &lt;i&gt;static&lt;/i&gt;.
+Local XML files can be referenced too; for instance the file &lt;i&gt;C:\WR Examples\catalog.xml&lt;/i&gt;
+is referenced by the URL &lt;i&gt;file:///C:/WR%20Examples/catalog.xml &lt;/i&gt;</Description> 
+  </StringProperty>  
+  <SubComponent elementName="XPath" idPrefix="ns" namePrefix="XPath" label="XPath" ignoreI18N="true"> 
+    <StringProperty attributeName="expression"> 
+      <Description xml:space="preserve">Specifies an XPath expression to be evaluated on the retrieved XML document.</Description> 
+    </StringProperty>  
+    <EnumProperty attributeName="resultType" defaultValue="array"> 
+      <EnumItem value="array" label="Array"/>  
+      <EnumItem value="boolean" label="Boolean"/>  
+      <EnumItem value="string" label="String"/>  
+      <Description xml:space="preserve">Specifies XPath result type.</Description> 
+    </EnumProperty>  
+    <Description xml:space="preserve">The XPath sub-component lets user to define an extra output parameter whose
+value is computed using the specified XPath expression.</Description> 
+  </SubComponent >  
+  <Description xml:space="preserve">A Get XML component retrieves XML content from a local or remote URL.</Description>  
+  <InputDescription xml:space="preserve" name="Dynamic URL">The URL of the XML document being parsed; available only
+if the Source Type property is set to&lt;i&gt; dynamic&lt;/i&gt;.</InputDescription>  
+  <InputDescription xml:space="preserve" name="BLOB">The BLOB identifying the XML document being parsed; available only
+if the Source Type property is set to&lt;i&gt; BLOB&lt;/i&gt;.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Text">The text string of the XML document being parsed; available only
+if the Source Type property is set to&lt;i&gt; Text&lt;/i&gt;.</InputDescription>  
+  <OutputDescription xml:space="preserve" name="Output XML Document">The parsed XML document.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Error Message">The message produced by the component in case of error.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Exception">The exception thrown by the component in case of error.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="XPath-Name">The value returned by the XPath evaluation.</OutputDescription>  
+  <IsContextFreeComponent xml:space="preserve">return (component["sourceType"] == "static")</IsContextFreeComponent>  
+  <IsMultiConditionComponent xml:space="preserve">return false</IsMultiConditionComponent> 
+</Component>

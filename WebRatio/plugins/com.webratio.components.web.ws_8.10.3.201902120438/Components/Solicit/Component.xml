@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Component type="operation" formBased="false" idPrefix="slu" namePrefix="Solicit " label="Solicit" onlyForServiceView="true" dataFlowSource="true" navigationFlowSource="true"  errorFlowSource="true"  successFlowSource="true" > 
+  
+  <EnumProperty label="Invocation Style" attributeName="invocationStyle" emptyInheritedLabel="SOAP" defaultValue="SOAP" hideFigureWhenEmpty="true">
+    <EnumItem value="SOAP" label="SOAP" /> 
+    <EnumItem value="REST" label="REST"/>  
+    <Description xml:space="preserve">The service invocation style.</Description> 
+  </EnumProperty>
+  
+  <StringProperty label="Namespace URI" attributeName="nsURI"> 
+    <IsEnabled>return (element["invocationStyle"] == "SOAP") || (element["invocationStyle"] == "REST" &amp;&amp; element["contentType"] == "XML")</IsEnabled>
+    <Description xml:space="preserve">The namespace URI of the XML element expected in the body of the request (could be empty).</Description> 
+  </StringProperty>  
+  
+  <EnumProperty label="Request Method" attributeName="requestMethod" emptyInheritedLabel="POST" defaultValue="POST" figureDisplayOrder="1" hideFigureWhenEmpty="true">
+  	<IsEnabled>return (element["invocationStyle"] != "SOAP")</IsEnabled>
+    <EnumItem value="GET" label="GET" />
+    <EnumItem value="POST" label="POST" />
+    <EnumItem value="PUT" label="PUT" />
+    <EnumItem value="DELETE" label="DELETE" />
+    <Description xml:space="preserve">The request method the component must answer to.</Description>
+  </EnumProperty>
+  
+  <EnumProperty label="Content Type" attributeName="contentType" figureDisplayOrder="1" hideFigureWhenEmpty="true">
+    <IsEnabled>return ("REST" == element["invocationStyle"]) &amp;&amp; (element["requestMethod"] == "PUT" || element["requestMethod"] == "POST")</IsEnabled>
+    <EnumItem value="XML" label="XML" />
+    <EnumItem value="JSON" label="JSON" />
+    <EnumItem value="MULTIPART_FORM_DATA" label="Multipart Form Data" />
+    <Description xml:space="preserve">The request content type.</Description>
+  </EnumProperty>
+  
+  <BooleanProperty label="Stateful" attributeName="stateful"> 
+    <Description xml:space="preserve">If checked indicates that this operation is stateful.</Description> 
+  </BooleanProperty>
+  
+  <BooleanProperty label="Protected" attributeName="protectedByToken"> 
+    <Description xml:space="preserve">If checked, the access to the operation is permitted only to users belonging to a role entitled to access the operation.</Description>
+  </BooleanProperty>
+  
+  <RolesProperty label="Roles" attributeName="roles" multiple="true">
+    <Description xml:space="preserve">If the solicit is protected, it contains the list of user-defined roles having the access rights to access the operation. If no Roles is defined, this property is automatically set to the "Authenticated User" default role.</Description>
+    <IsEnabled>return (element["protectedByToken"] == "true")</IsEnabled>
+  </RolesProperty>
+  
+  <SubComponent elementName="Header" idPrefix="rh" namePrefix="Header" ignoreI18N="true">
+  	<StringProperty attributeName="value"> 
+  		<Description>The default header value.</Description>
+  	</StringProperty>
+  	<Description>An header to extract from the HTTP request.</Description>
+  </SubComponent >
+  
+  <SubComponent elementName="QueryStringParameter" idPrefix="rrp" namePrefix="QueryStringParameter" label="Query String Parameter">
+     <IsEnabled>return ("REST" == element["invocationStyle"])</IsEnabled>
+     <XSDProviderProperty attributeName="xsdProvider" label="XSD Provider">
+        <Description xml:space="preserve">The optional XSD provider used to specify the parameter's type.</Description>
+     </XSDProviderProperty>
+     <XSDTypeProperty attributeName="xsdType" label="XSD Type" schemaExpr="@xsdProvider" includeSimpleTypes="true" includeElements="false" includeComplexTypes="false">
+        <Description xml:space="preserve">The parameter simple type.</Description>
+     </XSDTypeProperty>
+     <StringProperty attributeName="value">
+       <Description xml:space="preserve">The default value if not provided at runtime.</Description>
+     </StringProperty> 
+     <Description xml:space="preserve">Defines a query string parameter.</Description>   
+  </SubComponent >  
+  
+  <SubComponent elementName="RequestBodyParameter" idPrefix="slp" namePrefix="BodyParameter" label="Body Parameter">
+    <IsEnabled>return (("SOAP" == element["invocationStyle"]) || (element["requestMethod"] == "PUT" || element["requestMethod"] == "POST")) &amp;&amp; (element["contentType"] != "MULTIPART_FORM_DATA")</IsEnabled>
+    <XSDProviderProperty attributeName="xsdProvider" label="XSD Provider">
+      <IsEnabled>return  (element.selectSingleNode("ComplexParameterFragment|SimpleParameterFragment") == null)</IsEnabled>
+      <Description xml:space="preserve">The optional XSD provider used to specify the parameter's type.</Description>
+    </XSDProviderProperty>
+    <XSDTypeProperty attributeName="xsdType" schemaExpr="@xsdProvider" includeSimpleTypes="true" includeElements="true"
+      includeComplexTypes="true" label="XSD Type/Element">
+      <IsEnabled>return (element.selectSingleNode("ComplexParameterFragment|SimpleParameterFragment") == null)</IsEnabled>
+      <Description xml:space="preserve">The parameter's type; it is a simple type if the XSD provider 
+				   property is unspecified; otherwise it can be either a element or a complex type of the underlying XSDs.</Description>
+    </XSDTypeProperty>
+    <StringProperty label="Namespace URI" attributeName="nsURI">
+      <IsEnabled>return (!(element["xsdType"].endsWith("[Element]")) &amp;&amp; (element.parent["invocationStyle"] == "SOAP") || (element.parent["contentType"] == "XML"))</IsEnabled>
+      <Description xml:space="preserve">The namespace URI of the XML element associated to this parameter in case.</Description>
+    </StringProperty>
+    <IntegerProperty label="Min Card." attributeName="minCard" defaultValue="1">
+      	<Description xml:space="preserve">A numerical value specifying the minimum cardinality of this parameter [0, N]. 
+      	If 0 this fragment is optional, default is 1.</Description>
+    </IntegerProperty>
+    <IntegerProperty label="Max Card." attributeName="maxCard" defaultValue="1">
+		<Description xml:space="preserve">A numerical value specifying the maximum cardinality of this parameter [1, N].
+		If -1 this fragment has an unbounded max cardinality, default is 1, 0 is not allowed.
+		</Description>
+    </IntegerProperty>
+    <OrderingProperty attributeName="fragmentOrder" elementsExpr="ComplexParameterFragment|SimpleParameterFragment">
+      <IsEnabled>return (element.selectSingleNode("ComplexParameterFragment|SimpleParameterFragment") != null)</IsEnabled>
+      <Description xml:space="preserve">The order of the child parameter fragments.</Description>
+    </OrderingProperty>
+    <Description xml:space="preserve">The parameter exposed by the component. At runtime, the corresponding
+									value will be received by the component from the remote calling peer.
+	</Description>
+
+    <SubComponent elementName="ComplexParameterFragment" idPrefix="cpf" namePrefix="ComplexFragment" label="ComplexFragment">
+      <IsEnabled>
+          def component = element.selectSingleNode("ancestor::Solicit");
+          if("REST" == component["invocationStyle"]) {
+              return component["requestMethod"] == "PUT" || component["requestMethod"] == "POST"
+          }
+          return (element["xsdProvider"]=="")&amp;&amp;(element["xsdType"]=="")
+      </IsEnabled>
+      <XSDProviderProperty attributeName="xsdProvider" label="XSD Provider">
+        <IsEnabled>return (element.selectSingleNode("ComplexParameterFragment|SimpleParameterFragment") == null)</IsEnabled>
+        <Description xml:space="preserve">The optional XSD provider used to specify the parameter's type.</Description>
+      </XSDProviderProperty>
+      <XSDTypeProperty attributeName="xsdType" schemaExpr="@xsdProvider" includeSimpleTypes="false" includeElements="true"
+        includeComplexTypes="true" label="XSD Type/Element">
+        <IsEnabled>return (element["xsdProvider"] != "" &amp;&amp; (element.selectSingleNode("ComplexParameterFragment|SimpleParameterFragment") == null))</IsEnabled>
+        <Description xml:space="preserve">The fragment's complex type or element.</Description>
+      </XSDTypeProperty>
+      <IntegerProperty label="Min Card." attributeName="minCard" defaultValue="1">
+      	<Description xml:space="preserve">A numerical value specifying the minimum cardinality of this fragment [0, N]. 
+      	If 0 this fragment is optional, default is 1.</Description>
+      </IntegerProperty>
+      <IntegerProperty label="Max Card." attributeName="maxCard" defaultValue="1">
+		<Description xml:space="preserve">A numerical value specifying the maximum cardinality of this fragment [1, N].
+		If -1 this fragment has an unbounded max cardinality, default is 1, 0 is not allowed.
+		</Description>
+      </IntegerProperty>
+      <OrderingProperty attributeName="fragmentOrder" elementsExpr="ComplexParameterFragment|SimpleParameterFragment">
+        <IsEnabled>return (element.selectSingleNode("ComplexParameterFragment|SimpleParameterFragment") != null)</IsEnabled>
+        <Description xml:space="preserve">The order of the child parameter fragments.</Description>
+      </OrderingProperty>
+      <SubComponentReference elementName="ComplexParameterFragment" />
+      <SubComponentReference elementName="SimpleParameterFragment" />
+      <Description xml:space="preserve">The parameter fragment which permits to model a complex value fragment.</Description>
+    </SubComponent >
+
+    <SubComponent elementName="SimpleParameterFragment" idPrefix="spf" namePrefix="SimpleFragment" label="SimpleFragment">
+      <IsEnabled>
+          def component = element.selectSingleNode("ancestor::Solicit");
+          if("REST" == component["invocationStyle"]) {
+              return component["requestMethod"] == "PUT" || component["requestMethod"] == "POST"
+          }
+          return (element["xsdProvider"]=="")&amp;&amp;(element["xsdType"]=="")
+      </IsEnabled>
+      <XSDProviderProperty attributeName="xsdProvider" label="XSD Provider">
+        <Description xml:space="preserve">The optional XSD provider used to specify the parameter's type.</Description>
+      </XSDProviderProperty>
+      <XSDTypeProperty attributeName="xsdType" schemaExpr="@xsdProvider" includeSimpleTypes="true" includeElements="false" includeComplexTypes="false" label="XSD Simple Type">
+        <Description xml:space="preserve">The fragment's simple type.</Description>
+      </XSDTypeProperty>
+      <IntegerProperty label="Min Card." attributeName="minCard" defaultValue="1">
+      	<Description xml:space="preserve">A numerical value specifying the minimum cardinality of this fragment [0, N]. 
+      	If 0 this fragment is optional, default is 1.</Description>
+      </IntegerProperty>
+      <IntegerProperty label="Max Card." attributeName="maxCard" defaultValue="1">
+		<Description xml:space="preserve">A numerical value specifying the maximum cardinality of this fragment [1, N].
+		If -1 this fragment has an unbounded max cardinality, default is 1, 0 is not allowed.
+		</Description>
+      </IntegerProperty>
+      <Description xml:space="preserve">The parameter fragment which permits to model a simple value fragment.</Description>
+     </SubComponent >
+  </SubComponent >
+    
+  <SubComponent elementName="FormDataParameter" idPrefix="fdp" namePrefix="FormDataParameter" label="Form Data Parameter" figureDisplayOrder="1">
+	 <IsEnabled>return (element["contentType"] == "MULTIPART_FORM_DATA")</IsEnabled>
+	 <EnumProperty attributeName="parameterType" defaultValue="String">
+		<EnumItem value="String" label="String" />
+		<EnumItem value="File" label="File" />
+		<Description xml:space="preserve">The type of this form data parameter.</Description>
+	</EnumProperty>
+	<Description xml:space="preserve">Defines a form data request parameter coming from the caller service.</Description>
+  </SubComponent>
+    
+   <SubComponent elementName="SoapHeader" idPrefix="sh" namePrefix="SOAPHeader" ignoreI18N="true">
+  	<IsEnabled> return (element["invocationStyle"] == "SOAP")</IsEnabled>
+		<XSDProviderProperty attributeName="xsdProvider" label="XSD Provider">
+			<Description xml:space="preserve">The optional XSD provider used to specify the header's type.</Description>
+		</XSDProviderProperty>
+		<XSDTypeProperty attributeName="xsdType" schemaExpr="@xsdProvider"
+			includeSimpleTypes="true" includeElements="true" includeComplexTypes="true" label="XSD Type/Element">
+			<Description xml:space="preserve">The header's type; it is a simple type if the XSD provider 
+				   property is unspecified; otherwise it can be either a element or a complex type of the underlying XSDs.</Description>
+		</XSDTypeProperty>
+		<StringProperty label="Namespace URI" attributeName="nsURI">
+			<IsEnabled>return !(element["xsdType"].endsWith("[Element]"))</IsEnabled>
+			<Description xml:space="preserve">The namespace URI of the XML element associated to this header in case.</Description>
+		</StringProperty>
+  	<Description>An header to extract from the SOAP envelope document.</Description>
+  </SubComponent>  
+    
+  <Description xml:space="preserve">A Solicit component acts as endpoint for a SOAP/REST request.</Description>
+  <OutputDescription xml:space="preserve" name="SOAP Envelope">The entire SOAP request envelope received by the operation. It
+is an object of type org.dom4j.Document.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Parameter-Name">The output parameter associated to one of the parameters
+defined for the operation.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Error Message">The message produced by the operation in case of error. Useful
+to feed an Error Response through a Error flow.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Exception">The exception thrown by the operation in case of error. Useful to
+feed an error response operation through a Error flow.</OutputDescription> 
+</Component>

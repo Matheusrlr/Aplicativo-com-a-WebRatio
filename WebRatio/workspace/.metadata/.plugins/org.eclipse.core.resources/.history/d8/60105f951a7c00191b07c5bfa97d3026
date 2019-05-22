@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Warnings>
+<Warning key="DB_MAPPING.INCONSISTENCY" error="true" xpath="id('as1')" tab="mapping"><Message>The join criteria of the association Categoria_Tipo is incomplete: one or more key attributes are not referenced</Message></Warning><Warning key="DB_MAPPING.INCONSISTENCY" error="true" xpath="id('as1')" tab="mapping"><Message>The 1:N association Categoria_Tipo cannot be mapped over a bridge table</Message></Warning><Warning key="DB_MAPPING.INCONSISTENCY" error="true" xpath="id('as1')" tab="mapping"><Message>The mapping column oid of the association role CategoriaToTipo also maps the association role: TipoToCategoria</Message></Warning></Warnings>

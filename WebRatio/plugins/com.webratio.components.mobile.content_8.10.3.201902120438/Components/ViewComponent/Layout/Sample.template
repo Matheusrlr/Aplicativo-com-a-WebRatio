@@ -1,0 +1,13 @@
+#?delimiters [%, %], [%=, %]
+[% setHTMLOutput() 
+/*
+ *	View Component
+ */
+%]
+<wr:Frame>
+	<div class="<wr:StyleClass/> wr-comp-ViewComponent">
+		<wr:Iterate var="event" context="component" select="layout:Event">
+			<wr:Event/>
+		</wr:Iterate>
+	</div>
+</wr:Frame>

@@ -1,0 +1,19 @@
+#?delimiters [%,%],[%=,%]
+[%
+setXMLOutput()
+
+def classId = component["dataBinding"]
+def domainClass = getById(classId)
+def selectAttributes = new HashSet()
+selectAttributes.addAll((component["displayAll"] != "true") ? component["displayAttributes"].tokenize(" ") : getAttributes(domainClass).collect{it["id"]}) 
+selectAttributes.addAll(getOutputAttributes(component, "data.", null))
+
+%]
+<Descriptor service="com.webratio.components.web.content.datasource.DetailsService">
+[% if (domainClass == null) { %]
+  <Error>Could not find a domain-class identified by '[%=classId%]'</Error>
+[% }else{ %]
+  <DataSource>[%=getDataSourceId(domainClass)%]</DataSource>
+  [%printRaw(createQuery(domainClass).select(selectAttributes).maxResults(1).selector(component.element("ConditionalExpression")).build().asXML())%]
+[% } %]
+</Descriptor>

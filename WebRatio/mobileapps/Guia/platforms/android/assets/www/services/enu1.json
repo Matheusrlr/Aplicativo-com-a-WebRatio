@@ -1,0 +1,10 @@
+{
+  "service" : "wrm.comp.FormService",
+  "fields" : [ ],
+  "_form" : {
+    "_" : "wrm.form.DefaultFormSubService",
+    "formLabel" : "Formulário",
+    "viewFormRef" : "form",
+    "properties" : { }
+  }
+}

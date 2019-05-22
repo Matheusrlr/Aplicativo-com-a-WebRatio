@@ -1,0 +1,21 @@
+#?delimiters [%,%],[%=,%]
+[%
+setXMLOutput()
+
+def useModuleDomainName = getByIdOptional("modelElementDomainName") != null && (wr.project["moduleDomainName"] != "" || wr.projectType.name() != "WEBPROJECT")
+
+def domainClass = getById("ModelElement") 
+def query = createQuery(domainClass).select("modelElementID")
+if(useModuleDomainName){
+  query.select("modelElementDomainName")
+}
+query.selector().attributeCondition("userOID", "userOID").attribute("DefaultModelElement2Role.Role2User.userOID")
+query.selector().attributeCondition("roleOID", "roleOID").attribute("DefaultModelElement2Role.roleOID")
+
+%]
+
+
+<Descriptor service="com.webratio.components.web.session.ChangeRoleService">
+  <DataSource>[%=getById("User")?.valueOf("@db:database")%]</DataSource>
+  [%printRaw(query.build().asXML())%] 
+</Descriptor>

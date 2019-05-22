@@ -1,0 +1,13 @@
+#?delimiters [%, %], [%=, %]
+<BusinessModel id="[%=wr.project["uuid"]%]" name="[%=projectName%]">
+  
+  <WebRatioVersion>[%=wrVersion%]</WebRatioVersion>
+  <WebRatioBuildId>[%=wrBuildId%]</WebRatioBuildId>
+
+  <Roles>
+    [%for(role in wr.project.selectNodes("Roles/Role")){%]
+      <Role id="[%=role["id"]%]" name="[%=role["name"]%]"/>
+    [%}%]
+  </Roles>
+
+</BusinessModel>

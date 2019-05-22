@@ -1,0 +1,21 @@
+#?delimiters [%,%],[%=,%]
+[%
+setXMLOutput()
+
+def solicits = port.selectNodes("Operations/Solicit")
+def responses = port.selectNodes("Operations/Response")
+def errorResponses = port.selectNodes("Operations/ErrorResponse")
+%]
+<Descriptor service="com.webratio.rtx.ws.DefaultPortService" name="[%=port["name"]%]">
+	[% for (operation in solicits) { %]
+		<Solicit id="[%= operation["id"] %]" name="[%= operation["name"] %]"/>
+	[% }%]
+	  
+	[% for (operation in responses) { %]
+		<Response id="[%= operation["id"] %]" name="[%= operation["name"] %]"/>
+	[% }%]
+	  
+	[% for (operation in errorResponses) { %]
+		<ErrorResponse id="[%= operation["id"] %]" name="[%= operation["name"] %]"/>
+	[% } %]
+</Descriptor>

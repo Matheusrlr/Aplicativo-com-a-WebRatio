@@ -1,0 +1,113 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.GenerationException
+import com.webratio.generator.TimeLogger
+import com.webratio.generator.io.OutputManager
+import com.webratio.generator.io.IOHelper
+import com.webratio.commons.net.EventSocketClient
+import com.webratio.commons.net.JobCanceledException
+import com.webratio.commons.transform.groovy.EvaluateException
+import com.webratio.model.mobile.problems.MissingServerMappingException
+import com.google.common.base.Throwables
+import org.apache.commons.lang.exception.ExceptionUtils
+import org.dom4j.DocumentHelper
+
+wr.outputManager.setForceChanges(!wr.normalizeDescriptors)
+wr.outputManager.setWriteExceptionHandler { file, e ->
+	def title = "Error writing file"
+	def reason = "Error writing to output file " + file
+	def genExc = new GenerationException(title, reason, [], e)
+	genExc.setTargetId("Project")
+	wr.generationExceptions.add(genExc)
+}
+_wr_registry.setFileChecksEnabledForCurrentThread(false)
+
+
+/* Main tasks definition */
+def tasks = ["Project", "DomainModel", "Logic", "MVC", "Libs", "MobileContent", "PrepareBuild", "Framework"]
+def taskTimes = ["Project":5, "DomainModel":10, "Logic":25, "MVC":30, "Libs":3, "MobileContent":2, "PrepareBuild":2, "Framework":23]
+
+/* Initialize the generation environment */
+executeContextTemplate("App/Helper.template")
+executeContextTemplate("App/Init.template")
+
+/* Execute main tasks */
+eventSocketClient = new EventSocketClient(eventSocketPort)
+try {
+	eventSocketClient.connect("localhost")
+	eventSocketClient.sendBeginTask("Main", tasks.collect{taskTimes[it]}.sum())
+	TimeLogger.start()
+	for (task in tasks) {
+		TimeLogger.startTask(task)
+		eventSocketClient.sendCreateSubTask("Main", task, taskTimes[task])
+		executeContextTemplate("/" + task + "/Main.template")
+		eventSocketClient.sendTaskDetails(task, "Waiting for file writes")
+		wr.outputManager.waitForAllWrites()
+		eventSocketClient.sendTaskDone(task)
+		TimeLogger.taskDone()
+	}
+	TimeLogger.workDone()
+} catch (JobCanceledException e) {
+	/* Swallow */
+} catch (Throwable e) {
+	def genExc = new GenerationException("Error", "Unable to generate the mobile application", [], e)
+	genExc.setTargetId("Project")
+	wr.generationExceptions.add(genExc)
+} finally {
+	wr.outputManager.dispose()
+	_wr_registry.unsetFileChecksEnabledForCurrentThread()
+    
+    /* Report the end of work on the monitor socket */
+    try {
+    	eventSocketClient.sendTaskDone("Main")
+    } catch (JobCanceledException e) {
+    }
+    eventSocketClient.disconnect();
+    
+    /* Save generation exceptions to a file */
+	def genElem = DocumentHelper.createDocument().addElement("Generation")
+	def multiFileIdConversionMap = IOHelper.deserializeMap(wr.multiFileIdConversionMap)
+	def modulesIdConversionMap = [:] // TODO IOHelper.deserializeMap(wr.modulesIdConversionMap)
+	for (exc in wr.generationExceptions) {
+		def realId = modulesIdConversionMap?.get(exc.targetId) ?: exc.targetId
+		realId = multiFileIdConversionMap?.get(realId) ?: realId
+		def excElem = genElem.addElement("Exception")
+		
+        def throwables = ExceptionUtils.getThrowableList(exc)
+        def excIndex = ExceptionUtils.indexOfType(exc, GenerationException.class)
+        def evalExceptions = throwables.findAll { it instanceof EvaluateException }
+        exc = excIndex >= 0 ? throwables[excIndex] : exc
+        def cause = exc.cause
+		if (!(cause instanceof EvaluateException)) {
+			cause = new EvaluateException(cause, getClass())
+		}
+		
+		excElem.addAttribute("target", realId)
+		excElem.addElement("Title").setText(exc.title ?: "")
+		excElem.addElement("Reason").setText(exc.reason ?: "")
+		for (hint in exc.hints) {
+		    excElem.addElement("Hint").setText(hint)
+		}
+		addCauseStackTrace: {
+        	def sw = new java.io.StringWriter()
+        	cause.printEvaluateStackTrace(new java.io.PrintWriter(sw, true))
+        	excElem.addElement("Cause").setText(sw.toString())
+        }
+		
+		/* Serialize Groovy evaluation problem */
+        if (!evalExceptions.isEmpty()) {
+        	def problem = evalExceptions.last().problem
+        	def problemElem = excElem.addElement("TemplateEvaluateProblem")
+        	problemElem.addAttribute("description", problem.description)
+        	if (problem.file) {
+	        	problemElem.addAttribute("file", problem.file.absolutePath)
+	        	problemElem.addAttribute("start", problem.location.start.count + "," + problem.location.start.line + "," + problem.location.start.column)
+	        	problemElem.addAttribute("end", problem.location.end.count + "," + problem.location.end.line + "," + problem.location.end.column)
+        	}
+        }
+	}
+    def genFile = new File(wr.projectDir, "/.Temp~/Generation.xml")
+    genFile.parentFile.mkdirs()
+    genFile.write(serializeXML(genElem, false))
+}
+%]

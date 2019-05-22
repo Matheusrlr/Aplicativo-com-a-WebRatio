@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.9.2
+Bundle-SymbolicName: com.webratio.components.web.validation;singleton:
+ =true
+Bundle-Name: Default Validations
+Bundle-Version: 8.10.3.201902120438
+Bundle-ClassPath: com.webratio.components.web.validation.jar
+Require-Bundle: com.webratio.ide.components.core,com.webratio.ide.unit
+ s,com.webratio.rtx,com.webratio.commons.libs,com.webratio.commons.tra
+ nsform,com.webratio.web.mvc,com.webratio.lib.spring,com.webratio.xsd,
+ com.webratio.commons.lib.jcaptcha,com.webratio.commons.lib.apache.oro
+ ,com.webratio.commons.lib.javax.servlet,com.webratio.lib.hibernate,co
+ m.webratio.commons.base,com.webratio.data,com.webratio.log
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: WebRatio
+Created-By: 1.8.0-b132 (Oracle Corporation)
+
+Name: plugin.xml
+SHA-256-Digest: Tx/oKWtkcMbHm5kiewDFO1ijYm9VF1NSyOAiMT7Eyqs=
+
+Name: META-INF/signature
+SHA-256-Digest: PRYYgqFVErjMMx3lDuv1T8nEp66ZmsJ8BwS19rF+4z4=
+

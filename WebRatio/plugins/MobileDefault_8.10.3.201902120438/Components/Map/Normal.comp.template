@@ -1,0 +1,50 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Height" name="height" type="string" default="100%" >
+Defines the height of the component when there is other components in the grid.
+Otherwise it will take all the available height.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Show my location" name="showMyLocation" type="boolean" default="false" >
+Shows or hides the blue dot marking my current location on the map, and the related button.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Show zoom control" name="showZoomControl" type="boolean" default="false" >
+Shows or hides the zoom control buttons.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Marker's cluster icon" name="markersClusterIcon" type="string" default="./MobileDefault/images/marker-cluster.png" >
+Specifies the relative path of the icon to be used when display a cluster marker on the map.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Marker's cluster icon minimum count" name="markersClusterIconMinCount" type="number" default="2" >
+Specifies the minimum number of simple markers close enough to be rendered as a clustered.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Marker's cluster icon maximum zoom level" name="markersClusterIconMaxZoomLevel" type="number" default="15" >
+Specifies the maximum zoom level of the map starting from which the cluster marker icon is rendered instead of any single other marker it groups up.
+Allowed value is any integer positive number up to 18. 
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Marker's cluster icon X anchor" name="markersClusterIconXAnchor" type="number" default="32" >
+Specifies the horizontal offset (in pixels) from the left border of the cluster marker icon, used to determine the anchor point.
+Ideally it should correspond to the center of the icon itself.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Marker's cluster icon Y anchor" name="markersClusterIconYAnchor" type="number" default="32" >
+Specifies the vertical offset (in pixels) from the top border of the cluster marker icon, used to determine the anchor point.
+Ideally it should correspond to the center of the icon itself.
+</wr:LayoutParameter>
+[% setHTMLOutput()
+def infoWindowEvent = component.selectSingleNode("layout:Event")
+%]
+<wr:RequireResource ref="mobiledefault-map"/>
+<div class="<wr:StyleClass/> wr-comp-Map" style="height: [%= params["height"] %];" >
+	<wr-map class="wr-map-container" style="height: 100%; z-index: 9999;"
+	    show-my-location="[%= params["showMyLocation"] %]"
+	    show-zoom-control="[%= params["showZoomControl"] %]"
+	    markers-cluster-icon="[%= params["markersClusterIcon"] %]"
+	    markers-cluster-icon-min-count="[%= params["markersClusterIconMinCount"] %]"
+	    markers-cluster-icon-max-zoom-level="[%= params["markersClusterIconMaxZoomLevel"] %]"
+	    markers-cluster-icon-x-anchor="[%= params["markersClusterIconXAnchor"] %]"
+	    markers-cluster-icon-y-anchor="[%= params["markersClusterIconYAnchor"] %]"
+		map="view.map" 
+		data-tap-disabled="true"
+		info-window-click-listener="view.infoWindowClick"
+		[% if (infoWindowEvent) { %]
+			info-window-click="[%= getEventThrowExpression(infoWindowEvent, "{ position: \$index }") %]"
+		[% } %]
+	></wr-map>		
+</div>

@@ -1,0 +1,32 @@
+Manifest-Version: 1.0
+Export-Package: com.ibm.wsdl,com.ibm.wsdl.extensions,com.ibm.wsdl.exte
+ nsions.http,com.ibm.wsdl.extensions.mime,com.ibm.wsdl.extensions.sche
+ ma,com.ibm.wsdl.extensions.soap,com.ibm.wsdl.extensions.soap12,com.ib
+ m.wsdl.factory,com.ibm.wsdl.util,com.ibm.wsdl.util.xml,com.ibm.wsdl.x
+ ml,javax.wsdl,javax.wsdl.extensions,javax.wsdl.extensions.http,javax.
+ wsdl.extensions.mime,javax.wsdl.extensions.schema,javax.wsdl.extensio
+ ns.soap,javax.wsdl.extensions.soap12,javax.wsdl.factory,javax.wsdl.xm
+ l
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/wsdl4j.jar
+Bundle-Version: 1.6.3
+Bundle-Name: WebRatio 3rd Party Library - WSDL4J
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.javax.wsdl4j
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+
+Name: lib/wsdl4j.jar
+SHA-256-Digest: dA9Ejms7wRDgL0oeVvtXZy5zLS7K8prhWDUFGuivRyU=
+
+Name: lib/wsdl4jsrc.zip
+SHA-256-Digest: elKQZJVXi0gqSJp2xPowryhAkWsLW/YzqmaJLxgLU9Y=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about_files/CPL-1.0.txt
+SHA-256-Digest: 76smOpWCWOkSsIe1Txg34SSKDNuDXn5ec15kN9amS5k=
+
+Name: about.html
+SHA-256-Digest: a1v3w92o7DXgDcVXNJsPq4r9f9U3F9+OZY6PbDhYdRU=
+

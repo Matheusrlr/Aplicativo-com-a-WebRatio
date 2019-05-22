@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature id="com.webratio.commons.source" version="1.0.0.201810081230" label="WebRatio Commons Libraries" provider-name="WebRatio"     >
+	<description >
+		Generally reusable Java and Eclipse components.
+	</description>
+	<copyright >
+		%copyright
+	</copyright>
+	<license url="%license.url">
+		%license
+	</license>
+	<plugin id="com.webratio.commons.base.source" version="1.0.0.201810081230"     unpack="false"/>
+	<plugin id="com.webratio.commons.dom4j.source" version="1.0.0.201810081230"     unpack="false"/>
+	<plugin id="com.webratio.commons.server.source" version="1.0.0.201810081230"     unpack="false"/>
+	<plugin id="com.webratio.commons.eclipse.core.source" version="1.0.0.201810081230"     unpack="false"/>
+	<plugin id="com.webratio.commons.eclipse.gef.source" version="1.0.0.201810081230"     unpack="false"/>
+	<plugin id="com.webratio.commons.eclipse.ui.source" version="1.0.0.201810081230"     unpack="false"/>
+	<plugin id="com.webratio.commons.jersey.source" version="1.0.0.201810081230"     unpack="false"/>
+	<plugin id="com.webratio.commons.phonegap.build.source" version="1.0.0.201810081230"     unpack="false"/>
+</feature>

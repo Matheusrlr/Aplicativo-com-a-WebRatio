@@ -1,0 +1,156 @@
+#?delimiters [%, %], [%=, %]
+<wr:Page type="XHTML1"/>
+[%setHTMLOutput()%]
+<wr:Resources types="jspdeclaration"/>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<webratio:Page page="<wr:Id context="page"/>"/>
+
+<html>
+
+<head>
+  [%if(areUrlFragmentsEnabled()){%]<wr:BaseURI/>[%}%]
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta http-equiv="cache-control" content="no-cache" />
+  <meta http-equiv="expires" content="3600" />
+  <meta name="revisit-after" content="2 days" />
+  <meta name="robots" content="index,follow" />
+  <meta name="publisher" content="Your publisher infos here ..." />
+  <meta name="copyright" content="Your copyright infos here ..." />
+  <meta name="author" content="Design: G. Wolfgang www.1-2-3-4.info / Author: Your author infos here ..." />
+  <meta name="distribution" content="global" />
+  <meta name="description" content="Your page description here ..." />
+  <meta name="keywords" content="Your keywords, keywords, keywords, here ..." />
+  <link rel="icon" type="image/x-icon" href="./img/favicon.ico" />
+  <wr:Resources/>
+  <title><wr:Label context="page"/></title>
+</head>
+
+<!-- Global IE fix to avoid layout crash when single word size wider than column width -->
+<!--[if IE]><style type="text/css"> body {word-wrap: break-word;}</style><![endif]-->
+
+<body>
+<wr:PageForm>
+  <!-- Main Page Container -->
+  <div class="page-container">
+
+   <!-- For alternative headers START PASTE here -->
+
+    <!-- A. HEADER -->      
+    <div class="header">
+      
+      <!-- A.1 HEADER TOP -->
+      <div class="header-top">
+        
+        <!-- Sitelogo and sitename -->
+        <a class="sitelogo" href="index.jsp" title="Go to Start page"></a>
+        <div class="sitename">
+          <h1><a href="index.jsp" title="Go to Start page">WebRatio</a></h1>
+          <h2>Changing the IT Equations</h2>
+        </div>
+    
+        <!-- Navigation Level 0 -->
+        <!--<div class="nav0">
+          <ul>
+            <li><a href="#" title="Pagina home in Italiano"><img src="./img/flag_italy.gif" alt="Image description" /></a></li>
+            <li><a href="#" title="Homepage auf Deutsch"><img src="./img/flag_germany.gif" alt="Image description" /></a></li>
+            <li><a href="#" title="Hemsidan p&aring; svenska"><img src="./img/flag_sweden.gif" alt="Image description" /></a></li>
+          </ul>
+        </div>		-->	
+
+        <!-- Navigation Level 1 -->
+        <div class="nav1">
+          <ul>
+          	<wr:LandmarkMenu type="page" level="1">
+            	<li><a href="<wr:URL/>" title="<wr:Label/>"><wr:Label/></a></li>
+           	</wr:LandmarkMenu>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- A.2 HEADER MIDDLE -->
+      <div class="header-middle">    
+   
+        <!-- Site message -->
+        <div class="sitemessage">
+        </div>        
+      </div>
+      
+      <!-- A.3 HEADER BOTTOM -->
+      <div class="header-bottom">
+      
+        <!-- Navigation Level 2 (Drop-down menus) -->
+        <div class="nav2">
+          <!-- Navigation item -->
+          <wr:LandmarkMenu type="area" level="1">
+          	<ul>
+          		<li><wr:Event/></li>
+          	</ul>
+          </wr:LandmarkMenu>
+          <wr:LandmarkMenu type="operation" level="1">
+          	<ul>
+          		<li><wr:Event/></li>
+          	</ul>
+          </wr:LandmarkMenu>
+        </div>
+	  </div>
+
+      <!-- A.4 HEADER BREADCRUMBS -->
+
+      <!-- Breadcrumbs -->
+      <div class="header-breadcrumbs">
+        <ul>
+        	<wr:NavigationBar>
+        		<li><wr:Event/></li>
+        	</wr:NavigationBar>
+        	<li><wr:Label context="page"/></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- For alternative headers END PASTE here -->
+
+    <!-- B. MAIN -->
+    <div class="main">
+ 
+      <!-- B.1 MAIN NAVIGATION -->
+      <div class="main-navigation">
+
+        <!-- Navigation Level 3 -->
+        <div class="round-border-topright"></div>
+        <h1 class="first"><wr:Label context="page"/></h1>
+
+        <!-- Navigation with grid style -->
+        <dl class="nav3-grid">
+          <wr:LandmarkMenu level="2">
+          	<wr:Current>
+            	<dt><wr:Event/></dt>
+            	<wr:LandmarkMenu level="3">
+               		<dd><wr:Event/></dd>
+             	</wr:LandmarkMenu>
+           	</wr:Current>
+            <wr:NonCurrent>
+            	<dt><wr:Event/></dt>
+            </wr:NonCurrent>
+          </wr:LandmarkMenu>
+        </dl>                        
+	</div>
+ 
+      <!-- B.2 MAIN CONTENT -->
+      <div class="main-content">
+        
+        <!-- Pagetitle -->
+        <h1 class="pagetitle"><wr:Label context="page"/></h1>
+		<wr:Grid/>               
+      </div>
+    </div>
+      
+    <!-- C. FOOTER AREA -->      
+
+    <div class="footer">
+      <p>Copyright &copy; 2006 Your Company | All Rights Reserved</p>
+      <p class="credits">Original design by <a href="http://www.1-2-3-4.info" title="Designer Homepage">G. Wolfgang</a> | Adapted by <a href="http://www.webratio.com" title="http://www.webratio.com">WebRatio srl</a> | Generated by <a target="_blank" title="WebRatio | Business Agility and IT Standards for building your custom enterprise applications" href="http://www.webratio.com"><span class="blu">Web</span><img alt="Generated by WebRatio" src="WRResources/WRLogo8.png" /><span class="red">Ratio</span></a><sup>&reg;</sup> | <a href="http://validator.w3.org/check?uri=referer" title="Validate XHTML code">W3C XHTML 1.0</a> | <a href="http://jigsaw.w3.org/css-validator/" title="Validate CSS code">W3C CSS 2.0</a></p>
+    </div>
+  </div>
+</wr:PageForm>  
+</body>
+</html>

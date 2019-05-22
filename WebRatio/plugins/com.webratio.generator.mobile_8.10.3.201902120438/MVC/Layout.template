@@ -1,0 +1,105 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.OrderingScheduler
+import com.webratio.generator.mobile.output.FileType
+
+/*
+ * Generation group definitions
+ */
+
+def layoutGeneration = new OrderingScheduler("Layout generation")
+
+/* Screen partials */
+layoutGeneration.addGroup("screens", { realScreen ->
+	
+	/* Determine the possible contexts of the screen (many in case of multi-layout modules) */
+	def screenModuleDef = realScreen.selectSingleNode("ancestor::HybridModuleDefinition")
+	def possibleContexts
+	if (screenModuleDef && screenModuleDef["singleLayout"] != "true") {
+		possibleContexts = getPossibleElementContexts(realScreen)
+	} else {
+		possibleContexts = [ null ]
+	}
+	
+	/* Contextualized screen generation */
+	def generateActualScreen = { screen ->
+		def bindingKeys = new HashSet(binding.getVariables().keySet())
+		def panels = [ screen ] + getEffectiveToolbars(screen)
+		
+		/* Materialize contents of all panels */
+		for (panel in panels) {
+			if (panel.isVirtual()) {
+				panel.materialize()
+			}
+		}
+		
+		/* Expand "placed" layout elements */
+		for (panel in panels) {
+			for (elem in panel.selectNodes(".//*")) {
+				def qName = elem.qualifiedName
+				def parentQName = elem.parent.qualifiedName
+				if (qName == "layout:Component") {
+					expandLayoutComponent(elem)
+				} else if (qName == "layout:Attribute") {
+					if (parentQName != "layout:Component") {
+						expandLayoutAttribute(elem)
+					}
+				} else if (qName == "layout:Field") {
+					if (parentQName != "layout:Component") {
+						expandLayoutField(elem)
+					}
+				} else if (qName == "layout:Event") {
+					if (parentQName != "layout:Component") {
+						expandLayoutEvent(elem)
+					}
+				}
+			}
+		}
+		
+		/* Generate partial */
+		processOutputFile(FileType.SCREEN_PARTIAL, realScreen) { outputFile ->
+			def output = executeContextTemplate("MVC/ScreenPartial.template", ["screen": screen])
+			outputFile.writeAsync(serializeHTML(output), "UTF-8")
+		}
+		
+		/* Restore all panels to their previous state */
+		for (panel in panels) {
+			if (panel.isVirtual()) {
+				panel.dematerialize()
+			}
+		}
+		
+		/* Release memory */
+		wr.explorer.layoutModel().discardCache()
+		
+		/* Remove any binding variable added by user templates */
+		def newBindingKeys = new HashSet(binding.getVariables().keySet())
+		newBindingKeys.removeAll(bindingKeys)
+		newBindingKeys.each{ binding.getVariables().remove(it) }
+	}
+	
+	/* Generate a partial for each contextualized screen */
+	for (context in possibleContexts) {
+		def screen = enterElementZone(realScreen, context)
+		try {
+			if (screen.attributeValue("_sel", "") == "t") {
+				generateActualScreen(screen)
+			}
+		} finally {
+			exitElementZone()
+		}
+	}
+})
+
+/*
+ * Actual generation sequence
+ */
+
+/* Collect model elements */
+layoutGeneration.addElements("screens", getAllScreens().findAll{ it["_sel"] == "t"})
+eventSocketClient.sendTaskWorked("MVC", 1)
+
+/* Generate all the layout */
+layoutGeneration.process(eventSocketClient, "MVC", 200)
+eventSocketClient.sendTaskDetails("MVC", "")
+%]

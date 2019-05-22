@@ -1,0 +1,41 @@
+<Element name="Trigger" lowerName="trigger" pluralLowerName="">
+  <Description>
+    A trigger is the 'mechanism' by which an event is scheduled. It is possible to choose from a set of common scheduling policies or define custom policies by writing a custom cron expression. 
+  </Description>	
+
+    <PropertyCategory name="General">
+        <PropertyRef label="Id"/>
+        <PropertyRef label="Name"/>
+        <Property label="Schedule Policy">
+        	Specifies the schedule policy to use. Common policies are further configurable
+			through the other properties. The &lt;b&gt;Custom Cron Expression&lt;/b&gt; policy
+			enables the use of a custom cron expression for maximum flexibility.        
+        </Property>
+	    <Property label="Hours">
+	      The number of hours.
+		</Property>
+	    <Property label="Minutes">
+	      The number of minutes.
+		</Property>
+	    <Property label="Seconds">
+	      The number of seconds.
+		</Property>
+        <Property label="Day of week">
+        	For the &lt;b&gt;Once a Week&lt;/b&gt; policy, specifies the day of the week.        
+        </Property>
+        <Property label="Day">
+        	For policies requiring it, specifies a day of the month as a number in the range 1-31.        
+        </Property>
+        <Property label="Month">
+        	For policies requiring it, specifies a month.        
+        </Property>
+        <Property label="Year">
+        	For policies requiring it, specifies a year as a positive number.        
+        </Property>
+        <Property label="Cron Expression">
+        	When using a predefined schedule policy, this property shows the expression used to 
+			configure the underlying scheduler. The &lt;b&gt;Custom Cron Expression&lt;/b&gt;
+			policy allows the user to manually enter a cron expressions.        
+        </Property>
+    </PropertyCategory>
+</Element>

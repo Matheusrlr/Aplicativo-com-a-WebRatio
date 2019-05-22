@@ -1,0 +1,77 @@
+#?delimiters [%,%],[%=,%]
+[%
+import org.dom4j.DocumentFactory
+import com.webratio.generator.helpers.SpecialUtils
+import com.webratio.generator.contributors.GeneratorContributorHelper
+import org.apache.commons.lang.StringUtils
+
+setXMLOutput()
+
+def componentId = component.valueOf("@id")
+def inputXSLFile = null
+if (component.valueOf("@inputXSLFile") != "") {
+    inputXSLFile = getContentFile(component.valueOf("@inputXSLFile"))
+}
+def outputXSLFile = null
+if (component.valueOf("@outputXSLFile") != "") {
+    outputXSLFile = getContentFile(component.valueOf("@outputXSLFile"))
+}
+def webServiceOperation = component["webServiceOperation"]
+def httpAuth = component["httpAuthentication"] == "true" ? "BASIC" : component["httpAuthentication"];
+%]
+<InputParameters>
+ [% 
+  if (component.valueOf("@inputType") == "document") { 
+    %]<InputParameter name="[%=componentId%].inputDocument" type="xml" label="Input XML Document"/>[%
+    if (inputXSLFile != null) {
+      for (p in SpecialUtils.getTransformationInputs(inputXSLFile)) {
+        %]<InputParameter name="[%=componentId%].[%=p%]" label="[%=p%]"/>[%
+      } 
+    }
+  } else if(!StringUtils.isBlank(webServiceOperation)){
+        for (sh in component.selectNodes("SoapHeader")) {
+          %]<InputParameter name="[%=sh["id"]%]" label="[%=sh["name"]%] [SOAP Header]" mandatory="[%=(sh.valueOf("Value") == "" && sh["templateFile"] == "")%]"/>[%
+        } 
+        for(param in GeneratorContributorHelper.getInputParameters(component, wr)){
+          %]<InputParameter name="[%=param.name%]" label="[%=param.label%]" type="[%=param.type%]" mandatory="[%=param.mandatory%]" image="[%=param.imageName%]">
+                    [%if(param.description){%]<Description>[%=param.description%]</Description>[%}%]
+            </InputParameter>[%
+        }        
+  } else {
+     for (r in component.selectNodes("RequestResponseParameter")) {
+        %]<InputParameter name="[%=componentId%].[%=r["name"]%]" label="[%=r["name"]%]"/>[%
+     }
+     for (sh in component.selectNodes("SoapHeader")) {
+        %]<InputParameter name="[%=sh["id"]%]" label="[%=sh["name"]%] [SOAP Header]" mandatory="[%=sh.valueOf("Value") == ""%]"/>[%
+     }
+  } 
+  
+  // request headers    
+  for (h in component.selectNodes("RequestHeader")) {
+	 %]<InputParameter name="[%=h["id"]%]" label="[%=h["name"]%] [Header]" mandatory="[%=h.valueOf("Value") == ""%]" refId="[%=h['id']%]"/>[%
+  } 
+  
+  if (outputXSLFile != null) {  
+    for (p in SpecialUtils.getTransformationInputs(outputXSLFile)) {
+      %]<InputParameter name="[%=componentId%].output.[%=p%]" label="[%=p%] [output]"/>[%
+    }
+  }  
+  
+  %]<InputParameter name="[%=componentId%].endpointURL" label="Endpoint URL"/>[%
+   
+ %] 
+ [%if(httpAuth == "BASIC" || httpAuth == "NTLM"){%]
+   <InputParameter name="[%=component["id"]%].httpUsername" label="HTTP Security Username"/>
+   <InputParameter name="[%=component["id"]%].httpPassword" label="HTTP Security Password"/>
+ [%}%]
+ [%if(httpAuth == "NTLM"){%]
+   <InputParameter name="[%=component["id"]%].httpHost" label="HTTP Security Host"/>
+   <InputParameter name="[%=component["id"]%].httpDomain" label="HTTP Security Domain"/> 
+ [%}%]
+ [%if(component["signRequestMsg"] == "true"){%] 
+   <InputParameter name="[%=component["id"]%].authCode" label="Authorization Code"/>
+   <InputParameter name="[%=component["id"]%].authUsername" label="Authorization Username"/>
+   <InputParameter name="[%=component["id"]%].authPassword" label="Authorization Password"/>
+ [%}%]
+  
+</InputParameters>

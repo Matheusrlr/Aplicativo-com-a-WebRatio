@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="operation" formBased="false" idPrefix="dcnu" namePrefix="Disconnect " label="Disconnect" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" successFlowSource="true" successFlowTarget="true" defaultLabel="Disconnect {label(id(get-source-class-id(id(@association))))} to {label(id(get-target-class-id(id(@association))))}"> 
+  <AssociationRoleProperty label="Association Role" attributeName="association" includeDerived="false" figureDisplayOrder="1"> 
+    <Description xml:space="preserve">The association role for which the class instances must be disconnected.</Description> 
+  </AssociationRoleProperty>  
+  <ConditionalExpression label="Source Conditional Expression" classIdExpr="get-source-class-id(id(../../@association))" elementName="SourceConditionalExpression" defaultPolicy="true" figureDisplayOrder="2" automatic="true"> 
+    <Description xml:space="preserve">
+The set of selection criteria for retrieving the source instances of the
+association role from which the target instances must be disconnected.
+		</Description> 
+  </ConditionalExpression>  
+  <ConditionalExpression label="Target Conditional Expression" classIdExpr="get-target-class-id(id(../../@association))" elementName="TargetConditionalExpression" defaultPolicy="true" figureDisplayOrder="3" automatic="true"> 
+    <Description xml:space="preserve">
+The set of selection criteria for retrieving the target instances of the
+association role that must be disconnected from the source instances.
+		</Description> 
+  </ConditionalExpression>  
+  <Description xml:space="preserve">A disconnect component deletes the association between two sets of class
+instances in a given association role. 
+The instances to disconnect are identified using two conditional expressions, 
+one for each of the class that participates to the association role.
+A disconnect component specification consists of two parts:
+&lt;ul&gt;
+  &lt;li&gt;The specification of the association role to which the operation refers.&lt;/li&gt;
+  &lt;li&gt;One conditional expression for each of the two classes participating to 
+the association role (called &lt;i&gt;source&lt;/i&gt; and &lt;i&gt;target&lt;/i&gt; class). 
+The conditional expression identifies the set of class instances to be disconnected. 
+If both conditional expressions retrieve a set of objects, all the possible objects pair 
+for which a connection exists are disconnected.&lt;/li&gt;
+&lt;/ul&gt;</Description>  
+  <InputDescription xml:space="preserve" name="Condition-Name">The parameter associated to one of the Conditional Expressions
+defined on the source or target class of the operation.</InputDescription>  
+  <OutputDescription xml:space="preserve" name="Source (set of) Entity-Name">The key attributes values of the object(s) of the source class of the association
+role that have been disconnected; this can be a
+subset of the input objects of the operation, in case of partial
+or total failure.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Target (set of) Entity-Name">The key attributes values of the object(s) of the target class of the association
+role that have been disconnected; this can be a subset
+of the input objects of the operation, in case of partial or
+total failure.</OutputDescription> 
+</Component>

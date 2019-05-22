@@ -1,0 +1,187 @@
+#?delimiters [%, %], [%=, %]
+[%
+import org.apache.commons.lang.math.NumberUtils
+import org.apache.commons.lang.StringUtils
+
+setHTMLOutput()
+def years = NumberUtils.toInt(component["years"], 5)
+%]
+<wr:Frame>
+<div class="plain <wr:StyleClass/>">
+	<div class="plain Calendar">
+		<table border="0" cellspacing="1" cellpadding="2">    
+		  <tr>
+		     <td nowrap="nowrap">
+		      <table>
+		        <tr>
+		          <td>
+		            <select name="<wr:Id context="component"/>" onChange="if (this.value!='') {window.location.href=[%if(areUrlFragmentsEnabled()){%]'<%=wrBaseURI%>' + [%}%]this.value}" class="<wr:StyleClass/> month">
+		            <wr:Iterate var="event" context="component" select="layout:Event[contains(@id, '-month-')]">
+		              [% def month = NumberUtils.toInt(event.valueOf("NavigationFlow/ParameterBinding/@sourceValue")) %]
+		              <c:choose>
+		                <c:when test="${<wr:Id context="component"/>.currentMonth eq '[%= month%]'}">
+		                  <option selected value="<wr:URL context="event"/>"> 
+		                      <c:out value="${<wr:Id context="component"/>.monthNames[[%= month%]]}"/>
+		                  </option>
+		                </c:when>
+		                <c:otherwise>
+		                   <option value="<wr:URL context="event"/>"> 
+		                      <c:out value="${<wr:Id context="component"/>.monthNames[[%= month%]]}"/>
+		                   </option>
+		                </c:otherwise>
+		              </c:choose>
+		            </wr:Iterate>
+		            </select>
+		          </td>
+		        </tr>
+		      </table>
+		     </td>
+		     <c:set var="index" value="0"/>
+		     [% def yearEvent = component.selectSingleNode("layout:Event[contains(@id, '-year')]") %]
+		     <td nowrap="nowrap" align="right">
+		        <table>
+		           <tr>
+		              <td>
+		              	<a href="<wr:URL context="yearEvent"/>">
+							<img src="WRResources/spacer.gif" class="previousYear" border="0" alt="<wr:Label context="yearEvent"/>"/>
+						</a>
+		              </td>
+		              <c:forEach var="current" varStatus="status" items="${<wr:Id context="component"/>.years}" begin="1" end="[%= years%]">
+		                <c:set var="index" value="${status.index}"/>
+		                <td>
+		                 	<a class="<wr:StyleClass context="yearEvent"/> link<c:if test="${current eq <wr:Id context="component"/>.currentYear}">Current</c:if>" href="<wr:URL context="yearEvent"/>">
+		                    	<c:out value="${current}"/>
+		                    </a>
+		                </td>
+		              </c:forEach>
+		              <c:set var="index" value="${index + 1}"/>
+		              <td>
+		              	<a href="<wr:URL context="yearEvent"/>">
+							<img src="WRResources/spacer.gif" class="nextYear" border="0" alt="<wr:Label context="yearEvent"/>"/>				
+						</a>
+		              </td>
+		           </tr>
+		        </table>
+		     </td>
+		   </tr>
+		   <tr>
+		     <td colspan="2">
+		       <table>
+		         <tr>
+		           <c:forEach var="dayNamecurrent" varStatus="dayNamestatus" items="${<wr:Id context="component"/>.dayOfWeekNames}">
+			         <td style="border:1px solid black" width="13%">                                      
+		                <table cellspacing="0" cellpadding="0" width="100%">
+		                  <tr>
+		                    <td><img border="0" src="WRResources/spacer.gif" height="1"/></td>
+		                  </tr>
+		                  <tr>
+		                    <td height="1" valign="top"  class="<wr:StyleClass/> day" align="center">
+		                       <c:out value="${dayNamecurrent}"/>
+		                    </td>
+		                  </tr>
+		                </table>
+		             </td>
+		           </c:forEach>
+		         </tr>
+		         <tr>
+		           <c:set var="fwday" value="${<wr:Id context="component"/>.daysOfWeek[0]}"/>
+		              <c:if test="${fwday != 1}">
+		                <c:forEach begin="1" end="${fwday-1}">
+		                  <td height="1" style="border:1px solid black" valign="top" width="13%">
+		                    <img border="0" src="WRResources/spacer.gif" class="horizontalSpacer"/>
+		                  </td>
+		                </c:forEach>
+		              </c:if>
+		              <c:forEach var="level1current" varStatus="level1status" items="${<wr:Id context="component"/>.date}">
+		                 <c:set var="level1" value="${level1status.index}"/>
+		                 <c:set var="wday" value="${<wr:Id context="component"/>.daysOfWeek[level1]}"/>
+		                  <td style="border:1px solid black" valign="top" width="13%">
+		                  <table width="100%">
+		                    <tr>
+		                      <td height="1" valign="top" colspan="2">
+		                         <img border="0" src="WRResources/spacer.gif" class="horizontalSpacer"/>
+		                      </td>
+		                    </tr>
+		                    <tr>
+		                      <td valign="top">
+		                         <img border="0" src="WRResources/spacer.gif" class="verticalSpacer"/>
+		                      </td>
+		                      <td valign="top" align="right">
+		                        <table>
+		                          <tr>
+		                            [% def outgoingEvents = component.selectNodes("layout:Event[NavigationFlow/ParameterBinding[string(@_exp) != 't'][@source = 'date[].date'] and not(NavigationFlow/ParameterBinding[starts-with(@source, 'date[].data[].')])][string(@_exp) != 't']") %]
+		                           	[% def colSpan = component.selectNodes("layout:Attribute").size() +  outgoingEvents.size() %]
+		                            <td valign="top" align="right" width="100%" colspan="[%= colSpan%]" class="value<c:if test="${level1current.date eq <wr:Id context="component"/>.currentDate}">Current</c:if>">
+		                             
+		                            [% if(outgoingEvents.size() == 1){ %]
+	                                    [% def lev1Event = outgoingEvents[0] %]
+	                                    <a class="<wr:StyleClass/> link<c:if test="${level1current.date eq <wr:Id context="component"/>.currentDate}">Current</c:if>"  onclick="<wr:AjaxURL context="lev1Event" position="'level1'"/>" href="<wr:URL context="lev1Event" position="'level1'"/>">
+	                                      <fmt:formatDate value="${level1current.date}" pattern="d"/>
+	                                    </a>
+		                            [% } else {%]
+		                               <fmt:formatDate value="${level1current.date}" pattern="d"/>
+		                            [% } %]
+		                               </td>
+		                            [% if(outgoingEvents.size() > 1){ %]
+		                               <wr:Iterate var="event" context="component" select="layout:Event[NavigationFlow/ParameterBinding/@source='date[].date']">
+		                                 <wr:Visible position="'level1'">
+		                                   <td>
+		                                     <wr:Event context="event" position="'level1'" class="link"/>
+		                                   </td>
+		                                 </wr:Visible>
+		                               </wr:Iterate>
+		                            [% } %]
+		                           </tr>
+		                            <c:if test="${level1current.dataSize gt 0}">
+		                              <c:forEach var="level2current" varStatus="level2status" items="${level1current.data}">
+		                                <c:set var="level2" value="${level2status.index}"/>
+		                                [% def lev2Events = component.selectNodes("layout:Event[not(NavigationFlow/ParameterBinding) or NavigationFlow/ParameterBinding[string(@_exp) != 't'][@source != 'date[].date']][string(@_exp) != 't']") %]
+		                                <tr>
+		                                  <wr:Iterate var="attr" context="component" select="layout:Attribute">
+		                                    <td class="<wr:StyleClass/> value">
+		                                      [% if(lev2Events.size() == 1){%]
+		                                        <a class="<wr:StyleClass context="lev2Events[0]"/> link" href="<wr:URL context="lev2Events[0]" position="'level1,level2'"/>"  onclick="<wr:AjaxURL context="lev2Events[0]" position="'level1,level2'"/>">
+		                                          <wr:Value item="'level2current'" position="'level1,level2'"/>
+		                                        </a>
+		                                      [% } else { %]
+		                                        <wr:Value item="'level2current'" position="'level1,level2'"/>
+		                                      [% } %] 
+		                                    </td>
+		                                   </wr:Iterate>
+		                                   [% if(lev2Events.size() > 1){%]
+		                                     [% for(event in lev2Events){ %]
+		                                      <td>
+		                                          <wr:Event context="event" position="'level1,level2'"/>
+		                                      </td> 
+		                                     [% } %]
+		                                   [% } %]    
+		                                 </tr>
+		                              </c:forEach>
+		                            </c:if>
+		                          </table>
+		                        </td>
+		                      </tr>
+		                    </table>
+		                  </td>
+		                  <c:if test="${wday == 7}">
+		                    </tr>
+		                    <tr>
+		                  </c:if>
+		                </c:forEach>
+		              <c:set var="size" value="${<wr:Id context="component"/>.datesSize}"/>
+		              <c:set var="lwday" value="${<wr:Id context="component"/>.daysOfWeek[size-1]}"/>
+		              <c:if test="${lwday != 7}">
+		                <c:forEach begin="${lwday + 1}" end="7">
+		                  <td height="1" style="border:1px solid black" valign="top">
+		                    <img border="0" src="WRResources/spacer.gif" class="horizontalSpacer"/>
+		                  </td>
+		                </c:forEach>
+		              </c:if>
+		            </tr>
+		          </table>
+		        </td>
+		      </tr>  
+		</table>
+	</div>
+  </div>
+</wr:Frame>

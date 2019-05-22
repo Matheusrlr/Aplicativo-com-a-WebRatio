@@ -1,0 +1,9 @@
+{
+  "_" : "wrm.l10n.LocalizationService",
+  "defaultLocale" : "en",
+  "locales" : {
+    "en" : {
+      "patterns" : { }
+    }
+  }
+}

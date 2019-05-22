@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="operation" formBased="false" idPrefix="lou" namePrefix="Logout " label="Logout" dataFlowTarget="true" navigationFlowTarget="true" errorFlowSource="true" errorFlowTarget="true"  successFlowSource="true" successFlowTarget="true" defaultLabel="Logout to {label(id(@siteView))}"> 
+  <SiteViewProperty attributeName="siteView" type="public" figureDisplayOrder="1"> 
+    <Description xml:space="preserve">Specifies the public site view to which the operation must
+redirect the user. Clicking the activation button opens the
+site view selection dialog box, which lists the available public
+site views.</Description> 
+  </SiteViewProperty>  
+  <Description xml:space="preserve">A logout operation terminates the user's session and redirects the user to 
+the home page or to the operation of a public site view.</Description>  
+  <BooleanProperty label="Invalidate Session" attributeName="invalidateSession"> 
+    <Description>If checked, the user session is invalidated on logout.</Description> 
+  </BooleanProperty> 
+</Component>

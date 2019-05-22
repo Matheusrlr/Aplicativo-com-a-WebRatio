@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Components priority="1300" label="Utility Components">
+	<Group>
+		<Component>Selector</Component>
+	</Group>
+	<Group>
+		<Component>Barcode</Component>
+		<Component>BarcodeOperation</Component>
+	</Group>
+	<Group>
+		<Component>Calendar</Component>
+		<Component>CalendarOperation</Component>
+		<Component>ContactsOperation</Component>
+	</Group>
+</Components>

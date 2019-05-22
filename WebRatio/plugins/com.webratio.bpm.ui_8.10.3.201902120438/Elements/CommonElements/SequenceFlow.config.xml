@@ -1,0 +1,60 @@
+<Element name="SequenceFlow" lowerName="sequence flow" pluralLowerName="" >
+		<Description>
+			A &lt;a href="/Concepts/Elements/Process/CommonElements/SequenceFlow"/&gt; is used 
+			to show the order that Activites will be performed in a Process. 
+		</Description>
+        
+        <ActionRef label="Add Lane" />
+        <ActionRef label="Add Property" />
+        <ActionRef label="Edit Process Parameters..." />
+        <ActionRef label="Search References" />
+        <ActionRef label="Help" />		
+
+    <PropertyCategory name="General">
+        <PropertyRef label="Id"/>
+        <PropertyRef label="Name"/>
+	    <Property label="Source">
+	      The source element.
+		</Property>
+	    <Property label="Target">
+	      The target element.
+		</Property>
+        <Property label="Default">
+          If checked, this flow is followed when all conditions on other flows are not
+          verified.
+        </Property>
+        <Property label="Expression">
+          The expression to be verified in order to follow this flow.
+          &lt;p&gt;
+		    The Edit button <Button name="Edit"/> opens the 
+		    &lt;a href="/Reference/WizardsAndDialogs/ScriptDialog"/&gt;.
+	      &lt;/p&gt;
+	      <Button name="Clear"/>
+        </Property>
+        <Property label="Target Start Event">
+	      The associated start event.
+	      &lt;p&gt;
+	      The Select Start Event button <Button name="Select Start Event"/> opens the 
+	      &lt;a href="/Reference/WizardsAndDialogs/StartEventSelectionDialog"/&gt;.
+	      &lt;/p&gt;
+	      &lt;p&gt;
+	      The Go to Start Event button <Button name="Go to Start Event"/> jumps
+	      to the referenced start event.
+	      &lt;/p&gt;
+	      <Button name="Clear"/>
+        </Property>
+    </PropertyCategory>
+    <PropertyCategory name="Notification">
+	    <Property label="Mail">
+	      If checked, the notification message is sent by email.
+		</Property>
+	    <Property label="Mail Message">
+	      The message sent to a user by email when a task is assigned to him.  
+          &lt;p&gt;
+	      The Edit button <Button name="Edit"/> opens the 
+	      &lt;a href="/Reference/WizardsAndDialogs/NotificationMessageDialog"/&gt;, which 
+	      allows to customize the message.
+	      &lt;/p&gt;
+		</Property>
+    </PropertyCategory>
+</Element>

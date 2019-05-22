@@ -1,0 +1,62 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+
+def condExpr = component.selectNodes("SourceConditionalExpression/*|TargetConditionalExpression/*")
+def role = getById(component["associationRole"])
+%]
+<InputParameters>
+[%
+	for (cond in condExpr) {
+		def condSuffix = cond.parent.name - "ConditionalExpression"
+		if (cond.name == "AttributesCondition" && cond["attributes"]) {
+			if (cond["value"] == "" && !isUnaryPredicate(cond["predicate"])) {
+				def attributes = cond["attributes"].tokenize(" ")
+				def dClassId = ""
+				if (cond.parent.name == "SourceConditionalExpression") {
+					dClassId = getSourceDomainClass(role)?.attributeValue("id", "")
+				} else {
+					dClassId = getTargetDomainClass(role)?.attributeValue("id", "")
+				} %]
+					<InputParameter
+						name = "[%= getConditionalExpressionPartInputName(cond) %]"
+						refId="[%= cond["id"] %]"
+						type="[%= cond["attributes"].tokenize(" ").collect{dClassId + "." + it}.join("|") %]"
+						label="[%= getAttributesConditionLabel(cond) %] [[%= condSuffix %]]"
+						mandatory="[%= isRequiredConditionalExpressionPart(cond) %]"
+					/>
+				[%
+			}
+		}
+		if (cond.name == "KeyCondition") {
+			def keyLabel = cond["name"]
+			def dClass = ""
+			if (cond.parent.name == "SourceConditionalExpression") {
+				dClass = getSourceDomainClass(role)
+			} else {
+				dClass = getTargetDomainClass(role)
+			}
+			for (a in getKeyAttributes(dClass)) { %]
+				<InputParameter
+					name = "[%= getConditionalExpressionPartInputName(cond, a) %]"
+					refId="[%= cond["id"] %]"
+					type="[%= getAssignableTypeExpression(dClass, a, true, false) %]"
+					label="[%= getKeyConditionLabel(cond, dClass, a) %] [[%= condSuffix %]]"
+					mandatory="[%= isRequiredConditionalExpressionPart(cond) %]"
+				/>
+			[% }
+		}
+		if (cond.name == "AssociationRoleCondition" && cond["role"]) {
+			for (a in getKeyAttributes(getSourceDomainClass(getRoleByExpression(cond["role"])))) { %]
+				<InputParameter
+					name = "[%= getConditionalExpressionPartInputName(cond, a) %]"
+					refId="[%= cond["id"] %]"
+					type="[%= getAssignableTypeExpression(getSourceDomainClass(getRoleByExpression(cond["role"])), a, true, true) %]"
+					label="[%= getRoleConditionLabel(cond, a) %] [[%= condSuffix %]]"
+					mandatory="[%= isRequiredConditionalExpressionPart(cond) %]"
+				/>
+			[% }
+		}
+	}
+%]
+</InputParameters>

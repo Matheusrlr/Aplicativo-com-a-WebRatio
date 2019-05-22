@@ -1,0 +1,55 @@
+#?delimiters [%,%],[%=,%]
+[%setXMLOutput()%]
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/application_5.xsd"
+	version="5" xmlns="http://java.sun.com/xml/ns/javaee">
+
+	<display-name>[%=projectName%]</display-name>
+	
+	<module>
+	    <java>[%=rootModuleName%].jar</java>
+	</module>
+		
+	[%for(module in wr.project.selectNodes("SubProject[@natureId='com.webratio.ide.DataModelNature']").findAll{!excludedProjects.contains(it["name"])}){%]
+	<module>
+	    <java>[%=module["name"]%].jar</java>
+	</module>
+	[%}%]
+	
+	<module>
+		<web>
+			<web-uri>[%=rootModuleName%].war</web-uri>
+			<context-root>/[%=projectName%]</context-root>
+		</web>
+	</module>
+	
+    [%for(module in wr.project.selectNodes("SubProject[@natureId='com.webratio.ide.WebModelNature']").findAll{!excludedProjects.contains(it["name"])}){%]
+	<module>
+		<web>
+			<web-uri>[%=module["name"]%].war</web-uri>
+			<context-root>/[%=projectName%]/[%=module["name"]%]</context-root>
+		</web>
+	</module>
+	[%}%]
+	
+	[%for(module in wr.project.selectNodes("SubProject[@natureId='com.webratio.ide.ModuleNature']").findAll{!excludedProjects.contains(it["name"])}){%]
+	<module>
+		<web>
+			<web-uri>[%=module["name"]%].war</web-uri>
+			<context-root>/[%=projectName%]/[%=module["name"]%]</context-root>
+		</web>
+	</module>
+	[%}%]
+	
+	
+	[%for(module in wr.project.selectNodes("SubProject[@natureId='com.webratio.ide.wrprojectnature']").findAll{!excludedProjects.contains(it["name"])}){%]
+	<module>
+		<web>
+			<web-uri>[%=module["name"]%].war</web-uri>
+			<context-root>/[%=projectName%]/[%=module["name"]%]</context-root>
+		</web>
+	</module>
+	[%}%]
+	
+	
+
+</application>

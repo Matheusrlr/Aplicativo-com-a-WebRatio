@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="operation" version="1.0.0" idPrefix="rfrr" namePrefix="Restful Request Response " label="Restful Request Response" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" successFlowSource="true" successFlowTarget="true" errorFlowSource="true" errorFlowTarget="true"> 
+  
+  <WebServiceProviderProperty label="" attributeName="webServiceProvider" figureDisplayOrder="1" hideFigureWhenEmpty="true" type="WADL">
+	<Description xml:space="preserve">The Web Service Provider exposing operations.</Description>
+  </WebServiceProviderProperty>
+  
+  <WebServiceOperationProperty label="" attributeName="webServiceOperation" webServiceIdExpr="@webServiceProvider" figureDisplayOrder="1" hideFigureWhenEmpty="true">
+	<IsEnabled>return (element["webServiceProvider"] != "")</IsEnabled>
+	<Description xml:space="preserve">The web service operation to invoke.</Description>
+  </WebServiceOperationProperty>
+  
+  <StringProperty attributeName="endpointURL" figureDisplayOrder="1"> 
+    <IsEnabled>return (element["webServiceOperation"] == "")</IsEnabled>  
+    <Description xml:space="preserve">Specifies the endpoint URL of the service being invoked.</Description> 
+  </StringProperty> 
+   
+  <EnumProperty attributeName="requestMethod" defaultValue="GET"> 
+    <EnumItem value="GET"/>
+    <EnumItem value="POST"/>  
+    <EnumItem value="PUT"/>
+    <EnumItem value="DELETE"/>
+    <IsEnabled>return (element["webServiceOperation"] == "")</IsEnabled> 
+    <Description xml:space="preserve">Specifies the HTTP method used to invoke the service.</Description>
+  </EnumProperty>
+   
+  <EnumProperty attributeName="requestContentType" defaultValue="JSON"> 
+    <IsEnabled>return (element["requestMethod"] == "PUT" || element["requestMethod"] == "POST")</IsEnabled>
+    <EnumItem value="XML" label="XML" />
+    <EnumItem value="JSON" label="JSON" />
+    <EnumItem value="FORM_URL_ENCODED" label="Form URL Encoded" />
+    <EnumItem value="MULTIPART_FORM_DATA" label="Multipart Form Data" />
+    <EnumItem value="BINARY" label="Binary Stream" />
+    <Description xml:space="preserve">The request content type.</Description>  
+  </EnumProperty> 
+   
+  <EnumProperty attributeName="responseContentType" defaultValue="JSON"> 
+    <EnumItem value="XML" label="XML" />
+    <EnumItem value="JSON"/>  
+    <EnumItem value="TEXT" label="Text"/>
+    <EnumItem value="BINARY" label ="Binary Stream"/>
+    <IsEnabled>return (element["webServiceOperation"] == "")</IsEnabled> 
+    <Description xml:space="preserve">The response content type.</Description>  
+  </EnumProperty>  
+  
+  <EnumProperty label="HTTP Authentication" attributeName="httpAuthentication">
+		<EnumItem value="" label="None" />
+		<EnumItem value="true" label="Basic" />
+		<EnumItem value="NTLM" label="NTLM" />
+	    <Description xml:space="preserve">Sets the HTTP authentication method.</Description>
+  </EnumProperty>
+      
+  <StringProperty label="HTTP Auth Username" attributeName="username"> 
+    <IsEnabled>return (element["httpAuthentication"] == "true" || element["httpAuthentication"] == "NTLM")</IsEnabled> 
+    <Description xml:space="preserve">The HTTP authentication username.</Description> 
+  </StringProperty>  
+  
+  <PasswordProperty label="HTTP Auth Password" attributeName="password" cryptedAttributeName="cryptedPassword"> 
+    <IsEnabled>return (element["httpAuthentication"] == "true" || element["httpAuthentication"] == "NTLM")</IsEnabled>
+    <Description xml:space="preserve">The HTTP authentication password.</Description>
+  </PasswordProperty>     
+  
+  <StringProperty label="HTTP Auth Host" attributeName="httpAuthHost"> 
+    <IsEnabled>return (element["httpAuthentication"] == "NTLM")</IsEnabled> 
+    <Description xml:space="preserve">The HTTP authentication host for NTLM security, if unspecified the deploy host name is used instead.</Description> 
+  </StringProperty>  
+  
+  <StringProperty label="HTTP Auth Domain" attributeName="httpAuthDomain"> 
+    <IsEnabled>return (element["httpAuthentication"] == "NTLM")</IsEnabled> 
+    <Description xml:space="preserve">The HTTP authentication domain for NTLM security.</Description> 
+  </StringProperty> 
+  
+  <StringProperty label="SSL Protocol" attributeName="sslProtocol"> 
+    <Description xml:space="preserve">Specifies the SSL protocol to use (e.g. TLSv1.1, TLSv1.2) in case of secure connection.</Description> 
+  </StringProperty>  
+  
+  <IntegerProperty attributeName="timeout">  
+    <Description xml:space="preserve">Sets the timeout until a connection is established. A value of zero 
+      means the timeout is not used. The default value is zero.</Description> 
+  </IntegerProperty> 
+  
+  <IntegerProperty label="SO Timeout" attributeName="soTimeout"> 
+    <Description xml:space="preserve">Sets the default socket timeout in milliseconds which is the 
+     timeout for waiting for data. A timeout value of zero is interpreted as an infinite timeout. 
+    </Description> 
+  </IntegerProperty>  
+  
+  <BooleanProperty attributeName="compressRequest" label="Compress Request" defaultValue="false">
+  	<Description>If checked the request body is compressed using the GZIP encoding.</Description>
+  </BooleanProperty>
+  
+  <SubComponent elementName="RequestHeader" idPrefix="rrh" namePrefix="RequestHeader" label="Request Header" figureDisplayOrder="3"> 
+    <Description xml:space="preserve">Defines an header to send to the invoked service.</Description>  
+    <StringProperty attributeName="value">
+       <Description xml:space="preserve">The default header value if not provided at runtime.</Description>
+    </StringProperty> 
+  </SubComponent >  
+  
+  <SubComponent elementName="QueryStringParameter" idPrefix="rrp" namePrefix="QueryStringParameter" label="Query String Parameter" figureDisplayOrder="1">
+     <IsEnabled>return (element["webServiceOperation"] == "")</IsEnabled>
+     <XSDProviderProperty attributeName="xsdProvider" label="XSD Provider">
+        <Description xml:space="preserve">The optional XSD provider used to specify the parameter's type.</Description>
+     </XSDProviderProperty>
+     <XSDTypeProperty attributeName="xsdType" label="XSD Type" schemaExpr="@xsdProvider" includeSimpleTypes="true" includeElements="false" includeComplexTypes="false">
+        <Description xml:space="preserve">The parameter simple type.</Description>
+     </XSDTypeProperty>
+     <StringProperty attributeName="value">
+       <Description xml:space="preserve">The default value if not provided at runtime.</Description>
+     </StringProperty> 
+     <Description xml:space="preserve">Defines a query string parameter.</Description>   
+  </SubComponent >
+
+  <SubComponent elementName="RequestBodyParameter" idPrefix="rrp" namePrefix="RequestBodyParameter" label="Request Body Parameter" figureDisplayOrder="1"> 
+    <IsEnabled>return ((element["requestMethod"]=="PUT") || (element["requestMethod"]=="POST")) &amp;&amp; (element["webServiceOperation"] == "") &amp;&amp; (element["requestContentType"] != "FORM_URL_ENCODED")&amp;&amp;(element["requestContentType"] != "MULTIPART_FORM_DATA")</IsEnabled>
+    <StringProperty label="Value" attributeName="value">
+       <Description>The default parameter value of this parameter if not provided at runtime.</Description>
+    </StringProperty>
+    <XSDProviderProperty attributeName="xsdProvider" label="XSD Provider">
+        <IsEnabled>return (element.selectSingleNode("ComplexParameterFragment|SimpleParameterFragment") == null)</IsEnabled>
+        <Description xml:space="preserve">The optional XSD provider used to specify the parameter's type.</Description>
+    </XSDProviderProperty>
+    <XSDTypeProperty attributeName="xsdType" schemaExpr="@xsdProvider" includeSimpleTypes="false" includeElements="true" includeComplexTypes="true" label="XSD Type/Element">
+        <IsEnabled>return (element.selectSingleNode("ComplexParameterFragment|SimpleParameterFragment") == null)</IsEnabled>
+        <Description xml:space="preserve">The fragment's complex type or element.</Description>
+    </XSDTypeProperty>
+    <IntegerProperty label="Min Card." attributeName="minCard" defaultValue="1">
+    	<Description xml:space="preserve">A numerical value specifying the minimum cardinality of this parameter [0, N]. 
+      	If 0 this fragment is optional, default is 1.</Description>
+    </IntegerProperty>
+    <IntegerProperty label="Max Card." attributeName="maxCard" defaultValue="1">
+		<Description xml:space="preserve">A numerical value specifying the maximum cardinality of this parameter [1, N].
+		If -1 this fragment has an unbounded max cardinality, default is 1, 0 is not allowed.
+		</Description>
+    </IntegerProperty>
+    <OrderingProperty attributeName="fragmentOrder" elementsExpr="ComplexParameterFragment|SimpleParameterFragment">
+        <IsEnabled>return (element.selectSingleNode("ComplexParameterFragment|SimpleParameterFragment") != null)</IsEnabled>
+        <Description xml:space="preserve">The order of the child parameter fragments.</Description>
+    </OrderingProperty>
+    <Description xml:space="preserve">Defines an request parameter for the called service.</Description>  
+    
+  	  
+    <SubComponent elementName="ComplexParameterFragment" idPrefix="cpf" namePrefix="ComplexFragment" label="Complex Parameter Fragment">
+      <IsEnabled>return (element["xsdProvider"]=="")&amp;&amp;(element["xsdType"]=="")</IsEnabled>
+      <XSDProviderProperty attributeName="xsdProvider" label="XSD Provider">
+        <IsEnabled>return (element.selectSingleNode("ComplexParameterFragment|SimpleParameterFragment") == null)</IsEnabled>
+        <Description xml:space="preserve">The optional XSD provider used to specify the parameter's type.</Description>
+      </XSDProviderProperty>
+      <XSDTypeProperty attributeName="xsdType" schemaExpr="@xsdProvider" includeSimpleTypes="false" includeElements="true"
+        includeComplexTypes="true" label="XSD Type/Element">
+        <IsEnabled>return (element["xsdProvider"] != "" &amp;&amp; (element.selectSingleNode("ComplexParameterFragment|SimpleParameterFragment") == null))</IsEnabled>
+        <Description xml:space="preserve">The fragment's complex type or element.</Description>
+      </XSDTypeProperty>
+      <IntegerProperty label="Min Card." attributeName="minCard" defaultValue="1">
+      	<Description xml:space="preserve">A numerical value specifying the minimum cardinality of this fragment [0, N]. 
+      	If 0 this fragment is optional, default is 1.</Description>
+      </IntegerProperty>
+      <IntegerProperty label="Max Card." attributeName="maxCard" defaultValue="1">
+		<Description xml:space="preserve">A numerical value specifying the maximum cardinality of this fragment [1, N].
+		If -1 this fragment has an unbounded max cardinality, default is 1, 0 is not allowed.
+		</Description>
+      </IntegerProperty>
+      <OrderingProperty attributeName="fragmentOrder" elementsExpr="ComplexParameterFragment|SimpleParameterFragment">
+        <IsEnabled>return (element.selectSingleNode("ComplexParameterFragment|SimpleParameterFragment") != null)</IsEnabled>
+        <Description xml:space="preserve">The order of the child parameter fragments.</Description>
+      </OrderingProperty>
+      <SubComponentReference elementName="ComplexParameterFragment" />
+      <SubComponentReference elementName="SimpleParameterFragment" />
+      <Description xml:space="preserve">The parameter fragment which permits to model a complex value fragment.</Description>
+    </SubComponent >
+
+    <SubComponent elementName="SimpleParameterFragment" idPrefix="spf" namePrefix="SimpleFragment" label="Simple Parameter Fragment">
+      <IsEnabled>return (element["xsdProvider"]=="")&amp;&amp;(element["xsdType"]=="")</IsEnabled>
+      <XSDProviderProperty attributeName="xsdProvider" label="XSD Provider">
+        <Description xml:space="preserve">The optional XSD provider used to specify the parameter's type.</Description>
+      </XSDProviderProperty>
+      <XSDTypeProperty attributeName="xsdType" schemaExpr="@xsdProvider" includeSimpleTypes="true" includeElements="false" includeComplexTypes="false" label="XSD Simple Type">
+        <Description xml:space="preserve">The fragment's simple type.</Description>
+      </XSDTypeProperty>
+      <IntegerProperty label="Min Card." attributeName="minCard" defaultValue="1">
+      	<Description xml:space="preserve">A numerical value specifying the minimum cardinality of this fragment [0, N]. 
+      	If 0 this fragment is optional, default is 1.</Description>
+      </IntegerProperty>
+      <IntegerProperty label="Max Card." attributeName="maxCard" defaultValue="1">
+		<Description xml:space="preserve">A numerical value specifying the maximum cardinality of this fragment [1, N].
+		If -1 this fragment has an unbounded max cardinality, default is 1, 0 is not allowed.
+		</Description>
+      </IntegerProperty>
+      <StringProperty label="Value" attributeName="value">
+         <Description xml:space="preserve">The default fragment value if not provided at runtime.</Description>
+      </StringProperty>
+      <Description xml:space="preserve">The parameter fragment which permits to model a simple value fragment.</Description>
+    </SubComponent >
+  </SubComponent >  
+  
+  <SubComponent elementName="FormDataParameter" idPrefix="fdp" namePrefix="FormDataParameter" label="Form Data Parameter" figureDisplayOrder="1">
+		<IsEnabled>return (element["requestContentType"] ==	"MULTIPART_FORM_DATA")</IsEnabled>
+		<Description xml:space="preserve">Defines a form data request parameter for the called service.</Description>
+  </SubComponent>
+  
+  <SubComponent elementName="ResponseBodyParameter" idPrefix="rrsp" namePrefix="ResponseBodyParameter" label="Response Body Parameter" figureDisplayOrder="2"> 
+    <IsEnabled>return (element["webServiceOperation"] == "")</IsEnabled>
+    <XSDProviderProperty attributeName="xsdProvider" label="XSD Provider">
+        <IsEnabled>return (element.selectSingleNode("ComplexParameterFragment|SimpleParameterFragment") == null)</IsEnabled>
+        <Description xml:space="preserve">The optional XSD provider used to specify the parameter's type.</Description>
+    </XSDProviderProperty>
+    <XSDTypeProperty attributeName="xsdType" schemaExpr="@xsdProvider" includeSimpleTypes="false" includeElements="true" includeComplexTypes="true" label="XSD Type/Element">
+        <IsEnabled>return (element.selectSingleNode("ComplexParameterFragment|SimpleParameterFragment") == null)</IsEnabled>
+        <Description xml:space="preserve">The fragment's complex type or element.</Description>
+    </XSDTypeProperty>
+    <IntegerProperty label="Min Card." attributeName="minCard" defaultValue="1">
+    	<Description xml:space="preserve">A numerical value specifying the minimum cardinality of this parameter [0, N]. 
+      	If 0 this fragment is optional, default is 1.</Description>
+    </IntegerProperty>
+    <IntegerProperty label="Max Card." attributeName="maxCard" defaultValue="1">
+		<Description xml:space="preserve">A numerical value specifying the maximum cardinality of this parameter [1, N].
+		If -1 this fragment has an unbounded max cardinality, default is 1, 0 is not allowed.
+		</Description>
+    </IntegerProperty>
+    <OrderingProperty attributeName="fragmentOrder" elementsExpr="ComplexParameterFragment|SimpleParameterFragment">
+        <IsEnabled>return (element.selectSingleNode("ComplexParameterFragment|SimpleParameterFragment") != null)</IsEnabled>
+        <Description xml:space="preserve">The order of the child parameter fragments.</Description>
+    </OrderingProperty>
+    <Description xml:space="preserve">Defines an response parameter for the called service.</Description>
+
+
+    <SubComponent elementName="ComplexParameterFragment" idPrefix="cpf" namePrefix="ComplexFragment" label="Complex Parameter Fragment">
+      <IsEnabled>return (element["xsdProvider"]=="")&amp;&amp;(element["xsdType"]=="")</IsEnabled>
+      <XSDProviderProperty attributeName="xsdProvider" label="XSD Provider">
+        <IsEnabled>return (element.selectSingleNode("ComplexParameterFragment|SimpleParameterFragment") == null)</IsEnabled>
+        <Description xml:space="preserve">The optional XSD provider used to specify the parameter's type.</Description>
+      </XSDProviderProperty>
+      <XSDTypeProperty attributeName="xsdType" schemaExpr="@xsdProvider" includeSimpleTypes="false" includeElements="true" includeComplexTypes="true" label="XSD Type/Element">
+        <IsEnabled>return (element["xsdProvider"] != "" &amp;&amp; (element.selectSingleNode("ComplexParameterFragment|SimpleParameterFragment") == null))</IsEnabled>
+        <Description xml:space="preserve">The fragment's complex type or element.</Description>
+      </XSDTypeProperty>
+      <IntegerProperty label="Min Card." attributeName="minCard" defaultValue="1">
+      	<Description xml:space="preserve">A numerical value specifying the minimum cardinality of this fragment [0, N]. 
+      	If 0 this fragment is optional, default is 1.</Description>
+      </IntegerProperty>
+      <IntegerProperty label="Max Card." attributeName="maxCard" defaultValue="1">
+		<Description xml:space="preserve">A numerical value specifying the maximum cardinality of this fragment [1, N].
+		If -1 this fragment has an unbounded max cardinality, default is 1, 0 is not allowed.
+		</Description>
+      </IntegerProperty>
+      <OrderingProperty attributeName="fragmentOrder" elementsExpr="ComplexParameterFragment|SimpleParameterFragment">
+        <IsEnabled>return (element.selectSingleNode("ComplexParameterFragment|SimpleParameterFragment") != null)</IsEnabled>
+        <Description xml:space="preserve">The order of the child parameter fragments.</Description>
+      </OrderingProperty>
+      <SubComponentReference elementName="ComplexParameterFragment" />
+      <SubComponentReference elementName="SimpleParameterFragment" />
+      <Description xml:space="preserve">The parameter fragment which permits to model a complex value fragment.</Description>
+    </SubComponent >
+
+    <SubComponent elementName="SimpleParameterFragment" idPrefix="spf" namePrefix="SimpleFragment" label="Simple Parameter Fragment">
+      <IsEnabled>return (element["xsdProvider"]=="")&amp;&amp;(element["xsdType"]=="")</IsEnabled>
+      <XSDProviderProperty attributeName="xsdProvider" label="XSD Provider">
+        <Description xml:space="preserve">The optional XSD provider used to specify the parameter's type.</Description>
+      </XSDProviderProperty>
+      <XSDTypeProperty attributeName="xsdType" schemaExpr="@xsdProvider" includeSimpleTypes="true" includeElements="false" includeComplexTypes="false" label="XSD Simple Type">
+        <Description xml:space="preserve">The fragment's simple type.</Description>
+      </XSDTypeProperty>
+      <IntegerProperty label="Min Card." attributeName="minCard" defaultValue="1">
+      	<Description xml:space="preserve">A numerical value specifying the minimum cardinality of this fragment [0, N]. 
+      	If 0 this fragment is optional, default is 1.</Description>
+      </IntegerProperty>
+      <IntegerProperty label="Max Card." attributeName="maxCard" defaultValue="1">
+		<Description xml:space="preserve">A numerical value specifying the maximum cardinality of this fragment [1, N].
+		If -1 this fragment has an unbounded max cardinality, default is 1, 0 is not allowed.
+		</Description>
+      </IntegerProperty>
+      <StringProperty label="Value" attributeName="value">
+         <Description xml:space="preserve">The default fragment value if not provided at runtime.</Description>
+      </StringProperty>
+      <Description xml:space="preserve">The parameter fragment which permits to model a simple value fragment.</Description>
+    </SubComponent >
+    
+  </SubComponent >
+  
+  <SubComponent elementName="ResponseHeader" idPrefix="rrh" namePrefix="ResponseHeader" label="Response Header" figureDisplayOrder="3"> 
+    <IsEnabled>return (element["webServiceOperation"] == "")</IsEnabled>
+    <Description xml:space="preserve">Defines an header to read from the response of the invoked service.</Description>  
+    <StringProperty attributeName="value">
+       <Description xml:space="preserve">The default header value if not provided at runtime.</Description>
+    </StringProperty> 
+  </SubComponent >
+  
+  <Description xml:space="preserve">A Restful Request Response component invokes a specific REST web service using 
+  the provided information for building the request message.</Description>
+  <InputDescription xml:space="preserve" name="EndPoint URL">The endpoint URL of the Web service being invoked.</InputDescription>
+  <OutputDescription xml:space="preserve" name="HTTP Status Code">HTTP status codes are standard response codes  for the HTTP requests. For example: 200 - OK, 400 - Bad Request, 403 - Forbidden or 404 - Not Found.</OutputDescription>
+  <OutputDescription xml:space="preserve" name="Response BLOB">The attachment included in the response body. It is explicitly included if on the response component is set the multipart value in the "Attachment Style" property.</OutputDescription>
+  <OutputDescription xml:space="preserve" name="Response JSON Message">The JSON message received as response from the service.</OutputDescription>
+</Component>
+

@@ -1,0 +1,191 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import org.apache.commons.io.FileUtils
+import org.apache.commons.lang.StringUtils
+import java.io.File
+
+/* computes the lib files extensions */
+def libFileExtensions = ["jar", "mar", "dll", "so", "lib", "lic"]
+
+/* computes the excluded libraries */
+def excludedLibs = new HashSet()
+excludedLibs.add("ant.jar")
+excludedLibs.add("jdtCompilerAdapter.jar")
+excludedLibs.add("jsp-api.jar")
+excludedLibs.add("servlet-api.jar")
+excludedLibs.addAll(wr.project.valueOf("Property[@name='excludedLibs']/@value").split(",").collect{it.trim()})
+if (wr.projectType.name() != "ENTERPRISE" && wr.project.selectSingleNode(".//Page") == null) {
+	excludedLibs.add("jcaptcha.jar")
+	excludedLibs.add("jcaptcha-api.jar")
+	excludedLibs.add("itext.jar")
+	excludedLibs.add("itext-rtf.jar")
+	excludedLibs.add("jasperreports.jar")
+	excludedLibs.add("fontbox.jar")
+	excludedLibs.add("pdfbox.jar")
+	excludedLibs.add("fckeditor.jar")
+	excludedLibs.add("jempbox.jar")
+	excludedLibs.add("imaging.jar")	
+	excludedLibs.add("commons-digester.jar")
+	excludedLibs.add("jcommon.jar")
+	excludedLibs.add("jfreechart.jar")
+	excludedLibs.add("jstl.jar")
+	excludedLibs.add("standard-taglib.jar")
+	excludedLibs.add("tm-extractors.jar")	
+}
+if (wr.projectType.name() != "ENTERPRISE"){ 
+	if (wr.project.selectSingleNode("DomainModel/db:Database[@type='Apache Derby']") == null) {
+	    excludedLibs.add("derby.jar")
+	    excludedLibs.add("derbyclient.jar")
+	    excludedLibs.add("derbynet.jar")
+	}
+	if(wr.project.selectSingleNode("ServiceDataProviders/SMTPServer[string(@jndiName) != '']") != null){
+	    excludedLibs.add("mail.jar")
+	    excludedLibs.add("activation.jar")
+	}
+	def jobDb = getByIdOptional(wr.project.valueOf("@db:jobDatabase"))
+	if(jobDb == null || !jobDb["type"].startsWith("Oracle")){
+	   excludedLibs.add("quartz-oracle.jar")
+	}
+}
+
+def pluginIdToJarNameMap = [:]
+
+/* reads the plugin manifest */
+def getManifestEntry(file){
+    if(file == null || !file.exists()){
+      return null
+    }
+    def manEntry = [:]
+    File pluginXML = new File(file, "plugin.xml")
+    if(pluginXML.exists()){
+       def pluginName = file.getName()
+       if(wrVersion != null && pluginName.endsWith(wrVersion)){
+          pluginName = StringUtils.removeEnd(pluginName, "_" + wrVersion)
+          manEntry.put("date", StringUtils.substringAfterLast(wrVersion, "."))
+       }else{
+          manEntry.put("date", generationTime)
+       }
+       manEntry.put("name", pluginName)
+    }else{
+       File projectDescr = new File(file, ".project")
+       if(projectDescr.exists()){
+          manEntry.put("name", file.getName())
+          manEntry.put("date", generationTime)
+       }
+    }
+    return manEntry.isEmpty() ? getManifestEntry(file.getParentFile()) : manEntry
+}
+
+/* copies the file to the output dir */
+def copyLib = {file, outputDir ->
+   if(file == null || !file.exists()){
+       return
+   }
+   def fileName = file.name
+   if(excludedLibs.contains(fileName)){
+       return
+   }
+   def ext = StringUtils.substringAfterLast(fileName, ".").toLowerCase()
+   if (libFileExtensions.contains(ext) && !fileName.endsWith("-sources.jar")) {
+        def outputFile = new File(outputDir, fileName)
+        if (!outputFile.exists() || (file.lastModified() != outputFile.lastModified())) {
+            FileUtils.copyFile(file, outputFile, true)
+        }
+   }
+}
+
+/* copies or creates the jar for a certain project */
+def copyOrCreateJarFile = {projectFolder, fileName, outputDir, extensions ->
+    def sourceLib = new File(projectFolder, fileName)
+    def targetLib = new File(outputDir, fileName)
+    if (sourceLib.exists()) {
+       if(!targetLib.exists() || targetLib.lastModified() != sourceLib.lastModified()){
+          FileUtils.copyFile(sourceLib, targetLib)
+       }       
+    } else {
+       def jarVersion = StringUtils.defaultIfEmpty(wrVersion, generationTime)
+       com.webratio.generator.io.JarHelper.createJar(projectFolder, targetLib, extensions, jarVersion, wr)
+    }
+}
+
+/*creates the output lib directory */
+eventSocketClient.sendBeginTask("Libs", 100)
+
+def copyCommonLibs = (wr.projectType.name() in ["ENTERPRISE","WEBPROJECT"])
+def copyPrivateLibs = (wr.projectType.name() in ["WEBMODEL","MODULE","ENTERPRISE"]) 
+
+def outputLibDir = null
+def outputClassesDir = null
+def privateOutputLibDir = new File(wr.outputPath, "WEB-INF/lib")
+def privateOutputClassesDir = new File(wr.outputPath, "WEB-INF/classes")
+def bpmProject = wr.projectType.name() == "BPM"
+if(wr.projectType.name() == "WEBPROJECT"){
+   outputLibDir = privateOutputLibDir
+   outputClassesDir = privateOutputClassesDir
+} else if(bpmProject){
+   outputLibDir = privateOutputLibDir = new File(wr.outputPath, "lib")
+   outputClassesDir = privateOutputClassesDir = new File(wr.outputPath, "classes")
+} else{
+   outputLibDir = new File(new File(wr.outputPath), "lib")
+   outputClassesDir = new File(new File(wr.outputPath), rootModuleName + ".jar")
+   if(wr.projectType.name() == "ENTERPRISE"){
+     privateOutputLibDir = new File(wr.outputPath, rootModuleName + ".war/WEB-INF/lib")
+     privateOutputClassesDir = new File(wr.outputPath, rootModuleName + ".war/WEB-INF/classes")
+     outputClassesDir = new File(new File(wr.outputPath), rootModuleName + ".jar")
+   }
+}
+
+eventSocketClient.sendTaskWorked("Libs", 20)
+
+/* copies the JDBC driver JARs */
+if(copyCommonLibs){
+	for (db in wr.project.selectNodes("DomainModel/db:Database").findAll{StringUtils.isBlank(it["jndiName"])}) {
+	    def dbType = wr.explorer.databaseTypes().getConfiguration(db.attributeValue("type", ""))
+	    if (dbType != null) {
+	        def driverDirPath = dbType.attributeValue("driverDirectoryPath", "")
+	        def driverFileNames = dbType.attributeValue("driverFileNames", "")
+	        for (driverFileName in driverFileNames.tokenize(",").collect{it.trim()}) {
+	            copyLib(new File(driverDirPath, driverFileName), outputLibDir)
+	        }
+	    }
+	}
+}
+eventSocketClient.sendTaskWorked("Libs", 30)
+
+/* copies or creates plug-ins libraries */
+for (plugin in wr.generationConfig.selectNodes("Plugins/*")) {
+   def pluginFolder = new File(plugin["path"]) 
+   def libFolder = new File(pluginFolder, "lib")
+   if(libFolder.exists()){
+      for(libFile in libFolder.listFiles()){
+         if(libFile.name.endsWith("-tld.jar")){
+            if(copyPrivateLibs && !bpmProject){
+              copyLib(libFile, privateOutputLibDir)
+            }
+         } else if(copyCommonLibs || (bpmProject && plugin["common"] != "true")){
+            copyLib(libFile, outputLibDir)
+         }
+      }  
+   }
+   String jarName = StringUtils.defaultIfEmpty(plugin["id"], pluginFolder.name)  
+   jarName = StringUtils.defaultIfEmpty(pluginIdToJarNameMap.get(jarName), jarName)
+   if(copyCommonLibs || (bpmProject && plugin["common"] != "true")){
+      copyOrCreateJarFile(pluginFolder, jarName + ".jar", outputLibDir, null)
+   }   
+   if(copyPrivateLibs){
+      copyOrCreateJarFile(pluginFolder, jarName + "-tld.jar", privateOutputLibDir, "tld")
+   }
+}
+eventSocketClient.sendTaskWorked("Libs", 40)
+
+/* creates or updates log4j.properties */
+if(copyCommonLibs){
+  def configFile = new File(outputClassesDir, "log4j.properties")
+  if (!configFile.exists()) {
+    def originalConfigFile = wr.locateResourceFile("Libs/log4j.properties")
+    FileUtils.copyFile(originalConfigFile, configFile)
+  }
+}  
+eventSocketClient.sendTaskWorked("Libs", 10)
+
+%>

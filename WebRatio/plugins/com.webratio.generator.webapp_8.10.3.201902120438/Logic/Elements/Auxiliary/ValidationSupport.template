@@ -1,0 +1,96 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.GenerationException
+
+/** Applies to: View Component (form-based) */
+setXMLOutput()
+
+/* Compute the validation flows */
+def defaultValidationFlows = getDefaultValidationFlows(viewComp)
+def validationFlows = viewComp.selectNodes(".//VRValidationLink")
+
+/* Compute the visibility conditions */
+def visCond = getVisibilityExpression(viewComp)
+def fieldVisConds = [:]
+def alwaysVisibleFields = [] as Set
+for (fieldId in getAvailableLayoutFieldIds(viewComp)) {
+	def modelField = getByIdOptional(fieldId)
+	if (modelField) {
+		def fieldVisCond = getVisibilityExpression(modelField)
+		if (fieldVisCond) {
+			fieldVisConds[modelField["id"]] = fieldVisCond
+		} else {
+			alwaysVisibleFields.add(modelField["id"])
+		}
+	}
+}
+
+/* Compute validation rules */
+def vRules = []
+for (vRulesBag in viewComp.selectNodes(".//VRules")) {
+	for (vRule in getByIdsOptional(vRulesBag.parent, "validationOrder")) {
+		vRules.add(vRule)
+	}
+	for (vRule in vRulesBag.elements()) {
+		if (!vRules.contains(vRule)) {
+			vRules.add(vRule)
+		}
+	}
+}
+
+/* Do not generate anything when not necessary */
+if (defaultValidationFlows.isEmpty() && validationFlows.isEmpty() && !visCond && fieldVisConds.isEmpty() && vRules.isEmpty()) {
+	return
+}
+%]
+<ValidationSupport xmlns:wr="[%= WR_LOGIC_NS_URI %]" class="com.webratio.rtx.validation.DefaultFormValidationSupport">
+	[% for (flow in defaultValidationFlows) { %]
+		[% if (viewComp.selectSingleNode("VRValidationLink[@linkId = '" + flow["id"] + "']") == null) { %]
+			<wr:ValidationLink elementId="[%= viewComp["id"] %]" linkId="[%= flow["id"] %]" action="validate"/>
+		[% } %]
+	[% } %]
+	[% for (validationFlow in validationFlows) { %]
+		[% def parent = validationFlow.parent %]
+		<wr:ValidationLink elementId="[%= parent["id"] %]" linkId="[%= validationFlow["linkId"] %]" action="[%= validationFlow["action"] %]"/>
+	[% } %]
+	
+	[% if (visCond) { %]
+		<wr:Condition elementId="[%= viewComp["id"] %]">[%= visCond %]</wr:Condition>
+	[% } %]
+	[% for (entry in fieldVisConds.entrySet()) { %]
+		[% if (!alwaysVisibleFields.contains(entry.key)) { %]
+			<wr:Condition elementId="[%= entry.key %]">[%= entry.value %]</wr:Condition>
+		[% } %]
+	[% } %]
+	
+	[% for (vRule in vRules) {
+		if ("OldFieldCustomValidationRule" == vRule.name || "OldUnitCustomValidationRule" == vRule.name) {
+			continue
+		}
+		
+		def vRuleDirectory = wr.explorer.validationRuleTypes().getDirectory(getComponentType(vRule))
+		def vRuleLogicTemplate = new File(vRuleDirectory, "Logic/Logic.template")
+		try {
+			def vRuleDescr = parseXMLString(executeTemplate(vRuleLogicTemplate, ["element": vRule])).rootElement.detach()
+			vRuleDescr.setName(vRule.name)
+			vRuleDescr.addAttribute("elementId", vRule.parent.parent["id"])
+			vRuleDescr.addAttribute("id", vRule["id"])
+			vRuleDescr.addAttribute("name", vRule["name"])
+			if (vRule["errorMessage"]) {
+				vRuleDescr.addAttribute("customErrorMessage", "true")
+			}
+			def inputs = getValidationRuleInputParameters(vRule).collect{ it["name"] }.join("|")
+			if (inputs) {
+				vRuleDescr.addAttribute("inputs", inputs)
+			}
+			printRaw(serializeXML(vRuleDescr, false))
+		} catch (Exception e2) {
+			def title = "Error generating validation support"
+			def reason = "Unable to generate the validation support descriptor for " + viewComp["name"] + " [" + viewComp["id"] + "]"
+			def hint = "Check the project model for errors or warnings"
+			def genExc = new GenerationException(title, reason, [hint], e2)
+			genExc.setTargetId(viewComp["id"])
+			wr.generationExceptions.add(genExc)
+		}
+	} %]
+</ValidationSupport>

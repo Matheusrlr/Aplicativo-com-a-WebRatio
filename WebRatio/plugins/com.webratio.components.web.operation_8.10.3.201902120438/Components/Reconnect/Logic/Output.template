@@ -1,0 +1,25 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+def componentId = component["id"]
+def roleId = component["association"]
+def role = getById(roleId)
+def sourceDomainClass = getSourceDomainClass(role)
+def targetDomainClass = getTargetDomainClass(role)
+%>
+<OutputParameters>
+  <% for (a in getKeyAttributes(sourceDomainClass)) { %>
+    <OutputParameter 
+        name="source<%=a["id"]%>"
+        refId="<%=a["id"]%>"
+        type="<%=getTypeExpression(sourceDomainClass, a, true, true)%>"
+        label="Source <%=getLabel(a)%> [<%= sourceDomainClass?.attributeValue("name", "") %>]"/>
+  <% } %>
+  <% for (a in getKeyAttributes(targetDomainClass)) { %>
+    <OutputParameter 
+        name="target<%=a["id"]%>"
+        refId="<%=a["id"]%>"
+        type="<%=getTypeExpression(targetDomainClass, a, true, true)%>"
+        label="Target <%=getLabel(a)%> [<%= targetDomainClass?.attributeValue("name", "") %>]"/>
+  <% } %>    
+</OutputParameters>

@@ -1,0 +1,10 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.google.common.io.Files
+
+def PLATFORM_NAME = "windows"
+def OUT_BASE = "platforms_merges/" + PLATFORM_NAME
+def RES_BASE = "PrepareBuild/Platforms/" + PLATFORM_NAME
+
+/* Do nothing */
+%]

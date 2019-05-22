@@ -1,0 +1,27 @@
+<Element name="UserServices" lowerName="user services" pluralLowerName="user services">
+	<Description>
+		    	The user services contains all the REST methods used to manage the class chosen to represent the user. 
+	</Description>
+	<ActionRef label="Help"/>
+	<PropertyCategory name="General">
+		<Property label="User Class">
+	    	The reference to the Class defined in the Domain Model for which the users data are enabled.
+			This class usually is the User class or one of its generalizations.
+		</Property>
+		<Property label="Attributes">
+	    	The set of Attributes of the selected Class.
+		</Property>
+		<Property label="Associations">
+	    	The Associations returned by the Login or Update method if exposed on the selected class. 
+			It can be picked from the list of all the association having the selected User Class as source.
+		</Property>
+	    <Property label="Token Duration">
+			The default authorization token duration in minutes.
+		    A negative value (-1) means that the token is never renewed.
+			Default value is set to -1.
+	    </Property>
+		<Property label="Services Configuration">
+	    	If set, defines the operations available on the Class representing the User.
+		</Property>
+	</PropertyCategory>
+</Element>

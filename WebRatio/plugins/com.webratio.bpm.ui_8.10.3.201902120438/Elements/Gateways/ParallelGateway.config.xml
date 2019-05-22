@@ -1,0 +1,26 @@
+<Element name="ParallelGateway" lowerName="parallel gateway"
+		pluralLowerName="">
+		<Description>
+			A &lt;a href="/Concepts/Elements/Process/Gateways/ParallelGateway"/&gt; provides a mechanism to 
+				synchronize parallel flow and to create parallel flow. 
+		</Description>
+        
+        <ActionRef label="Add Lane" />
+        <ActionRef label="Add Sequence Flow" />
+        <ActionRef label="Add Property" />
+        <ActionRef label="Surround with Group" />
+        <ActionRef label="Move into Embedded Subprocess" />
+        <ActionRef label="Edit Process Parameters..." />
+        <Action label="Change Type to">
+          Change this gateway to a different gateway.        
+        </Action>
+        <ActionRef label="Search References" />
+        <ActionRef label="Help" />		
+
+    <PropertyCategory name="General">
+        <PropertyRef label="Id"/>
+        <PropertyRef label="Code"/>
+        <PropertyRef label="Name"/>
+        <PropertyRef label="Instance Name"/>
+    </PropertyCategory>
+</Element>

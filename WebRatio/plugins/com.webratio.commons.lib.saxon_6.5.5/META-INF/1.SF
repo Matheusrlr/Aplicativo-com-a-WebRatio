@@ -1,0 +1,21 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: rzhPqYqsYgw7sYv26DM7BALJvmYTK
+ pRpLMbwk5CysbQ=
+SHA-256-Digest-Manifest: LZHj2GMS+fQ0iC4GZvUKjGsXxBNhj9bAqSsDPiOeZ3U=
+Created-By: 1.7.0_75 (Oracle Corporation)
+
+Name: lib/saxon.jar
+SHA-256-Digest: 6b3rKfh8eNet0FNGP0LB1d/5fKEIS5+8sEpz2VconzE=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: about.html
+SHA-256-Digest: PNOoqp/iDFwtuS9x1Ri+vXwqBW9KwvGxXi5ap+aTxLY=
+
+Name: lib/saxonsrc.zip
+SHA-256-Digest: KDQbLfEevwNYLFj1cXWDbPyLXEyUXK8zEeF5EhIclRM=
+
+Name: about_files/saxon.txt
+SHA-256-Digest: YnuIs9chvnhsDBMv/74z9vLO2XVdXjL3FXoRDja83ZU=
+

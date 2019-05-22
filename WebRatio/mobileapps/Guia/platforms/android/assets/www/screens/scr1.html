@@ -1,0 +1,33 @@
+<!-- directive: wr-screen scr1 -->
+<div>
+	<button type="button" class="button " ng-click="screen.throwEvent($event, 'HomeEvent', null, { position: $index })">
+	{{ 'event.Home' | wrLocalize }}
+	</button>
+	<ion-content class="has-header wr-safe-area">
+		<!-- directive: wr-component pwu1 -->
+		<div class=" wr-comp-List">
+			<div ng-if="view.data &amp;&amp; view.data.length" class="list ">
+				<div class="item item-divider">{{ 'Lista' | wrLocalize }}</div>
+				<div class="item item-avatar" ng-repeat="current in view.data">
+					<span wr-blob="current.imagem" class="wr-attr-image  item-image">
+					<img ng-show="blob.url" ng-src="{{ blob.url }}" />
+					<span ng-show="blob.loading" class="wr-placeholder icon ion-load-d"></span>
+					<span ng-show="blob.failed" class="wr-placeholder icon ion-alert-circled"></span>
+					</span>
+					<h2>{{ current.nome }}</h2>
+					<p>{{ current.descricao }}</p>
+					<div class="item-buttons">    
+						<button type="button" class="button " ng-click="screen.throwEvent($event, 'OnSelectEvent', 'oslte3', { position: $index })">
+						{{ 't\u00F3picos' | wrLocalize }}
+						</button>
+						<button type="button" class="button " ng-click="screen.throwEvent($event, 'OnSelectEvent', 'oslte6', { position: $index })">
+						{{ '2' | wrLocalize }}
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end_directive: wr-component -->
+	</ion-content>
+</div>
+<!-- end_directive: wr-screen -->

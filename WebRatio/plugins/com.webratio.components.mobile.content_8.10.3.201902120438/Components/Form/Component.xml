@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="content" formBased="true" idPrefix="enu" namePrefix="Form " label="Form" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true"  errorFlowTarget="true"  successFlowTarget="true" canPlaceLayoutComponent="true" canPlaceLayoutFields="true" canPlaceLayoutEvents="true" subComponentOrder="ValidationRule"> 
+    <OrderingProperty attributeName="fieldOrder" elementsExpr="Field[string(@hidden) != 'true']|SelectionField" customComponentPartFigureClass="com.webratio.ide.ui.figures.EntrySubUnitFigure"> 
+        <Description xml:space="preserve">The order of fields and selection fields of the component. Such order is exploited by the code generator to construct the portion of the screen containing the data entry form corresponding to the form.</Description>
+		<IsEnabled>return (element.selectSingleNode("Field[string(@hidden) != 'true']|SelectionField") != null)</IsEnabled>  
+    </OrderingProperty>  
+    <SubComponent elementName="Field" idPrefix="fld" namePrefix="Field " enableAjaxEvents="true" enableAjaxAutocomplete="true" enableAjaxUpload="true" enableValidationRules="true"> 
+        <TypeProperty attributeName="type" typeAttributeName="type" subTypeAttributeName="subType" defaultValue="string">
+			<Description xml:space="preserve">The type of the content of the field. The selected type determines the rendition of the field.</Description>
+		</TypeProperty>
+        <ContentTypeProperty attributeName="contentType" typeAttributeName="type"> 
+            <Description xml:space="preserve">The content type of a field of type string, text, BLOB or URL. 
+			The selected content type determines the rendition of the field.</Description>
+			<IsEnabled>return (element["type"] == "string") || (element["type"] == "text") || (element["type"] == "url") || (element["type"] == "blob")</IsEnabled> 
+        </ContentTypeProperty>  
+		<BooleanProperty attributeName="preloaded"> 
+			<Description xml:space="preserve">The field can be preloaded with a value shown to the user when the screen is accessed. 
+			The preloaded value is the concatenation of the values stored in the slots associated with the field.</Description>
+		</BooleanProperty>	
+        <BooleanProperty attributeName="modifiable" defaultValue="true">  
+			<Description xml:space="preserve">The field can be modified by the user; otherwise it is fixed. Unmodifiable fields should be always preloaded.</Description>
+		</BooleanProperty>	
+        <BooleanProperty attributeName="hidden"> 
+			<Description xml:space="preserve">The field is not shown to the user, but its preload value is submitted with the form's content. 
+			Hidden fields should be always preloaded.</Description>
+		</BooleanProperty>	
+        <OrderingProperty attributeName="slotOrder" elementsExpr="Slot"> 
+            <Description xml:space="preserve">The order of slots.</Description>
+			<IsEnabled>return (element.element("Slot") != null)</IsEnabled>  
+        </OrderingProperty>  
+        <SubComponent elementName="Slot" idPrefix="slot" namePrefix="Slot " ignoreI18N="true"> 
+            <StringProperty attributeName="value">
+				<Description xml:space="preserve">A user-defined constant to be used as the value of the slot. 
+				If the property is left empty, the slot must be filled with the 
+				value of a parameter associated with one of the input flows 
+				of the entry component containing the slot's field.</Description>
+			</StringProperty>
+            <BooleanProperty attributeName="label" defaultValue="true"> 
+                <Description xml:space="preserve">If checked, the slot value is displayed to the user in the rendition of the field.</Description>
+				<IsEnabled>return false</IsEnabled>  
+            </BooleanProperty>  
+            <BooleanProperty attributeName="output" defaultValue="true"> 
+                <Description xml:space="preserve">If checked, the slot value is submitted as part of the field's data, when the user submits the form.</Description>
+				<IsEnabled>return false</IsEnabled>  
+            </BooleanProperty>
+			<Description xml:space="preserve">A slot is a placeholder for a piece of data to be preloaded in a field.</Description>
+        </SubComponent >
+		<Description xml:space="preserve">A field is an input control whereby the user can submit data. 
+A field is specified as a sub-element of a form. 
+The data entered by the user in a field can be checked, by associating one or 
+more validation rules to the field.
+A field can be associated with a slot, which can hold value shown to the user 
+when the page is accessed.</Description>
+    </SubComponent >  
+    <SubComponent elementName="SelectionField" idPrefix="sfld" namePrefix="Selection Field " enableAjaxEvents="true" enableValidationRules="true"> 
+        <TypeProperty attributeName="type" typeAttributeName="type" subTypeAttributeName="subType" excludedTypes="blob" defaultValue="string"> 
+			<Description xml:space="preserve">The type of the content of the field. The selected type determines the rendition of the field.</Description>
+		</TypeProperty>	
+        <StringProperty label="Preselected Value" attributeName="preselectValue">  
+			<Description xml:space="preserve">A value to be shown to the user as the default option when the screen is accessed. 
+			If the specified value does not belong to the list of values preloaded in the selection field, the property is ignored.</Description>
+		</StringProperty>
+        <OrderingProperty attributeName="slotOrder" elementsExpr="Slot"> 
+            <Description xml:space="preserve">The order of slots.</Description>
+			<IsEnabled>return (element.element("Slot") != null)</IsEnabled>  
+        </OrderingProperty>  
+        <BooleanProperty label="Split Output" attributeName="splitOutput">
+			<Description xml:space="preserve">If checked, the submitted value is split into each slot subvalue. 
+			Usually this property is used with composite key attributes.</Description>		
+		</BooleanProperty>	
+        <SubComponent elementName="Slot" idPrefix="slot" namePrefix="Slot " ignoreI18N="true"> 
+            <StringProperty attributeName="value">  
+				<Description xml:space="preserve">A user-defined constant to be used as the value of the slot. 
+				If the property is left empty, the slot must be filled with the 
+				value of a parameter associated with one of the input flows 
+				of the entry component containing the slot's field.</Description>
+            </StringProperty>
+			<BooleanProperty attributeName="label" defaultValue="true"> 
+				<Description xml:space="preserve">If checked, the slot value is displayed to the user in the rendition of the field.</Description>
+            </BooleanProperty>
+			<BooleanProperty attributeName="output" defaultValue="true">  
+				<Description xml:space="preserve">If checked, the slot value is submitted as part of the field's data, when the user submits the form.</Description>
+			</BooleanProperty>
+			<Description xml:space="preserve">A slot is a placeholder for a piece of data to be preloaded in a field.</Description>
+        </SubComponent >
+		<Description xml:space="preserve">A selection field is an input control whereby the user can submit data by
+selecting a value from multiple options. A selection field is specified as 
+a sub-element of an Form. The option chosen by the user in a selection field 
+can be checked, by associating one or more validation rules to the selection field.
+A selection field must be associated with one or more slots, which hold the 
+values among which the user must select.</Description>
+    </SubComponent >
+	<Description xml:space="preserve">The Form Component is a view component consisting of fields and selection fields that show an input form to the user.</Description>
+	<InputDescription xml:space="preserve" name="Field-Name [Slot ID]">The slot identifier of one of the preloaded fields of the Form.</InputDescription>  
+	<InputDescription xml:space="preserve" name="Selection-Field-Name Preselection">The identifier of one of the selection fields of the Form.
+The input parameter represents the value to use as a default
+choice in the list of options of the selection field.</InputDescription>
+	<OutputDescription xml:space="preserve" name="Field-Name">One of the fields of the Form.</OutputDescription>
+	<I18NLabels xml:space="preserve">def labels = []
+def fields = []
+fields += component.selectNodes("Field[string(@hidden) != 'true']")
+fields += component.elements("SelectionField")
+fields += component.elements("MultiSelectionField")
+for (field in fields) {
+    def label = [:]
+    label.id = field["id"]
+    label.key = field["name"]
+    labels.add(label)
+}
+return labels
+	</I18NLabels>
+    <IsContextFreeComponent xml:space="preserve">return getIncomingFlows(component).empty</IsContextFreeComponent>
+    <LayoutFields xml:space="preserve">def fieldIds = []
+for (subElem in component.elements()) {
+    def subElemTagName = subElem.name
+    if (subElemTagName == "Field") {
+        if (subElem.valueOf("string(@hidden)") != "true") {
+            fieldIds.add(subElem["id"])
+        }
+    } else if ((subElemTagName == "SelectionField") || (subElemTagName == "MultiSelectionField")){
+        fieldIds.add(subElem["id"])
+    }
+}
+def fieldIdSet = new HashSet(fieldIds)
+def fieldOrderIds = component["fieldOrder"].tokenize(" ")
+def ids = []
+ids += fieldOrderIds.findAll{fieldIdSet.contains(it)}
+ids += fieldIds.findAll{!fieldOrderIds.contains(it)}
+return ids</LayoutFields>
+<BeanDescription xml:space="preserve">
+&lt;p&gt;The component state object for the Form contains all the properties of fields and selection fields.&lt;br/&gt;
+The state object of a "field" component part consists of the following properties:
+&lt;ul&gt;
+  &lt;li&gt;&lt;code&gt;fieldId&lt;/code&gt; the value of the field identified by the fieldId&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;form.fieldId&lt;/code&gt; the value of the field&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;formState.fieldId&lt;/code&gt;: the state of the fields&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/p&gt;
+&lt;p&gt;The state object of a "selection field" component part consists of the following properties:
+&lt;ul&gt;
+  &lt;li&gt;&lt;code&gt;fieldId&lt;/code&gt; the value of the field identified by the fieldId&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;options.fieldId&lt;/code&gt; the array of options (labels and ouputs) of the selection field identified by the fieldId&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;formState.fieldId&lt;/code&gt;: the state of the selection field&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/p&gt;
+</BeanDescription>
+</Component>

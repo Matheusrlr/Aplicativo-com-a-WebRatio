@@ -1,0 +1,30 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: com.webratio.commons.db;singleton:=true
+Require-Bundle: org.eclipse.core.runtime,org.eclipse.core.resources,co
+ m.webratio.commons.libs,com.webratio.lib.apache.derby,com.webratio.li
+ b.hibernate,com.webratio.commons.dom4j,com.webratio.commons.lib.dom4j
+ ,com.webratio.commons.lib.apache.commons.beanutils,com.webratio.commo
+ ns.lib.apache.commons.collections,com.webratio.commons.lib.apache.com
+ mons.lang,com.webratio.commons.lib.apache.commons.io,com.webratio.com
+ mons.lib.apache.log4j
+Bundle-ManifestVersion: 2
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: WebRatio
+Ant-Version: Apache Ant 1.9.2
+Export-Package: com.webratio.commons.db,com.webratio.commons.db.config
+ ,com.webratio.commons.db.internal.config;x-friends:="com.webratio.com
+ mons.db.tests",com.webratio.commons.db.metadata,com.webratio.commons.
+ db.utils
+Bundle-Name: WebRatio Database Plug-in
+Bundle-Version: 8.10.3.201902120438
+Bundle-ClassPath: bin.jar,lib/ojdbc14.jar
+Bundle-Activator: com.webratio.commons.db.DBPlugin
+Created-By: 1.8.0-b132 (Oracle Corporation)
+
+Name: plugin.xml
+SHA-256-Digest: owg63eiD5JYHkazUXW7emWzzIV9hPEcc6JiEayWD1OI=
+
+Name: META-INF/signature
+SHA-256-Digest: PRYYgqFVErjMMx3lDuv1T8nEp66ZmsJ8BwS19rF+4z4=
+

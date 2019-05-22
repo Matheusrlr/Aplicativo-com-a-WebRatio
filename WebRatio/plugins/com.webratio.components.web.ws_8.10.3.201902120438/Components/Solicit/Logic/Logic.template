@@ -1,0 +1,66 @@
+#?delimiters [%,%],[%=,%]
+[%
+import org.apache.commons.lang.StringUtils
+setXMLOutput()
+def normalizedName = com.webratio.generator.helpers.XMLUtils.normalizeTagName(component["name"])
+def requestMethod = StringUtils.defaultIfEmpty(component["requestMethod"], "POST")
+def contentType = "XML"
+if(component["invocationStyle"] == "REST"){
+    if(requestMethod == "PUT" || requestMethod == "POST"){
+       contentType = StringUtils.defaultIfEmpty(component["contentType"], "JSON")
+    }else{
+       contentType = null
+    }
+}
+%]
+<Descriptor service="com.webratio.components.web.ws.SolicitService" name="[%=normalizedName%]">
+  
+  <Operation name="[%=normalizedName%]" 
+             nsURI="[%=component["nsURI"]%]" 
+             stateful="[%="true" == component["stateful"]%]" 
+             invocationStyle="[%=component["invocationStyle"]%]" 
+             requestMethod="[%=requestMethod%]" 
+             roles="[%=component["roles"]%]"
+             protected="[%=component["protectedByToken"]%]"
+             [%if(contentType){%]contentType="[%=contentType%]"[%}%]/>
+             
+  <QueryStringParameters>
+   [% 
+     for (parameter in component.selectNodes("QueryStringParameter")) { 
+       printRaw(StringUtils.remove(parameter.asXML(), "_sel=\"t\""))
+     }
+   %]
+  </QueryStringParameters>           
+  
+  <BodyParameters>
+   [% 
+     for (parameter in component.selectNodes("RequestBodyParameter")) { 
+       printRaw(StringUtils.remove(parameter.asXML(), "_sel=\"t\""))
+     }
+   %]
+  </BodyParameters>
+  
+  <FormDataParameters>
+   [% 
+     for (parameter in component.selectNodes("FormDataParameter")) { 
+       printRaw(StringUtils.remove(parameter.asXML(), "_sel=\"t\""))
+     }
+   %]
+  </FormDataParameters>
+  
+  <Headers>
+   [%
+     for(h in component.selectNodes("Header")){
+  	   printRaw(StringUtils.remove(h.asXML(), "_sel=\"t\""))
+     }
+   %]
+  </Headers>
+  
+  <SoapHeaders>
+   [%
+     for(sh in component.selectNodes("SoapHeader")){
+       printRaw(StringUtils.remove(sh.asXML(), "_sel=\"t\""))  	 
+     }
+   %]
+  </SoapHeaders>
+</Descriptor>

@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.9.2
+Created-By: 1.8.0-b132 (Oracle Corporation)
+
+Name: feature.xml
+SHA-256-Digest: mdxnMPE6VDd7/IwnCAUE4dqW5NtO4m4MDxYHPuuF3/M=
+
+Name: META-INF/signature
+SHA-256-Digest: PRYYgqFVErjMMx3lDuv1T8nEp66ZmsJ8BwS19rF+4z4=
+

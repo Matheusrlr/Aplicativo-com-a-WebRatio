@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="operation" version="1.0.0" idPrefix="ctctop" namePrefix="Contacts " label="Contacts" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" successFlowSource="true" successFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" multipleSuccessFlowCardinality="true"> 
+    <EnumProperty attributeName="mode" defaultValue="save"> 
+    	<EnumItem value="save" label="Save Contact"/>  
+    	<EnumItem value="pick" label="Pick Contact"/>  
+    	<Description xml:space="preserve">Specifies the operation to be executed on the device contacts database.
+&lt;p&gt;Two options are available:&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;&lt;b&gt;Save Contact&lt;/b&gt;. The operation saves a new contact in the device address book using the provided input information.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Pick Contact&lt;/b&gt;. The operation picks a contact from the device address book and provides the contact information as output.&lt;/li&gt;&lt;/ul&gt;</Description> 
+  	</EnumProperty>
+	<SubComponent elementName="ContactAddress" idPrefix="ctctdrs" namePrefix="ContactAddress " label="Contact Address">
+		<Description xml:space="preserve">The Contact Address element represents an additional address of the considered contact.
+&lt;p&gt;The address is an information composed of several parts:&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;Country&lt;/li&gt;&lt;li&gt;Region&lt;/li&gt;&lt;li&gt;City&lt;/li&gt;&lt;li&gt;Postal Code&lt;/li&gt;&lt;li&gt;Street Address&lt;/li&gt;&lt;/ul&gt;
+&lt;p&gt;For each Contact Address element, one input/output parameter for each address part is also added.&lt;/p&gt; 
+</Description>
+		<EnumProperty attributeName="type" defaultValue="home"> 
+	    	<EnumItem value="home" label="Home"/>
+	    	<EnumItem value="work" label="Work"/>  
+	    	<EnumItem value="other" label="Other"/>  
+	    	<Description xml:space="preserve">Specifies the address type.The available options are:
+&lt;ul&gt;&lt;li&gt;Home&lt;/li&gt;
+&lt;li&gt;Work&lt;/li&gt;
+&lt;li&gt;Other&lt;/li&gt;
+&lt;/ul&gt;</Description> 
+		</EnumProperty>
+	</SubComponent >
+	<SubComponent elementName="ContactEmail" idPrefix="ctctml" namePrefix="ContactEmail " label="Contact Email">
+		<Description xml:space="preserve">The Contact Email element represents an additional email of the considered contact.
+&lt;p&gt;For each Contact Email element, an additional input/output parameter is also added.&lt;/p&gt;</Description>
+		<EnumProperty attributeName="type" defaultValue="home"> 
+	    	<EnumItem value="home" label="Home"/>
+	    	<EnumItem value="work" label="Work"/> 
+	    	<EnumItem value="other" label="Other"/>  
+	    	<Description xml:space="preserve">Specifies the email type.The available options are:
+&lt;ul&gt;&lt;li&gt;Home&lt;/li&gt;
+&lt;li&gt;Work&lt;/li&gt;
+&lt;li&gt;Other&lt;/li&gt;
+&lt;/ul&gt;</Description> 
+		</EnumProperty>
+	</SubComponent >
+	<SubComponent elementName="ContactPhone" idPrefix="ctctphn" namePrefix="ContactPhone " label="Contact Phone">
+		<Description xml:space="preserve">The Contact Phone element represents an additional phone number of the considered contact.
+&lt;p&gt;For each Contact Phone element, an additional input/output parameter is also added.&lt;/p&gt;</Description>
+		<EnumProperty attributeName="type" defaultValue="home"> 
+	    	<EnumItem value="home" label="Home"/>
+	    	<EnumItem value="mobile" label="Mobile"/>
+	    	<EnumItem value="work" label="Work"/>
+	    	<EnumItem value="fax" label="Fax"/>
+	    	<EnumItem value="main" label="Main"/>  
+	    	<EnumItem value="other" label="Other"/>
+	    	<Description xml:space="preserve">Specifies the phone number type. The available options are:
+&lt;ul&gt;&lt;li&gt;Home&lt;/li&gt;
+&lt;li&gt;Mobile&lt;/li&gt;
+&lt;li&gt;Work&lt;/li&gt;
+&lt;li&gt;Fax&lt;/li&gt;
+&lt;li&gt;Main&lt;/li&gt;
+&lt;li&gt;Other&lt;/li&gt;
+&lt;/ul&gt;</Description> 
+		</EnumProperty>
+	</SubComponent >
+  	<SuccessFlowCodes xml:space="preserve">return ["Cancel"]</SuccessFlowCodes>
+  	<NativePlugins>
+  		<RequiredPlugin localId="builtin:cordova-plugin-contacts"/>
+  	</NativePlugins> 
+	<Description xml:space="preserve">&lt;p&gt;The Contacts operation interacts with the device address book. The operation can be used both to retrieve a contact from the address book and to save/update a contact in the address book.&lt;/p&gt;
+&lt;p&gt;This component uses the &lt;b&gt;Cordova Contacts&lt;/b&gt; PhoneGap plugin to interact with the device. &lt;/p&gt;
+&lt;p&gt;More information about the plugin are available here: &lt;a href="https://github.com/webratio/cordova-plugin-contacts"&gt;https://github.com/webratio/cordova-plugin-contacts&lt;/a&gt;&lt;/p&gt;.</Description>
+<InputDescription xml:space="preserve" name="Contact Id">The Contact ID in the device address book. This input parameter must be used in order to update an existing contact.</InputDescription>
+<InputDescription xml:space="preserve" name="First Name">The first name of the contact to be saved.</InputDescription>
+<InputDescription xml:space="preserve" name="Last Name">The last name of the contact to be saved.</InputDescription>
+<InputDescription xml:space="preserve" name="Home Phone Number">The home phone number of the contact to be saved.</InputDescription>
+<InputDescription xml:space="preserve" name="Work Phone Number">The work phone number of the contact to be saved.</InputDescription>
+<InputDescription xml:space="preserve" name="Mobile Phone Number">The mobile phone number of the contact to be saved.</InputDescription>
+<InputDescription xml:space="preserve" name="Home Email">The home email of the contact to be saved.</InputDescription>
+<InputDescription xml:space="preserve" name="Work Email">The work email of the contact to be saved.</InputDescription>
+<InputDescription xml:space="preserve" name="Home Street Address">The street address of the contact home address to be saved.</InputDescription>
+<InputDescription xml:space="preserve" name="Home City">The city of the contact home address to be saved.</InputDescription>
+<InputDescription xml:space="preserve" name="Home Region">The region of the contact home address to be saved.</InputDescription>
+<InputDescription xml:space="preserve" name="Home Postal Code">The postal code of the contact home address to be saved.</InputDescription>
+<InputDescription xml:space="preserve" name="Home Country">The country of the contact home address to be saved.</InputDescription>
+<OutputDescription xml:space="preserve" name="First Name">The first name of the picked contact.</OutputDescription>
+<OutputDescription xml:space="preserve" name="Last Name">The last name of the picked contact.</OutputDescription>
+<OutputDescription xml:space="preserve" name="Home Phone Number">The home phone number of the picked contact.</OutputDescription>
+<OutputDescription xml:space="preserve" name="Work Phone Number">The work phone number of the picked contact.</OutputDescription>
+<OutputDescription xml:space="preserve" name="Mobile Phone Number">The mobile phone number of the picked contact.</OutputDescription>
+<OutputDescription xml:space="preserve" name="Home Email">The home email of the picked contact.</OutputDescription>
+<OutputDescription xml:space="preserve" name="Work Email">The work email of the picked contact.</OutputDescription>
+<OutputDescription xml:space="preserve" name="Home Street Address">The home street address of the picked contact.</OutputDescription>
+<OutputDescription xml:space="preserve" name="Home City">The home city of the picked contact.</OutputDescription>
+<OutputDescription xml:space="preserve" name="Home Region">The home region of the picked contact.</OutputDescription>
+<OutputDescription xml:space="preserve" name="Home Postal Code">The home postal code of the picked contact.</OutputDescription>
+<OutputDescription xml:space="preserve" name="Home Country">The home country of the picked contact.</OutputDescription>
+<OutputDescription xml:space="preserve" name="Error Message">The message produced by the component in case of error.</OutputDescription>
+</Component>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="operation" formBased="false" idPrefix="lgu" namePrefix="Login " label="Login" dataFlowTarget="true" navigationFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" successFlowSource="true" successFlowTarget="true" multipleErrorFlowCardinality="true"> 
+  <ErrorFlowCodes xml:space="preserve">return ["Internal Error"]</ErrorFlowCodes>  
+  <Description xml:space="preserve">A login operation verifies the user's credentials (username and password)
+to grant access to non public site views.
+The login operation takes in input a username and a password; 
+if verification succeeds, the login operation redirects the user to the home page or operation
+of the site view of the default group of the user.
+If authentication succeeds but the group has no default site view, or no default group is associated with
+the user, the operation follows its outgoing Succes flow. Otherwise, the Error flow of the login operation is followed.
+The predefined Error flow code 'Internal Error' permits to distinguish between authentication failure (e.g. wrong credentials) 
+and internal error (e.g. database error). 
+A login operation is typically preceded by an form, which permits the user to input his credentials.
+</Description>    <InputDescription xml:space="preserve" name="Username">The username of the user wishing to login.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Password">The password of the user wishing to login.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Remember Credentials (cookies)">The flag indicating whether user credentials must be stored under a cookie until explicit logout.</InputDescription> 
+</Component>

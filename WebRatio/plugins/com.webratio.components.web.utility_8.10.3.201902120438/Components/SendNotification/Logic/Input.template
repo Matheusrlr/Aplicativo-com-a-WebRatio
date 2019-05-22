@@ -1,0 +1,17 @@
+#?delimiters [%,%],[%=,%]
+[%
+import org.apache.commons.lang.StringUtils
+
+setXMLOutput()
+def componentId = component["id"]
+def parameters = component.selectNodes("Parameter")
+%]
+<InputParameters>
+  <InputParameter name="[%=componentId%].notificationDeviceIds" label="Notification Device ID"/>
+  <InputParameter name="[%=componentId%].platform" label="Platform"/>
+  <InputParameter name="[%=componentId%].title" label="Title"/>
+  <InputParameter name="[%=componentId%].message" label="Message"/>
+  [% for(p in parameters) {%]
+         <InputParameter name="[%=componentId%].[%=p["name"]%]" label="[%=p["name"]%]"/>
+  [% } %]
+</InputParameters>

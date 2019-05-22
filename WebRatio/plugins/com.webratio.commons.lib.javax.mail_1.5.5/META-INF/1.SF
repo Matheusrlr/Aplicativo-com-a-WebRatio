@@ -1,0 +1,21 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: 5ylXUEqpWg+gu6CEynmVKtLu45cuJ
+ 98tdvhIsS3CXbU=
+SHA-256-Digest-Manifest: yce/vMUq9TEB4VqdGEkv8B4/oqzAY0C+n0RV6zxaJLw=
+Created-By: 1.7.0_80 (Oracle Corporation)
+
+Name: lib/mail.jar
+SHA-256-Digest: 1m+Ko4cks150iG62IBp3bcp5PbuRw8omKf7RQ+ExQSg=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: lib/mailsrc.zip
+SHA-256-Digest: 8o71mhmMY2MXuMr52Vyj30AlkQf62fmdE+8AKGj2ZaE=
+
+Name: about.html
+SHA-256-Digest: R6X4hyD+zOm9o1bYnp5zyIlw2yXzyZoWM81lV4aw43Q=
+
+Name: about_files/CDDL+GPL_1_1.txt
+SHA-256-Digest: GjtK6nBt8RHtFVX73f6inC1P7CKAMvKBjc7oUjVzrSw=
+

@@ -1,0 +1,45 @@
+Manifest-Version: 1.0
+Export-Package: com.jivesoftware.authHelper.consts,com.jivesoftware.au
+ thHelper.customescheme.negotiate,com.jivesoftware.authHelper.customes
+ cheme.ntlm2,com.jivesoftware.authHelper.utils,org.apache.commons.http
+ client,org.apache.commons.httpclient.auth,org.apache.commons.httpclie
+ nt.contrib.ssl,org.apache.commons.httpclient.cookie,org.apache.common
+ s.httpclient.methods,org.apache.commons.httpclient.methods.multipart,
+ org.apache.commons.httpclient.params,org.apache.commons.httpclient.pr
+ otocol,org.apache.commons.httpclient.util
+Require-Bundle: com.webratio.commons.lib.apache.commons.codec,com.webr
+ atio.commons.lib.apache.commons.logging
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/commons-httpclient.jar,lib/auth-helper.jar,lib/c
+ ommons-httpclient-contrib-ssl.jar
+Bundle-Version: 3.1.0.2
+Bundle-Name: WebRatio 3rd Party Library - Apache Commons HttpClient
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.apache.commons.httpclien
+ t
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: lib/commons-httpclientsrc.zip
+SHA-256-Digest: RRXsw+Ninj1BNO4Fij/uYQON1tL6a9e2thmi3QbCJAY=
+
+Name: lib/commons-httpclient-contrib-ssl.jar
+SHA-256-Digest: BYyg2OUJfHjPGJgP7c7HWzB4BT/5DuySY4aF12vDsSo=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: OiUwQ2Hj9yVENGi/Bo5pAx2F0m4ez94CcUApeAfLPPU=
+
+Name: lib/commons-httpclient.jar
+SHA-256-Digest: 29SVPQE+EOfBzDcBo+bM2MlQyJLwjYBPq/rCFwWTBEM=
+
+Name: lib/auth-helpersrc.zip
+SHA-256-Digest: JRvMc8j5dxk6i3E0Wu6QC/lusDwVDwGDFOkfoN5yAFI=
+
+Name: lib/auth-helper.jar
+SHA-256-Digest: pTjvA1xTxV2+st8F3qh4JZRi4ZdimDNzQIwHsB5c/S8=
+

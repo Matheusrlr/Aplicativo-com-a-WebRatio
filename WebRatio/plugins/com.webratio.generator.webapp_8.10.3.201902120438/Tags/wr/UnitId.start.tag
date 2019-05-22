@@ -1,0 +1,1 @@
+$$ setJavaOutput() $$<%=component.attributeValue("id", "")%>

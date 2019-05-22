@@ -1,0 +1,55 @@
+#?delimiters <%, %>, <%=, %>
+<% setJavaOutput() 
+
+def className = "FixedChar_" + attr.valueOf("@db:charLength")
+
+%>
+package <%= getPackageName()%>.types;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import org.hibernate.HibernateException;
+import org.hibernate.engine.spi.SessionImplementor;
+import org.hibernate.type.StringType;
+
+public class <%= className%> extends StringType {
+
+    private static final long serialVersionUID = 1L;
+    
+    private static final int FIXED_LENGTH = <%=attr.valueOf("@db:charLength")%>;
+    
+	public java.lang.Object get(ResultSet rs, String name) throws SQLException {
+		return rtrim(rs.getString(name));
+	}
+    
+	public void set(PreparedStatement st, String value, int index, SessionImplementor session) throws HibernateException, SQLException {
+	    String s = (String) value;
+	    if (s != null) {
+	        if (s.length() > FIXED_LENGTH) {
+	            s = s.substring(0, FIXED_LENGTH);
+	        } else if (s.length() < FIXED_LENGTH && !s.endsWith("%")) {
+	            StringBuffer sb = new StringBuffer(s);
+	            int n = FIXED_LENGTH - s.length();
+	            for (int i = 0; i < n; i++) {
+	                sb.append(' ');
+	            }
+	            s = sb.toString();
+	        }
+	    }
+	    
+	    super.set(st, s, index, session);
+	}
+	
+    private String rtrim(String s) {
+        if ((s == null) || s.length() == 0) {
+            return s;
+        }
+        int pos = s.length();
+        while (pos > 0 && Character.isWhitespace(s.charAt(pos - 1))) {
+            --pos;
+        }
+        return s.substring(0, pos);
+    }
+ 
+}

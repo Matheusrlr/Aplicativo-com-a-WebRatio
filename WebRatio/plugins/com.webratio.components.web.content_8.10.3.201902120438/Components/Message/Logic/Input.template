@@ -1,0 +1,41 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import org.apache.commons.lang.StringUtils
+setXMLOutput()
+def componentId = component.attributeValue("id", "")
+
+def placeholders = component.selectNodes("Placeholder")
+def placeholderNames = new HashSet()
+if(placeholders.isEmpty()){
+    def message = null
+    if(component["messageFile"] != ""){
+	   def messageFile = new File(wr.projectDir, "/WebContent/" + component["messageFile"])
+	   if (messageFile.exists() && messageFile.isFile()) {
+	     message = messageFile.getText()
+	   }
+	}
+	message = StringUtils.defaultIfEmpty(component.valueOf("Message"), message);
+	def stringToSplit = "_" + StringUtils.replace(message, "\$\$\$\$", "\$\$_\$\$") 
+	def tokens = StringUtils.splitByWholeSeparator(stringToSplit, "\$\$")
+	for (i in 0..tokens.size() - 1) {
+	   if (i % 2 != 0) {
+		if(tokens[i].indexOf("|") != -1){
+		   tokens[i] = StringUtils.substringBefore(tokens[i], "|")
+		}
+		placeholderNames.add(toValidFieldName(tokens[i]))
+	   }
+	}
+}
+%>
+<InputParameters acceptNull="true">
+	<InputParameter name="<%=componentId%>.shownMessages" label="Shown Messages"/>
+    <% if (placeholders.empty) {%> 
+      <%for(token in placeholderNames){%>
+        <InputParameter name="<%=componentId%>.<%=token%>" label="<%=token%>"/>
+      <%}%>
+    <%} else {%>
+	   <%for(p in placeholders) {%> 
+	     <InputParameter name="<%=componentId%>.<%=p["id"]%>" label="<%=p["name"]%>" refId="<%=p["id"]%>"/>
+	   <%}%> 
+    <%}%>   
+</InputParameters>

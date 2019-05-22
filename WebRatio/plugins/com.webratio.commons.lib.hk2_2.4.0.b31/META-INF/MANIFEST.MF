@@ -1,0 +1,47 @@
+Manifest-Version: 1.0
+Export-Package: org.glassfish.hk2.api,org.glassfish.hk2.api.messaging,
+ org.glassfish.hk2.extension,org.glassfish.hk2.internal,org.glassfish.
+ hk2.utilities,org.glassfish.hk2.utilities.binding,org.glassfish.hk2.u
+ tilities.cache,org.glassfish.hk2.utilities.cache.internal,org.glassfi
+ sh.hk2.utilities.general,org.glassfish.hk2.utilities.reflection,org.g
+ lassfish.hk2.utilities.reflection.internal,org.jvnet.hk2.annotations,
+ org.jvnet.hk2.component,org.jvnet.hk2.external.generator,org.jvnet.hk
+ 2.external.runtime,org.jvnet.hk2.internal,org.jvnet.tiger_types
+Require-Bundle: com.webratio.commons.lib.javassist,com.webratio.common
+ s.lib.javax.inject
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/hk2-api.jar,lib/hk2-locator.jar,lib/hk2-utils.ja
+ r
+Bundle-Version: 2.4.0.b31
+Bundle-Name: WebRatio 3rd Party Library - HK2
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.hk2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: DMMWHRajHXCDeXTaXw6kuJyql67JGsf2vxB3bLbYPHs=
+
+Name: lib/hk2-apisrc.zip
+SHA-256-Digest: PYFckRp4icWhNPc1wMDuKizi7XS/b4IQavJ3wJqLrbk=
+
+Name: lib/hk2-locatorsrc.zip
+SHA-256-Digest: sxOE445mz6Ew95QeFYcndX6mDOvl/WkJTtJY/UduqBo=
+
+Name: lib/hk2-api.jar
+SHA-256-Digest: GbNjLotFkssS5eiYpMlvMsQYoMBY8rr1VmBIvM3VYss=
+
+Name: about_files/CDDL+GPL_1_1.txt
+SHA-256-Digest: rPs90Jccj5ZYwzJdY2o8rYOa8ik7b6TAC1AZB+iOvLg=
+
+Name: lib/hk2-utils.jar
+SHA-256-Digest: J82zXspO6d8Myc0hjF8kBCRiSKaxBtwO5EYTnM6plYE=
+
+Name: lib/hk2-utilssrc.zip
+SHA-256-Digest: eDUfMwhXzYLDD987xZclGVMoQLINIT8fqPhHCVvCY3g=
+
+Name: lib/hk2-locator.jar
+SHA-256-Digest: 9O3V6Pm6YHpIWQr6WNtLw2qh8KG1gBjRwegG1xvq5aU=
+

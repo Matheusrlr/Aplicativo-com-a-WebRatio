@@ -1,0 +1,53 @@
+#?delimiters [%, %], [%=, %]
+[% 
+def flow = event.selectSingleNode("NavigationFlow")
+def isAjax = isAjaxEvent(event)
+def formBean = getFormBeanName(page)
+if ((type == "") && (event["componentId"] != "")) {  // event individually placed
+     type = isFormBased(getById(event["componentId"])) ? "button" : ""
+}
+%]
+[% def visibility = getInaccessibleEventPolicy(event)
+	if (getClosestAccessAwareElement(getById(flow["to"]))) {
+    if ( visibility == "" || visibility == "hide") { %]
+	<c:if test="${webratio:isTargetAccessible('[%=getEventRuntimeId(event)%]', pageContext)}">
+ [% } else if (visibility == "inactive") { %]
+    <c:choose>
+       <c:when test="${webratio:isTargetAccessible('[%=getEventRuntimeId(event)%]', pageContext)}">
+ [% } 
+ }%]
+ 	[% if ("button" == type) { %]
+		[% if (isAjax) { %]
+ 			<input onclick="return [% printRaw(getAjaxRequestCall(event, position)) %]" [%= styleClass ? "class=\"${styleClass}\"" : "" %] id="button:[%= getEventRuntimeId(event) %]" name="button:[%= getEventRuntimeId(event) %]" type="submit" value="<wr:Label context="event"/>">
+ 		[% } else { %]
+			<input onclick="[%if (event["newWindow"] == "true") { %]$('#[%= escapeCSS(formBean) %]')[0].target='_blank'[% } else { %]$('#[%= escapeCSS(formBean) %]')[0].target='_self'[% } %]" [%= styleClass ? "class=\"${styleClass}\"" : "" %] id="button:[%= getEventRuntimeId(event) %]" name="button:[%= getEventRuntimeId(event) %]" type="submit" value="<wr:Label context="event"/>">
+		[% } %]
+	[% } else { %]
+		[% if (isAjax) { %]
+ 			<a onclick="return [% printRaw(getAjaxRequestCall(event, position)) %]" [%= styleClass ? "class=\"${styleClass}\"" : "" %] href="<webratio:Link link="[%= getEventRuntimeId(event) %]" position="[%= position %]"/>">							
+ 		[% } else { %]
+ 			<a [%= styleClass ? "class=\"${styleClass}\"" : "" %] href="<webratio:Link link="[%= getEventRuntimeId(event) %]" position="[%= position %]"/>"[%if (event["newWindow"] == "true") { %] target="_blank"[% } %]>
+		[% } %]
+		<wr:Label context="event"/>
+		</a>
+	[% } %]									
+ [% 
+ if (getClosestAccessAwareElement(getById(flow["to"]))) {
+ if (visibility == "inactive") { %]
+     </c:when>
+	 <c:otherwise>
+	 	[% if ("button" == type) { %]
+	 		<input disabled="yes" [%= styleClass ? "class=\"${styleClass}\"" : "" %] id="button:[%= getEventRuntimeId(event) %]" name="button:[%= getEventRuntimeId(event) %]" type="submit" value="<wr:Label context="event"/>">
+		[% } else { %]
+			<span [%= styleClass ? "class=\"${styleClass}\"" : "" %]>
+				<wr:Label context="event"/>
+			</span>
+		[% } %]	
+	 </c:otherwise>
+ [% } %]	
+ [% if ( visibility == "" || visibility == "hide" ) { %]
+	</c:if>
+ [% } else if (visibility == "inactive") { %]
+	</c:choose>
+ [% } %]
+ [% } %]

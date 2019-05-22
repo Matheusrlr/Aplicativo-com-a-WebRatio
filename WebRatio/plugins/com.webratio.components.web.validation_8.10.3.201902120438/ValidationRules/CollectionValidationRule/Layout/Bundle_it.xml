@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle>
+  <Entry key="CollectionValidationRule.in">il valore deve essere uno tra: ${values}</Entry>
+  <Entry key="CollectionValidationRule.notIn">il valore non deve essere uno tra: ${values}</Entry>
+  <Entry key="CollectionValidationRule.in.query">il valore non è incluso nei valori permessi</Entry>
+  <Entry key="CollectionValidationRule.notIn.query">il valore è incluso nei valori vietati</Entry>
+</Bundle>

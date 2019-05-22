@@ -1,0 +1,244 @@
+/* import custom fonts */
+@font-face{
+    font-family:'Avenir LT';
+    src:url('Fonts/AvenirLTW0155Roman-webfont.eot');
+    src:url('Fonts/AvenirLTW0155Roman-webfont.eot?#iefix') format('embedded-opentype'),url('Fonts/AvenirLTW0155Roman-webfont.woff') format('woff'),url('Fonts/AvenirLTW0155Roman-webfont.ttf') format('truetype'),url('Fonts/AvenirLTW0155Roman-webfont.svg#svgFontName') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+html, body {
+    font-family: 'Avenir LT', Arial, sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    color: #666;
+}
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+*:before,
+*:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+/* General Classes */
+
+a, a:visited{
+    color: #82AD31;
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: underline;
+}
+
+
+
+.container-wrapper {
+    width: 960px;
+    margin: 0 auto;
+}
+.small-size .container-wrapper {
+    width: auto;
+}
+
+.clearfix:before,
+.clearfix:after,
+.section:before,
+.section:after,
+.container-wrapper:before,
+.container-wrapper:after {
+    display: table;
+    content: " ";
+}
+.clearfix:after,
+.section:after,
+.container-wrapper:after {
+    clear: both;
+}
+.container-padding {
+    padding: 30px 0;
+}
+.background-blue {
+    background-color: #40668C;
+    color: #fff;
+}
+.background-dark-gray {
+    background-color: #666;
+    color: #fff;
+}
+.text-center {
+    text-align: center;
+}
+
+.footer {
+    color: #fff
+}
+.footer p {
+    margin: 0;
+}
+
+.top {
+    padding: 10px 0;
+}
+
+
+
+/* WebRatio Generation Steps */
+.generationSteps{
+    width:50%;
+    float:left;
+    margin-top: 4.5em;
+}
+
+
+iframe {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: none;
+    height: 375px;
+}
+
+
+.dailyTip div{
+    border:1px solid #e7e7e7;
+}
+
+/* Welcome page sections */
+
+
+
+
+
+
+.section {
+    margin: 60px 0 15px;
+    position: relative;
+}
+.section .header {
+    float: left;
+    width: 66.66666666%;
+    background: #EBEBEB;
+    padding: 15px;
+    padding-right: 45px;
+    position: relative;
+}
+.small-size .header {
+    float: none;
+    width: auto;
+}
+
+.section .header h2 {
+    color: #40668C;
+    text-transform: uppercase;
+    font-size: 20px;
+    margin: 15px 0 30px;
+    padding-left: 115px;
+
+}
+
+.section .header .img {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: no-repeat center transparent;
+    top: -35px;
+    left: 15px;
+    background-size: 100px 100px;
+    
+}
+
+.section .content {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 33.3333333%;
+    background-color: #40668C;
+    color: #fff;
+    padding: 15px;
+}
+.small-size .content {
+    position: relative;
+    width: auto;
+}
+
+.section .content:before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 50%;
+    margin-top: -15px;
+    right: 100%;
+    border-bottom: 15px solid transparent;
+    border-top: 15px solid transparent;
+    border-right: 15px solid #40668C;
+}
+
+.small-size .section .content:before {
+    top: auto;
+    bottom: 100%;
+    margin-top: 0;
+    right: auto;
+    margin-left: -15px;
+    left: 50%;
+    border-bottom: 15px solid #40668C;
+    border-top: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+}
+
+.section ul {
+    list-style: none;
+    padding-left: 0;
+    line-height: 1.5em;
+}
+.section ul li {
+    padding-left: 20px;
+    position: relative;
+}
+.section ul li:before {
+    content: '';
+    display: block;
+    background-color: #fff;
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: url(../img/white-cube.png) no-repeat center transparent;
+    top: 5px;
+    left: 0;
+}
+
+.section ul li a{
+    color: #fff;
+}
+
+
+.section .header .learning{
+    background-image: url(../img/learning.png)
+}
+
+.section .header .community{
+    background-image:url(../img/community.png)
+}
+
+.section .header .support{
+    background-image:url(../img/support.png)
+}
+
+.section .header .certification{
+    background-image:url(../img/certification.png)
+}
+
+.section .header .resources{
+    background-image:url(../img/resources.png)
+}
+
+

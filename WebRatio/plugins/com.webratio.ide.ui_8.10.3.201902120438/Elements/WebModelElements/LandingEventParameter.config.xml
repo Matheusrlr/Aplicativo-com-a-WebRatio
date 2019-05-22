@@ -1,0 +1,19 @@
+<Element name="LandingEventParameter" lowerName="landing event parameter" pluralLowerName="landing event parameters">
+	<Description>
+		A parameter that a Landing Event
+		can receive when catching a Jump Event.
+	</Description>
+	<ActionRef label="Add Property" />
+	<ActionRef label="Localize" />
+	<ActionRef label="Generate Logic Descriptors Only"/>
+	<ActionRef label="Generate Selection"/>
+	<ActionRef label="Find Model Problems"/>
+	<PropertyCategory name="General">
+		<PropertyRef label="Identifier" />
+		<PropertyRef label="Name" />
+		<Property label="Value">
+			Default value to use for the parameter when the caught Jump Event does
+			not provide it.
+		</Property>
+	</PropertyCategory>
+</Element>

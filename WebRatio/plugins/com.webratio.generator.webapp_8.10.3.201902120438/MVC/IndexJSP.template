@@ -1,0 +1,24 @@
+#?delimiters [%, %], [%=, %]
+[% 
+def useURLFragments = "true" == wr.project.valueOf("WebModel/@enableURLFragments")
+def homeSiteView = getHomeSiteView()
+def homeElem = (homeSiteView ? getHomeElement(homeSiteView) : null)
+def homeElemPath = null
+if(homeElem != null){
+   homeElemPath = (homeElem["customURLName"] != "") ? getWebAppPath(homeElem) : homeElem["id"]
+}
+%]
+[%if(homeElem){%]
+  [%if(useURLFragments){%]
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	<%@ taglib prefix="webratio" uri="http://www.webratio.com/2006/TagLib/JSP20" %>
+    <c:set var="url"><webratio:Link link="[%= homeElem["id"]%].link"/></c:set>
+    <%response.sendRedirect((String) pageContext.getAttribute("url"));%>
+  [%} else {%]
+    <%response.sendRedirect(response.encodeRedirectURL("[%= homeElemPath%].do"));%>
+  [%}%]  
+[%} else if(wr.projectType.name() == "ENTERPRISE"){%]
+	<%response.sendRedirect("[%= wr.project.selectSingleNode("SubProject[@natureId='com.webratio.ide.WebModelNature'][@default='true']")["name"]%]");%>
+[%} else if(wr.project["wsEnableRestSummaryPage"] == "true"){%]
+	<%response.sendRedirect(response.encodeRedirectURL("swagger.do"));%>
+[%}%]

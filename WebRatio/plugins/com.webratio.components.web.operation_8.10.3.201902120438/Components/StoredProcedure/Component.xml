@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="operation" formBased="false" idPrefix="spu" namePrefix="Stored Procedure " label="Stored Procedure" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" successFlowSource="true" successFlowTarget="true"> 
+  <DBProperty attributeName="db" label="Database"> 
+    <Description xml:space="preserve">The database identifier defined into the mapping model.</Description> 
+  </DBProperty>  
+  <StoreProcedureProperty attributeName="procedure" databaseIdExpr="@db" figureDisplayOrder="1"> 
+    <Description xml:space="preserve">The name of the stored procedure defined into the database.</Description> 
+  </StoreProcedureProperty>  
+  <EnumProperty attributeName="resultType" defaultValue="plain"> 
+    <EnumItem value="plain"/>  
+    <EnumItem value="plainMySQLFunction" label="Plain (MySQL/Oracle/SQL Server Function)"/>  
+    <EnumItem value="recordSet"/>  
+    <Description xml:space="preserve">Specify if the result given back from the stored procedure
+is plain or is a result set. Consult the database developer's
+guide and the JDBC guide of the database/driver in
+use in order to choose the appropriate notation.</Description> 
+  </EnumProperty>  
+  <SubComponent elementName="StoredProcedureParameter" idPrefix="spp" namePrefix="X" label="Parameter"> 
+    <EnumProperty attributeName="type" defaultValue="string"> 
+      <EnumItem value="blob"/>  
+      <EnumItem value="boolean"/>  
+      <EnumItem value="date"/>  
+      <EnumItem value="decimal"/>  
+      <EnumItem value="float"/>  
+      <EnumItem value="integer"/>  
+      <EnumItem value="string"/>  
+      <EnumItem value="text"/>  
+      <EnumItem value="time"/>  
+      <EnumItem value="timestamp"/>  
+      <Description xml:space="preserve">The type of the content of the parameter. The selected type
+determines the rendition of the parameter.</Description> 
+    </EnumProperty>  
+    <EnumProperty attributeName="direction" defaultValue="input"> 
+      <EnumItem value="input" label="input"/>  
+      <EnumItem value="output" label="output"/>  
+      <EnumItem value="inOutput" label="input/output"/>  
+      <Description xml:space="preserve">The input/output direction of the parameter.</Description> 
+    </EnumProperty>  
+    <StringProperty attributeName="position"> 
+      <Description xml:space="preserve">The position number of the parameter (1-based).</Description> 
+    </StringProperty>  
+    <Description xml:space="preserve">A parameter is an input/output value accepted by the stored procedure.
+A parameter is specified as a sub-element of a stored procedure component.</Description> 
+  </SubComponent >  
+  <SubComponent elementName="OutputResultSet" idPrefix="rs" label="Result Set"> 
+    <IsEnabled>
+       dbId = element.attributeValue("db") 
+       dbElem = element.selectSingleNode("//*[namespace-uri()='http://www.webratio.com/2006/WebML/Database' and local-name()='Database' and @id='" + dbId + "']") 
+       return dbElem == null ? false : (dbElem.attributeValue("type").contains("Oracle"))
+    </IsEnabled>  
+    <StringProperty attributeName="position"> 
+      <Description xml:space="preserve">The position number of the parameter (1-based).</Description> 
+    </StringProperty>  
+    <SubComponent elementName="OutputParameter" idPrefix="op" label="Output Parameter"> 
+      <EnumProperty attributeName="type" defaultValue="string"> 
+        <EnumItem value="blob"/>  
+        <EnumItem value="boolean"/>  
+        <EnumItem value="date"/>  
+        <EnumItem value="decimal"/>  
+        <EnumItem value="float"/>  
+        <EnumItem value="integer"/>  
+        <EnumItem value="string"/>  
+        <EnumItem value="text"/>  
+        <EnumItem value="time"/>  
+        <EnumItem value="timestamp"/>  
+        <Description xml:space="preserve">The type of the content of the parameter. The selected type determines the rendition of the parameter.</Description> 
+      </EnumProperty>  
+      <StringProperty attributeName="position"> 
+        <Description xml:space="preserve">The position number of the parameter (1-based).</Description> 
+      </StringProperty> 
+    </SubComponent > 
+  </SubComponent >  
+  <Description xml:space="preserve">The Stored Procedure is an operation that allows to call a procedure
+stored in a database.</Description>  
+  <InputDescription xml:space="preserve" name="Input">The set of input parameters declared in the stored procedure.</InputDescription>  
+  <OutputDescription xml:space="preserve" name="Output">The set of output parameters exposed by the stored procedure.</OutputDescription> 
+</Component>

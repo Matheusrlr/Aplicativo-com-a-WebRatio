@@ -1,0 +1,52 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.GenerationException
+
+if (layoutSubPage == null) {
+	def title = "Undefined layoutSubPage variable"    
+	def reason = "Unable to generate the Sub Page layout."
+	def hint = "Specify a variable holding a layout:SubPage"
+	throw new GenerationException(title, reason, [hint], null)
+}
+
+/* Get style */
+def templatePath = "BUILTIN/SubPage"
+def templateParameters = [:]
+def templateFile = getLayoutFile(templatePath, LayoutType.PAGE)
+if (!templateFile) {
+	def title = "Sub Page Layout Not Found"
+	def reason = "Unable to find the sub page layout \'" + templatePath + "\'"
+	def hint = "Check the project for the missing sub page layout [name = " + templatePath + "] associated with a sub page of the page [id = " + page["id"] + "]"
+	throw new GenerationException(title, reason, [hint], null)
+}
+addUsedTemplate(templatePath)
+
+/* Render the Sub Page in a wrapper, capturing all output in case it must be split away */
+def textClosure = {
+	printRaw(executeContextTemplate("MVC/Wrapper.template", ["refreshFragmentType": "control", "element": layoutSubPage, "content": {
+		
+		/* Alternative condition start */
+		def alternative = getByIdOptional(layoutSubPage, "pageId")?.parent?.selectSingleNode("self::Alternative")
+		if (alternative) {
+			%]<c:if test="${[%= alternative["id"] %] eq '[%= layoutSubPage["pageId"] %]'}">[%
+		}
+		
+		/* Actual Sub Page layout */
+		printRaw(executeTemplate(templateFile.absolutePath, ["params": templateParameters, "templateType": "page"]))
+		
+		/* Alternative condition end */
+		if (alternative) {
+			%]</c:if>[%
+		}
+	}]))
+}
+
+/* If the Sub Page should be split, print it in an auxiliary page; otherwise, print it as normal */
+if (page.valueOf("@layout:splitSubPages") == "true") {
+	def pageId = layoutSubPage["pageId"]
+	def auxId = getLayoutId(layoutSubPage).replace(pageId, getPageRuntimeId(getById(pageId)))
+	printRaw(executeContextTemplate("MVC/AuxPage.template", ["auxId": auxId, "content": textClosure]))
+} else {
+	printRaw(executeTemplate(textClosure))
+}
+%]

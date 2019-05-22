@@ -1,0 +1,11 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import org.apache.commons.lang.StringUtils
+setXMLOutput()
+%>
+<ValidationRule service="com.webratio.components.web.validation.TypeValidationRuleService">
+  <Type><%=element["type"]%></Type>
+  <%if(!StringUtils.isBlank(element["pattern"])){%>
+     <Pattern><%=element["pattern"]%></Pattern>
+  <%}%>
+</ValidationRule>

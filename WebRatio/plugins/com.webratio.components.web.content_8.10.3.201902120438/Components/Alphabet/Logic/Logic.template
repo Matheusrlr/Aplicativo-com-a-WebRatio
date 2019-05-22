@@ -1,0 +1,21 @@
+#?delimiters [%,%],[%=,%]
+[%
+setXMLOutput()
+
+def domainClass = getByIdOptional(component["dataBinding"])
+%]
+<Descriptor service="com.webratio.components.web.content.[%=domainClass != null ? "datasource." : ""%]AlphabetService">
+    <UseNumbers>[%=component["useNumbers"] %]</UseNumbers>
+   	<SpecialCharacters>[%=component["specialCharacters"]%]</SpecialCharacters>
+    [% if (domainClass) { %]
+      [% def attribute = getById(component["attribute"]) %]
+   	  <SearchAttribute>[%=attribute["id"]%]</SearchAttribute>
+  	  <DataSource>[%=getDataSourceId(domainClass)%]</DataSource>
+      [%
+        def selectAttributes = new LinkedHashSet()
+        selectAttributes.addAll(getKeyAttributes(domainClass).collect{it["id"]})
+        selectAttributes.addAll(getOutputAttributes(component, "data[].", "Array"))
+        selectAttributes.add(component["attribute"])
+        printRaw(createQuery(domainClass).select(selectAttributes).selector(component.element("ConditionalExpression")).build().asXML())%]
+  	[% } %]
+</Descriptor>

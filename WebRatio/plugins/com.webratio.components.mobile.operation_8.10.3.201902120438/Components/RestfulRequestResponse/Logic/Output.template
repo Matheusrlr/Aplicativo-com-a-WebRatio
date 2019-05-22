@@ -1,0 +1,46 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+
+def bindingFlow = binding.variables["bindingFlow"]
+def showErrorOutputs = (!bindingFlow || bindingFlow?.getName() in ["ErrorFlow", "DataFlow"])
+%]
+<OutputParameters>
+
+	[% if (component["responseContentType"] == "json") { %] 
+		<OutputParameter name="json" label="Response JSON Message"/>
+	[% } else if (component["responseContentType"] == "text") { %]
+		<OutputParameter name="text" label="Response Text Message"/>
+	[% } %]
+	
+	[% 
+		def printResponseParameterOutput(param, labelPrefix = "", isArrayContext = false) {
+			def label = labelPrefix + param["name"]
+			def isArray = isArrayContext || param["isArray"] == "true"
+			%]
+			<OutputParameter
+				name="[%= param["id"] %]"
+				label="[%= label %][% if (param["isArray"] == "true") { %] [array][% } %]"
+			/>
+			[%
+			if (param.name == "ResponseParameter" || param.name == "ComplexParameterFragment") {
+				def childLabelPrefix = label + "/"
+				for (childParam in param.selectNodes("SimpleParameterFragment|ComplexParameterFragment")) {
+					printResponseParameterOutput(childParam, childLabelPrefix, isArray) // recurse
+				}
+			}
+		}
+	%]
+	[% for (param in component.selectNodes("ResponseParameter")) { %]
+		[% printResponseParameterOutput(param) %]
+	[% } %]
+	
+	[% for (responseHeader in component.selectNodes("ResponseHeader")) { %]
+		<OutputParameter name="[%= responseHeader["id"] %]" label="[%= responseHeader["name"] %]" image="RestfulRequestResponse/ResponseHeader" />
+	[% } %]
+	
+	[% if (showErrorOutputs) { %]
+		<OutputParameter name="errorMessage" label="Error Message" type="ErrorMessage"/>
+	[% } %]
+
+</OutputParameters>

@@ -1,0 +1,168 @@
+<SubElements>
+	<SubElement name="Slot" lowerName="slot" pluralLowerName="slots">
+			<Description>
+			A Slot is a placeholder 
+			for a piece of data to be preloaded in the <ElementRef/>.
+		   </Description>
+		   	<ActionRef label="Localize" />
+			<ActionRef label="Open Generated Code" />
+			<ActionRef label="Add Property" />
+			<PropertyCategory name="General">
+				<PropertyRef label="Identifier" />
+				<PropertyRef label="Name" />
+				<PropertyRef label="Value" name="Slot Value"/>
+				<PropertyRef label="Label"/>
+				<PropertyRef label="Output"/>
+			</PropertyCategory>
+	</SubElement>
+	<SubElement name="ValidationRule" lowerName="validation rule" pluralLowerName="validation rules">
+			<Description>
+			A Validation Rule is a logical 
+			condition evaluated on the content input by the user in a <ElementRef/>.
+		   </Description>
+		   	<ActionRef label="Localize" />
+			<ActionRef label="Open Generated Code" />
+			<ActionRef label="Add Property" />
+			<PropertyCategory name="General">
+				<PropertyRef label="Identifier" />
+				<PropertyRef label="Name" />
+				<PropertyRef label="Predicate"/>
+				<PropertyRef label="Value" name="Rule Value"/>
+				<PropertyRef label="Error Message"/>
+				<PropertyRef label="Class Name"/>
+			</PropertyCategory>
+	</SubElement>
+	<SubElement name="ParameterBinding" lowerName="parameter binding" pluralLowerName="parameters binding">
+			<Description>
+			A Parameter Binding is a value associated with a 
+			<ElementRef/> between components, which is transported, as an effect of the <ElementRef/> navigation, from the source component to the destination 
+	  		component.
+		   </Description>
+		   	<ActionRef label="Localize" />
+			<ActionRef label="Open Generated Code" />
+			<ActionRef label="Add Property" />
+			<PropertyCategory name="General">
+				<PropertyRef label="Identifier" />
+				<PropertyRef label="Name" />
+				<Property label="Source">
+					The output parameter of the source component (not editable)
+				</Property>
+				<Property label="Target">
+					The input parameter of the target component (not editable)
+				</Property>
+				<Property label="Passing">
+					If checked, the input parameter is re-emitted as-is by the destination component
+				</Property>
+				<Property label="Constant Value">
+					The constant value assigned to the parameter binding.
+				</Property>
+		  </PropertyCategory>
+	</SubElement>
+	<SubElement name="LandingEventParameter" lowerName="landing event parameter" pluralLowerName="landing event parameters">
+		<Description>
+			A parameter that a landing event
+			can receive when catching a Jump Event.
+		</Description>
+		<ActionRef label="Add Property" />
+		<ActionRef label="Localize" />
+		<ActionRef label="Generate Logic Descriptors Only"/>
+		<ActionRef label="Generate Selection"/>
+		<ActionRef label="Find Model Problems"/>
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+			<Property label="Value">
+				Default value to use for the parameter when the caught Jump Event does
+				not provide it.
+			</Property>
+		</PropertyCategory>
+	</SubElement>
+	<SubElement name="JumpBackEventParameter" lowerName="jump back event parameter" pluralLowerName="jump back event parameters">
+		<Description>
+			A parameter that a jump event
+			may capture when another jump event
+			performs a backward jump to it.
+		</Description>
+		<ActionRef label="Add Property" />
+		<ActionRef label="Localize" />
+		<ActionRef label="Find Model Problems"/>
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+		</PropertyCategory>
+	</SubElement>
+	<SubElement name="Input Port" lowerName="input port" pluralLowerName="input ports">
+		<Description>
+			Point through which navigation enters a Module (to an Input Port Definition).
+		</Description>
+	   	<ActionRef label="Localize" />
+		<ActionRef label="Add Property" />
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+			<Property label="Definition">
+				The Input Port Definition to which this Input Port refers.
+			</Property>
+		</PropertyCategory>
+	</SubElement>
+	<SubElement name="Output Port" lowerName="output port" pluralLowerName="output ports">
+		<Description>
+			Point through which navigation exits a Module (from an Output Port Definition).
+		</Description>
+	   	<ActionRef label="Localize" />
+		<ActionRef label="Add Property" />
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+			<Property label="Definition">
+				The Output Port Definition to which this Output Port refers.
+			</Property>
+		</PropertyCategory>
+	</SubElement>
+	<SubElement name="SuccessEvent" lowerName="success event" pluralLowerName="success events">
+		<Description>
+			The event caught when the business logic referred to by the parent <ElementRef/>
+			completes successfully. 
+		</Description>
+	   	<ActionRef label="Localize" />
+		<ActionRef label="Add Property" />
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+			<Property label="Success Port Definition">
+				The Success Port Definition to which this Success Event refers.
+			</Property>
+		</PropertyCategory>
+	</SubElement>
+	<SubElement name="ErrorEvent" lowerName="error event" pluralLowerName="error events">
+		<Description>
+			The event caught when the business logic referred to by the parent <ElementRef/>
+			completes with an error.
+		</Description>
+	   	<ActionRef label="Localize" />
+		<ActionRef label="Add Property" />
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+			<Property label="Error Port Definition">
+				The Error Port Definition to which this Error Event refers.
+			</Property>
+		</PropertyCategory>
+	</SubElement>
+	<SubElement name="PortDefinitionParameter" lowerName="port definition parameter" pluralLowerName="port definition parameters">
+		<Description>
+			A parameter that may be passed through the parent <ElementRef/>, effectively acting
+			as an input or output to the model contained in the Module/Action Definition.
+		</Description>
+	   	<ActionRef label="Localize" />
+		<ActionRef label="Open Generated Code" />
+		<ActionRef label="Add Property" />
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+			<Property label="Value">
+				The user-defined value to be used for the <ElementRef />.
+			</Property>
+		</PropertyCategory>
+	</SubElement>
+</SubElements>

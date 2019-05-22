@@ -1,0 +1,87 @@
+#?delimiters [%, %], [%=, %]
+[%  import org.apache.commons.lang.math.NumberUtils
+	setJSONOutput() 
+%]
+[% 	
+	def ce = component.selectSingleNode("ConditionalExpression")
+	def condExprs = ""
+	if(ce){
+		condExprs = getConditionalExpressionJson( getById(component["dataBinding"]), ce )
+	}
+	
+	def sortAttributes = component.selectNodes("SortAttribute")
+	
+	def maxResults = component["maxResults"] ? NumberUtils.toInt(component["maxResults"], -1) : 0
+	if (maxResults < 0) {
+		maxResults = 0
+	}
+	def levels = component.selectNodes("HierarchyLevel")
+
+%]
+{
+	"service": "wrm.comp.HierarchyService",
+	"entity": "[%= component["dataBinding"] %]",
+		[% if (ce) { %]
+			"condExpr":  [% printRaw(condExprs) %],
+		[% } %]
+	"order": [[% sortAttributes.eachWithSeparator(","){ it -> %] 
+				{
+					"property": "[%= it["attribute"] %]",
+					"reverse": [%= it["order"] == "descending" %]
+				 } 
+			 [% } 
+		 %]],
+	"maxResults": [%= maxResults %],
+	"levels": [
+				[% 
+					levels.eachWithSeparator(","){ %] [% printLevel(it) %] [% }
+				%] 
+		 	 ]
+}
+
+[%
+	def printLevel(level) {
+		def levelCe = level.selectSingleNode("ConditionalExpression")
+		def levelCondExprs = ""
+		if(levelCe){
+			levelCondExprs = getConditionalExpressionJson( getById(level["dataBinding"]), levelCe )
+		}	
+		def levelSortAttributes = level.selectNodes("SortAttribute")
+		
+		def levelMaxResults = level["maxResults"] ? NumberUtils.toInt(level["maxResults"], -1) : 0
+		if (levelMaxResults < 0) {
+			levelMaxResults = 0
+		}
+		def role = getOppositeRole(getById(level["role"]))
+		def dClassKey = getKeyAttributes(getTargetDomainClass(role))[0]
+
+		def levelLevels = level.selectNodes("HierarchyLevel")
+		%]
+		 	{   "entity": "[%= level["dataBinding"] %]",
+		 		"levelId": "[%= level["id"] %]",
+				 	[% if (levelCe) { %]
+						"condExpr":  [% printRaw(levelCondExprs) %],
+					[% } %]
+				"role": "[%= role["id"] %]",
+				"roleCondition": {
+									"property": "[%= role["id"] %].[%= dClassKey["id"] %]",
+									"operator": "in",
+									"valueInput": "[%= level["id"] %].[%= dClassKey["id"] %].expanded"
+								},
+				"order": [[% levelSortAttributes.eachWithSeparator(","){ it -> %] 
+						{
+							"property": "[%= it["attribute"] %]",
+							"reverse": [%= it["order"] == "descending" %]
+						 } 
+					 [% } 
+				 %]],
+		 		"[%= level["name"]%]maxResults": [%= levelMaxResults %],
+		 		"levels": [
+		 					[% 
+		 						levelLevels.eachWithSeparator(","){ %] [% printLevel(it) %] [% }
+		 					%] 
+		 				]
+			}
+		
+		
+[% } %]

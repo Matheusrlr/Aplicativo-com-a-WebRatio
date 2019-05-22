@@ -1,0 +1,20 @@
+<Element name="OnSelectEvent" lowerName="On Select event" pluralLowerName="On Select events">
+	<Description>
+		The On Select Event represents the user's interaction when selecting elements from a View Component. 
+		It can be placed on a View Component and lets the runtime execution follow the outgoing Navigation Flow. 
+	</Description>
+	<ActionRef label="Add Property" />
+	<ActionRef label="Localize" />
+	<ActionRef label="Generate Layout Pages Only"/>
+	<ActionRef label="Generate Logic Descriptors Only"/>
+	<ActionRef label="Generate Selection"/>
+	<ActionRef label="Find Model Problems"/>
+	<ActionRef label="Help"/>
+	<PropertyCategory name="General">
+		<PropertyRef label="Identifier" />
+		<PropertyRef label="Name" />		
+		<Property label="Enable Validation">	
+	    	If checked, this property enables the validation on a flow outgoing from the event placed on a &lt;a href="/Reference/ComponentsReferencecom.webratio.components.mobile.content/Components"&gt;Form&lt;/a&gt; otherwise the validation is ignored.
+		</Property>
+	</PropertyCategory>
+</Element>

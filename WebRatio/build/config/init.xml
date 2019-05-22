@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<project name="WebRatio Build Init Script">
+
+	<property name="webratioDir" value="${ant.file}/../../../.." />
+
+	<path id="groovy.classpath">
+		<fileset dir="${webratioDir}/WebRatio/build/config">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${ant.file}/..">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+	<taskdef name="groovy" classname="org.codehaus.groovy.ant.Groovy" classpathref="groovy.classpath" />
+
+	<groovy>
+		<![CDATA[		
+		   import java.io.*
+		
+		   def webratioDir = new File(properties["webratioDir"])
+		   def pluginsDir = new File(webratioDir, "WebRatio/plugins")
+		   def buildPluginDir = new File(pluginsDir, "com.webratio.project.build")
+		   if(!buildPluginDir.exists()){
+		     def lastVersionNumber = 0 
+		     def pluginNamePrefix = buildPluginDir.name + "_"
+       		 for(file in pluginsDir.listFiles()){
+		        if (file.getName().startsWith(pluginNamePrefix)) {
+		            def currentVersionNumber = Long.decode(file.getName().substring(file.getName().lastIndexOf('.') + 1))
+		            if (currentVersionNumber > lastVersionNumber) {
+		               lastVersionNumber = currentVersionNumber
+		               buildPluginDir = file
+		            }
+		        }		            
+		     }
+		   }
+		   if(!buildPluginDir.exists()){
+		       throw new Exception("Unable to compute dir for 'com.webratio.project.build' plug-in")
+		   }
+		   properties['projectBuildDir'] = buildPluginDir.canonicalPath
+		]]>
+	</groovy>
+
+
+	<import file="${projectBuildDir}/Scripts/base.xml" />
+
+
+</project>

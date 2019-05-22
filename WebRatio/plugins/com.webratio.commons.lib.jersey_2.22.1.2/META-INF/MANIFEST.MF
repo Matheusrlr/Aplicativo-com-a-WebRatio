@@ -1,0 +1,107 @@
+Manifest-Version: 1.0
+Export-Package: com.sun.research.ws.wadl,org.glassfish.jersey,org.glas
+ sfish.jersey.client,org.glassfish.jersey.client.authentication,org.gl
+ assfish.jersey.client.filter,org.glassfish.jersey.client.internal,org
+ .glassfish.jersey.client.spi,org.glassfish.jersey.filter,org.glassfis
+ h.jersey.internal,org.glassfish.jersey.internal.inject,org.glassfish.
+ jersey.internal.l10n,org.glassfish.jersey.internal.sonar,org.glassfis
+ h.jersey.internal.spi,org.glassfish.jersey.internal.util,org.glassfis
+ h.jersey.internal.util.collection,org.glassfish.jersey.jackson,org.gl
+ assfish.jersey.jackson.internal,org.glassfish.jersey.media.multipart,
+ org.glassfish.jersey.media.multipart.file,org.glassfish.jersey.media.
+ multipart.internal,org.glassfish.jersey.message,org.glassfish.jersey.
+ message.filtering,org.glassfish.jersey.message.filtering.internal,org
+ .glassfish.jersey.message.filtering.spi,org.glassfish.jersey.message.
+ internal,org.glassfish.jersey.model,org.glassfish.jersey.model.intern
+ al,org.glassfish.jersey.process,org.glassfish.jersey.process.internal
+ ,org.glassfish.jersey.server,org.glassfish.jersey.server.filter,org.g
+ lassfish.jersey.server.filter.internal,org.glassfish.jersey.server.in
+ ternal,org.glassfish.jersey.server.internal.inject,org.glassfish.jers
+ ey.server.internal.monitoring,org.glassfish.jersey.server.internal.mo
+ nitoring.jmx,org.glassfish.jersey.server.internal.process,org.glassfi
+ sh.jersey.server.internal.routing,org.glassfish.jersey.server.interna
+ l.scanning,org.glassfish.jersey.server.internal.sonar,org.glassfish.j
+ ersey.server.model,org.glassfish.jersey.server.model.internal,org.gla
+ ssfish.jersey.server.monitoring,org.glassfish.jersey.server.spi,org.g
+ lassfish.jersey.server.spi.internal,org.glassfish.jersey.server.wadl,
+ org.glassfish.jersey.server.wadl.config,org.glassfish.jersey.server.w
+ adl.internal,org.glassfish.jersey.server.wadl.internal.generators,org
+ .glassfish.jersey.server.wadl.internal.generators.resourcedoc,org.gla
+ ssfish.jersey.server.wadl.internal.generators.resourcedoc.model,org.g
+ lassfish.jersey.server.wadl.internal.generators.resourcedoc.xhtml,org
+ .glassfish.jersey.server.wadl.processor,org.glassfish.jersey.servlet,
+ org.glassfish.jersey.servlet.internal,org.glassfish.jersey.servlet.in
+ ternal.spi,org.glassfish.jersey.servlet.spi,org.glassfish.jersey.spi,
+ org.glassfish.jersey.uri,org.glassfish.jersey.uri.internal
+Require-Bundle: com.webratio.commons.lib.asm,com.webratio.commons.lib.
+ jackson,com.webratio.commons.lib.jackson2,com.webratio.commons.lib.ja
+ vax.ws.rs,com.webratio.commons.lib.hk2,com.webratio.commons.lib.googl
+ e.guava,com.webratio.commons.lib.javax.inject,com.webratio.commons.li
+ b.javax.annotation,com.webratio.commons.lib.javax.validation,com.webr
+ atio.commons.lib.mimepull
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/jersey-common.jar,lib/jersey-client.jar,lib/jers
+ ey-media-json-jackson.jar,lib/jersey-media-multipart.jar,lib/jersey-s
+ erver.jar,lib/jersey-container-servlet-core.jar,lib/jersey-guava.jar,
+ lib/jersey-entity-filtering.jar
+Bundle-Version: 2.22.1.2
+Bundle-Name: WebRatio 3rd Party Library - Jersey
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.jersey
+Eclipse-RegisterBuddy: com.webratio.commons.lib.javax.ws.rs
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+
+Name: lib/jersey-media-multipartsrc.zip
+SHA-256-Digest: rTIHmxat/YE7W5hdpidz26iPSx6izGBrYt65XhsELWs=
+
+Name: lib/jersey-clientsrc.zip
+SHA-256-Digest: DLXEEPRQHw3jdGWzBlgpPQ//bMjU8a+JpxsOcc5Epwg=
+
+Name: lib/jersey-commonsrc.zip
+SHA-256-Digest: 183pdmQ0WQX2h6KBP9pHsYq5mNWqG9bIWkkvjGkLgNo=
+
+Name: lib/jersey-guava.jar
+SHA-256-Digest: zRP603Yhbl2Xz1KMkJ8rO2023AyE8A4M5DHna7Lccg4=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: lib/jersey-client.jar
+SHA-256-Digest: IcGe39KvbXZw6wiFVTJ2p73lL8iBk1PPtmwexpOfA+g=
+
+Name: lib/jersey-container-servlet-coresrc.zip
+SHA-256-Digest: +34DIg10OXqw8xBxcJtX1sxNNBC0OkBUe5xVp4vFhoo=
+
+Name: lib/jersey-entity-filteringsrc.zip
+SHA-256-Digest: kHL/pAR+AS7ESZOe0mFzwkJ15nI5zOsAvAit2X6ImNs=
+
+Name: lib/jersey-container-servlet-core.jar
+SHA-256-Digest: 3bT5hMxha/dQ+5ZNdA9hnP2gmdG8Wkx+BsUD4wMDQ6w=
+
+Name: lib/jersey-server.jar
+SHA-256-Digest: 4oKhxn0pt2X5AxrRU6Tp7tDxy31OE3sOJiRSmvNe87E=
+
+Name: lib/jersey-media-multipart.jar
+SHA-256-Digest: N0MpANutm51xuKVFGdWOFjwpY8aFKSZMJcSncuKFjhI=
+
+Name: about.html
+SHA-256-Digest: 32PGPc41GCRE67N128jVBGK79/r8gXEPt2ZAQr+nVSk=
+
+Name: lib/jersey-common.jar
+SHA-256-Digest: ptzIBJjdPoSQH8CLAl+DLzy/T/jQ3nzrbQL/7cTGRbI=
+
+Name: lib/jersey-media-json-jacksonsrc.zip
+SHA-256-Digest: qM0ruEq/HfS9Ffosen9qp8dZqAIOoQyYsMtPXeFVrMw=
+
+Name: lib/jersey-entity-filtering.jar
+SHA-256-Digest: RtwqxjHdaf5hBh54sy340y/Ss4n3jXPdOW5FWhRASnA=
+
+Name: lib/jersey-media-json-jackson.jar
+SHA-256-Digest: YG4Okk2VhEZRkQNdh1YQknGWOIHs6wy5NJ2HYGV+db0=
+
+Name: about_files/CDDL+GPL_1_1.txt
+SHA-256-Digest: rPs90Jccj5ZYwzJdY2o8rYOa8ik7b6TAC1AZB+iOvLg=
+
+Name: lib/jersey-serversrc.zip
+SHA-256-Digest: ySJtXSg/5n6+3PUZAz2lUSql/59z3OPtQ0wuq0AOCdU=
+

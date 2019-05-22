@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Store Components Test Definition">
+
+	<!--
+	<property name="webratio.home" value="C:/WebRatio/WebRatio Enterprise 8.0.0" />
+	-->
+	<dirname property="antfile.dir" file="${ant.file}"/>
+	<property name="webratio.home" value="${antfile.dir}/../../../.." />
+	<property name="output.folder" value="${webratio.home}/Tomcat\webapps" />
+	<property name="webratio.loc" value="${webratio.home}/WebRatio/WebRatio.exe" />
+	<property name="workspace.loc" value="${webratio.home}/workspace" />
+	<property name="war.folder" value="${webratio.home}/WARs" />
+	<property name="java.home" value="C:\Java\jdk1.6\jre" />
+	<property name="vmargs" value=" -Xms40m -Xmx512m -XX:PermSize=64m -XX:MaxPermSize=128m -Dwr.user.unfeedback=true" />
+	<property name="webratio.version" value="8.0.0.201307180601" />
+
+	<macrodef name="testing">
+		<attribute name="itemName" />
+		<attribute name="itemId" />
+		<attribute name="projectName" />
+		<attribute name="username" />
+		<attribute name="password" />
+		<element name="install" />
+		<element name="generate" />
+		<element name="deploy" />
+		<sequential>
+			<echo message="itemName=@{itemName}" />
+			<echo message="itemId=@{itemId}" />
+
+			<!-- install -->
+			<echo message="[ INSTALL ]" />
+			<java fork="true" dir="." jvm="${java.home}/bin/java.exe" logError="true" classname="org.eclipse.core.launcher.Main" output="output.log">
+				<classpath>
+					<fileset dir="${webratio.home}/WebRatio/plugins">
+						<include name="org.eclipse.equinox.launcher_*.jar" />
+					</fileset>
+				</classpath>
+				<arg line="-application com.webratio.ide.ui.store" />
+				<arg line="-data '${workspace.loc}'" />
+				<arg line="-storeItem @{itemId}" />
+				<arg line="-storeItemName @{itemName}" />
+				<arg line="-storeUser @{username}" />
+				<arg line="-storePassword @{password}" />
+				<arg line="-consolelog" />
+				<jvmarg line="${vmargs}" />
+				<arg line="-DuseShellConsole=true" />
+			</java>
+
+			<!-- generate -->
+			<echo message="projectName=@{projectName}" />
+			<echo message="[ GENERATE ]" />
+			<java fork="true" dir="." jvm="${java.home}/bin/java.exe" logError="true" classname="org.eclipse.core.launcher.Main" output="output.log">
+				<classpath>
+					<fileset dir="${webratio.home}/WebRatio/plugins">
+						<include name="org.eclipse.equinox.launcher_*.jar" />
+					</fileset>
+				</classpath>
+				<arg line="-application com.webratio.ide.ui.webAppGenerator" />
+				<arg line="-data '${workspace.loc}'" />
+				<arg line="-webratioProject @{projectName}" />
+				<arg line="-consoleLog" />
+				<arg line="-webratioVersion '${webratio.version}'" />
+				<jvmarg line="${vmargs}" />
+			</java>
+
+			<!-- deploy -->
+			<echo message="[ DEPLOY ]" />
+			<war basedir="${output.folder}/@{projectName}" destfile="${war.folder}/@{projectName}.war" webxml="${output.folder}/@{projectName}/WEB-INF/web.xml" excludes="WEB-INF/descr/_redeploy" />
+		</sequential>
+	</macrodef>
+</project>

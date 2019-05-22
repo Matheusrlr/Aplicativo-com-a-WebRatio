@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><?eclipse version="3.2"?>
+
+<plugin>
+  <extension point="com.webratio.commons.mf.ui.views.properties.tabbed.propertyTabs">
+    <propertyTabs contributorId="com.webratio.bpm.ui.editors.BPMProjectEditor">
+      <propertyTab category="default" image="icons/full/elcl16/general.png" disabledImage="icons/full/dlcl16/general.png" id="general" label="General"/>
+      <propertyTab category="default" image="icons/full/elcl16/duration.png" disabledImage="icons/full/dlcl16/duration.png" id="duration" label="Duration" afterTab="general"/>
+      <propertyTab category="default" image="icons/full/elcl16/notification.png" disabledImage="icons/full/dlcl16/notification.png" id="notification" label="Notification" afterTab="duration"/>
+      <propertyTab category="default" image="icons/full/elcl16/appearance.png" disabledImage="icons/full/dlcl16/appearance.png" id="appearance" label="Appearance" afterTab="notification"/>
+      <propertyTab category="default" image="icons/full/elcl16/social.png" disabledImage="icons/full/dlcl16/social.png" id="social" label="Social" afterTab="appearance"/>
+      <propertyTab category="default" image="icons/full/elcl16/xml.png" disabledImage="icons/full/dlcl16/xml.png" id="xml" label="XML" afterTab="social"/>
+    </propertyTabs>
+  </extension>
+  <extension point="org.eclipse.core.runtime.contentTypes">
+    <content-type base-type="org.eclipse.core.runtime.xml" file-extensions="descr" id="com.webratio.bpm.ui.ELEMENT_DESCRIPTOR" name="Element Descriptor"/>
+  </extension>
+  <extension id="activeScenarioIds" name="Active Scenario Ids" point="org.eclipse.core.resources.markers">
+    <super type="org.eclipse.core.resources.marker"/>
+    <persistent value="true"/>
+  </extension>
+  <extension id="com.webratio.bpm.businessmodelingnature" name="BPMN Project" point="org.eclipse.core.resources.natures">
+    <runtime>
+      <run class="com.webratio.bpm.ui.BusinessModelingNature"/>
+    </runtime>
+    <builder id="com.webratio.bpm.ui.bpmbuilder"/>
+  </extension>
+  <extension point="org.eclipse.ui.ide.projectNatureImages">
+    <image icon="icons/full/ovr16/business_ovr.png" id="com.webratio.bpm.businessmodelingnature" natureId="com.webratio.bpm.businessmodelingnature"/>
+  </extension>
+  <extension id="bpmbuilder" name="BPM Builder" point="org.eclipse.core.resources.builders">
+    <builder hasNature="true">
+      <run class="com.webratio.bpm.ui.resources.BPMBuilder"/>
+    </builder>
+  </extension>
+  <extension id="problem" name="BPM Problem" point="org.eclipse.core.resources.markers">
+    <super type="org.eclipse.core.resources.problemmarker"/>
+    <persistent value="true"/>
+  </extension>
+  <extension point="org.eclipse.ui.ide.markerResolution">
+    <markerResolutionGenerator class="com.webratio.bpm.ui.warnings.BPMResolutionGenerator" markerType="com.webratio.bpm.ui.problem"/>
+    <markerResolutionGenerator class="com.webratio.bpm.ui.warnings.SignalResolutionGenerator" markerType="com.webratio.bpm.ui.problem"/>
+  </extension>
+  <!--
+  <extension point="org.eclipse.ui.perspectives">
+    <perspective class="com.webratio.bpm.ui.BPMPerspectiveFactory" icon="icons/full/ctool16/bpm.png" id="com.webratio.bpm.ui.BPMPerspective" name="WebRatio BPMN"/>
+  </extension>
+  <extension point="org.eclipse.ui.perspectiveExtensions">
+    <perspectiveExtension targetID="com.webratio.bpm.ui.BPMPerspective">
+      <perspectiveShortcut id="com.webratio.bpm.ui.BPMPerspective"/>
+      <perspectiveShortcut id="org.eclipse.team.cvs.ui.cvsPerspective"/>
+    </perspectiveExtension>
+    <perspectiveExtension targetID="org.eclipse.ui.resourcePerspective">
+      <perspectiveShortcut id="com.webratio.bpm.ui.BPMPerspective"/>
+    </perspectiveExtension>
+    <perspectiveExtension targetID="org.eclipse.jdt.ui.JavaPerspective">
+      <perspectiveShortcut id="com.webratio.bpm.ui.BPMPerspective"/>
+    </perspectiveExtension>
+  </extension>
+  -->
+  <!--
+  <extension point="org.eclipse.ui.preferencePages">
+    <page category="com.webratio.commons.startup.preferences.GeneralPreferencePage" class="com.webratio.bpm.ui.preferences.BPMPreferencePage" id="com.webratio.bpm.ui.preferences.BPMPreferencePage" name="BPMN"/>
+  </extension>
+  -->
+</plugin>

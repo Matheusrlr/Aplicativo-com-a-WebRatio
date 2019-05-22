@@ -1,0 +1,34 @@
+#?delimiters [%,%],[%=,%]
+[%
+import org.apache.commons.lang.math.NumberUtils
+setXMLOutput()
+
+def classBased = component["classBased"] == "true"
+def domainClass = getByIdOptional(component["dataBinding"])
+
+%]
+<Descriptor service="com.webratio.components.web.content.[%=classBased ? "datasource." : ""%]CalendarService">
+  <ShortMonths>[%=component["shortMonths"]%]</ShortMonths>
+  <ShortWeekdays>[%=component["shortWeekdays"]%]</ShortWeekdays>
+  <YearsBlockSize>[%=NumberUtils.toInt(component["years"], 5)%]</YearsBlockSize>
+  [%if(classBased){ 
+     if (domainClass == null) { 
+       %]<Error>Could not find a domain-class identified by '[%=component["dataBinding"]%]'</Error>[%
+     } else {
+         %]<DataSource>[%=getDataSourceId(domainClass)%]</DataSource>[%
+         %]<DateAttribute>[%=component["dateAttribute"]%]</DateAttribute>[%
+         def selector = component.element("ConditionalExpression")
+         //computes select attributes
+         def selectAttributes = new HashSet()
+         selectAttributes.addAll(getKeyAttributes(domainClass).collect{it["id"]})
+         selectAttributes.addAll(component.attributeValue("displayAttributes", "").tokenize(" "))
+         selectAttributes.addAll(getOutputAttributes(component, "date[].data[].", null))
+         selectAttributes.add(component["dateAttribute"])
+         
+         def query = createQuery(domainClass).select(selectAttributes).selector(component.element("ConditionalExpression"))  
+         component.selectNodes("SortAttribute").each{query.sort(it["attribute"], it["order"])}
+         printRaw(query.build().asXML())
+     }
+   }   
+  %]
+</Descriptor>

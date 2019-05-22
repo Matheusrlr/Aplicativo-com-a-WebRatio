@@ -1,0 +1,7 @@
+#?delimiters [%, %], [%=, %]
+[%
+	def onlyCell = grid.selectSingleNode("layout:Row[1]/layout:Cell[1]")
+%]
+[% if (onlyCell) { %]
+<wr:Cell context="onlyCell"/>
+[% } %]

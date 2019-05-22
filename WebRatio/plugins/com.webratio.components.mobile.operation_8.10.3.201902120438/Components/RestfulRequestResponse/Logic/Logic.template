@@ -1,0 +1,90 @@
+#?delimiters [%, %], [%=, %]
+[%
+setJSONOutput()
+
+def useBody = (component["requestMethod"] == "PUT" || component["requestMethod"] == "POST")
+def requestParams = component.selectNodes("RequestParameter")
+def responseParams = component.selectNodes("ResponseParameter")
+def squashedRequestParam = (useBody && requestParams.size() == 1 && requestParams[0]["useAsRoot"] != "true" ? requestParams[0] : null)
+def squashedResponseParam = (responseParams.size() == 1 ? responseParams[0] : null)
+
+/* Function for printing parameter/fragment information */
+def collectParamInfo(list, param, options = [:], pathPrefix = "", contextArrayPath = null, skipContent = false) {
+	def path = pathPrefix + (param != options["squashedParam"] ? param["name"] : "")
+	if (contextArrayPath != null && param["isArray"] == "true" && !options["flattenArrays"]) {
+		return
+	}
+	def arrayPath = param["isArray"] == "true" ? path : contextArrayPath
+	list.add(["name": param["id"], "path": path, "arrayPath": arrayPath])
+	if (!skipContent && (param.name == "RequestParameter" || param.name == "ResponseParameter" || param.name == "ComplexParameterFragment")) {
+		def childPathPrefix = (path ? path + "." : "")
+		for (childParam in param.selectNodes("SimpleParameterFragment|ComplexParameterFragment")) {
+			collectParamInfo(list, childParam, options, childPathPrefix, arrayPath) // recurse
+		}
+	}
+}
+
+/* Collect information about request and response parameters/fragments */
+def requestInputList = []
+for (param in requestParams) {
+	collectParamInfo(requestInputList, param, ["squashedParam": squashedRequestParam], "", null, !useBody)
+}
+def responseOutputList = []
+for (param in responseParams) {
+	collectParamInfo(responseOutputList, param, ["squashedParam": squashedResponseParam, "flattenArrays": true])
+}
+
+%]
+{
+	"service": "wrm.comp.RestfulRequestResponseService",
+	
+	"requestInputs": [
+		[% requestInputList.eachWithSeparator(",") { paramInfo -> %]
+			{
+				"name": "[%= paramInfo.name %]",
+				"path": "[%= paramInfo.path %]"
+				[% if (paramInfo.arrayPath) { %],
+					"array": "[%= paramInfo.arrayPath %]"
+				[% } %]
+			}
+		[% } %]
+	],
+	"responseOutputs": [
+		[% responseOutputList.eachWithSeparator(",") { paramInfo -> %]
+			{
+				"name": "[%= paramInfo.name %]",
+				"path": "[%= paramInfo.path %]"
+				[% if (paramInfo.arrayPath) { %],
+					"array": "[%= paramInfo.arrayPath %]"
+				[% } %]
+			}
+		[% } %]
+	],
+	
+	"requestHeaderInputs": [
+		[% component.selectNodes("RequestHeader").eachWithSeparator(",") { header -> %]
+			{ "name": "[%= header["id"] %]", "header": "[%= header["name"] %]", "value": "[%= header["value"] %]" }
+		[% } %]
+	],
+	"responseHeaderOutputs": [
+		[% component.selectNodes("ResponseHeader").eachWithSeparator(",") { header -> %]
+			{ "name": "[%= header["id"] %]", "header": "[%= header["name"] %]", "value": "[%= header["value"] %]" }
+		[% } %]
+	],
+	
+	"method": "[%= component["requestMethod"] %]",
+	"url": "[%= component["endpointURL"] %]",
+	[% if (useBody) { %]
+		"requestType": "[%= component["requestContentType"] %]",
+	[% } %]
+	"responseType": "[%= component["responseContentType"] %]",
+	
+	"timeout": [%= component["timeOut"] ?: 0 %]
+	
+	[% if (component["httpAuthentication"] == "true") { %],
+		"httpAuthentication": {
+			"username": "[%= component["username"] %]",
+			"password": "[%= component["password"] %]"
+		}
+	[% } %]
+}

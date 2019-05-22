@@ -1,0 +1,38 @@
+Manifest-Version: 1.0
+Export-Package: com.google.zxing,com.google.zxing.aztec,com.google.zxi
+ ng.aztec.decoder,com.google.zxing.aztec.detector,com.google.zxing.azt
+ ec.encoder,com.google.zxing.client.result,com.google.zxing.common,com
+ .google.zxing.common.detector,com.google.zxing.common.reedsolomon,com
+ .google.zxing.datamatrix,com.google.zxing.datamatrix.decoder,com.goog
+ le.zxing.datamatrix.detector,com.google.zxing.datamatrix.encoder,com.
+ google.zxing.maxicode,com.google.zxing.maxicode.decoder,com.google.zx
+ ing.multi,com.google.zxing.multi.qrcode,com.google.zxing.multi.qrcode
+ .detector,com.google.zxing.oned,com.google.zxing.oned.rss,com.google.
+ zxing.oned.rss.expanded,com.google.zxing.oned.rss.expanded.decoders,c
+ om.google.zxing.pdf417,com.google.zxing.pdf417.decoder,com.google.zxi
+ ng.pdf417.decoder.ec,com.google.zxing.pdf417.detector,com.google.zxin
+ g.pdf417.encoder,com.google.zxing.qrcode,com.google.zxing.qrcode.deco
+ der,com.google.zxing.qrcode.detector,com.google.zxing.qrcode.encoder
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/zxing-core.jar
+Bundle-Version: 3.2.1
+Bundle-Name: WebRatio 3rd Party Library - ZXing
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.zxing
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: eDYleRnoOYxOtjOBs7OKrDIC/Ph1hEU9LuGcqHa3OhE=
+
+Name: lib/zxing-core.jar
+SHA-256-Digest: tNgkUuemv27CaYkEszJDFxftj5qFAiTyla7InegPIlk=
+
+Name: lib/zxing-coresrc.zip
+SHA-256-Digest: XZlYE2caTPmSCubpyPoE2BXOCtM8hOFkHqm37M0LwWI=
+

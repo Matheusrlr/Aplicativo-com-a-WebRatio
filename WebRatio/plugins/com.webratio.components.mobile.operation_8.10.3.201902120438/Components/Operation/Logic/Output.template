@@ -1,0 +1,4 @@
+#?delimiters [%, %], [%=, %]
+[% setXMLOutput() %]
+<OutputParameters>
+</OutputParameters>

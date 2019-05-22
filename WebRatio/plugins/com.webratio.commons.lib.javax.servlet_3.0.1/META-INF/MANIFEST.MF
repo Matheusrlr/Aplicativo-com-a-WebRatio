@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Export-Package: javax.servlet,javax.servlet.annotation,javax.servlet.d
+ escriptor,javax.servlet.http
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/servlet-api.jar
+Bundle-Version: 3.0.1
+Bundle-Name: WebRatio 3rd Party Library - Servlet API
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.javax.servlet
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+
+Name: lib/servlet-apisrc.zip
+SHA-256-Digest: WxKBDmtXuq6iZ8yxZ7yKnSysnBRXbXEoXeErZ633e6c=
+
+Name: lib/servlet-api.jar
+SHA-256-Digest: N32L3oesa8f4PyffjgJFbVhwu3jIMtrGVs6swosBblY=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: pIN+xcpqYs2lEMYuVRVJcmEQav0rTb756HTT5UGQkJw=
+
+Name: about_files/CDDL+GPL.txt
+SHA-256-Digest: cMY5g9SNG44frMYbx+Hau6mOvkBm9aZlZ6bztqAiGPQ=
+

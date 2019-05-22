@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle>
+  <!-- value comparison -->
+  <Entry key="CompareValidationRule.eq">the value must be equal to ${value}</Entry>
+  <Entry key="CompareValidationRule.gteq">the value must be greater than or equal to ${value}</Entry>
+  <Entry key="CompareValidationRule.gt">the value must be greater than ${value}</Entry>
+  <Entry key="CompareValidationRule.lteq">the value must be smaller than or equal to ${value}</Entry>
+  <Entry key="CompareValidationRule.lt">the value must be smaller than ${value}</Entry>
+  <Entry key="CompareValidationRule.neq">the value must be different from ${value}</Entry>
+
+  <!-- property comparison -->  
+  <Entry key="CompareValidationRule.eq.property">the value must be equal to the value of &apos;${otherPropertyName}&apos;</Entry>
+  <Entry key="CompareValidationRule.gteq.property">the value must be greater than or equal to the value of &apos;${otherPropertyName}&apos;</Entry>
+  <Entry key="CompareValidationRule.gt.property">the value must be greater than the value of &apos;${otherPropertyName}&apos;</Entry>
+  <Entry key="CompareValidationRule.lteq.property">the value must be smaller than or equal to the value of &apos;${otherPropertyName}&apos;</Entry>
+  <Entry key="CompareValidationRule.lt.property">the value must be smaller than the value of &apos;${otherPropertyName}&apos;</Entry>
+  <Entry key="CompareValidationRule.neq.property">the value must be different from the value of &apos;${otherPropertyName}&apos;</Entry> 
+</Bundle>

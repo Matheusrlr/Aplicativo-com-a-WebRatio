@@ -1,0 +1,35 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import org.dom4j.DocumentFactory
+
+setXMLOutput()
+def componentId = component["id"]
+def mode = component["mode"]
+def domainClass = getById(component["dataBinding"])
+%>
+<InputParameters>
+<% if(domainClass != null){%>
+
+<% for (a in getKeyAttributes(domainClass)) { %>
+   <InputParameter name="<%=componentId%>.<%=a["id"]%>" refId="<%=a["id"]%>" type="<%=getAssignableTypeExpression(domainClass, a, true, false)%>" label="<%=a["name"]%>" mandatory="false"/>
+<% } %>
+
+<% if(mode == "import"){%>
+   
+   <InputParameter name="<%=componentId%>.xmlDocument" type="<%=domainClass["id"]%>.xml" image="DOM_TYPE" label="<%=domainClass["name"]%> XML Document"/>
+   
+   <% for (role in getOutgoingRoles(domainClass)) { %>
+      <% for (a in getKeyAttributes(getTargetDomainClass(role))) { %>
+        <InputParameter 
+            name="<%=componentId%>.<%=role["id"]%>.<%=a["id"]%>"
+            refId="<%=role["id"]%>"
+            type="<%=getSuperDomainClassHierarchy(getTargetDomainClass(role)).collect{it["id"] + "." + a["id"] + ".single"}.join("|")%>"
+            label="<%=getLabel(getTargetDomainClass(role))%>.<%=getLabel(a)%>(<%=getLabel(role)%>)"
+            mandatory="false"/>
+      <% } %>
+   <% } %>   
+<% } else { %>
+   <InputParameter name="<%=componentId%>.entityBeans" type="<%=domainClass["id"]%>" refId="<%=domainClass["id"]%>" label="<%=domainClass["name"]%> Class Objects"/>
+<%}%>
+<% } %> 
+</InputParameters>

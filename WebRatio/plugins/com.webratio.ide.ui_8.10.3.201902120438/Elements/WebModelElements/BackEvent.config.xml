@@ -1,0 +1,21 @@
+<Element name="BackEvent" lowerName="back event" pluralLowerName="back events">
+	<Description>
+		A Back Event is the destination
+		for a remote Jump Event. All values
+		received along the jump are passed ahead to the outgoing flows.
+	</Description>
+	<ActionRef label="Add Navigation Flow" />
+	<ActionRef label="Add Property" />
+	<ActionRef label="Localize" />
+	<ActionRef label="Surround with Area" />
+	<ActionRef label="Generate Logic Descriptors Only"/>
+	<ActionRef label="Generate Selection"/>
+	<ActionRef label="Find Model Problems"/>
+	<PropertyCategory name="General">
+		<PropertyRef label="Identifier" />
+		<PropertyRef label="Name" />
+		<Property label="Target Screen">
+			The screen to which redirect the flow.
+		</Property>		
+	</PropertyCategory>
+</Element>

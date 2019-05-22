@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="operation" formBased="false" idPrefix="ru"
+	namePrefix="Register " label="Register" dataFlowSource="true" dataFlowTarget="true"
+	navigationFlowTarget="true" errorFlowSource="true" errorFlowTarget="true"
+	successFlowSource="true" successFlowTarget="true">
+	<Description xml:space="preserve">A register operation performs the user registration on the back-end in case the AppUser 
+domain-class is remotely mapped.
+  </Description>
+  <InputDescription xml:space="preserve" name="Username">The username of the user wishing to register.</InputDescription>
+  <InputDescription xml:space="preserve" name="Password">The password of the user wishing to register.</InputDescription>
+</Component>

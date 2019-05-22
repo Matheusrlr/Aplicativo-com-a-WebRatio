@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="operation" formBased="false" idPrefix="jio" namePrefix="JSON I/O  " label="JSON I/O" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" successFlowSource="true" successFlowTarget="true">
+
+	<EnumProperty label="" attributeName="mode" defaultValue="import" figureDisplayOrder="1" changeFigureIcon="true">
+		<EnumItem value="import" />
+		<EnumItem value="export" />
+		<Description xml:space="preserve">Specifies the component operating mode.</Description>
+	</EnumProperty>
+
+	<DomainClassProperty label="" attributeName="dataBinding" includeDerived="false" figureDisplayOrder="2">
+		<Description xml:space="preserve">The class holding data of the root JSON document.</Description>
+	</DomainClassProperty>
+	
+	<AttributesProperty label="" classIdExpr="@dataBinding" elementName="" attributeName="attributes" includeDerived="true" enabledImportExtraAttributes="true"> 
+      <Description xml:space="preserve">The list of class attributes to be included in the output JSON document.</Description>  
+      <IsEnabled>return (element["dataBinding"] != "")</IsEnabled> 
+    </AttributesProperty>
+	
+	<BooleanProperty attributeName="deleteAllBefore">
+		<IsEnabled>return element["mode"] == "import"</IsEnabled>
+		<Description>If checked, the component removes all the already present class volatile instances before each execution.</Description>
+	</BooleanProperty>
+	
+	<AttributesProperty label="" classIdExpr="@dataBinding" elementName="" attributeName="keyAttributes" includeDerived="true" enabledImportExtraAttributes="true"> 
+      <Description xml:space="preserve">The list of class attributes to be included in the output JSON document.</Description>  
+      <IsEnabled>return (element["dataBinding"] != "") &amp;&amp; (element["mode"]=="import")</IsEnabled> 
+    </AttributesProperty>
+    
+    <EnumProperty label="" attributeName="mappingType" defaultValue="NORMALIZED_NAMES">
+		<EnumItem value="NORMALIZED_NAMES" label="Normalized Names"/>
+		<EnumItem value="MODEL_NAMES" label="Model Names" />
+		<Description xml:space="preserve">Specifies whether to use normalized model names instead of model names.</Description>
+	</EnumProperty>
+	
+	<SubComponent elementName="Node" idPrefix="jsnnd" namePrefix="Node " label="Node" ignoreI18N="true"> 
+    <DomainClassProperty label="" attributeName="dataBinding" includeDerived="true"> 
+      <Description xml:space="preserve">The class from which the content of the JSON document is retrieved.</Description> 
+    </DomainClassProperty>  
+    <AttributesProperty label="" classIdExpr="@dataBinding" elementName="" attributeName="attributes" includeDerived="true" enabledImportExtraAttributes="true"> 
+      <Description xml:space="preserve">The list of class attributes displayed by the node.</Description>  
+      <IsEnabled>return (element["dataBinding"] != "")</IsEnabled> 
+    </AttributesProperty>
+    <AttributesProperty label="" classIdExpr="@dataBinding" elementName="" attributeName="keyAttributes" includeDerived="true" enabledImportExtraAttributes="true"> 
+      <Description xml:space="preserve">The list of class attributes to be included in the output JSON document.</Description>  
+      <IsEnabled>return (element["dataBinding"] != "") &amp;&amp; (element.parent["mode"]=="import")</IsEnabled> 
+    </AttributesProperty>  
+    <AssociationRoleChainProperty label="Association Role" attributeName="role" includeDerived="false" sourceClassIdExpr="../@dataBinding" targetClassIdExpr="@dataBinding"> 
+      <IsEnabled>return (element["dataBinding"] != "")</IsEnabled>  
+      <Description xml:space="preserve">The association role chain connecting a node to its parent.</Description> 
+    </AssociationRoleChainProperty>  
+    <SubComponentReference elementName="Node"/>  
+    <Description xml:space="preserve"></Description> 
+  </SubComponent >
+	
+	<Description>The JSON I/O component lets you import/export objects described by a JSON document.</Description>
+
+	<InputDescription xml:space="preserve" name="Entity-Name JSON Document">The JSON document used to fill class tree starting from a certain class.</InputDescription>
+	<InputDescription xml:space="preserve" name="Role-Name Keys">The key attributes used to connect the handled objects through the domain model association.</InputDescription>
+	<InputDescription xml:space="preserve" name="Entity-Name Objects">The class objects used to generate the output JSON document.</InputDescription>
+	<OutputDescription xml:space="preserve" name="(Element-Name|ComplexType-Name) JSON Document">The generated JSON document.</OutputDescription>
+	<OutputDescription xml:space="preserve" name="Entity Keys">The import classes key attribute values.</OutputDescription>
+	<OutputDescription xml:space="preserve" name="Error Message">The occurred error message in case of errors.</OutputDescription>
+	<OutputDescription xml:space="preserve" name="Exception">The occurred exception.</OutputDescription>
+</Component>

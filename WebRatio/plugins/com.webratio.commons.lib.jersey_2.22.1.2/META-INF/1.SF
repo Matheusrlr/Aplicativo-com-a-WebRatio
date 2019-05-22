@@ -1,0 +1,60 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: Sa+gzQPeCFmuI/xOHcPqEDnlcOcaF
+ kGPYMD+nOYI37g=
+SHA-256-Digest-Manifest: +7xStSmSlPYyfjY/isdTAFoGmRjXh9Isf2QcvyKiJhs=
+Created-By: 1.7.0_80 (Oracle Corporation)
+
+Name: lib/jersey-media-multipartsrc.zip
+SHA-256-Digest: vsqRzekjNVlbkmsB8eatPu+UCu7pfbFA153bvUucQ2k=
+
+Name: lib/jersey-clientsrc.zip
+SHA-256-Digest: /Fhgj7GL2rzrfVa6hceWyvbC8yYIvhEB4J+LEMw5wNc=
+
+Name: lib/jersey-commonsrc.zip
+SHA-256-Digest: RbNbV/peBt14JAUzDc81t+LDUHWhKz9Bv5YoZU/vMdU=
+
+Name: lib/jersey-guava.jar
+SHA-256-Digest: ly5K/JzqZK51LieusZy4Srh8+FBoD1oaVhm9csQnayY=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: lib/jersey-client.jar
+SHA-256-Digest: 5q1eec04t0jQlMtFi3KPDLtRJCoNq+9GYWsCSX+wpG0=
+
+Name: lib/jersey-container-servlet-coresrc.zip
+SHA-256-Digest: KjYWoCVVzntKXDDjsHNmaA9zq7pF09Y8BiJEELYJhTg=
+
+Name: lib/jersey-entity-filteringsrc.zip
+SHA-256-Digest: 8MwQYYOTBXahwQmgpoS9J2+RD48DS6dzItSTIMUvGRU=
+
+Name: lib/jersey-container-servlet-core.jar
+SHA-256-Digest: KWLhNtIaLdWYpTuI+7abxcIk4PxtmK/GGM46wPppDmg=
+
+Name: lib/jersey-server.jar
+SHA-256-Digest: BDcMxyY2zI51S2Ox8U3b0w339tPc9Djaz7hOsy//bpU=
+
+Name: lib/jersey-media-multipart.jar
+SHA-256-Digest: jmu2VmC2JPGGf2O4mawgQZCDPdTTGyRx/jp3AbE9t+8=
+
+Name: lib/jersey-common.jar
+SHA-256-Digest: gQx+4vgIT76umtt3JiyMbCBTPe1Uq33W66doHivmq6g=
+
+Name: about.html
+SHA-256-Digest: dCfDk/yBMFiRoYZ583gqQdbxjtPKOqFwV31uRd92hA4=
+
+Name: lib/jersey-entity-filtering.jar
+SHA-256-Digest: DuRuYGWdZHExAz9OeGbvzdBg0V0OJG5FA0/xP2Us0ng=
+
+Name: lib/jersey-media-json-jacksonsrc.zip
+SHA-256-Digest: Bx4cNOOULQOVAQbBM8Qm6aRWKgN8o7uo7a0MwhpwsPQ=
+
+Name: lib/jersey-media-json-jackson.jar
+SHA-256-Digest: hcb2nI7j04R8l0OsiyoNe1KQceEnlBh9QHrYYQ76StQ=
+
+Name: about_files/CDDL+GPL_1_1.txt
+SHA-256-Digest: NFIiKQAL3lQjW2k5eebuBpM0CAaKrMQ86D+AKjma4AQ=
+
+Name: lib/jersey-serversrc.zip
+SHA-256-Digest: uivUj4f4MYIj+AfS/i5/5KBtMhSCgH03rsRaESrzQrk=
+

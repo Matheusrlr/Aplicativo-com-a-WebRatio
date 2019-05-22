@@ -1,0 +1,77 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Show Header" name="showHeader" type="boolean" default="true">
+Defines the rendition of the header.
+Allowed values are: true(default) or false.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Header Font Weight" name="headerfont-weight" type="enum" values="normal|bold" default="bold">
+Defines the rendering of the block header
+Allowed values are:
+- normal
+- bold (default)
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Header Background" name="headerbackground" type="color" default="">
+Defines the header background color.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Header Color" name="headercolor" type="color" default="">
+Defines the header text color.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Header Borders" name="headerborder" type="string" default="">
+Defines the header borders to render.
+Value is a space-separated combination of the
+following keywords: top, left, right, bottom.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Header Border Style" name="headerborder-style" type="enum" values="NONE|THIN|MEDIUM|DASHED|DOTTED|THICK|DOUBLE|HAIR|MEDIUM_DASHED|DASH_DOT|MEDIUM_DASH_DOT|DASH_DOT_DOT|MEDIUM_DASH_DOT_DOT|SLANTED_DASH_DOT">
+Defines the header border style.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Header Border Color" name="headerborder-color" type="color" default="">
+Defines the header border color.
+</wr:LayoutParameter>
+
+<wr:LayoutParameter label="First Row" name="firstRow" type="string" default="">
+The block first row (1-based)
+</wr:LayoutParameter>
+<wr:LayoutParameter label="First Column" name="firstColumn" type="string" default="">
+The block first column code or number (1-based)
+</wr:LayoutParameter>
+
+[%
+import org.apache.commons.lang.StringUtils
+
+setXMLOutput()
+
+def writeStyle(params, prefix){
+   def style = params.entrySet().findAll{it.key.startsWith(prefix) && !StringUtils.isBlank(it.value)}.collect{StringUtils.uncapitalize(it.key - prefix) + ":" + it.value}.join(";")    
+   if(!StringUtils.isBlank(style)){%] style="[%= style%]"[%}
+}
+
+def writeLocation(params){
+    if(!StringUtils.isBlank(params["firstRow"])){%] firstRow="[%= params["firstRow"]%]"[%}
+    if(!StringUtils.isBlank(params["firstColumn"])){%] firstColumn="[%= params["firstColumn"]%]"[%}
+}
+
+%]
+<Block position="[%= blockPosition%]"[%writeLocation(params)%]> 
+<c:if test="${not(empty <wr:Id context="component"/>) and (<wr:Id context="component"/>.dataSize gt 0)}">
+	<wr:Frame>
+	[%if("true" == params["showHeader"]){%]
+	<Header[%writeStyle(params, "header")%]>
+   		<wr:Iterate var="attr" context="component" select="layout:Attribute">
+   			<wr:Visible>
+				<Cell><wr:Label/></Cell>
+			</wr:Visible>
+	 	</wr:Iterate>
+	</Header>
+	[%}%]
+	<c:forEach var="current" varStatus="status" items="${<wr:Id context="component"/>.data}">
+		<c:set var="index" value="${status.index}"/>		
+		<Row>
+			<wr:Iterate var="attr" context="component" select="layout:Attribute">
+				<wr:Visible position="'index'">
+					<wr:Value/>
+				</wr:Visible>
+			</wr:Iterate>
+		</Row>
+	</c:forEach>	
+    </wr:Frame>
+</c:if>     
+</Block>

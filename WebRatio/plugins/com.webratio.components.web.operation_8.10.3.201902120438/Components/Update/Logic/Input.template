@@ -1,0 +1,65 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+def componentId = component["id"]
+def classId = component["dataBinding"]
+def domainClass = getById(classId)
+%>
+<InputParameters acceptNull="true">
+  <%if(domainClass){%>
+    <InputParameter name="<%=componentId%>.entityBeans" refId="<%=classId%>" type="<%=classId%>" label="<%=domainClass["name"]%> Object<%if(component["bulk"] == "true"){%>s<%}%>" mandatory="false"/>
+  <%}%>  
+  <% for (cond in component.selectNodes("ConditionalExpression/*")) { %>
+    <% def predicate = cond.attributeValue("predicate", "") %>
+    <% if (cond.name == "AssociationRoleCondition" && cond["role"]) { %>
+      <% for (a in getKeyAttributes(getSourceDomainClass(getRoleByExpression(cond.attributeValue("role", ""))))) { %>
+        <InputParameter 
+            name="<%=cond["id"]%>.<%=a["id"]%>"
+            refId="<%=cond["id"]%>"
+            type="<%=getAssignableTypeExpression(getSourceDomainClass(getRoleByExpression(cond["role"])), a, true, true)%>"
+            label="<%=getRoleConditionLabel(cond, a)%>"
+            mandatory="<%=cond.attributeValue("implied", "") != "true"%>"/>
+      <% } %>
+    <% } else if (cond.name == "AttributesCondition" && cond["attributes"]) { %>
+      <% if ((cond["value"] == "") && !isUnaryPredicate(predicate)) { %>
+        <InputParameter
+            name="<%=cond["id"]%>"
+            refId="<%=cond["id"]%>"
+            type="<%=cond.attributeValue("attributes", "").tokenize(" ").collect{classId + "." + it}.join("|")%>"
+            label="<%=getAttributesConditionLabel(cond)%>"
+            mandatory="<%=cond.attributeValue("implied", "") != "true"%>"/>
+      <% } %>     
+    <% } else if (cond.name == "KeyCondition") { %>
+      <% for (a in getKeyAttributes(domainClass)) { %>
+        <InputParameter 
+            name="<%=cond["id"]%>.<%=a["id"]%>"
+            refId="<%=cond["id"]%>"
+            type="<%=getAssignableTypeExpression(domainClass, a, true, true)%>"
+            label="<%=getKeyConditionLabel(cond, domainClass, a)%>"
+            mandatory="<%=cond.attributeValue("implied", "") != "true"%>"/>
+      <% } %>
+    <% } %>
+  <% } %>
+  <% for (a in getAttributes(domainClass)) { %>
+    <% if (!isDerived(a) && a["key"] != "true") { %>
+      <InputParameter name="<%=componentId%>.<%=a["id"]%>" refId="<%=a["id"]%>" label="<%=getLabel(a)%>" mandatory="false"/>
+      <% if (a["type"] == "blob") { %>
+         <InputParameter name="<%=componentId%>.<%=a["id"]%>_name" refId="<%=a["id"]%>" label="<%=getLabel(a)%> [file name]" mandatory="false"/>
+      <% } %>
+    <% } %>
+  <% } %>
+  <% for (role in getOutgoingRoles(domainClass)) { %>
+    <% if (!isDerived(role)) { %>
+      <% for (a in getKeyAttributes(getTargetDomainClass(role))) { %>
+        <InputParameter 
+            name="<%=componentId%>.<%=role["id"]%>.<%=a["id"]%>"
+            refId="<%=role["id"]%>"
+            <% if ((role["maxCard"] == "1")) { %>
+              type="<%=getSuperDomainClassHierarchy(getTargetDomainClass(role)).collect{it.attributeValue("id", "") + "." + a.attributeValue("id", "")}.join("|")%>"
+            <%}%>
+            label="<%=getLabel(getTargetDomainClass(role))%>.<%=getLabel(a)%>(<%=getLabel(role)%>)"
+            mandatory="false"/>
+      <% } %>
+    <% } %>
+  <% } %>
+</InputParameters>

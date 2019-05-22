@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ValidationRule type="singleProperty" idPrefix="regex" namePrefix="Regular Expression " label="Regular Expression"> 
+  <StringProperty attributeName="regex" attributeLabel="Regular Expression" label="Expression">
+    <Description xml:space="preserve">The regular expression</Description>
+  </StringProperty>  
+  <BooleanProperty attributeName="ignoreCase">
+    <Description xml:space="preserve">If checked, the validation is performed ignoring case sensitivity.</Description>
+  </BooleanProperty>  
+  <Description xml:space="preserve">The Regular Expression validation rule verifies
+if the value of an element matches with a regular
+expression.&lt;br/&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;${propertyValue}&lt;/b&gt;: the element value&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${propertyName}&lt;/b&gt;: the element name&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${objectName}&lt;/b&gt;: the parent element name&lt;/li&gt;
+&lt;/ul&gt;</Description>
+</ValidationRule>

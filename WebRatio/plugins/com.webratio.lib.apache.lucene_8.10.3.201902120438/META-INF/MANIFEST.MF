@@ -1,0 +1,31 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.9.2
+Bundle-SymbolicName: com.webratio.lib.apache.lucene
+Export-Package: org.apache.lucene,org.apache.lucene.analysis,org.apach
+ e.lucene.analysis.standard,org.apache.lucene.document,org.apache.luce
+ ne.index,org.apache.lucene.queryParser,org.apache.lucene.search,org.a
+ pache.lucene.search.function,org.apache.lucene.search.payloads,org.ap
+ ache.lucene.search.spans,org.apache.lucene.store,org.apache.lucene.st
+ ore.jdbc,org.apache.lucene.store.jdbc.support,org.apache.lucene.util,
+ org.apache.pdfbox.cos,org.apache.pdfbox.pdfparser,org.apache.pdfbox.p
+ dmodel,org.apache.pdfbox.util,org.textmining.extraction,org.textminin
+ g.extraction.word
+Bundle-Name: WebRatio 3rd Party Library - Apache Lucene
+Bundle-Version: 8.10.3.201902120438
+Bundle-ClassPath: lib/lucene-core.jar,lib/fontbox.jar,lib/jempbox.jar,
+ lib/pdfbox.jar,lib/tm-extractors.jar,com.webratio.lib.apache.lucene.j
+ ar
+Require-Bundle: com.webratio.commons.lib.apache.commons.beanutils;visi
+ bility:=reexport,com.webratio.commons.lib.apache.commons.dbcp;visibil
+ ity:=reexport,com.webratio.commons.lib.apache.commons.io;visibility:=
+ reexport,com.webratio.commons.lib.apache.commons.lang;visibility:=ree
+ xport,com.webratio.commons.lib.apache.commons.logging;visibility:=ree
+ xport,com.webratio.lib.hibernate
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: WebRatio
+Created-By: 1.8.0-b132 (Oracle Corporation)
+
+Name: META-INF/signature
+SHA-256-Digest: PRYYgqFVErjMMx3lDuv1T8nEp66ZmsJ8BwS19rF+4z4=
+

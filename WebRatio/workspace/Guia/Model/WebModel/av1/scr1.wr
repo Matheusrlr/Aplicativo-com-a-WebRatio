@@ -1,0 +1,52 @@
+<Screen xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" gr:x="300" gr:y="-65" id="av1#scr1" name="Categoria">
+  <ViewComponents>
+    <List gr:x="0" gr:y="0" id="av1#scr1#pwu1" name="Lista" checkable="false" dataBinding="cls1" displayAttributes="cls1#att2 cls1#att3 cls1#att21" maxResults="2" eventOrder="av1#scr1#pwu1#oslte3 av1#scr1#pwu1#oslte6">
+      <Events>
+        <OnSelectEvent id="av1#scr1#pwu1#oslte3" name="t&#243;picos" validate="true">
+          <NavigationFlow id="av1#scr1#pwu1#oslte3#nf3" to="av1#scr2#pwu2" automaticCoupling="true"/>
+        </OnSelectEvent>
+        <OnSelectEvent id="av1#scr1#pwu1#oslte6" name="2" validate="true">
+          <NavigationFlow id="av1#scr1#pwu1#oslte6#nf6" to="av1#scr5#dau2" automaticCoupling="true" gr:bendpoints="-127,5,123,25"/>
+        </OnSelectEvent>
+      </Events>
+    </List>
+  </ViewComponents>
+  <layout:Grid containerType="grid">
+    <layout:Row>
+      <layout:Cell colspan="12">
+        <layout:Component componentId="av1#scr1#pwu1">
+          <layout:Attribute attribute="cls1#att2"/>
+          <layout:Attribute attribute="cls1#att3"/>
+          <layout:Attribute attribute="cls1#att21"/>
+          <layout:Event event="av1#scr1#pwu1#oslte3" eventType="OnSelectEvent"/>
+          <layout:Event event="av1#scr1#pwu1#oslte6" eventType="OnSelectEvent"/>
+        </layout:Component>
+      </layout:Cell>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+    <layout:Row>
+      <layout:Cell colspan="12"/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+  </layout:Grid>
+</Screen>

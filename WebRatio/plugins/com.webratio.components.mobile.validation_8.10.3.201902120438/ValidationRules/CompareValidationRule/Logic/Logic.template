@@ -1,0 +1,11 @@
+#?delimiters [%,%],[%=,%]
+[% setJSONOutput() %]
+{
+	"service": "wrm.comp.val.CompareValidationRuleService",
+	"predicate": "[%= element["predicate"] %]",
+	"ignoreCase": [%= element["ignoreCase"] == "true" %],
+	[% if (element["valueField"]) { %]
+		"valueField": "[%= element["valueField"] %]",
+	[% } %]
+	"value": "[%= element["value"] %]"
+}

@@ -1,0 +1,35 @@
+#?delimiters [%, %], [%=, %]
+[%
+setJSOutput()
+
+import java.io.File
+
+%]
+var path = require('path');
+
+module.exports = {
+	entry: "_wr_root",
+	resolve: {
+		root: [
+			path.join(__dirname, "src"),
+			[% wr.componentsPluginDirs.eachWithSeparator(",") { dir -> %]
+				"[%= new File(dir, "src").absolutePath %]"
+			[% } %]
+		]
+	},
+	module: {
+		loaders: [{
+			test: /\.js$/,
+			exclude: [ /node_modules/ ],
+			loader: "babel-loader",
+			query: {
+				whitelist: "es6.modules"
+			}
+		}]
+	},
+	resolveLoader: {
+		root: [
+			path.join("[%= getNodeJsDirectory().absolutePath %]", "node_modules")
+		]
+	}
+};

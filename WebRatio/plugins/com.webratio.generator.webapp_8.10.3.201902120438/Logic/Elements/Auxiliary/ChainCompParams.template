@@ -1,0 +1,66 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+
+/* Compute chain component runtime information */
+def runInfo = createSerializableProxy(wr.helpers.runtime.getChainComponentRunInfo(chainComp))
+%]
+<Descriptor service="com.webratio.rtx.components.DefaultOperationDecoratorService">
+	<ModelName>[%= runInfo.modelName %]</ModelName>
+	[% if (!runInfo.urlFragments.isEmpty()) { %]
+		<URLFragment>[%= runInfo.urlFragments.join(" ") %]</URLFragment>
+	[% } %]
+	<ParentContainer>[%= runInfo.parentContainer %]</ParentContainer>
+	[% if (runInfo.parentModuleDefinition) { %]
+		<ParentModule>[%= runInfo.parentModuleDefinition %]</ParentModule>
+	[% } %]
+	[% if (runInfo.masterPanelsIgnored) { %]
+		<MasterPage ignore="true"/>
+	[% } else if (runInfo.masterPanels[0]) { %]
+		<MasterPage>[%= runInfo.masterPanels[0] %]</MasterPage>
+	[% } %]
+	<NavigationAncestors>[%= runInfo.ancestorAreaContainerIds.reverse().join("|") %]</NavigationAncestors>
+
+	<Secure>[%= runInfo.secure %]</Secure>
+	<Localized>[%= runInfo.localized %]</Localized>
+	<CheckPermission>[%= runInfo.permissionElement != null || chainComp["protectedByToken"] == "true" %]</CheckPermission>
+	[% if (runInfo.permissionElement) { %]
+		<PermissionElement>[%= runInfo.permissionElement %]</PermissionElement>
+	[% } %]
+	
+	<LinkIdRequired>true</LinkIdRequired>
+	<OperationParams>
+		[% def ownParams = [] as Set %]
+		[% for (param in runInfo.parameters.findAll{ it.componentId == chainComp["id"] }) { %]
+			[% ownParams.add(param) %]
+			<OperationParam	component="[%= param.componentId %]">
+				[%= param.id %]
+			</OperationParam>
+		[% } %]
+		<Params>[%= runInfo.parameters.findAll{ !ownParams.contains(it) }.collect{ it.id }.join("|") %]</Params>
+	</OperationParams>
+	[% if (!runInfo.secondaryEnteringFlowIds.empty) { %]
+		<SecondaryIncomingLinks>[%= runInfo.secondaryEnteringFlowIds.join("|") %]</SecondaryIncomingLinks>
+	[% } %]
+	[% if (!runInfo.precedingEnteringFlowIds.empty) { %]
+		<PrecedingIncomingLinks>[%= runInfo.precedingEnteringFlowIds.join("|") %]</PrecedingIncomingLinks>
+	[% } %]
+	[% if (!runInfo.precedingComponentIds.empty) { %]
+		<PrecedingCollectors>[%= runInfo.precedingComponentIds.join("|") %]</PrecedingCollectors>
+	[% } %]
+	[% if (!runInfo.followingComponentIds.empty) { %]
+		<FollowingCollectors>[%= runInfo.followingComponentIds.join("|") %]</FollowingCollectors>
+	[% } %]
+	<Outgoing>
+		[% for (exitingFlow in runInfo.exitingFlows) { %]
+			<Link resultCode="[%= exitingFlow.resultCode %]" [% if (exitingFlow.data) { %]transport="true"[% } %]>[%= exitingFlow.id %]</Link>
+		[% } %]
+	</Outgoing>
+	[% if (runInfo.ajax) { %]
+		<Ajax>true</Ajax>
+	[% } %]
+	[% if (runInfo.flowHistoryRecorded) { %]
+		<IsLinkHistoryRecorded>true</IsLinkHistoryRecorded>
+	[% } %]
+	<DomainModelValidationEnabled>[%=chainComp["disableValidation"] != "true"%]</DomainModelValidationEnabled>	
+</Descriptor>

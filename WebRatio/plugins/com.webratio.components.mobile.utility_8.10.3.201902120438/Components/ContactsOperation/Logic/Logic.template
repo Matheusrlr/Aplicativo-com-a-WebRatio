@@ -1,0 +1,79 @@
+#?delimiters [%, %], [%=, %]
+[%
+setJSONOutput()
+
+def mode = component["mode"]
+%]
+
+{
+	"service": "wrm.comp.ContactsOperationService",
+	"mode": "[%= component["mode"] %]",
+	"addresses": [	
+		{
+			"type": "home",
+			"street": "homeStreet",
+			"city": "homeCity",
+			"region": "homeRegion",
+			"postalCode": "homePostalCode",
+			"country": "homeCountry"
+		}
+		[% 
+		if (component.selectNodes("ContactAddress").size() > 0) {
+		%],[%
+		}
+		component.selectNodes("ContactAddress").eachWithSeparator(",") { contactAddr -> %]
+		{
+			"type": "[%=contactAddr["type"] %]",
+			"street": "[%=contactAddr["id"] + ".street" %]",
+			"city": "[%=contactAddr["id"] + ".city" %]",
+			"region": "[%=contactAddr["id"] + ".region" %]",
+			"postalCode": "[%=contactAddr["id"] + ".postalCode" %]",
+			"country": "[%=contactAddr["id"] + ".country" %]"
+		}
+		[% } %]
+	],
+	"phones": [	
+		{
+			"type": "home",
+			"number": "homePhone"
+		},
+		{
+			"type": "work",
+			"number": "workPhone"
+		},
+		{
+			"type": "mobile",
+			"number": "mobilePhone"
+		}
+		[% 
+		if (component.selectNodes("ContactPhone").size() > 0) {
+		%],[%
+		}
+		component.selectNodes("ContactPhone").eachWithSeparator(",") { contactPhone -> %]
+		{
+			"type": "[%=contactPhone["type"] %]",
+			"number": "[%=contactPhone["id"] + ".number" %]"
+		}
+		[% } %]
+	],
+	"emails": [	
+		{
+			"type": "home",
+			"email": "homeEmail"
+		},
+		{
+			"type": "work",
+			"email": "workEmail"
+		}
+		[% 
+		if (component.selectNodes("ContactEmail").size() > 0) {
+		%],[%
+		}
+		component.selectNodes("ContactEmail").eachWithSeparator(",") { contactEmail -> %]
+		{
+			"type": "[%=contactEmail["type"] %]",
+			"email": "[%=contactEmail["id"] + ".email" %]"
+		}
+		[% } %]
+	]
+}

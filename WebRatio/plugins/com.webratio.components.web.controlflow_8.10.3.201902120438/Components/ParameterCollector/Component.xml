@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="operation" version="1.0.0" idPrefix="pcu" namePrefix="Parameter Collector " label="Parameter Collector" successFlowSource="true"  successFlowTarget="true" errorFlowTarget="true" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" forbidPassingBindings="true" > 
+  <SubComponent elementName="CollectorParameter" idPrefix="pcp" namePrefix="Collector Parameter " ignoreI18N="true" figureDisplayOrder="1"> 
+    <Description xml:space="preserve">A input/output parameter of the collector.</Description>  
+    <StringProperty attributeName="value"> 
+      <Description xml:space="preserve">Constant Value</Description> 
+    </StringProperty> 
+  </SubComponent >  
+  <Description xml:space="preserve">The Parameter Collector Component is available starting from the WebRatio 5.1 version. 
+It's an operation, which means that it can be placed in every View (Site View, Module Definitions, Action Definitions, Service View).
+It permits to collect a set of parameters coming from multiple sources and to redistribute them to multiple targets. 
+Its main purpose is to reduce the usage of passing parameters in order to transport parameters from multiple content components of a source page into one or more target components.</Description>
+  <InputDescription xml:space="preserve" name="CollectorParameter-Name">One of the collector parameters passing through the component.</InputDescription>  
+  <OutputDescription xml:space="preserve" name="CollectorParameter-Name">One of the collector parameters passing through the component.</OutputDescription> 
+</Component>

@@ -1,0 +1,26 @@
+<Element name="Generalization" lowerName="generalization"
+		pluralLowerNames="generalizations">
+		<Description>	
+			The basic generalization hierarchy (also called IS-A hierarchy) 
+			has one super-class and one or more sub-classes.
+    	</Description>
+		<ActionRef label="Remove Mapping"/>
+		<ActionRef label="Localize"/>
+		<ActionRef label="Go to Source"/>
+		<ActionRef label="Go to Target"/>
+		<ActionRef label="Generate Selection"/>
+		<ActionRef label="Find Model Problems"/>
+		<ActionRef label="Help"/>
+		<PropertyCategory name="General">
+			<Property label="Source Class">
+				The sub class that is source of the generalization.
+			</Property>
+			<Property label="Target Class">
+				The super class that is target of the generalization.
+			</Property>
+		</PropertyCategory>
+		<PropertyCategory name="Mapping">
+			<PropertyRef label="Table"/>
+			<PropertyRef label="Join Criteria"/>
+		</PropertyCategory>
+</Element>

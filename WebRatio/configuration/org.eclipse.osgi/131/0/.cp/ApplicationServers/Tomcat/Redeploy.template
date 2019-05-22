@@ -1,0 +1,22 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import org.apache.commons.io.FileUtils
+
+// performs a logic redeploy
+def doLogicRedeploy(){
+  FileUtils.touch(new File(outputPath + "/WEB-INF/descr/_redeploy"))
+}
+
+// performs a full redeploy
+def doFullRedeploy(){
+  // already done by web.xml update
+}
+
+// performs the application redeploy
+if(phases.contains("All")){
+   doFullRedeploy()   
+} else if(phases.contains("Logic")){
+   doLogicRedeploy()
+} 
+
+%>

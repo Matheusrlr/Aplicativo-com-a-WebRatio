@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="content" formBased="true" idPrefix="pwu" namePrefix="List " label="List" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true"  errorFlowTarget="true"  successFlowTarget="true" canPlaceLayoutComponent="true"> 
+  <DomainClassProperty attributeName="dataBinding" includeDerived="true" figureDisplayOrder="1"> 
+    <Description xml:space="preserve">The class from which the content of the component is drawn.</Description> 
+  </DomainClassProperty>  
+  <ConditionalExpression classIdExpr="../../@dataBinding" elementName="ConditionalExpression" defaultPolicy="true" figureDisplayOrder="2"> 
+    <Description xml:space="preserve">The set of selection criteria that retrieves the instances of the class of the component.</Description> 
+  </ConditionalExpression>  
+  <ConditionalExpression label="Preload Conditional Expression" classIdExpr="../../@dataBinding" elementName="PreConditionalExpression" defaultPolicy="false" figureDisplayOrder="3"> 
+    <Description xml:space="preserve">A Preload Conditional Expression is like a Conditional Expression, but is used to determine which objects of the
+list must be displayed as pre-checked when rendering the component.</Description> 
+  </ConditionalExpression>  
+  <AttributesProperty classIdExpr="@dataBinding" attributeName="displayAttributes" includeDerived="true" enabledImportExtraAttributes="true"> 
+    <Description xml:space="preserve">The list of class attributes displayed by the component.</Description>  
+    <IsEnabled>return (element["dataBinding"] != "")</IsEnabled> 
+  </AttributesProperty>  
+  <SortAttributesProperty label="Sort Attributes" elementName="SortAttribute" attributeName="attribute" classIdExpr="@dataBinding" attributeIdsExpr="@displayAttributes"> 
+    <Description xml:space="preserve">The sorting criteria used to display the objects in the List. 
+    In case the component is sortable, the user at run-time can dynamically reorder the instances clicking on the sort display attributes.
+    </Description>  
+    <IsEnabled>return (element["dataBinding"] != "")</IsEnabled> 
+  </SortAttributesProperty>  
+  <BooleanProperty label="Sortable" attributeName="sortable" defaultValue="true"> 
+    <Description xml:space="preserve">If true the sorting criteria can be dynamically changed at run-time.</Description> 
+  </BooleanProperty>  
+  <SortAttributesProperty label="Default Sort Attributes" elementName="DefaultSortAttribute" attributeName="attribute" classIdExpr="@dataBinding" attributeIdsExpr="@displayAttributes"> 
+    <Description xml:space="preserve">If the component is sortable, represents the sorting criteria used to display the 
+    objects the first time the user enters the page. If unspecified, the selected sort attributes are used also as initial sorting.
+    </Description>  
+    <IsEnabled>return (element["dataBinding"] != "" &amp;&amp; element["sortable"] == "true")</IsEnabled> 
+  </SortAttributesProperty>  
+  <IntegerProperty attributeName="sortHistorySize"> 
+    <Description xml:space="preserve">A numerical value specifying how many selected sort attributes must be remembered 
+in the dynamic sorting criteria (default 1).</Description>  
+    <IsEnabled>return (element["sortable"] == "true")</IsEnabled> 
+  </IntegerProperty>  
+  <BooleanProperty label="Checkable" attributeName="checkable" defaultValue="false"> 
+    <Description xml:space="preserve">If true the checkbox is rendered for each row.</Description>  
+    <IsEnabled>return (element["distinct"] != "true")</IsEnabled> 
+  </BooleanProperty>  
+  <IntegerProperty attributeName="blockFactor"> 
+    <Description xml:space="preserve">A numerical value specifying how many objects at a time are scrolled. 
+If this property is unspecified or set to -1, all the available rows are returned.</Description> 
+  </IntegerProperty>  
+  <IntegerProperty attributeName="blockWindow"> 
+    <Description xml:space="preserve">A numerical value specifying the maximum number of flows available to jump to other result blocks.
+Assuming that N is the value of this property, the
+component will show N-1 block flows before the current block, and
+N-1 block flows after the current block. If this property is
+unspecified or set to -1, all the block flows are shown.</Description> 
+  </IntegerProperty>  
+  <IntegerProperty attributeName="maxResults"> 
+    <Description xml:space="preserve">The maximum number of rows to retrieve.
+If unspecified, all rows are retrieved.</Description> 
+  </IntegerProperty>  
+  <BooleanProperty attributeName="distinct"> 
+    <Description xml:space="preserve">If checked, objects with duplicate attribute values are removed
+from the content of the list. The columns included in the distinct clause are: all component Display Attributes, 
+Sort Attributes and all columns used as output parameters. Note that hiding some attributes in the layout component Shown Attributes may still cause duplicated rows to appear.</Description> 
+  </BooleanProperty>  
+  <OrderingProperty attributeName="validationOrder" elementsExpr="VRules/*"> 
+    <IsEnabled>return (element.selectSingleNode("VRules/*") != null)</IsEnabled>  
+    <Description xml:space="preserve">The order of validation rules of the component.</Description> 
+  </OrderingProperty>  
+  <Description xml:space="preserve">The List is an enhanced version of the Simple List, 
+which provide commands to scroll through the available objects and to 
+dynamically order the shown instances. The property &lt;i&gt;Default Sort Attributes&lt;/i&gt;
+is two-folded: first, it defines the set of attributes whose selection will dynamically
+change the order of instances; on the other hand the value of this property 
+defines how to order instances at the first component's display. The component optionally allows the user
+to select a set of objects to submit for processing.</Description>  
+  <InputDescription xml:space="preserve" name="Current Object">The set of key attributes values of the object that define the current 
+selected object (available if not scrollable).</InputDescription>  
+  <InputDescription xml:space="preserve" name="Current Objects">The set of key attributes values of the objects that define the current block
+of objects of the component.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Condition-Name">The parameter associated to one of the Conditional Expressions
+of the component.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Block Index">A numerical value specifying the block index where to jump.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Block Factor">A numerical value specifying how many objects at a time
+are scrolled.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Block Window">A numerical value specifying the maximum number of flows available to jump to other result blocks.
+Assuming that N is the value of this property, the
+component will show N-1 block flows before the current block, and
+N-1 block flows after the current block. If this property is
+unspecified, all the block flows are shown.</InputDescription>  
+  <OutputDescription xml:space="preserve" name="Attribute-Name">The value of one of the class attributes for the object selected
+from the component.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="ForeignKey-Name">The value for one of the foreign key attributes of the object 
+connected to the object selected.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Block Index">A numerical value representing the shown block index.</OutputDescription>  
+  <LayoutAttributes xml:space="preserve">return component.attributeValue("displayAttributes", "").tokenize(" ")</LayoutAttributes>  
+  <LayoutEvents xml:space="preserve">
+def eventOrderIds = component.attributeValue("eventOrder", "").tokenize(" ")
+def events = component.selectNodes("Events/*[not(self::OnLoadEvent)]").collect{it["id"]}
+
+def eventIds = []
+eventIds.addAll(eventOrderIds?.findAll{events?.contains(it)})
+eventIds.addAll(events?.findAll{!eventOrderIds?.contains(it)})
+
+if(component["sortable"] == "true"){
+   def displayAtts = component["displayAttributes"].tokenize(" ")
+   for(att in component.selectNodes("SortAttribute").findAll{displayAtts.contains(it["attribute"])}){
+     eventIds.add(component["id"] + getAttributeExpressionId(att["attribute"]))
+   }  
+}
+if(component["blockFactor"] != ""){
+   eventIds.add(component["id"] + "First")
+   eventIds.add(component["id"] + "Previous")
+   eventIds.add(component["id"] + "Block")
+   eventIds.add(component["id"] + "Next")
+   eventIds.add(component["id"] + "Last")
+}
+return eventIds
+  </LayoutEvents>  
+  <SubmitLinkIds xml:space="preserve">
+if("true" != component["checkable"]){
+  return null
+}  
+def links = getExitingFlows(component, FlowType.NAVIGATION)
+def ids = []
+for (link in links) {
+    def parameterBindings = link.elements("ParameterBinding").collect{it["source"]}
+    if (parameterBindings.empty) {
+        parameterBindings = getAutomaticParameterBindings(link).collect{it["source"]}
+    }
+    if (parameterBindings.any{it.endsWith("Checked")}) {
+        ids.add(link["id"])
+    }
+}
+return ids</SubmitLinkIds>  
+  <IsContextFreeComponent xml:space="preserve">
+def incomingLinks = getIncomingFlows(component).findAll{it["_exp"] != "t"}
+if(incomingLinks.empty){
+  return true
+}
+def currentPrefix = component["id"] + ".current"
+for(link in incomingLinks){
+    def parameterBindings = link.selectNodes("ParameterBinding")
+    def automaticLinkParams = parameterBindings.empty ? getAutomaticParameterBindings(link) : []
+    if (!parameterBindings.empty)  {
+       if (parameterBindings.any{!it["target"].startsWith(currentPrefix)}) {
+           return false
+      }
+   } else {
+       if (automaticLinkParams.any{!it.target.startsWith(currentPrefix)}) {
+           return false
+      }
+   }
+}
+return true</IsContextFreeComponent>  
+  <IsMultiConditionComponent xml:space="preserve">
+def incomingLinks = getIncomingFlows(component).findAll{it["_exp"] != "t"}
+if (incomingLinks.size() &lt;= 1) {
+    return false
+}
+def sel = component.element("ConditionalExpression")
+if(sel == null){
+  return false
+}
+def count = sel.elements("AssociationRoleCondition").size() + sel.elements("KeyCondition").size()
+for (cond in sel.elements("AttributesCondition")) {
+    def pred = cond["predicate"]
+    if ((cond["value"] == "") &amp;&amp; !isUnaryPredicate(pred)) {
+        count++
+    }
+}
+return count &gt; 1</IsMultiConditionComponent>  
+  <AutoExpand xml:space="preserve">
+  //current preservation
+  def domainClass = getById(component["dataBinding"])
+  if(component["distinct"] != "true"){
+	  for(link in getExitingFlows(component, FlowType.NAVIGATION)){
+	     def connectionType = getConnectionType(link)
+	     if(connectionType == "contentToContentIntraPage"){
+	       if(link["automaticCoupling"] == "true"){
+	           def i = 1
+	           for(par in getAutomaticParameterBindings(link)){
+	               def curPar = link.addElement("ParameterBinding");
+	               curPar.addAttribute("id", link["id"] + "_par" + i)
+	               curPar.addAttribute("source", par["source"])
+	               curPar.addAttribute("target", par["target"])
+	               i++
+	           }
+	           link["automaticCoupling"] = "false"
+	       }
+	       for (a in getKeyAttributes(domainClass)) {
+	          def curPar = link.addElement("ParameterBinding")
+	          curPar.addAttribute("id", link["id"] + "_" + a["id"])
+	          curPar.addAttribute("source", "data[]." + a["id"])
+	          curPar.addAttribute("target", component["id"] + ".current." + a["id"])
+	       }
+	       
+	       def curPar = link.addElement("ParameterBinding")
+		   curPar.addAttribute("id", link["id"] + "_block")
+		   curPar.addAttribute("source", "scroller.current")
+		   curPar.addAttribute("target", component["id"] + ".block")
+	       
+	     }
+	  }
+  }
+  def sortable = component["sortable"] == "true"
+  def scrollable = component["blockFactor"] != ""
+  if(sortable || scrollable){
+      def useSelectiveRefresh = isSelectiveRefreshViewComponent(component)
+      if(sortable){
+          def displayAtts = component["displayAttributes"].tokenize(" ")
+          def sortAtts = component.selectNodes("SortAttribute").findAll{displayAtts.contains(it["attribute"])}
+          addSortEvents(component, sortAtts, useSelectiveRefresh)
+          if(component.selectSingleNode("DataFlow[ParameterBinding[starts-with(@source, 'data[]')]]") != null) {
+            for(sortFlow in component.selectNodes("Events/OnSelectEvent[@sort='true']/NavigationFlow")) {
+              for (a in getKeyAttributes(domainClass)) {
+	            def curPar = sortFlow.addElement("ParameterBinding")
+	            curPar.addAttribute("id", sortFlow["id"] + "_cur" + a["id"])
+	            curPar.addAttribute("source", "current_" + a["id"])
+	            curPar.addAttribute("target", component["id"] + ".current." + a["id"])
+	          }
+	        }
+	      }	   
+      }
+      if(scrollable){
+         addScrollEvents(component, useSelectiveRefresh)
+      }
+  }
+</AutoExpand>    <ExpandLayoutComponent xml:space="preserve">def expLayoutUnit = defaultExpand(layoutComponent)
+for (layoutEvent in layoutComponent.selectNodes("layout:Event")) {
+    if (layoutEvent["label"] == "") {
+        def event = getByIdOptional(layoutEvent["event"])
+        if (event != null) {
+            def sortAttrId = event["sortAttribute"]
+            if (sortAttrId != "") {
+                def layoutAttr = expLayoutUnit.selectNodes("layout:Attribute").find{it["attribute"] == sortAttrId}
+                if (layoutAttr != null) {
+                    layoutEvent.addAttribute("label", getTitle(layoutAttr))
+                }
+            }
+        }
+    }
+}
+return expLayoutUnit
+</ExpandLayoutComponent>    <BeanDescription xml:space="preserve">
+	&lt;p&gt;The component state object for the List consists of the following properties:
+	   &lt;ul&gt;
+  		&lt;li&gt;&lt;code&gt;int dataSize&lt;/code&gt;: the number of class state objects included within the current block&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Object[] data&lt;/code&gt;: the array of class state objects composing the current block&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;int currentIndex&lt;/code&gt;: the zero-based index of the current class state object&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;String sortAttribute&lt;/code&gt;: the current sorting attribute identifier (available if the component is Sortable). Initially it can be null, and all attributes are sorting attributes&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;String currentSorting&lt;/code&gt;: the current sorting criteria (available if the component is Sortable)&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;String sortCriteria&lt;/code&gt;: the current sorting criteria (e.g. att1:A|att2:D)&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Map sortMask&lt;/code&gt;: the map containing the sorting criteria ('A' or 'D') for each attribute identifier (available if the component is Sortable)&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;String[] {unitId}Checked&lt;/code&gt;: the array with the values of the oid attribute of the &lt;b&gt;pre-checked 
+        objects only&lt;/b&gt; (available if the component is Checkable)&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;String[] key&lt;/code&gt;: the array of the pipe-separated list of key attributes values of the class (available if the component is Checkable)&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Map scroller&lt;/code&gt;: the map containing the blocks information: 
+  		   &lt;ul&gt;
+  		      &lt;li&gt;&lt;code&gt;first&lt;/code&gt;: the one-based index of the first block of objects&lt;/li&gt;
+  		      &lt;li&gt;&lt;code&gt;previous&lt;/code&gt;: the one-based index of the previous block of objects&lt;/li&gt;
+  		      &lt;li&gt;&lt;code&gt;next&lt;/code&gt;: the one-based index of the next block of objects&lt;/li&gt;
+  		      &lt;li&gt;&lt;code&gt;last&lt;/code&gt;: the one-based index of the last block of objects&lt;/li&gt;
+  		      &lt;li&gt;&lt;code&gt;current&lt;/code&gt;: the one-based index of the current block of objects&lt;/li&gt;
+  		      &lt;li&gt;&lt;code&gt;blocks&lt;/code&gt;: the array of the blocks indexes&lt;/li&gt;
+  		      &lt;li&gt;&lt;code&gt;from&lt;/code&gt;: the index of the first object included within the current block&lt;/li&gt;
+  		      &lt;li&gt;&lt;code&gt;to&lt;/code&gt;: the index of the last object included within the current block&lt;/li&gt;
+  		      &lt;li&gt;&lt;code&gt;of&lt;/code&gt;: the total number of objects&lt;/li&gt;
+  		   &lt;/ul&gt;
+  		&lt;/li&gt;
+  	   &lt;/ul&gt;
+	&lt;/p&gt;
+</BeanDescription> </Component>

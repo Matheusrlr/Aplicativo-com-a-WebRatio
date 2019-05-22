@@ -1,0 +1,58 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import com.webratio.generator.io.DescriptorFile
+import org.apache.commons.lang.StringUtils
+import com.webratio.generator.TimeLogger
+import com.webratio.generator.GenerationException
+import com.webratio.generator.resolvers.FakeEntityResolver
+import org.apache.commons.io.FileUtils
+  
+def registerProjectGenerationException(exception, message, wr){
+    def title = "Deploy Error"
+    def reason = "Unable to generate the " + message
+    def hint = "Check the project model for errors or warnings"
+    def genExc = new GenerationException(title, reason, [hint], exception)
+    genExc.setTargetId("Project")
+    wr.generationExceptions.add(genExc)
+}    
+
+eventSocketClient.sendBeginTask("EnterpriseProject", 3)  
+def appServerPluginDir = deployCorePluginDir + "/ApplicationServers/" + applicationServer
+
+/* generates the aplication.xml */
+try {
+  def appXmlFile = wr.outputManager.getDescriptorFile("META-INF/application.xml")
+  appXmlFile.write(serializeXML(executeTemplate(new File(appServerPluginDir + "/application.xml.template")), true, FakeEntityResolver.INSTANCE))
+  eventSocketClient.sendTaskWorked("EnterpriseProject", 1)
+} catch(Throwable exc) {
+  registerProjectGenerationException(exc, "application.xml", wr)
+}
+TimeLogger.worked("application.xml")
+
+/* generates the deployment.xml */
+try {
+  def deplXmlFile = wr.outputManager.getDescriptorFile("deployment.xml")
+  deplXmlFile.write(serializeXML(executeTemplate(new File(appServerPluginDir + "/deployment.xml.template")), true, FakeEntityResolver.INSTANCE))
+  eventSocketClient.sendTaskWorked("EnterpriseProject", 1)
+} catch(Throwable exc) {
+  registerProjectGenerationException(exc, "application.xml", wr)
+}
+TimeLogger.worked("deployment.xml")
+
+/* updates the AppConfig.properties */
+try {
+  def appConfigFile = wr.outputManager.getDescriptorFile(rootModuleName + ".jar/conf/AppConfig.properties")
+  if(appConfigFile.exists()){
+     def content = FileUtils.readFileToString(appConfigFile)
+     if(content.indexOf("ignoreCommonsLogging=") == -1){
+        content += "\nignoreCommonsLogging=true"
+        FileUtils.writeStringToFile(appConfigFile, content) 
+     }
+  }
+  eventSocketClient.sendTaskWorked("EnterpriseProject", 1)
+} catch(Throwable exc) {
+  registerProjectGenerationException(exc, "AppConfig.properties", wr)
+}
+TimeLogger.worked("AppConfig.properties")
+
+%>

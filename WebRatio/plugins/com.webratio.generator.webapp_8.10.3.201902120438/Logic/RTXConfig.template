@@ -1,0 +1,36 @@
+#?delimiters <%, %>, <%=, %>
+<%
+import org.apache.commons.io.FileUtils
+import org.apache.commons.lang.StringUtils
+
+if(wr.projectType.name() in ["ENTERPRISE","WEBPROJECT"]){
+  def relPath = (wr.projectType.name() == "ENTERPRISE") ?  ("/" + rootModuleName + ".jar/conf") : ("/WEB-INF/conf")
+  def configFile = new File(wr.outputPath + relPath + "/RTXConfig.properties")
+  if (!configFile.exists()) {
+     def originalConfigFile = wr.locateResourceFile("Logic/RTXConfig.properties")
+     FileUtils.copyFile(originalConfigFile, configFile)
+     if(productionMode || hostAlwaysAllowed){
+        def configFileText = configFile.text
+        if(productionMode){
+           configFileText = StringUtils.replace(configFileText, "#developmentMode=false", "developmentMode=false")
+        }
+        if(hostAlwaysAllowed){
+           configFileText = StringUtils.replace(configFileText, "#hostAlwaysAllowed=false", "hostAlwaysAllowed=true")
+        }
+        configFile.write(configFileText)
+     }
+  }
+} else if(wr.projectType.name() == "BPM") {
+  def relPath ="/conf"
+  def configFile = new File(wr.outputPath + relPath + "/RTXConfig.properties")
+  if (!configFile.exists()) {
+     def originalConfigFile = wr.locateResourceFile("Logic/RTXConfig.properties")
+     FileUtils.copyFile(originalConfigFile, configFile)
+     if(productionMode){
+        def configFileText = configFile.text
+        configFileText = StringUtils.replace(configFileText, "#developmentMode=false", "developmentMode=false")
+        configFile.write(configFileText)
+     }
+  }
+}
+%>

@@ -1,0 +1,136 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import com.icl.saxon.TransformerFactoryImpl
+import java.io.File
+import java.io.FileInputStream
+import java.io.IOException
+import java.io.StringReader
+import java.util.Properties
+import org.apache.commons.io.FileUtils
+import org.apache.commons.lang.StringUtils
+import org.apache.commons.lang.SystemUtils
+import org.dom4j.io.SAXReader
+import org.xml.sax.EntityResolver
+import org.xml.sax.InputSource
+import org.xml.sax.SAXException
+import javax.xml.transform.Templates
+import javax.xml.transform.Transformer
+import javax.xml.transform.TransformerFactory
+import org.dom4j.io.DocumentSource
+import javax.xml.transform.stream.StreamResult
+import javax.xml.transform.stream.StreamSource
+
+class WRDocResolver implements EntityResolver {
+
+    private File dtdFile
+    
+    public WRDocResolver(File dtdFile) {
+        this.dtdFile = dtdFile
+    }
+
+    public InputSource resolveEntity(String publicId, String systemId)
+			throws SAXException, IOException {
+	    if ("-//WebRatio//WebRatio Documentation DTD 1.0//EN".equals(publicId)) {
+		    return new InputSource(new FileReader(dtdFile))
+		} else {
+    	    return null
+    	}
+	}
+}
+
+toTitle = { s ->
+    return StringUtils.replace(s, ' ', '_')
+}
+
+/* parses the input document */
+def inputFile = new File(inputDocPath)
+println "PROCESSING:" + inputFile.name
+def saxReader = new SAXReader()
+saxReader.setEntityResolver(new WRDocResolver(new File(docPluginDirPath + "/DTD/WRDoc.dtd")))
+def inStream = new FileInputStream(inputFile)
+def doc = null
+try{
+ doc = saxReader.read(inStream).rootElement
+}catch(Exception e){
+   throw new Exception("Unable to read file " + inputFile, e)
+}
+inStream.close()
+for (a in doc.selectNodes("//a")) {
+    def href = a.valueOf("@href")
+    def refFile = null
+    if (!href.startsWith("http") && !href.startsWith("#") && !href.contains("#") && !href.contains("javascript")) {
+	    if (href.startsWith("/")) {
+	        def refPath = inputFile.parentFile.canonicalPath + "/" + (pathToRoot - "../") + href + ".wrdoc"
+	        refPath = StringUtils.replace(refPath, "//", "/")
+	        refPath = StringUtils.replace(refPath, "/", SystemUtils.FILE_SEPARATOR)
+	        refFile = new File(refPath)
+	        refFile = new File(refFile.canonicalPath)
+	    } else {
+	        def refPath = inputFile.parentFile.canonicalPath + "/" + href + ".wrdoc"
+	        refPath = StringUtils.replace(refPath, "/", SystemUtils.FILE_SEPARATOR)
+	        refFile = new File(refPath)
+	        refFile = new File(refFile.canonicalPath)
+	    }
+	    if (!refFile.exists() || !refFile.isFile()) {
+	    	if (! href.startsWith("PLUGINS_ROOT")) {
+	        	System.err.println("WARNING: the document " + inputFile.name + " references a non-existing document: " + href)
+	    	}
+	    } else {
+	        def hrefPart = href
+	        if (hrefPart.contains("../")) {
+	            hrefPart = StringUtils.substringAfterLast("../")
+	        }
+	        if (!StringUtils.replace(refFile.canonicalPath, SystemUtils.FILE_SEPARATOR, "/").contains(hrefPart)) {
+	            System.err.println("WARNING: fix the character case in " + inputFile.name + " for the reference to the document: " + href)
+	        }
+	    }
+    }
+}
+
+def searchForImagesAndCopy(pathToRoot, src, htmlDir, inputFile, inputDocPath) {
+	if (src.startsWith("PLUGIN_ID=")) {
+    	def imagePath = StringUtils.substringAfterLast(pathToRoot, "../") + src - "PLUGIN_ID="
+    	def file = new File("../", imagePath)
+    	if (file.exists() && file.isFile()) {
+    	    def targetFile = new File(htmlDir, "Images/" + (src - "PLUGIN_ID="))
+    	    if (!targetFile.exists() || !Arrays.equals(file.readBytes(), targetFile.readBytes())) {
+         	    FileUtils.copyFile(file, new File(htmlDir, "Images/" + (src - "PLUGIN_ID=")), true)
+    	    }
+    	} else if (!(file.exists()) || !(file.isFile())){
+    		System.err.println("WARNING: the referenced image " + file.name + " doesn't exists in plugin path: " + src)
+    	}
+    } else {
+    	def imagePath = (inputDocPath - inputFile.name) + (pathToRoot - "../")
+    	def file = new File(imagePath , src - '/')
+    	if (!file.exists() || !file.isFile()) {
+    	    if (! src.startsWith("PLUGINS_ROOT")) {
+    			System.err.println("WARNING: the image " + file.name + " doesn't exists in path: " + src)
+    		}
+    	}
+    }
+}
+
+for (img in doc.selectNodes("//s2|//s3|//s4|//s5")) {
+	def src = img.valueOf("@img")
+	if (src != "") {
+		searchForImagesAndCopy(pathToRoot, src, htmlDir, inputFile, inputDocPath)
+	}
+}
+for (img in doc.selectNodes("//img")) {
+    def src = img.valueOf("@src")
+    searchForImagesAndCopy(pathToRoot, src, htmlDir, inputFile, inputDocPath) 
+}
+/* creates the HTML output document */
+def outputFile = new File(outputDocPath)
+def htmlTemplatePath = docPluginDirPath + "/EclipseHelp/HTML.xsl"
+def trFactory = TransformerFactoryImpl.newInstance()
+def htmlTemplate = trFactory.newTemplates(new StreamSource(new File(htmlTemplatePath)))
+def htmlTransformer = htmlTemplate.newTransformer()
+htmlTransformer.setParameter("inputPath", inputFile.canonicalPath)
+htmlTransformer.setParameter("pathToRoot", pathToRoot)
+htmlTransformer.setParameter("validPaths", validPaths)
+htmlTransformer.transform(new DocumentSource(doc), new StreamResult(outputFile))
+
+/* sets the last modified date of the target document */
+outputFile.setLastModified(inputFile.lastModified())
+%>

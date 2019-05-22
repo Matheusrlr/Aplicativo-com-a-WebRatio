@@ -1,0 +1,19 @@
+#?delimiters [%,%],[%=,%]
+[%
+setXMLOutput()
+
+def domainClass = getById(component["dataBinding"])
+
+%]
+<Descriptor service="com.webratio.components.web.operation.datasource.CreateService">
+  [% if (domainClass == null) { %]
+    <Error>Could not find a domain-class identified by '[%=component["dataBinding"]%]'</Error>
+  [% } else { %]
+    <DataSource>[%=getDataSourceId(domainClass)%]</DataSource>
+    <Class>[%=domainClass["id"]%]</Class>
+    <Bulk>[%=component["bulk"] == "true"%]</Bulk>
+    <DeleteAllBefore>[%=component["deleteAllBefore"]%]</DeleteAllBefore>
+    <SkipBlankRecords>[%=component["skipBlankRecords"] == "true"%]</SkipBlankRecords>
+    <NotBlank>[%=component["notBlankAttributes"].replace(" ", "|")%]</NotBlank>
+  [% } %]
+</Descriptor>

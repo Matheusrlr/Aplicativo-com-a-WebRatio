@@ -1,0 +1,2 @@
+#?delimiters [%, %], [%=, %]
+<wr:Element context="layoutSubPage" select="layout:Grid"/>

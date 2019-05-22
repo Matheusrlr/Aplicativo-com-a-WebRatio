@@ -1,0 +1,32 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import com.webratio.generator.GenerationException
+import org.apache.commons.lang.StringUtils
+
+def pageId = page.attributeValue("id")
+if (event == null) {
+	def title = "Undefined Event Context"    
+    def reason = "Unable to find the event in the specified context [context = " + contextVarName + "]."
+    def hint = "Specify a valid context for the event of the page [id = " + pageId + "]"
+    throw new GenerationException(title, reason, [hint], null)
+}
+def eventLayout = getLayout(event, LayoutType.EVENT)
+if (eventLayout.path == "") {
+    def title = "Undefined Event Layout"    
+    def reason = "Unable to find the event layout for an event."
+    def hint = "Specify an event layout for all the events of the page [id = " + pageId + "]"
+    throw new GenerationException(title, reason, [hint], null)
+}
+def templateFile = getLayoutFile(eventLayout.path, LayoutType.EVENT)
+if (templateFile == null) {
+    def title = "Event Layout Not Found"
+    def reason = "Unable to find the event layout \'" + eventLayout.path + "\'"
+    def hint = "Check the project for the missing event layout [name = " + eventLayout.path + "] associated with an event of the page [id = " + pageId + "]"
+    throw new GenerationException(title, reason, [hint], null)
+}
+addUsedTemplate(eventLayout.path)
+if (isAjaxGenericPage(page)) {
+	def text = StringUtils.strip(executeTemplate(templateFile.absolutePath, ["params": eventLayout.parameters, "templateType": "event"]))
+	text = (text =~ /(<webratio:Link)(?:(\s.*?)(?:\bescapeXml\s*?=\s*?"[^"]*"(.*?))?)?(\/?>)/).replaceAll(escapeXml ? '$1$2$3$4' : '$1$2$3 escapeXml="false"$4')
+	printRaw(text)
+}%>

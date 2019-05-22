@@ -1,0 +1,17 @@
+#?delimiters [%, %], [%=, %]
+[% if (useAjaxPseudoXML()) { %]<%
+if ("true".equals(request.getParameter("pxml"))) {
+	out.print("#");
+	response.setContentType("text/plain; charset=UTF-8");
+} else {
+	out.print("<");
+	response.setContentType("text/xml; charset=UTF-8");
+}
+%>?xml version="1.0" encoding="UTF-8"?>[% } else {
+%]<?xml version="1.0" encoding="UTF-8"?>[% } %]
+[% if (!useAjaxPseudoXML()) { %]
+	<%@ page contentType="text/xml; charset=UTF-8"%>
+[% } %]
+<Page id="login">
+	<Login url="<%= request.getAttribute(com.webratio.web.mvc.WRGlobals.LOGIN_USER_REDIRECT_KEY) %>"/>
+</Page>

@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Export-Package: org.apache.commons.io,org.apache.commons.io.comparator
+ ,org.apache.commons.io.filefilter,org.apache.commons.io.input,org.apa
+ che.commons.io.monitor,org.apache.commons.io.output
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/commons-io.jar
+Bundle-Version: 2.4.0
+Bundle-Name: WebRatio 3rd Party Library - Apache Commons IO
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.apache.commons.io
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: Be9Tx7T5QTpD4gRc5+uyd5p7BKQDdeIH5y/BEmzxan0=
+
+Name: lib/commons-io.jar
+SHA-256-Digest: zGpB3D6qzJ5ECmvQ0okLINNrTuQI/i1nEi8yi7bgFYE=
+
+Name: lib/commons-iosrc.zip
+SHA-256-Digest: 1GNbNIu78/Fm2XKwUrxMrFsybBM77te4ocq36iK2HgE=
+

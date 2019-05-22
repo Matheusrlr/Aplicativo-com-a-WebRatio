@@ -1,0 +1,45 @@
+#?delimiters [%, %], [%=, %]
+[% 
+setJSONOutput()
+
+def defaultMessage = component.valueOf("string(Message)")
+
+import org.apache.commons.lang.StringUtils
+
+def componentId = component.attributeValue("id", "")
+def placeholderNames = new HashSet()
+def message = null
+message = StringUtils.defaultIfEmpty(component.valueOf("Message"), message);
+def stringToSplit = "_" + StringUtils.replace(message, "\$\$\$\$", "\$\$_\$\$") 
+def tokens = StringUtils.splitByWholeSeparator(stringToSplit, "\$\$")
+for (i in 0..tokens.size() - 1) {
+   	if (i % 2 != 0) {
+		placeholderNames.add(tokens[i])
+	}
+}
+
+%]
+{
+	"service": "wrm.comp.MessageService",
+	[% if (defaultMessage) { %]
+		"defaultMessage": "[%= defaultMessage %]",
+	[% } %]
+		"placeholders": [
+			[% placeholderNames.eachWithSeparator(",") { placeholder -> 
+				if (placeholder.indexOf("|") != -1) { 
+					def label = placeholder.replaceAll("\\|", "\\\\|");
+					placeholder = toValidFieldName(StringUtils.substringBefore(placeholder, "|"))
+				%]
+					{
+						"name": "[%=component["id"] + "." + placeholder %]",
+						"label": "[%=label %]"
+					}
+				[% } else { %]
+					{
+						"name": "[%=component["id"] + "." + placeholder %]",
+						"label": "[%=placeholder %]"
+					}
+				[% }
+			} %]
+		]
+}

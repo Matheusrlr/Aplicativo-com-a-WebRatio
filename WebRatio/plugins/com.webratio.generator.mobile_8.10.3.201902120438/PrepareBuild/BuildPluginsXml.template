@@ -1,0 +1,11 @@
+#?delimiters [%, %], [%=, %]
+[% setXMLOutput() %]
+<Plugins>
+	[% for (plugin in appInfo.plugins.selected) { %]
+		<Plugin id="[%= plugin.pluginId %]" dir="[%= plugin.directory %]">
+			[% for (variable in plugin.variables.entrySet()) { %]
+				<Variable name="[%= variable.key %]" value="[%= variable.value %]"/>
+			[% } %]
+		</Plugin>
+	[% } %]
+</Plugins>

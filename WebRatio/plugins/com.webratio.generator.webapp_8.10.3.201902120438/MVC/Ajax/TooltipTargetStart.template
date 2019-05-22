@@ -1,0 +1,12 @@
+#?delimiters [%, %], [%=, %]
+[%
+	def tooltipComponent = element?.selectSingleNode("ancestor::layout:Component")
+%]
+[% if (tooltipComponent && tooltipComponent["ajaxTooltipEnabled"] == "true" && tooltipComponent["ajaxTooltipElement"] == elementType) { %]
+	[%
+		/* Compute descriptor string */
+		def tooltipEvent = getById(tooltipComponent, "ajaxTooltipEvent")
+		def formPostDescriptor = ""
+	%]
+	<div class="wr-tooltipTarget" data-tooltip-action="<webratio:Link link="[%= getEventRuntimeId(tooltipEvent) %]" position="[%= position %]"/>[%= formPostDescriptor %]">
+[% } %]

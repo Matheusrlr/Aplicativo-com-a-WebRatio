@@ -1,0 +1,27 @@
+{
+  "service" : "wrm.comp.ListService",
+  "entity" : "cls1",
+  "maxResults" : 2,
+  "distinct" : false,
+  "output" : [ {
+    "ref" : "att2",
+    "viewName" : "nome",
+    "bindName" : "att2"
+  }, {
+    "ref" : "att21",
+    "viewName" : "imagem",
+    "bindName" : "att21"
+  }, {
+    "ref" : "att3",
+    "viewName" : "descricao",
+    "bindName" : "att3"
+  } ],
+  "order" : [ ],
+  "_form" : {
+    "_" : "wrm.form.DefaultFormSubService",
+    "formLabel" : "Lista",
+    "properties" : {
+      "checkedKeys" : { }
+    }
+  }
+}

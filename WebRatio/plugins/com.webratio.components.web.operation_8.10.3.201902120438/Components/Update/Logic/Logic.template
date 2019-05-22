@@ -1,0 +1,18 @@
+#?delimiters [%,%],[%=,%]
+[%
+setXMLOutput()
+
+def domainClass = getById(component["dataBinding"])
+def selector = component.element("ConditionalExpression")
+
+%]
+<Descriptor service="com.webratio.components.web.operation.datasource.UpdateService">
+  [% if (domainClass == null) { %]
+    <Error>Could not find a domain-class identified by '[%=component["dataBinding"]%]'</Error>
+  [% } else { %]
+    <DataSource>[%=getDataSourceId(domainClass)%]</DataSource>
+    <Class>[%=domainClass["id"]%]</Class>
+    <Bulk>[%=component["bulk"] == "true"%]</Bulk>
+    [%if(selector){ printRaw(createQuery(domainClass).select(getKeyAttributes(domainClass).collect{it["id"]}).selector(selector).build().asXML()) }%]
+  [% } %]
+</Descriptor>

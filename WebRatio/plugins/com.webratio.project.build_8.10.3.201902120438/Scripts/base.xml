@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+<project name="WebRatio Base Script">
+
+	<description>
+		This project provides WebRatio tasks and base context entries.
+	</description>
+
+	<path id="build.path">
+		<fileset dir="${projectBuildDir}" includes="*.jar" />
+	</path>
+
+	<typedef name="webratio.BuildClassPath" classname="com.webratio.project.build.ant.types.BuildClassPath" classpathref="build.path" />
+
+	<webratio.BuildClassPath id="build.classpath" webratioDir="${webratioDir}">
+
+		<path refid="build.path" />
+
+		<plugin id="com.webratio.commons.base" />
+		<plugin id="com.webratio.commons.dom4j" />
+		<plugin id="com.webratio.commons.lib.antlr" />
+		<plugin id="com.webratio.commons.lib.apache.commons.codec" />
+		<plugin id="com.webratio.commons.lib.apache.commons.collections" />
+		<plugin id="com.webratio.commons.lib.apache.commons.io" />
+		<plugin id="com.webratio.commons.lib.apache.commons.lang" />
+		<plugin id="com.webratio.commons.lib.apache.commons.logging" />
+		<plugin id="com.webratio.commons.lib.apache.commons.net" />
+		<plugin id="com.webratio.commons.lib.apache.log4j" />
+		<plugin id="com.webratio.commons.lib.dom4j" />
+		<plugin id="com.webratio.commons.lib.google.guava" />
+		<plugin id="com.webratio.commons.lib.groovy" />
+		<plugin id="com.webratio.commons.lib.apache.httpcomponents" />
+		<plugin id="com.webratio.commons.lib.apache.commons.httpclient" />
+		<plugin id="com.webratio.commons.lib.jsonsmart" />
+		<plugin id="com.webratio.commons.lib.jackson2" />
+		<plugin id="com.webratio.commons.lib.jaxen" />
+		<plugin id="com.webratio.commons.lib.jsr305" />
+		<plugin id="com.webratio.commons.lib.slf4j" />
+		<plugin id="com.webratio.commons.libs" />
+		<plugin id="com.webratio.commons.transform" />
+		
+		<plugin id="org.eclipse.jgit" />
+		<plugin id="com.jcraft.jsch" />
+
+		<plugin id="com.webratio.generator.helpers" />
+		<plugin id="com.webratio.generator.mobile" />
+		<plugin id="com.webratio.model" />
+		<plugin id="com.webratio.model.query" />
+
+	</webratio.BuildClassPath>
+
+	<taskdef resource="com/webratio/project/build/ant/tasks/webratio.taskdef" classpathref="build.classpath" />
+
+</project>

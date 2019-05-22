@@ -1,0 +1,33 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: oC3kL2tj1Ly20cHr6Df7OiKXE6pOB
+ S1xiaai+/2m4EQ=
+SHA-256-Digest-Manifest: q5vSN6npeJMS/QXYKeMrBQ7D5IS8Y54QQ5IQXWpBoZw=
+Created-By: 1.7.0_80 (Oracle Corporation)
+
+Name: lib/hibernate-commons-annotations.jar
+SHA-256-Digest: wlVhT2IGbiGWfSUfLWoTS8XkVvWhALxMfEy+HFR2+nI=
+
+Name: lib/hibernate-coresrc.zip
+SHA-256-Digest: xvanBMC1WuHzVhmCDULMcTeiMs2kwB6NW1H/5QnRj8Y=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: lib/hibernate-c3p0src.zip
+SHA-256-Digest: aL2YNkX8oSWkJvrGqKw3J6MONASeDDlseyt3s9jfKZ0=
+
+Name: about.html
+SHA-256-Digest: rgvCfolW3VZdYaUm1K7fyuJqqoNwjP43iPAAvbYZc7c=
+
+Name: lib/hibernate-c3p0.jar
+SHA-256-Digest: lGPaeMY9T8jarrnQ5wIIMwCDD1PVU7SJF7Jtq2iloRY=
+
+Name: lib/hibernate-core.jar
+SHA-256-Digest: B87d4NMamW7vV70+kYyXggDd0QsgN9yccmTOTWD6PPA=
+
+Name: lib/hibernate-commons-annotationssrc.zip
+SHA-256-Digest: zTCX1UF6y4jjO+cEYIDyiWzok+Trk8ZRgOPhsm3/Kpg=
+
+Name: about_files/lgpl-2.1.txt
+SHA-256-Digest: UdtCZapicIeRLnsFsL+4WWdRO7N6e3KPpEMUrPpUZSo=
+

@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<project name="WebRatio Build Script" default="project.build">
+
+	<fail unless="webratioDir" message="Missing script parameter 'webratioDir'" />
+	<fail unless="projectDir" message="Missing script parameter 'projectDir'" />
+	<fail unless="outputFile" message="Missing script parameter 'outputFile'" />
+	<fail unless="configuration" message="Missing script parameter 'configuration'" />
+	<fail unless="username" message="Missing script parameter 'username'" />
+	<fail unless="password" message="Missing script parameter 'password'" />
+	<fail unless="serial" message="Missing script parameter 'serial'" />
+	
+	<!-- optional proxy properties -->
+	<property name="httpsProxyHost" value=""/>
+	<property name="httpsProxyPort" value="0"/>
+	<property name="httpsProxyUsername" value=""/>
+	<property name="httpsProxyPassword" value=""/>
+	<property name="socksProxyHost" value=""/>
+	<property name="socksProxyPort" value="0"/>
+	<property name="socksProxyUsername" value=""/>
+	<property name="socksProxyPassword" value=""/>
+
+	<import file="${webratioDir}/WebRatio/build/config/init.xml" />
+
+	<target name="project.build">
+
+		<webratio.build webratioDir="${webratioDir}" projectDir="${projectDir}" outputFile="${outputFile}" configuration="${configuration}" username="${username}" password="${password}" serial="${serial}" 
+		                httpsProxyHost="${httpsProxyHost}" httpsProxyPort="${httpsProxyPort}" httpsProxyUsername="${httpsProxyUsername}" httpsProxyPassword="${httpsProxyPassword}" 
+						socksProxyHost="${socksProxyHost}" socksProxyPort="${socksProxyPort}" socksProxyUsername="${socksProxyUsername}" socksProxyPassword="${socksProxyPassword}" />
+
+	</target>
+
+</project>

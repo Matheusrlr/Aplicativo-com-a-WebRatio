@@ -1,0 +1,125 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Event Icon" name="event-icon" type="text" default="chevron-right">
+Defines the icon to be shown when there is only one event.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Current Date Color" name="current-date-color" type="enum" values="white|gray|blue|light blue|green|yellow|red|violet|black" default="blue">
+Defines the color of the event.
+</wr:LayoutParameter>
+[% setHTMLOutput()
+def colors = [
+	"white" : "light",
+	"gray" : "stable",
+	"blue" : "positive",
+	"light blue" : "calm",
+	"green" : "balanced",
+	"yellow" : "energized",
+	"red" : "assertive",
+	"violet" : "royal",
+	"black" : "dark"]
+	
+def yearEvent = component.selectSingleNode("layout:Event[contains(@id, '-year')]")
+def monthEvent = component.selectSingleNode("layout:Event[contains(@id, '-month')]")
+def dateEvent = component.selectSingleNode("layout:Event[contains(@id, '-date')]")
+def classBased = component["classBased"] == "true"
+
+def eventIcon = params["event-icon"]
+def currentDateColor = colors[params["current-date-color"]] + "-bg"
+%]
+<wr:RequireResource ref="mobiledefault-calendar"/>
+<wr:RequireResource ref="mobiledefault-select"/>
+<div class="<wr:StyleClass/> wr-comp-Calendar">
+	<wr:Frame>
+		<div class="month-selector">
+			<select 
+				ng-model="view.currentMonth"
+				ng-change="[%= getEventThrowExpression(monthEvent, "{ month: view.currentMonth }") %]"
+				ng-options="month.month for month in view.monthsNames track by month.index" 
+			></select>
+			<select 
+				ng-model="view.currentYear"
+				ng-change="[%= getEventThrowExpression(yearEvent, "{ year: view.currentYear }") %]" 
+				ng-options="year for year in view.years track by year"
+			></select>
+		</div>
+						
+		
+			<wr-month-calendar date-collection="view.date" first-day="view.firstDay">
+			
+				<div class="row days-names">
+					<div 
+						class="col day-name"
+						ng-if="view.firstDay <= $index"
+						ng-repeat="day in view.daysNames"
+					>
+						{{ day }}
+					</div>
+					<div 
+						class="col day-name"
+						ng-if="view.firstDay > $index"
+						ng-repeat="day in view.daysNames"
+					>
+						{{ day }}
+					</div>
+					
+				</div>
+				
+				<div class="row week" ng-repeat="week in weeks">
+					<div 
+						class="col day"
+						ng-repeat="current in week.days"
+						ng-click="[%= getEventThrowExpression(dateEvent, "{ date: current.date.getDate(), month: current.date.getMonth(), year: current.date.getFullYear() }") %]"
+						ng-class="{ '[%= currentDateColor %]': view.currentDate === current.date.getDate() && view.currentMonth.index == current.date.getMonth(), disable : view.currentMonth.index !== current.date.getMonth()[% if (classBased) { %], 'has-events': current.dataSize > 0[% } %] }"
+					>
+						{{ current.date.getDate() }}
+						[% if (classBased) { %]
+							<div class="events-size" ng-if="current.dataSize">{{ current.dataSize }}</div>
+						[% } %]
+					</div>
+				</div>
+			</wr-month-calendar>
+			<div class="list">
+				
+				[% if (classBased) { 
+					def attrs = component.selectNodes("layout:Attribute")
+					def nameAttr = attrs.find{it["type"] != 'blob'}
+					def imageAttr = attrs.find{it["type"] == 'blob' && (it["contentType"] == "" || it["contentType"].startsWith("image"))}
+					
+					def selectEvent = component.selectSingleNode("layout:Event[not(NavigationFlow/ParameterBinding) or NavigationFlow/ParameterBinding[string(@_exp) != 't'][@source != 'date[].date']][string(@_exp) != 't']")
+				%]
+					<div
+						class="item[% if (imageAttr) { %] item-avatar[% } %][% if (selectEvent && eventIcon != "") { %] item-icon-right[% } %]"
+						ng-repeat="current in view.date[view.currentDate-1].data"
+						[% if (selectEvent) { %]
+							ng-click="[%= getEventThrowExpression(selectEvent, "{ dateIndex: view.currentDate-1, dataIndex: \$index }") %]"
+						[% } %]
+					>
+						[% if (imageAttr) { %]
+							<wr:Value context="imageAttr" class="item-image"/>
+						[% } %]
+						<h2><wr:Value context="nameAttr"/></h2>
+						<wr:Iterate var="attr" context="component" select="layout:Attribute">
+							[% if (attr != nameAttr && attr != imageAttr) { %]
+								<p><wr:Value/></p>
+							[% } %]
+						</wr:Iterate>
+						[% if (selectEvent && eventIcon != "") { %]
+							<span class="icon ion-[%= eventIcon %]"></span>
+						[% } %]
+					</div>
+				[% } %]
+				
+				<wr:Iterate var="event" context="component" select="layout:Event[NavigationFlow/ParameterBinding/@source='date']">
+                	<div 
+                   		class="item current-date-event[% if (eventIcon != "") { %] item-icon-right[% } %]"
+                   		ng-click="[%= getEventThrowExpression(event, "{ dateIndex: view.currentDate-1 }") %]"
+                   	>
+                    	<wr:Label/>
+                    	[% if (eventIcon != "") { %]
+							<span class="icon ion-[%= eventIcon %]"></span>
+						[% } %]
+					</div>
+				</wr:Iterate>
+			</div>
+		
+	</wr:Frame>
+</div>

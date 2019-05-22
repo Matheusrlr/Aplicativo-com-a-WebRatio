@@ -1,0 +1,36 @@
+#?delimiters [%, %], [%=, %]
+[%
+setJSONOutput()
+
+def role = component["associationRole"]
+
+def sourceDClass = getSourceDomainClass(getById(role))["id"]
+def targetDClass = getTargetDomainClass(getById(role))["id"]
+
+def ceSource = component.selectSingleNode("SourceConditionalExpression")
+def ceTarget = component.selectSingleNode("TargetConditionalExpression")
+
+def sourceCondition = ""
+if(ceSource){
+	sourceCondition = getConditionalExpressionJson( getById(sourceDClass), ceSource )
+}
+
+def targetCondition = ""
+if(ceTarget){
+	targetCondition = getConditionalExpressionJson( getById(targetDClass), ceTarget )
+}
+
+%]
+{
+	"service": "wrm.comp.DisconnectService",
+	"sourceEntity": "[%= sourceDClass %]",
+	"targetEntity": "[%= targetDClass %]",
+	[% if (ceSource) { %]
+			"sourceExprs":  [% printRaw(sourceCondition) %],
+	[% } %]
+	[% if (ceTarget) { %]
+			"targetExprs":  [% printRaw(targetCondition) %],
+	[% } %]
+	"role": "[%= role %]"
+	
+}

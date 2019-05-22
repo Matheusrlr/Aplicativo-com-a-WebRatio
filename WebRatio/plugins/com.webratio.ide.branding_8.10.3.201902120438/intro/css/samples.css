@@ -1,0 +1,20 @@
+a#wr_acme img { background-image : url('graphics/obj48/wr_obj.gif'); }
+a#wr_acme:hover img { background-image : url('graphics/obj48/wrhov_obj.png'); }
+
+a#wr_bookstore img { background-image : url('graphics/obj48/wr_obj.png'); }
+a#wr_bookstore:hover img { background-image : url('graphics/obj48/wrhov_obj.png'); }
+
+a#wr_acme img { background-image : url('graphics/obj48/wr_obj.png'); }
+a#wr_acme:hover img { background-image : url('graphics/obj48/wrhov_obj.png'); }
+
+a#wr_calendar img { background-image : url('graphics/obj48/wr_obj.png'); }
+a#wr_calendar:hover img { background-image : url('graphics/obj48/wrhov_obj.png'); }
+
+a#wr_prjmgr img { background-image : url('graphics/obj48/wr_obj.png'); }
+a#wr_prjmgr:hover img { background-image : url('graphics/obj48/wrhov_obj.png'); }
+
+a#wr_exprep img { background-image : url('graphics/obj48/wr_obj.png'); }
+a#wr_exprep:hover img { background-image : url('graphics/obj48/wrhov_obj.png'); }
+
+a#wr_vacreq img { background-image : url('graphics/obj48/wr_obj.png'); }
+a#wr_vacreq:hover img { background-image : url('graphics/obj48/wrhov_obj.png'); }

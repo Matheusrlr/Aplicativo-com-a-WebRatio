@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="EAR" default="main">
+
+	<target name="delete">
+		<delete dir="${FOLDER}" failonerror="true" />
+	</target>
+
+	<target name="copy">
+		<mkdir dir="${TEMP_FOLDER}" />
+		<copydir dest="${TEMP_FOLDER}/${FOLDER_NAME}" src="${SOURCE_FOLDER}" />
+	</target>
+
+	<target name="war">
+		<mkdir dir="${TEMP_FOLDER}" />
+		<available file="${SOURCE_FOLDER}/META-INF/MANIFEST.MF" property="manifest_file_exists" />
+		<antcall target="war_with_manifest" />
+		<antcall target="war_without_manifest" />
+	</target>
+
+	<target name="war_with_manifest" if="manifest_file_exists">
+		<war basedir="${SOURCE_FOLDER}" destfile="${TEMP_FOLDER}/${FILE_NAME}" webxml="${SOURCE_FOLDER}/WEB-INF/web.xml" excludes="WEB-INF/descr/_redeploy" manifest="${SOURCE_FOLDER}/META-INF/MANIFEST.MF" />
+	</target>
+
+	<target name="war_without_manifest" unless="manifest_file_exists">
+		<war basedir="${SOURCE_FOLDER}" destfile="${TEMP_FOLDER}/${FILE_NAME}" webxml="${SOURCE_FOLDER}/WEB-INF/web.xml" excludes="WEB-INF/descr/_redeploy" />
+	</target>
+
+	<target name="jar">
+		<mkdir dir="${TEMP_FOLDER}" />
+		<jar destfile="${TEMP_FOLDER}/${FILE_NAME}">
+			<fileset dir="${SOURCE_FOLDER}" />
+		</jar>
+	</target>
+
+	<target name="main">
+		<delete file="${DEPLOY_FOLDER}/${FILE_NAME}" failonerror="true" />
+		<ear destfile="${DEPLOY_FOLDER}/${FILE_NAME}" appxml="${OUTPUT_FOLDER}/META-INF/application.xml">
+			<fileset dir="${OUTPUT_FOLDER}">
+				<exclude name="*.jar/**" />
+				<exclude name="*.war/**" />
+				<exclude name="META-INF/application.xml" />
+			</fileset>
+			<fileset dir="${TEMP_FOLDER}"/>
+		</ear>
+	</target>
+
+</project>

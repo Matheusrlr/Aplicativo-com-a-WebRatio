@@ -1,0 +1,54 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+def componentId = component["id"]
+%>
+<InputParameters>
+<% for (a in getKeyAttributes(getById(component["dataBinding"]))) { %> 
+    <InputParameter 
+          name="<%=componentId%>.current.<%=a["id"]%>" 
+          refId="<%=a["id"]%>"
+          label="current <%=getLabel(a)%>"
+          mandatory="false"
+          clearOnIncomingLinkClick="true"/>
+<% } %>
+<% for (cond in component.selectNodes(".//ConditionalExpression/*")) { 
+    def levelClassId = cond.valueOf("../../@dataBinding") 
+    def levelClass = getById(levelClassId) 
+    if (cond.name == "AssociationRoleCondition" && cond["role"]) { 
+     for (a in getKeyAttributes(getSourceDomainClass(getRoleByExpression(cond["role"])))) { %>
+      <InputParameter 
+          name="<%=cond["id"]%>.<%=a["id"]%>"
+          refId="<%=cond["id"]%>"
+          type="<%=getAssignableTypeExpression(getSourceDomainClass(getRoleByExpression(cond["role"])), a, true, true)%>"
+          label="<%=getRoleConditionLabel(cond, a)%> [<%=cond.parent.parent["name"]%>]"
+          mandatory="<%=isRequiredConditionalExpressionPart(cond)%>"/>
+    <% } %>
+  <% } else if (cond.name == "AttributesCondition" && cond["attributes"]) { 
+       def predicate = cond["predicate"] 
+       if ((cond["value"] == "") && !isUnaryPredicate(predicate)) { %>
+        <InputParameter
+           name="<%=cond["id"]%>"
+           refId="<%=cond["id"]%>"
+           type="<%=cond["attributes"].tokenize(" ").collect{levelClassId + "." + it}.join("|")%>"
+           label="<%=getAttributesConditionLabel(cond)%> [<%=cond.parent.parent["name"]%>]"
+           mandatory="<%=isRequiredConditionalExpressionPart(cond)%>"/>
+    <% } %>
+  <% } else if (cond.name == "KeyCondition") { 
+        for (a in getKeyAttributes(levelClass)) { %>
+         <InputParameter 
+            name="<%=cond["id"]%>.<%=a["id"]%>"
+            refId="<%=cond["id"]%>"
+            type="<%=getAssignableTypeExpression(levelClass, a, true, true)%>"
+            label="<%=getKeyConditionLabel(cond, levelClass, a)%> [<%=cond.parent.parent["name"]%>]"
+            mandatory="<%=isRequiredConditionalExpressionPart(cond)%>"/>
+    <% } %>
+  <% } %>
+<% } %>
+
+<InputParameter name="<%=componentId%>.block" clearOnNewInputValues="true" hideCoupling="true"/>
+<InputParameter name="<%=componentId%>.blockFactor" label="Block Factor" mandatory="false"/>
+<InputParameter name="<%=componentId%>.blockWindow" label="Block Window" mandatory="false"/>
+<InputParameter name="<%=componentId%>.sortAttribute" hideCoupling="true"/>
+<InputParameter name="<%=componentId%>.sortCriteria" hideCoupling="true"/>
+</InputParameters>

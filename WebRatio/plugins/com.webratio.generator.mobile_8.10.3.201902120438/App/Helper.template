@@ -1,0 +1,127 @@
+#?delimiters [%, %], [%=, %]
+[%
+/*
+ * Temporary helpers: either migrate to Java or remove
+ */ 
+ 
+/*jayData input types are not always the same as db types*/
+getJayDataType = { attributeOrType ->
+	def type = attributeOrType instanceof org.dom4j.Element ? attributeOrType["type"] : attributeOrType
+	switch (type) {
+		case 'blob': 
+			return 'blob'
+		case 'boolean': 
+			return 'boolean'
+		case 'date':
+			return 'date'
+		case 'decimal':
+			return 'decimal'
+		case 'float':
+			return 'float'
+		case 'integer':
+			return 'integer'
+		case 'password':
+			return 'string'
+		case 'string':
+			return 'string'
+		case 'text':
+			return 'string'
+		case 'time':
+			return 'time'
+		case 'timestamp': 
+			return 'date'
+		case 'url':
+			return 'string'
+		default:
+			throw new RuntimeException("Type ${type} not supported by the target DB")
+	}
+}
+
+retrieveMap = {component ->
+	def displayAttributes = component["displayAttributes"].tokenize(" ")	
+	
+	if(displayAttributes.size() == 0){
+		return ""
+	}
+	def displayAttrsNames = retrieveNames(displayAttributes, true)
+	def map = "{"
+	for(attr in displayAttrsNames){
+		map += attr + " : it." + attr + ", "
+	}
+	map = map.substring(0, map.size() - 2)
+	map += "}"
+	return map
+}
+
+retrieveNames = { attrsIds , valid->
+	def attrsNames = []
+	attrsIds.each{
+		if (valid) {
+			attrsNames.add(getFieldName(getById(it)))
+		} else {
+			attrsNames.add(getById(it)["name"])
+		}
+	}
+	return attrsNames
+}
+
+def BLANK_RE = /^\s*$/
+
+java.util.Collection.metaClass.eachWithSeparator = { separator, iterateCallback ->
+	def context = iterateCallback.delegate
+	if (separator instanceof String) {
+		def sep = separator
+		separator = { 
+			context.printRaw(sep)
+		}
+	}
+	
+	def onePrinted = false
+	delegate.each { element ->
+		def text = context.executeTemplate(iterateCallback.curry(element))
+    	if (text ==~ BLANK_RE) {
+    		return
+    	}
+		if (onePrinted) {
+			separator()
+		} else {
+			onePrinted = true
+		}
+		context.printRaw(text)
+	}
+}
+
+executeWithSeparator = { separator, ...callbacks ->
+	def context = callbacks[0].delegate
+	if (separator instanceof String) {
+		def sep = separator
+		separator = { 
+			context.printRaw(sep)
+		}
+	}
+	
+	def onePrinted = false
+	callbacks.each { callback ->
+		def text = context.executeTemplate(callback)
+    	if (text ==~ BLANK_RE) {
+    		return
+    	}
+		if (onePrinted) {
+			separator()
+		} else {
+			onePrinted = true
+		}
+		context.printRaw(text)
+	}
+}
+
+getOrderedItems = { items ->
+	def result = []
+	for ( item in items ) {
+		result.push(getById(item))	
+	}
+	return result
+}
+
+
+%]

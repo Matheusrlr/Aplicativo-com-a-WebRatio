@@ -1,0 +1,9 @@
+#?delimiters [%, %], [%=, %]
+[% setXMLOutput() %]
+<OutputParameters>
+	<OutputParameter name="title" label="Title" />
+	<OutputParameter name="message" label="Message" />
+	[% for (param in event.elements("NotificationEventParameter")) { %]
+		<OutputParameter name="[%= param["id"] %]" label="[%= param["name"] %]" />
+	[% } %]
+</OutputParameters>

@@ -1,0 +1,16 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+
+def dclass = getById(component["dataBinding"])
+%]
+<OutputParameters>
+	[% for (a in getKeyAttributes(dclass)) { %]
+		<OutputParameter
+			name="[%= a["id"] %]"
+			refId="[%= a["id"] %]"
+			type="[%= getSuperDomainClassHierarchy(dclass).collect{it["id"] + "." + a["id"] + ".single"}.join("|") %]"
+			label="[%= getLabel(a) %]"
+		/>
+	[% } %]
+</OutputParameters>

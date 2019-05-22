@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Descriptor service="com.webratio.rtx.localization.DefaultLocalizationService" name="Localization Service">
+  <Storage type="file"/>
+  <Locale language="en" country="US" default="true">
+    <Pattern type="decimal"/>
+    <Pattern type="date"/>
+    <Pattern type="float"/>
+    <Pattern type="integer"/>
+    <Pattern type="number"/>
+    <Pattern type="time"/>
+    <Pattern type="timestamp"/>
+    <Pattern type="boolean"/>
+  </Locale>
+</Descriptor>

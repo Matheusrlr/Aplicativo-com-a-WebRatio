@@ -1,0 +1,23 @@
+#?delimiters [%, %], [%=, %]
+[%
+
+/* Determine the layout */
+def layout = getLayout(component, LayoutType.COMPONENT)
+if (!layout.path) {
+	throwGenerationException("Component has no layout defined - " + component)
+}
+def layoutTemplate = getLayoutFile(layout.path, LayoutType.COMPONENT, getComponentType(getInteractionElement(component)))
+if (!layoutTemplate) {
+	throwGenerationException("Component layout template not found: " + layout.path)
+}
+addUsedTemplate(layout.path)
+
+/* Standalone wrapper start */
+%]<!-- directive: wr-component [%= component["id"] %] -->[%
+
+/* Actual Component layout */
+printRaw(executeTemplate(layoutTemplate.absolutePath, ["params": layout.parameters, "templateType": "component"]))
+
+/* Standalone wrapper end */
+%]<!-- end_directive: wr-component -->[%
+%]

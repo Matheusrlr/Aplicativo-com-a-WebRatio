@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="operation" formBased="false" idPrefix="sn" namePrefix="Send Notification " label="Send Notification" dataFlowSource="true" dataFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" successFlowSource="true" successFlowTarget="true"> 
+    <StringProperty attributeName="notificationName" label="Notification Name">
+		<Description xml:space="preserve">The name used to identify the notification. This name must be used by  "Notification Event" placed in the Mobile Project to state which is the notification the event is listening for.</Description>
+	</StringProperty>
+    <ServiceDataProvidersProperty attributeName="notificationProvider" multiple="true" serviceDataProviderType="NotificationProvider">
+		<Description>The list of the Notification Providers used to send the notification. If no Notification Provider is selected, then the operation uses all Notification Providers modeled on the Project.
+		</Description>
+	</ServiceDataProvidersProperty>
+	<SubComponent elementName="Parameter" sortable="false" idPrefix="snp" namePrefix="Parameter"> 
+        <StringProperty attributeName="value"> 
+            <Description xml:space="preserve">The default value used if the parameter is not provided by an input flow.</Description> 
+        </StringProperty>  
+    </SubComponent> 
+    <ServiceDataProvider type="NotificationProvider" multipleInstances="true" label="Notification Provider">
+    	<StringProperty attributeName="name">
+			<Description xml:space="preserve">The user-defined Notification Provider name. </Description>
+		</StringProperty>
+	    <MobilePlatformProperty attributeName="platform" label="Platform">
+			<Description xml:space="preserve">The device platform which the Notification Provider is configured for.</Description>
+	    </MobilePlatformProperty>
+	    <StringProperty attributeName="apiKey" label="API Key" 
+			com.webratio.ide.deploy.ui.widget.enablers.IExternalWidgetLaunchBindingEnabler="com.webratio.ide.deploy.ui.widget.enablers.NotificationProviderAndroidPlatformEnabler">
+	        <IsEnabled>element["platform"] == "Android"</IsEnabled>
+			<Description xml:space="preserve">The public API key generated on the Google Cloud Messaging website. This API key enables push notification for Android devices.</Description>
+		</StringProperty>
+		<FileProperty label="APNS Certificate" attributeName="apnsCertificate" 
+			com.webratio.ide.deploy.ui.widget.enablers.IExternalWidgetLaunchBindingEnabler="com.webratio.ide.deploy.ui.widget.enablers.NotificationProviderIOSPlatformEnabler">
+		    <IsEnabled>element["platform"] == "iOS"</IsEnabled>
+			<Description xml:space="preserve">The Certificate file generated on the Apple Developer Portal. This certificate enables push notifications for iOS devices.
+If unspecified it will be possible to send notifications only to the WebRatio Developer App.
+			</Description>
+		</FileProperty> 
+		<PasswordProperty label="APNS Certificate Passphrase" attributeName="apnsCertificatePassPhrase" 
+			com.webratio.ide.deploy.ui.widget.enablers.IExternalWidgetLaunchBindingEnabler="com.webratio.ide.deploy.ui.widget.enablers.NotificationProviderIOSPlatformEnabler">
+		    <IsEnabled>element["platform"] == "iOS"</IsEnabled>
+			<Description xml:space="preserve">The password required to use the APNS Certificate.</Description>
+		</PasswordProperty>
+		<BooleanProperty attributeName="sandbox" defaultValue="false" label="Sandbox"
+			com.webratio.ide.deploy.ui.widget.enablers.IExternalWidgetLaunchBindingEnabler="com.webratio.ide.deploy.ui.widget.enablers.NotificationProviderIOSSandboxEnabler">
+			<IsEnabled>element["platform"] == "iOS" &amp;&amp; element["apnsCertificate"] != ""</IsEnabled>
+    		<Description xml:space="preserve">If checked, the provider will use the APNS sandbox environment to dispatch messages.</Description> 
+  		</BooleanProperty> 
+    </ServiceDataProvider>
+</Component>

@@ -1,0 +1,438 @@
+
+/*** GENERAL ***/
+
+div, td {
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-size: 10pt;
+}
+img {
+  border:none;
+}
+div.Anchor a {
+  background: none;
+  padding: 0;
+}
+.GoToHeader {
+  font-size: 8pt;
+  float: right;
+  margin-right: 15px;
+}
+
+/*** LINKS ***/
+
+a, a:visited {
+  font-weight: bold;
+  padding-right: 16px;
+  background: no-repeat right url(icons/blue_arrow.png);
+  color: #0018CE;
+}
+a:hover {
+  background: no-repeat right url(icons/blue_arrow_neg.png)
+}
+.GoToHeader a, .FullPath a, .GoToHeader a:visited, .FullPath a:visited {
+  background: no-repeat right url(icons/blue_arrow_up.png)
+}
+.GoToHeader a:hover, .FullPath a:hover {
+  background: no-repeat right url(icons/blue_arrow_up_neg.png)
+}
+
+/*** PROJECT ***/
+
+.ProjectName {
+  font-size: 25px;
+  font-weight: bold;
+  text-align:center;
+  background-image: url(../icons/ModelDocLogoImage.png);
+  background-position:top left;
+  background-repeat:no-repeat;
+  height:70px;
+  padding-top:10px;
+  
+}
+.ProjectRevision {
+  float: right;
+  padding-right: 5px;
+}
+.CreationDate {
+  float: right;
+  font-style: italic;
+  padding-right: 5px;
+}
+.SiteViewSummary .ElementName, .DataModelSummary .ElementName {
+  font-size: 15pt;
+  padding: 2px;
+}
+
+/*** HEADERS ***/
+
+.Header, .HeaderSection {
+  background-color: #D8E2FF;                                                         /************** BACKGROUND COLOR 1 **************/ 
+  border-top: 2px solid gray;
+  border-bottom: 1px solid gray;
+  margin: 20px -8px 4px -8px;
+  padding: 2px 10px 2px 10px;
+}
+.HeaderSection .ElementComment {
+  width: 800px;
+}
+.Id_Statistics .Header, .Id_Report .Header, .Id_Localization .Header, .Id_BusinessObjects .Header{
+  height: 26px;
+}
+.HeaderSection_StdJmp, .HeaderSection_LyJmp {
+  float: right;
+  padding-right: 15px;
+}
+.Model {
+  float: left;
+  color: #0071CE;
+  font-size: 16pt;
+  font-weight: bold;
+}
+.Id_Statistics .Model, .Id_Report .Model, .Id_Localization .Model , .Id_BusinessObjects .Model{
+}
+.Model a {
+  text-decoration:none;
+}
+.Model .ElementName{
+  padding-left: 10px;
+  font-size: 16pt;
+  font-weight: bold;
+}
+.FullPath {
+  float:left;
+  margin-left:80px;
+  margin-top:1px;
+}
+
+/*** APPENDIX HEADER ***/
+
+.Appendix {
+  font-weight:normal;
+  float:right;
+  margin-top: 4px;
+}
+.Appendix div {
+  float: left;
+  padding-left: 5px;
+  margin-right: 5px;
+  border-left: 1px solid black;
+}
+.Appendix div .Title {
+  font-weight: normal;
+  background: #DDEEEE; 
+}
+.Appendix div div {
+  padding: 0px;
+  border: 0px;
+  margin: 0px;
+  float: none;
+}
+
+/*** SECTIONS ***/
+
+.SummarySection, .DetailsSection {
+  border-top: 1px dashed gray;
+  margin-top: 2px;  
+}
+
+/*** TITLES ***/
+
+.Title {
+	font-weight: bold;
+	padding-top: 2px;
+	padding-bottom: 3px;
+}
+
+th, .MAPPING .Title, .AttributeSummary .Title,
+.IncomingRoleSummary .Title, .OutgoingRoleSummary .Title, .LoopingRoleSummary .Title,
+.GENERAL .Title, .LAYOUT .Title, .INCOMING_PARAMETER .Title, .OUTGOING_PARAMETER .Title, 
+.AJAX .Title, .CONDITION .Title, .SECURITY .Title, .SERVICES .Title, 
+.PUBLISH .Title, .DURATION_PROCESSING .Title, .DURATION_WAIT .Title, .NOTIFICATION .Title, 
+.APPEARANCE .Title, .BPM .Title {
+  background: #FFEFD8;                                                               /************** BACKGROUND COLOR 3 **************/
+	border-top:none;
+	border-left:1px solid white;
+	padding: 0px 0px 4px 1px;
+	margin:0px;
+  font-size:12px;
+}
+.AttributeSummary .Title, .IncomingRoleSummary .Title, .OutgoingRoleSummary .Title, .LoopingRoleSummary .Title {
+  padding: 3px 0px 4px 5px;
+}
+.Group .Title, .Appendix .Title {
+	border-top: none;
+	margin-bottom: 0px;
+}
+.SubValidationRuleList .Title, .ValidationRuleList .Title, .SubUnitList .Title, .GenericChildrenList .Title {
+  margin-left: 0px;
+  margin-right: 0px
+}
+
+/*** SUMMARIES ***/
+
+.Source .Label, .Source .Element, .Target .Label, .Target .Element {
+  display: inline;
+}
+.Link, .OKLink, .KOLink, .ContextParameter, .Locale, .Relationship, .SubType, .dbDatabase {
+  margin: 2px;
+  padding: 1px;
+  float: left;
+  border: 1px solid lightgray;
+}
+.ContextParameter, .Locale {
+  width: 250px;
+}
+.Relationship, .SubType, .dbDatabase {
+  width: 350px;
+}
+.Link, .OKLink, .KOLink {
+  width: 350px;
+  height: 550px;
+}
+
+/*** PROPERTIES ***/
+
+.Node {
+  background-color: #F8F8F8;
+  margin: 2px;
+  clear: both;
+  padding-left: 5px;
+  width: 600px;
+}
+.EntitySummary, .RelationshipSummary, .SubTypeSummary, .db_DatabaseSummary,
+.AttributeSummary, .IncomingRoleSummary, .OutgoingRoleSummary, .LoopingRoleSummary,
+.PageSummary, .UnitSummary,
+.IncomingLinkSummary, .InternalLinkSummary {
+  float: left;
+  margin: 2px;
+}
+.primaryProperties {
+  border: 1px dashed #BBBBBB;
+  display: inline;
+  padding: 0;
+  margin-left: 3px;
+}
+.name {
+  font-weight: bold;
+  padding: 2px;
+  display: inline;
+}
+.value {
+  font-size: 8pt;
+  padding: 2px;
+  display: inline;
+}
+.MAPPING, .GENERAL, .LAYOUT, .INCOMING_PARAMETER, .OUTGOING_PARAMETER, .AJAX, .CONDITION, .SECURITY, .SERVICES, 
+.PUBLISH, .DURATION_PROCESSING, .DURATION_WAIT, .NOTIFICATION,
+.APPEARANCE, .BPM {
+  border: 1px solid white;
+  margin: 2px;
+  float: left;
+}
+td {
+  border-left: 1px solid white;
+  border-top: 1px solid white;
+  padding: 0px 2px;
+  background-color: #F8F8F8;
+}
+td.ColumnName {
+  font-weight:bold;
+}
+td table td {
+  border-left: none;
+  border-top: none;
+}
+td.CouplingParameterWebMLDocProperty_NAVIGATED_LINKS {
+  border-left: 1px solid white;
+}
+.Id {
+  float: right;
+  font-size: 8pt;
+  font-style: italic;
+}
+.LocaleList .ElementType, .ContextParameterList .ElementType {
+  display: none;
+}
+.LocaleList .Id, .ContextParameterList .Id {
+  float: none;
+  text-align: right;
+}
+
+/*** UNITS ***/
+
+.Unit {
+  border: 1px solid gray;
+  margin: 2px 2px 0 0;
+  background: #FFFBF5;                                                               /************** BACKGROUND COLOR 2 **************/
+}
+.Unit .DetailsCard .ElementDescription .ElementPath div.ElementName {
+  font-weight: bold;
+  font-size: 13pt;
+}
+.SubUnit .DetailsCard .ElementDescription,
+.ValidationRule .DetailsCard .ElementDescription,
+.SubValidationRule .DetailsCard .ElementDescription {
+  background: transparent;
+}
+.SubUnit .DetailsCard .ElementDescription .ElementPath div.ElementName,
+.ValidationRule .DetailsCard .ElementDescription .ElementPath div.ElementName,
+.SubValidationRule .DetailsCard .ElementDescription .ElementPath div.ElementName, {
+  font-weight: normal;
+  font-size: 10pt;
+}
+.SubUnit, .ValidationRule, .SubValidationRule {
+  margin: 2px;
+  padding: 1px;
+  float: left;
+  border: 1px solid lightgray;
+  width: 350px;
+}
+.SubUnit .ElementType,
+.ValidationRule .ElementType,
+.SubValidationRule .ElementType  {
+  font-weight: bold;
+}
+
+/*** LAYOUT ***/
+
+.layoutGrid, .layoutCell, .layoutUnit, .layoutLink, .layoutAttribute, .layoutField {
+  border: 1px solid gray;
+  margin: 2px 2px 0 0;
+  float: left;
+}
+.layoutUnit {
+  border: 1px solid gray;
+  margin: 2px 2px 0 0;
+}
+
+/*** ELEMENTS ***/
+
+.ElementName {
+	display: inline;
+}
+.ElementQName {
+	padding-left:1px;
+	padding-right:6px;
+	display:inline;
+	color:black;
+	font-weight:normal;
+}
+.ElementIcon {
+	margin: 2px 3px 1px 1px;
+}
+.ElementComment {
+  background-color:transparent;
+  border:medium none;
+  color:black;
+  font-weight:normal;
+  padding: 5px 2px 2px 2px;
+  clear: both;
+}
+
+/*** SEPARATOR ***/
+
+.item {
+  display:inline;
+}
+.IdRefPathItemSeparator {
+  background:transparent url(icons/IdRefPathItemSeparator.png) no-repeat scroll left center;
+  display:inline;
+  font-size:0;
+  padding-left:16px;
+  padding-top:8px;
+}
+.ParameterItemSeparator {
+	background-image: url('icons/ParameterItemSeparator.png'); 
+	background-repeat: no-repeat;
+	display:inline;
+	padding-top:16px;
+	padding-left:10px;
+	font-size:0px;
+}
+.ItemSeparator {
+	background-image: url('icons/ItemSeparator.png'); 
+	background-repeat: no-repeat;
+	display:inLine;
+	padding-top:16px;
+	padding-left:16px;
+	font-size:0px;
+}
+
+/*** STATISTICS ***/
+
+.StatisticsStructure, .StatisticsViewComponents, .StatisticsNavigation, .StatisticsOperations {
+  float:left;
+  margin-right:50px;
+}
+.StatisticsStructure table,.StatisticsViewComponents table,.StatisticsNavigation table,.StatisticsOperations table {
+  width:400px;
+}
+.Structure, .Navigation, .Content, .Operation {
+  margin-bottom: 5px;
+}
+.derivated, .volatile {
+  clear:both;
+  font-size:11px;
+}
+
+/*** STATISTICS ***/
+table.BusinessObjectCard th {
+	min-width: 150px;
+}
+table.BusinessObjectCard th.colCnt0 {
+	min-width: 350px;
+}
+
+/*** END OF FLOAT ***/
+
+.DetailsSection, .DeploymentConfigurationList, .EndOfDetailsCard, .EndOfPage, .EndOfUnit, .EndOfSubUnit,
+.ServiceDataProvidersList, .SiteViewList,
+.SummarySection, .Page, .LocaleList, .UnitList, .Unit, .SubUnitList, .ValidationRuleList, .SubValidationRuleList,
+.Incoming_LinkList, .Outgoing_LinkList, .Internal_LinkList, .PropertyList, .ChildrenList,
+.RelationshipList, .SubTypeList,
+.db_DatabaseList {
+  clear: left;
+}
+
+/*** HIDDEN HEADERS ***/
+
+table.AttributeWebMLDocProperty th, 
+table.BooleanWebMLDocProperty th, 
+table.DerivationQueryWebMLDocProperty th, 
+table.DisplayAllWebMLDocProperty th, 
+table.EnumWebMLDocProperty th, 
+table.IdRefsWebMLDocProperty th, 
+table.ConstantIdRefsWebMLDocProperty th, 
+table.ListWebMLDocProperty th, 
+table.ParameterRefWebMLDocProperty th, 
+table.PasswordWebMLDocProperty th, 
+table.SelectionExpressionWebMLDocProperty th, 
+table.TextElementWebMLDocProperty th,
+table.SortAttributesWebMLDocProperty th,
+table.ConstantStringWebMLDocProperty th,
+table.ConstantListWebMLDocProperty th,
+table.TypeWebMLDocProperty th, 
+table.CouplingParameterWebMLDocProperty th,
+table.Structure th,
+table.Navigation th,
+table.Content_Units th,
+table.Operation_Units th,
+table.Structure th,
+.MAPPING table th,
+.GENERAL table th,
+.LAYOUT table th,
+.INCOMING_PARAMETER table th,
+.OUTGOING_PARAMETER table th,
+.AJAX table th,
+.CONDITION table th,
+.SECURITY table th,
+.SERVICES table th,
+.PUBLISH table th,
+.DURATION_PROCESSING table th,
+.DURATION_WAIT table th,
+.NOTIFICATION table th,
+.APPEARANCE table th,
+.BPM table th
+{
+	display:none
+}

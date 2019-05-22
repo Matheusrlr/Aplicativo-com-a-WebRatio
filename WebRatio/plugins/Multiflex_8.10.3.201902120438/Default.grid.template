@@ -1,0 +1,49 @@
+#?delimiters [%, %], [%=, %]
+[% 
+import org.apache.commons.lang.math.NumberUtils
+
+for (row in grid.selectNodes("layout:Row")) { 
+def cells = row.selectNodes("layout:Cell")
+def maxColSpan = 0
+for (aCell in cells) {
+	if (maxColSpan < NumberUtils.toInt(aCell["colspan"], 0)) {
+		maxColSpan = NumberUtils.toInt(aCell["colspan"], 0)
+	}
+}
+def cellCount = cells.size() - (maxColSpan > 0 ? (maxColSpan - 1): 0)
+def cellIndex = 1
+%]
+[% for (cell in row.selectNodes("layout:Cell")) { 
+	def position = ""
+	if (cellCount > 1) {
+		if (cellCount == 2) {
+			switch(cellIndex) {
+				case 1:
+				position = "-left"
+				break
+				case 2:
+				position = "-right"
+				break
+			}
+		} else {
+			switch(cellIndex) {
+				case 1:
+				position = "-left"
+				break
+				case 2:
+				position = "-middle"
+				break
+				case 3:
+				position = "-right"
+				break
+			}
+		}
+	}
+%]
+<div class="column[%= cellCount %]-unit[%= position%]">
+<wr:Cell context="cell"/>
+[% cellIndex++ %]
+</div>
+[% } %]
+<hr class="clear-contentunit" />
+[% }  %]

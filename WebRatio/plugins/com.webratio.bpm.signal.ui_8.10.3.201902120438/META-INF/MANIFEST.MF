@@ -1,0 +1,37 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: com.webratio.bpm.signal.ui;singleton:=true
+Require-Bundle: org.apache.ant,org.eclipse.core.resources,org.eclipse.
+ gef,org.eclipse.jdt.ui,org.eclipse.search,org.eclipse.ui.console,org.
+ eclipse.ui.ide,com.webratio.commons.mf.ui.views.properties.tabbed,com
+ .webratio.commons.db,com.webratio.commons.libs,com.webratio.commons.m
+ f.model,com.webratio.commons.mf.ui,com.webratio.generator.helpers,com
+ .webratio.generator.webapp,com.webratio.bpm.signal.core,org.eclipse.j
+ dt.core,org.eclipse.team.core,org.eclipse.pde,org.eclipse.pde.core,or
+ g.eclipse.pde.ui,org.eclipse.ant.core,org.eclipse.ant.ui,org.eclipse.
+ ui.editors,org.eclipse.core.filesystem,org.eclipse.help.ui,org.eclips
+ e.ui.workbench.texteditor,org.eclipse.compare,org.eclipse.ui,org.ecli
+ pse.jface.text,org.eclipse.core.runtime,org.eclipse.swt,org.eclipse.j
+ face,org.eclipse.ui.workbench,org.eclipse.ui.navigator,com.webratio.c
+ ommons.startup,com.webratio.bpm.ui,com.webratio.bpm.core,com.webratio
+ .commons.lib.apache.commons.lang,com.webratio.commons.lib.apache.log4
+ j,com.webratio.commons.lib.dom4j,com.webratio.commons.eclipse.core,co
+ m.webratio.commons.lib.google.guava,com.webratio.commons.eclipse.ui
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: WebRatio
+Ant-Version: Apache Ant 1.9.2
+Export-Package: com.webratio.bpm.signal.ui,com.webratio.bpm.signal.ui.
+ viewers
+Bundle-Name: WebRatio BPM Signal UI Plug-in
+Bundle-Version: 8.10.3.201902120438
+Bundle-ClassPath: bin.jar
+Bundle-Activator: com.webratio.bpm.signal.ui.BPMSignalUIPlugin
+Created-By: 1.8.0-b132 (Oracle Corporation)
+
+Name: plugin.xml
+SHA-256-Digest: 0PUODK4fZslxRS0jILUk39wlvUJ4tGOY7SeaVg3oRCc=
+
+Name: META-INF/signature
+SHA-256-Digest: PRYYgqFVErjMMx3lDuv1T8nEp66ZmsJ8BwS19rF+4z4=
+

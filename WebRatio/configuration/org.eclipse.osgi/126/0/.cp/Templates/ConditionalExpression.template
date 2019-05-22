@@ -1,0 +1,111 @@
+#?delimiters <%,%>,<%=,%>
+<%/*
+ FOR VALIDATION RULES
+ inputs:
+ useDefaultPolicy
+ dataBindingIdExpression
+*/%>
+<ConditionalExpression maxCard="1" ignoreI18N="true">
+<% if ("true" == useDefaultPolicy) { %>
+    <EnumProperty attributeName="defaultPolicy" defaultValue="fill">
+        <EnumItem value="fill"/>
+        <EnumItem value="empty" label="Empty (only with Not Required)"/>
+        <EnumItem value="emptyAlwaysApplied" label="Empty"/>
+        <Description>
+            The component's behaviour in case no input parameter is available for all the not required conditions of the component. 
+            If the value is set to &lt;b&gt;Fill&lt;/b&gt; the content of the component is filled up in the normal way, 
+            i.e. by ignoring the not required selector conditions lacking their input parameter. 
+            If the value is set to &lt;b&gt;Empty (only with Not Required)&lt;/b&gt; the content of the component is left empty if the 
+            above mentioned pre-condition is satisfied (allowed only if all the selector's conditions are not required). 
+            If the value is set to &lt;b&gt;Empty&lt;/b&gt; the content of the component is left empty if the above mentioned pre-condition 
+            is satisfied (allowed also if there is one or more required conditions).
+        </Description>
+    </EnumProperty>
+<% } %>    
+    <EnumProperty attributeName="booleanOperator" defaultValue="and">
+        <EnumItem value="and"/>
+        <EnumItem value="or"/>
+        <EnabledCondition>return element.valueOf("@expression") == ""</EnabledCondition>
+        <Description>
+            If the selector needs more than one condition, this property defines whether the different conditions are considered either 
+            in conjunction (AND logical operator) or in disjunction (OR logical operator).
+        </Description>
+    </EnumProperty>
+    <KeyCondition elementName="KeyCondition" idPrefix="kcond" namePrefix="KeyCondition" ignoreI18N="true">
+        <EnumProperty attributeName="predicate" defaultValue="in">
+            <EnumItem value="in" label="In"/>
+            <EnumItem value="notIn" label="Not In"/>
+            <Description>The predicate used in the condition</Description>
+        </EnumProperty>
+        <EnumProperty attributeName="implied" defaultValue="false" label="Required">
+            <EnumItem value="false" label="True"/>
+            <EnumItem value="true" label="False"/>
+            <EnabledCondition>return element.valueOf("../@expression") == ""</EnabledCondition>
+            <Description>Indicates if the condition is required or implied</Description>
+        </EnumProperty>
+    </KeyCondition>
+    <AttributesCondition elementName="AttributesCondition" idPrefix="acond" namePrefix="AttCondition" ignoreI18N="true">
+        <AttributesProperty attributeName="attributes" classIdExpr="<%=dataBindingIdExpression%>" includeDerived="true" enabledImportExtraAttributes="true">
+            <Description>
+                It contains the list of attributes of the condition. If more than one attribute is chosen, the condition is treated a set of as conditions connected 
+                by the OR logical operator, each one referring to a distinct attribute.
+            </Description>
+        </AttributesProperty>
+        <EnumProperty attributeName="predicate" defaultValue="eq">
+            <EnumItem value="beginsWith" label="Begins With"/>
+            <EnumItem value="contains" label="Contains"/>
+            <EnumItem value="endsWith" label="Ends With"/>
+            <EnumItem value="eq" label="Equal"/>
+            <EnumItem value="gt" label="Greater Than"/>
+            <EnumItem value="gteq" label="Greater or Equal"/>
+            <EnumItem value="notNull" label="Is Not Null"/>
+            <EnumItem value="null" label="Is Null"/>
+            <EnumItem value="lt" label="Less Than"/>
+            <EnumItem value="lteq" label="Less or Equal"/>
+            <EnumItem value="notBeginsWith" label="Not Begins With"/>
+            <EnumItem value="notContains" label="Not Contains"/>
+            <EnumItem value="notEndsWith" label="Not Ends With"/>
+            <EnumItem value="neq" label="Not Equal"/>
+            <Description>The predicate used in the condition</Description>
+        </EnumProperty>
+        <BooleanProperty attributeName="ignoreCase">
+            <Description>If checked, the predicate evaluation is performed ignoring case sensitivity</Description>
+            <EnabledCondition>return ['beginsWith','contains','endsWith','eq','notBeginsWith','notContains','notEndsWith','neq'].contains(element['predicate'])</EnabledCondition>
+        </BooleanProperty>
+        <EnumProperty attributeName="booleanOperator" defaultValue="or">
+            <EnumItem value="and"/>
+            <EnumItem value="or"/>
+            <EnabledCondition>return !["null","notNull"].contains(element["predicate"])</EnabledCondition>
+            <Description>The boolean operator used to concatenate the conditions produced by applying the condition on multiple values</Description>
+        </EnumProperty>
+        <StringProperty attributeName="value">
+            <EnabledCondition>return !["null","notNull"].contains(element["predicate"])</EnabledCondition>
+            <Description>The condition's constant value</Description>
+        </StringProperty>
+        <EnumProperty attributeName="implied" defaultValue="false" label="Required">
+            <EnumItem value="false" label="True"/>
+            <EnumItem value="true" label="False"/>
+            <EnabledCondition>return element.valueOf("../@expression") == ""</EnabledCondition>
+            <Description>Indicates if the condition is required or implied</Description>
+        </EnumProperty>
+    </AttributesCondition>
+    <AssociationRoleCondition elementName="AssociationRoleCondition" idPrefix="rcond" namePrefix="RoleCondition" ignoreI18N="true">
+        <AssociationRoleChainProperty attributeName="role" targetClassIdExpr="<%=dataBindingIdExpression%>" includeDerived="true">
+            <Description>It contains the association-role chain of the condition starting from the farthest role. </Description>
+        </AssociationRoleChainProperty>
+        <EnumProperty attributeName="predicate" defaultValue="in">
+            <EnumItem value="in" label="In"/>
+            <EnumItem value="notIn" label="Not In"/>
+            <Description>The predicate used in the condition</Description>
+        </EnumProperty>
+        <EnumProperty attributeName="implied" defaultValue="false" label="Required">
+            <EnumItem value="false" label="True"/>
+            <EnumItem value="true" label="False"/>
+            <EnabledCondition>return element.valueOf("../@expression") == ""</EnabledCondition>
+            <Description>Indicates if the condition is required or implied</Description>
+        </EnumProperty>
+    </AssociationRoleCondition>
+    <SelectionExpressionProperty attributeName="expression" label="Expression">
+        <Description>The complex expression based on the conditions of the selector.</Description>
+    </SelectionExpressionProperty>
+</ConditionalExpression>

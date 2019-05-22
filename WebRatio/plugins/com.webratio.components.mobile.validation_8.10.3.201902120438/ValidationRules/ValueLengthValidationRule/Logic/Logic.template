@@ -1,0 +1,32 @@
+#?delimiters [%,%],[%=,%]
+[% setJSONOutput() %]
+
+{
+	"service": "wrm.comp.val.ValueLengthValidationRuleService",
+	"predicate": "[%= element["predicate"] %]",
+	"value": [%= computeValue(element["value"]) %]
+}
+
+[%
+	def computeValue(value) {
+		def result
+	    try {
+			value = value.toUpperCase();
+			if (value.endsWith("B")) {
+				value = value.substring(0, value.length() -1)
+			}	    	
+	        if (value.endsWith("G")) {
+	            result = Long.parseLong(value.substring(0, value.length() -1)) * 1024 * 1024 * 1024
+	        } else if (value.endsWith("M")) {
+	            result = Long.parseLong(value.substring(0, value.length() -1)) * 1024 * 1024
+	        } else if (value.endsWith("K")) {
+	            result = Long.parseLong(value.substring(0, value.length() -1)) * 1024L
+	        } else {
+	            result = Long.parseLong(value)
+	        }
+	    } catch (Exception e) {
+	        throwGenerationException("Invalid compare length value '" + value + "'")
+	    }
+	    return result
+	}
+%]

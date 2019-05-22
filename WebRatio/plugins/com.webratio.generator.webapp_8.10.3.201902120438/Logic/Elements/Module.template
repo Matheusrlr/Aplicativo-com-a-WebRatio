@@ -1,0 +1,21 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+
+def moduleDef = getById(module, "definition")
+def moduleDefQId = moduleDef["id"]
+def projectId = moduleDef.valueOf("ancestor::*/@ownerProjectId")
+if (projectId) {
+	moduleDefQId = projectId + ":" + moduleDefQId 
+}
+def inputPortDef = moduleDef.selectSingleNode("InputPortDefinition")
+def singleLayout = (moduleDef.valueOf("@layout:singleLayout") == "true")
+%]
+<Descriptor service="com.webratio.web.mvc.module.ModuleService">
+	<Module operation="false" singleLayout="[%= singleLayout %]">[%= moduleDefQId %]</Module>
+	<InputCollectorId>[%= inputPortDef ? inputPortDef["id"] : "" %]</InputCollectorId>
+	[% def inputParameters = inputPortDef ? inputPortDef.elements("PortDefinitionParameter") : [] %]
+	[% for (inPar in inputParameters) { %]
+		<InputParameter>[%= inPar["id"] %]</InputParameter>
+	[% } %]
+</Descriptor>

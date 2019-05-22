@@ -1,0 +1,17 @@
+#?delimiters [%, %], [%=, %]
+[%
+
+/* Determine the layout */
+def layout = getLayout(customLocation, LayoutType.CELL)
+if (!layout.path) {
+	throwGenerationException("Custom location has no cell layout defined - " + customLocation)
+}
+def layoutTemplate = getLayoutFile(layout.path, LayoutType.CELL)
+if (!layoutTemplate) {
+	throwGenerationException("Custom location cell layout template not found: " + layout.path)
+}
+addUsedTemplate(layout.path)
+
+/* Actual Custom Location layout */
+printRaw(executeTemplate(layoutTemplate.absolutePath, ["cell": customLocation, "params": layout.parameters, "templateType": "cell"]))
+%]

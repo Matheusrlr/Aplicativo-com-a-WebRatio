@@ -1,0 +1,48 @@
+Manifest-Version: 1.0
+Export-Package: org.springframework.asm,org.springframework.cglib,org.
+ springframework.cglib.beans,org.springframework.cglib.core,org.spring
+ framework.cglib.proxy,org.springframework.cglib.reflect,org.springfra
+ mework.cglib.transform,org.springframework.cglib.transform.impl,org.s
+ pringframework.cglib.util,org.springframework.core,org.springframewor
+ k.core.annotation,org.springframework.core.convert,org.springframewor
+ k.core.convert.converter,org.springframework.core.convert.support,org
+ .springframework.core.env,org.springframework.core.io,org.springframe
+ work.core.io.support,org.springframework.core.serializer,org.springfr
+ amework.core.serializer.support,org.springframework.core.style,org.sp
+ ringframework.core.task,org.springframework.core.task.support,org.spr
+ ingframework.core.type,org.springframework.core.type.classreading,org
+ .springframework.core.type.filter,org.springframework.lang,org.spring
+ framework.objenesis,org.springframework.objenesis.instantiator,org.sp
+ ringframework.objenesis.instantiator.android,org.springframework.obje
+ nesis.instantiator.basic,org.springframework.objenesis.instantiator.g
+ cj,org.springframework.objenesis.instantiator.jrockit,org.springframe
+ work.objenesis.instantiator.perc,org.springframework.objenesis.instan
+ tiator.sun,org.springframework.objenesis.strategy,org.springframework
+ .util,org.springframework.util.backoff,org.springframework.util.compa
+ rator,org.springframework.util.concurrent,org.springframework.util.xm
+ l
+Require-Bundle: com.webratio.commons.lib.apache.commons.logging,com.we
+ bratio.commons.lib.apache.log4j
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/spring-core.jar
+Bundle-Version: 4.2.4
+Bundle-Name: WebRatio 3rd Party Library - Spring Core
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.spring.core
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
+Name: lib/spring-core.jar
+SHA-256-Digest: SROlEq5Ts9DMsrZko/cQ5jtqKKwLKn8DPFBAR+M+aDg=
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: x8N3NhJmnTV9XJnF9DEmQmFGco3MdjvN+sWUwTiB9As=
+
+Name: lib/spring-coresrc.zip
+SHA-256-Digest: Mv+Z96mmFEUZrSc7PIHxWUhc1IGdYyQM+RHLDa172M0=
+

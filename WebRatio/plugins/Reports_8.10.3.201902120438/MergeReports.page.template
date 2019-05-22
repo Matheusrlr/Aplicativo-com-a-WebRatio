@@ -1,0 +1,28 @@
+#?delimiters [%, %], [%=, %]
+<wr:Resources types="jspdeclaration"/>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<wr:Page type="wr:report"/>
+[%
+def isReportTargetPage = { link ->
+    if (link["type"] != "normal") {
+        return false
+    }
+    def targetPage = getClosestTopGenericPage(getById(link["to"]))
+    if ((targetPage == null) || (targetPage == page)) {
+        return false
+    }
+    def targetPageStyle = targetPage.valueOf("@layout:style")
+    def targetPageLayout = targetPage.valueOf("@layout:pageLayout")
+    return (targetPageStyle == "Reports") && ((targetPageLayout == "") || (targetPageLayout == "Reports/Default"))
+}
+def linkIds = []
+linkIds += page.selectNodes(".//*[self::NavigationFlow or self::DataFlow]").findAll{isReportTargetPage(it)}.collect{it["id"]}
+%]
+<webratio:Page page="<wr:Id context="page"/>"/>
+<report:PDFMergeReports domain="">
+<URLSet>
+[% for (linkId in linkIds) { %]
+  <URL><webratio:Link escapeXml="true" link="[%=linkId%]" ignoreURLFragments="true"/></URL>
+[% } %]
+</URLSet>
+</report:PDFMergeReports>

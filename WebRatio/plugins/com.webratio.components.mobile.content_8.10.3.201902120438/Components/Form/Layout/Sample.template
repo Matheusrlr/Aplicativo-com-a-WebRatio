@@ -1,0 +1,18 @@
+#?delimiters [%, %], [%=, %]
+[% setHTMLOutput() 
+/*
+ *	Form Component
+ *	Use the AngularJS variable "view.form" to access to the fields value
+ */
+%]
+<wr:Frame>
+	<div class="<wr:StyleClass/> wr-comp-Form">
+		<wr:Iterate var="field" context="component" select="layout:Field">
+			<wr:Label/>
+			<wr:Value/>
+		</wr:Iterate>
+		<wr:Iterate var="event" context="component" select="layout:Event">
+			<wr:Event/>
+		</wr:Iterate>
+	</div>
+</wr:Frame>

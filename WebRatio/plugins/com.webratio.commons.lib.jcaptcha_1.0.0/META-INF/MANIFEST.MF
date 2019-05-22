@@ -1,0 +1,53 @@
+Manifest-Version: 1.0
+Export-Package: com.octo.captcha,com.octo.captcha.component.image.back
+ groundgenerator,com.octo.captcha.component.image.color,com.octo.captc
+ ha.component.image.deformation,com.octo.captcha.component.image.fontg
+ enerator,com.octo.captcha.component.image.textpaster,com.octo.captcha
+ .component.image.textpaster.textdecorator,com.octo.captcha.component.
+ image.utils,com.octo.captcha.component.image.wordtoimage,com.octo.cap
+ tcha.component.sound.soundconfigurator,com.octo.captcha.component.sou
+ nd.wordtosound,com.octo.captcha.component.word,com.octo.captcha.compo
+ nent.word.worddecorator,com.octo.captcha.component.word.wordgenerator
+ ,com.octo.captcha.engine,com.octo.captcha.engine.image,com.octo.captc
+ ha.engine.image.fisheye,com.octo.captcha.engine.image.gimpy,com.octo.
+ captcha.engine.image.utils,com.octo.captcha.engine.sound,com.octo.cap
+ tcha.engine.sound.utils,com.octo.captcha.image,com.octo.captcha.image
+ .fisheye,com.octo.captcha.image.gimpy,com.octo.captcha.module,com.oct
+ o.captcha.module.config,com.octo.captcha.module.jmx,com.octo.captcha.
+ module.taglib,com.octo.captcha.module.web.image,com.octo.captcha.modu
+ le.web.sound,com.octo.captcha.service,com.octo.captcha.service.captch
+ astore,com.octo.captcha.service.image,com.octo.captcha.service.multit
+ ype,com.octo.captcha.service.sound,com.octo.captcha.service.text,com.
+ octo.captcha.sound,com.octo.captcha.sound.gimpy,com.octo.captcha.soun
+ d.speller,com.octo.captcha.sound.spellfind,com.octo.captcha.text,com.
+ octo.captcha.text.math
+Require-Bundle: com.webratio.commons.lib.apache.commons.logging,com.we
+ bratio.commons.lib.apache.commons.collections,com.webratio.commons.li
+ b.javax.servlet
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/jcaptcha.jar,lib/jcaptcha-api.jar,lib/imaging.ja
+ r
+Bundle-Version: 1.0.0
+Bundle-Name: WebRatio 3rd Party Library - JCAPTCHA
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.jcaptcha
+Bundle-RequiredExecutionEnvironment: J2SE-1.4
+
+Name: lib/imaging.jar
+SHA-256-Digest: 6j9D1zkxPDqqTwtduVGoIt8YVMvUIlNhANB3ut6Nbbw=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: BHUu+jxBY+QRDLyVXfspBaunz/brBcWRk5TBqhmteQo=
+
+Name: lib/jcaptcha.jar
+SHA-256-Digest: i7uzLvhMjVcWnxQnyfDBloAqpxzqHVU0+R2r88UfrL0=
+
+Name: about_files/lgpl-2.1.txt
+SHA-256-Digest: 3GJlINzVOiL3J68+5Cx3DlbJemT+OtsGN5nYqwMv5VE=
+
+Name: lib/jcaptcha-api.jar
+SHA-256-Digest: 9LHwrLvsdLUHlmrXjE8+61hRzZVEvKUNwiIyGjmkjTU=
+

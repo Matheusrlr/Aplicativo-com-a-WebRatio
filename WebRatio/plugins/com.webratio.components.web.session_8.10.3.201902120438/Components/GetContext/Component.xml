@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="content|operation" formBased="false" idPrefix="gtu" namePrefix="Get " label="Get Context" dataFlowSource="true" navigationFlowSource="true"     > 
+  <Description xml:space="preserve">Get components are used to retrieve values from global or local parameters, 
+to be used for evaluating the conditions associated to components.</Description>  
+  <ContextParametersProperty attributeName="contextParameters" multiple="true" figureDisplayOrder="1"> 
+    <Description>The context parameters from which the content of the component is drawn.</Description> 
+  </ContextParametersProperty>  
+  <OutputDescription xml:space="preserve" name="Stored Value(s)">The value, or set of values, stored in the parameter associated
+with the get component.</OutputDescription>  
+  <IsHistoryComponent xml:space="preserve">return true</IsHistoryComponent>  
+  <IsContextFreeComponent xml:space="preserve">return true</IsContextFreeComponent> 
+</Component>

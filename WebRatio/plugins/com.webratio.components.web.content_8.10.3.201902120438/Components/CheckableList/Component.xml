@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="content" formBased="true" idPrefix="mciu" namePrefix="CheckableList " label="Checkable List" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true"  errorFlowTarget="true"  successFlowTarget="true" canPlaceLayoutComponent="true"> 
+  <DomainClassProperty attributeName="dataBinding" includeDerived="true" figureDisplayOrder="1"> 
+    <Description xml:space="preserve">The class from which the content of the component is drawn.</Description> 
+  </DomainClassProperty>  
+  <ConditionalExpression classIdExpr="../../@dataBinding" elementName="ConditionalExpression" defaultPolicy="true" figureDisplayOrder="2"> 
+    <Description xml:space="preserve">The set of selection criteria that retrieves the instances of the class of the component.</Description> 
+  </ConditionalExpression>  
+  <ConditionalExpression label="Preload Conditional Expression" classIdExpr="../../@dataBinding" elementName="PreConditionalExpression" defaultPolicy="false" figureDisplayOrder="3"> 
+    <Description xml:space="preserve">A Preload Conditional Expression is like a Conditional Expression, but is used to determine which objects of the
+checkable list must be displayed as pre-checked when rendering the component.</Description> 
+  </ConditionalExpression>  
+  <AttributesProperty classIdExpr="@dataBinding" attributeName="displayAttributes" includeDerived="true" enabledImportExtraAttributes="true"> 
+    <Description xml:space="preserve">The list of class attributes displayed by the component.</Description>  
+    <IsEnabled>return (element["dataBinding"] != "")</IsEnabled> 
+  </AttributesProperty>  
+  <SortAttributesProperty label="Sort Attributes" elementName="SortAttribute" attributeName="attribute" classIdExpr="@dataBinding" attributeIdsExpr="@displayAttributes"> 
+    <Description xml:space="preserve">The sorting criteria used to display the objects in the checkable list.</Description>  
+    <IsEnabled>return (element["dataBinding"] != "")</IsEnabled> 
+  </SortAttributesProperty>  
+  <IntegerProperty attributeName="maxResults"> 
+    <Description xml:space="preserve">The maximum number of rows to retrieve.
+If unspecified, all rows are retrieved.</Description> 
+  </IntegerProperty>  
+  <OrderingProperty attributeName="validationOrder" elementsExpr="VRules/*"> 
+    <IsEnabled>return (element.selectSingleNode("VRules/*") != null)</IsEnabled>  
+    <Description xml:space="preserve">The order of validation rules of the component.</Description> 
+  </OrderingProperty>  
+  <Description xml:space="preserve">Checkable lists present multiple instances of a class as a list and permit 
+the user to select a set of objects from such list. 
+A checkable list specification consists of two parts:
+&lt;ul&gt;
+  &lt;li&gt;The specification of the class to which the component refers and, optionally, 
+of a conditional expression used to restrict the set of instances contributing to the content 
+of the component.&lt;/li&gt;
+  &lt;li&gt;The selection of the attributes to be included in the component.&lt;/li&gt;
+&lt;/ul&gt;</Description>  
+  <InputDescription xml:space="preserve" name="Condition-Name">The parameter associated to one of the Conditional Expression
+ or Preload Conditional Expression conditions of the component.</InputDescription>  
+  <OutputDescription xml:space="preserve" name="Checked Attribute-Name">The attributes values of the multiple objects chosen from the index.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Attribute-Name (Single Row)">The value of one of the class attributes for the single object
+selected from the Checkable List.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="ForeignKey-Name (Single Row)">The value for one of the foreign key attributes of the object 
+connected to the object selected.</OutputDescription>  
+  <LayoutAttributes xml:space="preserve">return component.attributeValue("displayAttributes", "").tokenize(" ")</LayoutAttributes>  
+  <IsContextFreeComponent xml:space="preserve">if (getIncomingFlows(component).size() &gt; 0) { 
+   return false
+}
+
+def sel = component.element("ConditionalExpression")
+if(sel != null){
+	def count = sel.elements("AssociationRoleCondition").size() + sel.elements("KeyCondition").size()
+	if(count &gt; 0){   
+	  return false 
+	}
+	
+	for (cond in sel.elements("AttributesCondition")) {
+	    def pred = cond["predicate"]
+	    if ((cond["value"] == "") &amp;&amp; !isUnaryPredicate(pred)) {
+	          return false
+	    }
+	}
+}
+
+def preSel = component.element("PreConditionalExpression")
+if(preSel != null){
+	count = preSel.elements("AssociationRoleCondition").size()  +  preSel.elements("KeyCondition").size()
+	if(count &gt; 0){ 
+	  return false 
+	}
+	
+	for (cond in preSel.elements("AttributesCondition")) {
+	    def pred = cond["predicate"]
+	    if ((cond["value"] == "") &amp;&amp; !isUnaryPredicate(pred)) {
+	         return false
+	    }
+	}
+}
+return true
+</IsContextFreeComponent>    <IsMultiConditionComponent xml:space="preserve">return getIncomingFlows(component).size() &gt; 1</IsMultiConditionComponent>  
+  <SubmitLinkIds xml:space="preserve">
+def links = getExitingFlows(component, FlowType.NAVIGATION)
+def ids = []
+for (link in links) {
+    def parameterBindings = link.elements("ParameterBinding").collect{it["source"]}
+    if (parameterBindings.empty) {
+        parameterBindings = getAutomaticParameterBindings(link).collect{it["source"]}
+    }
+    if (!parameterBindings.any{it.startsWith("data[].")}) {
+        ids.add(link["id"])
+    }
+}
+return ids</SubmitLinkIds>  
+  <BeanDescription xml:space="preserve">
+	&lt;p&gt;The component state object for the Checkable List consists of the following properties:
+	   &lt;ul&gt;
+  		&lt;li&gt;&lt;code&gt;int dataSize&lt;/code&gt;: the number of class state objects&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;List data&lt;/code&gt;: the list of class state objects&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;String[] {unitId}Checked&lt;/code&gt;: the array with the values of the oid attribute of the &lt;b&gt;pre-checked 
+  		objects only&lt;/b&gt;&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;String[] key&lt;/code&gt;: the array of the pipe-separated list of key attributes of the class&lt;/li&gt;
+  	   &lt;/ul&gt;
+	&lt;/p&gt;
+	&lt;p&gt;The class state object depends on the class the unt is based on. For example, the class 
+	&lt;i&gt;Product&lt;/i&gt; of Acme application is associated with a state object having the following properties:
+	   &lt;ul&gt;
+	    &lt;li&gt;&lt;code&gt;Integer OID&lt;/code&gt;: the value of the &lt;i&gt;oid&lt;/i&gt; attribute&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Integer code&lt;/code&gt;: the value of the &lt;i&gt;code&lt;/i&gt; attribute&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;String description&lt;/code&gt;: the value of the &lt;i&gt;description&lt;/i&gt; attribute&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;String name&lt;/code&gt;: the value of the &lt;i&gt;name&lt;/i&gt; attribute&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Double price&lt;/code&gt;: the value of the &lt;i&gt;price&lt;/i&gt; attribute&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Object thumbnail&lt;/code&gt;: the value of the &lt;i&gt;thumbnail&lt;/i&gt; attribute&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Boolean highlighted&lt;/code&gt;: the value of the &lt;i&gt;highlighted&lt;/i&gt; attribute&lt;/li&gt;
+  	   &lt;/ul&gt;
+	&lt;/p&gt;
+</BeanDescription> </Component>

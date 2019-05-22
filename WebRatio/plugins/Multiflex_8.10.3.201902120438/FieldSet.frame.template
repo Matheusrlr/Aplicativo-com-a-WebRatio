@@ -1,0 +1,6 @@
+#?delimiters [%, %], [%=, %]
+<div class="contactform">
+	<fieldset><legend>&nbsp;<wr:Label context="element"/>&nbsp;</legend>
+		<wr:FrameContent/>
+	</fieldset>
+</div>

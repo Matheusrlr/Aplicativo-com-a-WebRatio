@@ -1,0 +1,6 @@
+#?delimiters [%, %], [%=, %]
+[% setJSONOutput() %]
+{
+	"service": "wrm.comp.CalendarOperationService",
+	"mode": "[%= component["mode"] %]"
+}

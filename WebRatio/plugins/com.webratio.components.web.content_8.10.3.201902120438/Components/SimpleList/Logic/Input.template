@@ -1,0 +1,54 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+def componentId = component["id"]
+def classId = component["dataBinding"]
+def domainClass = getById(classId)
+def hasConditions = component.selectSingleNode("ConditionalExpression/AssociationRoleCondition|ConditionalExpression/AttributesCondition|ConditionalExpression/KeyCondition") != null
+%>
+<InputParameters>
+<InputParameter name="<%=component["id"]%>.maxResults" label="Max Results" mandatory="false"/>
+<% if (component["distinct"] != "true") { 
+   for (a in getKeyAttributes(domainClass)) { 
+    def currentType = hasConditions ? "" : classId + "." + a["id"] + ".single" %>
+    <InputParameter 
+        name="<%=componentId%>.current.<%=a["id"]%>" 
+        refId="<%=a["id"]%>"
+        type="<%=currentType%>"
+        label="current <%=getLabel(a)%>"
+        mandatory="false"
+        clearOnIncomingLinkClick="true"/>
+  <% } 
+ } 
+ for (cond in component.selectNodes("ConditionalExpression/*")) { 
+   if (cond.name == "AssociationRoleCondition" && cond["role"]) { 
+     for (a in getKeyAttributes(getSourceDomainClass(getRoleByExpression(cond["role"])))) { %>
+      <InputParameter 
+          name="<%=cond["id"]%>.<%=a["id"]%>"
+          refId="<%=cond["id"]%>"
+          type="<%=getAssignableTypeExpression(getSourceDomainClass(getRoleByExpression(cond["role"])), a, true, true)%>"
+          label="<%=getRoleConditionLabel(cond, a)%>"
+          mandatory="<%=isRequiredConditionalExpressionPart(cond)%>"/>
+    <% } 
+   } else if (cond.name == "AttributesCondition" && cond["attributes"]) { 
+      def predicate = cond["predicate"] 
+      if ((cond["value"] == "") && !isUnaryPredicate(predicate)) { %>
+       <InputParameter
+          name="<%=cond["id"]%>"
+          refId="<%=cond["id"]%>"
+          type="<%=cond["attributes"].tokenize(" ").collect{classId + "." + it}.join("|")%>"
+          label="<%=getAttributesConditionLabel(cond)%>"
+          mandatory="<%=isRequiredConditionalExpressionPart(cond)%>"/>
+    <% } 
+   } else if (cond.name == "KeyCondition") { 
+      for (a in getKeyAttributes(domainClass)) { %>
+       <InputParameter 
+          name="<%=cond["id"]%>.<%=a["id"]%>"
+          refId="<%=cond["id"]%>"
+          type="<%=getAssignableTypeExpression(domainClass, a, true, true)%>"
+          label="<%=getKeyConditionLabel(cond, domainClass, a)%>"
+          mandatory="<%=isRequiredConditionalExpressionPart(cond)%>"/>
+    <% } 
+   } 
+ } %>
+</InputParameters>

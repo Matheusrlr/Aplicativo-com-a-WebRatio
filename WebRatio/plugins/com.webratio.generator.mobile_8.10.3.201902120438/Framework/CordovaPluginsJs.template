@@ -1,0 +1,39 @@
+#?delimiters [%, %], [%=, %]
+[% 
+setJSOutput()
+%]
+cordova.define('cordova/plugin_list', function(require, exports, module) {
+	
+	module.exports = [
+		[% jsModules.eachWithSeparator(",") { jsModule ->
+			def pluginId = jsModule.valueOf("ancestor::*[local-name() = 'plugin']/@id")
+		%]
+			{
+				"file": "plugins/[%= pluginId %]/[%= jsModule["src"] %]",
+				"id": "[%= pluginId %].[%= jsModule["name"] %]",
+				"clobbers": [
+					[% jsModule.selectNodes("clobbers").eachWithSeparator(",") { clobber -> %]
+						"[%= clobber["target"] %]"
+					[% } %]
+				],
+				"merges": [
+					[% jsModule.selectNodes("merges").eachWithSeparator(",") { merge -> %]
+						"[%= merge["target"] %]"
+					[% } %]
+				]
+				[% if (jsModule.selectSingleNode("runs")) { %],
+					"runs": true
+				[% } %]
+			}
+		[% } %]
+	];
+	
+	module.exports.metadata = {
+		[% appInfo.plugins.selected.eachWithSeparator(",") { plugin ->
+			def manifest = plugin.instance.manifest
+		%]
+			"[%= manifest["id"] %]": "[%= manifest["version"] %]"
+		[% } %]
+	};
+	
+});

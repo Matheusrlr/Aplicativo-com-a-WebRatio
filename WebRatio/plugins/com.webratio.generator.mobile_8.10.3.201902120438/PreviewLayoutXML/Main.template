@@ -1,0 +1,149 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.google.common.base.Throwables
+import com.webratio.generator.helpers.ModulesExpandStrategy
+import com.webratio.generator.helpers.ModulesHelper
+import com.webratio.generator.helpers.MultiFileHelper
+
+try {
+	
+	/*
+	 * Project parsing: this is roughly equivalent to Project/Main.template
+	 */
+	
+	/* Simplify ids and modules */
+	def projectElement = parseXMLFile(new File(projectPath)).rootElement
+	wr.project = projectElement
+	MultiFileHelper mfHelper = new MultiFileHelper(projectElement)
+	mfHelper.simplifyIds(projectElement)
+	layoutPanelId = mfHelper.getSimplifiedId(layoutPanelId)
+	/* TODO -----------------------------------------------------
+	ModulesHelper modulesHelper = new ModulesHelper(projectElement, wr.projectType)
+	modulesHelper.replaceModules() */
+	writeProjectToFile(projectElement.document, new File(projectPath))
+	
+	/* Auto-expand screens, top toolbar and components */
+	def parseResult = parseWebProject(new File(projectPath), null)
+	wr.project = parseResult.document.rootElement
+	wr.elementRetriever = parseResult.index
+	for (screen in getAllScreens()) {
+		expandPanel(screen)
+	}
+	for (toolbar in getAllTopToolbars()) {
+		expandPanel(toolbar)
+	}
+	for (viewComp in getAllViewComponents()) {
+		try {
+			if (viewComp.selectSingleNode("ancestor::ContentModuleDefinition") == null) {
+				expandComponent(viewComp)
+			}
+		} catch (Throwable t) {
+			throw new Exception("Unable to expand view component " + viewComp["name"] + "[" + viewComp["id"] + "]", t)
+		}  
+	}
+	
+	/* Write to file */
+	writeProjectToFile(wr.project.document, new File(projectPath))
+	
+	/* Parse again with dynamic module expansion */
+	parseResult = parseExpandWebProject(new File(projectPath), new ModulesExpandStrategy(wr), null)
+	wr.project = parseResult.document.rootElement
+	wr.elementRetriever = parseResult.index
+	wr.project.document.updateReplacements()
+	
+	/*
+	 * Layout XML computation: specific to this template
+	 */
+	
+	/* Expand layout elements as needed by the input element */
+	def selectedLayoutComp = null
+	def layoutComp = null
+	def panel = wr.project.selectSingleNode(".//Screen[@id = '" + layoutPanelId + "'] | .//Toolbar[@id = '" + layoutPanelId + "']")
+	if (panel) {
+		def getUniquePathInPanel = { elem ->
+			return elem?.getUniquePath(panel)?.replaceAll(/layout:Grid/, "layout:Grid[not(@moduleId)]")
+		}
+		if (model.name == "Event") { // layout:Event
+			def eventId = mfHelper.getSimplifiedId(model["event"])
+			def layoutEvents = panel.selectNodes(".//layout:Event[@event = '" + eventId + "'][parent::layout:Cell|parent::layout:CustomLocation]")
+			if (layoutEvents.size() > 0) {
+				layoutEvents.each{ expandLayoutEvent(it) }
+			} else {
+				selectedLayoutComp = model.selectSingleNode("parent::layout:Component")
+				if (selectedLayoutComp != null) {
+					layoutComp = panel.selectSingleNode(getUniquePathInPanel(selectedLayoutComp))
+					expandLayoutComponent(layoutComp)
+				}
+			}
+		} else if (model.name == "Attribute") { // layout:Attribute
+			def attrId = mfHelper.getSimplifiedId(model["attribute"])
+			def layoutAtts = panel.selectNodes(".//layout:Attribute[@attribute = '" + attrId + "'][parent::layout:Cell|parent::layout:CustomLocation]")
+			if (layoutAtts.size() > 0) {
+				layoutAtts.each{ expandLayoutAttribute(it) }
+			} else {
+				selectedLayoutComp = model.selectSingleNode("parent::layout:Component")
+				if (selectedLayoutComp != null) {
+					layoutComp = panel.selectSingleNode(getUniquePathInPanel(selectedLayoutComp))
+					expandLayoutComponent(layoutComp)
+				}
+			}
+		} else if (model.name == "Field") { // layout:Field
+			def fieldId = mfHelper.getSimplifiedId(model["field"])
+			def layoutFields = panel.selectNodes(".//layout:Field[@field = '" + fieldId + "'][parent::layout:Cell|parent::layout:CustomLocation]")
+			if (layoutFields.size() > 0) {
+				layoutFields.each{ expandLayoutField(it) }
+			} else {
+				selectedLayoutComp = model.selectSingleNode("parent::layout:Component")
+				if (selectedLayoutComp != null) {
+					layoutComp = panel.selectSingleNode(getUniquePathInPanel(selectedLayoutComp))
+					expandLayoutComponent(layoutComp)
+				}
+			}
+		} else if (model.name == "Component") { // layout:Component
+			layoutComp = panel.selectSingleNode(getUniquePathInPanel(model))
+			expandLayoutComponent(layoutComp)
+		} else {
+			def selectedElement = panel
+			if (model.name == "Module") { // layout:Module
+				selectedElement = panel.selectSingleNode(".//layout:Grid[@moduleId = '" + mfHelper.getSimplifiedId(model["moduleId"]) + "']")
+			} else if (model.name != "Screen" && model.name != "Toolbar") {
+				selectedElement = panel.selectSingleNode(getUniquePathInPanel(model))
+			}
+			def layoutComps = selectedElement.selectNodes(".//layout:Component")
+			layoutComps.each{ expandLayoutComponent(it) }
+			def layoutEvents = selectedElement.selectNodes(".//layout:Event[parent::layout:Cell|parent::layout:CustomLocation]")
+			layoutEvents.each{ expandLayoutEvent(it) }
+			def layoutAtts = selectedElement.selectNodes(".//layout:Attribute[parent::layout:Cell|parent::layout:CustomLocation]")
+			layoutAtts.each{ expandLayoutAttribute(it) }
+			def layoutFields = selectedElement.selectNodes(".//layout:Field[parent::layout:Cell|parent::layout:CustomLocation]")
+			layoutFields.each{ expandLayoutField(it) }
+		}
+		
+		/* Get the input element */
+		def genElem = null
+		if (model.name == "Event" && layoutComp != null) { // layout:Event
+			def eventId = mfHelper.getSimplifiedId(model["event"])
+			genElem = layoutComp.selectSingleNode(".//layout:Event[@id = '" + eventId + "']")
+		} else if (model.name == "Attribute" && layoutComp != null) { // layout:Attribute
+			def attrId = mfHelper.getSimplifiedId(model["attribute"])
+			genElem = layoutComp.selectSingleNode(".//layout:Attribute[@id = '" + attrId + "']")
+		} else if (model.name == "Module") {
+			genElem = panel.selectSingleNode(".//layout:Grid[@moduleId='" + mfHelper.getSimplifiedId(model["moduleId"]) + "']")
+		} else if (model.name == "Screen" || model.name == "Toolbar") {
+			genElem = panel
+		} else {
+			genElem = panel.selectSingleNode(getUniquePathInPanel(model));
+		}
+		
+		/* Write the selected element to a temporary file */
+		if (genElem) {
+	       printRaw(serializeXML(genElem, true).trim())
+		} else {
+		   printRaw("Element removed from the layout")
+		}
+	}
+	mfHelper = null
+} catch (Throwable e) {
+	printRaw(Throwables.getStackTraceAsString(e))
+}
+%]

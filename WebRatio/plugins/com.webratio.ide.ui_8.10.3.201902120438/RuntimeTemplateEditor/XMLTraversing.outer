@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root>
+	
+	<Statement name="Iterate over Elements" image="STATEMENT" templateTypes="xml" indent="true">
+		<Description>
+			Iterates over a subset of elements.
+		</Description>
+		<Value><![CDATA[
+$SS for (@@element@@ in @@document@@.selectNodes("@@xpath@@")) { $SE
+	$$CURSOR$$
+$SS } $SE]]>
+		</Value>
+	</Statement>
+  
+</Root>

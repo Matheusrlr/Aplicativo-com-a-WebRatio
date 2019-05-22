@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="content" version="1.0.0" idPrefix="brcd" namePrefix="Barcode " label="Barcode" dataFlowTarget="true" navigationFlowTarget="true" successFlowSource="true" successFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" multipleSuccessFlowCardinality="true" canPlaceLayoutComponent="true"> 
+  	<NativePlugins>
+  		<RequiredPlugin localId="local:barcodescanner.zip"/>
+  	</NativePlugins> 
+	<Description xml:space="preserve">&lt;p&gt;The Barcode view component generates and renders in a screen a QR Code or a Barcode using the infomation provided as input.&lt;/p&gt;
+&lt;p&gt;This component uses the &lt;b&gt;BarcodeScanner&lt;/b&gt; PhoneGap plugin to interact with the device. &lt;/p&gt;
+&lt;p&gt;More information about the plugin are available here: &lt;a href="https://github.com/webratio/phonegap-plugin-barcodescanner"&gt;https://github.com/webratio/phonegap-plugin-barcodescanner&lt;/a&gt;&lt;/p&gt;.</Description>
+	<EnumProperty attributeName="format" defaultValue="QR_CODE"> 
+    	<EnumItem value="QR_CODE" label="QR Code" />
+    	<EnumItem value="CODE_128" label="Code 128" />
+    	<Description xml:space="preserve">Specifies the format of the generated QR Code/Barcode.
+&lt;p&gt;The available options are:&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;QR Code&lt;/li&gt;
+&lt;li&gt;Code 128&lt;/li&gt;
+&lt;/ul&gt;</Description> 
+  	</EnumProperty>
+  	<EnumProperty attributeName="valueType" defaultValue="text"> 
+    	<EnumItem value="email" label="Email"/>
+    	<EnumItem value="geo" label="Geo Address"/>
+    	<EnumItem value="phone" label="Phone"/>
+    	<EnumItem value="phoneContact" label="Phone Contact"/>
+    	<EnumItem value="sms" label="SMS"/>
+    	<EnumItem value="text" label="Text"/>
+    	<EnumItem value="url" label="URL"/>
+    	<IsEnabled>return (element["format"] == "QR_CODE")</IsEnabled>  
+    	<Description xml:space="preserve">Specifies the specific type of the generated QR Code.
+&lt;p&gt;The available options are:&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;Email&lt;/li&gt;
+&lt;li&gt;Geo Address&lt;/li&gt;
+&lt;li&gt;Phone&lt;/li&gt;
+&lt;li&gt;SMS&lt;/li&gt;
+&lt;li&gt;Text&lt;/li&gt;
+&lt;li&gt;URL&lt;/li&gt;
+&lt;/ul&gt;
+The view component proposes an input parameter dedicated to the selected option.
+      </Description> 
+  	</EnumProperty>
+</Component>

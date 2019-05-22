@@ -1,0 +1,19 @@
+#?delimiters [%,%],[%=,%]
+[%
+setXMLOutput()
+
+def domainClass = getById(component["dataBinding"])
+def selector = component.element("ConditionalExpression")
+
+%]
+<Descriptor service="com.webratio.components.web.operation.datasource.DeleteService">
+[% if (domainClass == null) { %]
+  <Error>Could not find a domain-class identified by '[%=component["dataBinding"]%]'</Error>
+[% } else if ((selector == null) || selector.elements().empty) { %]
+  <Error>Could not find a valid selector condition</Error>
+[% } else { %]
+  <DataSource>[%=getDataSourceId(domainClass)%]</DataSource>
+  <Class>[%=domainClass["id"]%]</Class>
+  [%if(selector){ printRaw(createQuery(domainClass).select(getKeyAttributes(domainClass).collect{it["id"]}).selector(selector).build().asXML()) }%]
+[% } %]
+</Descriptor>

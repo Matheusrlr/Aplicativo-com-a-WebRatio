@@ -1,0 +1,12 @@
+#?delimiters [%,%],[%=,%]
+[%
+setXMLOutput()
+%]
+<InputParameters>
+	
+  [%if (component["switchValues"] == "roleNames") {%]
+  	  <InputParameter name="[%=component["id"]%].switch" label="Role Id" mandatory="false"/>
+  [%} else {%]
+  	  <InputParameter name="[%=component["id"]%].switch" label="Switch" mandatory="true"/>
+  [%}%]
+</InputParameters>

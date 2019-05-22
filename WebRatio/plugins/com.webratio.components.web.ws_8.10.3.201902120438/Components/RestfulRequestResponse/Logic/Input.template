@@ -1,0 +1,71 @@
+#?delimiters [%,%],[%=,%]
+[%
+import com.webratio.generator.contributors.GeneratorContributorHelper
+import org.apache.commons.lang.StringUtils
+
+setXMLOutput()
+def componentId = component["id"]
+def webServiceOperation = component["webServiceOperation"]
+def httpAuth = component["httpAuthentication"] == "true" ? "BASIC" : component["httpAuthentication"];
+%]
+<InputParameters>
+[%
+	if(!StringUtils.isBlank(webServiceOperation)){
+       for(param in GeneratorContributorHelper.getInputParameters(component, wr)){
+          %]<InputParameter name="[%=param.name%]" label="[%=param.label%]" type="[%=param.type%]" mandatory="[%=param.mandatory%]" image="[%=param.imageName%]">
+              [%if(param.description){%]<Description>[%=param.description%]</Description>[%}%]
+            </InputParameter> 
+          [%
+        }
+	} else {
+	    %]<InputParameter name="[%=componentId%].endpointURL" label="Endpoint URL"/>[%
+		for (qs in component.selectNodes("QueryStringParameter")) {
+	       %]<InputParameter name="[%=qs["id"]%]" label="[%=qs["name"]%]" refId="[%=qs["id"]%]"/>[%
+	    } 
+	    if(component["requestContentType"] != "BINARY"  && component["requestContentType"] != "MULTIPART_FORM_DATA") {	    
+	 		for (r in component.selectNodes("RequestBodyParameter")) {
+	       		%]<InputParameter name="[%=r["id"]%]" label="[%=r["name"]%]" refId="[%=r["id"]%]"/>[%
+           		for(param in GeneratorContributorHelper.getInputParameters(r, wr)){
+          	  		%]<InputParameter name="[%=param.name%]" label="[%=r["name"]%] - [%=param.label%]" type="[%=param.type%]" mandatory="[%=param.mandatory%]" image="[%=param.imageName%]">
+                    	[%if(param.description){%]<Description>[%=param.description%]</Description>[%}%]
+                	</InputParameter>[%
+           		}
+        	}        
+        	if(component["requestMethod"] == "POST" || component["requestMethod"] == "PUT"){
+	      		%]<InputParameter name ="[%=component["id"]%].attachmentBlobs" label="Attachment BLOBs" image="BLOB"/>[%
+	    	}
+	    } else if(component["requestContentType"] == "BINARY") {
+	    	if(component["requestMethod"] == "POST" || component["requestMethod"] == "PUT" ){
+				%]<InputParameter name ="[%=component["id"]%].blob" label="Request BLOB" image="BLOB"/>[%
+			}
+	    } else if(component["requestContentType"] == "MULTIPART_FORM_DATA") {
+	    	for (fdp in component.selectNodes("FormDataParameter")) {
+	       		%]<InputParameter name="[%=fdp["id"]%]" label="[%=fdp["name"]%]" refId="[%=fdp["id"]%]"/>[%
+	    	}
+	    }
+	    def urlFragments = component["endpointURL"].tokenize("/")
+		for(i = 1; i < urlFragments.size();i++){
+		  if(urlFragments[i].contains("{") && urlFragments[i].contains("}")){
+		    def name = urlFragments[i].substring(1,urlFragments[i].length()-1)
+		    %]<InputParameter name="[%=componentId%].[%=name%]" label="Path.[%=name%]" image="pathParameter"/>[%
+		  }
+		}
+	}
+    
+    // request headers    
+    for (h in component.selectNodes("RequestHeader")) {
+	  %]<InputParameter name="[%=h["id"]%]" label="[%=h["name"]%] [Header]" mandatory="[%=h.valueOf("Value") == ""%]" refId="[%=h['id']%]"/>[%
+	}
+    
+	// authentication
+	if(httpAuth == "BASIC" || httpAuth == "NTLM"){
+	   %]<InputParameter name="[%=component["id"]%].httpUsername" label="HTTP Security Username"/>[%
+	   %]<InputParameter name="[%=component["id"]%].httpPassword" label="HTTP Security Password"/>[%
+	}
+	if(httpAuth == "NTLM"){
+	   %]<InputParameter name="[%=component["id"]%].httpHost" label="HTTP Security Host"/>[%
+	   %]<InputParameter name="[%=component["id"]%].httpDomain" label="HTTP Security Domain"/>[%
+	}
+	    
+%] 
+</InputParameters>

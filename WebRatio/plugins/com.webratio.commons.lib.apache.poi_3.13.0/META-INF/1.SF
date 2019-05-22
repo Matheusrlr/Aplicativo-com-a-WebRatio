@@ -1,0 +1,36 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: gWixFOkiUFRukoBdkTo7fglYB1Lll
+ KyNe6AgDK6vHxc=
+SHA-256-Digest-Manifest: pzpCEG5zGiIB9yPAsYBMPofQwlGLa29l3gc7xaJICF8=
+Created-By: 1.7.0_80 (Oracle Corporation)
+
+Name: lib/poi-scratchpadsrc.zip
+SHA-256-Digest: 9uHy9aCDEVy/6TAKltKxWY6K1i6SwzlP6xrtSx4WdPs=
+
+Name: lib/poisrc.zip
+SHA-256-Digest: 2JbihAlEm1v+S9Kq8L9Iutb43Q3o/UcS3pAFPZOuaGo=
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: a5fmgH7myHzNji9AMOfHrVh8fy7MOgIdRSUiRZ6EFA4=
+
+Name: lib/poi-ooxml-schemas.jar
+SHA-256-Digest: ZRNsX9Fhbd4V3DsVaVuA8E+iNqYeWBeaILb/il8QxAQ=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: lib/poi.jar
+SHA-256-Digest: AQdk7Pt5QU2MUOcYTTtWpVcNpBL4zFBb9x1PY/Yp5Es=
+
+Name: about.html
+SHA-256-Digest: MhmUrDvIox3O+Y7392wCh+sB93OEeeUoLJ/HIus/G1M=
+
+Name: lib/poi-ooxml.jar
+SHA-256-Digest: VaBD9WW2bAFzvPzm/aE5gvHBqE5KI9behbUDwqlUNc0=
+
+Name: lib/poi-ooxmlsrc.zip
+SHA-256-Digest: bHSsKixyTTLN7Hhn0rn+4J9OJFtKOWTDoKsLq4dHtv8=
+
+Name: lib/poi-scratchpad.jar
+SHA-256-Digest: 4dqQ057kDJ4gnArwmJFHU58XS2Xm2gyK34LE68PR93s=
+

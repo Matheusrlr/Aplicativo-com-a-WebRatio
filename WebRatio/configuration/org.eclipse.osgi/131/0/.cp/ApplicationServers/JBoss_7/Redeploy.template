@@ -1,0 +1,35 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import org.apache.commons.lang.StringUtils
+import org.apache.commons.io.FileUtils
+
+// performs a logic redeploy
+def doLogicRedeploy(){
+  def redeployFile = null
+  if(projectType == "ENTERPRISE"){
+     redeployFile = new File(outputPath + "/WorkDir/_redeploy")
+  } else if(projectType == "WEBMODEL" || projectType == "MODULE"){
+     redeployFile = new File(outputPath + "/../WorkDir/" + "/_redeploy." + projectName)
+  } else {
+     redeployFile = new File(outputPath + "/WEB-INF/descr/_redeploy")
+  }
+  FileUtils.touch(redeployFile)
+}
+
+// performs a full redeploy
+def doFullRedeploy(){
+   def outFolder = new File(outputPath)
+   if(projectType == "WEBMODEL" || projectType == "MODULE" || projectType == "DATAMODEL"){
+      outFolder = outFolder.getParentFile()
+   }
+   new File(outFolder.getParentFile(), outFolder.getName() + ".dodeploy").createNewFile()
+}
+
+// performs the application redeploy
+if(phases.contains("All")){
+   doFullRedeploy()   
+} else if(phases.contains("Logic")){
+   doLogicRedeploy()
+} 
+
+%>

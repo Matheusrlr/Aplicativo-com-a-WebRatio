@@ -1,0 +1,13 @@
+#?delimiters [%, %], [%=, %]
+[% setJSONOutput() %]
+{
+	"service": "wrm.comp.event.NotificationEventService",
+	
+	"notificationName": "[%= event["name"] %]",
+	
+	"parameterOutputs": {
+		[% event.elements("NotificationEventParameter").eachWithSeparator(",") { param -> %]
+			"[%= param["name"] %]": "[%= param["id"] %]"
+		[% } %]
+	}
+}

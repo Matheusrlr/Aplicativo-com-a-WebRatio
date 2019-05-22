@@ -1,0 +1,21 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: sQfR8CtGfEl6akJPezM2BtHxC+3YV
+ ujgfYEF+4hlpzg=
+SHA-256-Digest-Manifest: mN8yEKh8AEd2rmaqR4cfHz0e95cnZKrA3vVSdLxAjtU=
+Created-By: 1.7.0_80 (Oracle Corporation)
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: about.html
+SHA-256-Digest: zUc4MIrTJ5i6S2Fc8zQDUtPM1TGp8Xh9jtXx2aNzFlk=
+
+Name: lib/mimepull.jar
+SHA-256-Digest: sHFfc31i9gZ3O3AeoRsC1odwQ7xDWtjPsQyCQfbzhYE=
+
+Name: about_files/CDDL+GPL_1_1.txt
+SHA-256-Digest: NFIiKQAL3lQjW2k5eebuBpM0CAaKrMQ86D+AKjma4AQ=
+
+Name: lib/mimepullsrc.zip
+SHA-256-Digest: WqOF3G4xGE1cnB4V2BUMwBdHPhSSvW1amO/3wSDTB8g=
+

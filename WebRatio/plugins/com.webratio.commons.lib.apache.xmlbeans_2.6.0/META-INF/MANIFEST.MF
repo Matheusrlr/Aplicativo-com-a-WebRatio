@@ -1,0 +1,52 @@
+Manifest-Version: 1.0
+Export-Package: org.apache.xmlbeans,org.apache.xmlbeans.impl.common,or
+ g.apache.xmlbeans.impl.config,org.apache.xmlbeans.impl.inst2xsd,org.a
+ pache.xmlbeans.impl.inst2xsd.util,org.apache.xmlbeans.impl.jam,org.ap
+ ache.xmlbeans.impl.jam.annotation,org.apache.xmlbeans.impl.jam.intern
+ al,org.apache.xmlbeans.impl.jam.internal.classrefs,org.apache.xmlbean
+ s.impl.jam.internal.elements,org.apache.xmlbeans.impl.jam.internal.ja
+ vadoc,org.apache.xmlbeans.impl.jam.internal.parser,org.apache.xmlbean
+ s.impl.jam.internal.reflect,org.apache.xmlbeans.impl.jam.mutable,org.
+ apache.xmlbeans.impl.jam.provider,org.apache.xmlbeans.impl.jam.visito
+ r,org.apache.xmlbeans.impl.jam.xml,org.apache.xmlbeans.impl.piccolo.i
+ o,org.apache.xmlbeans.impl.piccolo.util,org.apache.xmlbeans.impl.picc
+ olo.xml,org.apache.xmlbeans.impl.regex,org.apache.xmlbeans.impl.richP
+ arser,org.apache.xmlbeans.impl.schema,org.apache.xmlbeans.impl.soap,o
+ rg.apache.xmlbeans.impl.store,org.apache.xmlbeans.impl.tool,org.apach
+ e.xmlbeans.impl.util,org.apache.xmlbeans.impl.validator,org.apache.xm
+ lbeans.impl.values,org.apache.xmlbeans.impl.xb.ltgfmt,org.apache.xmlb
+ eans.impl.xb.ltgfmt.impl,org.apache.xmlbeans.impl.xb.substwsdl,org.ap
+ ache.xmlbeans.impl.xb.substwsdl.impl,org.apache.xmlbeans.impl.xb.xmlc
+ onfig,org.apache.xmlbeans.impl.xb.xmlconfig.impl,org.apache.xmlbeans.
+ impl.xb.xmlschema,org.apache.xmlbeans.impl.xb.xmlschema.impl,org.apac
+ he.xmlbeans.impl.xb.xsdownload,org.apache.xmlbeans.impl.xb.xsdownload
+ .impl,org.apache.xmlbeans.impl.xb.xsdschema,org.apache.xmlbeans.impl.
+ xb.xsdschema.impl,org.apache.xmlbeans.impl.xpathgen,org.apache.xmlbea
+ ns.impl.xsd2inst,org.apache.xmlbeans.soap,org.apache.xmlbeans.xml.str
+ eam,org.apache.xmlbeans.xml.stream.events,org.apache.xmlbeans.xml.str
+ eam.utils,repackage,schemaorg_apache_xmlbeans.system.sXMLCONFIG,schem
+ aorg_apache_xmlbeans.system.sXMLLANG,schemaorg_apache_xmlbeans.system
+ .sXMLSCHEMA,schemaorg_apache_xmlbeans.system.sXMLTOOLS
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/xmlbeans.jar
+Bundle-Version: 2.6.0
+Bundle-Name: WebRatio 3rd Party Library - Apache XMLBeans
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.apache.xmlbeans
+Bundle-RequiredExecutionEnvironment: J2SE-1.4
+
+Name: lib/xmlbeanssrc.zip
+SHA-256-Digest: pm9GrudJICQ6gF5z74AGHT0rQSO94G0+kYU8V2lqN3c=
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: /ihsmocsWUVi3gK4vXrHTHBFZvC9KXn/uGpjs26WyNE=
+
+Name: lib/xmlbeans.jar
+SHA-256-Digest: P1PZM7VPaQBxLF7DguBhH2RYTciUWOGxn31KZb8J3bc=
+

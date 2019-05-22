@@ -1,0 +1,16 @@
+#?delimiters [%, %], [%=, %]
+[%
+import org.apache.tools.ant.taskdefs.Manifest;
+import org.apache.tools.ant.taskdefs.Manifest.Attribute;
+import java.io.StringWriter
+import java.io.PrintWriter
+
+Manifest manifest = new Manifest()
+manifest.addConfiguredAttribute(new Attribute("Bundle-Vendor", "WebRatio s.r.l."))
+manifest.addConfiguredAttribute(new Attribute("Bundle-Name", projectName))
+manifest.addConfiguredAttribute(new Attribute("Bundle-SymbolicName", wr.project["uuid"]))
+
+StringWriter sw = new StringWriter()
+manifest.write(new PrintWriter(sw))
+printRaw(sw.toString())
+%]

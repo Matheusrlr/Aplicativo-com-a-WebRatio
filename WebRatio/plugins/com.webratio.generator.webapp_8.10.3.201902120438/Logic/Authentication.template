@@ -1,0 +1,46 @@
+#?delimiters [%,%],[%=,%]
+[%
+setXMLOutput()
+
+import org.apache.commons.lang.StringUtils
+
+if(wr.projectType.name() == "BPM"){
+  %]<Descriptor service="com.webratio.bpm.tee.rtx.services.ProcessAuthenticationService" name="Process Authentication Service"/>[%
+  return
+}
+
+def getLoginQuery(){
+  def db = getByIdOptional(getById("User")?.valueOf("@db:database"))
+  def roleOIDField = getById("Role").selectSingleNode("Attribute[@key='true']")["id"]
+  def userOIDField =  getById("User").selectSingleNode("Attribute[@key='true']")["id"]
+  def userNameField = "userName"
+  def passwordField = "password"
+  def userToDefaultRole = "User2DefaultRole"
+  def roleToDefaultModelElement = "Role2DefaultModelElement"
+  def useModelElementDomainName = getByIdOptional("modelElementDomainName") != null && (wr.project["moduleDomainName"] != "" || wr.projectType.name() != "WEBPROJECT")
+
+  // computes the authentication query
+  def query = createQuery(getById("User")).select(userOIDField).select(passwordField)
+  if(getByIdOptional("User2DefaultRole")){
+     query.select("User2DefaultRole." + roleOIDField)
+     if(getByIdOptional("Role2DefaultModelElement")){
+        query.select("User2DefaultRole.Role2DefaultModelElement.modelElementID")
+     }
+  }  
+  if(useModelElementDomainName){
+     query.select(userToDefaultRole + "." + roleToDefaultModelElement + "." + "modelElementDomainName")
+  }
+  def selector = query.selector() 
+  selector.attributeCondition("acond1", "username").attribute(userNameField)
+  selector.expression("acond1")
+  return query.build()  
+}
+
+%]
+
+<Descriptor service="com.webratio.rtx.security.DefaultAuthenticationService" name="Authentication Service">
+   <DataSource>[%=getDataSourceId(getById("User"))%]</DataSource>
+   <CryptAlgorithm>[%=getById("password")?.valueOf("@db:cryptAlgorithm")%]</CryptAlgorithm>
+   [%printRaw(getLoginQuery().asXML())%]
+</Descriptor>   
+   

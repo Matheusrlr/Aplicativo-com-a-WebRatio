@@ -1,0 +1,30 @@
+{
+  "service" : "wrm.comp.ListService",
+  "entity" : "cls1",
+  "maxResults" : 0,
+  "distinct" : false,
+  "output" : [ {
+    "ref" : "att6",
+    "viewName" : "nome",
+    "bindName" : "att6"
+  }, {
+    "ref" : "att5",
+    "viewName" : "oid",
+    "bindName" : "att5"
+  }, {
+    "ref" : "att14",
+    "viewName" : "remoteOid",
+    "bindName" : "att14"
+  } ],
+  "order" : [ {
+    "property" : "att14",
+    "reverse" : false
+  } ],
+  "_form" : {
+    "_" : "wrm.form.DefaultFormSubService",
+    "formLabel" : "Estabelecimentos",
+    "properties" : {
+      "checkedKeys" : { }
+    }
+  }
+}

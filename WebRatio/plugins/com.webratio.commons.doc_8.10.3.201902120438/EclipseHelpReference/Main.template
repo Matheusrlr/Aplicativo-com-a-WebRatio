@@ -1,0 +1,79 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import com.icl.saxon.TransformerFactoryImpl
+import java.io.File
+import java.io.FileInputStream
+import java.io.IOException
+import java.io.StringReader
+import java.util.Properties
+import org.apache.commons.io.FileUtils
+import org.apache.commons.lang.StringUtils
+import org.dom4j.io.SAXReader
+import org.xml.sax.EntityResolver
+import org.xml.sax.InputSource
+import org.xml.sax.SAXException
+import javax.xml.transform.Templates;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import org.dom4j.io.DocumentSource
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+
+class WRDocResolver implements EntityResolver {
+
+    private File dtdFile
+    
+    public WRDocResolver(File dtdFile) {
+        this.dtdFile = dtdFile
+    }
+
+    public InputSource resolveEntity(String publicId, String systemId)
+			throws SAXException, IOException {
+	    if ("-//WebRatio//WebRatio Documentation DTD 1.0//EN".equals(publicId)) {
+		    return new InputSource(new FileReader(dtdFile))
+		} else {
+    	    return null
+    	}
+	}
+}
+
+toTitle = { s ->
+    return StringUtils.replace(s, ' ', '_')
+}
+
+/* parses the input document */
+def saxReader = new SAXReader()
+saxReader.setEntityResolver(new WRDocResolver(new File(docPluginDirPath + "/DTD/WRDoc.dtd")))
+def inStream = new FileInputStream(inputDocPath)
+def doc = saxReader.read(inStream).rootElement
+inStream.close()
+
+/* creates the main reference page */
+new File(outputDirPath + "/EclipseHelpReference").mkdir()
+def unitsTemplatePath = docPluginDirPath + "/EclipseHelpReference/Units.xsl"
+def unitsOutputFile = new File(outputDirPath + "/EclipseHelpReference/" + toTitle(doc.valueOf("@title")) + ".html")
+def trFactory = TransformerFactoryImpl.newInstance();
+def unitsTemplate = trFactory.newTemplates(new StreamSource(new File(unitsTemplatePath)));
+unitsTemplate.newTransformer().transform(new DocumentSource(doc), new StreamResult(unitsOutputFile));
+
+/* creates the TOC reference fragment */
+def tocReferenceFragmentTemplatePath = docPluginDirPath + "/EclipseHelpReference/TOCReferenceFragment.xsl"
+def tocReferenceFragmentOutputFile = new File(outputDirPath + "/EclipseHelpReference/" + toTitle(doc.valueOf("@title")) + ".tocreference.xml")
+def tocReferenceFragmentTemplate = trFactory.newTemplates(new StreamSource(new File(tocReferenceFragmentTemplatePath)));
+tocReferenceFragmentTemplate.newTransformer().transform(new DocumentSource(doc), new StreamResult(tocReferenceFragmentOutputFile));
+
+/* creates the units reference pages */
+new File(outputDirPath + "/EclipseHelpReference/" + toTitle(doc.valueOf("@title"))).mkdir()
+def unitTemplatePath = docPluginDirPath + "/EclipseHelpReference/Unit.xsl"
+def unitTemplate = trFactory.newTemplates(new StreamSource(new File(unitTemplatePath)));
+for (s1 in doc.selectNodes("s1")) {
+   def unitOutputFile = new File(outputDirPath + "/EclipseHelpReference/" + toTitle(doc.valueOf("@title")) + "/" + toTitle(s1.valueOf("@title")) + ".html")
+   def unitTransformer = unitTemplate.newTransformer()
+   unitTransformer.setParameter("s1Title", s1.valueOf("@title"))
+   unitTransformer.transform(new DocumentSource(doc), new StreamResult(unitOutputFile));
+}
+
+/* copies the CSS files */
+FileUtils.copyFile(new File(docPluginDirPath + "/EclipseHelpReference/book.css"), new File(outputDirPath + "/EclipseHelpReference/book.css"))
+FileUtils.copyFile(new File(docPluginDirPath + "/EclipseHelpReference/schema.css"), new File(outputDirPath + "/EclipseHelpReference/schema.css"))
+%>

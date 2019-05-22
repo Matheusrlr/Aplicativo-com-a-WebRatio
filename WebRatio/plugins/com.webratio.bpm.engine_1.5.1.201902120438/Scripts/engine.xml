@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="BPM Engine">
+
+	<target name="prepare.engine">
+
+		<fail unless="engineAppName" message="Missing 'appName' parameter" />
+		<fail unless="outputDir" message="Missing 'outputDir' parameter" />
+
+		<property name="swaggerBasePath" value="/${engineAppName}" />
+
+		<delete dir="${outputDir}/${engineAppName}" failonerror="true" />
+		<unzip dest="${outputDir}/${engineAppName}" src="../lib/bpm-engine.zip" overwrite="true">
+			<patternset>
+				<include name="bpm-engine/**/*" />
+			</patternset>
+			<mapper>
+				<globmapper from="bpm-engine/*" to="*" />
+			</mapper>
+		</unzip>
+
+		<replace file="${outputDir}/${engineAppName}/WEB-INF/web.xml">
+			<replacefilter token="@SWAGGER_BASE_PATH@" value="${swaggerBasePath}" />
+		</replace>
+
+		<antcall target="update.engine" inheritall="true" />
+	</target>
+
+
+	<target name="update.engine">
+
+		<fail unless="engineAppName" message="Missing 'appName' parameter" />
+		<fail unless="outputDir" message="Missing 'outputDir' parameter" />
+
+		<property name="swaggerBasePath" value="/${engineAppName}" />
+
+		<filterset id="engine-properties-filterset">
+			<filtersfile file="${outputDir}/${engineAppName}/WEB-INF/conf/Engine.properties" />
+		</filterset>
+		<copy file="${enginePropertiesFile}" tofile="${outputDir}/${engineAppName}/WEB-INF/conf/Engine.properties" overwrite="true" failonerror="true">
+			<filterset refid="engine-properties-filterset" />
+		</copy>
+
+		<touch file="${outputDir}/${engineAppName}/WEB-INF/web.xml" />
+	</target>
+
+	<target name="build.par">
+
+		<fail unless="projectName" message="Missing 'projectName' parameter" />
+		<fail unless="buildDir" message="Missing 'buildDir' parameter" />
+		<fail unless="resultFile" message="Missing 'resultFile' parameter" />
+
+		<jar destfile="${resultFile}" manifest="${buildDir}/${projectName}/META-INF/MANIFEST.MF">
+			<fileset dir="${buildDir}/${projectName}">
+				<include name="**/*" />
+			</fileset>
+		</jar>
+		
+		<delete dir="${buildDir}/${projectName}" failonerror="false"/>
+
+	</target>
+
+</project>

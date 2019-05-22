@@ -1,0 +1,35 @@
+Manifest-Version: 1.0
+Export-Package: org.springframework.aop,org.springframework.aop.aspect
+ j,org.springframework.aop.aspectj.annotation,org.springframework.aop.
+ aspectj.autoproxy,org.springframework.aop.config,org.springframework.
+ aop.framework,org.springframework.aop.framework.adapter,org.springfra
+ mework.aop.framework.autoproxy,org.springframework.aop.framework.auto
+ proxy.target,org.springframework.aop.interceptor,org.springframework.
+ aop.scope,org.springframework.aop.support,org.springframework.aop.sup
+ port.annotation,org.springframework.aop.target,org.springframework.ao
+ p.target.dynamic
+Require-Bundle: com.webratio.commons.lib.spring.beans,com.webratio.com
+ mons.lib.spring.core
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/spring-aop.jar
+Bundle-Version: 4.2.4
+Bundle-Name: WebRatio 3rd Party Library - Spring AOP
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.spring.aop
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: lib/spring-aopsrc.zip
+SHA-256-Digest: XKbS+S1g3TjumoKvmxdeNeWBwCCmwEjNm0FAtyXNs7Y=
+
+Name: lib/spring-aop.jar
+SHA-256-Digest: zKgWjIlyibhwftMpZgBumXx8DsLOcawSyCCxQAxO8bQ=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: eL1dbEvg/ednrXe2HDxM8U0eW75i5ejpjn0sdTHesUI=
+

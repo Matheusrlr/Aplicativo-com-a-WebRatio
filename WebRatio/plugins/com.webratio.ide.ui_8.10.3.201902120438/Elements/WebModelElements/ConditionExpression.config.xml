@@ -1,0 +1,38 @@
+<Element name="ConditionExpression" lowerName="activation expression"
+		pluralLowerName="activation expressions">
+		<Description>
+			An Activation expression is 
+		  	a Groovy expression that returns a boolean value.
+			It can be defined on  
+			&lt;a href="/Reference/ElementsReference/ProjectElements/WebProject"/&gt;, 
+			&lt;a href="/Reference/ElementsReference/ProjectElements/WebModel"/&gt;
+			&lt;a href="/Reference/ElementsReference/WebModelElements/Page"&gt;top-level pages&lt;/a&gt; and 
+			&lt;a href="/Reference/ElementsReference/WebModelElements/MasterPage"&gt;master pages&lt;/a&gt;. 
+		</Description>
+		<ActionRef label="Add Property" />
+		<ActionRef label="Generate Layout Pages Only"/>
+		<ActionRef label="Generate Logic Descriptors Only"/>
+		<ActionRef label="Generate Selection"/>
+		<ActionRef label="Search References"/>
+		<ActionRef label="Find Model Problems"/>
+		<ActionRef label="Help"/>
+		
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+			<Property label="Expression">
+				The script defining the activation expression.
+				<Button name="Edit Expression"/>
+				<Button name="Move to File"/>
+				<Button name="Clear"/>
+			</Property>
+			<Property label="Script File">
+				A script file containing the expression. Useful in case of multiple 
+				activation expression elements sharing the same script code.
+				The Browse button <Button name="Browse"/> permits to select the file.
+				The Edit button (&lt;img src="PLUGIN_ID=com.webratio.commons.mf.ui/icons/full/elcl16/edit.png"/&gt;)
+				opens the script editor.
+				<Button name="Clear"/>
+			</Property>
+		</PropertyCategory>
+	</Element>

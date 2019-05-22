@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: com.webratio.commons.base
+Export-Package: com.webratio.commons.base,com.webratio.commons.base.an
+ notations,com.webratio.commons.base.collect,com.webratio.commons.base
+ .http,com.webratio.commons.base.io,com.webratio.commons.base.net,com.
+ webratio.commons.base.soap,com.webratio.commons.base.sql,com.webratio
+ .commons.base.zip
+Bundle-Name: WebRatio Java Base Library
+Bundle-Version: 1.0.0.201810081230
+Bundle-ClassPath: com.webratio.commons.base.jar
+Require-Bundle: com.webratio.commons.lib.google.guava,com.webratio.com
+ mons.lib.jsr305,com.webratio.commons.lib.apache.commons.httpclient,co
+ m.webratio.commons.lib.mimepull,com.webratio.commons.lib.apache.commo
+ ns.lang,com.webratio.commons.dom4j,com.webratio.commons.lib.dom4j
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: WebRatio
+
+Name: about.html
+SHA-256-Digest: vuFwTp1xHKAQWF+DRiSVx6xqpwOvJaUcOSfU9wQtY+A=
+
+Name: com.webratio.commons.base.jar
+SHA-256-Digest: GgrCcCBqMLje/Y6w7p18u8FA1re1SGfOUQDXcHGb7+4=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+

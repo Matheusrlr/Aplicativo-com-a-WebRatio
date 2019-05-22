@@ -1,0 +1,31 @@
+Manifest-Version: 1.0
+Export-Package: com.google.common.annotations,com.google.common.base,c
+ om.google.common.base.internal,com.google.common.cache,com.google.com
+ mon.collect,com.google.common.escape,com.google.common.eventbus,com.g
+ oogle.common.hash,com.google.common.html,com.google.common.io,com.goo
+ gle.common.math,com.google.common.net,com.google.common.primitives,co
+ m.google.common.reflect,com.google.common.util.concurrent,com.google.
+ common.xml,com.google.thirdparty.publicsuffix
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/guava.jar
+Bundle-Version: 19.0.0
+Bundle-Name: WebRatio 3rd Party Library - Guava
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.google.guava
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
+Name: lib/guavasrc.zip
+SHA-256-Digest: gU4ev3CNOMOwAVX71ISkAab3cbUShi5L9YhjxPlWPGo=
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: B6rMM/hgh1fzVKRdnceKGfOkpJwEHt0Ea3ftYmHSR6M=
+
+Name: lib/guava.jar
+SHA-256-Digest: WNTMLgXrsBK7rFaLAy91Yjvhy2+wlvPGDHKob38FfeQ=
+

@@ -1,0 +1,27 @@
+#?delimiters [%,%],[%=,%]
+[%
+
+setXMLOutput()
+
+def classId = component["dataBinding"]
+def domainClass = getById(classId)
+def distinct = (component["distinct"] == "true")
+def selectAttributes = new LinkedHashSet(component["distinctAttributes"].tokenize(" "))
+selectAttributes.addAll(getOutputAttributes(component, null, "Array"))
+
+%]
+<Descriptor service="com.webratio.components.web.utility.datasource.SelectorService">
+[% if (domainClass == null) { %]
+  <Error>Could not find a domain-class identified by '[%=classId%]'</Error>
+[% } else { %]
+  
+  <DataSource>[%=getDataSourceId(domainClass)%]</DataSource>
+  [%
+    def query = createQuery(domainClass).distinct(distinct)
+    query.select(selectAttributes).maxResults(component["maxResults"]).selector(component.element("ConditionalExpression"))  
+    component.selectNodes("SortAttribute").each{query.sort(it["attribute"], it["order"])}
+    printRaw(query.build().asXML())
+  %]
+
+[% } %]
+</Descriptor>

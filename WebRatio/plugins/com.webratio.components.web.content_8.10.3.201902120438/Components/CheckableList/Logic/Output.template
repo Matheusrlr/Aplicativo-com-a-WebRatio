@@ -1,0 +1,42 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+def componentId = component["id"]
+def classId = component["dataBinding"]
+%>
+<OutputParameters>
+<% for (a in getKeyAttributes(getById(classId))) { %>
+    <OutputParameter 
+        name="<%=a["id"]%>Checked"
+        refId="<%=a["id"]%>"
+        type="<%=getTypeExpression(getById(classId), a, false, true)%>"
+        label="Checked <%=getLabel(a)%>"
+        providedByForm="true"/>
+  <% } %> 
+  <% for (a in getAttributes(getById(classId))) { %>
+    <OutputParameter 
+        name="data[].<%=a["id"]%>"
+        refId="<%=a["id"]%>"
+        type="<%=getTypeExpression(getById(classId), a, true, false)%>"
+        label="<%=getLabel(a)%> (Single Row)"
+        providedByForm="true"
+        possiblyLarge="true"/>
+  <% } 
+     for (role in getOutgoingRoles(getById(classId)).findAll{!isMany(it)}) { 
+      for (keyAttr in getKeyAttributes(getTargetDomainClass(role))) { %>
+      <OutputParameter 
+          name="data[].<%=role["id"] + "_" + keyAttr["id"]%>"
+          refId="<%=role["id"]%>"
+          label="<%=getLabel(role) + "." + getLabel(keyAttr)%> (Single Row)"
+          mandatory="false"
+          providedByForm="true"
+          possiblyLarge="true"/>
+      <% } 
+   } %>
+   
+   <%component["displayAttributes"].tokenize(" ").findAll{it.contains(".") || it.contains("(")}.each{%>
+      <OutputParameter name="data[].<%=getAttributeExpressionId(it)%>" refId="importedAttribute" label="<%=getAttributeExpressionImportLabel(it)%> (Single Row)" providedByForm="true" possiblyLarge="true"/>
+   <%}%>
+   
+   <OutputParameter name="dataSize" label="Data Size"/>
+</OutputParameters>

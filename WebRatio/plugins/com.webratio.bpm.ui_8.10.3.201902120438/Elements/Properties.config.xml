@@ -1,0 +1,149 @@
+<Properties>
+	<Property label="Id">
+		The internal identifier of the <ElementRef /> in the model.
+	</Property>
+	<Property label="Color">
+	    The background color for the task.  
+	</Property>
+    <Property label="Code">
+      An arbitrary code which can also be used for identification purposes. 
+	</Property>
+    <Property label="Name">
+		The user-defined <ElementRef /> name. Although not strictly necessary, it is good design
+		practice to choose distinct names for different <ElementRefs />.
+	</Property>
+    <Property label="Parameters">
+    	The parameters involved during the execution/evaluation of the activity.
+		The Browse button open the Parameters dialog, which allows to select the involved parameters.
+	</Property>
+	<Property label="Instance Name">
+        The name of the <ElementRef /> displayed at execution time.
+        &lt;p&gt;
+	    The Edit button <Button name="Edit"/> opens the 
+	    &lt;a href="/Reference/WizardsAndDialogs/InstanceNameDialog"/&gt;, which 
+	    allows to customize the instance name.
+	    &lt;/p&gt;
+	    The instance name can be composed using the following place holders:&lt;br/&gt;
+	    &lt;ul&gt;
+	      &lt;li&gt;&lt;b&gt;processId&lt;/b&gt;: the process instance OID&lt;/li&gt;
+	      &lt;li&gt;&lt;b&gt;processName&lt;/b&gt;: the process name which corresponds to the pool name&lt;/li&gt;
+	      &lt;li&gt;&lt;b&gt;activityId&lt;/b&gt;: the activity instance OID (task/event element only)&lt;/li&gt;
+	      &lt;li&gt;&lt;b&gt;activityName&lt;/b&gt;: the name of the activity type (task/event element only)&lt;/li&gt;
+	    &lt;/ul&gt;	    
+	</Property>
+	<Property label="Save Policy">
+        The activity assignment policy applied when the user save and leave the activity.
+        Possible policies are:
+	    &lt;ul&gt;
+	    	&lt;li&gt;&lt;b&gt;None&lt;/b&gt;: the activity remains assigned to the current
+	    	user and therefore is not released. 
+	    	&lt;/li&gt;
+	    	&lt;li&gt;&lt;b&gt;Offer to All&lt;/b&gt;: the activity is released from the
+	    	current user and is made available to all the users belonging to roles able 
+	    	to access the lane.
+	    	&lt;/li&gt;
+	    	&lt;li&gt;&lt;b&gt;Offer to Role&lt;/b&gt;: the activity is released from the
+	    	current user and is made available to all the users belonging to the same role
+	    	of the current user.
+	    	&lt;/li&gt;
+	    	&lt;li&gt;&lt;b&gt;Reapply Distribution&lt;/b&gt;: the activity is reassigned by applying again the
+	    	distribution policy, if any.
+	    	&lt;/li&gt;
+	    &lt;/ul&gt;
+	</Property>
+    <Property label="Leave Policy">
+	     The activity assignment policy applied when the user release an activity without completing it.
+	     Possible policies are:
+		    &lt;ul&gt;
+		    	&lt;li&gt;&lt;b&gt;Reset&lt;/b&gt;: the activity assignment is restored.&lt;/li&gt;
+		    	&lt;li&gt;&lt;b&gt;Offer to All&lt;/b&gt;: the activity is released from the current user and is made available to all the users belonging to roles able to access the lane.
+		    	&lt;/li&gt;
+		    	&lt;li&gt;&lt;b&gt;Offer to Role&lt;/b&gt;: the activity is released from the current user and is made available to all the users belonging to the same role of the current user.
+		    	&lt;/li&gt;
+		    	&lt;li&gt;&lt;b&gt;Reapply Distribution&lt;/b&gt;: the activity is released from the current user and the distribution policy is executed to decide the new assignee. 
+		    	&lt;/li&gt;
+		    &lt;/ul&gt;
+	</Property>
+    <Property label="Distribution Policy">
+      The policy outlining how user activities are distributed throughout the various
+      actors involved in the process. Possible values are:
+	    &lt;ul&gt;
+	    	&lt;li&gt;&lt;b&gt;Allocate to First User in Lane&lt;/b&gt;: the activity
+	    	  is assigned to the user who completed a task in the lane for the very 
+	    	  first time.&lt;/li&gt;
+	    	&lt;li&gt;&lt;b&gt;Offer to All&lt;/b&gt;: the activity is made available to
+	    	  all the users belonging to roles able to access the lane.&lt;/li&gt;
+	    	&lt;li&gt;&lt;b&gt;Offer to Previous Role&lt;/b&gt;: a backward search is performed
+	    	on the users who completed previous tasks, starting from the last one; if the
+	    	user's role is also associated with the current lane, then the activity is
+	    	made available to all the users belonging to such role.
+	    	&lt;/li&gt;
+	    	&lt;li&gt;&lt;b&gt;Allocate to Previous User&lt;/b&gt;: a backward search is performed	    	
+	    	on the users who completed previous tasks, starting from the last one; if the
+	    	user belongs to a role associated with the current lane, then the activity is
+	    	assigned to such user.
+	    	&lt;/li&gt;
+	    	&lt;li&gt;&lt;b&gt;Allocate to One (Balanced)&lt;/b&gt;: the activity is
+	    	assigned to the least busy user belonging to a role associated with the
+	    	current lane. 
+	    	&lt;/li&gt;
+	    	&lt;li&gt;&lt;b&gt;Custom&lt;/b&gt;: the distribution criteria is modeled in a dedicated action definition in the BPMN project.
+	    	&lt;/li&gt;
+	    &lt;/ul&gt;
+	</Property>
+    <Property label="distributionPolicyActionDefinition">
+    	The reference to the Distribution Policy Action Defintion to be executed.
+	</Property>
+    <Property label="serviceTaskActionDefinition">
+    	The reference to the Service Task Action Defintion to be executed.
+	</Property>
+    <Property label="actionDefinition">
+    	The reference to the Action Defintion to be executed.
+	</Property>
+    <Property label="complexGatewayActionDefinition">
+    	The reference to the Complex Gateway Action Defintion to be executed.
+	</Property>
+    <Property label="conditionalEventActionDefinition">
+    	The reference to the Conditional Event Action Defintion to be executed.
+	</Property>
+    <Property label="Activity Status">
+      The status reached by the activity when the event is caught. Possible values are:
+	    &lt;ul&gt;
+	    	&lt;li&gt;&lt;b&gt;Cancelled&lt;/b&gt;: the activity is set to invalidated.
+	    	&lt;/li&gt;
+	    	&lt;li&gt;&lt;b&gt;Completed&lt;/b&gt;: the activity is set to accomplished.
+	    	&lt;/li&gt;
+	    	&lt;li&gt;&lt;b&gt;Running&lt;/b&gt;: the activity continues its execution.
+	    	&lt;/li&gt;
+	    &lt;/ul&gt;
+	</Property>
+    <Property label="Triggers">
+          The set of scheduling triggers.
+          &lt;p&gt;
+	      The Browse button <Button name="Browse"/> opens the 
+	      &lt;a href="/Reference/WizardsAndDialogs/TriggersDialog"/&gt;.
+          &lt;/p&gt;
+	</Property>
+	<Property label="Signal">
+      The broadcasted signal.
+      &lt;p&gt;
+      The Select Signal button <Button name="Select Signal"/> opens the 
+      &lt;a href="/Reference/WizardsAndDialogs/SignalSelectionDialog"/&gt;.
+      &lt;/p&gt;
+      &lt;p&gt;
+      The Go to Signal button <Button name="Go to Signal"/> opens the
+      editor where the broadcasted signal is defined.
+      &lt;/p&gt;
+      <Button name="Clear"/>
+    </Property>
+	<Property label="Target Message Event">
+		The destination message event.
+    </Property>
+    <Property label="Polling Frequency">
+      The interval, in seconds, at which the condition is evaluated.
+	</Property>
+    <Property label="Interrupting">
+    	If checked, permits to specify whether to interrupt or not the execution of the parent task. This property is available when a catching event is placed on the boundary of a task.
+		By default, this property is checked.
+	</Property>
+</Properties>

@@ -1,0 +1,44 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+def elementId = element["id"]
+def classId = element["dataBinding"]
+def dClass = getByIdOptional(classId)
+%>
+<InputParameters>
+<%if(dClass == null){%>
+   <InputParameter name="<%=elementId%>.values" refId="<%=elementId%>" label="[<%=element["name"]%>] values" mandatory="<%=element.selectNodes("Value").empty%>"/>
+<%}else{
+ for (cond in element.selectNodes("ConditionalExpression/*")) { 
+   if (cond.name == "AssociationRoleCondition" && cond["role"]) { 
+     for (a in getKeyAttributes(getSourceDomainClass(getRoleByExpression(cond["role"])))) { %>
+      <InputParameter 
+          name="<%=cond["id"]%>.<%=a["id"]%>"
+          refId="<%=cond["id"]%>"
+          type="<%=getAssignableTypeExpression(getSourceDomainClass(getRoleByExpression(cond["role"])), a, true, true)%>"
+          label="[<%=element["name"]%>] <%=getRoleConditionLabel(cond, a)%>"
+          mandatory="<%=isRequiredConditionalExpressionPart(cond)%>"/>
+    <% } 
+   } else if (cond.name == "AttributesCondition" && cond["attributes"]) { 
+      def predicate = cond["predicate"] 
+      if ((cond["value"] == "") && !isUnaryPredicate(predicate)) { %>
+       <InputParameter
+          name="<%=cond["id"]%>"
+          refId="<%=cond["id"]%>"
+          type="<%=cond["attributes"].tokenize(" ").collect{classId + "." + it}.join("|")%>"
+          label="[<%=element["name"]%>] <%=getAttributesConditionLabel(cond)%>"
+          mandatory="<%=isRequiredConditionalExpressionPart(cond)%>"/>
+    <% } 
+   } else if (cond.name == "KeyCondition") { 
+      for (a in getKeyAttributes(dClass)) { %>
+       <InputParameter 
+          name="<%=cond["id"]%>.<%=a["id"]%>"
+          refId="<%=cond["id"]%>"
+          type="<%=getAssignableTypeExpression(dClass, a, true, false)%>"
+          label="[<%=element["name"]%>] <%=getKeyConditionLabel(cond, dClass, a)%>"
+          mandatory="<%=isRequiredConditionalExpressionPart(cond)%>"/>
+    <% } 
+   } 
+ }
+}  %>
+</InputParameters>

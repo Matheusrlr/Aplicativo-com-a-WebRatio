@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle>
+  <Entry key="Hierarchy.First">primo</Entry>
+  <Entry key="Hierarchy.Jump">vai a</Entry>
+  <Entry key="Hierarchy.Last">ultimo</Entry>
+  <Entry key="Hierarchy.Next">successivo</Entry>
+  <Entry key="Hierarchy.NoItemsShownOf">Nessun elemento visualizzato su</Entry>
+  <Entry key="Hierarchy.Previous">precedente</Entry>
+  <Entry key="Hierarchy.Of">di</Entry>
+  <Entry key="Hierarchy.To">a</Entry>
+  <Entry key="Hierarchy.From">da</Entry>
+</Bundle>

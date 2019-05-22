@@ -1,0 +1,26 @@
+<Element name="StartMeasurement" lowerName="start measurement"
+		pluralLowerName="">
+		<Description>
+			A &lt;a href="/Concepts/Elements/Process/CommonElements/StartMeasurement"/&gt; is a process 
+	        checkpoint designed to measure time or business variables.
+		</Description>	
+        
+        <ActionRef label="Add Lane" />
+        <ActionRef label="Add Property" />
+        <ActionRef label="Surround with Group" />
+        <ActionRef label="Move into Embedded Subprocess" />
+        <ActionRef label="Edit Process Parameters..." />
+        <ActionRef label="Search References" />
+        <ActionRef label="Help" />		
+        		
+    <PropertyCategory name="General">
+        <PropertyRef label="Id"/>
+        <PropertyRef label="Name"/>
+        <Property label="Measured Element">
+          The element on which the measurement is computed. 
+        </Property>			
+        <Property label="Status">
+          The observed status, either &lt;b&gt;Ready&lt;/b&gt; or &lt;b&gt;Active&lt;/b&gt;. 
+        </Property>
+    </PropertyCategory>
+</Element>

@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Export-Package: javax.mail,javax.mail.event,javax.mail.internet,javax.
+ mail.search,javax.mail.util
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/mail.jar
+Bundle-Version: 1.5.5
+Bundle-Name: WebRatio 3rd Party Library - JavaMail API
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.javax.mail
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+
+Name: lib/mail.jar
+SHA-256-Digest: 50pVpJCnZ+g6ts9o1FkhQHD91ZZRlaNILxGw/K3589g=
+
+Name: lib/mailsrc.zip
+SHA-256-Digest: jiiP+mVwHO3XpIdi++o+Z1LV9Dinz9Z5qDq8oDN8Ys8=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: ldzYwrzRv3s6uA4TdAyaMz56SbLTAyOHjkM1x01jQWs=
+
+Name: about_files/CDDL+GPL_1_1.txt
+SHA-256-Digest: UOV3msLrf6m62AF2OKiuBlY2cK5cnq1pHl0EGvNS1Ow=
+

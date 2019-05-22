@@ -1,0 +1,29 @@
+Manifest-Version: 1.0
+Export-Package: org.springframework.expression,org.springframework.exp
+ ression.common,org.springframework.expression.spel,org.springframewor
+ k.expression.spel.ast,org.springframework.expression.spel.standard,or
+ g.springframework.expression.spel.support
+Require-Bundle: com.webratio.commons.lib.spring.core
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/spring-expression.jar
+Bundle-Version: 4.2.4
+Bundle-Name: WebRatio 3rd Party Library - Spring Expression Language
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.spring.expression
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: lib/spring-expression.jar
+SHA-256-Digest: qIkFnOrkJiqJnAtabe/rMR3zuNfsDxqUgh4G5q9ivWQ=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: tXpF3COgbVmn6Qszch+WORlQ6XrzMkrhTZz4Hs8DkEw=
+
+Name: lib/spring-expressionsrc.zip
+SHA-256-Digest: e/PitMLsjvUeapSpdfhgDyUKDKNtmJ9Mcp9DKN+CScU=
+

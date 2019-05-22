@@ -1,0 +1,143 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Label Position" name="label-position" type="enum" values="top|left" default="left">
+Position of the field label in relation to the field itself.
+Applicable only when rendering the entire Layout Field at once (mode = "full"), 
+Allowed values are:
+- left (default): label on the left side of the field,
+- top: label just above the field.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Label width" name="label-width" type="string" default="15ex">
+CSS width of the field label.
+Applicable only when rendering the entire Layout Field at once (mode = "full"), 
+Most useful when placing labels on left, in order to visually align fields.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Multi selection values orientation" name="multi-selection-field-orientation" type="enum" values="vertical|horizontal" default="vertical">
+Defines the orientation for multi selection field values:
+- vertical (default)
+- horizontal
+</wr:LayoutParameter>
+<wr:LayoutParameter name="localize-values" label="Localize Values" type="boolean" default="false">
+  Defines whether to use bean message to print out the (multi) selection field values.
+</wr:LayoutParameter>
+
+[%
+import org.apache.commons.lang.math.NumberUtils
+import org.apache.commons.lang.StringUtils
+def printFieldMode = { mode ->
+	def templateFile = getLayoutFile(getLayout(field, LayoutType.FIELD).path, LayoutType.FIELD)
+	printRaw(executeTemplate(templateFile.absolutePath, [ field: field, mode: mode, styleClass: styleClass ]));
+}
+
+if (mode == "full") { %]
+<div class="fullField">
+	<div class="labelWrapper" [% if (params["label-position"] == "left") { %]style="width: [%= params["label-width"] %]; float: left"[% } %]>[% printFieldMode("label") %]</div>
+	<div class="valueWrapper" style="overflow: hidden">[% printFieldMode("value") %]</div>
+</div>
+
+[% } else {
+if (mode == "error") {
+  return
+} else if (mode == "label") {
+  %]<span class="<wr:StyleClass context="field"/> header"><wr:Label context="field"/></span>[%
+  return
+}
+
+def localizeValues = "true" == params["localize-values"] || (isBpmLocalizedModel() && StringUtils.isNotBlank(getInteractionElement(field).valueOf("@bpm:uuid")))
+def unitId = field.selectSingleNode("ancestor::layout:Component")?.valueOf("@componentId")
+def type = field["type"]
+def subType = getByIdOptional(field["subType"])
+def typeId = type
+if(subType != null){
+  typeId = subType["id"]
+  type = subType["type"]
+}
+def contentType = field["contentType"]
+def fieldId = field["field"]
+def modifiable = (field["modifiable"] == "true")
+def plain = getById(field["field"])?.name == "Field"
+def selection = getById(field["field"])?.name == "SelectionField"
+def multiSelection = getById(field["field"])?.name == "MultiSelectionField"
+def multipleForm = unitId != null && getById(unitId).name == "MultipleForm"
+
+def formBean = getFormBeanName(page)
+def fieldProp = field["field"] + ((isLocalizedType(type) && plain) ? "_locale" : "") + ((type == "blob") ? ".preload" : "") 
+def qualifiedProp = formBean + "." + fieldProp 
+if(multipleForm){
+  qualifiedProp = formBean + "." + unitId + "[index]." + fieldProp
+}
+def styleClass = field["styleClass"]
+
+if (plain) {
+	if (type == "boolean") {
+		%]<c:choose>
+			<c:when test="${[%=qualifiedProp%]}"><spring:message code="[%=typeId%].yes"/></c:when>
+			<c:otherwise><spring:message code="[%=typeId%].no"/></c:otherwise>
+		</c:choose>[%
+	} else if (type == "blob") { 
+	  %]<c:if test="${not (empty [%=qualifiedProp%])}">
+	       <a target="_blank" [%= styleClass ? "class=\"${styleClass}\"" : "" %] href="<webratio:BLOB value="${[%=qualifiedProp%]}"/>"><c:out value="${[%=qualifiedProp%].name}"/></a>
+	    </c:if>[%
+	} else if (type == "url") {
+	      def makeHref = {
+		        if ("email".equals(contentType) || "mail".equals(contentType)) {
+		            %]<c:set var="encEmail" value="${[%=qualifiedProp%]}"/>mailto:<%= java.net.URLEncoder.encode((String)pageContext.getAttribute("encEmail"), "US-ASCII")%>[%
+		        } else {
+		            %]<c:out value="${[%=qualifiedProp%]}"/>[%
+		        }
+		    }
+		  %]<c:if test="${not(empty [%=qualifiedProp%])}">
+		    <a target="_blank" [%= styleClass ? "class=\"${styleClass}\"" : "" %] href="[% makeHref() %]"><c:out value="${[%=qualifiedProp%]}"/></a>
+		  </c:if>[%
+	} else {
+	  %]<c:out value="${[%=qualifiedProp%]}" [%= (contentType == "text/html") ? "escapeXml=\"false\"" : ""%]/>[%
+	}	
+} else if (selection) {
+    def labelProperty = formBean + "." + field["field"] + "LabelList" + (isLocalizedType(type) ? "_locale" : "")
+	def listProperty = formBean + "." + field["field"] + "List"                             
+    %]
+      <c:forEach var="selection" varStatus="selectionStatus" items="${[%= listProperty %]}">
+        <c:if test="${selection eq [%= qualifiedProp %]}">
+          [%if (localizeValues) {%]
+			 <spring:message code="${[%= labelProperty %][selectionStatus.index]}"/>
+		  [%} else {%]
+			 <c:out value="${[%= labelProperty %][selectionStatus.index]}"/> 
+		  [%}%]         
+        </c:if>
+      </c:forEach>
+    [%
+} else if (multiSelection && !multipleForm) {
+    def labelProperty = formBean + "." + field["field"] + "LabelList" + (isLocalizedType(type) ? "_locale" : "")
+	def listProperty = formBean + "." + field["field"] + "List"                             
+    def horizontal = "horizontal" == params["multi-selection-field-orientation"] 
+    %]
+      <table>
+        [%=horizontal ? "<tr>" : ""%]
+        <c:set var="msfValues" value="${[%=qualifiedProp%]}"/>
+        <c:forEach var="current" varStatus="status" items="${[%=listProperty %]}">
+         <c:set var="index" value="${status.index}"/>
+         <%if(org.apache.commons.lang.ArrayUtils.contains((Object[])pageContext.getAttribute("msfValues"), pageContext.getAttribute("current"))){%>
+         [%=!horizontal ? "<tr>" : ""%]
+           <td [%= styleClass ? "class=\"${styleClass}\"" : "" %]>
+	        [%if (localizeValues) {%]
+			   <spring:message code="${[%= labelProperty %][index]}"/>
+		    [%} else {%]
+			   <c:out value="${[%= labelProperty %][index]}"/> 
+		    [%}%]
+	        <form:hidden path="[%= fieldProp %]" value="${current}"/>
+           </td>
+         [%=!horizontal ? "</tr>" : ""%]
+         <%}%> 
+        </c:forEach>
+        [%=horizontal ? "</tr>" : ""%]
+      </table>
+    [%
+} 
+if (plain || selection) {
+    if(multipleForm){
+	   %]<form:hidden path="[%=unitId%][${index}].[%=fieldProp%]"/>[%
+	}else{
+	   %]<form:hidden path="[%=fieldProp%]"/>[%
+	}
+}
+%]
+[% } %]

@@ -1,0 +1,45 @@
+#?delimiters [%, %], [%=, %]
+[%
+/*
+ * If refresh fragments are being collected, do NOT generate an auxiliary page;
+ * instead, print the content in-place while signaling that the generated content
+ * "would have liked" to be placed in an auxiliary page
+ */
+if (binding.variables.containsKey("_refreshFragments")) {
+	printRaw(executeTemplate(["_askedAuxId": auxId], content))
+	return
+}
+
+/* Determine the file to write to */
+def fileName = getAuxFileName(auxId)
+def contentType = getAuxContentType(auxId)
+
+processOutputFile(fileName, "split layout page", page, { outputFile ->
+	outputFile.parentFile.mkdirs()
+	
+	/* Generate the auxiliary content, including prolog (for the file to work alone) and the provided content */
+	def text = executeTemplateWithDelayedFragments {
+		printRaw(executeContextTemplate("MVC/AuxPageProlog.template", null))
+		if (contentType) {
+			%]<%@ page contentType="[%= contentType %]"%>[%
+			printRaw("\n")
+		}
+		%]<webratio:Page page="<wr:Id context="page"/>"/>
+		[% printRaw(executeTemplate(content))
+	}
+	
+	/* Write to an external file */
+	def strWriter = new StringWriter()
+	def strReader = new StringReader(text)
+	strReader.filterLine(strWriter) { it.trim().length() != 0 }
+	if (page.selectSingleNode("Property[@name = 'trim'][@value = 'true']") != null || wr.project.selectSingleNode("Property[@name = 'trim'][@value = 'true']") != null) {
+		def strWriter2 = new StringWriter()
+		new StringReader(strWriter.toString()).transformLine(strWriter2){it.trim()}
+		outputFile.writeAsync(strWriter2.toString(), "UTF-8")
+	} else {
+		outputFile.writeAsync(strWriter.toString(), "UTF-8")
+	}
+})
+
+/* Include the external file */
+%]<jsp:include page="[%= fileName %]" flush="true"/>

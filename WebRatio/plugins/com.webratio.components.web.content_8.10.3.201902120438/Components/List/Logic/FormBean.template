@@ -1,0 +1,7 @@
+#?delimiters [%,%],[%=,%]
+[% setXMLOutput() %]
+<FormBean>
+
+	<Property name="[%=component["id"]%]Checked" type="java.lang.String[]"/>
+
+</FormBean>

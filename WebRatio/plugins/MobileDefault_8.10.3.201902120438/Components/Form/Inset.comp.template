@@ -1,0 +1,46 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Icon" name="icon" type="enum" values="none|plus|search|person|edit" default="search">
+Defines the icon to be shown in the field label.
+</wr:LayoutParameter>
+[%
+setHTMLOutput()
+def field = component.selectSingleNode("layout:Field")
+def type = field["type"]
+def readOnly = (field["modifiable"] == "false")
+
+def hasEvents = (component.selectSingleNode("layout:Event") != null)
+
+def inputTypes = [
+				"date": "date",
+				"decimal": "number",
+				"float": "number",
+				"integer": "number",
+				"password": "password",
+				"string": "text",
+				"time": "time",
+				"timestamp": "datetime-local",
+				"url": "url"
+			]
+%]
+<form class="<wr:StyleClass/> wr-comp-Form item item-input-inset">
+	<label class="item-input-wrapper">
+		[% if (params["icon"] != "none") { %]<span class="icon ion-[%= params["icon"] %] placeholder-icon"></span>[% } %]
+		<input
+			type="[%= inputTypes[type] ?: "text" %]"
+			ng-model="view.form.[%= field["id"] %]"
+			wr-form-property
+			[% if (readOnly) { %]disabled[% } %]
+			placeholder="<wr:Label context="field"/>"
+		>
+	</label>
+	
+	
+	[% if (hasEvents) { %]
+		
+		<wr:Iterate var="event" context="component" select="layout:Event">
+			<wr:Value context="event" class="button-small"/>
+		</wr:Iterate>
+		
+	[% } %]
+	
+</form>

@@ -1,0 +1,21 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: Oe0xriOuO35jESIyG8rQVU9kdtO7j
+ 1IoyI1G5h5cOtQ=
+SHA-256-Digest-Manifest: qBVki2wWqZhM76nCJDUlwvFT2z9JYso0cpJxfUdRkpc=
+Created-By: 1.7.0_80 (Oracle Corporation)
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: a5fmgH7myHzNji9AMOfHrVh8fy7MOgIdRSUiRZ6EFA4=
+
+Name: lib/joda-timesrc.zip
+SHA-256-Digest: m/woOnV5nSTlKQZhrgQkKKLcLoBQEbO18JI8ewFQpe0=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: about.html
+SHA-256-Digest: 7iYDZVvbcTUMBBTgiZzsY1d6FZSk+KjT+4qhB7CJnqM=
+
+Name: lib/joda-time.jar
+SHA-256-Digest: QRe/9PYpXiF3HI2z/ytc44BqULrJBzz7nZPMxaM1e7c=
+

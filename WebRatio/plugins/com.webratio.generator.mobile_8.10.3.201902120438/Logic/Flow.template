@@ -1,0 +1,78 @@
+#?delimiters [%, %], [%=, %]
+[%
+setJSONOutput()
+
+// TODO avoid printing both navTo and bindTo ids when they are identical
+def includeFrom = binding.variables["includeFrom"] ?: false
+
+/* Compute flow runtime information */
+def runInfo = createSerializableProxy(wr.helpers.runtime.getFlowRunInfo(flow))
+def preservedParameters = runInfo.selectiveRefresh ? runInfo.selectiveRefreshPreservedParameters : runInfo.fullRefreshPreservedParameters
+def boundContextPropagations = runInfo.contextPropagations.findAll { !it.passed }
+def passedContextPropagations = runInfo.contextPropagations.findAll { it.passed }
+%]
+{
+	[% if (runInfo.navigator) { %]
+		"id": "[%= flow["id"] %]",
+		"navTo": "[%= runInfo.realTargetId %]",
+	[% } %]
+	
+	"bindTo": "[%= flow["to"] %]"
+	
+	[% if (includeFrom) { %],
+		"bindFrom": "[%= runInfo.sourceId %]"
+	[% } %]
+	
+	[% if ((runInfo.sourcePanelId && runInfo.navigator) || !preservedParameters.isEmpty()) { %],
+		"preserve": "[%= preservedParameters.collect{ it.id }.join("|") %]"
+	[% } %]
+	
+	[% if (!boundContextPropagations.isEmpty()) { %],
+		"bind": {
+			[% boundContextPropagations.eachWithSeparator(",") { propag -> 
+				printContextPropagation(propag)
+			} %]
+		}
+	[% } %]
+	[% if (!passedContextPropagations.isEmpty()) { %],
+		"pass": {
+			[% passedContextPropagations.eachWithSeparator(",") { propag -> 
+				printContextPropagation(propag)
+			} %]
+		}
+	[% } %]
+	
+	[%
+		/* Helper for printing the source a context propagation */
+		def printContextPropagation(propag) {
+			if (propag.value != null) { %]
+				"[%= propag.targetParam %]": {
+					[%
+				 			def values = (propag.value == "\$\$NULL\$\$"? null : propag.value)
+				 			if (values) {
+		 						def ARRAY_SPLIT_PATTERN = /(?<!\|)\|(?!\|)/
+							values = values.split(ARRAY_SPLIT_PATTERN) as List
+						}
+					%]
+					[% if (values) { %]
+						[% if (values.size() == 1) { %]
+							"k": "[%= values[0].replaceAll("\\|\\|", "|") %]"
+		 						[% } else { %]
+							"k": [
+								[% values.eachWithSeparator(",") { value -> %]
+									"[%= value.replaceAll("\\|\\|", "|") %]"
+								[% } %]
+									]
+						[% } %]
+					[% } else { %]
+						"k": null
+					[% } %]
+				 }
+			[% } else if (propag.sourceBindingId) { %]
+				"[%= propag.targetParam %]": { "p": "[%= propag.sourceBindingId %]" }
+			[% } else { %]
+				"[%= propag.targetParam %]": "[%= propag.sourceParam %]"
+			[% }
+		}
+	%]
+}

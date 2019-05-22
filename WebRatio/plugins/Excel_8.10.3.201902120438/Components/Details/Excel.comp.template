@@ -1,0 +1,58 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Show Attribute Name" name="show-attribute-name" type="boolean" default="true">
+Defines the rendition of the attribute labels.
+Allowed values are: true(default) or false.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Header Font Weight" name="labelfont-weight" type="enum" values="normal|bold" default="bold">
+Defines the rendering of the labels
+Allowed values are:
+- normal
+- bold (default)
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Header Background" name="labelbackground" type="color" default="">
+Defines the label background color.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Header Color" name="labelcolor" type="color" default="">
+Defines the label text color.
+</wr:LayoutParameter>
+
+<wr:LayoutParameter label="First Row" name="firstRow" type="string" default="">
+The block first row (1-based)
+</wr:LayoutParameter>
+<wr:LayoutParameter label="First Column" name="firstColumn" type="string" default="">
+The block first column code or number (1-based)
+</wr:LayoutParameter>
+
+[%
+import org.apache.commons.lang.StringUtils
+
+setXMLOutput()
+
+def writeStyle(params, prefix){
+   def style = params.entrySet().findAll{it.key.startsWith(prefix) && !StringUtils.isBlank(it.value)}.collect{StringUtils.uncapitalize(it.key - prefix) + ":" + it.value}.join(";")    
+   if(!StringUtils.isBlank(style)){%] style="[%= style%]"[%}
+}
+
+def writeLocation(params){
+   if(!StringUtils.isBlank(params["firstRow"])){%] firstRow="[%= params["firstRow"]%]"[%}
+   if(!StringUtils.isBlank(params["firstColumn"])){%] firstColumn="[%= params["firstColumn"]%]"[%}
+}
+
+%]
+<Block position="[%= blockPosition%]"[%writeLocation(params)%]> 
+<c:if test="${not(empty <wr:Id context="component"/>) and (<wr:Id context="component"/>.dataSize gt 0)}">
+ <wr:Frame>
+	<wr:Iterate var="attr" context="component" select="layout:Attribute">
+	<wr:Visible>
+	  <Row>	
+		 [%if(params["show-attribute-name"] != "false"){%]
+		 <Cell[%writeStyle(params, "label")%]><wr:Label/></Cell>
+		 [%}%]
+		 <wr:Value/>
+	  </Row>
+	</wr:Visible>
+	</wr:Iterate>
+ </wr:Frame>
+</c:if> 
+</Block>
+

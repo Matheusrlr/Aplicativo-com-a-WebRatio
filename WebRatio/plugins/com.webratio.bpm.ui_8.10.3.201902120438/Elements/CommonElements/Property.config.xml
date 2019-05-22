@@ -1,0 +1,18 @@
+<Element name="Property" lowerName="property" pluralLowerName="" >
+    <Description>    
+		A &lt;a href="/Concepts/Elements/Process/CommonElements/Property"/&gt;
+		is an extra information that the user can add to each element.
+    </Description>
+        
+        <ActionRef label="Add Lane" />
+        <ActionRef label="Edit Process Parameters..." />
+        <ActionRef label="Search References" />
+        <ActionRef label="Help" />    
+    <PropertyCategory name="General">
+        <PropertyRef label="Id"/>
+        <PropertyRef label="Name"/>
+        <Property label="Value">
+          The user-defined Property value.
+        </Property>
+    </PropertyCategory>
+</Element>

@@ -1,0 +1,13 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import org.apache.commons.lang.StringUtils
+import org.apache.commons.lang.StringEscapeUtils
+setXMLOutput()
+
+%>
+<ValidationRule service="com.webratio.components.web.validation.CaptchaValidationRuleService">
+  <%def cfgAtts = element.selectNodes("@*[starts-with(name(), 'cfg_')]")%> 
+  <%if(!cfgAtts.empty){%>
+     <Config <%cfgAtts.each{printRaw(StringUtils.removeStart(it.name, "cfg_") + "=\"" + StringEscapeUtils.escapeXml(it.value) + "\" ")}%>/>
+  <%}%>
+</ValidationRule>

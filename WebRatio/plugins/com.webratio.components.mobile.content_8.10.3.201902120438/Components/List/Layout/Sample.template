@@ -1,0 +1,20 @@
+#?delimiters [%, %], [%=, %]
+[% setHTMLOutput() 
+/*
+ *	List Component
+ *	Use the AngularJS variable "current" to access to the attributes value
+ */
+%]
+<wr:Frame>
+	<div class="<wr:StyleClass/> wr-comp-List">
+		<div ng-repeat="current in view.data">
+			<wr:Iterate var="attr" context="component" select="layout:Attribute">
+				<wr:Label/>
+				<wr:Value/>
+			</wr:Iterate>
+			<wr:Iterate var="event" context="component" select="layout:Event">
+				<wr:Event/>
+			</wr:Iterate>
+		</div>
+	</div>
+</wr:Frame>

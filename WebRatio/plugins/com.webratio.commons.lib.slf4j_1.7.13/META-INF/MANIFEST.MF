@@ -1,0 +1,33 @@
+Manifest-Version: 1.0
+Export-Package: org.slf4j,org.slf4j.helpers,org.slf4j.impl,org.slf4j.s
+ pi
+Require-Bundle: com.webratio.commons.lib.apache.log4j
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/slf4j-api.jar,lib/slf4j-log4j12.jar
+Bundle-Version: 1.7.13
+Bundle-Name: WebRatio 3rd Party Library - SLF4J
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.slf4j
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+
+Name: lib/slf4j-log4j12.jar
+SHA-256-Digest: y8fklvQfR9HVXpIAthGv4FTPmYCpRWoTQJ3yhcH5y3I=
+
+Name: lib/slf4j-apisrc.zip
+SHA-256-Digest: 3gw0l70tv8uoZue52H/1JHSRI+rMKhOAaFN89FT+1jU=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: lib/slf4j-log4j12src.zip
+SHA-256-Digest: EWeDesfD4z2NjlzVMxvWCAdlU8BbNDlo8u1EYRBGuXE=
+
+Name: about.html
+SHA-256-Digest: kziiTjbZJidROeD+XZrtrHcdZKsyyGfzt8l9orMNOxo=
+
+Name: about_files/slf4j.txt
+SHA-256-Digest: F3SiMaiLsK5eSTd2XWq6C79JOpnhwtcGFD2da0GZPoI=
+
+Name: lib/slf4j-api.jar
+SHA-256-Digest: INaNDC5PuYT/wWSFK4to30miuHFgdvV2iBvO92SaDjU=
+

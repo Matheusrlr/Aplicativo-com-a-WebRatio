@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Eclipse-RegisterBuddy: com.webratio.commons.lib.groovy
+Bundle-SymbolicName: com.webratio.commons.phonegap.build
+Export-Package: com.webratio.commons.phonegap.build
+Bundle-Name: WebRatio PhoneGap Build API
+Bundle-Version: 1.0.0.201810081230
+Bundle-ClassPath: com.webratio.commons.phonegap.build.jar
+Require-Bundle: com.webratio.commons.lib.javax.ws.rs,com.webratio.comm
+ ons.lib.jersey,com.webratio.commons.lib.jackson,com.webratio.commons.
+ lib.google.guava,com.webratio.commons.lib.hk2,com.webratio.commons.li
+ b.javax.inject,com.webratio.commons.lib.javax.annotation,com.webratio
+ .commons.lib.javassist,com.webratio.commons.lib.mimepull
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: WebRatio
+
+Name: about.html
+SHA-256-Digest: vuFwTp1xHKAQWF+DRiSVx6xqpwOvJaUcOSfU9wQtY+A=
+
+Name: com.webratio.commons.phonegap.build.jar
+SHA-256-Digest: kXmA1bHZ5wtdVwaVgjzaKERetg8eqrv2ogXq4dG6ISM=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+

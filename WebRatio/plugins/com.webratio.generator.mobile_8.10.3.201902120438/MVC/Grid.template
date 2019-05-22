@@ -1,0 +1,37 @@
+#?delimiters [%, %], [%=, %]
+[%
+
+/* Find all placed elements and "real" cells (TODO remove this when mobile layout is finalized) */
+def elements = []
+if (grid["containerType"] == "cell") {
+	elements.add(grid.selectSingleNode("layout:Row/layout:Cell"))
+} else {
+	for (cell in grid.selectNodes("layout:Row/layout:Cell")) {
+		def cellElement = cell.selectSingleNode("layout:Component|layout:Attribute|layout:Field|layout:Event|layout:Fragment|layout:Grid")
+		
+		/* Skip empty */
+		if (cellElement == null) {
+			continue
+		}
+		
+		def renderedElement
+		
+		/* Handle special "cell container" grids as cells, other elements by themselves (including "grid containers") */
+		if (cellElement.name == "Grid" && cellElement["containerType"] == "cell") {
+			renderedElement = cellElement.selectSingleNode("layout:Row/layout:Cell")
+		} else {
+			renderedElement = cellElement
+		}
+		
+		elements.add(renderedElement)
+	}
+}
+
+/* Actual elements layout */
+for (element in elements) {
+	printRaw(executeContextTemplate("MVC/LayoutElement.template", [\
+		"_elem": element, \
+		"_layoutTagAttributes": [:] \
+	]))
+}
+%]

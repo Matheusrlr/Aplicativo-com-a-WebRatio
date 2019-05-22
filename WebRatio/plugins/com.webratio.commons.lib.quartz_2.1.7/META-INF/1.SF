@@ -1,0 +1,45 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: Q56A2ialcAeqO0f/KobtfdbxRWUSa
+ y0V9mjlyv6bKkU=
+SHA-256-Digest-Manifest: BBGJjCuMuwzkAamDIwdBIyxNAEmVJ6sA8C+5Ygeq1GE=
+Created-By: 1.7.0_75 (Oracle Corporation)
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: a5fmgH7myHzNji9AMOfHrVh8fy7MOgIdRSUiRZ6EFA4=
+
+Name: lib/quartzsrc.zip
+SHA-256-Digest: Gtmg1xRfmXaHM+Tiiy7NS/myxJxX23R/9IRTAx+991s=
+
+Name: lib/quartz-weblogicsrc.zip
+SHA-256-Digest: 8g1eUQMCQWAxduJkR/oE2YjxdOKZyZLbXc6WMOsONa0=
+
+Name: lib/quartz-weblogic.jar
+SHA-256-Digest: +krh4q2aihTxwkV8RyebQ9JkzyeBzzV4Gfta/6+Lp/o=
+
+Name: lib/quartz-commonjsrc.zip
+SHA-256-Digest: NCYNE+tX97Lx0fFwLT9oDNHG0k4Sp54QR7WxMabjLcc=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: about.html
+SHA-256-Digest: ck76OPszMIIpXmBAA24rYi8T3E5yYih/2meqIxq/GSw=
+
+Name: lib/quartz-oracle.jar
+SHA-256-Digest: aJxJIzFbE6qV8lV+Co3bhmHMpaJzZzpdwnmIFU9vAko=
+
+Name: lib/quartz-commonj.jar
+SHA-256-Digest: KcFv4f/Oa0bvlAQxwCvJitwG61+L8lh8SHbGd/9qf0U=
+
+Name: lib/quartz.jar
+SHA-256-Digest: 3rKkuw2NmYtd+3bTAQx+0FhshZ8ZiwIjplybfFbq+Lw=
+
+Name: lib/quartz-jbosssrc.zip
+SHA-256-Digest: 84N/WLucuNf8tiurzrua2b6f6fLGf2BUZO67pZKbruQ=
+
+Name: lib/quartz-jboss.jar
+SHA-256-Digest: buyUnshEt1bTLohbJVauni6tmsOO8KrCrYyt0r7zNQw=
+
+Name: lib/quartz-oraclesrc.zip
+SHA-256-Digest: i8LJBUvDCX46ZVLMDFzCWcQo4c3vFWtbOtKjJ4y2zTU=
+

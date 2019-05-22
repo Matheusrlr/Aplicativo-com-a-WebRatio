@@ -1,0 +1,18 @@
+#?delimiters [%,%],[%=,%]
+[%
+import org.apache.commons.lang.StringUtils
+import org.apache.commons.lang.math.NumberUtils
+
+setXMLOutput()
+
+def groupName = StringUtils.defaultIfEmpty(wr.project["jobGroupName"], "DEFAULT")
+if(wr.projectType.name() in ["WEBMODEL","MODULE"]){
+   groupName += "_" + projectName.toUpperCase()
+}
+%]
+<Descriptor service="com.webratio.rtx.jobs.QuartzJobManagerService">
+  <GroupName>[%=groupName%]</GroupName>
+  [% for (job in wr.project.selectNodes("WebModel/ServiceView/Job[Operations/InitJob]")) {%]
+    <Job id="[%=job["id"]%]" name="[%=job["name"]%]"/>
+  [% } %]
+</Descriptor>

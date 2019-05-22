@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle>
+  <Entry key="PasswordStrengthValidationRule.low">La password deve essere composta da 4 a 9 caratteri. E' necessario inserire almeno un numero e una lettera maiuscola e una lettera minuscola</Entry>
+  <Entry key="PasswordStrengthValidationRule.medium">La password deve essere composta da 10 a 32 caratteri. Almeno 3 di 4 dei seguenti criteri devono essere soddisfatti: almeno 1 lettera maiuscola (A-Z), almeno 1 lettera minuscola (a-z),almeno 1 numero (0-9),almeno 1 carattere speciale. Non sono ammessi più di 3 caratteri uguali.</Entry>
+  <Entry key="PasswordStrengthValidationRule.high">La password deve essere composta da 10 a 128 caratteri. Almeno 3 di 4 dei seguenti criteri devono essere soddisfatti: almeno 1 lettera maiuscola (A-Z), almeno 1 lettera minuscola (a-z),almeno 1 numero (0-9),almeno 1 carattere speciale. Non sono ammessi più di 3 caratteri uguali.</Entry>
+  <Entry key="PasswordStrengthValidationRule.custom">La password deve rispettare i criteri di sicurezza.</Entry>
+  <Entry key="PasswordStrengthValidationRule.boxTitle">La password deve soddisfare i seguenti criteri:</Entry>
+  <Entry key="PasswordStrengthValidationRule.numbersCriteria">Almeno &lt;b>un numero</Entry>
+  <Entry key="PasswordStrengthValidationRule.lowerCharCriteria">Almeno &lt;b>una lettera minuscola</Entry>
+  <Entry key="PasswordStrengthValidationRule.capitalCharCriteria">Almeno &lt;b>una lettera maiuscola</Entry>
+  <Entry key="PasswordStrengthValidationRule.specialCharCriteria">Almeno &lt;b>un carattere speciale</Entry>
+  <Entry key="PasswordStrengthValidationRule.noRepetitionCriteria">Meno di &lt;b>3 caratteri uguali</Entry>
+  <Entry key="PasswordStrengthValidationRule.charactersWord">caratteri</Entry>
+</Bundle>

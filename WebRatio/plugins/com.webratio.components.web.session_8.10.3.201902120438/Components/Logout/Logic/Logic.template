@@ -1,0 +1,16 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import org.apache.commons.lang.StringUtils
+setXMLOutput()
+
+def siteViewId = component["siteView"]
+def siteView = getById(siteViewId)
+def projectId = siteView?.valueOf("@ownerProjectId")
+if(!StringUtils.isBlank(projectId)){
+  siteViewId = projectId + "." + siteViewId 
+}
+%>
+<Descriptor service="com.webratio.components.web.session.LogoutService">
+  <SiteView><%=siteViewId%></SiteView>
+  <InvalidateSession><%="true" == component["invalidateSession"]%></InvalidateSession>
+</Descriptor>

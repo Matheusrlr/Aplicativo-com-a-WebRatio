@@ -1,0 +1,74 @@
+  <Element name="Cell" lowerName="cell"
+		pluralLowerName="cells">
+		<Description>
+			A cell
+			is the grid container of components, sub pages and sub grids.
+			Each cell is identified by its row and column coordinates, starting from [0,0].
+		</Description>
+		
+		<Action label="Remove Column">
+			Removes the column of the selected cell.
+		</Action>
+		<Action label="Remove Row">
+			Removes the row of the selected cell.
+		</Action>
+		<Action label="Add Column Before">
+			Adds a new column to the grid before the column of the selected cell.
+		</Action>
+		<Action label="Add Column After">
+			Adds a new column to the grid after the column of the selected cell.
+		</Action>
+		<ActionRef label="Add Grid"/>
+		<Action label="Add Row Before">
+			Adds a new row to the grid before the row of the selected cell.
+		</Action>
+		<Action label="Add Row After">
+			Adds a new row to the grid before the row of the selected cell.
+		</Action>
+		<Action label="Merge Cells">
+			Merges the selected cells.
+		</Action>
+		<Action label="Split Cell">
+			Splits the selected merged cell.
+		</Action>
+		<ActionRef label="Add Property" />
+		<ActionRef label="Localize" />
+		<ActionRef label="Open in Browser" />
+		<ActionRef label="Help"/>
+		
+		<PropertyCategory name="Layout">
+		    <PropertyRef label="Label" name="Title"/>
+			<PropertyRef label="Style" />
+			<PropertyRef label="Grid Layout"/>
+			<PropertyRef label="Frame Layout"/>
+			<PropertyRef label="Cell Layout"/>
+			<PropertyRef label="Attribute Layout"/>
+			<PropertyRef label="Field Layout"/>
+			<PropertyRef label="Event Layout"/>
+			<PropertyRef label="Component Configuration"/>
+			<Property label="Row Span">
+				The number of rows that the cell takes up.
+			</Property>
+			<Property label="Column Span">
+				The number of columns that the cell takes up.
+			</Property>
+			<PropertyRef label="Horizontal Align"/>
+			<PropertyRef label="Vertical Align"/>
+			<PropertyRef label="Width"/>
+			<PropertyRef label="Height"/>
+			<PropertyRef label="Padding"/>
+			<PropertyRef label="CSS Style"/>
+			<Property label="Customize Content" onlyForNatureId="com.webratio.ide.MobileNature">
+		    	If checked, the status of the custom location is reset and the editing is enabled.
+			</Property>
+		</PropertyCategory>
+		<PropertyCategory name="Condition">
+			<PropertyRef name="Page Visibility Condition" label="Grid Visibility Cond." />
+			<PropertyRef name="Page Visibility Condition" label="Cell Visibility Cond."/>
+			<PropertyRef name="Page Visibility Condition" label="Attribute Visibility Cond."/>
+			<PropertyRef name="Page Visibility Condition" label="Field Visibility Cond."/>
+			<PropertyRef name="Page Visibility Condition" label="Field Disable Cond."/>
+			<PropertyRef name="Page Visibility Condition" label="Event Visibility Cond."/>
+			<PropertyRef name="Page Visibility Condition" label="Event Disable Cond."/>
+		</PropertyCategory>
+	</Element>

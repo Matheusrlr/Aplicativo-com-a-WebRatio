@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="content" formBased="no" idPrefix="hinu" namePrefix="Hierarchy " label="Hierarchy" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true"  errorFlowTarget="true"  successFlowTarget="true" canPlaceLayoutComponent="true"> 
+  <DomainClassProperty attributeName="dataBinding" includeDerived="true" figureDisplayOrder="1"> 
+    <Description xml:space="preserve">The class from which the content of the hierarchy is drawn.</Description> 
+  </DomainClassProperty>  
+  <ConditionalExpression classIdExpr="../../@dataBinding" elementName="ConditionalExpression" defaultPolicy="true" figureDisplayOrder="2"> 
+    <Description xml:space="preserve">The set of selection criteria that retrieves the instances of the class of the component.</Description> 
+  </ConditionalExpression>  
+  <AttributesProperty classIdExpr="@dataBinding" attributeName="displayAttributes" includeDerived="true" enabledImportExtraAttributes="true"> 
+    <Description xml:space="preserve">The list of class attributes displayed by the component.</Description>  
+    <IsEnabled>return (element["dataBinding"] != "")</IsEnabled> 
+  </AttributesProperty>  
+  <SortAttributesProperty label="Sort Attributes" elementName="SortAttribute" attributeName="attribute" classIdExpr="@dataBinding" attributeIdsExpr="@displayAttributes"> 
+    <Description xml:space="preserve">The sorting criteria used to display the objects in the hierarchy. 
+    In case the component is sortable, the user at run-time can dynamically reorder the instances clicking on the sort display attributes.
+    </Description>  
+    <IsEnabled>return (element["dataBinding"] != "")</IsEnabled> 
+  </SortAttributesProperty>  
+  <BooleanProperty label="Sortable" attributeName="sortable" defaultValue="false"> 
+    <Description xml:space="preserve">If true the sorting criteria can be dynamically changed at run-time.</Description> 
+  </BooleanProperty>  
+  <SortAttributesProperty label="Default Sort Attributes" elementName="DefaultSortAttribute" attributeName="attribute" classIdExpr="@dataBinding"> 
+    <Description xml:space="preserve">If the component is sortable, represents the sorting criteria used to display the 
+    objects the first time the user enters the page. If unspecified, the selected sort attributes are used also as initial sorting.
+    </Description>  
+    <IsEnabled>return (element["dataBinding"] != "" &amp;&amp; element["sortable"] == "true")</IsEnabled> 
+  </SortAttributesProperty>  
+  <IntegerProperty attributeName="blockFactor"> 
+    <Description xml:space="preserve">A numerical value specifying how many objects at a time are scrolled.
+If this property is unspecified or set to -1, all the available rows are returned.</Description> 
+  </IntegerProperty>  
+  <IntegerProperty attributeName="blockWindow"> 
+    <Description xml:space="preserve">A numerical value specifying the maximum number of flows available to jump to other result blocks.
+Assuming that N is the value of this property, the
+component will show N-1 block flows before the current block, and
+N-1 block flows after the current block. If this property is
+unspecified or set to -1, all the block flows are shown.</Description> 
+  </IntegerProperty>  
+  <IntegerProperty attributeName="maxResults"> 
+    <Description xml:space="preserve">The maximum number of rows to retrieve.
+If unspecified, all rows are retrieved.</Description> 
+  </IntegerProperty>  
+  <OrderingProperty attributeName="levelOrder" elementsExpr="HierarchyLevel" figureDisplayOrder="3" customComponentPartFigureClass="com.webratio.ide.ui.figures.HierarchicalLevelsFigure"> 
+    <IsEnabled>return (element.selectSingleNode("HierarchyLevel") != null)</IsEnabled>  
+    <Description xml:space="preserve">The order of the child levels of the component.</Description> 
+  </OrderingProperty>  
+  <SubComponent elementName="HierarchyLevel" idPrefix="hiulvl" namePrefix="Level " label="Level" ignoreI18N="true"> 
+    <DomainClassProperty attributeName="dataBinding" includeDerived="true"> 
+      <Description xml:space="preserve">The class from which the content of the hierarchy level is drawn.</Description> 
+    </DomainClassProperty>  
+    <ConditionalExpression label="Level Conditional Expression" classIdExpr="../../@dataBinding" elementName="ConditionalExpression" defaultPolicy="true"> 
+      <Description xml:space="preserve">The set of selection criteria that retrieves the instances of the class of the level.</Description> 
+    </ConditionalExpression>  
+    <AttributesProperty classIdExpr="@dataBinding" attributeName="displayAttributes" includeDerived="true" enabledImportExtraAttributes="true"> 
+      <Description xml:space="preserve">The list of class attributes displayed by the level.</Description>  
+      <IsEnabled>return (element["dataBinding"] != "")</IsEnabled> 
+    </AttributesProperty>  
+    <SortAttributesProperty label="Sort Attributes" classIdExpr="@dataBinding" elementName="SortAttribute" attributeName="attribute" attributeIdsExpr="@displayAttributes"> 
+      <Description xml:space="preserve">The sorting criteria used to display the objects in the level.</Description>  
+      <IsEnabled>return (element["dataBinding"] != "")</IsEnabled> 
+    </SortAttributesProperty>  
+    <AssociationRoleChainProperty label="Role" attributeName="role" includeDerived="true" sourceClassIdExpr="../@dataBinding" targetClassIdExpr="@dataBinding"> 
+      <IsEnabled>return (element["dataBinding"] != "")</IsEnabled>  
+      <Description xml:space="preserve">The association role chain connecting a hierarchy
+level to its parent level.</Description> 
+    </AssociationRoleChainProperty>  
+    <IntegerProperty attributeName="maxResults"> 
+      <Description xml:space="preserve">The maximum number of rows to retrieve.
+If unspecified, all rows are retrieved.</Description> 
+    </IntegerProperty>  
+    <OrderingProperty attributeName="levelOrder" elementsExpr="HierarchyLevel"> 
+      <IsEnabled>return (element.selectSingleNode("HierarchyLevel") != null)</IsEnabled>  
+      <Description xml:space="preserve">The order of the child levels of the level.</Description> 
+    </OrderingProperty>  
+    <SubComponentReference elementName="HierarchyLevel"/>  
+    <Description xml:space="preserve">A level is characterized by a class and an association role chain connecting such
+class to the class at the previous level of the hierarchy.</Description> 
+  </SubComponent >  
+  <Description xml:space="preserve">Hierarchy components present the instances of multiple entities connected 
+by associations as a hierarchy and permit the user to select one object 
+from such hierarchy. A Hierarchy specification consists of three parts:
+&lt;ul&gt;
+  &lt;li&gt;An ordered sequence of N entities, connected by N-1 association roles chains. 
+Each class defines a &lt;i&gt;level&lt;/i&gt; of the Hierarchy. 
+The same class may appear multiple times in the hierarchy, at different levels.&lt;/li&gt;
+  &lt;li&gt;An optional conditional expression used to restrict the set of instances contributing to 
+the content of the component, for each one of the N entities.&lt;/li&gt;
+  &lt;li&gt;The selection of the attributes to be included in the component, for each one of 
+the N entities.&lt;/li&gt;
+&lt;/ul&gt;</Description>  
+  <InputDescription xml:space="preserve" name="Current Object">The set of key attributes values of the object that define the current 
+root level object selected.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Condition-Name">The parameter associated to one of the Conditional Expressions
+of anyone of the levels of the Hierarchy.</InputDescription>  
+  <OutputDescription xml:space="preserve" name="Attribute-Name (Level n-th)">The value of one of the class attributes for the object selected
+from the n-th level of the Hierarchy.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="ForeignKey-Name (Level n-th)">The values for one of the foreign key attributes of the objects 
+connected to the n-th level object selected.</OutputDescription>  
+  <IsContextFreeComponent xml:space="preserve">return getIncomingFlows(component).findAll{it["_exp"] != "t"}.empty</IsContextFreeComponent>  
+  <IsMultiConditionComponent xml:space="preserve">return getIncomingFlows(component).findAll{it["_exp"] != "t"}.size() &gt; 1</IsMultiConditionComponent>  
+  <LayoutAttributes xml:space="preserve">
+  def layoutAttributes = []
+  layoutAttributes.addAll(component.attributeValue("displayAttributes", "").tokenize(" ").flatten())
+  layoutAttributes.addAll(component.selectNodes(".//HierarchyLevel").collect{it.attributeValue("displayAttributes", "").tokenize(" ").flatten()}.flatten())
+  return layoutAttributes.unique()
+  </LayoutAttributes>  
+  <LayoutEvents xml:space="preserve">
+def eventOrderIds = component.attributeValue("eventOrder", "").tokenize(" ")
+def events = component.selectNodes("Events/*[not(self::OnLoadEvent)]").collect{it["id"]}
+def eventIds = []
+eventIds.addAll(eventOrderIds?.findAll{events?.contains(it)})
+eventIds.addAll(events?.findAll{!eventOrderIds?.contains(it)})
+if(component["sortable"] == "true"){
+   def displayAtts = component["displayAttributes"].tokenize(" ")
+   for(att in component.selectNodes("SortAttribute").findAll{displayAtts.contains(it["attribute"])}){
+      eventIds.add(component["id"] + getAttributeExpressionId(att["attribute"]))
+   }  
+}
+if(component["blockFactor"] != ""){
+   eventIds.add(component["id"] + "First")
+   eventIds.add(component["id"] + "Previous")
+   eventIds.add(component["id"] + "Block")
+   eventIds.add(component["id"] + "Next")
+   eventIds.add(component["id"] + "Last")
+}
+return eventIds
+</LayoutEvents>    <I18NLabels xml:space="preserve">def labels = []
+for (level in component.selectNodes(".//HierarchyLevel")) {
+    def label = [:]
+    label.id = level["id"]
+    label.key = level["name"]
+    labels.add(label)
+}
+return labels
+</I18NLabels>    <ExpandLayoutComponent xml:space="preserve">
+import org.apache.commons.lang.StringUtils
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+import java.lang.StringBuffer
+  
+try {
+  
+  reorderChildLevels = { parent -&gt;
+    def children = []
+    children.addAll(parent.elements("HierarchyLevel"))
+  	def childOrderIds = parent["levelOrder"].tokenize(" ")
+    if (!childOrderIds.empty) {
+  	  def levelMap = [:]
+  	  children.each{levelMap[it["id"]] = it }
+  	  children.each{it.detach()}
+  	  childOrderIds.findAll{levelMap[it] != null}.each{parent.add(levelMap[it])}
+  	  children.findAll{!childOrderIds.contains(it["id"])}.each{parent.add(it)}
+    } 
+    for (child in children) {
+	  reorderChildLevels(child)
+    }
+  }
+
+  hiuIsLevelAttribute = { layoutAttr, level -&gt;
+     if (layoutAttr == null || level == null) {
+         return false
+     }
+     def attrIds = level["displayAttributes"].tokenize(" ").collect{getAttributeExpressionId(it)}
+     def attrId = getAttributeExpressionId(layoutAttr["attribute"])
+     def attribute = []
+     if (attrIds.contains(attrId)) {
+        attribute.add(attrId)
+        return true
+     }
+     return false
+  }
+    
+  hiuIsLevelEvent = { layoutEvent, level -&gt;
+      def flow = getByIdOptional(layoutEvent["event"])?.selectSingleNode("NavigationFlow")
+      def sources = flow?.selectNodes("ParameterBinding").collect{it["source"]}
+      if (sources.empty) {
+         sources = getAutomaticParameterBindings(flow).collect{it["source"]}
+      }
+      def rootParamFound = false
+      for (source in sources) {
+         if (StringUtils.isEmpty(source)) {
+           continue
+         }
+         def parameter = StringUtils.substringBeforeLast(source, "[].") + "[]."
+         Pattern p = Pattern.compile("data\\x5B\\x5D.")
+         Matcher m = p.matcher(parameter)
+         StringBuffer sb = new StringBuffer()
+         while (m.find()) {
+           m.appendReplacement(sb, " ")
+         }
+         m.appendTail(sb)
+         def levelIds = StringUtils.split(sb.toString(), " ")
+         if (levelIds.length == 0) {
+         	rootParamFound = true
+         } else if (levelIds.length &gt; 0) {
+	        return levelIds[levelIds.length - 1] == level["id"]
+         }
+      }
+      if(rootParamFound &amp;&amp; level.name == "Hierarchy"){
+         return true
+      }
+      return false
+  }
+    
+  hiuAppendLayoutAttribute = { layoutAttr, parentTarget -&gt;
+      parentTarget.elements().add(layoutAttr.createCopy())
+  }
+  hiuAppendChild = {child, parentTarget -&gt;
+  	  parentTarget.elements().add(child.createCopy())
+  }
+  hiuAppendLayoutEvent = { layoutEvent, parentTarget -&gt;
+      parentTarget.elements().add(layoutEvent.createCopy())
+  }
+  hiuCopyLevel = { level, parentTarget -&gt;
+      def newLevel = parentTarget.addElement("HierarchyLevel")
+      newLevel.appendAttributes(level)
+	  for (property in level.selectNodes("Property")) {
+		hiuAppendChild(property, newLevel)
+	  }
+      level.elements("HierarchyLevel").each{hiuCopyLevel(it, newLevel)}
+      layoutComponent.selectNodes("layout:Attribute").findAll{hiuIsLevelAttribute(it, level)}.each{hiuAppendLayoutAttribute(it, newLevel)}
+      for (attr in newLevel.selectNodes("layout:Attribute")) {
+        expandLayoutAttribute(attr)	
+      }
+      layoutComponent.selectNodes("layout:Event").findAll{hiuIsLevelEvent(it, level)}.each{hiuAppendLayoutEvent(it, newLevel)}
+      for (layoutEvent in newLevel.selectNodes("layout:Event")) {
+        def event = getByIdOptional(layoutEvent["event"])
+	    if (event != null) {
+	        layoutEvent.appendAttributes(event)
+	    	event.selectNodes("*").each{hiuAppendChild(it, layoutEvent)}
+	    }
+      }
+  }
+  
+  def component = getById(layoutComponent["componentId"])
+  layoutComponent.appendAttributes(component)
+  layoutComponent.addAttribute("unitTagName", component.name);
+  component.elements("HierarchyLevel").each{hiuCopyLevel(it, layoutComponent)}
+  def unitAtts = layoutComponent.selectNodes("layout:Attribute")
+  for (attr in unitAtts) {
+    expandLayoutAttribute(attr)
+  }
+  
+  def unitEvents = layoutComponent.selectNodes("layout:Event")
+  for (layoutEvent in unitEvents) {
+    def event = getByIdOptional(layoutEvent["event"])
+    if (event != null) {
+      layoutEvent.appendAttributes(event)
+      event.selectNodes("*").each{hiuAppendChild(it, layoutEvent)}
+    }
+  }
+  unitEvents = layoutComponent.selectNodes("layout:Event")
+  def properties = component.selectNodes("Property") 
+  for (property in properties) {
+  	hiuAppendChild(property, layoutComponent)
+  }
+  def invalidUnitAtts = unitAtts.findAll{!hiuIsLevelAttribute(it, component)}
+   
+  /* removes the events that belongs to sub levels and not to the component */
+  def invalidUnitEvents = unitEvents.findAll{it["sort"] != "true" &amp;&amp; it["scroll"] != "true" &amp;&amp; !hiuIsLevelEvent(it, component)}
+  def layoutUnitElements = layoutComponent.elements()
+  invalidUnitAtts.each{layoutUnitElements.remove(it)}
+  invalidUnitEvents.each{layoutUnitElements.remove(it)}
+  
+  /* reorders the levels according to the level order */
+  reorderChildLevels(layoutComponent)
+} catch (Throwable e) {
+    e.printStackTrace()
+}
+</ExpandLayoutComponent>    <AutoExpand xml:space="preserve">
+  //current preservation
+  def domainClass = getById(component["dataBinding"])
+  for(link in getExitingFlows(component, FlowType.NAVIGATION)){
+     def connectionType = getConnectionType(link)
+     if(connectionType == "contentToContentIntraPage"){
+       if(link["automaticCoupling"] == "true"){
+           def i = 1
+           for(par in getAutomaticParameterBindings(link)){
+               def curPar = link.addElement("ParameterBinding");
+               curPar.addAttribute("id", link["id"] + "_par" + i)
+               curPar.addAttribute("source", par["source"])
+               curPar.addAttribute("target", par["target"])
+               i++
+           }
+           link["automaticCoupling"] = "false"
+       }
+       for (a in getKeyAttributes(domainClass)) {
+          def curPar = link.addElement("ParameterBinding");
+          curPar.addAttribute("id", link["id"] + "_" + a["id"])
+          curPar.addAttribute("source", "data[]." + a["id"])
+          curPar.addAttribute("target", component["id"] + ".current." + a["id"])
+       }
+     }
+  }
+  def sortable = component["sortable"] == "true"
+  def scrollable = component["blockFactor"] != ""
+  if(sortable || scrollable){
+      def useSelectiveRefresh = isSelectiveRefreshViewComponent(component)
+      if(sortable){
+	      def displayAtts = component["displayAttributes"].tokenize(" ")
+	      def sortAtts = component.selectNodes("SortAttribute").findAll{displayAtts.contains(it["attribute"])}
+	      addSortEvents(component, sortAtts, useSelectiveRefresh)
+	      if(component.selectSingleNode("DataFlow[ParameterBinding[starts-with(@source, 'data[]')]]") != null) {
+            for(sortFlow in component.selectNodes("Events/OnSelectEvent[@sort='true']/NavigationFlow")) {
+              for (a in getKeyAttributes(domainClass)) {
+	            def curPar = sortFlow.addElement("ParameterBinding")
+	            curPar.addAttribute("id", sortFlow["id"] + "_cur" + a["id"])
+	            curPar.addAttribute("source", "scroller." + a["id"])
+	            curPar.addAttribute("target", component["id"] + ".current." + a["id"])
+	          }
+	        }
+	      }	 
+	  }
+	  if(scrollable){
+	     addScrollEvents(component, useSelectiveRefresh)
+	  }
+  }
+</AutoExpand>    <BeanDescription xml:space="preserve">
+	&lt;p&gt;The component state object for the Hierarchy consists of the following properties:
+	   &lt;ul&gt;
+  		&lt;li&gt;&lt;code&gt;int dataSize&lt;/code&gt;: the number of class state objects&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Object[] data&lt;/code&gt;: the array of class state objects&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;int currentIndex&lt;/code&gt;: the zero-based index of the current class state object&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;int {levelId}dataSize&lt;/code&gt;: the number of class state objects of the level&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Object[] {levelId}data&lt;/code&gt;: the array of class state objects of the level&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;String currentSortAttribute&lt;/code&gt;: the current sorting attribute identifier (available if the component is Sortable). Initially it can be null, and all attributes are sorting attributes&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;String currentSorting&lt;/code&gt;: the current sorting criteria (available if the component is Sortable)&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;Map sortMask&lt;/code&gt;: the map containing the sorting criteria ('A' or 'D') for each attribute identifier (available if the component is Sortable)&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;Map scroller&lt;/code&gt;: the map containing the blocks information: 
+           &lt;ul&gt;
+              &lt;li&gt;&lt;code&gt;first&lt;/code&gt;: the index of the first block of objects&lt;/li&gt;
+              &lt;li&gt;&lt;code&gt;previous&lt;/code&gt;: the index of the previous block of objects&lt;/li&gt;
+              &lt;li&gt;&lt;code&gt;next&lt;/code&gt;: the index of the next block of objects&lt;/li&gt;
+              &lt;li&gt;&lt;code&gt;last&lt;/code&gt;: the index of the last block of objects&lt;/li&gt;
+              &lt;li&gt;&lt;code&gt;current&lt;/code&gt;: the one-based index of the current block of objects&lt;/li&gt;
+              &lt;li&gt;&lt;code&gt;blocks&lt;/code&gt;: the array of the bloks indexes&lt;/li&gt;
+              &lt;li&gt;&lt;code&gt;from&lt;/code&gt;: the index of the first object included within the current block&lt;/li&gt;
+              &lt;li&gt;&lt;code&gt;to&lt;/code&gt;: the index of the last object included within the current block&lt;/li&gt;
+              &lt;li&gt;&lt;code&gt;of&lt;/code&gt;: the total number of objects&lt;/li&gt;
+           &lt;/ul&gt;
+        &lt;/li&gt;
+  	   &lt;/ul&gt;
+	&lt;/p&gt;
+	&lt;p&gt;The state object at the root level depends on the class the component is based on, and on the 
+	child levels. For example, if the component is based on the &lt;i&gt;Category&lt;/i&gt; and contains an immediate child level 
+	(identified by hiulvl1), the state object at the root level includes the following properties:
+	   &lt;ul&gt;
+	    &lt;li&gt;&lt;code&gt;Integer OID&lt;/code&gt;: the value of the &lt;i&gt;oid&lt;/i&gt; attribute&lt;/li&gt;
+	    &lt;li&gt;&lt;code&gt;String category&lt;/code&gt;: the value of the &lt;i&gt;Category&lt;/i&gt; attribute&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;int hiulvl1dataSize&lt;/code&gt;: the number of class state objects of the child level&lt;/li&gt;
+  	    &lt;li&gt;&lt;code&gt;Object[] hiulvl1data&lt;/code&gt;: the array of class state objects of the level of the child level&lt;/li&gt;
+  	   &lt;/ul&gt;
+	&lt;/p&gt;
+	&lt;p&gt;The state object at the n-th level has a structure similar to the structure of the state object at the root level. 
+	It depends on the class the n-th level is based on, and on the nested
+	child levels. For example, if the component is based on the &lt;i&gt;Product&lt;/i&gt; and contains an immediate child level 
+	(identified by hiulvl2), the state object includes the following properties:
+	   &lt;ul&gt;
+	    &lt;li&gt;&lt;code&gt;Integer OID&lt;/code&gt;: the value of the &lt;i&gt;oid&lt;/i&gt; attribute&lt;/li&gt;
+	    &lt;li&gt;&lt;code&gt;String category&lt;/code&gt;: the value of the &lt;i&gt;Category&lt;/i&gt; attribute&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Integer code&lt;/code&gt;: the value of the &lt;i&gt;code&lt;/i&gt; attribute&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;String description&lt;/code&gt;: the value of the &lt;i&gt;description&lt;/i&gt; attribute&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;String name&lt;/code&gt;: the value of the &lt;i&gt;name&lt;/i&gt; attribute&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Double price&lt;/code&gt;: the value of the &lt;i&gt;price&lt;/i&gt; attribute&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Object thumbnail&lt;/code&gt;: the value of the &lt;i&gt;thumbnail&lt;/i&gt; attribute&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Boolean highlighted&lt;/code&gt;: the value of the &lt;i&gt;highlighted&lt;/i&gt; attribute&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;int hiulvl2dataSize&lt;/code&gt;: the number of class state objects of the child level&lt;/li&gt;
+  	    &lt;li&gt;&lt;code&gt;Object[] hiulvl2data&lt;/code&gt;: the array of class state objects of the level of the child level&lt;/li&gt;
+  	   &lt;/ul&gt;
+	&lt;/p&gt;
+	&lt;p&gt;The structure presented above is valid only for multi-branch Hierarchies, i.e. for Hierarchies presenting at 
+	least one level with two or more immediate child levels.
+	&lt;/p&gt;
+</BeanDescription> </Component>

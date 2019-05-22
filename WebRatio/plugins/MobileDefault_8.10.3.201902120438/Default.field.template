@@ -1,0 +1,173 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Label Style" name="label-style" type="enum" values="left|top|placeholder|floating" default="left">
+Defines the style of the label.
+Allowed values are:
+- left
+- top
+- placeholder: label is inside
+- floating: label is inside when the field is empty and it is on top when text is entered
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Color" name="color" type="enum" values="white|gray|blue|light blue|green|yellow|red|violet|black" default="blue">
+Defines the color of the field widget (ie: toggle, checkbox, range)
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Boolean field style" name="boolean-field-style" type="enum" values="toggle|checkbox" default="toggle">
+Defines the style of a boolean field.
+Allowed values are:
+- toggle (default)
+- checkbox
+</wr:LayoutParameter>
+[%
+setHTMLOutput()
+def labelStyles = [
+	"left" : "inline",
+	"top" : "stacked",
+	"placeholder" : "placeholder",
+	"floating" : "floating"]
+	
+def colors = [
+	"white" : "light",
+	"gray" : "stable",
+	"blue" : "positive",
+	"light blue" : "calm",
+	"green" : "balanced",
+	"yellow" : "energized",
+	"red" : "assertive",
+	"violet" : "royal",
+	"black" : "dark"]
+
+def modelField = getById(field["field"])
+def isField = modelField.name == "Field"
+def isSelectionField = modelField.name == "SelectionField"
+
+def labelStyle = labelStyles[params["label-style"]]
+def labelClass = (labelStyle == "stacked" || labelStyle == "floating") ? "item-" + labelStyle + "-label" : ""
+
+def type = field["type"]
+def contentType = field["contentType"]
+def readOnly = (field["modifiable"] != "true")
+def boolStyle = params["boolean-field-style"]
+
+def printFieldMode = { mode ->
+	def templateFile = getLayoutFile(getLayout(field, LayoutType.FIELD).path, LayoutType.FIELD)
+	printRaw(executeTemplate(templateFile.absolutePath, [ field: field, mode: mode, styleClass: null ]));
+}
+if (mode != "label" && mode != "value" && mode != "error") { 
+	/* Decide the classes to apply */
+	def classes = []
+	classes.add("item")
+	classes.add("item-input")
+	if (isField) {
+		if (type == "boolean") {
+			classes.add("item-" + boolStyle)
+		} else if (type == "text") {
+			classes.add("item-text")
+			classes.add(labelClass)
+		} else {
+			classes.add(labelClass)
+		}
+	} else if (isSelectionField) {
+		classes.add("item-select")
+	}
+%]
+	<[%= type == "blob" ? "div" : "label" %] class="[%= classes.join(" ") %][%= styleClass ? " ${styleClass}" : "" %]" ng-class="{ 'has-errors' : view.formState.[%= field["id"] %].invalid }">
+		[% 	if (!isField || labelStyle != "placeholder") { 
+				printFieldMode("label") 
+			} %]
+		<div class="wr-input-wrapper">
+			[% printFieldMode("value") %]
+			[% printFieldMode("error") %]
+		</div>		 
+	</[%= type == "blob" ? "div" : "label" %]>	
+[% } else if (mode == "label") { %]
+	<span class="input-label[%= styleClass ? " ${styleClass}" : "" %]" ng-class="{ 'has-errors' : view.formState.[%= field["id"] %].invalid }">
+		<wr:Label context="field"/>
+	</span>
+[% } else if (mode == "error") { %]
+	<ul class="wr-error-list" ng-if="view.formState.[%= field["id"] %].errors.length">
+		<li ng-repeat="error in view.formState.[%= field["id"] %].errors track by $index">
+			{{ error }}
+		</li>
+	</ul>
+[% } else { %]
+	[% if (isField) { %]
+		
+		[% if (type == "boolean") { %]
+			[% if (boolStyle == "toggle") { %]
+				<label class="toggle toggle-[%= colors[params["color"]] %][%= styleClass ? " ${styleClass}" : "" %]">
+					<input type="checkbox" ng-model="view.form.[%= field["id"] %]" wr-form-property [% if (readOnly) { %]disabled[% } %]>
+					<div class="track">
+						<div class="handle"></div>
+					</div>
+				</label>
+			[% } else { %]
+				<label class="checkbox checkbox-[%= colors[params["color"]] %][%= styleClass ? " ${styleClass}" : "" %]">
+					<input type="checkbox" ng-model="view.form.[%= field["id"] %]" wr-form-property [% if (readOnly) { %]disabled[% } %]>
+				</label>
+			[% } %]
+		[% } else if (type == "text") { %]
+			<textarea 
+				ng-model="view.form.[%= field["id"] %]"
+				wr-form-property
+				[% if (readOnly) { %]disabled[% } %]
+				[% if (labelStyle == "placeholder" || labelStyle == "floating") { %]placeholder="<wr:Label context="field"/>"[% } %]
+				[%= styleClass ? "class='${styleClass}'" : "" %]
+			></textarea>
+		[% } else if (type == "blob") {
+				if (!contentType || contentType == "" || contentType.startsWith("image")) { %]
+					<wr:RequireResource ref="blob-camera-plugin"/>
+					<wr:RequireResource ref="mobiledefault-action-sheet"/>
+					<wr-action-sheet title="Choose the image" cancel-button="Cancel" class="wr-field-image" ng-model="view.form.[%= field["id"] %]" wr-form-property wr-blob>
+						<img ng-src="{{ blob.url }}" ng-show="blob.url"/>
+						<span ng-show="!blob.url" class="wr-placeholder icon" ng-class="{'ion-loading-d': blob.loading , 'ion-image': !blob.loading}" ></span>
+						
+						<wr-action-sheet-button action="blob.capture()">Take a picture</wr-action-sheet-button>
+						<wr-action-sheet-button action="blob.select()">Select from the gallery</wr-action-sheet-button>
+						
+					</wr-action-sheet>
+		[% 		} else {
+					throwGenerationException("Only image blob fields are supported. Please edit the field '${field['name']}' (${field['id']})")
+				}
+			} else {
+			def inputTypes = [
+				"date": "date",
+				"decimal": "text",
+				"float": "number",
+				"integer": "number",
+				"password": "password",
+				"string": "text",
+				"time": "time",
+				"timestamp": "datetime-local",
+				"url": "url"
+			]
+			def steps = [
+				"float": "any"
+			]
+			%]
+			[% if ("date".equals(type) || "time".equals(type) || "timestamp".equals(type)) { %]
+			<wr:RequireResource ref="mobiledefault-date-input"/>
+			[% } else if ("integer".equals(type) || "float".equals(type)) { %]
+			<wr:RequireResource ref="mobiledefault-number-input"/>
+			[% } %]
+			<input
+				type="[%= inputTypes[type] ?: "text" %]"
+				[% if (steps[type]) { %]step="[%= steps[type] %]"[% } %]
+				ng-model="view.form.[%= field["id"] %]"
+				wr-form-property
+				[% if (readOnly) { %]disabled[% } %]
+				[% if (labelStyle == "placeholder" || labelStyle == "floating") { %]placeholder="<wr:Label context="field"/>"[% } %]
+				[%= styleClass ? "class='${styleClass}'" : "" %]
+			/>
+		[% } %]
+		
+	[% } else if (isSelectionField) { %]
+			<wr:RequireResource ref="mobiledefault-select"/>
+			<select 
+				ng-model="view.form.[%= field["id"] %]"
+				wr-form-property 
+				ng-options="opt as opt.label for opt in view.options.[%= field["id"] %]"
+				[%= styleClass ? "class='${styleClass}'" : "" %]
+			>
+				<option value="">No selection</option>
+			</select>
+	[% } %]
+[% } %]

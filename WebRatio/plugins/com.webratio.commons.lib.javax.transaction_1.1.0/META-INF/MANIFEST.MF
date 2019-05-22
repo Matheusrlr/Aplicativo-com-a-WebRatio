@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Export-Package: javax.transaction,javax.transaction.xa
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/jta.jar
+Bundle-Version: 1.1.0
+Bundle-Name: WebRatio 3rd Party Library - Java Transaction API
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.javax.transaction
+Bundle-RequiredExecutionEnvironment: J2SE-1.4
+
+Name: about_files/jta.txt
+SHA-256-Digest: 20hIuM+8bBLDGArFtLnh2kdgLY36F35fc2O/AVyXqvc=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: lKH0wAugOu3prsMQ7UJrP8x+z3XrL8BJdOgAPCLHXXA=
+
+Name: lib/jtasrc.zip
+SHA-256-Digest: IoTmM/R8uNzuQPUvy4gUM0s6FjSVwfFB4/ugCtJC8/o=
+
+Name: lib/jta.jar
+SHA-256-Digest: uOwWO0pHutFvmgt9A8MhDGsKKSFtdoAxBzrCCBfAulA=
+

@@ -1,0 +1,161 @@
+#?delimiters [%,%],[%=,%]
+<wr:LayoutParameter label="Show Header" name="showHeader" type="boolean" default="true">
+Defines the rendition of the header.
+Allowed values are: true(default) or false.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Header Font Weight" name="headerfont-weight" type="enum" values="normal|bold" default="bold">
+Defines the rendering of the block header
+Allowed values are:
+- normal
+- bold (default)
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Header Background" name="headerbackground" type="color" default="">
+Defines the header background color.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Header Color" name="headercolor" type="color" default="">
+Defines the header text color.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Header Borders" name="headerborder" type="string" default="">
+Defines the header borders to render.
+Value is a space-separated combination of the
+following keywords: top, left, right, bottom.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Header Border Style" name="headerborder-style" type="enum" values="NONE|THIN|MEDIUM|DASHED|DOTTED|THICK|DOUBLE|HAIR|MEDIUM_DASHED|DASH_DOT|MEDIUM_DASH_DOT|DASH_DOT_DOT|MEDIUM_DASH_DOT_DOT|SLANTED_DASH_DOT">
+Defines the header border style.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Header Border Color" name="headerborder-color" type="color" default="">
+Defines the header border color.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Show Break Line" name="showBrekLine" type="boolean"  default="true">
+Defines if the break line between rows must be shown.
+</wr:LayoutParameter>
+
+<wr:LayoutParameter label="First Row" name="firstRow" type="string" default="">
+The block first row (1-based)
+</wr:LayoutParameter>
+<wr:LayoutParameter label="First Column" name="firstColumn" type="string" default="">
+The block first column code or number (1-based)
+</wr:LayoutParameter>
+
+[%
+import org.apache.commons.lang.StringUtils
+
+setXMLOutput()
+
+def showHeader = "true" == params["showHeader"]
+def showBrekLine = "true" == params["showBrekLine"]
+def position = "level1"
+def atts = component.selectNodes("layout:Attribute")
+
+
+def writeStyle(params, prefix){
+   def style = params.entrySet().findAll{it.key.startsWith(prefix) && !StringUtils.isBlank(it.value)}.collect{StringUtils.uncapitalize(it.key - prefix) + ":" + it.value}.join(";")    
+   if(!StringUtils.isBlank(style)){%] style="[%= style%]"[%}
+}
+
+def writeLocation(params){
+    if(!StringUtils.isBlank(params["firstRow"])){%] firstRow="[%= params["firstRow"]%]"[%}
+    if(!StringUtils.isBlank(params["firstColumn"])){%] firstColumn="[%= params["firstColumn"]%]"[%}
+}
+%]
+
+[% // iterates recursively on the hierarchicalLevels
+   def getSubLevelsLayout(hLevel, position, levelCount, parentLevelElementsCount){
+   	  def levelId = hLevel["id"]
+	  def currentLevel = "level" + levelCount + "current"
+	  position = position + ",level" + levelCount
+	  def levelAtts = hLevel.selectNodes("layout:Attribute")
+	  def levelElementsCount = parentLevelElementsCount +  levelAtts.size()
+%]
+
+
+<c:choose>
+ <c:when test="${level[%=levelCount -1 %]current.[%=levelId%]dataSize gt 0}">
+	<c:forEach items="${level[%=levelCount -1 %]current.[%=levelId%]data}" var="level[%=levelCount%]current"
+		varStatus="level[%=levelCount%]status">
+	    <c:set var="level[%=levelCount%]" value="${level[%=levelCount%]status.index}" />
+	    <c:if test="${level[%=levelCount%] gt 0}">
+		    </Row>
+		    <Row>
+  		     [% for (index in 1..parentLevelElementsCount) { %]
+			    <Cell/>
+			 [% } %]        
+	    </c:if>
+		<wr:Iterate var="attr" context="hLevel" select="layout:Attribute">
+			<wr:Value item="currentLevel"/>
+		</wr:Iterate>
+		<wr:Iterate var="subLevel" context="hLevel" select="HierarchyLevel">
+			[% getSubLevelsLayout(subLevel, position, levelCount + 1, levelElementsCount) %]
+		</wr:Iterate>
+		<c:if test="${level[%=levelCount%] eq level[%=levelCount -1 %]current.[%=levelId%]dataSize}"></Row></c:if>
+	 </c:forEach>
+  </c:when>
+  <c:otherwise>
+	 [% for (index in 1..(levelAtts.size())) { %]
+		 <Cell/>
+	 [% } %]
+  </c:otherwise>
+</c:choose>
+[% } %]
+
+[%def getSubLevelsHeaders(hLevel) { %]
+   <wr:Iterate var="level" context="hLevel" select="layout:Attribute">
+		<Cell><wr:Label/></Cell>	
+   </wr:Iterate>
+   <wr:Iterate var="subLevel" varIndex="subLevelIndex" context="hLevel" select="HierarchyLevel">
+ 		[% getSubLevelsHeaders(subLevel) %]
+   </wr:Iterate>
+[%}%]
+
+[%def getElementsCount(hLevel, count) { %]
+   <wr:Iterate var="level" context="hLevel" select="layout:Attribute">
+	 [% count++ %]
+   </wr:Iterate>
+   <wr:Iterate var="subLevel" varIndex="subLevelIndex" context="hLevel" select="HierarchyLevel">
+ 	 [% count += getElementsCount(subLevel, count) %]
+   </wr:Iterate>
+   [% return count %]
+[%}%]
+
+
+
+<c:if test="${not(empty <wr:Id context="component"/>) and (<wr:Id context="component"/>.dataSize gt 0)}">
+   <Block position="[%= blockPosition%]"[%writeLocation(params)%]> 
+	<wr:Frame>
+		[% if (showHeader) { %]
+			<Header[%writeStyle(params, "header")%]>
+				<wr:Iterate var="att" context="component" select="layout:Attribute">
+		    		<Cell><wr:Label/></Cell>
+		  		</wr:Iterate>
+		  		<wr:Iterate var="hLevel" varIndex="hLevelIndex" context="component" select="HierarchyLevel">
+		       		[% getSubLevelsHeaders(hLevel) %]
+				</wr:Iterate>
+		  	</Header>
+		[% } %]
+		<c:forEach var="level1current" varStatus="level1status" items="${<wr:Id context="component"/>.data}">
+			<c:set var="level1" value="${level1status.index}" />
+		 	    <Row>
+				  <wr:Iterate var="attr" context="component" select="layout:Attribute">
+					 <wr:Value item="'level1current'"/>
+				  </wr:Iterate>
+			  	  <wr:Iterate var="hLevel" context="component" select="HierarchyLevel">
+					 [% getSubLevelsLayout(hLevel, "level1", 2, atts.size()) %]
+				  </wr:Iterate>
+				</Row>
+				[% if(showBrekLine){ %] 
+				<Row>
+				  [% def count = atts.size() %]
+				  <wr:Iterate var="hLevel" varIndex="hLevelIndex" context="component" select="HierarchyLevel">
+			         [% count += getElementsCount(hLevel, count) %]
+			      </wr:Iterate>
+				  [% for (index in 1..count) { %]
+				      <Cell/>
+				  [% } %]        
+				</Row>
+				[%}%]
+			</c:forEach>
+			  	
+	</wr:Frame>
+  </Block>
+</c:if>
+  

@@ -1,0 +1,18 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.io.IOHelper
+
+def PLATFORM_NAME = "windows"
+def OUT_BASE = "platforms/" + PLATFORM_NAME
+def RES_BASE = "Framework/Platforms/" + PLATFORM_NAME
+
+/* Copy static files of the platform */
+processOutputFile(OUT_BASE, "static ${PLATFORM_NAME} files", wr.project, { rootDir ->
+	def staticDir = wr.locateResourceFile(RES_BASE + "/Static")
+	IOHelper.copyDirectory(staticDir, rootDir, [IOHelper.CVS_AWARE_FILTER], [])
+})
+
+/* Create and fill the platform www directory */
+executeContextTemplate("Framework/PlatformWebRoot.template", ["platformName": PLATFORM_NAME, "platformPath": OUT_BASE, "wwwPath": OUT_BASE + "/www"])
+
+%]

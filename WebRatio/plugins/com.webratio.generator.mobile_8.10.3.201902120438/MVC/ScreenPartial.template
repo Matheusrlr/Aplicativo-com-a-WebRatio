@@ -1,0 +1,37 @@
+#?delimiters [%, %], [%=, %]
+[%
+import org.apache.commons.lang.StringUtils
+
+/* Initialize facilities for keeping track of templates */
+def screenUsedStyles = [] as Set
+def addUsedTemplate = { templatePath ->
+	def style = StringUtils.substringBefore(templatePath, "/")
+	if (screenUsedStyles.add(style)) {
+		resourceRegistry.addAll(getRequiredResources(style), ["condition": ""], getAvailableResources(style))
+	}
+}
+addUsedTemplate("BUILTIN/*")
+
+/* Determine the layout */
+def layout = getLayout(screen, LayoutType.SCREEN)
+if (!layout.path) {
+	throwGenerationException("Screen has no layout defined - " + screen)
+}
+def layoutTemplate = getLayoutFile(layout.path, LayoutType.SCREEN)
+if (!layoutTemplate) {
+	throwGenerationException("Screen layout template not found: " + layout.path)
+}
+addUsedTemplate(layout.path)
+
+/* Screen wrapper start */
+%]<!-- directive: wr-screen [%= screen["id"] %] -->[%
+
+/* Actual Screen layout */
+wr.currentTopScreen = screen
+printRaw(executeTemplate(layoutTemplate.absolutePath, ["params": layout.parameters, "templateType": "screen", "_layoutResources": ["registry": resourceRegistry], "addUsedTemplate": addUsedTemplate]))
+
+/* Screen wrapper end */
+%]<!-- end_directive: wr-screen -->[%
+
+wr.usedStyles.addAll(screenUsedStyles)
+%]

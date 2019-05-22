@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+formatter.style.tabWidth=4
+formatter.style.tabBySpaces=true
+formatter.style.maxLineWidth=135
+formatter.style.maxCommentLineWidth=135
+formatter.style.indentationWidth=4
+formatter.style.docComments.paramTypeAndNameIndented=true
+formatter.style.docComments.paramDescriptionOnNewLine=false
+formatter.style.sameLineClauses.ifStatementElse=true

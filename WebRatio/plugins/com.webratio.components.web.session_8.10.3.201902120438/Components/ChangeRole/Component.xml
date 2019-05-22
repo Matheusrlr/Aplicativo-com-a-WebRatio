@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="operation" formBased="false" idPrefix="cgu" namePrefix="Change Role " label="Change Role" dataFlowTarget="true" navigationFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" successFlowSource="true" successFlowTarget="true"> 
+  <Description xml:space="preserve">A change role operation changes the role of a currently logged user 
+and redirects him to the home page or operation of the site view associated with the
+new role. If authentication succeeds but the role has no default site view, the operation follows its outgoing Error flow. 
+If the currently logged user is not a member of the role, the operation fails and its Error flow is followed.</Description>  
+  <InputDescription xml:space="preserve" name="Current User">The key attributes values of the currently logged user.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Selected Role">The key attributes values of the role to switch to.</InputDescription>  
+  <OutputDescription xml:space="preserve" name="Current User">The key attributes values of the currently logged user.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Chosen Role">The key attributes values of the new role.</OutputDescription> 
+</Component>

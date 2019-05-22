@@ -1,0 +1,57 @@
+Manifest-Version: 1.0
+Export-Package: org.codehaus.jackson,org.codehaus.jackson.annotate,org
+ .codehaus.jackson.format,org.codehaus.jackson.impl,org.codehaus.jacks
+ on.io,org.codehaus.jackson.jaxrs,org.codehaus.jackson.map,org.codehau
+ s.jackson.map.annotate,org.codehaus.jackson.map.deser,org.codehaus.ja
+ ckson.map.deser.impl,org.codehaus.jackson.map.deser.std,org.codehaus.
+ jackson.map.exc,org.codehaus.jackson.map.ext,org.codehaus.jackson.map
+ .introspect,org.codehaus.jackson.map.jsontype,org.codehaus.jackson.ma
+ p.jsontype.impl,org.codehaus.jackson.map.module,org.codehaus.jackson.
+ map.ser,org.codehaus.jackson.map.ser.impl,org.codehaus.jackson.map.se
+ r.std,org.codehaus.jackson.map.type,org.codehaus.jackson.map.util,org
+ .codehaus.jackson.node,org.codehaus.jackson.schema,org.codehaus.jacks
+ on.sym,org.codehaus.jackson.type,org.codehaus.jackson.util,org.codeha
+ us.jackson.xc
+Require-Bundle: com.webratio.commons.lib.javax.ws.rs
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/jackson-core-asl.jar,lib/jackson-mapper-asl.jar,
+ lib/jackson-jaxrs.jar,lib/jackson-xc.jar
+Bundle-Version: 1.9.13
+Bundle-Name: WebRatio 3rd Party Library - Jackson
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.jackson
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+
+Name: lib/jackson-xcsrc.zip
+SHA-256-Digest: 6JY+v9C/pOI+RZmJFOIk9ZB/a7UWuOs2gjqRs/XpgCU=
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: lib/jackson-xc.jar
+SHA-256-Digest: LSkF/Ox9HFW3dZlWF2hduwNnI1BwTZ5AtJLqtbVNC+c=
+
+Name: lib/jackson-mapper-asl.jar
+SHA-256-Digest: dOegenby7breKTEqWi68z6AZEovAIezjhW12GX6b4MI=
+
+Name: lib/jackson-mapper-aslsrc.zip
+SHA-256-Digest: 2gQFad4LI8/Qw5wwOn2d1RLQqEjnH0jzcLM0QpScPlw=
+
+Name: lib/jackson-core-aslsrc.zip
+SHA-256-Digest: 9NrTobmiD7z9N1A0MJ5xfhZ0DD13ByUDfxZe8s/oUr0=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: lib/jackson-jaxrs.jar
+SHA-256-Digest: F3BXCmulyHpHlcCutA7nxf5eMd9k7x1HlaDUJ3lrhLs=
+
+Name: about.html
+SHA-256-Digest: 7IG7TXK8n9RsCS480BWRN0ObdJAe8uHRZoCqLRh0fck=
+
+Name: lib/jackson-core-asl.jar
+SHA-256-Digest: RAqctcqVshX5U9OiCmsaENofCbUpqd3qX4pJBd2rT1o=
+
+Name: lib/jackson-jaxrssrc.zip
+SHA-256-Digest: 1Wdfh2Oqz6tPYbBEsObUxQI6uIsvCX7l8kXOcVxsyqo=
+

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="JavaCompile" default="main">
+
+	<property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter" />
+
+	<target name="main">
+		<javac srcdir="${srcPath}" destdir="${targetPath}" debug="on" source="1.4" target="1.4">
+			<classpath>
+				<fileset dir="${hibernateLibDir}">
+					<include name="*.jar" />
+				</fileset>
+				<fileset dir="${slf4jLibDir}">
+					<include name="*.jar" />
+				</fileset>
+				<fileset dir="${dom4jLibDir}">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+		</javac>
+	</target>
+
+</project>

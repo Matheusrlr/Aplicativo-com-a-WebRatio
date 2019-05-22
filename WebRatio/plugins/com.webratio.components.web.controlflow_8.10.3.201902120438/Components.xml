@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Components priority="500"> 
+  <Group> 
+    <Component>Switch</Component>  
+    <Component>ParameterCollector</Component> 
+  </Group>  
+  <Group> 
+    <Component>Loop</Component>  
+  </Group> 
+</Components>

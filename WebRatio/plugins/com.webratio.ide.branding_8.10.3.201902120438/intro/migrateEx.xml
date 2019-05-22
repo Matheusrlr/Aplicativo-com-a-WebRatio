@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<introContent>
+  	<extensionContent id="com.webratio.ide.ui.migration" name="WebRatio Porting Guide" alt-style="css/migrate.properties" style="css/migrate.css" path="migrate/@">
+		<group style-id="content-group" id="content-group">
+       		<link label="Web model migration from the previous release" url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.webratio.ide.ui.doc.user/HTML/Migration.html" id="wr_migration" style-id="content-link">
+          		<text>Learn what you need to do to make your old Web projects, styles, and units work in WebRatio 6.x</text>
+       	  	</link>
+       	  	<link label="BPM migration from the previous release" url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.webratio.bpm.ui.doc.user/HTML/Migration.html" id="wr_bpm_migration" style-id="content-link">
+       	  		<text>Learn what you need to do to make your old BPM projects work in WebRatio 6.x</text>
+       		</link>
+       	</group>
+  	</extensionContent>
+</introContent>

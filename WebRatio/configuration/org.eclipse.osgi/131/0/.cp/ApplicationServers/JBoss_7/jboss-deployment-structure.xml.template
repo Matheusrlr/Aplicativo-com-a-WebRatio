@@ -1,0 +1,33 @@
+#?delimiters [%,%],[%=,%]
+[%setXMLOutput()%]
+<jboss-deployment-structure>
+  <deployment>
+    <exclusions>
+      <module name="org.slf4j"/>
+	  <module name="org.apache.commons.logging"/>
+	  <module name="org.apache.log4j"/> 
+	  <module name="org.codehaus.jackson.jackson-core-asl"/>
+	  <module name="org.codehaus.jackson.jackson-jaxrs"/>
+	  <module name="org.codehaus.jackson.jackson-mapper-asl"/>
+	  <module name="org.codehaus.jackson.jackson-xc"/>
+    </exclusions>
+  </deployment>
+  [%
+    def moduleNames = wr.project.selectNodes("SubProject[@natureId='com.webratio.ide.WebModelNature' or @natureId='com.webratio.ide.ModuleNature' or @natureId='com.webratio.ide.wrprojectnature']").collect{it["name"]}.findAll{!excludedProjects.contains(it)}
+    moduleNames.add(rootModuleName)     
+  %]
+  [%for(moduleName in moduleNames){%]
+	<sub-deployment name="[%=moduleName%].war">
+      <exclusions>
+        <module name="org.slf4j"/>
+	    <module name="org.apache.commons.logging"/>
+	    <module name="org.apache.log4j"/> 
+	    <module name="org.codehaus.jackson.jackson-core-asl"/>
+	    <module name="org.codehaus.jackson.jackson-jaxrs"/>
+	    <module name="org.codehaus.jackson.jackson-mapper-asl"/>
+	    <module name="org.codehaus.jackson.jackson-xc"/>
+      </exclusions>
+    </sub-deployment>
+  [%}%]
+</jboss-deployment-structure>
+

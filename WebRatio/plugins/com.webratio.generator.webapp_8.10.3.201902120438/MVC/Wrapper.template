@@ -1,0 +1,88 @@
+#?delimiters [%, %], [%=, %]
+[%
+def element = binding.variables["element"] ?: null
+def wrapperId = binding.variables["wrapperId"] ?: null
+def alwaysWrap = binding.variables["alwaysWrap"] ?: false
+def refreshFragmentType = binding.variables["refreshFragmentType"] ?: null
+def inspectElementsType = binding.variables["inspectElementsType"] ?: null
+def allowLazyRefresh = binding.variables["allowLazyRefresh"] ?: false
+
+/* Function for computing an IDE-understandable XPath */
+def getElementXpath = { elem ->
+	def moduleGrid = elem.selectSingleNode("ancestor::layout:Grid[@_moduleId][1]")
+	if (moduleGrid) {
+		def path = "layout:Grid/" + elem.getUniquePath(moduleGrid)
+		return getOriginalId(moduleGrid["_moduleId"]) + ";" + path
+	} else {
+		def ancestor = getClosestTopGenericPage(elem)
+		def path = elem.getUniquePath(ancestor)
+		if (ancestor != page) {
+			return getOriginalId(ancestor["id"]) + ";" + path
+		} else {
+			return path
+		}
+	}
+}
+
+/* Determine whether to use a wrapper and which features to enable */
+def useWrapper, useSelectiveRefresh, useElementInspection
+
+/* Wrappers are HTML: use them only in HTML pages and if not disabled from calling templates */
+if (!["html", "xhtml"].contains(pageOutputType.name) || binding.variables["suppressWrappers"]) {
+	useWrapper = false
+} else {
+	useSelectiveRefresh = ((element || wrapperId) && refreshFragmentType && isSelectiveRefreshGenericPage(page))
+	useElementInspection = (element && inspectElementsType && isInspectElementsEnabled())
+	useWrapper = (alwaysWrap || useSelectiveRefresh || useElementInspection)
+}
+
+/* Wrapper start */
+if (useWrapper) {
+	%]<div[%
+	if (useSelectiveRefresh && useElementInspection) {
+		%] class="wr-ajaxDiv _wr_wrapper"[%
+	} else if (useSelectiveRefresh) {
+		%] class="wr-ajaxDiv"[%
+	} else if (useElementInspection) {
+		%] class="_wr_wrapper"[%
+	}
+	if (useSelectiveRefresh) {
+		%] id="[%= wrapperId ?: getLayoutId(element) %]"[%
+	}
+	if (useElementInspection) {
+		%] rel="[%= getElementXpath(element) %]"[%
+	}
+	%]>[%
+}
+
+/* Use selective refresh content holders for "lazy remove" mode */
+if (useWrapper && useSelectiveRefresh && allowLazyRefresh && useAjaxLazyRemove(page)) {
+	def originalContent = content
+	content = {
+		%]<div class="wr-ajaxContent">[%
+		printRaw(executeTemplate(originalContent))
+		%]</div>[%
+	}
+}
+
+/* Print content, capturing it as a refresh fragment if possible */
+if (refreshFragmentType && (useWrapper && useSelectiveRefresh || element == null) && binding.variables.containsKey("_refreshFragments")) {
+	
+	/* Execute the fragment template */
+	def childFragments = [:]
+	def text = executeTemplate(["_refreshFragments": childFragments, "_askedAuxId": null], content)
+	
+	/* Save the captured output and child fragments; note the requested auxiliary page id */
+	def fragment = ["element": element, "text": text, "children": childFragments, "askedAuxId": binding.variables["_askedAuxId"]]
+	def fragmentsOfType = _refreshFragments[refreshFragmentType] ?: (_refreshFragments[refreshFragmentType] = [])
+	fragmentsOfType.add(fragment)
+	
+} else {
+	printRaw(executeTemplate(content))
+}
+
+/* Wrapper end */
+if (useWrapper) {
+	%]</div>[%
+}
+%]

@@ -1,0 +1,102 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.GenerationException
+import org.apache.commons.lang.StringUtils
+
+if (field == null) {
+	def title = "Undefined field variable"    
+	def reason = "Unable to generate the Field layout."
+	def hint = "Specify a variable holding a layout:Field"
+	throw new GenerationException(title, reason, [hint], null)
+}
+
+/* Get style */
+def fieldLayout = getLayout(field, LayoutType.FIELD)
+def templatePath = fieldLayout.path
+def templateParameters = fieldLayout.parameters
+if (!templatePath) {
+    def title = "Undefined Field Layout"    
+    def reason = "Unable to find the field layout for a field."
+    def hint = "Specify a field layout for all the fields of the page [id = " + page["id"] + "]"
+    throw new GenerationException(title, reason, [hint], null)
+}
+def templateFile = getLayoutFile(templatePath, LayoutType.FIELD)
+if (!templateFile) {
+	def title = "Field Layout Not Found"
+	def reason = "Unable to find the field layout \'" + templatePath + "\'"
+	def hint = "Check the project for the missing field layout [name = " + templatePath + "] associated with the field [id = " + field["id"] + "]"
+	throw new GenerationException(title, reason, [hint], null)
+}
+addUsedTemplate(templatePath)
+
+/* Make the Layout Field refreshable only when directly placed */
+def placedDirectly = (field["componentId"] as boolean)
+def refreshFragmentType = (placedDirectly ? "control" : null)
+
+/* Render the Layout Field in a wrapper */
+printRaw(executeContextTemplate("MVC/Wrapper.template", ["refreshFragmentType": refreshFragmentType, "allowLazyRefresh": placedDirectly, "element": field, "content": {
+	
+	/* Visibility condition start */
+	def visibilityCondition = getVisibilityCondition(field)
+	if (visibilityCondition) {
+		%]<c:if test="${[% printJSPTagValue(visibilityCondition) %]}">[%
+	}
+	
+	/* Support AJAX features only for "value" fields rendered in an HTML page */
+	def fieldAjaxSupported = ((mode == "" || mode == "value" || mode == "full") && ["html", "xhtml"].contains(pageOutputType.name))
+	
+	/* With AJAX Upload enabled, print an iframe pointing to the field page instead of the field itself */
+	if (field["ajaxUploadEnabled"] == "true" && fieldAjaxSupported) {
+		def uploadPageId = field["ajaxUploadPage"]
+		def uploadWidth = field["ajaxUploadPageWidth"] ?: "100%"
+		def uploadHeight = field["ajaxUploadPageHeight"] ?: "70"
+		%]
+		<iframe src="<webratio:Link link="[%= uploadPageId %]"/>" width="[%= uploadWidth %]" height="[%= uploadHeight %]" frameborder="0" style="border: none; overflow-y: hidden; overflow-x: hidden;"></iframe>
+		[%
+	} else {
+	
+		/* Give a chance to the AJAX Autocomplete feature to replace the field entirely */
+		def fieldReplaced = false
+		if (fieldAjaxSupported) {
+			def text = executeContextTemplate("MVC/Ajax/AutocompleterGenerator.template", ["field": field, "mode": "replacement", "fieldLayout": fieldLayout]).trim()
+			if (text) {
+				printRaw(text)
+				fieldReplaced = true
+			}
+		}
+		
+		/* If not replaced by AJAX Autocomplete, print the actual Field layout */
+		if (!fieldReplaced) {
+			printRaw(executeTemplate(templateFile.absolutePath, ["params": templateParameters, "templateType": "field"]).trim())
+		}
+		
+		/* Field AJAX features */
+		if (fieldAjaxSupported) {
+			
+			/* Compute the HTML id to use for binding events (this is actually a guess, since it depends on the template) */
+			def fieldType = StringUtils.removeEnd(getById(field, "field").name, "Field")
+			def eventFieldId
+			if (fieldReplaced) {
+				eventFieldId = field["field"] + "_helper"
+			} else {
+				eventFieldId = field["field"] + ((isLocalizedType(field["type"]) && fieldType == "") ? "_locale" : "")
+				def parentComponent = field.selectSingleNode("ancestor::layout:Component")
+				if (parentComponent && parentComponent["unitTagName"] == "MultipleForm") {
+					eventFieldId = parentComponent["id"] + "[\${index}]." + eventFieldId
+				}
+			}
+			
+			/* AJAX Event support */
+			printRaw(executeContextTemplate("MVC/Ajax/EventGenerator.template", ["field": field, "eventFieldId": eventFieldId, "fieldLayout": fieldLayout]).trim())
+			
+			/* AJAX Autocomplete support */
+			printRaw(executeContextTemplate("MVC/Ajax/AutocompleterGenerator.template", ["field": field, "mode": "", "fieldLayout": fieldLayout]).trim())
+		}
+	}
+	
+	/* Visibility condition end */
+	if (visibilityCondition) {
+		%]</c:if>[%
+	}
+}]))
+%]

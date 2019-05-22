@@ -1,0 +1,21 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: s+l54gb4kMVwvcCiU+WGOwmRdNCj4
+ yglnlNsP7yZk5o=
+SHA-256-Digest-Manifest: cFdQNi86zy0Mx0XYRkqWcbJstrHFMaWncfniWKzhw6k=
+Created-By: 1.7.0_75 (Oracle Corporation)
+
+Name: lib/orosrc.zip
+SHA-256-Digest: 2qTUwTvIwstOxiqcDUSzfy56BKiiF18JozIRDUPuyJM=
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: a5fmgH7myHzNji9AMOfHrVh8fy7MOgIdRSUiRZ6EFA4=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: about.html
+SHA-256-Digest: v5Lz/6GM30XAfqBIZlNvZyibJ0mchmwq31ud091sXtM=
+
+Name: lib/oro.jar
+SHA-256-Digest: Kzw4XzO33JRAuBcSomKr7YyuWX0H4tm6bGggj0FDOvg=
+

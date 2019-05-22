@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component  type="operation" formBased="false" idPrefix="lou" namePrefix="Logout " label="Logout" dataFlowTarget="true" navigationFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" successFlowSource="true" successFlowTarget="true" > 
+  <BooleanProperty attributeName="removeUsername" label="Remove Username"> 
+	<Description xml:space="preserve">If checked the logout operation removes the username from the device. </Description>
+  </BooleanProperty>
+  <Description xml:space="preserve">The logout operation removes the password and the token from the device; any user session is terminated; the content of the App User and App Role classes is removed.</Description>
+</Component>

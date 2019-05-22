@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<introContent>
+  <extensionContent id="com.webratio.ide.ui.firststeps.left" name="WebRatio Home (Left)" alt-style="css/firststeps.properties" style="css/firststeps.css" path="firststeps/@">
+    <group style-id="content-group" id="content-group">
+      <link style-id="content-link" label="Overview" url="http://org.eclipse.ui.intro/showPage?id=overview" id="wr_overview">
+        <text>Get an overview of the features</text>
+      </link>
+      <link style-id="content-link" label="Samples" url="http://org.eclipse.ui.intro/showPage?id=samples" id="wr_samples">
+        <text>Try out the samples</text>
+      </link>
+      <link style-id="content-link" label="Migrate" url="http://org.eclipse.ui.intro/showPage?id=migrate" id="wr_migrate">
+        <text>Migrate to the new release</text>
+      </link>
+      <link style-id="content-link" label="Workbench" url="http://org.eclipse.ui.intro/switchToLaunchBar" id="wr_workbench">
+        <text>Go to the workbench</text>
+      </link>
+    </group>
+  </extensionContent>
+</introContent>

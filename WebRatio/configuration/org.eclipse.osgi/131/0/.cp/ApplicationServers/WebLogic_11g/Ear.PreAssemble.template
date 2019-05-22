@@ -1,0 +1,12 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import org.apache.commons.io.FileUtils
+   
+// moves the jars to the lib folder
+for(file in new File(tempFolder).listFiles()){
+  if(file.isFile() && file.name.endsWith(".jar")){
+     FileUtils.copyFile(file, new File(outputFolder + "/lib/" + file.name))
+     file.delete()
+  }
+}   
+%>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Element name="Package" lowerName="package"
+		pluralLowerName="packages">
+		<Description>
+			A package is a group of related classes and sub-packages.
+		</Description>
+		<ActionRef label="Remove Mapping"/>
+		<ActionRef label="Add Property"/>
+		<ActionRef label="Generate Selection"/>
+		<ActionRef label="Find Model Problems"/>
+		<ActionRef label="Help"/>
+		
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<Property label="Java Package Name">
+			    The fully package name assigned to the class Java classes. 
+			</Property>
+			<PropertyRef label="Name" />
+		</PropertyCategory>
+		<PropertyCategory name="Appearance">
+			<Property label="Color">
+			    The background color for the package. 
+			</Property>
+			<Property label="Apply Color to Classes">
+			    If checked, the Color property is applied to classes included in the package. 
+			</Property>
+			<PropertyRef label="Show" />			
+		</PropertyCategory>
+		<PropertyCategory name="Mapping">
+		    <Property label="Manual">
+		    	If checked, classes contained in the package are not synchronized automatically by the mobile application. The modeler must take care of these classes. All other properties are disabled.
+		    </Property>
+		    <Property label="On Reopen">
+		    	If checked, classes contained in the package are synchronized every time the user brings the application in foreground or he starts up the mobile application (except for the start up after the app installation or update).
+		    </Property>
+		    <Property label="Periodically">
+		    	If checked, classes contained in the package are synchronized at regular intervals. If you enable this property, the "Interval" property is mandatory.
+		    </Property>
+		    <Property label="Interval">
+		    	This property defines the period of time (in minutes) according to which the synchronization is repeated. (e.g. If you enter "5" data are synchronized every 5 minutes.). If the "Periodically" property is set, this property is mandatory.
+		    </Property>
+		</PropertyCategory>
+</Element>

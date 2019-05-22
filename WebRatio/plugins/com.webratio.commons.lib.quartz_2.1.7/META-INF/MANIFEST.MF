@@ -1,0 +1,61 @@
+Manifest-Version: 1.0
+Export-Package: org.quartz,org.quartz.commonj,org.quartz.core,org.quar
+ tz.core.jmx,org.quartz.ee.jmx.jboss,org.quartz.ee.jta,org.quartz.ee.s
+ ervlet,org.quartz.helpers,org.quartz.impl,org.quartz.impl.calendar,or
+ g.quartz.impl.jdbcjobstore,org.quartz.impl.jdbcjobstore.oracle,org.qu
+ artz.impl.jdbcjobstore.oracle.weblogic,org.quartz.impl.matchers,org.q
+ uartz.impl.triggers,org.quartz.jobs,org.quartz.jobs.ee.ejb,org.quartz
+ .jobs.ee.jms,org.quartz.jobs.ee.jmx,org.quartz.jobs.ee.mail,org.quart
+ z.listeners,org.quartz.plugins,org.quartz.plugins.history,org.quartz.
+ plugins.management,org.quartz.plugins.xml,org.quartz.simpl,org.quartz
+ .spi,org.quartz.utils,org.quartz.utils.counter,org.quartz.utils.count
+ er.sampled,org.quartz.utils.weblogic,org.quartz.xml
+Require-Bundle: com.webratio.commons.lib.slf4j
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/quartz.jar,lib/quartz-oracle.jar,lib/quartz-jbos
+ s.jar,lib/quartz-weblogic.jar,lib/quartz-commonj.jar
+Bundle-Version: 2.1.7
+Bundle-Name: WebRatio 3rd Party Library - Quartz
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.quartz
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+
+Name: lib/quartz-weblogicsrc.zip
+SHA-256-Digest: 7e3sezZtlvH2Wf7X180pZbCfzWXiANHlMkxtZ9hyKzo=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: lib/quartz-oracle.jar
+SHA-256-Digest: PuIJBcl0fv+16pK9TNgQxsVl6WV6B0Ilg25u/c636CA=
+
+Name: lib/quartz-commonj.jar
+SHA-256-Digest: qJgTqO/WS2f2tPKK+H5LcHCLAu4jHrY9NGzg6qZ/++s=
+
+Name: lib/quartzsrc.zip
+SHA-256-Digest: R+oYtp2f0vUYEiXSsOpqbFjri0OoW+2fc5IgTOBlX4k=
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: lib/quartz-weblogic.jar
+SHA-256-Digest: ov0EJmviIEmblTx5IehoVhLzzszzhfAyav/hbtZl5Kc=
+
+Name: lib/quartz-commonjsrc.zip
+SHA-256-Digest: 8sLPhfSqnpQEbGpwePDNhyUm84Z5zOFAP4jzIBqVALA=
+
+Name: about.html
+SHA-256-Digest: S3KsayvsWBpOQZlkuosNOporet9dyXVrq8owk/nH34E=
+
+Name: lib/quartz-jbosssrc.zip
+SHA-256-Digest: sGH86Rrx0cu9hQa3/arZCE5wSE7HNZe+2IWWHoQ6ZIw=
+
+Name: lib/quartz.jar
+SHA-256-Digest: j91jWhrimkL5+gjSbXeU9kxm4ctfzkicrZpAXpHOExc=
+
+Name: lib/quartz-jboss.jar
+SHA-256-Digest: xWa6rOUUO6WaR2sp1hVZnQBeii4PoQ6WnYRwDbOqfO0=
+
+Name: lib/quartz-oraclesrc.zip
+SHA-256-Digest: ZToo32lEDZDY1vASL47W43lj2jZ6m0iBa45scBjJPS8=
+

@@ -1,0 +1,54 @@
+#?delimiters [%, %], [%=, %]
+[%setXMLOutput()
+import org.apache.commons.lang.math.NumberUtils
+import org.apache.commons.lang.StringUtils
+
+def componentXMLName = toValidClassName(component["name"])
+def classXMLName = toValidClassName(getById(component["dataBinding"])?.attributeValue("name"))
+def position = "level1"
+
+// iterates recursively on the hierarchicalLevels
+def getSubLevelsLayout(hLevel, position, levelCount) { 
+    def levelId = hLevel["id"]
+    position = position + ",level" + levelCount
+    def currentLevel = "level" + levelCount + "current"
+    def levelXMLName = toValidClassName(hLevel["name"])
+    def entityLevelXMLName = toValidClassName(getById(hLevel["dataBinding"])?.attributeValue("name"))
+%]
+  <[%=levelXMLName%]>
+	 <wr:Iterate var="attr" context="hLevel" select="layout:Attribute">
+	   [% def attrXMLName = getFieldName(attr["attribute"]) %]
+	   <i18n.[%=attrXMLName%]><wr:Label/></i18n.[%=attrXMLName%]>
+	 </wr:Iterate>
+    <c:forEach items="${level[%=levelCount -1 %]current.[%=levelId%]data}" var="level[%=levelCount%]current" varStatus="level[%=levelCount%]status">
+	  <c:set var="level[%=levelCount%]" value="${level[%=levelCount%]status.index}" />
+	  <[%=entityLevelXMLName%]>
+        <wr:Iterate var="attr" context="hLevel" select="layout:Attribute">
+          [% def attrXMLName = getFieldName(attr["attribute"]) %]
+          <[%=attrXMLName%]><wr:Value item="currentLevel"/></[%=attrXMLName%]>
+        </wr:Iterate>    
+        <wr:Iterate var="subLevel" context="hLevel" select="HierarchyLevel">
+          [% getSubLevelsLayout(subLevel, position, levelCount + 1) %]
+        </wr:Iterate>
+      </[%=entityLevelXMLName%]>
+    </c:forEach>
+  </[%=levelXMLName%]>
+[% } %]
+<[%=componentXMLName%] dataSize="${<wr:Id context="component"/>.dataSize}">
+  <wr:Iterate var="attr" context="component" select="layout:Attribute">
+    [% def attrXMLName = getFieldName(attr["attribute"]) %]
+    <i18n.[%=attrXMLName%]><wr:Label/></i18n.[%=attrXMLName%]>
+  </wr:Iterate>
+  <c:forEach var="level1current" varStatus="level1status" items="${<wr:Id context="component"/>.data}">
+    <c:set var="level1" value="${level1status.index}" />
+    <[%=classXMLName%]>
+      <wr:Iterate var="attr" context="component" select="layout:Attribute">
+        [% def attrXMLName = getFieldName(attr["attribute"]) %]
+        <[%=attrXMLName%]><wr:Value item="'level1current'"/></[%=attrXMLName%]>
+      </wr:Iterate>
+      <wr:Iterate var="hLevel" context="component" select="HierarchyLevel">
+        [% getSubLevelsLayout(hLevel, "level1", 2) %]
+      </wr:Iterate>
+    </[%=classXMLName%]>
+  </c:forEach>
+</[%=componentXMLName%]>

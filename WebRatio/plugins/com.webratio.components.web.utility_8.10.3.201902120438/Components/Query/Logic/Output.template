@@ -1,0 +1,18 @@
+#?delimiters <%,%>,<%=,%>
+<% setXMLOutput() %>
+<OutputParameters>
+    <% if(component["mode"] == "dynamic"){ %>
+       <%for (output in component.selectNodes("QueryOutput")) {%>
+           <OutputParameter name="data[].<%=output["name"]%>" refId="<%=output["id"]%>" label="<%=output["name"]%>"/>
+           <OutputParameter name="<%=output["id"]%>" refId="<%=output["id"]%>" label="<%=output["name"]%> (Array)"/>
+       <%}%>
+    <% } else if(component["mode"] == "select"){ %>
+       <%for (output in component.selectNodes("QueryOutput")) {%>
+           <OutputParameter name="<%=output["id"]%>" refId="<%=output["id"]%>" label="<%=output["name"]%> (Array)"/>
+           <OutputParameter name="data[].<%=toValidFieldName(output["name"] ?: output["id"])%>" refId="<%=output["id"]%>" label="<%=output["name"]%>"/>
+       <%}%>
+    <% } else if(component["mode"] == "update"){ %>
+        <OutputParameter name="updateResult" refId="" label="Update Result"/>
+    <% } %>
+    <OutputParameter name="dataSize" label="Data Size"/>
+</OutputParameters>

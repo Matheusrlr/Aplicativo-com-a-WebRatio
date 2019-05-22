@@ -1,0 +1,36 @@
+#?delimiters [%,%],[%=,%]
+[%
+import org.apache.commons.lang.math.NumberUtils
+
+setXMLOutput()
+
+def className = "StoredProcedureService"
+def dbType = getById(component["db"])?.attributeValue("type", "")
+if (dbType != null && dbType.startsWith("PostgreSQL")) {
+	className = "PostgreSQL" + className
+}
+
+def componentId = component.attributeValue("id", "")
+%]
+<Descriptor service="com.webratio.components.web.operation.datasource.[%= className%]">
+  <DataSource>[%=component["db"]%]</DataSource>
+  <Statement>[%=component["procedure"]%]</Statement>
+  <ResultType>[%=component["resultType"] == "recordSet" ? "recordSet" : (component["resultType"] == "plainMySQLFunction" ? "plainMySQLFunction" : "plain")%]</ResultType>
+  <ForceAutoCommit>[%=component.selectSingleNode("Property[@name='forceAutoCommit' and @value='true']") != null%]</ForceAutoCommit>
+  [% for (par in component.selectNodes("StoredProcedureParameter[@direction  = 'input']").sort{NumberUtils.toInt(it["position"], 0)}) { %]
+    <InputParameter id="[%=par["id"]%]" position="[%=par["position"]%]" type="[%=par["type"]%]"/>
+  [% } %]
+  [% for (par in component.selectNodes("StoredProcedureParameter[@direction  = 'output']").sort{NumberUtils.toInt(it["position"], 0)}) { %]
+    <OutputParameter id="[%=par["id"]%]" position="[%=par["position"]%]" type="[%=par["type"]%]"/>
+  [% } %]
+   [% for (par in component.selectNodes("StoredProcedureParameter[@direction  = 'inOutput']").sort{NumberUtils.toInt(it["position"], 0)}) { %]
+    <InputOutputParameter id="[%=par["id"]%]" position="[%=par["position"]%]" type="[%=par["type"]%]"/>
+  [% } %]
+  [% for (rs in component.selectNodes("OutputResultSet")) { %]
+  	<OutputResultSet id="[%=rs['id']%]" name="[%=rs['name']%]" position="[%=rs['position']%]">
+  		[% for (op in rs.selectNodes("OutputParameter")) { %]
+  			<OutputParameter id="[%=op['id']%]" name="[%=op['name']%]" position="[%=op['position']%]" type="[%=op['type']%]" />
+  		[% } %]
+  	</OutputResultSet>
+  [% } %]
+</Descriptor>

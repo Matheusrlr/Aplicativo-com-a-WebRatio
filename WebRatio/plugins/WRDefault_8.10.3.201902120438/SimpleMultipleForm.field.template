@@ -1,0 +1,119 @@
+#?delimiters [%, %], [%=, %]
+[%
+def unitId = field.selectSingleNode("ancestor::layout:Component")?.valueOf("@componentId")
+if (unitId == "") {
+	unitId = field["componentId"]
+} 
+def fieldId = field["field"]
+def type = field["type"]
+def contentType = field["contentType"]
+def modifiable = (field["modifiable"] == "true")
+def plain = getById(field["field"])?.name == "Field"
+def selection = getById(field["field"])?.name == "SelectionField"
+def fieldProp = field["field"] + ((isLocalizedType(type) && plain) ? "_locale" : "")
+def typeId = (field["subType"] != "") ? field["subType"] : type
+def formBean = getFormBeanName(page)
+def indexedProp = unitId + "[\${index}]"
+
+if (mode == "error") { %]
+	<form:errors path="[%=indexedProp%].[%=fieldProp%]" cssClass="<wr:StyleClass context="field"/> error"/>
+[% } else if (mode == "label") { %]
+<wr:Label context="field"/>
+[% } else if (plain) {%]
+  [% if ((type == "boolean")) {
+  	if (modifiable) { %]
+			<form:radiobutton cssClass="[%=styleClass%]" path="[%=indexedProp%].[%=fieldProp%]" value="true"/>
+			<spring:message code="[%=typeId%].yes"/>
+			<form:radiobutton cssClass="[%=styleClass%]" path="[%=indexedProp%].[%=fieldProp%]" value="false"/>
+			<spring:message code="[%=typeId%].no"/>
+		[% } else { %]
+			<form:hidden path="[%=indexedProp%].[%=fieldProp%]"/>
+			<c:choose>
+			  <c:when test="${[%=unitId%].[%=fieldProp%]}">
+			    <spring:message code="[%=typeId%].yes"/>
+			  </c:when>
+			  <c:otherwise>
+			    <spring:message code="[%=typeId%].no"/>
+			  </c:otherwise>
+			</c:choose>
+		[% } %]
+	[% } else if ((type == "text")) { %]
+		<form:textarea id="[%=indexedProp%].[%=fieldProp%]" path="[%=indexedProp%].[%=fieldProp%]" cssClass="[%=styleClass%]" cols="35" rows="8" readonly="[%=!modifiable%]"/>
+		[% if (contentType == "text/html") { %]
+			<wr:RequireResource ref="cksource-ckeditor">
+				<script type="text/javascript">
+					if (CKEDITOR.instances['[%=indexedProp%].[%=fieldProp%]']) {
+						CKEDITOR.instances['[%=indexedProp%].[%=fieldProp%]'].destroy(true);
+					}
+					CKEDITOR.replace('[%=indexedProp%].[%=fieldProp%]', {
+						width    : 350,
+						height   : 200,
+						toolbar  : 'WebRatioDefault',
+						language : '<%= com.webratio.web.mvc.WebConstants.PAGE_LOCALE_KEY.get(pageContext).getLanguage() %>',
+						baseHref : '<%= wrBaseURI %>',
+						readOnly : [%=!modifiable%]
+					});
+				</script>
+			</wr:RequireResource>
+		[% } %]
+  	[% } else if (type == "blob") { %]
+		<form:hidden path="[%=indexedProp%].[%=fieldProp%].preload"/>
+	    [% if (modifiable) { %]
+		<form:input type="file" id="[%=indexedProp%].[%=fieldProp%]" path="[%=indexedProp%].[%=fieldProp%]"/>
+	    [% } %]
+		<c:if test="${not empty([%=indexedProp%].[%=fieldProp%].preload)}">
+		  <form:checkbox path="[%=indexedProp%].[%=fieldProp%].clear"/> clear <a target="blank" href="<webratio:BLOB value="${[%=indexedProp%].[%=fieldProp%].preload}"/>">preview</a>
+		</c:if>
+  	[% } else if (type == "password") { %]
+		<form:password id="[%=indexedProp%].[%=fieldProp%]" size="[%= inputSize %]" cssClass="[%=styleClass%]" path="[%=indexedProp%].[%=fieldProp%]" readonly="[%=!modifiable%]" redisplay="false" autocomplete="off"/>
+  	[% } else { %]
+		<form:input id="[%=indexedProp%].[%=fieldProp%]" cssClass="[%=styleClass%]" path="[%=indexedProp%].[%=fieldProp%]" readonly="[%=!modifiable%]"/>
+  		[%  if ((type == "date" || type == "time" || type == "timestamp") && modifiable) { %]
+			<wr:RequireResource ref="wr-calendar-utils"/>
+			[% if (type == "date" || type == "timestamp") { %]
+				<wr:RequireResource ref="jquery-ui-datepicker-lang"/>
+			[% } %]
+			[% if (type == "time" || type == "timestamp") { %]
+				<wr:RequireResource ref="richardson-timepicker-lang"/>
+			[% } %]
+			<script type="text/javascript">
+				jQuery(function($) { 								
+					var pattern = $.wr.calendar.[%= type %]ConfigFromJava("${[%= typeId%]Pattern}");
+					$('[id="[%=indexedProp%].[%=fieldProp%]"]').[%= (type == "timestamp") ? "datetime" : type %]picker({
+						showOn: "button",
+						showWeek: true,
+						buttonImage: "Resources/calendar.gif",
+						buttonImageOnly: true,
+						showButtonPanel: true,
+					[% if (type == "date") { %]
+						dateFormat: pattern.dateFormat,
+						firstDay: <%= java.util.Calendar.getInstance(com.webratio.web.mvc.WebConstants.PAGE_LOCALE_KEY.get(pageContext)).getFirstDayOfWeek() - 1 %>
+					[% } else if (type == "time") { %]
+						timeFormat: pattern.timeFormat,
+						ampm: pattern.ampm
+					[% } else { %]
+						dateFormat: pattern.dateFormat,
+						firstDay: <%= java.util.Calendar.getInstance(com.webratio.web.mvc.WebConstants.PAGE_LOCALE_KEY.get(pageContext)).getFirstDayOfWeek() - 1 %>,
+						timeFormat: pattern.timeFormat,
+						ampm: pattern.ampm,
+						separator: pattern.separator
+					[% } %]
+					});
+				});
+			</script>
+	  	[% } %]
+ 	[% } %]
+[% } else if (selection) { %]
+  [% if (type == "boolean") { %]
+	<form:select id="[%=indexedProp%].[%=fieldProp%]" cssClass="[%=styleClass%]" path="[%=indexedProp%].[%=fieldProp%]">
+	  <form:option value="false"><spring:message code="[%=typeId%].no"/></form:option>
+	  <form:option value="true"><spring:message code="[%=typeId%].yes"/></form:option>
+	</form:select>
+  [% } else { %]
+		<form:select id="[%=indexedProp%].[%=fieldProp%]" cssClass="[%=styleClass%]" path="[%=indexedProp%].[%= fieldProp %]">
+		  <form:option value=""><spring:message code="selectionfield.noselection"/></form:option>
+		  <form:options items="${[%=formBean%].[%=field["field"]%]Items}" itemValue="value" itemLabel="label"/>
+		</form:select>
+  [% } %]
+[% } %]
+

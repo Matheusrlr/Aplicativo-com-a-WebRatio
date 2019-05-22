@@ -1,0 +1,7 @@
+#?delimiters [%,%],[%=,%]
+[%setXMLOutput()%]
+<jboss-app>
+  <loader-repository> 
+  com.webratio.cl:archive=[%=projectName%].ear
+  </loader-repository>
+</jboss-app>

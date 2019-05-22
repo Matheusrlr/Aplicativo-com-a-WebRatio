@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Components priority="500"> 
+  <Group> 
+    <Component>Selector</Component>  
+    <Component>Script</Component>  
+    <Component>Math</Component>  
+    <Component>Password</Component>  
+    <Component>Time</Component> 
+  </Group>  
+  <Group> 
+    <Component>Mail</Component>  
+    <Component>Excel</Component>  
+    <Component>Query</Component>  
+    <Component>GetDomainModel</Component> 
+  </Group> 
+  <Group>
+    <Component>SendNotification</Component>
+  </Group>
+</Components>

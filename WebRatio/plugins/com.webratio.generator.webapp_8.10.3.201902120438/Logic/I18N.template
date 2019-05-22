@@ -1,0 +1,29 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import org.apache.commons.lang.StringUtils
+
+setXMLOutput()
+def subTypes = wr.project.selectNodes("DomainModel/SubType")
+%>
+<Descriptor service="com.webratio.rtx.localization.DefaultLocalizationService" name="Localization Service">
+<Storage type="<%=StringUtils.defaultIfEmpty(wr.project["bundleStoreType"].toLowerCase(), "file")%>" <%if(wr.project["bundleStoreType"] == "Database"){%>refreshTimeout="<%=wr.project.valueOf("@db:bundleRefreshTimeout")%>"<%}%>/> 
+
+<% for (subType in subTypes) { %>
+  <SubType id="<%=subType["id"]%>" name="<%=subType["name"]%>" type="<%=subType["type"]%>"/>
+<% } %>
+<% for (locale in wr.project.selectNodes("WebModel/Locale")) { %>
+  <Locale language="<%=locale["language"]%>" country="<%=locale["country"]%>" default="<%=locale == getDefaultLocale()%>">
+    <Pattern type="decimal"><%=getLocalePattern(locale, "decimal")%></Pattern>
+    <Pattern type="date"><%=getLocalePattern(locale, "date")%></Pattern>
+    <Pattern type="float"><%=getLocalePattern(locale, "float")%></Pattern>
+    <Pattern type="integer"><%=getLocalePattern(locale, "integer")%></Pattern>
+    <Pattern type="number"><%=getLocalePattern(locale, "decimal")%></Pattern>
+    <Pattern type="time"><%=getLocalePattern(locale, "time")%></Pattern>
+    <Pattern type="timestamp"><%=getLocalePattern(locale, "timestamp")%></Pattern>
+    <Pattern type="boolean"><%=getLocalePattern(locale, "boolean")%></Pattern>
+    <% for (subType in subTypes) { %>
+       <Pattern type="<%=subType["id"]%>"><%=getLocalePattern(locale, subType["id"])%></Pattern>
+    <% } %>
+  </Locale>
+<% } %>
+</Descriptor>

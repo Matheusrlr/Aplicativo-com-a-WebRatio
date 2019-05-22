@@ -1,0 +1,10 @@
+<Layout 
+    pageLayout="Default"
+    gridLayout="Default"
+    attributeLayout="Default"
+    frameLayout="WRDefault/Empty">
+  <ComponentConfiguration componentType="Hierarchy" componentLayout="Default"/>
+  <ComponentConfiguration componentType="MultipleDetails" componentLayout="Default"/>
+  <ComponentConfiguration componentType="Message" componentLayout="Default"/>
+  <Resources alwaysRequired="wr-taglib-report"/>
+</Layout>

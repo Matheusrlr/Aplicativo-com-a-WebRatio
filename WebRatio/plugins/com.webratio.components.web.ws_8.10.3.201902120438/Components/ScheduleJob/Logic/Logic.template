@@ -1,0 +1,16 @@
+#?delimiters [%,%],[%=,%]
+[%
+setXMLOutput()
+def job = getById(component["job"])
+def initJob = job?.selectSingleNode("Operations/InitJob")
+%]
+<Descriptor service="com.webratio.components.web.ws.ScheduleJobService">
+  <Job>[%=component["job"]%]</Job>
+  <SchedulePolicy>[%=component["schedulePolicy"]%]</SchedulePolicy>
+[% if (initJob != null) { %]
+     [% for(par in initJob.elements("JobInputParameter")){ %]
+       <JobInputParameter>[%=par["id"]%]</JobInputParameter>
+    [% } %]
+[% } %] 
+
+</Descriptor>

@@ -1,0 +1,295 @@
+{
+  "_" : "wrm.data.DataService",
+  "databaseName" : "Guia",
+  "contextName" : "ManagementContext",
+  "metadata" : {
+    "version" : 556202944,
+    "entities" : {
+      "MUser" : {
+        "name" : "data.AppUser",
+        "setName" : "data_AppUserSet",
+        "serverName" : "User",
+        "serverReadable" : false,
+        "attributes" : {
+          "mUserOID" : {
+            "name" : "oid",
+            "type" : "integer",
+            "key" : true
+          },
+          "mUsername" : {
+            "name" : "username",
+            "serverName" : "userName",
+            "type" : "string"
+          },
+          "att23" : {
+            "name" : "remoteOid",
+            "serverName" : "oid",
+            "type" : "integer",
+            "serverKey" : true,
+            "indexed" : true
+          }
+        },
+        "roles" : {
+          "MUser2MRole" : {
+            "name" : "AppUserToAppRole",
+            "many" : true,
+            "inverse" : "MRole2MUser"
+          }
+        }
+      },
+      "MRole" : {
+        "name" : "data.AppRole",
+        "setName" : "data_AppRoleSet",
+        "attributes" : {
+          "mRoleOID" : {
+            "name" : "oid",
+            "type" : "integer",
+            "key" : true
+          },
+          "mRoleName" : {
+            "name" : "name",
+            "type" : "string"
+          }
+        },
+        "roles" : {
+          "MRole2MUser" : {
+            "name" : "AppRoleToAppUser",
+            "foreignKeyName" : "AppRoleToAppUser__oid",
+            "many" : false,
+            "inverse" : "MUser2MRole"
+          }
+        }
+      },
+      "cls1" : {
+        "name" : "data.Categoria",
+        "setName" : "data_CategoriaSet",
+        "attributes" : {
+          "att1" : {
+            "name" : "oid",
+            "type" : "integer",
+            "key" : true
+          },
+          "att3" : {
+            "name" : "descricao",
+            "type" : "string"
+          },
+          "att2" : {
+            "name" : "nome",
+            "type" : "string"
+          },
+          "att21" : {
+            "name" : "imagem",
+            "type" : "blob",
+            "meta" : {
+              "contentType" : {
+                "name" : "imagem_contentType",
+                "type" : "string"
+              },
+              "fileName" : {
+                "name" : "imagem_fileName",
+                "type" : "string"
+              },
+              "serverFileId" : {
+                "name" : "imagem_remoteFileId",
+                "type" : "string"
+              },
+              "status" : {
+                "name" : "imagem_status",
+                "type" : "integer"
+              }
+            }
+          }
+        },
+        "roles" : {
+          "role1" : {
+            "name" : "CategoriaToTPico",
+            "many" : true,
+            "inverse" : "role2"
+          },
+          "role4" : {
+            "name" : "CategoriaToMenu",
+            "foreignKeyName" : "CategoriaToMenu__oid",
+            "many" : false,
+            "inverse" : "role3"
+          }
+        }
+      },
+      "cls2" : {
+        "name" : "data.Topico",
+        "setName" : "data_TopicoSet",
+        "attributes" : {
+          "att4" : {
+            "name" : "oid",
+            "type" : "integer",
+            "key" : true
+          },
+          "att10" : {
+            "name" : "valor",
+            "type" : "integer"
+          },
+          "att9" : {
+            "name" : "telefone",
+            "type" : "string"
+          },
+          "att8" : {
+            "name" : "link",
+            "type" : "url"
+          },
+          "att7" : {
+            "name" : "endereco",
+            "type" : "string"
+          },
+          "att6" : {
+            "name" : "descricao",
+            "type" : "string"
+          },
+          "att5" : {
+            "name" : "nome",
+            "type" : "string"
+          },
+          "att20" : {
+            "name" : "logo",
+            "type" : "blob",
+            "meta" : {
+              "contentType" : {
+                "name" : "logo_contentType",
+                "type" : "string"
+              },
+              "fileName" : {
+                "name" : "logo_fileName",
+                "type" : "string"
+              },
+              "serverFileId" : {
+                "name" : "logo_remoteFileId",
+                "type" : "string"
+              },
+              "status" : {
+                "name" : "logo_status",
+                "type" : "integer"
+              }
+            }
+          }
+        },
+        "roles" : {
+          "role2" : {
+            "name" : "TPicoToCategoria",
+            "foreignKeyName" : "TPicoToCategoria__oid",
+            "many" : false,
+            "inverse" : "role1"
+          }
+        }
+      },
+      "cls3" : {
+        "name" : "data.Menu",
+        "setName" : "data_MenuSet",
+        "attributes" : {
+          "att11" : {
+            "name" : "oid",
+            "type" : "integer",
+            "key" : true
+          },
+          "att22" : {
+            "name" : "logo",
+            "type" : "blob",
+            "meta" : {
+              "contentType" : {
+                "name" : "logo_contentType",
+                "type" : "string"
+              },
+              "fileName" : {
+                "name" : "logo_fileName",
+                "type" : "string"
+              },
+              "serverFileId" : {
+                "name" : "logo_remoteFileId",
+                "type" : "string"
+              },
+              "status" : {
+                "name" : "logo_status",
+                "type" : "integer"
+              }
+            }
+          }
+        },
+        "roles" : {
+          "role3" : {
+            "name" : "MenuToCategoria",
+            "many" : true,
+            "inverse" : "role4"
+          },
+          "role5" : {
+            "name" : "MenuToFeedback",
+            "foreignKeyName" : "MenuToFeedback__oid",
+            "many" : false,
+            "inverse" : "role6"
+          }
+        }
+      },
+      "cls4" : {
+        "name" : "data.Feedback",
+        "setName" : "data_FeedbackSet",
+        "attributes" : {
+          "att12" : {
+            "name" : "oid",
+            "type" : "integer",
+            "key" : true
+          },
+          "att19" : {
+            "name" : "sugestao",
+            "type" : "string"
+          },
+          "att18" : {
+            "name" : "sexo",
+            "type" : "boolean"
+          },
+          "att17" : {
+            "name" : "dataNasc",
+            "type" : "date"
+          },
+          "att16" : {
+            "name" : "email",
+            "type" : "string"
+          },
+          "att15" : {
+            "name" : "matrCula",
+            "type" : "string"
+          },
+          "att14" : {
+            "name" : "sobrenome",
+            "type" : "string"
+          },
+          "att13" : {
+            "name" : "nome",
+            "type" : "string"
+          }
+        },
+        "roles" : {
+          "role6" : {
+            "name" : "FeedbackToMenu",
+            "many" : false,
+            "inverse" : "role5"
+          }
+        }
+      }
+    },
+    "associations" : {
+      "MUser2MRole_MRole2MUser" : {
+        "name" : "appUserToAppRole_appRoleToAppUser",
+        "roles" : [ "MUser2MRole", "MRole2MUser" ]
+      },
+      "as1" : {
+        "name" : "categoriaToTPico_TPicoToCategoria",
+        "roles" : [ "role1", "role2" ]
+      },
+      "as2" : {
+        "name" : "menuToCategoria_categoriaToMenu",
+        "roles" : [ "role3", "role4" ]
+      },
+      "as3" : {
+        "name" : "menuToFeedback_feedbackToMenu",
+        "roles" : [ "role5", "role6" ]
+      }
+    }
+  },
+  "dataRestoreDisabled" : [ ]
+}

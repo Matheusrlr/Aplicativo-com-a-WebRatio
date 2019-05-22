@@ -1,0 +1,6 @@
+#?delimiters <%,%>,<%=,%>
+<%setXMLOutput()%>
+<ValidationRule service="com.webratio.components.web.validation.ValueLengthValidationRuleService">
+  <Predicate><%=element["predicate"]%></Predicate>
+  <Value><%=element["value"]%></Value>
+</ValidationRule>

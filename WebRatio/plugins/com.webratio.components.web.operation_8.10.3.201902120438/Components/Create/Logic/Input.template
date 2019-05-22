@@ -1,0 +1,36 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+def componentId = component["id"]
+def classId = component["dataBinding"]
+def validIdGen = ["", "increment", "assigned"]
+def domainClass = getById(classId)
+def virtual = (domainClass != null) && (domainClass["duration"] == "volatile")
+%>
+<InputParameters>
+  <%if(domainClass){%>
+    <InputParameter name="<%=componentId%>.entityBeans" refId="<%=classId%>" type="<%=classId%>" label="<%=domainClass["name"]%> Object<%if(component["bulk"] == "true"){%>s<%}%>" mandatory="false"/>
+  <%}%>
+  <% for (a in getAttributes(domainClass).findAll{virtual || validIdGen.contains(it.valueOf("@db:idGenerator"))}) { %>
+    <% if (!isDerived(a)) { %>
+      <InputParameter name="<%=componentId%>.<%=a["id"]%>" refId="<%=a["id"]%>" label="<%=getLabel(a)%>" mandatory="false"/>
+      <% if (a["type"] == "blob") { %>
+         <InputParameter name="<%=componentId%>.<%=a["id"]%>_name" refId="<%=a["id"]%>" label="<%=getLabel(a)%> [file name]" mandatory="false"/>
+      <% } %>
+    <% } %>
+  <% } %>
+  <% for (role in getOutgoingRoles(domainClass)) { %>
+    <% if (!isDerived(role)) { %>
+      <% for (a in getKeyAttributes(getTargetDomainClass(role))) { %>
+        <InputParameter 
+            name="<%=componentId%>.<%=role["id"]%>.<%=a["id"]%>"
+            refId="<%=role["id"]%>"
+            <% if ((role["maxCard"] == "1")) { %>
+              type="<%=getSuperDomainClassHierarchy(getTargetDomainClass(role)).collect{it["id"] + "." + a["id"] + ".single"}.join("|")%>"
+            <%}%>
+            label="<%=getLabel(getTargetDomainClass(role))%>.<%=getLabel(a)%>(<%=getLabel(role)%>)"
+            mandatory="false"/>
+      <% } %>
+    <% } %>
+  <% } %>
+</InputParameters>

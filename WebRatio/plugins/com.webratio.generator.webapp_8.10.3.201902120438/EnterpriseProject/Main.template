@@ -1,0 +1,62 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import com.webratio.generator.GenerationException
+import com.webratio.generator.TimeLogger
+import org.apache.commons.io.FileUtils
+import org.apache.commons.lang.StringUtils
+
+def registerProjectGenerationException(exception, message, wr){
+    def title = "Error generating application descriptor"
+    def reason = "Unable to generate the " + message
+    def hint = "Check the project model for errors or warnings"
+    def genExc = new GenerationException(title, reason, [hint], exception)
+    genExc.setTargetId("Project")
+    wr.generationExceptions.add(genExc)
+}
+eventSocketClient.sendBeginTask("EnterpriseProject", 6)
+def applicationServerName = StringUtils.substringBefore(applicationServer, "_")
+
+/* creates folders */
+new File(wr.outputPath + "/lib").mkdirs()  
+new File(wr.outputPath + "/" + rootModuleName + ".jar/conf").mkdirs()
+new File(wr.outputPath + "/" + rootModuleName + ".jar/descr").mkdirs()
+
+/* generates the aplication.descr */
+processOutputFile(rootModuleName + ".jar/descr/_application.descr", "_application.descr", wr.project, { appXmlFile ->
+	try {
+	  appXmlFile.write(serializeXML(executeContextTemplate("EnterpriseProject/application.descr.template"), true))
+	  eventSocketClient.sendTaskWorked("EnterpriseProject", 1)
+	} catch(Throwable exc) {
+	  registerProjectGenerationException(exc, "_application.descr", wr)
+	}
+})
+TimeLogger.worked("Application")
+
+/* generates the AppConfig.properties */
+processOutputFile(rootModuleName + ".jar/conf/AppConfig.properties", "RTXConfig.properties", wr.project, { propFile ->
+	try {
+	  if (!propFile.exists()) {
+	     def text = FileUtils.readFileToString(wr.locateResourceFile("EnterpriseProject/AppConfig.properties"))
+	     text = StringUtils.replace(text, "@APPLICATION_SERVER@", applicationServerName.toLowerCase())
+	     propFile.write(text)
+	  }
+	} catch(Throwable exc) {
+	  registerProjectGenerationException(exc, "RTXConfig.properties", wr)
+	}
+})
+eventSocketClient.sendTaskWorked("EnterpriseProject", 1)
+TimeLogger.worked("RTXConfig.properties")
+
+/* generates application server specific files */
+try {
+  def appServerTemplateFile = new File(deployCorePluginDir + "/ApplicationServers/" + applicationServer + "/Main.template")
+  if(appServerTemplateFile.exists()){
+    executeTemplate(appServerTemplateFile)    
+  }
+} catch(Throwable exc) {
+  registerProjectGenerationException(exc, applicationServerName, wr)
+}
+eventSocketClient.sendTaskWorked("EnterpriseProject", 1)
+TimeLogger.worked(applicationServer)
+
+%>

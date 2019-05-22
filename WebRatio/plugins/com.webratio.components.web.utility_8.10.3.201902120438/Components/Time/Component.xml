@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="content|operation" formBased="false" idPrefix="tmu" namePrefix="Time " label="Time" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" successFlowSource="true" successFlowTarget="true"> 
+  <Description xml:space="preserve">The Time component allows to specify the current date (day-month-year), 
+the current time (hours-minutes-seconds), and the current timestamp 
+(day-month-year-hours-minutes-seconds) in a hypertext. 
+It can be used either as a operation or as a view component, and therefore 
+can be positioned either outside or inside the page.</Description>  
+  <InputDescription xml:space="preserve" name="Input Time">A formatted time expression, to be parsed by the component.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Input Date">A formatted date expression, to be parsed by the component.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Input Timestamp">A formatted timestamp expression, to be parsed by the component.</InputDescription>  
+  <OutputDescription xml:space="preserve" name="Current Time">The current time.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Current Date">The value of the current date.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Current Timestamp">The value of the current timestamp.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Hours in Time">The hours value of the time.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Minutes in Time">The minutes value of the time.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Seconds in Time">The seconds value of the time.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Day in Date">The day value of the date.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Month in Date">The month value of the date.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Year in Date">The year value of the date.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Hours in Timestamp">The hours value of the timestamp.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Minutes in Timestamp">The minutes value of the timestamp.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Second in Timestamp">The seconds value of the timestamp.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Day in Timestamp">The day value of the timestamp.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Month in Timestamp">The month value of the timestamp.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Year in Timestamp">The year value of the timestamp.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Next Midnight Timestamp">The next midnight timestamp starting from the current/input date</OutputDescription>  
+  <IsContextFreeComponent xml:space="preserve">def incomingLinks = getIncomingFlows(component)
+def xPath = "ParameterBinding[starts-with(@target,'"+component["id"]+"')]"
+return !incomingLinks.any{it.selectSingleNode(xPath) != null}
+</IsContextFreeComponent></Component>

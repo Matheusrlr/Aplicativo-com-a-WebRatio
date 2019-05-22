@@ -1,0 +1,59 @@
+#?delimiters [%, %], [%=, %]
+[%setHTMLOutput()%]
+<c:if test="${not(empty <wr:Id context="component"/>.data)}">
+<wr:Frame>
+<div class="plain <wr:StyleClass/>">
+	<div class="plain JobStatus">
+		<table>
+		<c:forEach var="job" varStatus="jobStatus" items="${<wr:Id context="component"/>.data}">
+		    <tr>
+		      <td colspan="4" style="border-bottom:solid 2px #40668C">
+		         <table>
+		           <tr>
+		             <th nowrap="nowrap" class="<wr:StyleClass/> header" style="text-align:left"><spring:message code="JobStatus.JobId"/>:</th>
+		             <td><c:out value="${job.instanceId}"/></td>
+		           </tr>
+				   <tr>
+				     <th nowrap="nowrap" class="<wr:StyleClass/> header" style="text-align:left"><spring:message code="JobStatus.JobGroup"/>:</th>
+				     <td><c:out value="${job.group}"/></td>
+				   </tr>
+				   <tr>
+				     <th nowrap="nowrap" class="<wr:StyleClass/> header" style="text-align:left"><spring:message code="JobStatus.JobStatus"/>:</th>
+				     <td><c:out value="${job.status}"/></td>
+				   </tr>
+				 </table>
+		      </td>
+		    </tr>
+    	    <tr>
+			   <th nowrap="nowrap" class="<wr:StyleClass/> header"></th>
+			   <th nowrap="nowrap" class="<wr:StyleClass/> header"><spring:message code="JobStatus.TriggerId"/></th>
+			   <th nowrap="nowrap" class="<wr:StyleClass/> header"><spring:message code="JobStatus.TriggerGroup"/></th>
+			   <th nowrap="nowrap" class="<wr:StyleClass/> header"><spring:message code="JobStatus.TriggerNextFireTimestamp"/></th>
+		    </tr>
+			<c:forEach var="current" varStatus="status" items="${job.triggers}">
+			  <c:set var="index" value="${status.index}"/>
+			  <tr>  
+					<td class="<wr:StyleClass/> value" style="padding-left:20px"><img src="WRResources/spacer.gif" class="bullet" border="0" alt=""/></td>
+					<td class="<wr:StyleClass/> value">
+  						<c:out value="${current.instanceId}"/>
+  					</td>
+  					<td class="<wr:StyleClass/> value">
+  						<c:out value="${current.group}"/>
+  					</td>
+  					<td class="<wr:StyleClass/> value">
+  						<fmt:formatDate value="${current.nextFireTimestamp}" pattern="${timestampPattern}"/>
+  					</td>
+                    <wr:Iterate var="event" context="component" select="layout:Event">
+  					   <wr:Visible position="'index'"><td class="<wr:StyleClass/> value"><wr:Event context="event"/></td></wr:Visible>
+                    </wr:Iterate>
+  				</tr>
+			</c:forEach>
+			<tr>
+			    <td colspan="4" style="padding-bottom:10px">&nbsp;</td>			   
+		    </tr>
+		</c:forEach>
+		</table>
+  	</div>
+</div>
+</wr:Frame>
+</c:if>

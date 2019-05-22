@@ -1,0 +1,255 @@
+/* import custom fonts */
+@font-face{
+    font-family:'Avenir LT';
+    src:url('AvenirLTW0155Roman-webfont.eot');
+    src:url('AvenirLTW0155Roman-webfont.eot?#iefix') format('embedded-opentype'),url('AvenirLTW0155Roman-webfont.woff') format('woff'),url('AvenirLTW0155Roman-webfont.ttf') format('truetype'),url('AvenirLTW0155Roman-webfont.svg#svgFontName') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face{
+    font-family:'Avenir LT';
+    src:url('AvenirLTW0185Heavy-webfont.eot');
+    src:url('AvenirLTW0185Heavy-webfont.eot?#iefix') format('embedded-opentype'),url('AvenirLTW0185Heavy-webfont.woff') format('woff'),url('AvenirLTW0185Heavy-webfont.ttf') format('truetype'),url('AvenirLTW0185Heavy-webfont.svg#svgFontName') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
+
+* {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    
+}
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+*:before,
+*:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 8px;
+    font-family: sans-serif;
+    background: #E6E6E6;
+    color: #666;
+    font-family: 'Avenir LT', Arial, sans-serif;
+}
+
+a {
+	color: inherit;
+}
+
+a:active {
+    color: #40668C;
+    font-weight:bold;
+}
+
+ol {
+    text-align: left;
+    margin-left: 24px;
+    margin-bottom: 12px;
+}
+
+p {
+	margin-bottom: 12px;
+}
+p:last-child {
+	margin-bottom: 0;
+}
+
+.button, .button:visited {
+	display: inline-block;
+	background: #40668C;
+	color: #fff;
+	padding: 6px 12px;
+	border-radius: 6px;
+	text-align: center;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-weight: 700;
+	transition: background 0.3s ease-in-out;
+}
+.button:hover, .button:focus {
+	background: #0D3359;
+	
+}
+.button:active {
+	background: #000026;
+	
+}
+
+.mainMessage {
+    position: fixed;
+    top: 10%; left: 25%; z-index: 2;
+    width: 50%;
+    padding: .5em;
+    border: 1px solid orange;
+    background-color: #F7DF03;
+    box-shadow: 0 0 5px #888888;
+    text-align: center;
+}
+
+.overlay {
+	display: table;
+	position: absolute;
+	z-index: 1;
+	width: 100%; 
+	height: 100%;
+	background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAadEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjEwMPRyoQAAAB9JREFUGFdj+Pfv3zMg/gXFcDZIAiaIgvFKUMWof78AlT2OAQMnxOQAAAAASUVORK5CYII=');
+}
+
+.overlay > span {
+	display: table-cell;
+	padding: 0 50px;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.panel > .content,
+.subPanel > .content {
+	padding: 12px 16px;
+}
+
+.message {
+	
+}
+
+.intro {
+	border-bottom: 1px solid #E6E6E6;
+	padding-bottom: 12px;
+	margin-bottom: 0;
+	font-weight: 700;
+}
+
+.problem {
+	margin: 10px;
+	padding: 7px 16px;
+	border-radius: 10px;
+	font-weight: 500;
+	text-align: left;
+}
+
+.problem-info {
+    color: #0A5387;
+    background-color: #CEEAFF;
+}
+
+.problem-warning {
+    color: #87680A;
+    background-color: #FFF3CD;
+}
+
+.problem-error {
+    color: #870A19;
+    background-color: #FFCED3;
+}
+
+.url {
+	word-wrap: break-word;
+}
+
+
+.block {
+	margin: 0 auto;
+    background: #fff;
+    text-align: center;
+	max-width: 550px;
+    position: relative;
+}
+
+.block .header {
+	background-color: #40668C;
+    color: white;
+    padding: 8px;
+    position: relative;
+	overflow: visible;
+}
+
+.block .header:after {
+	content: '';
+	display: block;
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -15px;
+	border-top: 15px solid #40668C;
+	border-left: 15px solid rgba(0, 0, 0, 0);
+	border-right: 15px solid rgba(0, 0, 0, 0);
+}
+
+.block .header h1 {
+	line-height: 24px;
+	font-size: 20px;
+}
+
+.block .header .date {
+	position: absolute;
+	right: 8px;
+	bottom: 8px;
+	color: #F8F8F8;
+	font-size: 12px;
+}
+
+.panel {
+	height: 100%;
+	text-align: center;
+	display: none;
+	padding-top: 24px;
+}
+
+.block-test .panel-test, .block-build-android .panel-build-android, .block-build-ios .panel-build-ios, .block-build-windows .panel-build-windows {
+	display: block;
+}
+
+/*
+.panel:first-child {
+	width: 33.4%;
+}
+*/
+.panel > h2 { 
+    
+	padding-top: 12px;
+	font-size: 16px;
+}
+
+.subPanel {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.subPanel.emulateStatus {
+    height: 132px;
+    border-bottom: 1px solid #E6E6E6;
+}
+
+.subPanel.serveStatus {
+	height: 292px;
+}
+
+.subPanel  .qrcode {
+	min-width: 150px; min-height: 150px;
+}
+
+.subPanel.androidBuildStatus {
+	height: 313px;
+}
+
+.subPanel.iosBuildStatus {
+	height: 313px;
+}
+
+.subPanel.windowsBuildStatus {
+	height: 313px;
+}
+
+.windowsApplicationErrorMessage {
+    color: red;
+    font-weight: bold;
+}

@@ -1,0 +1,14 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+def componentId = component.valueOf("@id")
+%>
+<InputParameters>
+  <% if(component.valueOf("@sourceType") == "dynamic") { %>
+    <InputParameter  name="<%=componentId%>.url" label="Dynamic URL"/>
+  <% }else if(component.valueOf("@sourceType") == "blob") { %>
+    <InputParameter  name="<%=componentId%>.blob" label="BLOB"/>
+  <% }else if(component.valueOf("@sourceType") == "text") { %>
+    <InputParameter  name="<%=componentId%>.text" label="Text"/>
+  <% }  %>
+</InputParameters>

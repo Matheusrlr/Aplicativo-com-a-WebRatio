@@ -1,0 +1,74 @@
+#?delimiters [%,%],[%=,%]
+[%
+import org.apache.commons.lang.StringUtils
+
+setXMLOutput()
+def sortable = (component["sortable"] == "true")
+def domainClass = getById(component["dataBinding"])
+def ignoreCase = (domainClass != null) && (domainClass["duration"] == "volatile") || "true" == component.valueOf("Property[@name='ignoreCaseSorting']/@value")
+def levels = [component]
+levels.addAll(component.selectNodes(".//HierarchyLevel"))
+
+//computes the sort attributes
+def displayAttributes = component["displayAttributes"].tokenize(" ")
+def dynamicSortAttributes = sortable ? component.selectNodes("SortAttribute") : []
+def defaultSortAttributes = component.selectNodes("DefaultSortAttribute")
+if(defaultSortAttributes.empty){
+   defaultSortAttributes = component.selectNodes("SortAttribute")
+}
+
+def getLevelFragment(elem) {
+    if (elem.name != "Hierarchy") {
+        return getLevelFragment(elem.parent) + elem.attributeValue("id", "") + "data[]."
+    }
+    return "data[]."
+}
+%]
+<Descriptor service="com.webratio.components.web.content.datasource.HierarchyService">
+  [% if (domainClass == null) { %]
+     <Error>Could not find a domain-class identified by '[%=component["dataBinding"]%]'</Error>
+  [% } %]
+  <UseFirstRowAsDefaultCurrent>[%=component.selectSingleNode("DataFlow[ParameterBinding[starts-with(@source, 'data[]')]]") != null%]</UseFirstRowAsDefaultCurrent>
+  <DataSource>[%=getDataSourceId(domainClass)%]</DataSource>
+  <ScrollerSupport blockFactor="[%=component["blockFactor"]%]" blockWindow="[%=component["blockWindow"]%]"/>
+  <SortSupport history="[%=StringUtils.defaultIfEmpty(component["sortHistorySize"], "1")%]">
+    [% for(att in dynamicSortAttributes){ %] 
+      <Sort by="[%=att["attribute"]%]" order="[%=att["order"]%]" ignoreCase="[%=ignoreCase%]" dynamic="true"/>
+    [% } %]
+    [% for(att in defaultSortAttributes){ %]
+      <Sort by="[%=att["attribute"]%]" order="[%=att["order"]%]" ignoreCase="[%=ignoreCase%]"/>
+    [% } %]
+  </SortSupport>
+  [% 
+  for (level in levels) {
+    if(level != component){
+      %]<Level id="[%=level["id"]%]" name="[%=level["name"]%]" parentLevel="[%=level.parent["id"]%]" parentClass="[%=level.parent["dataBinding"]%]" class="[%=level["dataBinding"]%]" associationRole="[%=level["role"]%]">[%
+    }
+       def levelDomainClass = getById(level["dataBinding"]) 
+       if (levelDomainClass == null) {
+         %]<Error>Could not find a domain-class identified by '[%=level["dataBinding"]%]'</Error>[%
+       } else {
+	        def selectAttributes = new HashSet()
+	        selectAttributes.addAll(getKeyAttributes(levelDomainClass).collect{it["id"]})
+	        selectAttributes.addAll(level["displayAttributes"].tokenize(" "))
+	        selectAttributes.addAll(getOutputAttributes(component, getLevelFragment(level), null))
+	        if (level != component) {
+              def inverseChain = level["role"].tokenize(".").collect{getOppositeRole(getById(it))["id"]}.reverse().join("_")
+              getKeyAttributes(getById(level.parent["dataBinding"])).each{ selectAttributes.add(inverseChain + "_" + it["id"]) }
+            }  
+	        def query = createQuery(levelDomainClass).select(selectAttributes).maxResults(level["maxResults"]) 
+	        def selector = query.selector(level.element("ConditionalExpression")).selector()
+	        level.selectNodes("SortAttribute").each{query.sort(it["attribute"], it["order"])}      
+	        if (level != component){
+	          def expression = selector.getExpression()
+	          selector.associationCondition(level.parent["id"], "parentCond").role(level["role"])
+	          if(expression){ selector.expression(level.parent["id"] + " and " + expression) }
+	        }  
+	        printRaw(query.build().asXML())
+       }
+    if(level != component){   
+      %]</Level>[%
+    }
+  } 
+  %]
+</Descriptor>

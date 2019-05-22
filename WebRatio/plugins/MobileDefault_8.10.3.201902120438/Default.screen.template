@@ -1,0 +1,27 @@
+#?delimiters [%, %], [%=, %]
+[%
+setHTMLOutput()
+
+/* Determine whether the top bar location is populated */
+def hasTop = (getEffectiveToolbars(screen).find{ it.selectSingleNode("layout:CustomLocation[@name = 'Top Bar']") != null } != null)
+if (!hasTop) {
+	hasTop = (screen.selectSingleNode("layout:CustomLocation[@name = 'Top Bar']") != null)
+}
+
+/* Determine whether the bottom bar location is populated */
+def hasBottom = (getEffectiveToolbars(screen).find{ it.selectSingleNode("layout:CustomLocation[@name = 'Bottom Bar']") != null } != null)
+if (!hasBottom) {
+	hasBottom = (screen.selectSingleNode("layout:CustomLocation[@name = 'Bottom Bar']") != null)
+}
+%]
+<div>
+	
+	<wr:CustomLocation name="Top Bar" idePosition="top"/>
+	
+	<ion-content class="[% if (hasTop) { %]has-header[% } %][% if (hasBottom) { %] has-footer[% } %] wr-safe-area">
+		<wr:Grid/>
+	</ion-content>
+	
+	<wr:CustomLocation name="Bottom Bar" idePosition="bottom"/>
+	
+</div>

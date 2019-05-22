@@ -1,0 +1,28 @@
+#?delimiters [%, %], [%=, %]
+[%
+
+/* Determine the layout */
+def layout = getLayout(attr, LayoutType.ATTRIBUTE)
+if (!layout.path) {
+	throwGenerationException("Attribute has no layout defined - " + attr)
+}
+def layoutTemplate = getLayoutFile(layout.path, LayoutType.ATTRIBUTE)
+if (!layoutTemplate) {
+	throwGenerationException("Attribute layout template not found: " + layout.path)
+}
+addUsedTemplate(layout.path)
+
+/* Standalone wrapper start */
+def componentId = attr["componentId"]
+if (componentId) {
+	%]<!-- directive: wr-component [%= componentId %] -->[%
+}
+
+/* Actual Attribute layout */
+printRaw(executeTemplate(layoutTemplate.absolutePath, ["params": layout.parameters, "templateType": "attribute"]).trim())
+
+/* Standalone wrapper end */
+if (componentId) {
+	%]<!-- end_directive: wr-component -->[%
+}
+%]

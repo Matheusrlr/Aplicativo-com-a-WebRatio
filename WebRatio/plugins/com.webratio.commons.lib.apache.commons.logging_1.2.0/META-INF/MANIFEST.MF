@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Export-Package: org.apache.commons.logging,org.apache.commons.logging.
+ impl
+Require-Bundle: com.webratio.commons.lib.apache.log4j
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/commons-logging.jar
+Bundle-Version: 1.2.0
+Bundle-Name: WebRatio 3rd Party Library - Apache Commons Logging
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.apache.commons.logging
+Bundle-RequiredExecutionEnvironment: J2SE-1.4
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: lib/commons-logging.jar
+SHA-256-Digest: 2t3qHqC+D1aXirMAa4rJKDSv7vvZt+TmMW/KV98PpjY=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: vXy77ibbOWRW/xu8V46P1b2q5rvwwcvC2eXF3GWNf1c=
+
+Name: lib/commons-loggingsrc.zip
+SHA-256-Digest: RDR6z+WGBGFyjpyzMlHpc0W+Nvig39XFEwwXJVlFX0E=
+

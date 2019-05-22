@@ -1,0 +1,33 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+def componentId = component.attributeValue("id", "")
+def classId = component.attributeValue("dataBinding", "")
+def domainClass = getByIdOptional(classId)
+%>
+<OutputParameters>
+  <% if (domainClass) { %>
+    <% for (a in getAttributes(domainClass)) { %>
+      <OutputParameter 
+          name="date[].data[].<%=a.attributeValue("id")%>"
+          refId="<%=a["id"]%>"
+          type="<%=getTypeExpression(domainClass, a, true, false)%>"
+          label="<%=getLabel(a)%>"/>
+    <% } 
+       for (role in getOutgoingRoles(getById(classId)).findAll{!isMany(it)}) { 
+        for (keyAttr in getKeyAttributes(getTargetDomainClass(role))) { %>
+        <OutputParameter 
+            name="date[].data[].<%=role["id"] + "_" + keyAttr["id"]%>"
+            refId="<%=role["id"]%>"
+            label="<%=getLabel(role) + "." + getLabel(keyAttr)%>"
+            mandatory="false"/>
+       <% }
+       }
+    %>
+  <% } %>
+  <%component["displayAttributes"].tokenize(" ").findAll{it.contains(".") || it.contains("(")}.each{%>
+     <OutputParameter name="date[].data[].<%=getAttributeExpressionId(it)%>" refId="importedAttribute" label="<%=getAttributeExpressionImportLabel(it)%>"/>
+  <%}%>
+  <OutputParameter name="date[].date" label="Selected Date"/>
+  <OutputParameter name="dataSize" label="Data Size"/>
+</OutputParameters>

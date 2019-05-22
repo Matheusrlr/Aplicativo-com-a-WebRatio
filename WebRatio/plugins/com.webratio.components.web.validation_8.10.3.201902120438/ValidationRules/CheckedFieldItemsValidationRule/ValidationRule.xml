@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ValidationRule type="singleProperty" idPrefix="ckd" namePrefix="Checked Items " label="Checked Items" contexts="Form/MultiSelectionField"> 
+  <EnumProperty attributeName="predicate" defaultValue="min"> 
+    <EnumItem value="eq" label="Exactly"/>  
+    <EnumItem value="min" label="At Least"/>  
+    <EnumItem value="max" label="At Most"/>  
+    <Description xml:space="preserve">The predicate defining how the comparison is
+performed.</Description>
+  </EnumProperty>  
+  <IntegerProperty attributeName="itemCount">
+    <Description xml:space="preserve">The number of items to be matched.</Description>
+  </IntegerProperty>  
+  <Description xml:space="preserve">The Checked Items validation rule evaluates the
+total number of items checked in a component and
+compares it to a specific value.&lt;br/&gt;
+The validation error message can be composed using the following placeholders:&lt;br/&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;${propertyValue}&lt;/b&gt;: the field value&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${propertyName}&lt;/b&gt;: the field name&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${objectName}&lt;/b&gt;: the parent component name&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${itemCount}&lt;/b&gt;: the comparison item count&lt;/li&gt;
+&lt;/ul&gt;</Description>
+</ValidationRule>

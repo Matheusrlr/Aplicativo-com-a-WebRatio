@@ -1,0 +1,46 @@
+#?delimiters [%,%],[%=,%]
+[%setXMLOutput()
+import org.apache.commons.lang.StringUtils
+def writeMode = "write" == component["mode"]
+def updateMode = "update" == component["mode"]
+def useHeader = (("true" == component["useHeader"]) && ("read" == component["mode"]))
+def saveExcel = (getExitingFlows(component).find{ it.selectSingleNode("ParameterBinding[@source = 'excel']") != null } != null)
+
+def cellInfoOrderIds = component["cellInfoOrder"].tokenize(" ")
+def allCellInfos = component.selectNodes("CellInfo")
+def cellInfos = []
+cellInfos += cellInfoOrderIds.collect{getById(it)}
+cellInfos += allCellInfos.findAll{!cellInfoOrderIds.contains(it["id"])}
+
+%]
+<Descriptor service="com.webratio.components.web.utility.ExcelService">
+   <Mode>[%=component["mode"]%]</Mode>
+   <Format>[%=component["format"]%]</Format>
+   <SourceType>[%=component["sourceType"]%]</SourceType>
+   <StaticURL>[%=component["url"]%]</StaticURL>
+   <SaveExcel>[%=saveExcel%]</SaveExcel>
+   [%if(useHeader){%]
+     <UseHeader>true</UseHeader>
+   [%}%]
+   [%
+    for(cellInfo in cellInfos){
+      def headerEnabled = writeMode && cellInfo["useNameAsHeader"] == "true"
+      def valueStyleEnabled = writeMode || updateMode
+      %]
+      <CellInfo
+         id="[%=cellInfo["id"]%]"
+         name="[%=toValidFieldName(cellInfo["name"])%]"
+         sheet="[%=cellInfo["sheet"]%]"
+         columnName="[%=cellInfo["name"]%]"
+         column="[%=cellInfo["column"]%]"
+         rows="[%=cellInfo["rows"]%]"
+         type="[%=cellInfo["type"]%]"
+         autoSizeColumn="[%=StringUtils.defaultIfEmpty(cellInfo["autoSizeColumn"], "true")%]"
+         preserveCellStyle="[%=cellInfo["preserveCellStyle"]%]"
+         [%if(!StringUtils.isBlank(cellInfo["dataFormat"])){%]dataFormat="[%=cellInfo["dataFormat"]%]"[%}%]
+         [%if(headerEnabled){%]useNameAsHeader="[%=cellInfo["useNameAsHeader"]%]"[%}%]
+         [%if(headerEnabled && !StringUtils.isBlank(cellInfo["headerStyle"])){%]headerStyle="[%=cellInfo["headerStyle"]%]"[%}%]
+         [%if(valueStyleEnabled && !StringUtils.isBlank(cellInfo["valueStyle"])){%]valueStyle="[%=cellInfo["valueStyle"]%]"[%}%]
+         [%if(cellInfo["removeBlankRows"] == "true"){%]removeBlankRows="true"[%}%]/>
+   [%}%]
+</Descriptor>

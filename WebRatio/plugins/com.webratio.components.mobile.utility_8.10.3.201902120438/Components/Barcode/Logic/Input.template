@@ -1,0 +1,35 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+def format = component["format"]
+def valueType = component["valueType"]
+%]
+
+<InputParameters>
+ 	[%if (format == "QR_CODE") { 
+		if (valueType == "text") {%] 
+			<InputParameter name="text" label="Text" />
+		[%} else if (valueType == "url") {%]
+			<InputParameter name="url" label="URL" />
+		[%} else if (valueType == "email") {%]
+			<InputParameter name="recipient" label="Recipient" />
+			<InputParameter name="subject" label="Subject" />
+			<InputParameter name="body" label="Body" />
+		[%} else if (valueType == "phone") {%]
+			<InputParameter name="phoneNumber" label="Phone Number" />
+		[%} else if (valueType == "sms") {%]	
+			<InputParameter name="phoneNumber" label="Phone Number" />
+			<InputParameter name="text" label="Message Text" />
+		[%} else if (valueType == "geo") {%]	
+			<InputParameter name="latitude" label="Latitude" />
+			<InputParameter name="longitude" label="Longitude" />
+		[%} else if (valueType == "phoneContact") {%]
+			<InputParameter name="contactName" label="Contact Name" />
+			<InputParameter name="contactPhone" label="Contact Phone" />
+			<InputParameter name="contactAddress" label="Contact Address" />
+			<InputParameter name="contactEmail" label="Contact Email" />
+		[%}
+	} else {%] 
+		<InputParameter name="text" label="Text" />
+	[%}%] 
+</InputParameters>

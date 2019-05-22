@@ -1,0 +1,30 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import java.io.FileOutputStream
+import org.apache.commons.lang.StringUtils
+import org.apache.commons.io.FileUtils
+import org.apache.commons.io.IOUtils
+
+def appConfig = new File(outputFolder + "/" + rootModuleName + ".jar/conf/AppConfig.properties")
+def props = new java.util.Properties()
+def input = null
+try{ 
+  input = new java.io.FileInputStream(appConfig)
+  props.load(input)
+}finally{
+ IOUtils.closeQuietly(input)
+}
+
+if(!props.contains("workDirectory")){
+  props.setProperty("workDirectory", "\${user.dir}/temp/" + enterpriseProjectName)
+}
+
+def output = null
+try{ 
+  output = new java.io.FileOutputStream(appConfig)
+  props.store(output, null)
+}finally{
+  IOUtils.closeQuietly(output)
+}
+
+%>

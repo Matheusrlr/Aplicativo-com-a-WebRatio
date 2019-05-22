@@ -1,0 +1,71 @@
+#?delimiters [%, %], [%=, %]
+[%
+import org.apache.commons.io.FileUtils
+import com.webratio.generator.io.IOHelper
+
+/* If not supporting emulators, skip framework altogether */
+if (!wr.emulatorSupport) {
+    eventSocketClient.sendBeginTask("Framework", 1)
+    eventSocketClient.sendTaskWorked("Framework", 1)
+	return
+}
+
+/* If generating as a bare webapp, skip framework and put web contents at the top level */
+if (wr.bareWebapp) {
+	eventSocketClient.sendBeginTask("Framework", 1)
+	def wwwDir = wr.outputManager.getFile("www")
+	IOHelper.copyDirectory(wwwDir, wr.outputManager.getFile("/"), [IOHelper.CVS_AWARE_FILTER], [])
+	FileUtils.deleteDirectory(wwwDir)
+	eventSocketClient.sendTaskWorked("Framework", 1)
+	return
+}
+
+/*
+ * Generate framework files
+ */
+
+def appInfo = wr.appInfo
+
+eventSocketClient.sendBeginTask("Framework", 3 + (12 * wr.appConfig.targetPlatforms.size()) + (20 * appInfo.plugins.selected.size()))
+
+/* Copy static files of the framework */
+processOutputFile("/", "static framework files", wr.project, { rootDir ->
+	def staticDir = wr.locateResourceFile("Framework/Static")
+	IOHelper.copyDirectory(staticDir, rootDir, [IOHelper.CVS_AWARE_FILTER], [])
+})
+eventSocketClient.sendTaskWorked("Framework", 1)
+
+/* Generate a script, and associated libraries, for supporting plugins in emulators */
+processOutputFile("www/app/emulatorSupport.js", "emulator support script", wr.project, { emulatorSupportFile ->
+	emulatorSupportFile.writeAsync(executeContextTemplate("Framework/EmulatorSupport.template", ["appInfo": appInfo]), "UTF-8")
+})
+executeContextTemplate("Framework/EmulatorSupportLibs.template", ["appInfo": appInfo])
+
+/* Generate output specific to each platform */
+for (platformName in wr.appConfig.targetPlatforms) {
+	executeContextTemplate("Framework/Platforms/" + platformName + "/Platform.template", ["appInfo": appInfo])
+	eventSocketClient.sendTaskWorked("Framework", 10)
+}
+
+/* Generate a plugin JSON list for each platform */
+for (platformName in wr.appConfig.targetPlatforms) {
+	processOutputFile("plugins/" + platformName + ".json", "plugin list", wr.project, { listFile ->
+		listFile.writeAsync(executeContextTemplate("Framework/PluginsJson.template", ["appInfo": appInfo]))
+	})
+	eventSocketClient.sendTaskWorked("Framework", 2)
+}
+
+/* Copy expanded plugin files */
+for (plugin in appInfo.plugins.selected) {
+	def destinationDir = wr.outputManager.getFile("/plugins/" + plugin.pluginId)
+	destinationDir.parentFile.mkdirs()
+	IOHelper.copyDirectory(plugin.directory, destinationDir, [IOHelper.CVS_AWARE_FILTER], [])
+	eventSocketClient.sendTaskWorked("Framework", 20)
+}
+
+/* Generate a global config.xml file */
+processOutputFile("www/config.xml", "configuration file", wr.project, { configFile ->
+	configFile.writeAsync(serializeXML(executeContextTemplate("Framework/ConfigXml.template", ["appInfo": appInfo]), true), "UTF-8")
+})
+eventSocketClient.sendTaskWorked("Framework", 1)
+%]

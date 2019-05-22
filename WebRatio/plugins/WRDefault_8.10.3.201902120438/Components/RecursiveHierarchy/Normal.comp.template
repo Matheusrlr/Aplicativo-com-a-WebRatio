@@ -1,0 +1,123 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Links Position" name="link-position" type="enum" values="left|right|on_row" default="right">
+Defines the rendition of the sub levels links.
+Allowed values are:
+- right (default): places the links on the right
+- left: places the links on the left
+- on_row: places the first link on the attributes
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Use Empty Unit Message" name="use-empty-unit-message" type="boolean" default="false">
+Defines the usage of a message for empty units.
+Allowed values are: true(default) or false.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Empty Unit Message" name="empty-unit-message" type="string" default="emptyUnitMessage">
+Defines the key of the message to use if the component is empty.
+Default value: emptyUnitMessage
+</wr:LayoutParameter>
+[% 
+ setHTMLOutput()
+ def linkPosition = params["link-position"]
+ def useEmptyUnitMessage = params["use-empty-unit-message"]
+ def emptyUnitMessage = params["empty-unit-message"]
+ def unitEvent = component.selectSingleNode("layout:Event")
+%]
+
+[% if (useEmptyUnitMessage != "true") { %]
+<c:if test="${not(empty <wr:Id context="component"/>) and (<wr:Id context="component"/>.dataSize gt 0)}">
+[% } else { %]
+<c:choose>
+<c:when test="${not(empty <wr:Id context="component"/>) and (<wr:Id context="component"/>.dataSize gt 0)}">
+[% } %]
+<wr:Frame>
+	<div class="plain <wr:StyleClass/>">
+		<div class="plain RecursiveHierachy">
+			<table border="0" cellspacing="1" cellpadding="2">
+			  <!-- begin header -->
+			  <tr>
+			  	 [% if (linkPosition == "left") { %]
+			     <wr:Iterate var="event" context="component" select="layout:Event">
+				  	<wr:Visible><th class="<wr:StyleClass/> header"></th></wr:Visible>
+				 </wr:Iterate>
+				 [% }  %]
+			     <wr:Iterate var="attr" context="component" select="layout:Attribute">
+			        <wr:Visible>
+			          <th nowrap="nowrap" class="<wr:StyleClass/> header"><wr:Label context="attr"/></th>  
+			        </wr:Visible>
+			     </wr:Iterate>
+			     [% if (linkPosition == "left") { %]
+			     <wr:Iterate var="event" context="component" select="layout:Event">
+				 	[% if (linkPosition == "right" || (linkPosition == "on_row"  && index > 0)) { %]
+				 	<wr:Visible>
+		   		 		<th class="<wr:StyleClass/> header"></th>
+			   	 	</wr:Visible>
+			   	 	[% } %]
+				 </wr:Iterate>
+				 [% } %]
+			  </tr>
+			  <c:forEach var="current" varStatus="status" items="${<wr:Id context="component"/>.data}">
+			    <c:set var="index" value="${status.index}"/>
+			    <c:set var="currentLevel" value="${current.level}"/>
+			    <c:set var="isCurrent" value="${current.isCurrent}"/>
+			      <tr>
+			        [% if (linkPosition == "left") { %]
+				    <wr:Iterate var="event" context="component" select="layout:Event">
+					 	<wr:Visible>
+					 		<td><wr:Event class="link" context="event"/></td>
+					 	</wr:Visible>
+					</wr:Iterate>
+					[% }  %]
+			        <wr:Iterate var="attr" context="component" select="layout:Attribute">
+				 	  <wr:Visible>
+						  <td class="<wr:StyleClass/> value<c:if test="${isCurrent}">Current</c:if> [%=attr["type"]%]" nowrap>
+						  [% if (index == 0) { %]<div style="margin-left: ${current.level}em;">[% } %]
+							  [% if ((linkPosition == "on_row") && (unitEvent)) {%]
+							  	<wr:Visible position="'index'">
+									<wr:Visible context="unitEvent" position="'index'">
+										<a href="<wr:URL context="unitEvent"/>" class="<wr:StyleClass context="unitEvent"/> link<c:if test="${isCurrent}">Current</c:if>" onclick="<wr:AjaxURL context="unitEvent" />">
+									</wr:Visible>
+									<wr:Value context="attr"/>
+									<wr:Visible context="unitEvent" position="'index'">
+										</a>
+									</wr:Visible>
+								</wr:Visible>
+							  [% } else {%]
+					          	<wr:Value context="attr"/>
+					          [% } %]
+				          [% if (index == 0) { %]</div>[% } %]
+				          </td>
+			          </wr:Visible>
+				 	</wr:Iterate>
+				 	[% if (linkPosition != "left") { %]
+			        <wr:Iterate var="event" context="component" select="layout:Event">
+			          [% if (linkPosition == "right" || (linkPosition == "on_row"  && index > 0)) { %]
+				         <wr:Visible>
+				           <td><wr:Event context="event" class="link"/></td>
+				         </wr:Visible>
+			          [% } %]
+			        </wr:Iterate>
+			        [% } %]
+			      </tr>
+			    </c:forEach>
+			 </table>
+		</div>
+	</div>
+</wr:Frame>  
+[% if (useEmptyUnitMessage != "true") { %]
+</c:if>
+[% } else { %]
+</c:when>
+<c:otherwise>
+	<wr:Frame>
+		<div class="plain <wr:StyleClass/>">
+			<div class="plain RecursiveHierachy">
+				<table>
+				    <tr>
+				      <td><bean:message key="[%printJSPTagValue(emptyUnitMessage)%]"/></td>
+				    </tr>
+				</table>
+			</div>
+		</div>
+	</wr:Frame>
+</c:otherwise>
+</c:choose>
+[% } %]   

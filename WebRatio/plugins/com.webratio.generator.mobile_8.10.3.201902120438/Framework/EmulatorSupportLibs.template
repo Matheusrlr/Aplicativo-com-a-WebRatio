@@ -1,0 +1,19 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.google.common.io.Files
+import com.webratio.generator.io.IOHelper
+
+/* Copy libraries for supporting emulation of each plugin */
+appInfo.plugins.selected.each() { plugin ->
+	processOutputFile("www/app/emulation_libs/${plugin.pluginId}", "support libraries of ${plugin}", wr.project, { libsDir ->
+		
+		/* Copy all files found in the plugin emulation directory */
+		def emulationDir = new File(plugin.directory, "webratio")
+		emulationDir.listFiles((java.io.FileFilter) IOHelper.CVS_AWARE_FILTER).each { libFile ->
+			if (libFile.name != "emulation_stub.js") {
+				libsDir.mkdirs()
+				Files.copy(libFile, new File(libsDir, libFile.name))
+			}
+		}
+	})
+}

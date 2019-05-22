@@ -1,0 +1,61 @@
+Manifest-Version: 1.0
+Export-Package: org.springframework.cache,org.springframework.cache.an
+ notation,org.springframework.cache.concurrent,org.springframework.cac
+ he.config,org.springframework.cache.interceptor,org.springframework.c
+ ache.support,org.springframework.context,org.springframework.context.
+ access,org.springframework.context.annotation,org.springframework.con
+ text.config,org.springframework.context.event,org.springframework.con
+ text.expression,org.springframework.context.i18n,org.springframework.
+ context.support,org.springframework.context.weaving,org.springframewo
+ rk.ejb.access,org.springframework.ejb.config,org.springframework.ejb.
+ interceptor,org.springframework.format,org.springframework.format.ann
+ otation,org.springframework.format.datetime,org.springframework.forma
+ t.datetime.joda,org.springframework.format.datetime.standard,org.spri
+ ngframework.format.number,org.springframework.format.support,org.spri
+ ngframework.instrument.classloading,org.springframework.instrument.cl
+ assloading.glassfish,org.springframework.instrument.classloading.jbos
+ s,org.springframework.instrument.classloading.tomcat,org.springframew
+ ork.instrument.classloading.weblogic,org.springframework.instrument.c
+ lassloading.websphere,org.springframework.jmx,org.springframework.jmx
+ .access,org.springframework.jmx.export,org.springframework.jmx.export
+ .annotation,org.springframework.jmx.export.assembler,org.springframew
+ ork.jmx.export.metadata,org.springframework.jmx.export.naming,org.spr
+ ingframework.jmx.export.notification,org.springframework.jmx.support,
+ org.springframework.jndi,org.springframework.jndi.support,org.springf
+ ramework.remoting,org.springframework.remoting.rmi,org.springframewor
+ k.remoting.soap,org.springframework.remoting.support,org.springframew
+ ork.scheduling,org.springframework.scheduling.annotation,org.springfr
+ amework.scheduling.concurrent,org.springframework.scheduling.config,o
+ rg.springframework.scheduling.support,org.springframework.scripting,o
+ rg.springframework.scripting.bsh,org.springframework.scripting.config
+ ,org.springframework.scripting.groovy,org.springframework.scripting.j
+ ruby,org.springframework.scripting.support,org.springframework.stereo
+ type,org.springframework.ui,org.springframework.ui.context,org.spring
+ framework.ui.context.support,org.springframework.validation,org.sprin
+ gframework.validation.annotation,org.springframework.validation.beanv
+ alidation,org.springframework.validation.support
+Require-Bundle: com.webratio.commons.lib.spring.beans,com.webratio.com
+ mons.lib.spring.core,com.webratio.commons.lib.spring.expression
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/spring-context.jar
+Bundle-Version: 4.2.4
+Bundle-Name: WebRatio 3rd Party Library - Spring Context
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.spring.context
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: CbzsD0l1oRgFmyO6fPjlYbVMfWioHaJxcb2/fOBfe5Q=
+
+Name: lib/spring-context.jar
+SHA-256-Digest: 9CDVvvprJUuOT1V7J7MqMDl1YDQoDSiQ6b2VZSUz2Iw=
+
+Name: lib/spring-contextsrc.zip
+SHA-256-Digest: K61sIqCdSaK7W+ol9cuGz9ZkJDibsnYn/tIRIrIuS8s=
+

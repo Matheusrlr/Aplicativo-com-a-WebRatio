@@ -1,0 +1,39 @@
+#?delimiters [%, %], [%=, %]
+[% setJSONOutput() %]
+[% 	def ce = element.selectSingleNode("ConditionalExpression")
+	def condExprs = ""
+	if(ce){
+		condExprs = getConditionalExpressionJson( getById(element["dataBinding"]), ce )
+	}
+%]
+{
+	"service": "wrm.comp.val.CollectionValidationRuleService",
+	[% if (element["dataBinding"]) { %]
+		"entity": "[%= element["dataBinding"] %]",
+		"output": "[%= element["attribute"] %]",
+		[% if (ce) { %]
+				"condExprs":  [% printRaw(condExprs) %],
+		[% } %]
+	[% } else { 
+		def values = []
+		for(value in element.selectNodes("Value")){
+      		values.add(value["value"])
+		}
+	%]
+		"values": "[%= values.join("|") %]",
+	[% } %]
+	"predicate": "[%= element["predicate"]%]",
+	"ignoreCase": "[%= element["ignoreCase"]%]"
+}
+
+
+
+
+
+
+
+
+
+
+
+

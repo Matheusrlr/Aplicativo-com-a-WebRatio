@@ -1,0 +1,16 @@
+  <Element name="Property" lowerName="property"
+		pluralLowerName="properties">
+		<Description>
+			A property
+			is an extra information that the user can add to each element.
+		</Description>
+		<ActionRef label="Help"/>
+		
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name"/>
+			<Property label="Value">
+				The user-defined property value.
+			</Property>
+		</PropertyCategory>
+	</Element>

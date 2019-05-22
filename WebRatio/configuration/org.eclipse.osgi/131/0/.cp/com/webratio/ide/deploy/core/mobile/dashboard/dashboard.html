@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>App Dashboard</title>
+	<meta charset="UTF-8">
+	<script src="jquery.min.js"></script>
+	<script src="dashboard.js"></script>
+	<link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+	<div class="mainMessage">Loading...</div>
+	
+	<div class="noBlocksMessage">
+		Generate or build a Mobile Project in the WebRatio Editor.
+	</div>
+	
+	<script id="blockTemplate" type="text/html">
+		<div class="block">
+			<div class="header">
+				<h1 class="name"></h1>
+				<span class="date"></span>
+			</div>
+			<div class="panel panel-test">
+				<p class="intro"></p>
+				
+				<div class="subPanel emulateStatus">
+					<div class="overlay">
+						<span class="waitMessage"></span>
+					</div>
+					<div class="content">
+						<p>Press the "Open Emulator" button to view and emulate your Mobile Application in a new browser window on your PC.</p>
+						<p class="message"></p>
+						<p>Note: the emulator requires Google Chrome.</p>
+					</div>
+				</div>
+				
+				<div class="subPanel serveStatus">
+					<div class="overlay">
+						<span class="waitMessage"></span>
+					</div>
+					<div class="content">
+						<p>Start the WebRatio Mobile Developer app on your device and scan the QR code or connect to 
+						<b><span class="message"></span></b> to view and emulate your Mobile Application using your mobile device</p>
+						<img style="display: none" src="" class="qrcode">
+						<p>Note: Download and install WebRatio Mobile Developer free app from 
+						<a class="google-play" target="_blank" href="https://play.google.com/store/apps/details?id=com.webratio.mobile.developer">Google Play</a> or 
+						<a class="app-store" target="_blank" href="https://itunes.apple.com/us/app/webratio-mobile-developer/id927339789">App Store</a>.</p>
+					</div>
+				</div>
+			</div>
+			
+			<div class="panel panel-build-android">
+				<p class="intro"></p>
+				<template class="problem-template">
+					<div class="problem"></div>
+				</template>
+				<div class="subPanel androidBuildStatus">
+					<div class="overlay">
+						<span class="waitMessage"></span>
+					</div>
+					<div class="content">						
+						<p class="message">Scan the QR code to install your Mobile Application or <a class="download-link" target="_blank">download the app package</a>.</p>
+						<img style="display: none" src="" class="qrcode">
+					</div>
+				</div>
+			</div>
+			
+			<div class="panel panel-build-ios">
+				<p class="intro"></p>
+				<template class="problem-template">
+					<div class="problem"></div>
+				</template>
+				<div class="subPanel iosBuildStatus">
+					<div class="overlay">
+						<span class="waitMessage"></span>
+					</div>
+					<div class="content">						
+						<p class="message">Scan the QR code to install your Mobile Application or <a class="download-link" target="_blank">download the app package</a>.</p>
+						<img style="display: none" src="" class="qrcode">
+					</div>
+				</div>
+			</div>
+			
+			<div class="panel panel-build-windows">
+				<p class="intro"></p>
+				<template class="problem-template">
+					<div class="problem"></div>
+				</template>
+				<div class="subPanel windowsBuildStatus">
+					<div class="overlay">
+						<span class="waitMessage"></span>
+					</div>
+					<div class="content">
+						<div class="windowsApplicationPanel">
+							<p>
+								<div class="windowsApplicationMessage">
+									Your application is ready to be run.<br>
+									Choose one of the following launching modes.<br>
+									Note: the installation may take several minutes. please wait.
+								</div>
+							</p>
+                            <a class="windowsApplicationOnPcButton command-link">Run on PC</a>
+							<div class="windowsApplicationOnPcMessage"></div>
+							<p></p>
+                            <a class="windowsApplicationOnDeviceButton command-link" data-command-args="device=true">Run on device</a>
+							<div class="windowsApplicationOnDeviceMessage"></div>
+							<p></p>
+							<div class="windowsApplicationErrorMessage"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+</body>
+</html>

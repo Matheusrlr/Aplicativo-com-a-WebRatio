@@ -1,0 +1,9 @@
+#?delimiters [%, %], [%=, %]
+[%
+setJSONOutput()
+
+%]
+
+{
+	"service": "wrm.comp.MapService"
+}

@@ -1,0 +1,50 @@
+.tabs-top > .tabs,
+.tabs.tabs-top {
+  top: 0;
+  .platform-ios.platform-cordova:not(.fullscreen) & {
+    padding-top: 20px;
+    height: 69px;
+    top: 0;
+  }
+}
+
+.tabs-top + .scroll-content {
+  top: 49px;
+  .platform-ios.platform-cordova:not(.fullscreen) & {
+    top: 69px;
+  }
+}
+
+.tabs {
+  .tab-item {
+    max-width: 100%;
+    &.icon-only {
+      .icon {
+        line-height: inherit;
+      }
+    }
+    &.icon-top {
+      font-size: 12px;
+      line-height: 14px;
+    }
+    &.icon-left,
+    &.icon-right {
+      font-size: 12px;
+      .icon {
+        display: inline-block;
+        vertical-align: top;
+        margin-top: -0.1em;
+      }
+    }
+    &.icon-left {
+      .icon {
+        padding-right: 5px;
+      }
+    }
+    &.icon-right {
+      .icon {
+        padding-left: 5px;
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+<Layout 
+    pageLayout="TwoColumns"
+    frameLayout="Default"
+    gridLayout="Default"
+    errorPage="Default"
+    loginPage="Default">
+  <ComponentConfiguration componentType="Form" frameLayout="FieldSet" componentLayout="Default"/>
+  <ComponentConfiguration componentType="Details" componentLayout="ListItems"/>
+  <ComponentConfiguration componentType="SimpleList" componentLayout="ListItems"/>
+  <ComponentConfiguration componentType="Hierarchy" componentLayout="ListItems"/>
+  <Resources alwaysRequired="Multiflex-style Multiflex-style-text Multiflex-style-setup">
+    <Resource name="Multiflex-style-setup" type="css" path="css/layout2_setup.css" mediaQuery="screen,projection,print"/>
+    <Resource name="Multiflex-style-text" type="css" path="css/layout2_text.css" mediaQuery="screen,projection,print"/>
+    <Resource name="Multiflex-style" type="css" path="css/webratio.css"/>
+  </Resources>
+</Layout>

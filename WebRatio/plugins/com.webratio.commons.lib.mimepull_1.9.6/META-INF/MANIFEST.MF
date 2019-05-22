@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Export-Package: org.jvnet.mimepull
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/mimepull.jar
+Bundle-Version: 1.9.6
+Bundle-Name: WebRatio 3rd Party Library - Mimepull
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.mimepull
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: A+glXSmdgTy8yBtUuIXyO3mq5gsYXL9QAl/TFZ4eixY=
+
+Name: lib/mimepull.jar
+SHA-256-Digest: LR7laqiYN7qepVQxVC55OfqdQlVSwubI3fs7d4d3Ibc=
+
+Name: about_files/CDDL+GPL_1_1.txt
+SHA-256-Digest: rPs90Jccj5ZYwzJdY2o8rYOa8ik7b6TAC1AZB+iOvLg=
+
+Name: lib/mimepullsrc.zip
+SHA-256-Digest: YVt40iDHS2ySTtCdUWmGKK0Jh4bO21ZGv0EarmD1AwE=
+

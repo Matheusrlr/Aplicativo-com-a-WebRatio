@@ -1,0 +1,14 @@
+<Element name="Parameters" lowerName="parameters" pluralLowerName="parameterses" >
+    <Description>
+    </Description>
+        <ActionRef label="Add Lane" />
+        <ActionRef label="Add Parameter" />
+        <ActionRef label="Edit Process Parameters..." />
+        <ActionRef label="Search References" />
+        <ActionRef label="Help" />    
+    <PropertyCategory name="General">
+        <Property label="Parameter Count">
+          The number of defined parameters.
+        </Property>
+    </PropertyCategory>
+</Element>

@@ -1,0 +1,189 @@
+#?delimiters [%, %], [%=, %]
+[%
+setJSONOutput()
+
+def runInfo = createSerializableProxy(wr.helpers.runtime.getScreenRunInfo(screen))
+def preservingScreenSet = getPreservingScreenSet(screen)
+def components = screen.selectNodes("ViewComponents/*")
+// TODO use ad-hoc helper retrieving events
+def events = screen.selectNodes("Events/* | ViewComponents/*/Events/* | Toolbar/Events/* | Toolbar/ViewComponents/*/Events/*")
+%]
+{
+	"_": "wrm.core.PanelService",
+	
+	[% if (runInfo.permissionElement) { %]
+		"protected": [
+			[% runInfo.permissionRoles.eachWithSeparator(",") { role -> %]
+				"[%= role %]"
+			[% } %]
+		],
+	[% } %]
+	
+	[% if (screen == getLoginElement()) { %]
+		"gateway": true,
+	[% } %]
+	
+	[% if (preservingScreenSet) { %]
+		"fence": "[%= preservingScreenSet["id"] %]",
+	[% } %]
+	
+	[% if (screen.name == "Toolbar") { %]
+		"master": true,
+	[% } else if (!runInfo.masterPanels.isEmpty()) { %]
+		"masters": [
+			[% runInfo.masterPanels.eachWithSeparator(",") { toolbarId -> %]
+				"[%= toolbarId %]"
+			[% } %]
+		],
+	[% } %]
+	
+	"navigations": {
+		[% runInfo.entryNavigations.eachWithSeparator(",") { nav -> %]
+			"[%= nav.id %]": {
+				[% if (nav.nonContextual) { %]
+					"nc": true,
+				[% } %]
+				"flows": "[%= nav.flowIds.join("|") %]"
+				[% if (!nav.selectiveRefresh) { %],
+					"fr": true
+				[% } %]
+				[% if (!nav.sideEffects.names.isEmpty()) { %],
+					"effects": "[%= nav.sideEffects.names.join("|") %]"
+				[% } %]
+				[% if (!nav.parameterConditions.empty) { %],
+					"paramConds": {
+						[% nav.parameterConditions.eachWithSeparator(",") { paramCond -> %]
+							[% if (paramCond.paramPrevValues != null) { %]
+								"[%= paramCond.paramName %]": {
+									"v": "[%= paramCond.paramValues.join("|") %]",
+									"pv": "[%= paramCond.paramPrevValues.join("|") %]"
+								}
+							[% } else { %]
+								"[%= paramCond.paramName %]": "[%= paramCond.paramValues.join("|") %]"
+							[% } %]
+						[% } %]
+					}
+				[% } %]
+			}
+		[% } %]
+	},
+	[% if (!runInfo.knownSideEffects.names.isEmpty()) { %]
+		"knownEffects": "[%= runInfo.knownSideEffects.names.join("|") %]",
+	[% } %]
+	
+	"propagationSequence": "[%= runInfo.defaultFlowSequence.flowIds.join("|") %]",
+	"propagations": {
+		[% runInfo.defaultFlowSequence.flowIds.eachWithSeparator(",") { flowId -> %]
+			[% def dataFlow = getById(flowId) %]
+			"[%= flowId %]": [% printRaw(executeContextTemplate("Logic/Flow.template", ["flow": dataFlow, "includeFrom": true])) %]
+		[% } %]
+	},
+	
+	"components": {
+		[% runInfo.componentComputations.eachWithSeparator(",") { compComp -> %]
+			"[%= compComp.componentId %]": {
+				"fb": [%= compComp.formBased %]
+				[% if (!compComp.layoutSupported) { %],
+					"nv": true
+				[% } %]
+				[% if (!compComp.navigationConditions.isEmpty()) { %],
+					[% printNavigationConditions(compComp) %]
+				[% } %]
+				[% if (!compComp.refreshFormInfos.isEmpty()) { %],
+					"rf": [
+						[% compComp.refreshFormInfos.eachWithSeparator(",") { refreshFormInfo -> %]
+							{
+								"all": [%= refreshFormInfo.refreshAll %]
+								[% if (!refreshFormInfo.selectiveRefresh) { %],
+									"fr": true
+								[% } %]
+								[% if (refreshFormInfo.entryNavigations != null) { %],
+									"navs": "[%= refreshFormInfo.entryNavigations.collect{ it.id }.join("|") %]"
+								[% } %]
+								[% if (refreshFormInfo.sideEffects != null) { %],
+									"effects": "[%= refreshFormInfo.sideEffects.names.join("|") %]"
+								[% } %]
+								[% if (!refreshFormInfo.renewedInputs.isEmpty()) { %],
+									"inputs": "[%= refreshFormInfo.renewedInputs.join("|") %]"
+								[% } %]
+							}
+						[% } %]
+					]
+				[% } %]
+			}
+		[% } %]
+	},
+	
+	"events": {
+		[% events.eachWithSeparator(",") { event -> %]
+			[%
+				def component = isViewComponent(event.parent.parent) ? event.parent.parent : null
+				def flow = event.element("NavigationFlow")
+			%]
+			"[%= event["id"] %]": {
+				[% if (component) { %]
+					"component": "[%= component["id"] %]",
+				[% } %]
+				[% if (event.name == "BackEvent") { %]
+					"generic": true,
+				[% } %]
+				"type": "[%= event.name %]"
+				[% if (flow) { %],
+					[%
+						def secondaryFlows = getSecondarySubmitFlows(flow) 
+					%]
+					"flow": [% printRaw(executeContextTemplate("Logic/Flow.template", ["flow": flow])) %]
+					[% if (!secondaryFlows.isEmpty()) { %],
+						"secondaryFlows": "[%= secondaryFlows.collect { it["id"] }.join("|") %]"
+					[% } %]
+				[% } %]
+			}
+		[% } %]
+	},
+	
+	[%
+		/* Helper for printing the navigation conditions of a computation */
+		def printNavigationConditions(computation, defaultNavigationConditions = null) {
+			def meaningfulNavConds = []
+			if (defaultNavigationConditions == null || !defaultNavigationConditions.equals(computation.navigationConditions)) {
+				for (navCond in computation.navigationConditions) {
+					def usesDefaultBehavior
+					if (navCond.selectiveRefresh) {
+						usesDefaultBehavior = (navCond.entryNavigations != null && navCond.entryNavigations.isEmpty())
+					} else {
+						usesDefaultBehavior = (navCond.entryNavigations == null)
+					}
+					if (!usesDefaultBehavior || navCond.sideEffects != null) {
+						meaningfulNavConds.add(navCond)
+					}
+				}
+			} %]
+			"conds": [
+				[% meaningfulNavConds.eachWithSeparator(",") { navCond -> %]
+					{
+						"fr": [%= !navCond.selectiveRefresh %]
+						[% if (navCond.entryNavigations != null) { %],
+							"navs": "[%= navCond.entryNavigations.collect{ it.id }.join("|") %]"
+						[% } %]
+						[% if (navCond.sideEffects != null) { %],
+							"effects": "[%= navCond.sideEffects.names.join("|") %]"
+						[% } %]
+					}
+				[% } %]
+			]
+		[% }
+	%]
+	
+	"autoFlow": {
+		[% if (runInfo.autoFlowInfo.selectiveRefresh) { %]
+			"preserve": "[%= runInfo.autoFlowInfo.selectiveRefreshPreservedParameterIds.join("|") %]"
+		[% } else { %]
+			"preserve": "[%= runInfo.autoFlowInfo.fullRefreshPreservedParameterIds.join("|") %]"
+		[% } %]
+	},
+	
+	"autoFlowFull": {
+		"preserve": "[%= runInfo.autoFlowInfo.fullRefreshPreservedParameterIds.join("|") %]"
+	}
+	
+}

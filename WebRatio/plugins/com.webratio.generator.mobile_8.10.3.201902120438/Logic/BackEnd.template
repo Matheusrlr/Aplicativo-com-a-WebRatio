@@ -1,0 +1,6 @@
+#?delimiters [%, %], [%=, %]
+[% setJSONOutput() %]
+{
+	"_": "wrm.core.BackEndService",
+	"baseUrl": "[%= wr.project["backEndBaseUrl"] %]"
+}

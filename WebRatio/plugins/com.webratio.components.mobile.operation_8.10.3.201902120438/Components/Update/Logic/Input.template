@@ -1,0 +1,97 @@
+#?delimiters [%, %], [%= ,%]
+[%
+setXMLOutput()
+
+def conditionalExprParts = component.selectNodes("ConditionalExpression/*")
+def dclassId = component["dataBinding"]
+def dclass = getById(dclassId)
+def isMappedUserDclass = (dclassId == "MUser" && dclass["serverClass"])
+
+def inputAttributes, inputRoles;
+if (isMappedUserDclass) {
+	inputAttributes = getAttributes(dclass)
+	inputRoles = []
+} else {
+	inputAttributes = getAttributes(dclass)
+	inputRoles = getOutgoingRoles(dclass).findAll { !isMany(it) }
+}
+%]
+<InputParameters>
+
+	[% for (part in conditionalExprParts) {
+		if (part.name == "AttributesCondition" && part["attributes"]) {
+			if (part["value"] == "" && !isUnaryPredicate(part["predicate"])) {
+				def attributeIds = part["attributes"].tokenize(" ") %]
+				<InputParameter
+					name="[%= getConditionalExpressionPartInputName(part, getById(attributeIds[0])) %]"
+					refId="[%= part["id"] %]"
+					type="[%= part["attributes"].tokenize(" ").collect{dclassId + "." + it}.join("|") %]"
+					label="[%= getAttributesConditionLabel(part) %]"
+					mandatory="[%= isRequiredConditionalExpressionPart(part) %]"
+				/>
+			[% }
+		}
+		if (part.name == "KeyCondition") {
+			def keyLabel = part["name"]
+			for (a in getKeyAttributes(dclass)) { %]
+				<InputParameter
+					name="[%= getConditionalExpressionPartInputName(part, a) %]"
+					refId="[%= part["id"] %]"
+					type="[%= getAssignableTypeExpression(dclass, a, true, false) %]"
+					label="[%= getKeyConditionLabel(part, dclass, a) %]"
+					mandatory="[%= isRequiredConditionalExpressionPart(part) %]"
+				/>
+			[% }
+		}
+		if (part.name == "AssociationRoleCondition" && part["role"]) {
+			for (a in getKeyAttributes(getSourceDomainClass(getRoleByExpression(part["role"])))) { %]
+				<InputParameter
+					name="[%= getConditionalExpressionPartInputName(part, a) %]"
+					refId="[%= part["id"] %]"
+					type="[%= getAssignableTypeExpression(getSourceDomainClass(getRoleByExpression(part["role"])), a, true, true) %]"
+					label="[%= getRoleConditionLabel(part, a) %]"
+					mandatory="[%= isRequiredConditionalExpressionPart(part) %]"
+				/>
+			[% }
+		}
+	} %]
+	
+	[% if (isMappedUserDclass) { %]
+		<InputParameter
+			name="oldPassword"
+			type="_User.password"
+			label="Old Password"
+			mandatory="false"
+		/>
+		<InputParameter
+			name="newPassword"
+			label="New Password"
+			mandatory="false"
+		/>
+	[% } %]
+	
+	[% for (attr in inputAttributes) { %]
+		[% if (isInputBindableAttribute(attr) && isChangeableAttribute(attr)) { %]
+			<InputParameter
+				name="[%= attr["id"] %]"
+				refId="[%= attr["id"] %]" 
+				label="[%= getLabel(attr) %]"
+				mandatory="false"
+			/>
+		[% } %]
+	[% } %]
+	
+	[% for (role in inputRoles) { %]
+		[% def a = getKeyAttribute(getTargetDomainClass(role)) %]
+		<InputParameter
+			name="[%= role["id"] %]"
+			refId="[%= role["id"] %]"
+			[% if (role["maxCard"] == "1") { %]
+				type="[%= getSuperDomainClassHierarchy(getTargetDomainClass(role)).collect { it["id"] + "." + a["id"] + ".single" }.join("|") %]"
+			[% } %]
+			label="[%= getLabel(role) %]"
+			mandatory="false"
+		/>
+	[% } %]
+	
+</InputParameters>

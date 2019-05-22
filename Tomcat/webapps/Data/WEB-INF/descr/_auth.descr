@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Descriptor service="com.webratio.rtx.security.DefaultAuthenticationService" name="Authentication Service">
+  <DataSource>db1</DataSource>
+  <CryptAlgorithm/>
+  <Query dataBinding="User">
+    <Select>userOID|password</Select>
+    <Selector expression="acond1" defaultPolicy="fill">
+      <AttributesCondition id="acond1" name="username" attributes="userName" predicate="eq" required="true"/>
+    </Selector>
+  </Query>
+</Descriptor>

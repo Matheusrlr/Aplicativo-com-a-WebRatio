@@ -1,0 +1,82 @@
+#?delimiters [%, %], [%=, %]
+[%
+import org.apache.commons.lang.StringUtils
+import org.apache.commons.codec.net.URLCodec
+
+if (field["ajaxEventEnabled"] == "true") {
+	%]<wr:RequireResource ref="wr-runtime"/>[%
+	def fieldType = StringUtils.removeEnd(getById(field, "field").name, "Field")
+	
+	/* Compute event event */
+	def eventEvent = getById(field, "ajaxEventEvent")
+	
+	/* Compute event type */
+	def eventType = field["ajaxEventType"] ?: "change"
+	if (field["type"] == "boolean" && fieldLayout.parameters["boolean-field-rendering"] == "checkbox") {
+		eventType = "click"
+	}
+	
+	/* Compute event indicator id */
+	def eventIndicatorId = (field["ajaxEventIndicator"] == "true" ? eventFieldId + "_indicator" : null)
+	
+	/* Compute event target request parameter name and value */
+	def eventTargetParam = getAjaxEventTargetParam()
+	def eventTargetValue = null
+	if (eventTargetParam) {
+		eventTargetValue = new URLCodec("UTF-8").encode(field.valueOf("Property[@name = 'ajaxEventTargetValue']/@value") ?: field["field"])
+	}
+	
+	/* Compute extra event-handling options */
+	def extraOptions = [:]
+	if (eventIndicatorId) { 
+		extraOptions["indicator"] = "'" + eventIndicatorId + "'"
+	}
+	if (eventTargetValue) {
+		extraOptions["extraQuery"] = "'" + eventTargetParam + "=" + eventTargetValue + "'"
+	}
+	
+	/* Functions for printing bind code */
+	def printNormalObserveCode = {
+		def options = getAjaxRequestOptions(eventEvent, null)
+		options.putAll(extraOptions)
+		%]
+		<script type="text/javascript">
+			WREventUtils.observe("[%= eventFieldId %]", "[%= eventType %]", function(event) { WREvent.observe(event, "[%= getPageRuntimeId(page) %]", "[%= getEventRuntimeId(eventEvent) %]", $H({[%= options.collect { "\"$it.key\": $it.value" }.join(", ") %]})); });
+		</script>
+		[%
+	}
+	def printRadioObserveCode = {
+		%]
+		<script type="text/javascript">
+			new Form.Element.RadioEventObserver("[%= getFormBeanName(page) %]", "[%= eventFieldId %]", function() { [% printRaw(getAjaxRequestCall(eventEvent, null, extraOptions)) %] });
+		</script>
+		[%
+	}
+	def printCheckboxObserveCode = {
+		%]
+		<script type="text/javascript">
+			new Form.Element.CheckboxEventObserver("[%= getFormBeanName(page) %]", "[%= eventFieldId %]", function() { [% printRaw(getAjaxRequestCall(eventEvent, null, extraOptions)) %] });
+		</script>
+		[%
+	}
+	
+	/* Bind the event; use special binding code for groups of radio buttons and checkboxes */
+	if (["", "Selection"].contains(fieldType)) {
+		if (("Selection" == fieldType && fieldLayout.parameters["selection-field-rendering"]?.indexOf("radio") >= 0) || ("Selection" != fieldType && field["type"] == "boolean" && fieldLayout.parameters["boolean-field-rendering"] == "normal")) {
+			printRadioObserveCode()
+		} else {
+			printNormalObserveCode()
+		}
+	} else if ("MultiSelection" == fieldType) {
+		if (fieldLayout.parameters["multi-selection-field-rendering"] == "multiple select") {
+			printNormalObserveCode()
+		} else {
+			printCheckboxObserveCode()
+		}
+	}
+	
+	/* Print an indicator element if needed */
+	if (eventIndicatorId) {	%]
+		<span id="[%= eventIndicatorId %]" style="display: none"><img src="WRResources/ajax/jquery-ui/themes/webratio/indicator.gif"[% if (pageOutputType.name == "xhtml") { %]/[% } %]></span>
+	[% }
+} %]

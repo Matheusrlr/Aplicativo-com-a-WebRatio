@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Export-Package: org.apache.commons.exec,org.apache.commons.exec.enviro
+ nment,org.apache.commons.exec.launcher,org.apache.commons.exec.util
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/commons-exec.jar
+Bundle-Version: 1.3.0
+Bundle-Name: WebRatio 3rd Party Library - Apache Commons Exec
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.apache.commons.exec
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: lib/commons-execsrc.zip
+SHA-256-Digest: wSHY5wAQCSuvxW81jnJZrEhGU9tZWq/qHmegQPUa6mY=
+
+Name: lib/commons-exec.jar
+SHA-256-Digest: y0mBLcG/sOpPIPOYvK4aiMZAbiE+Z/dST7ENT4rZNHs=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: iSoQG+FkFXSThK0GjiNBqBf8NO4HvcjgmklLCgb042Y=
+

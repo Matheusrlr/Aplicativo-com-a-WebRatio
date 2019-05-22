@@ -1,0 +1,19 @@
+<ActionDefinition xmlns:gr="http://www.webratio.com/2006/WebML/Graph" id="tlads0#ad2" name="Retrieve" defaultSuccessPortDefinition="tlads0#ad2#spd2" defaultErrorPortDefinition="tlads0#ad2#epd2">
+  <Operations>
+    <Query gr:x="365" gr:y="180" id="tlads0#ad2#qu1" name="Query 1" mode="select" language="SQL" db="db1" queryFile="Database_190508_145711.sql" outputsOrder="tlads0#ad2#qu1#qo1 tlads0#ad2#qu1#qo2">
+      <SuccessFlow id="tlads0#ad2#qu1#sf2" to="tlads0#ad2#spd2" automaticCoupling="true"/>
+      <ErrorFlow id="tlads0#ad2#qu1#ef1" to="tlads0#ad2#epd2" automaticCoupling="true"/>
+      <QueryInput id="tlads0#ad2#qu1#qi1" name="Keys" required="true" type="integer"/>
+      <QueryOutput id="tlads0#ad2#qu1#qo1" name="nome" type="string"/>
+      <QueryOutput id="tlads0#ad2#qu1#qo2" name="descricao" type="string"/>
+    </Query>
+  </Operations>
+  <InputPortDefinition id="tlads0#ad2#ipd2" gr:x="0" gr:y="30">
+    <SuccessFlow id="tlads0#ad2#ipd2#sf1" to="tlads0#ad2#qu1">
+      <ParameterBinding id="tlads0#ad2#ipd2#sf1#par1" source="tlads0#ad2#ipd2#pdp1" target="tlads0#ad2#qu1.tlads0#ad2#qu1#qi1"/>
+    </SuccessFlow>
+    <PortDefinitionParameter id="tlads0#ad2#ipd2#pdp1" name="Keys"/>
+  </InputPortDefinition>
+  <SuccessPortDefinition id="tlads0#ad2#spd2" name="Success Port" gr:x="0" gr:y="30"/>
+  <ErrorPortDefinition id="tlads0#ad2#epd2" name="Error Port" gr:x="0" gr:y="300"/>
+</ActionDefinition>

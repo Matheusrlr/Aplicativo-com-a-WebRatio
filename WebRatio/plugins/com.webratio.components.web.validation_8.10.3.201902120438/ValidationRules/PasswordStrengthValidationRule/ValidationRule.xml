@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ValidationRule type="singleProperty" idPrefix="psvr" namePrefix="Password Strength " label="Password Strength"> 
+  <EnumProperty attributeName="securityLevel" defaultValue="medium"> 
+    <EnumItem value="low" label=""/>  
+    <EnumItem value="medium" label=""/>  
+    <EnumItem value="high" label=""/>  
+    <EnumItem value="custom"/>  
+    <Description xml:space="preserve">The Security Level defines the security criteria for the password
+&lt;ul&gt;
+&lt;li&gt;'Low' means 4 to 9 character password requiring
+    numbers and both lowercase and uppercase letters
+&lt;/li&gt;
+&lt;li&gt;'Medium' (default) means 10 to 32 character password requiring 
+    at least 3 out 4 (uppercase and lowercase letters, numbers 
+    and special characters) and no more than 2 equal characters 
+    in a row
+&lt;/li&gt;
+&lt;li&gt;'High' means 10 to 128 character password requiring 
+    at least 3 out 4 (uppercase and lowercase letters, numbers 
+    and special characters) and no more than 2 equal characters 
+    in a row
+&lt;/li&gt;
+&lt;li&gt;'Custom' enables the other properties to build a 
+    custom security criteria
+&lt;/li&gt;
+&lt;/ul&gt;  </Description> 
+  </EnumProperty>  
+  <IntegerProperty attributeName="minLength" label=""> 
+    <EnabledCondition xml:space="preserve">element["securityLevel"] == "custom"</EnabledCondition> 
+    <Description xml:space="preserve">If checked, it states that the minimum length of the password. Enabled when Security Level is 'custom'.</Description> 
+  </IntegerProperty>  
+  <IntegerProperty attributeName="maxLength"> 
+    <EnabledCondition xml:space="preserve">element["securityLevel"] == "custom"</EnabledCondition>
+    <Description xml:space="preserve">If checked, it states that the maximum length of the password. Enabled when Security Level is 'custom'.</Description> 
+  </IntegerProperty>  
+  <BooleanProperty attributeName="useNumbers" label=""> 
+    <EnabledCondition xml:space="preserve">element["securityLevel"] == "custom"</EnabledCondition>
+    <Description xml:space="preserve">If checked, it states that the password must contain at least a number. Enabled when Security Level is 'custom'.</Description> 
+  </BooleanProperty>  
+  <BooleanProperty attributeName="useLowerCaseCharacters" label=""> 
+    <EnabledCondition xml:space="preserve">element["securityLevel"] == "custom"</EnabledCondition>
+    <Description xml:space="preserve">If checked, it states that the password must contain at least a lower case letter. Enabled when Security Level is 'custom'.</Description> 
+  </BooleanProperty>  
+  <BooleanProperty attributeName="useUpperCaseCharacters" label=""> 
+    <EnabledCondition xml:space="preserve">element["securityLevel"] == "custom"</EnabledCondition>
+    <Description xml:space="preserve">If checked, it states that the password must contain at least an upper case letter. Enabled when Security Level is 'custom'.</Description> 
+  </BooleanProperty>  
+  <BooleanProperty attributeName="useSpecialCharacters" label=""> 
+    <EnabledCondition xml:space="preserve">element["securityLevel"] == "custom"</EnabledCondition>
+    <Description xml:space="preserve">If checked, it states that the password must contain at least a special character. Enabled when Security Level is 'custom'.</Description> 
+  </BooleanProperty> 
+  <Description xml:space="preserve">The Password Strength validation rule allows to check that the user provides a secure password.</Description>
+</ValidationRule>

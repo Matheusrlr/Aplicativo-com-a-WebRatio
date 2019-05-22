@@ -1,0 +1,36 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+def componentId = component.attributeValue("id", "")
+def domainClass = getByIdOptional(component["dataBinding"])
+def useDomainClass = (domainClass != null)
+
+def isMandatory(field){
+  if(field.parent["dataBinding"] != ""){
+     return false
+  } else if(field.name == "Field"){
+     return (field["modifiable"] == "true") && (field.selectSingleNode("VRules/CaptchaValidationRule") == null) 
+  }
+  return true
+}
+
+%>
+<OutputParameters>
+ <% for (field in component.selectNodes("Field | SelectionField | MultiSelectionField")) { %>
+    <% if (field["splitOutput"] == "true") {%>
+      <% for (slot in field.selectNodes("Slot[@output = 'true']")) { %>
+        <OutputParameter name="<%=slot["id"]%>" refId="<%=field["id"]%>" mandatory="<%=!useDomainClass%>" label="<%=field["name"]%>[<%=slot["name"]%>]" providedByForm="true"/>
+      <% } %>
+    <% } else {%>
+      <OutputParameter name="<%=field["id"]%>" refId="<%=field["id"]%>" mandatory="<%=isMandatory(field)%>" label="<%=field["name"]%>" providedByForm="true"/>
+    <% } %>
+ <% }  %>
+ 
+ <%if(domainClass){%>
+   <% for (a in getKeyAttributes(domainClass)) { %>
+      <OutputParameter name="key.<%=a["id"]%>" type="<%=getTypeExpression(domainClass, a, true, false)%>" refId="<%=a["id"]%>" label="Key [<%=a["name"]%>]" providedByForm="true"/>
+   <% } %>
+   <OutputParameter name="entityBean" type="<%=domainClass["id"]%>" refId="<%=domainClass["id"]%>" label="<%=domainClass["name"]%> Object" providedByForm="true"/>
+ <% } %>
+ 
+</OutputParameters>

@@ -1,0 +1,30 @@
+#?delimiters [%, %], [%=, %]
+[% setJSONOutput() %]
+{
+	"_": "wrm.data.sync.DataSyncService",
+	
+	"entities": {
+		[% getAllDomainClasses().eachWithSeparator(",") { dclass -> %]
+			[% if (dclass["serverClass"] && !["MUser", "MRole"].contains(dclass["id"])) { %]
+				[%
+					def policy = getSynchronizationPolicy(dclass)
+				%]
+				"[%= dclass["id"] %]": {
+					[% executeWithSeparator(",") { %]
+						[% if (policy.onStartup) { %]
+							"startup": true
+						[% } %]
+					[% } { %]
+						[% if (policy.onReopen) { %]
+							"reopen": [%= policy.interval.get() %]
+						[% } %]
+					[% } { %]
+						[% if (policy.periodically) { %]
+							"period": [%= policy.interval.get() %]
+						[% } %]
+					[% } %]
+				}
+			[% } %]
+		[% } %]
+	}
+}

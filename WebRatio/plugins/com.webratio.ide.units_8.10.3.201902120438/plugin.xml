@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?><?eclipse version="3.2"?>
+
+<plugin>
+  <extension-point id="unitDefinition" name="Unit Definition" schema="schema/unitDefinition.exsd"/>
+  <extension-point id="buildContributions" name="buildContributions" schema="schema/buildContributions.exsd"/>
+  <extension id="com.webratio.ide.units.wrunitsnature" name="WebRatio Components" point="org.eclipse.core.resources.natures">
+    <runtime>
+      <run class="com.webratio.ide.units.core.UnitsNature"/>
+    </runtime>
+    <options allowLinking="false"/>
+    <builder id="com.webratio.ide.units.unitsbuilder"></builder>
+  </extension>
+  <extension id="com.webratio.ide.units.unitsbuilder" name="Components Builder" point="org.eclipse.core.resources.builders">
+    <builder hasNature="true">
+      <run class="com.webratio.ide.units.internal.core.resources.UnitsBuilder"></run>
+    </builder>
+  </extension>
+  <extension id="com.webratio.ide.units.mobilecomponentsnature" name="WebRatio Mobile Components" point="org.eclipse.core.resources.natures">
+    <runtime>
+      <run class="com.webratio.ide.units.core.MobileComponentsNature2"/>
+    </runtime>
+    <options allowLinking="false"/>
+    <builder id="com.webratio.ide.units.mobilecomponentsbuilder"></builder>
+  </extension>
+  <extension id="com.webratio.ide.units.mobilecomponentsbuilder" name="Mobile Components Builder" point="org.eclipse.core.resources.builders">
+    <builder hasNature="true">
+      <run class="com.webratio.ide.units.internal.core.resources.MobileComponentsBuilder"></run>
+    </builder>
+  </extension>
+  <extension id="com.webratio.ide.units.webcomponentsnature" name="WebRatio Web Components" point="org.eclipse.core.resources.natures">
+    <runtime>
+      <run class="com.webratio.ide.units.core.WebComponentsNature2"/>
+    </runtime>
+    <options allowLinking="false"/>
+    <builder id="com.webratio.ide.units.webcomponentsbuilder"></builder>
+  </extension>
+  <extension id="com.webratio.ide.units.webcomponentsbuilder" name="Web Components Builder" point="org.eclipse.core.resources.builders">
+    <builder hasNature="true">
+      <run class="com.webratio.ide.units.internal.core.resources.WebComponentsBuilder"></run>
+    </builder>
+  </extension>
+  <extension id="problem" name="WebRatio Component Problem" point="org.eclipse.core.resources.markers">
+    <super type="org.eclipse.core.resources.problemmarker"></super>
+    <persistent value="true"></persistent>
+  </extension>
+  <extension point="org.eclipse.ui.newWizards">
+    <wizard category="com.webratio.ide.ui" class="com.webratio.ide.units.ui.wizards.ComponentWizard" hasPages="true" icon="icons/ctool16/newunit_wiz.png" id="com.webratio.ide.units.ui.wizards.ComponentWizard" name="Component" project="false">
+      <description>Choose where to create a new custom component.</description>
+    </wizard>
+    <wizard category="com.webratio.ide.ui" class="com.webratio.ide.units.ui.wizards.EventWizard" hasPages="true" icon="icons/ctool16/new_event_wiz.png" id="com.webratio.ide.units.ui.wizards.EventWizard" name="Event" project="false">
+      <description>Choose where to create a new custom event.</description>
+    </wizard>
+  </extension>
+  <!--
+   <extension
+         point="org.eclipse.ui.importWizards">
+      <wizard
+            category="com.webratio.ide.ui"
+            class="com.webratio.ide.units.ui.wizards.WR5ImportUnitsProjectWizard"
+            icon="icons/ctool16/import_units_prj.png"
+            id="com.webratio.ide.units.ui.wizards.WR5ImportUnitsProjectWizard"
+            name="WebRatio Components">
+         <description>
+            Import a custom components project made with WebRatio 5.x or 6.x.
+         </description>
+      </wizard>
+      <wizard
+            category="com.webratio.ide.ui"
+            class="com.webratio.ide.units.ui.wizards.WR4ImportUnitWizard"
+            icon="icons/ctool16/import4x_wiz.png"
+            id="com.webratio.ide.units.ui.wizards.WR4ImportUnitWizard"
+            name="WebRatio 4.x Component">
+         <description>
+            Import a custom component made with WebRatio 4.x.
+         </description>
+      </wizard>
+      <wizard
+            category="com.webratio.ide.ui"
+            class="com.webratio.ide.units.ui.wizards.WR5ImportUnitWizard"
+            icon="icons/ctool16/import4x_wiz.png"
+            id="com.webratio.ide.units.ui.wizards.WR5ImportUnitWizard"
+            name="WebRatio Component">
+         <description>
+            Import a custom component made with WebRatio 5.x or 6.x.
+         </description>
+      </wizard>
+      <wizard
+            category="com.webratio.ide.ui"
+            class="com.webratio.ide.units.ui.wizards.WR8ImportComponentWizard"
+            icon="icons/ctool16/import_export_component.png"
+            id="com.webratio.ide.units.ui.wizards.WR8ImportComponentWizard"
+            name="Component">
+         <description>
+            Import a custom component made with WebRatio 8.x.
+         </description>
+      </wizard>
+   </extension>
+   -->
+  <!--   
+   <extension
+         point="org.eclipse.ui.exportWizards">
+      <wizard
+            category="com.webratio.ide.ui"
+            class="com.webratio.ide.units.ui.wizards.WR5ExportUnitWizard"
+            icon="icons/ctool16/export_unit_wiz.png"
+            id="com.webratio.ide.units.WR5ExportUnitWizard"
+            name="Custom Component">
+         <description>
+            Export a custom component made with WebRatio 6.
+         </description>
+      </wizard>
+      <wizard
+            category="com.webratio.ide.ui"
+            class="com.webratio.ide.units.ui.wizards.WR8ExportComponentWizard"
+            icon="icons/ctool16/import_export_component.png"
+            id="com.webratio.ide.units.ui.wizards.WR8ExportComponentWizard"
+            name="Component">
+         <description>
+            Export a custom component made with WebRatio 8.
+         </description>
+      </wizard>
+   </extension>
+   -->
+  <extension point="org.eclipse.ui.ide.projectNatureImages">
+    <image icon="icons/ovr16/units_ovr.png" id="com.webratio.ide.units.wrunitsnature" natureId="com.webratio.ide.units.wrunitsnature"/>
+    <image icon="icons/ovr16/units_ovr.png" id="com.webratio.ide.units.mobilecomponentsnature" natureId="com.webratio.ide.units.mobilecomponentsnature"/>
+    <image icon="icons/ovr16/units_ovr.png" id="com.webratio.ide.units.webcomponentsnature" natureId="com.webratio.ide.units.webcomponentsnature"/>
+  </extension>
+  <extension point="org.eclipse.ui.editors">
+    <editor class="com.webratio.ide.units.editors.ComponentFormEditor" default="true" filenames="Component.xml" icon="icons/obj16/unit_obj.png" id="com.webratio.ide.units.editors.ComponentFormEditor" name="Component Type Editor"/>
+    <editor class="com.webratio.ide.units.editors.EventFormEditor" default="true" filenames="Event.xml" icon="icons/obj16/event_obj.png" id="com.webratio.ide.units.editors.EventFormEditor" name="Event Type Editor"/>
+    <editor class="com.webratio.ide.units.editors.InputParametersEditor" contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor" default="true" filenames="Input.template" icon="icons/obj16/input_params_obj.png" id="com.webratio.ide.units.editors.InputParametersEditor" name="Input Parameters Editor"/>
+    <editor class="com.webratio.ide.units.editors.OutputParametersEditor" contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor" default="true" filenames="Output.template" icon="icons/obj16/output_params_obj.png" id="com.webratio.ide.units.editors.OutputParametersEditor" name="Output Parameters Editor"/>
+    <editor class="com.webratio.ide.units.editors.LogicUnitEditor" contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor" default="true" filenames="Logic.template" icon="icons/obj16/logic_obj.png" id="com.webratio.ide.units.editors.LogicUnitEditor" name="Logic Unit Editor"/>
+  </extension>
+  <extension point="org.eclipse.ui.popupMenus">
+    <!--   
+      <objectContribution
+            adaptable="true"
+            id="com.webratio.ide.units.popupMenu"
+            objectClass="org.eclipse.core.resources.IProject">
+         <menu
+               id="com.webratio.ide.units.menu"
+               label="WebRatio">
+            <separator name="group0"/>
+         </menu>
+         <visibility>
+            <objectState
+                  name="projectNature"
+                  value="com.webratio.ide.units.wrunitsnature"/>
+         </visibility>
+         <action
+               class="com.webratio.ide.units.actions.CreatePDFGuideAction"
+               enablesFor="1"
+               id="com.webratio.ide.units.actions.CreatePDFGuideAction"
+               label="Create PDF Guide"
+               menubarPath="com.webratio.ide.units.menu/group0"/>
+         <action
+               class="com.webratio.ide.units.actions.CreateHTMLGuideAction"
+               enablesFor="1"
+               id="com.webratio.ide.units.actions.CreateHTMLGuideAction"
+               label="Create HTML Guide"
+               menubarPath="com.webratio.ide.units.menu/group0"/>
+      </objectContribution>
+      -->
+    <objectContribution adaptable="false" id="com.webratio.ide.units.builder.popupMenu" objectClass="org.eclipse.core.resources.IProject">
+      <action class="com.webratio.ide.units.actions.EnableTemplateScriptValidationAction" enablesFor="1" id="com.webratio.ide.units.actions.EnableTemplateScriptValidation" label="Enable Template/Script Validation" menubarPath="additions" style="toggle"></action>
+      <filter name="projectNature" value="com.webratio.ide.units.wrunitsnature"></filter>
+    </objectContribution>
+  </extension>
+</plugin>

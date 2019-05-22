@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: com.webratio.components.web.utility;singleton:=tr
+ ue
+Require-Bundle: com.webratio.commons.libs,com.webratio.commons.transfo
+ rm,com.webratio.rtx,com.webratio.ide.units,com.webratio.lib.hibernate
+ ,com.webratio.commons.lib.groovy,com.webratio.commons.base,com.webrat
+ io.data,com.webratio.log,com.webratio.commons.lib.apache.httpcomponen
+ ts
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: WebRatio
+Import-Package: org.apache.http.entity
+Ant-Version: Apache Ant 1.9.2
+Export-Package: com.webratio.components.web.utility,com.webratio.compo
+ nents.web.utility.beans
+Bundle-Name: Utility Components
+Bundle-Version: 8.10.3.201902120438
+Bundle-ClassPath: lib/apns.jar,lib/google-gcm-server.jar,lib/json-simp
+ le.jar,lib/mpns.jar,com.webratio.components.web.utility.jar
+Created-By: 1.8.0-b132 (Oracle Corporation)
+
+Name: plugin.xml
+SHA-256-Digest: Lc6ujk9UB1vcGsTENv8ctAUP4uSv7McUSeeA6KDGW2E=
+
+Name: META-INF/signature
+SHA-256-Digest: PRYYgqFVErjMMx3lDuv1T8nEp66ZmsJ8BwS19rF+4z4=
+

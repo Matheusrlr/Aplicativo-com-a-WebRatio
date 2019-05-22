@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping auto-import="true" default-cascade="none" default-access="property" default-lazy="true">
+  <class name="com.webratio.webapp.Tipo" table="`tipo`" dynamic-update="true" dynamic-insert="true" mutable="true" polymorphism="implicit" select-before-update="false" optimistic-lock="version">
+    <composite-id mapped="false" unsaved-value="undefined">
+      <key-property name="oid" column="`oid`" type="java.lang.Integer"/>
+      <key-property name="oidCategoria" column="`oid_categoria`" type="java.lang.Integer"/>
+    </composite-id>
+    <property name="nome" column="`nome`" type="java.lang.String" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
+    <property name="createdAt" column="`createdat`" type="java.sql.Timestamp" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
+    <property name="updatedAt" column="`updatedat`" type="java.sql.Timestamp" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
+    <set name="tipoToEstabelecimentos" inverse="true" sort="unsorted" mutable="true" optimistic-lock="true" embed-xml="true">
+      <key on-delete="noaction">
+        <column name="`oid_tipo`"/>
+        <column name="``"/>
+      </key>
+      <one-to-many class="com.webratio.webapp.Estabelecimentos" not-found="exception" embed-xml="true"/>
+    </set>
+    <many-to-one name="tipoToCategoria" class="com.webratio.webapp.Categoria" update="false" insert="false" not-found="exception" unique="false" optimistic-lock="true" embed-xml="true">
+      <column name="`oid_categoria`"/>
+    </many-to-one>
+  </class>
+  <!-- mapping for relationship 'TipoToEstabelecimentos[role4]' -->
+  <class entity-name="com.webratio.webapp.Rel_Tipo_to_tipoToEstabelecimentos" table="`topico`" dynamic-update="true" dynamic-insert="true" mutable="true" polymorphism="implicit" select-before-update="false" optimistic-lock="version">
+    <id name="target_oid" column="`oid`" type="java.lang.Integer"/>
+    <property name="source_oid" column="`oid_tipo`" type="java.lang.Integer" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
+  </class>
+  <!-- mapping for relationship 'TipoToCategoria[role7]' -->
+  <class entity-name="com.webratio.webapp.Rel_Tipo_to_tipoToCategoria" table="`tipo`" dynamic-update="true" dynamic-insert="true" mutable="true" polymorphism="implicit" select-before-update="false" optimistic-lock="version">
+    <composite-id mapped="false" unsaved-value="undefined">
+      <key-property name="source_oid" column="`oid`" type="java.lang.Integer"/>
+      <key-property name="source_oidCategoria" column="`oid_categoria`" type="java.lang.Integer"/>
+    </composite-id>
+    <property name="target_oid" column="`oid_categoria`" type="java.lang.Integer" insert="false" update="false" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
+  </class>
+</hibernate-mapping>

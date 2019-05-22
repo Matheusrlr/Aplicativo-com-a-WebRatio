@@ -1,0 +1,64 @@
+<Element name="Module" lowerName="module" pluralLowerName="modules">
+	<Description>
+		A Module is a reference to a
+		reusable fragment of interaction flow model defined by a Module Definition.
+		The navigation enters from an input Port and exits from an output Port, optionally bringing 
+		parameters along. Which output Port is used for exiting depends on the internal model of the
+		Module Definition.
+	</Description>
+	<ActionRef label="Add Property" />
+	<ActionRef label="Localize" />
+	<ActionRef label="Surround with Area" />
+	<Action label="Go to Module Definition">
+		Goes to the &lt;a href="/Reference/ElementsReference/WebModelElements/HybridModuleDefinition"&gt;Module Definition&lt;/a&gt;
+		that this Module refers to.
+	</Action>
+	<ActionRef label="Open Generated Code" />
+	<ActionRef label="Generate Logic Descriptors Only"/>
+	<ActionRef label="Generate Selection"/>
+	<ActionRef label="Find Model Problems"/>
+	<ActionRef label="Help"/>
+	<PropertyCategory name="General">
+		<PropertyRef label="Identifier" />
+		<PropertyRef label="Name" />
+		<Property label="Home">
+			If checked, this module is accessed when the ancestor Site View is 
+			accessed.
+		</Property>
+		<PropertyRef label="Default"/>
+		<Property label="Landmark">
+			If checked, a flow will appear in the corresponding landmark 
+			menu that will access this module.
+		</Property>
+		<Property label="Protected">
+			If checked, the access to this module is permitted only to users 
+			belonging to a group entitled to access it.
+		</Property>
+		<Property label="Secure">
+			If checked, all the flows whose navigation can access this 
+			module are implemented using the secure HTTP protocol, 
+			instead of the HTTP protocol.
+		</Property>
+		<Property label="Ignore Master Page">
+			If checked, the layout pages generated from this module do not include
+			the Master Container elements. Enabled only when refering to Hybrid Module Definitions.
+		</Property>
+		<Property label="Module Definition">
+			The &lt;a href="/Reference/ElementsReference/WebModelElements/HybridModuleDefinition"&gt;Module Definition&lt;/a&gt;
+			to which this Module refers.
+		</Property>
+		<PropertyRef label="Custom Descriptor"/>
+		<PropertyRef label="Custom URL Name"/>
+		<Property label="Ignore Master Container">
+	    	If checked, the generated layout page does not include the Master Container.
+		</Property>
+	</PropertyCategory>
+	<PropertyCategory name="Appearance">
+		<Property label="Icon">
+			A distinctive icon displayed in the diagram and in the outline.
+		</Property>
+		<Property label="Show All Parts">
+			If checked, all parts belonging to the module will be displayed.
+		</Property>
+	</PropertyCategory>
+</Element>

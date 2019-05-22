@@ -1,0 +1,66 @@
+{
+  "_" : "wrm.core.PanelService",
+  "navigations" : {
+    "0" : {
+      "nc" : true,
+      "flows" : "scr5",
+      "fr" : true
+    },
+    "1" : {
+      "nc" : true,
+      "flows" : "scr5.link",
+      "fr" : true
+    },
+    "2" : {
+      "flows" : "scr5.auto-link",
+      "fr" : true
+    },
+    "3" : {
+      "flows" : "scr5.auto-link"
+    },
+    "4" : {
+      "flows" : "nf4",
+      "fr" : true
+    },
+    "5" : {
+      "flows" : "nf4"
+    }
+  },
+  "knownEffects" : "#pr#",
+  "propagationSequence" : "",
+  "propagations" : { },
+  "components" : {
+    "pwu2" : {
+      "fb" : true,
+      "conds" : [ {
+        "fr" : false,
+        "navs" : "5",
+        "effects" : "-"
+      }, {
+        "fr" : false,
+        "effects" : "#pr#"
+      } ],
+      "rf" : [ {
+        "all" : true,
+        "fr" : true,
+        "navs" : "4",
+        "inputs" : "pwu2:maxResults"
+      }, {
+        "all" : true,
+        "navs" : "5",
+        "inputs" : "pwu2:maxResults"
+      }, {
+        "all" : true,
+        "fr" : true,
+        "navs" : "0|1"
+      } ]
+    }
+  },
+  "events" : { },
+  "autoFlow" : {
+    "preserve" : "pwu2:maxResults"
+  },
+  "autoFlowFull" : {
+    "preserve" : "pwu2:maxResults"
+  }
+}

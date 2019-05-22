@@ -1,0 +1,32 @@
+<Element name="EndSignalEvent" lowerName="end signal event"
+		pluralLowerName="">
+		<Description>
+			A &lt;a href="/Concepts/Elements/Process/Events/SignalEvents/EndSignalEvent"/&gt; 
+			indicates that a Signal will be broadcasted when the End has been reached. Note that the Signal,
+			which is broadcast to any Process that can receive the Signal, 
+			can be sent across Process levels or Pools, but is not a Message. 
+		</Description>
+        
+        <ActionRef label="Add Lane" />
+        <ActionRef label="Add Property" />
+        <ActionRef label="Surround with Group" />
+        <ActionRef label="Move into Embedded Subprocess" />
+        <ActionRef label="Edit Process Parameters..." />
+        <Action label="Change Type to" >
+          Converts this event into another type of end event.
+        </Action>
+        <ActionRef label="Search References" />
+        <ActionRef label="Help" />
+
+    <PropertyCategory name="General">
+        <PropertyRef label="Id"/>
+        <PropertyRef label="Code"/>
+        <PropertyRef label="Name"/>
+        <PropertyRef label="Instance Name"/>
+        <PropertyRef label="Signal"/>
+        <!-- In binding similar to Int.ThrowingSignal (B3) -->
+	    <Property label="Input Binding">
+	    	The set of process parameter passed as input to the selected Action Definition.  
+		</Property>
+    </PropertyCategory>
+</Element>

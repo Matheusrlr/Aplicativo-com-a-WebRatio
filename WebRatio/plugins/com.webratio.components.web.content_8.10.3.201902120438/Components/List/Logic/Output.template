@@ -1,0 +1,37 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import org.apache.commons.lang.StringUtils
+
+setXMLOutput()
+def componentId = component["id"]
+def classId = component["dataBinding"]
+def domainClass = getById(classId)
+%>
+<OutputParameters>
+   <%
+    for (a in getKeyAttributes(domainClass)) { 
+       %><OutputParameter name="<%=a["id"]%>Array" refId="<%=a["id"]%>" label="<%=getLabel(a)%> (block)" possiblyLarge="true"/><%
+    }
+    if(component["distinct"] != "true" && "true" == component["checkable"]){
+       for (a in getKeyAttributes(getById(classId))) { 
+         %><OutputParameter name="<%=a["id"]%>Checked" refId="<%=a["id"]%>" label="Checked <%=getLabel(a)%>" providedByForm="true"/><% 
+       }
+    }    
+    for (a in getAttributes(domainClass)) { 
+       %><OutputParameter name="data[].<%=a["id"]%>" refId="<%=a["id"]%>" type="<%=getTypeExpression(domainClass, a, true, false)%>" label="<%=getLabel(a)%>" possiblyLarge="true"/><%
+    } 
+    
+    for (role in getOutgoingRoles(getById(classId)).findAll{!isMany(it)}) { 
+      for (keyAttr in getKeyAttributes(getTargetDomainClass(role))) { 
+        %><OutputParameter name="data[].<%=role["id"] + "_" + keyAttr["id"]%>" refId="<%=role["id"]%>" label="<%=getLabel(role) + "." + getLabel(keyAttr)%>" mandatory="false" possiblyLarge="true"/><% 
+      }
+    } 
+   %>
+   
+   <%component["displayAttributes"].tokenize(" ").findAll{it.contains(".") || it.contains("(")}.each{%>
+      <OutputParameter name="data[].<%=getAttributeExpressionId(it)%>" refId="importedAttribute" label="<%=getAttributeExpressionImportLabel(it)%>" possiblyLarge="true"/>
+   <%}%>
+   
+   <OutputParameter name="scroller.current" label="Block Index"/>
+   <OutputParameter name="dataSize" label="Data Size"/>
+</OutputParameters>

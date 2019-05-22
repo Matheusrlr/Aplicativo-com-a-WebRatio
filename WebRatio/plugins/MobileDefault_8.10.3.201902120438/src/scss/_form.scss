@@ -1,0 +1,50 @@
+.item-toggle,
+.item-checkbox {
+  .input-label {
+    max-width: none;
+    width: auto;
+    display: inline-block;
+  }
+}
+
+.checkbox input,
+.checkbox-icon {
+  padding-right: 0;
+}
+
+.wr-field-image {
+  @include flex(1 0 220px);
+  @include align-items(center);
+  img {
+    max-width: 80px;
+    max-height: 80px;
+  }
+  .wr-placeholder {
+    font-size: 24px;
+  }
+}
+
+.item-select:after {
+  top: 25px;
+}
+
+.wr-input-wrapper {
+  @include flex(1 0 220px);
+  @include align-items(center);
+}
+
+.input-label.has-errors,
+input.ng-invalid {
+  color: #f00;
+}
+
+.wr-error-list {
+  color: #f00;
+  font-size: 0.8rem;
+  .item-toggle & {
+    margin-top: 46px;
+  }
+  .item-select & {
+    margin-top: 50px;
+  }
+}

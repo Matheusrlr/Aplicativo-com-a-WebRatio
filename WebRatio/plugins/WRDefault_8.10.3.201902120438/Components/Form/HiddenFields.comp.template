@@ -1,0 +1,15 @@
+#?delimiters [%, %], [%=, %]
+[%
+if(component["dataBinding"] != ""){
+ %]<form:hidden path="<wr:Id context="component"/>Key" id="<wr:Id context="component"/>Key"/>[%
+}
+// prints hidden fields, which do not have associated layout:Field elements
+for (hiddenField in getById(component["id"])?.selectNodes("Field[@hidden = 'true']")) {
+    def type = hiddenField["type"]
+	if (type == "blob") { %]
+        <form:hidden path="[%=hiddenField["id"]%].preload"/>
+    [% } else { %]
+		<form:hidden path="[%=hiddenField["id"]%]" id="[%=hiddenField["id"]%]"/>
+    [% }
+} 
+%]

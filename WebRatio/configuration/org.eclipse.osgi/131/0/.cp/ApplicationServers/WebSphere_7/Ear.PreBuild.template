@@ -1,0 +1,63 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import java.util.jar.Manifest
+import java.io.FileOutputStream
+import org.apache.commons.lang.StringUtils
+import org.apache.commons.io.FileUtils
+import com.webratio.generator.helpers.XMLUtils
+import com.webratio.generator.resolvers.WebAppEntityResolver
+import com.webratio.generator.resolvers.FakeEntityResolver
+
+// computes the classpath libs
+def libs = []
+libs.add("./lib/" + rootModuleName + ".jar")
+for(jarFileName in subProjects.keySet().findAll{subProjects.get(it) == "com.webratio.ide.DataModelNature"}){
+    libs.add("./lib/" + jarFileName)
+} 
+libs.addAll(new File(outputFolder, "lib").listFiles().collect{"./lib/" + it.name})
+
+def jndiNames = []
+def project = XMLUtils.parseXMLFile(tempProjectFile, FakeEntityResolver.INSTANCE).getRootElement() 
+for(db in project.selectNodes("DomainModel/db:Database[string(@jndiName) !='']")){
+   jndiNames.add(StringUtils.removeStart(db["jndiName"], "java:comp/env/"))
+}
+   
+// creates the manifest
+def warFolders = subProjects.keySet().findAll{it.endsWith(".war")}
+warFolders.add(rootModuleName + ".war")
+for(warFolder in warFolders){
+  
+  /* creates the war manifest */
+  def manifest = new Manifest()
+  def manifestAtts = manifest.getMainAttributes()
+  manifestAtts.putValue("Manifest-Version", "1.0")
+  manifestAtts.putValue("Created-By",  System.getProperty("java.vm.version") + " (" + System.getProperty("java.vm.vendor") + ")")
+  manifestAtts.putValue("Bundle-Vendor", "WebRatio s.r.l.")
+  manifestAtts.putValue("Bundle-Name", StringUtils.substringBeforeLast(warFolder, ".war"))
+  manifestAtts.putValue("Class-Path", libs.collect{it}.join(" "))
+  def outputStream = null
+  try{
+     def manifestFile = new File(outputFolder, warFolder + "/META-INF/MANIFEST.MF")
+     manifestFile.parentFile.mkdirs()
+     outputStream = new FileOutputStream(manifestFile)
+     manifest.write(outputStream)
+  }finally{
+     org.apache.commons.io.IOUtils.closeQuietly(outputStream)
+  }  
+  
+  /* updates the JNDI resources */
+  if(!jndiNames.empty){
+    def webXmlFile = new File(outputFolder, warFolder + "/WEB-INF/web.xml")
+    def webXML = parseXMLFile(webXmlFile, WebAppEntityResolver.INSTANCE)  
+    for(jndiName in jndiNames){
+      def resRef = webXML.getRootElement().addElement("resource-ref")
+      resRef.addElement("res-ref-name").setText(jndiName)
+      resRef.addElement("res-type").setText("javax.sql.DataSource")
+      resRef.addElement("res-auth").setText("Container")
+      resRef.addElement("res-sharing-scope").setText("Shareable")
+    }
+    FileUtils.writeStringToFile(webXmlFile, serializeXML(webXML, true))
+  }
+}    
+
+%>

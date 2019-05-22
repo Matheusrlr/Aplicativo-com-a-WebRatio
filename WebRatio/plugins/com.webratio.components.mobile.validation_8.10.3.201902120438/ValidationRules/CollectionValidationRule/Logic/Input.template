@@ -1,0 +1,55 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+
+def elementId = element["id"]
+def classId = element["dataBinding"]
+def dClass = getByIdOptional(classId)
+%]
+<InputParameters>
+[%
+	if (dClass == null) { %]
+		<InputParameter name="[%= elementId %].values" refId="[%= elementId %]" label="[[%= element["name"] %]] values" mandatory="[%= element.selectNodes("Value").empty %]"/>
+	[% } else {
+		def condExpr = element.selectNodes("ConditionalExpression/*")
+		for (cond in condExpr) {
+			if (cond.name == "AttributesCondition" && cond["attributes"]) {
+				if (cond["value"] == "" && !isUnaryPredicate(cond["predicate"])) {
+					def attributes = cond["attributes"].tokenize(" ") %]
+						<InputParameter
+							name = "[%= getConditionalExpressionPartInputName(cond) %]"
+							refId="[%= cond["id"] %]"
+							type="[%= attributes.collect{classId + "." + it}.join("|") %]"
+							label="[%= getAttributesConditionLabel(cond) %]"
+							mandatory="[%= isRequiredConditionalExpressionPart(cond) %]"
+						/>
+					[%
+				}
+			}
+			if (cond.name == "KeyCondition") {
+				for (a in getKeyAttributes(dClass)) { %]
+					<InputParameter
+						name = "[%= getConditionalExpressionPartInputName(cond, a) %]"
+						refId="[%= cond["id"] %]"
+						type="[%= getAssignableTypeExpression(dClass, a, true, false) %]"
+						label="[%= getKeyConditionLabel(cond, dClass, a) %]"
+						mandatory="[%= isRequiredConditionalExpressionPart(cond)%] "
+					/>
+				[% }
+			}	
+			if (cond.name == "AssociationRoleCondition" && cond["role"]) {
+				for (a in getKeyAttributes(getSourceDomainClass(getRoleByExpression(cond["role"])))) { %]
+						<InputParameter
+							name = "[%= getConditionalExpressionPartInputName(cond, a) %]"
+							refId="[%= cond["id"] %]"
+							type="[%= getAssignableTypeExpression(getSourceDomainClass(getRoleByExpression(cond["role"])), a, true, true) %]"
+							label="[%= getRoleConditionLabel(cond, a) %]"
+							mandatory="[%= isRequiredConditionalExpressionPart(cond) %]"
+						/>
+					[%
+				}
+			}
+		}
+	}
+%]
+</InputParameters>

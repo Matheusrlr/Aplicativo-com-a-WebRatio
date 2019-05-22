@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Export-Package: org.objectweb.asm,org.objectweb.asm.signature
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/asm.jar
+Bundle-Version: 3.3.1
+Bundle-Name: WebRatio 3rd Party Library - ASM
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.asm
+Bundle-RequiredExecutionEnvironment: J2SE-1.4
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about_files/asm.txt
+SHA-256-Digest: ri0R4UXvMkHtFk6kjOKDAYJ2vW85A+NWgaxq7fGJglg=
+
+Name: about.html
+SHA-256-Digest: ABVbbP/TF/vXl39+bNSWpkZb5+YOPqMozik7FBXFUD0=
+
+Name: lib/asm.jar
+SHA-256-Digest: wrOSdfjpUbx0dQCAoSZs2rw5OZvF4T1kK/LTRkSd9/M=
+

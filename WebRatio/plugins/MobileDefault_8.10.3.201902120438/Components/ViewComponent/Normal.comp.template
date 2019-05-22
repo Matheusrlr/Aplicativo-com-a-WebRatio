@@ -1,0 +1,27 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Event Style" name="events-style" type="enum" default="none" values="none|button-bar|tabs">
+Defines the style of the events.
+</wr:LayoutParameter>
+[%
+setHTMLOutput()
+
+def eventTabs = params["events-style"] == "tabs"
+def hasEvents = (component.selectSingleNode("layout:Event") != null)
+
+def eventTemplate = getStyle(component) + "/Tab"
+%]
+<div class="<wr:StyleClass/> wr-comp-ViewComponent list">
+	<wr:Frame>
+		[% if (hasEvents) { %]
+			<div class="[%= (eventTabs) ? "item " : "" %][%= (params["events-style"] != "none") ? params["events-style"] : "item-buttons" %]">    
+				<wr:Iterate var="event" context="component" select="layout:Event">
+					[% if (eventTabs && !getLayout(event, LayoutType.EVENT).path.endsWith("Tab")) {
+							throwGenerationException("Use Tab event template for ${event['name']} (${event['id']})")
+						}
+					%]
+					<wr:Event/>
+				</wr:Iterate>
+			</div>
+		[% } %]
+	</wr:Frame>
+</div>

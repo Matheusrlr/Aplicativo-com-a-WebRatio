@@ -1,0 +1,46 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.GenerationException
+
+if (cell == null) {
+	def title = "Undefined cell variable"    
+	def reason = "Unable to generate the Cell layout."
+	def hint = "Specify a variable holding a layout:Cell"
+	throw new GenerationException(title, reason, [hint], null)
+}
+
+/* Get style */
+def layoutManager = getLayoutManager(cell)
+def cellLayout = getLayout(cell, LayoutType.CELL)
+def templatePath = layoutManager.cellLayout?.path ?: cellLayout.path
+def templateParameters = layoutManager.cellLayout?.path ? [:] : cellLayout.parameters
+if (!templatePath || templatePath == "None") {
+	templatePath = "BUILTIN/Default"  // normalize an "unspecified" cell template
+}
+def templateFile = getLayoutFile(templatePath, LayoutType.CELL)
+if (!templateFile) {
+	def title = "Cell Layout Not Found"
+	def reason = "Unable to find the cell layout \'" + templatePath + "\'"
+	def hint = "Check the project for the missing cell layout [name = " + templatePath + "] associated with a cell of the page [id = " + page["id"] + "]"
+	throw new GenerationException(title, reason, [hint], null)
+}
+addUsedTemplate(templatePath)
+
+/* Render the Cell in a wrapper */
+printRaw(executeContextTemplate("MVC/Wrapper.template", ["refreshFragmentType": "control", "element": cell, "content": {
+	
+	/* Visibility condition start */
+	def visibilityCondition = getVisibilityCondition(cell)
+	if (visibilityCondition) {
+		%]<c:if test="${[% printJSPTagValue(visibilityCondition) %]}">[%
+	}
+	
+	/* Actual Cell layout */
+	printRaw(executeTemplate(templateFile.absolutePath, ["params": templateParameters, "templateType": "cell"]))
+	
+	/* Visibility condition end */
+	if (visibilityCondition) {
+		%]</c:if>[%
+	}
+}]))
+%]

@@ -1,0 +1,33 @@
+Manifest-Version: 1.0
+Eclipse-RegisterBuddy: com.webratio.commons.transform, com.webratio.co
+ mmons.libs
+Bundle-SymbolicName: com.webratio.generator.helpers;singleton:=true
+Require-Bundle: com.webratio.commons.libs,com.webratio.commons.transfo
+ rm,org.eclipse.text,org.eclipse.jdt.core,org.eclipse.equinox.registry
+ ,org.eclipse.core.runtime,org.apache.ant,com.webratio.commons.lib.goo
+ gle.guava,com.webratio.lib.hibernate,com.webratio.commons.dom4j,com.w
+ ebratio.commons.lib.groovy,com.webratio.model,com.webratio.model.quer
+ y,com.webratio.commons.lib.jsr305,com.webratio.commons.base,com.webra
+ tio.commons.lib.jackson2,com.webratio.data
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: WebRatio
+Ant-Version: Apache Ant 1.9.2
+Export-Package: com.webratio.generator,com.webratio.generator.cache,co
+ m.webratio.generator.contributors,com.webratio.generator.expand,com.w
+ ebratio.generator.helpers,com.webratio.generator.helpers.mobile,com.w
+ ebratio.generator.helpers.webold,com.webratio.generator.io,com.webrat
+ io.generator.output,com.webratio.generator.resolvers,com.webratio.gen
+ erator.runmodel,com.webratio.generator.runmodel.analysis,com.webratio
+ .generator.xml
+Bundle-Name: WebRatio Generator Helpers Plug-in
+Bundle-Version: 8.10.3.201902120438
+Bundle-ClassPath: lib/jericho-html.jar,bin.jar
+Created-By: 1.8.0-b132 (Oracle Corporation)
+
+Name: plugin.xml
+SHA-256-Digest: lY0jt0hxvZmccZQyyl65ISLogYEuxgDsuzFBMHPY11k=
+
+Name: META-INF/signature
+SHA-256-Digest: PRYYgqFVErjMMx3lDuv1T8nEp66ZmsJ8BwS19rF+4z4=
+

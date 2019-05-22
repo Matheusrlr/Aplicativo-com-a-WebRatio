@@ -1,0 +1,26 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+
+def role = getById(component["associationRole"])
+def sourceDClass = getSourceDomainClass(role)
+def targetDClass = getTargetDomainClass(role)
+%]
+<OutputParameters>
+	[% for (a in getKeyAttributes(sourceDClass)) { %]
+		<OutputParameter
+			name="source[%= a["id"] %]"
+			refId="[%= a["id"] %]"
+			type="[%= getTypeExpression(sourceDClass, a, true, false) %]"
+			label="Source [%= getLabel(a) %] [[%= sourceDClass["name"] %]]"
+		/>
+	[% } %]
+	[% for (a in getKeyAttributes(targetDClass)) { %]
+		<OutputParameter
+			name="target[%= a["id"] %]"
+			refId="[%= a["id"] %]"
+			type="[%= getTypeExpression(targetDClass, a, true, false) %]"
+			label="Target [%= getLabel(a) %] [[%= targetDClass["name"] %]]"
+		/>
+	[% } %]
+</OutputParameters>

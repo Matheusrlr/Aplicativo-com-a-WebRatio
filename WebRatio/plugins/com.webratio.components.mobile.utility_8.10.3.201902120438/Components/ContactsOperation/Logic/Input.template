@@ -1,0 +1,40 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+%]
+
+<InputParameters>
+	[% if (component["mode"] == "save") { %]
+		<InputParameter name="id" label="Contact Id" />
+		<InputParameter name="firstName" label="First Name" />
+		<InputParameter name="lastName" label="Last Name" />
+		<InputParameter name="homePhone" label="Home Phone Number" />
+		<InputParameter name="workPhone" label="Work Phone Number" />
+		<InputParameter name="mobilePhone" label="Mobile Phone Number" />
+		<InputParameter name="homeEmail" label="Home Email" />
+		<InputParameter name="workEmail" label="Work Email" />
+		<InputParameter name="homeStreet" label="Home Street Address" />
+		<InputParameter name="homeCity" label="Home City" />
+		<InputParameter name="homeRegion" label="Home Region" />
+		<InputParameter name="homePostalCode" label="Home Postal Code" />
+		<InputParameter name="homeCountry" label="Home Country" />	
+		[% 
+		for (contactAddress in component.selectNodes("ContactAddress")) { %]
+			<InputParameter name="[%= contactAddress["id"] + ".street" %]" label="[%= contactAddress["name"] + ".Street Address" %]" />
+			<InputParameter name="[%= contactAddress["id"] + ".city" %]" label="[%= contactAddress["name"] + ".City" %]" />
+			<InputParameter name="[%= contactAddress["id"] + ".region" %]" label="[%= contactAddress["name"] + ".Region" %]" />
+			<InputParameter name="[%= contactAddress["id"] + ".postalCode" %]" label="[%= contactAddress["name"] + ".Postal Code" %]" />
+			<InputParameter name="[%= contactAddress["id"] + ".country" %]" label="[%= contactAddress["name"] + ".Country" %]" />
+		[%
+		}
+		for (contactPhone in component.selectNodes("ContactPhone")) { %]
+			<InputParameter name="[%= contactPhone["id"] + ".number" %]" label="[%= contactPhone["name"] + ".Number" %]" />
+		[%
+		}
+		for (contactEmail in component.selectNodes("ContactEmail")) { %]
+			<InputParameter name="[%= contactEmail["id"] + ".email" %]" label="[%= contactEmail["name"] + ".Email" %]" />
+		[%
+		}
+	}
+	%]
+</InputParameters>

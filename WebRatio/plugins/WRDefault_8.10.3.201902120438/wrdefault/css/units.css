@@ -1,0 +1,552 @@
+/**************************************************************************/
+/*                            GENERAL                           */
+/*  Style rules determining the behavior of all WebRatio View Components  */
+/**************************************************************************/
+
+/* WebRatio CSS classes DIVs */
+.plain {}
+
+/* Integer values */
+.integer {}
+
+/* Float values */
+.float {}
+
+/* Decimal values */
+.decimal {}
+
+/* Headers and attribute names */
+.header {}
+
+/* Headers and attribute names of current elements */
+.headerCurrent {}
+
+/* Alternate headers and attribute names */
+.headerAlternate {}
+
+/* Alternate headers and attribute names of current elements */
+.headerCurrentAlternate {}
+
+/* Attribute values */
+.value {}
+
+/* Attribute values of current elements */
+.valueCurrent {}
+
+/* Alternate attribute values */
+.valueAlternate {}
+
+/* Alternate attribute values of current elements */
+.valueCurrentAlternate {}
+
+/* Bullets */
+.bullet {}
+
+/* Bullets of current elements */
+.bulletCurrent {}
+
+/* Alternate bullets */
+.bulletAlternate {}
+
+/* Alternate bullets of current elements */
+.bulletCurrentAlternate {}
+
+/* Rows */
+.row {}
+
+/* Rows of current elements */
+.rowCurrent {}
+
+/* Alternate rows */
+.rowAlternate {}
+
+/* Alternate rows of current elements */
+.rowCurrentAlternate {}
+
+/* Buttons */
+.button {}
+
+/* Links */
+.link {}
+
+/* Links of current elements */
+.linkCurrent {}
+
+/* Alternate links */
+.linkAlternate {}
+
+/* Alternate links of current elements */
+.linkCurrentAlternate {}
+
+/* Scroll links */
+.scroll {}
+
+/* Text between scroll links (e.g. 1-10 of 20) */
+.scrollText {}
+
+/* Jump bundles */
+.jump {}
+
+/* Sorting links */
+.sort {}
+
+/* Ascending sort links */
+.sortAscending {}
+
+/* Descending sort links */
+.sortDescending {}
+
+/* "Select All" link */
+.selectAll {}
+
+/* "Unselect All" link */
+.unSelectAll {}
+
+/* Fields */
+.field {}
+
+/* Selection fields and selects */
+.selectionfield {}
+
+/* Multi selection fields */
+.multiselectionfield {}
+
+/* Error messages */
+.error {}
+
+/* Checkboxes */
+.checkBox {}
+
+/* Days of calendars */
+.day {}
+
+/* Month names of calendars */
+.month {}
+
+/* Previous year link of calendars */
+.previousYear {}
+
+/* Next year link of calendars */
+.nextYear {}
+
+/* Horizontal spacing */
+.horizontalSpacer {}
+
+/* Vertical spacing */
+.verticalSpacer {}
+
+/**************************************************************************************/
+/*  Theses classes determine the behavior of view components according to their type  */
+/**************************************************************************************/
+
+/**************/
+/*  ALPHABET  */
+/**************/
+
+/* Alphabet values */
+.Alphabet .value {}
+
+/* Alphabet links */
+.Alphabet .link {}
+
+/*************/
+/*  DETAILS  */
+/*************/
+
+/* Details headers and attribute names */
+.Details .header {}
+
+/* Details attribute values */
+.Details .value {}
+
+/* Details rows */
+.Details .row {}
+
+/* Details alternate rows */
+.Details .rowAlternate {}
+
+/* Details links */
+.Details .link {}
+
+/**********/
+/*  FORM  */
+/**********/
+
+/* Form headers and field names */
+.Form .header {}
+
+/* Form fields */
+.Form .value {}
+
+/* Form rows */
+.Form .row {}
+
+/* Form alternate rows */
+.Form .rowAlternate {}
+
+/* Form links */
+.Form .button {}
+
+/* Form fields */
+.Form .field {}
+
+/* Form selection fields and selects */
+.Form .selectionfield {}
+
+/* Form multi selection fields */
+.Form .multiselectionfield {}
+
+/* Form error messages */
+.Form .error {}
+
+
+/**************/
+/*  CALENDAR  */
+/**************/
+
+/* Calendar values */
+.Calendar .value {}
+
+/* Calendar values of the current element*/
+.Calendar .valueCurrent {}
+
+/* Calendar links */
+.Calendar .button {}
+
+/* Calendar links */
+.Calendar .link {}
+
+/* Calendar links of current elements */
+.Calendar .linkCurrent {}
+
+/* Calendar days */
+.Calendar .day {}
+
+/* Calendar month names */
+.Calendar .month {}
+
+/* Calendar previous year link */
+.Calendar .previousYear {}
+
+/* Calendar next year link */
+.Calendar .nextYear {}
+
+/* Calendar horizontal spacing */
+.Calendar .horizontalSpacer {}
+
+/* Calendar vertical spacing */
+.Calendar .verticalSpacer {}
+
+/******************/
+/*  HIERARCHY  */
+/******************/
+
+/* Hierarchy headers and attribute names */
+.Hierarchy .header {}
+
+/* Hierarchy attribute values */
+.Hierarchy .value {}
+
+/* Hierarchy bullets */
+.Hierarchy .bullet {}
+
+/* Hierarchy rows */
+.Hierarchy .row {}
+
+/* Hierarchy rows of current elements */
+.Hierarchy .rowCurrent {}
+
+/* Hierarchy alternate rows */
+.Hierarchy .rowAlternate {}
+
+/* Hierarchy alternate rows of current elements */
+.Hierarchy .rowCurrentAlternate {}
+
+/* Hierarchy links */
+.Hierarchy .link {}
+
+/*****************/
+/*  SIMPLE LIST  */
+/*****************/
+
+/* Simple List headers and attribute names */
+.SimpleList .header {}
+
+/* Simple List headers and attribute names of current elements */
+.SimpleList .headerCurrent {}
+
+/* Simple List alternate headers and attribute names */
+.SimpleList .headerAlternate {}
+
+/* Simple List alternate headers and attribute names of current elements */
+.SimpleList .headerCurrentAlternate {}
+
+/* Simple List attribute values */
+.SimpleList .informal {}
+
+/* Simple List attribute values */
+.SimpleList .value {}
+
+/* Simple List attribute values of current elements */
+.SimpleList .valueCurrent {}
+
+/* Simple List alternate attribute values */
+.SimpleList .valueAlternate {}
+
+/* Simple List alternate attribute values of current elements */
+.SimpleList .valueCurrentAlternate {}
+
+/* Simple List attribute values in dropdown*/
+.SimpleList .selectionfield {}
+
+/* Simple List bullets */
+.SimpleList .bullet {}
+
+/* Simple List bullets of current elements */
+.SimpleList .bulletCurrent {}
+
+/* Simple List alternate bullets */
+.SimpleList .bulletAlternate {}
+
+/* Simple List alternate bullets of current elements */
+.SimpleList .bulletCurrentAlternate {}
+
+/* Simple List rows */
+.SimpleList .row {}
+
+/* Simple List rows of current elements */
+.SimpleList .rowCurrent {}
+
+/* Simple List alternate rows */
+.SimpleList .rowAlternate {}
+
+/* Simple List alternate rows of current elements */
+.SimpleList .rowCurrentAlternate {}
+
+/* Simple List links */
+.SimpleList .link {}
+
+/* Simple List links of current elements */
+.SimpleList .linkCurrent {}
+
+/* Simple List alternate links */
+.SimpleList .linkAlternate {}
+
+/* Simple List alternate links of current elements */
+.SimpleList .linkCurrentAlternate {}
+
+/****************/
+/*  JOB STATUS  */
+/****************/
+
+/* Job Status headers and property names */
+.JobStatus .header {}
+
+/* Job Status property values */
+.JobStatus .value {}
+
+/* Job Status bullets */
+.JobStatus .bullet {}
+
+/* Job Status links */
+.JobStatus .link {}
+
+
+/*********************/
+/*  CHECKABLE LIST   */
+/*********************/
+
+/* Checkable List headers and attribute names */
+.CheckableList .header {}
+
+/* Checkable List attribute values */
+.CheckableList .value {}
+
+/* Checkable List rows */
+.CheckableList .row {}
+
+/* Checkable List alternate rows */
+.CheckableList .rowAlternate {}
+
+/* Checkable List links */
+.CheckableList .button {}
+
+/* Checkable List errors */
+.CheckableList .error {}
+
+/* Checkable List checkboxes */
+.CheckableList .checkBox {}
+
+/* Checkable List "Select All" link */
+.CheckableList .selectAll {}
+
+/**********************/
+/*  MULTIPLE DETAILS  */
+/**********************/
+
+/* Multiple Details headers and attribute names */
+.MultipleDetails .header {}
+
+/* Multiple Details attribute values */
+.MultipleDetails .value {}
+
+/* Multiple Details bullets */
+.MultipleDetails .bullet {}
+
+/* Multiple Details links */
+.MultipleDetails .link {}
+
+/*******************/
+/*  MULTIPLE FORM  */
+/*******************/
+
+/* Multiple Form headers and field names */
+.MultipleForm .header {}
+
+/* Multiple Form links */
+.MultipleForm .button {}
+
+/* Multiple Form fields */
+.MultipleForm .field {}
+
+/* Multiple Form selection fields and selects */
+.MultipleForm .selectionfield {}
+
+/* Multiple Form "Select All" link */
+.MultipleForm .selectAll {}
+
+/* Multiple Form error messages */
+.MultipleForm .error {}
+
+/*************/
+/*  MESSAGE  */
+/*************/
+
+/* Message values */
+.Message .value {}
+
+/* Message links */
+.Message .link {}
+
+/********************/
+/*  VIEW COMPONENT  */
+/********************/
+
+/* View Component links */
+.ViewComponent .link {}
+
+/**********/
+/*  LIST  */
+/**********/
+
+/* List headers and attribute names */
+.List .header {}
+
+/* List headers and attribute names of current elements */
+.List .headerCurrent {}
+
+/* List alternate headers and attribute names */
+.List .headerAlternate {}
+
+/* List alternate headers and attribute names of current elements */
+.List .headerCurrentAlternate {}
+
+/* List attribute values */
+.List .value {}
+
+/* List attribute values of current elements */
+.List .valueCurrent {}
+
+/* List alternate attribute values */
+.List .valueAlternate {}
+
+/* List alternate attribute values of current elements */
+.List .valueCurrentAlternate {}
+
+/* List bullets */
+.List .bullet {}
+
+/* List bullets of current elements */
+.List .bulletCurrent {}
+
+/* List alternate bullets */
+.List .bulletAlternate {}
+
+/* List alternate bullets of current elements */
+.List .bulletCurrentAlternate {}
+
+/* List rows */
+.List .row {}
+
+/* List rows of current elements */
+.List .rowCurrent {}
+
+/* List alternate rows */
+.List .rowAlternate {}
+
+/* List alternate rows of current elements */
+.List .rowCurrentAlternate {}
+
+/* List links */
+.List .link {}
+
+/* List links of current elements */
+.List .linkCurrent {}
+
+/* List alternate links */
+.List .linkAlternate {}
+
+/* List alternate links of current elements */
+.List .linkCurrentAlternate {}
+
+/* List scroll links */
+.List .scroll {}
+
+/* Text between List scroll links (e.g. 1-10 of 20) */
+.List .scrollText {}
+
+/* List jump bundles */
+.List .jump {}
+
+/* List sorting links */
+.List .sort {}
+
+/*************************/
+/*  RECURSIVE HIERARCHY  */
+/*************************/
+
+/* Recursive Hierarchy headers and attribute names */
+.RecursiveHierarchy .header {}
+
+/* Recursive Hierarchy attribute values */
+.RecursiveHierarchy .value {}
+
+/* Recursive Hierarchy attribute values of current elements */
+.RecursiveHierarchy .valueCurrent {}
+
+/* Recursive Hierarchy links */
+.RecursiveHierarchy .link {}
+
+/************/
+/*  SCRIPT  */
+/************/
+
+/* Script results */
+.Script .value {}
+
+/**************/
+/*  SCROLLER  */
+/**************/
+
+/* Scroller links */
+.Scroller .link {}
+
+/* Scroller scroll links */
+.Scroller .scroll {}
+
+/* Text between Scroller scroll links (e.g. 1-10 of 20) */
+.Scroller .scrollText {}
+
+/* Scroller jump bundles */
+.Scroller .jump {}
+

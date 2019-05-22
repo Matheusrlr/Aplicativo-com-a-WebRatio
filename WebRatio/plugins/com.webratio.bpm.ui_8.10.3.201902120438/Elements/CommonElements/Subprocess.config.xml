@@ -1,0 +1,51 @@
+<Element name="Subprocess" lowerName="subprocess"
+	pluralLowerName="subprocesses">
+	<Description>
+		A &lt;a
+		href="/Concepts/Elements/Process/CommonElements/Subprocess"/&gt; is a
+		compound activity.It has detail
+		that is defined as a flow of other activities. A Sub-Process is a
+		graphical object within a Process Flow, but it also can be "opened up"
+		to show another Process (either Embedded or
+		Reusable).
+	</Description>
+
+	<ActionRef label="Add Sequence Flow" />
+	<ActionRef label="Add Intermediate Catching Error" />
+	<ActionRef label="Surround with Group" />
+	<ActionRef label="Edit Process Parameters..." />
+	<ActionRef label="Search References" />
+	<ActionRef label="Help" />
+	<PropertyCategory name="General">
+		<PropertyRef label="Id" />
+		<PropertyRef label="Code" />
+		<PropertyRef label="Name" />
+		<PropertyRef label="Instance Name" />
+		<Property label="Process">
+			The process referenced as a subprocess.
+		</Property>
+		<Property label="Input Binding">
+			The set of process parameters bound to the available subprocess parameters.
+		</Property>
+		<Property label="Output Binding">
+			The set of subprocess parameters bound to the available process parameters.
+		</Property>
+		<Property label="Execution Policy">
+			The policy controlling the creation of subprocess instances. Available values are:
+	    &lt;ul&gt;
+        &lt;li&gt;&lt;b&gt;Single&lt;/b&gt;: the subprocess is executed just one time.
+	    	&lt;/li&gt;
+	    	&lt;li&gt;&lt;b&gt;Loop&lt;/b&gt;: the subprocess is executed repeatedly until a certain condition is verified.
+	    	&lt;/li&gt;
+	    	&lt;li&gt;&lt;b&gt;Parallel&lt;/b&gt;: the subprocesses work in parallel.
+	    	&lt;/li&gt;
+	    &lt;/ul&gt;
+		</Property>
+		<Property label="Loop Condition">
+			The condition to be verified in case of "Loop" execution policy. The condition is evaluated before the next iteration of the loop takes place.
+		</Property>
+		<Property label="Nr. of Instances">
+			The parameters whose value control the number of subprocesses created in case of "Loop" or "Parallel" execution policy.
+		</Property>
+	</PropertyCategory>
+</Element>

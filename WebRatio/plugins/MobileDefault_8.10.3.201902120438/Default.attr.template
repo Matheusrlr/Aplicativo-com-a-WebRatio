@@ -1,0 +1,83 @@
+#?delimiters [%, %], [%=, %]
+[%
+setHTMLOutput()
+
+def name = getFieldName(attr["attribute"])
+def type = attr["type"]
+def contentType = attr["contentType"]
+
+def printAttrMode = { mode ->
+	def templateFile = getLayoutFile(getLayout(attr, LayoutType.ATTRIBUTE).path, LayoutType.ATTRIBUTE)
+	printRaw(executeTemplate(templateFile.absolutePath, [ attr: attr, mode: mode, styleClass: null ]));
+}
+
+%]
+[% if (mode == "full") { %]
+
+	<div class="item item-attribute [%= styleClass %]">
+		[% printAttrMode("label") %]
+		<p>[% printAttrMode("value") %]</p>
+	</div>
+	
+[% } else if (mode == "label") { %]
+	<h2[%= styleClass ? " class='${styleClass}'" : "" %]>
+		<wr:Label context="attr"/>
+	</h2>
+[% } else { %]
+
+	[% if (mode == "value") { %]
+	<span[%= styleClass ? " class='${styleClass}'" : "" %]>
+	[% } %]
+	
+	[% if (type == "blob") { %]
+		[% if (!contentType || contentType == "" || contentType.startsWith("image")) { %]
+			<span wr-blob="[%= item %].[%= name %]" class="wr-attr-image [%= styleClass %]">
+				<img ng-show="blob.url" ng-src="{{ blob.url }}"/>
+				<span ng-show="blob.loading" class="wr-placeholder icon ion-load-d"></span>
+				<span ng-show="blob.failed" class="wr-placeholder icon ion-alert-circled"></span>
+			</span>
+		[% } else { %]
+			<wr:RequireResource ref="blob-opener-plugin"/>
+			<button 
+				class="button" 
+				ng-class="{'button icon ion-alert-circled': blob.failed:, 'button icon ion-load-d' :blob.loading}"
+				type="button" 
+				wr-blob="[%= item %].[%= name %]" 
+				ng-disabled="!blob.url"
+				ng-click="blob.open([% if (contentType) { %]'[%= contentType %]'[% } %])"
+			>
+				<wr:Label context="attr"/>
+			</button>
+		[% } %]
+	[% } else if (type == "boolean") { %]
+		{{ [%= item %].[%= name %] ? 'boolean.yes' : 'boolean.no' | wrLocalize }}
+	[% } else if (type == "date") { %]
+		{{ [%= item %].[%= name %] | date : 'wr-date' }}
+	[% } else if (type == "time") { %]
+		{{ [%= item %].[%= name %] | date : 'wr-time' }}
+	[% } else if (type == "timestamp") { %]
+		{{ [%= item %].[%= name %] | date : 'wr-timestamp' }}
+	[% } else if (type == "integer") { %]
+		{{ [%= item %].[%= name %] | number : 'wr-integer' }}
+	[% } else if (type == "float") { %]
+		{{ [%= item %].[%= name %] | number : 'wr-float' }}
+	[% } else if (type == "decimal") { %]
+		{{ [%= item %].[%= name %] | number : 'wr-decimal' }}
+	[% } else if (type == "url") { %]
+		<wr:RequireResource ref="mobiledefault-external-open"/>
+		[% if (contentType == "email") { %]
+			<a wr-external-open target="_system" ng-href="{{ 'mailto:' + [%= item %].[%= name %] }}">{{ [%= item %].[%= name %] }}</a>
+		[% } else { %]
+			<a wr-external-open target="_system" ng-href="{{ [%= item %].[%= name %] }}">{{ [%= item %].[%= name %] }}</a>
+		[% } %]
+	[% } else if (contentType == "text/html") { %]
+		<span ng-bind-html="[%= item %].[%= name %]"></span>
+	[% } else { %]
+		{{ [%= item %].[%= name %] }}
+	[% } %]
+	
+	[% if (mode == "value") { %]
+	</span>
+	[% } %]
+	
+[% } %]

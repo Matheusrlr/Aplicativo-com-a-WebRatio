@@ -1,0 +1,13 @@
+<Element name="Abstract Page" lowerName="abstract page" pluralLowerName="abstract pages">
+	<Description>
+		TODO
+	</Description>
+
+	<PropertyCategory name="General">
+		<PropertyRef label="Identifier" />
+		<PropertyRef label="Name" />
+		<Property label="Inheritance">
+			TODO:AbstractPage@Inheritance
+		</Property>			
+	</PropertyCategory>
+</Element>

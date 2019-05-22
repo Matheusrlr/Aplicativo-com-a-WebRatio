@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="content" formBased="false" idPrefix="mssu" namePrefix="Message " label="Message" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true"  errorFlowTarget="true"  successFlowTarget="true" canPlaceLayoutComponent="true" canPlaceLayoutEvents="true"> 
+  <TextProperty elementName="Message" label="Message Text"> 
+	<Description xml:space="preserve">The message to be printed out.</Description>
+  </TextProperty>
+  <Description xml:space="preserve">The message lets the user to print out messages within the page. 
+The messages passed on the component input flows will be used instead of the message text on the component.
+  </Description>
+  <InputDescription xml:space="preserve" name="Shown Messages">A string or an array of strings to be displayed by the component.</InputDescription>
+  <BeanDescription xml:space="preserve">
+	&lt;p&gt;The component state object for the Message consists of the following properties:
+	   &lt;ul&gt;
+  		&lt;li&gt;&lt;code&gt;int dataSize&lt;/code&gt;: the number of messages to show&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;String[] data&lt;/code&gt;: the array of messages to show&lt;/li&gt;
+  	   &lt;/ul&gt;
+	&lt;/p&gt;
+    </BeanDescription>
+  <IsContextFreeComponent xml:space="preserve">return getIncomingFlows(component).empty</IsContextFreeComponent>  
+  <IsMultiConditionComponent xml:space="preserve">return getIncomingFlows(component).size &gt; 1</IsMultiConditionComponent>  
+</Component>

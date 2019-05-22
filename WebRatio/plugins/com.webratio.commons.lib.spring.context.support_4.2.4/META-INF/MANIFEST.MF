@@ -1,0 +1,34 @@
+Manifest-Version: 1.0
+Export-Package: org.springframework.cache.ehcache,org.springframework.
+ cache.guava,org.springframework.cache.jcache,org.springframework.cach
+ e.jcache.config,org.springframework.cache.jcache.interceptor,org.spri
+ ngframework.cache.transaction,org.springframework.mail,org.springfram
+ ework.mail.javamail,org.springframework.scheduling.commonj,org.spring
+ framework.scheduling.quartz,org.springframework.ui.freemarker,org.spr
+ ingframework.ui.jasperreports,org.springframework.ui.velocity
+Require-Bundle: com.webratio.commons.lib.spring.beans,com.webratio.com
+ mons.lib.spring.context,com.webratio.commons.lib.spring.core,com.webr
+ atio.commons.lib.spring.expression
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/spring-context-support.jar
+Bundle-Version: 4.2.4
+Bundle-Name: WebRatio 3rd Party Library - Spring Context Support
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.spring.context.support
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: 6J070rZcRYA59EbYOiXzkVOLeL4SwztuDT3N0vZAmas=
+
+Name: lib/spring-context-supportsrc.zip
+SHA-256-Digest: lwi7/RReWYc0jnEzFtIa6efiBRMPkYk6RSZMve0PXR0=
+
+Name: lib/spring-context-support.jar
+SHA-256-Digest: j+GNM0y5r1DCKqISSTTowt+LFjsPOyLUjXYKIaA7IBM=
+

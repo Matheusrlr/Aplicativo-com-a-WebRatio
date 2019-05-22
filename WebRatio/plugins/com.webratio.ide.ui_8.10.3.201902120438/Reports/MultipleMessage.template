@@ -1,0 +1,109 @@
+#?delimiters [%,%],[%=,%]
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+[%
+import org.apache.commons.lang.StringEscapeUtils
+
+def unitId = contentUnit["id"]
+int index = 0
+%]
+<jasperReport
+     name="WebRatio Multiple Message SubReport"
+     columnCount="1"
+     printOrder="Vertical"
+     orientation="Portrait"
+     pageWidth="595"
+     pageHeight="842"
+     columnWidth="535"
+     columnSpacing="0"
+     leftMargin="0"
+     rightMargin="0"
+     topMargin="0"
+     bottomMargin="0"
+     whenNoDataType="NoPages"
+     isTitleNewPage="false"
+     isSummaryNewPage="false">
+    <property name="ireport.scriptlethandling" value="2" />
+    <property name="ireport.encoding" value="UTF-8" />
+    <import value="java.util.*" />
+    <import value="net.sf.jasperreports.engine.*" />
+    <import value="net.sf.jasperreports.engine.data.*" />
+  <parameter name="SUBREPORT_DIR" isForPrompting="true" class="java.lang.String">
+    <defaultValueExpression>"[%=StringEscapeUtils.escapeJava(reportDirPath)%]"</defaultValueExpression>
+  </parameter>
+	<parameter name="BASE_URI" isForPrompting="false" class="java.lang.String"/>
+    <field name="text" class="java.lang.String">
+      <fieldDescription>text</fieldDescription>
+    </field>
+    <background>
+      <band height="0"  isSplitAllowed="true" >
+      </band>
+    </background>
+    <title>
+      <band height="0"  isSplitAllowed="true" >
+      </band>
+    </title>
+    <pageHeader>
+      <band height="20"  isSplitAllowed="true" >
+      </band>
+    </pageHeader>
+    <columnHeader>
+      <band height="0"  isSplitAllowed="true" >
+      </band>
+    </columnHeader>
+    <detail>
+	  <band height="60" isSplitAllowed="true" >
+        <staticText>
+          <reportElement
+            mode="Opaque" x="5" y="25"
+                width="55" height="16"
+                key="staticText-[%=unitId%]"
+				backcolor="#CCCCFF"/>
+          <box>
+            <topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+            <leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+            <bottomPen lineWidth="0.0" lineColor="#000000"/>
+            <rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+          </box>
+          <textElement>
+            <font/>
+          </textElement>
+          <text>text:</text>
+        </staticText>
+        <textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+          <reportElement
+              x="65"
+              y="25"
+              width="77"
+              height="18"
+              key="textField"/>
+          <box>
+            <topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+            <leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+            <bottomPen lineWidth="0.0" lineColor="#000000"/>
+            <rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+          </box>
+          <textElement>
+            <font/>
+          </textElement>
+          <textFieldExpression class="java.lang.String">$F{text}</textFieldExpression>
+        </textField>
+      </band>
+    </detail>
+    <columnFooter>
+      <band height="0"  isSplitAllowed="true" >
+      </band>
+    </columnFooter>
+    <pageFooter>
+      <band height="0"  isSplitAllowed="true" >
+      </band>
+    </pageFooter>
+    <lastPageFooter>
+      <band height="0"  isSplitAllowed="true" >
+      </band>
+    </lastPageFooter>
+    <summary>
+      <band height="0"  isSplitAllowed="true" >
+      </band>
+    </summary>
+</jasperReport>

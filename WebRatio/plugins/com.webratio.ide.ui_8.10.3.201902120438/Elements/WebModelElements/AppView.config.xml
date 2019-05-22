@@ -1,0 +1,38 @@
+	<Element name="AppView" lowerName="app view"
+		pluralLowerName="app views">
+		<Description>
+			An App View is a 
+			group of Screen Sets 
+			and / or Screens devoted to
+			fulfilling the requirements of one or more user groups.
+		</Description>
+
+		<ActionRef label="Add Action" />
+		<ActionRef label="Add Screen" />
+		<ActionRef label="Add Screen Set" />
+		<ActionRef label="Add Toolbar" />
+		<ActionRef label="Add Property" />
+		<ActionRef label="Find Model Problems"/>
+		<ActionRef label="Help"/>
+		
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+			<Property label="Home Element">
+				The screen or the operation selected as the Home of the App View.
+			</Property>
+			<Property label="Login Screen">
+				The screen selected as the Login Screen of the Mobile Application.
+			</Property>			
+		</PropertyCategory>
+		<PropertyCategory name="Layout">
+			<PropertyRef label="Style" />
+			<PropertyRef label="Screen Layout" />
+			<PropertyRef label="Frame Layout"/>
+			<PropertyRef label="Cell Layout"/>
+			<PropertyRef label="Attribute Layout"/>
+			<PropertyRef label="Field Layout"/>
+			<PropertyRef label="Event Layout"/>
+			<PropertyRef label="Component Configuration"/>
+		</PropertyCategory>
+	</Element>

@@ -1,0 +1,58 @@
+mai 17, 2019 9:44:11 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: ContextListener: contextInitialized()
+mai 17, 2019 9:44:11 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: SessionListener: contextInitialized()
+mai 17, 2019 9:44:11 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: ContextListener: attributeAdded('org.apache.jasper.compiler.TldLocationsCache', 'org.apache.jasper.compiler.TldLocationsCache@ade64a7')
+mai 17, 2019 9:44:11 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: No Spring WebApplicationInitializer types detected on classpath
+mai 17, 2019 9:44:11 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: Initializing Spring FrameworkServlet 'controller-servlet'
+mai 17, 2019 9:51:16 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: Destroying Spring FrameworkServlet 'controller-servlet'
+mai 17, 2019 9:51:17 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: No Spring WebApplicationInitializer types detected on classpath
+mai 17, 2019 9:51:17 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: Initializing Spring FrameworkServlet 'controller-servlet'
+mai 17, 2019 9:58:13 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: ContextListener: contextInitialized()
+mai 17, 2019 9:58:13 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: SessionListener: contextInitialized()
+mai 17, 2019 9:58:13 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: ContextListener: attributeAdded('org.apache.jasper.compiler.TldLocationsCache', 'org.apache.jasper.compiler.TldLocationsCache@ade64a7')
+mai 17, 2019 9:58:13 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: No Spring WebApplicationInitializer types detected on classpath
+mai 17, 2019 9:58:14 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: Initializing Spring FrameworkServlet 'controller-servlet'
+mai 17, 2019 10:54:59 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: SessionListener: contextDestroyed()
+mai 17, 2019 10:54:59 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: ContextListener: contextDestroyed()
+mai 17, 2019 10:55:00 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: Destroying Spring FrameworkServlet 'controller-servlet'
+mai 17, 2019 10:55:02 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: ContextListener: contextInitialized()
+mai 17, 2019 10:55:02 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: SessionListener: contextInitialized()
+mai 17, 2019 10:55:02 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: ContextListener: attributeAdded('org.apache.jasper.compiler.TldLocationsCache', 'org.apache.jasper.compiler.TldLocationsCache@138828ed')
+mai 17, 2019 10:55:03 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: No Spring WebApplicationInitializer types detected on classpath
+mai 17, 2019 10:55:03 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: Initializing Spring FrameworkServlet 'controller-servlet'
+mai 17, 2019 10:59:25 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: ContextListener: contextInitialized()
+mai 17, 2019 10:59:25 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: SessionListener: contextInitialized()
+mai 17, 2019 10:59:25 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: ContextListener: attributeAdded('org.apache.jasper.compiler.TldLocationsCache', 'org.apache.jasper.compiler.TldLocationsCache@6c251c9c')
+mai 17, 2019 10:59:26 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: No Spring WebApplicationInitializer types detected on classpath
+mai 17, 2019 10:59:26 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: Initializing Spring FrameworkServlet 'controller-servlet'
+mai 17, 2019 11:43:07 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: SessionListener: contextDestroyed()
+mai 17, 2019 11:43:07 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: ContextListener: contextDestroyed()
+mai 17, 2019 11:43:07 AM org.apache.catalina.core.ApplicationContext log
+INFORMAÇÕES: Destroying Spring FrameworkServlet 'controller-servlet'

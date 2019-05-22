@@ -1,0 +1,37 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import java.util.jar.Manifest
+import java.io.FileOutputStream
+import org.apache.commons.lang.StringUtils
+
+// computes the classpath libs
+def libs = []
+libs.add(rootModuleName + ".jar")
+for(jarFileName in subProjects.keySet().findAll{subProjects.get(it) == "com.webratio.ide.DataModelNature"}){
+    libs.add(jarFileName)
+} 
+libs.addAll(new File(outputFolder, "lib").listFiles().collect{"./lib/" + it.name})
+   
+// creates the manifest
+def warFolders = subProjects.keySet().findAll{it.endsWith(".war")}
+warFolders.add(rootModuleName + ".war")
+for(warFolder in warFolders){
+  def manifest = new Manifest()
+  def manifestAtts = manifest.getMainAttributes()
+  manifestAtts.putValue("Manifest-Version", "1.0")
+  manifestAtts.putValue("Created-By",  System.getProperty("java.vm.version") + " (" + System.getProperty("java.vm.vendor") + ")")
+  manifestAtts.putValue("Bundle-Vendor", "WebRatio s.r.l.")
+  manifestAtts.putValue("Bundle-Name", StringUtils.substringBeforeLast(warFolder, ".war"))
+  manifestAtts.putValue("Class-Path", libs.collect{it}.join(" "))
+  def outputStream = null
+  try{
+     def manifestFile = new File(outputFolder, warFolder + "/META-INF/MANIFEST.MF")
+     manifestFile.parentFile.mkdirs()
+     outputStream = new FileOutputStream(manifestFile)
+     manifest.write(outputStream)
+  }finally{
+     org.apache.commons.io.IOUtils.closeQuietly(outputStream)
+  }  
+}    
+
+%>

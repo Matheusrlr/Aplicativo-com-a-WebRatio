@@ -1,0 +1,21 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: VuR/d8mpER9mPY3D/qJQwdxweFjS0
+ wE9kpxb+kdkKuE=
+SHA-256-Digest-Manifest: eHx6uQFKRr6vtwXOrg3G8HOjwqze3IlNrdKTyu0ICZk=
+Created-By: 1.7.0_80 (Oracle Corporation)
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: a5fmgH7myHzNji9AMOfHrVh8fy7MOgIdRSUiRZ6EFA4=
+
+Name: lib/spring-websrc.zip
+SHA-256-Digest: XsBveRt6WRE9ROoFIFLA8DDYHCZsG2yeP1XuP+eisqA=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: lib/spring-web.jar
+SHA-256-Digest: XyNVHQnvnnFgblFiVijgz/G2HMpowXdXwUzy+aloNeg=
+
+Name: about.html
+SHA-256-Digest: riGKqmvTGANQ1GZ0JSzXsMNdAE+tFKSuGnxI8H4Y9ns=
+

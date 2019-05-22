@@ -1,0 +1,6 @@
+#?delimiters [%, %], [%=, %]
+[% for (row in grid.selectNodes("layout:Row")) { %]
+[% for (cell in row.selectNodes("layout:Cell")) { %]
+<wr:Cell context="cell"/>
+[% } %]
+[% }  %]

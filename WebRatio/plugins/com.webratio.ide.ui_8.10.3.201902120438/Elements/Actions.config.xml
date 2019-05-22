@@ -1,0 +1,230 @@
+<Actions>
+	<Action label="Add Activation Expression">
+		Adds a new &lt;a href="/Reference/ElementsReference/WebModelElements/ConditionExpression"&gt;Activation Expression&lt;/a&gt; 
+		to the <ElementRef/>.
+	</Action>
+	<Action label="Add Variable">
+		Adds a new &lt;a href="Variable"/&gt; with page scope to the <ElementRef/>.
+	</Action>
+	<Action label="Help">
+		Opens the reference help page related to the <ElementRef/>. The 
+		page shows a brief description of the <ElementRef/> properties and actions.
+	</Action>
+	<Action label="Go to Source">
+		Goes to the <ElementRef /> source.
+	</Action>
+	<Action label="Go to Target">
+		Goes to the <ElementRef /> target.
+	</Action>
+	<Action label="Go to Metadata">
+		If the database is refreshed and the 
+		<ElementRef /> mapping is valid, goes to the <ElementRef /> metadata.
+	</Action>
+	<Action label="Go to Home">
+		Goes to the home element of the <ElementRef/>.
+	</Action>
+	<Action label="Go to Master Page">
+		Goes to the &lt;a href="/Reference/ElementsReference/WebModelElements/MasterPage"/&gt; of the 
+		<ElementRef/>.
+	</Action>
+	<Action label="Generate Layout Pages Only">
+		Generates only the layout pages of the <ElementRef/>.
+	</Action>
+	<Action label="Generate Logic Descriptors Only">
+		Generates only the logic descriptors of the <ElementRef/>.
+	</Action>
+	<Action label="Generate Selection">
+		Generates the layout, descriptors and classes of the <ElementRef/>.
+	</Action>
+	<Action label="Generate and Run">
+		Generates the layout, descriptors and classes of the <ElementRef/>, start Tomcat and open the Home page in browser.
+	</Action>
+	<Action label="Find Model Problems">
+		Finds the model problems of the <ElementRef/> and of its children.
+	</Action>
+	<Action label="Export Diagram Image...">
+		Exports the <ElementRef/> as an image.
+	</Action>
+	<Action label="Search References">
+		Searches the identifier references of the <ElementRef /> in the project.
+	</Action>
+	<Action label="Add Property">
+		Adds a new &lt;a href="/Reference/ElementsReference/WebModelElements/Property"/&gt; to the
+		<ElementRef />.
+	</Action>
+	<Action label="Add Flow">
+		Adds a new &lt;a href="Flow"&gt;Flow&lt;/a&gt; to the
+		<ElementRef />.
+	</Action>
+	<Action label="Add Navigation Flow">
+		Adds a new &lt;a href="NavigationFlow"&gt;Navigation Flow&lt;/a&gt; to the
+		<ElementRef />.
+	</Action>
+	<Action label="Add Data Flow">
+		Adds a new &lt;a href="DataFlow"&gt;Data Flow&lt;/a&gt; to the
+		<ElementRef />.
+	</Action>
+	<Action label="Add Attribute">
+		Adds a new &lt;a href="Attribute"/&gt; to the
+		Class.
+	</Action>
+	<Action label="Add Generalization">
+		Adds a new &lt;a href="Generalization"/&gt; to the
+		Class.
+	</Action>
+	<Action label="Add Association">
+		Adds a new &lt;a href="Association"/&gt; to the
+		Class.
+	</Action>
+	<Action label="Add Database">
+		Adds a new &lt;a href="/Reference/ElementsReference/WebProjectElements/ServiceDataProviders#Database"&gt;Database&lt;/a&gt;
+		 to the <ElementRef />.
+	</Action>
+	<Action label="Add Grid">
+		Adds a new &lt;a href="Grid"/&gt; to the
+		<ElementRef />.
+	</Action>
+	<Action label="Add Layout Component">
+		Adds a new &lt;a href="LayoutComponent"/&gt; to the
+		<ElementRef />.
+	</Action>
+	<Action label="Add Layout Sub Page">
+		Adds a new &lt;a href="LayoutSubPage"/&gt; to the
+		<ElementRef />.
+	</Action>
+	<Action label="Add Layout Attribute">
+		Adds a new &lt;a href="LayoutAttribute"/&gt; to the
+		<ElementRef />.
+	</Action>
+	<Action label="Add Layout Field">
+		Adds a new &lt;a href="LayoutField"/&gt; to the
+		<ElementRef />.
+	</Action>
+	<Action label="Add Layout Flow">
+		Adds a new &lt;a href="LayoutLink"&gt;Layout Flow&lt;/a&gt; to the
+		<ElementRef />.
+	</Action>
+	<Action label="Add Operation">
+		The user can add one of the installed 
+		operations to the <ElementRef/>.
+	</Action>
+	<Action label="Add View Component">
+		The user can add one of the installed 
+		view components to the <ElementRef/>.
+	</Action>
+	<Action label="Add Slot">
+		Adds a new &lt;a href="#Slot"&gt;Slot&lt;/a&gt; to the
+		<ElementRef />.
+	</Action>
+	<Action label="Add Validation Rule">
+		Adds a new &lt;a href="#ValidationRule"&gt;Validation Rule&lt;/a&gt; to the
+		<ElementRef />.
+	</Action>
+	<Action label="Add Area">
+		Adds a new &lt;a href="Area"/&gt; to the
+		<ElementRef />.
+	</Action>
+	<Action label="Add Alternative">
+		Adds a new &lt;a href="Alternative"/&gt; page to the
+		<ElementRef />.
+	</Action>
+	<Action label="Add Page">
+		Adds a new &lt;a href="Page"/&gt; to the
+		<ElementRef />.
+	</Action>
+	<Action label="Add Master Page">
+		Adds a new &lt;a href="MasterPage"/&gt; to the
+		<ElementRef />.
+	</Action>
+	<Action label="Add Port">
+		Adds a new &lt;a href="ServicePort"/&gt; to the
+		<ElementRef />.
+	</Action>
+	<Action label="Add Job">
+		Adds a new &lt;a href="Job"/&gt; to the
+		<ElementRef />.
+	</Action>
+	<Action label="Add Trigger">
+		Adds a new &lt;a href="Trigger"/&gt; to the
+		<ElementRef />.
+	</Action>
+	<Action label="Add Operation Group">
+		Adds a new &lt;a href="OperationGroup"/&gt; to the
+		<ElementRef />.
+	</Action>
+	<Action label="Add Content Module">
+		Adds a new &lt;a href="ContentModuleDefinition"/&gt; to the
+		<ElementRef />.
+	</Action>
+	<Action label="Add Action">
+		Adds a new &lt;a href="ActionDefinition"&gt;Action&lt;/a&gt; to the
+		<ElementRef />.
+	</Action>
+	<Action label="Add Hybrid Module">
+		Adds a new &lt;a href="HybridModuleDefinition"/&gt; to the
+		<ElementRef />.
+	</Action>
+	<Action label="Localize">
+		Opens the &lt;a href="/Reference/WizardsAndDialogs/LocalizeDialog"/&gt;
+		to allow the localization of <ElementRef /> label.
+	</Action>
+	<Action label="Open Generated Code">
+		Opens the generated code files.
+	</Action>
+	<Action label="Open in Browser">
+		Shows the generated <ElementRef /> in the integrated browser.
+	</Action>
+	<Action label="Remove Mapping">
+		Removes the mapping from the <ElementRef />.
+	</Action>
+	<Action label="Surround with Area">
+		Surrounds the <ElementRef /> with an area.
+	</Action>
+	<Action label="Surround with Operation Group">
+		Surrounds the <ElementRef /> with an operation group.
+	</Action>
+	<Action label="Surround with Screen Set">
+		Surrounds the <ElementRef /> with a screen set.
+	</Action>
+	<Action label="Convert To...">
+		Converts the <ElementRef /> in an other compatible components.
+	</Action>
+	<Action label="Convert to Flow">
+		Convert the <ElementRef /> in a &lt;a href="Link"&gt;Flow&lt;/a&gt;. The parameters binding of the 
+		flow are maintained.
+	</Action>
+	<Action label="Straighten Connections">
+		Transforms the <ElementRef /> connection in a straighten connection.
+	</Action>
+	<Action label="Separate Overlapping Connections">
+	    Bends overlapping connections in order to make all of them visible.
+	</Action>
+	<Action label="Add Site View">
+		Adds a new &lt;a href="/Reference/ElementsReference/WebModelElements/SiteView"/&gt; to the
+		Web Model.
+	</Action>
+	<Action label="Add Service View">
+	    Adds a new &lt;a href="/Reference/ElementsReference/WebModelElements/ServiceView"/&gt; to the
+		Web Model.
+	</Action>
+	<Action label="Add Module Definitions">
+	    Adds a new &lt;a href="/Reference/ElementsReference/WebModelElements/ModuleView"/&gt; to the
+		Web Model.
+	</Action>
+	<Action label="Add Context Parameter">
+	    Adds a new &lt;a href="/Reference/ElementsReference/WebModelElements/ContextParameter"/&gt; to the
+		Web Model.
+	</Action>
+	<Action label="Add Screen">
+		Adds a new &lt;a href="Screen"/&gt; to the
+		<ElementRef />.
+	</Action>
+	<Action label="Add Screen Set">
+		Adds a new &lt;a href="ScreenSet"/&gt; to the
+		<ElementRef />.
+	</Action>
+	<Action label="Add Toolbar">
+		Adds a new &lt;a href="Toolbar"/&gt; to the
+		<ElementRef />.
+	</Action>
+</Actions>

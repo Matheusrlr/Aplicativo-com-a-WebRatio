@@ -1,0 +1,35 @@
+<Screen xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" gr:x="525" gr:y="-65" id="av1#scr2" name="T&#243;picos">
+  <ViewComponents>
+    <List gr:x="0" gr:y="0" id="av1#scr2#pwu2" name="List 2" checkable="false" eventOrder="av1#scr2#pwu2#oslte1 av1#scr2#pwu2#oslte7">
+      <Events>
+        <OnSelectEvent id="av1#scr2#pwu2#oslte1" name="Detalhes" validate="true">
+          <NavigationFlow id="av1#scr2#pwu2#oslte1#nf1" to="av1#scr3#dau1" automaticCoupling="true"/>
+        </OnSelectEvent>
+        <OnSelectEvent id="av1#scr2#pwu2#oslte7" name="voltar" validate="true">
+          <NavigationFlow id="av1#scr2#pwu2#oslte7#nf7" to="av1#scr1#pwu1" automaticCoupling="true" gr:bendpoints="-98,12,97,17"/>
+        </OnSelectEvent>
+      </Events>
+    </List>
+  </ViewComponents>
+  <layout:Grid containerType="grid">
+    <layout:Row>
+      <layout:Cell colspan="12">
+        <layout:Component componentId="av1#scr2#pwu2">
+          <layout:Event event="av1#scr2#pwu2#oslte1" eventType="OnSelectEvent"/>
+          <layout:Event event="av1#scr2#pwu2#oslte7" eventType="OnSelectEvent"/>
+        </layout:Component>
+      </layout:Cell>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+  </layout:Grid>
+</Screen>

@@ -1,0 +1,18 @@
+#?delimiters [%,%],[%=,%]
+[%
+
+setXMLOutput()
+def modules = []
+modules.add(rootModuleName)
+modules.addAll(wr.project.selectNodes("SubProject[@natureId='com.webratio.ide.WebModelNature' or @natureId='com.webratio.ide.ModuleNature']").collect{it["name"]}.findAll{!excludedProjects.contains(it)})
+%]
+<appdeployment:Deployment xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:appdeployment="http://www.ibm.com/websphere/appserver/schemas/5.0/appdeployment.xmi">
+  <deployedObject xmi:type="appdeployment:ApplicationDeployment" startingWeight="1" warClassLoaderPolicy="MULTIPLE">
+    <classloader mode="PARENT_LAST"/>
+    [%for(module in modules){%]
+    <modules xmi:type="appdeployment:WebModuleDeployment" uri="[%=module%].war">
+      <classloader mode="PARENT_LAST"/>
+    </modules>
+    [%}%]
+  </deployedObject>
+</appdeployment:Deployment>

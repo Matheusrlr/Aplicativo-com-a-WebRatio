@@ -1,0 +1,27 @@
+{
+  "name": "pgplugin-accountmanager",
+  "version": "1.1.6",
+  "description": "This plugin manages the user account.",
+  "cordova": {
+    "id": "phonegap-plugin-accountmanager",
+    "platforms": [
+      "ios",
+      "android",
+      "wp8",
+      "windows"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webratio/webratio-tool-misc/tree/pgplugin-accountmanager/master"
+  },
+  "engines": {
+    "cordovaDependencies": {
+      "1.1.6": {
+        "cordova": ">=7.1.0",
+        "cordova-android": ">=7.0.0"
+      }
+    }
+  },
+  "author": "WebRatio s.r.l. <info@webratio.com> (https://github.com/webratio)"
+}

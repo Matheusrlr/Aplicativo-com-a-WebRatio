@@ -1,0 +1,221 @@
+#?delimiters [%,%],[%=,%]
+[% 
+import org.apache.commons.lang.StringUtils
+setXMLOutput() 
+
+shapeIdCounter++;
+def mainShapeId = shapeIdCounter;
+idMap.put(bpmElementId, mainShapeId);
+def textAnnotationHeight = 0.133 * (StringUtils.countMatches(text, "\n") + 1) + 0.12;
+def textAnnotationWidth = 0.6
+for(String s : StringUtils.split(text, "\n")) {
+    textAnnotationWidth = Math.max(textAnnotationWidth, (0.04 * s.length()));
+}
+
+%]
+<!--
+    Text Annotation
+-->    
+<Shape ID='[%=mainShapeId%]' Type='Group' LineStyle='3' FillStyle='3' TextStyle='3'>
+[%
+    printRaw(executeTemplate(baseTemplatePath + "_XForm.template", ["mainShapeId":mainShapeId,
+        "XForm_X":pinX, 
+        "XForm_Y":(pageHeight - pinY - textAnnotationHeight), 
+        "XForm_W":textAnnotationWidth, 
+        "XForm_H":textAnnotationHeight, 
+    ]))
+    printRaw(executeTemplate(baseTemplatePath + "_Misc.template", [:]))
+%]
+    <Shapes>
+        <Shape ID='[%=++shapeIdCounter%]' Type='Shape' LineStyle='3' FillStyle='3' TextStyle='3'>
+            <XForm>
+                <PinX F='Sheet.[%=mainShapeId%]!Width*0.5'>0.5191929133858269</PinX>
+                <PinY F='Sheet.[%=mainShapeId%]!Height*0.5'>0.1909448818897637</PinY>
+                <Width F='Sheet.[%=mainShapeId%]!Width*1'>1.038385826771654</Width>
+                <Height F='Sheet.[%=mainShapeId%]!Height*1'>0.3818897637795272</Height>
+                <LocPinX F='Width*0.5'>0.5191929133858269</LocPinX>
+                <LocPinY F='Height*0.5'>0.1909448818897636</LocPinY>
+                <Angle>0</Angle>
+                <FlipX>0</FlipX>
+                <FlipY>0</FlipY>
+                <ResizeMode>0</ResizeMode>
+            </XForm>
+            <Fill>
+                <FillForegnd>#ffffff</FillForegnd>
+                <FillBkgnd F='Inh'>0</FillBkgnd>
+                <FillPattern F='Inh'>1</FillPattern>
+                <ShdwForegnd F='Inh'>0</ShdwForegnd>
+                <ShdwBkgnd F='Inh'>1</ShdwBkgnd>
+                <ShdwPattern F='Inh'>0</ShdwPattern>
+                <FillForegndTrans F='Inh'>0</FillForegndTrans>
+                <FillBkgndTrans F='Inh'>0</FillBkgndTrans>
+                <ShdwForegndTrans F='Inh'>0</ShdwForegndTrans>
+                <ShdwBkgndTrans F='Inh'>0</ShdwBkgndTrans>
+                <ShapeShdwType F='Inh'>0</ShapeShdwType>
+                <ShapeShdwOffsetX F='Inh'>0</ShapeShdwOffsetX>
+                <ShapeShdwOffsetY F='Inh'>0</ShapeShdwOffsetY>
+                <ShapeShdwObliqueAngle F='Inh'>0</ShapeShdwObliqueAngle>
+                <ShapeShdwScaleFactor F='Inh'>1</ShapeShdwScaleFactor>
+            </Fill>
+            <vx:Fill xmlns:vx='http://schemas.microsoft.com/visio/2006/extension'>
+                <vx:FillForegnd F='THEMEGUARD(RGB(255,255,255))'>#ffffff</vx:FillForegnd>
+            </vx:Fill>
+            <Line>
+                <LineWeight F='Inh'>0.01</LineWeight>
+                <LineColor>#000000</LineColor>
+                <LinePattern>0</LinePattern>
+                <Rounding F='Inh'>0</Rounding>
+                <EndArrowSize F='Inh'>2</EndArrowSize>
+                <BeginArrow>0</BeginArrow>
+                <EndArrow F='Inh'>0</EndArrow>
+                <LineCap F='Inh'>0</LineCap>
+                <BeginArrowSize F='Inh'>2</BeginArrowSize>
+                <LineColorTrans F='Inh'>0</LineColorTrans>
+            </Line>
+            <vx:Line xmlns:vx='http://schemas.microsoft.com/visio/2006/extension'>
+                <vx:LineColor F='THEMEGUARD(RGB(0,0,0))'>#000000</vx:LineColor>
+            </vx:Line>
+            <TextBlock>
+                <LeftMargin Unit='PT'>0.05</LeftMargin>
+                <RightMargin Unit='PT'>0.01388888888888889</RightMargin>
+                <TopMargin Unit='PT'>0.01388888888888889</TopMargin>
+                <BottomMargin Unit='PT'>0.01388888888888889</BottomMargin>
+                <VerticalAlign>1</VerticalAlign>
+                <TextBkgnd F='Inh'>0</TextBkgnd>
+                <DefaultTabStop F='Inh'>0.5905511811023622</DefaultTabStop>
+                <TextDirection F='Inh'>0</TextDirection>
+                <TextBkgndTrans F='Inh'>0</TextBkgndTrans>
+            </TextBlock>
+            <Char IX='0'>
+                <Font F='Inh'>4</Font>
+                <Color F='Inh'>0</Color>
+                <Style>0</Style>
+                <Case F='Inh'>0</Case>
+                <Pos>0</Pos>
+                <FontScale F='Inh'>1</FontScale>
+                <Size Unit='PT'>0.1111111111111111</Size>
+                <DblUnderline>0</DblUnderline>
+                <Overline>0</Overline>
+                <Strikethru>0</Strikethru>
+                <Highlight>0</Highlight>
+                <DoubleStrikethrough>0</DoubleStrikethrough>
+                <RTLText>0</RTLText>
+                <UseVertical>0</UseVertical>
+                <Letterspace F='Inh'>0</Letterspace>
+                <ColorTrans F='Inh'>0</ColorTrans>
+                <AsianFont F='Inh'>0</AsianFont>
+                <ComplexScriptFont F='Inh'>0</ComplexScriptFont>
+                <LocalizeFont F='Inh'>0</LocalizeFont>
+                <ComplexScriptSize F='Inh'>-1</ComplexScriptSize>
+                <LangID F='Inh'>1040</LangID>
+            </Char>
+            <Para IX='0'>
+                <IndFirst F='Inh'>0</IndFirst>
+                <IndLeft F='Inh'>0</IndLeft>
+                <IndRight F='Inh'>0</IndRight>
+                <SpLine F='Inh'>-1.2</SpLine>
+                <SpBefore F='Inh'>0</SpBefore>
+                <SpAfter F='Inh'>0</SpAfter>
+                <HorzAlign>0</HorzAlign>
+                <Bullet F='Inh'>0</Bullet>
+                <BulletStr F='Inh'/>
+                <BulletFont F='Inh'>0</BulletFont>
+                <LocalizeBulletFont F='Inh'>0</LocalizeBulletFont>
+                <BulletFontSize F='Inh'>-1</BulletFontSize>
+                <TextPosAfterBullet F='Inh'>0</TextPosAfterBullet>
+                <Flags F='Inh'>0</Flags>
+            </Para>
+            <Geom IX='0'>
+                <NoFill>0</NoFill>
+                <NoLine>0</NoLine>
+                <NoShow>0</NoShow>
+                <NoSnap>0</NoSnap>
+                <MoveTo IX='1'>
+                    <X F='Width*0'>0</X><Y F='Height*0'>0</Y>
+                </MoveTo>
+                <LineTo IX='2'>
+                    <X F='Width*1'>1.038385826771654</X><Y F='Height*0'>0</Y>
+                </LineTo>
+                <LineTo IX='3'>
+                    <X F='Width*1'>1.038385826771654</X><Y F='Height*1'>0.3818897637795272</Y>
+                </LineTo>
+                <LineTo IX='4'>
+                    <X F='Width*0'>0</X><Y F='Height*1'>0.3818897637795272</Y>
+                </LineTo>
+                <LineTo IX='5'>
+                    <X F='Geometry1.X1'>0</X><Y F='Geometry1.Y1'>0</Y>
+                </LineTo>
+            </Geom>
+            <Text><cp IX='0'/>[%for(String s : StringUtils.split(text, "\n")) {%][%=s%]
+[%}%]</Text>
+        </Shape>
+        <Shape ID='[%=++shapeIdCounter%]' Type='Shape' LineStyle='3' FillStyle='3' TextStyle='3'>
+            <XForm>
+                <PinX F='Sheet.[%=mainShapeId%]!Width*0.14928909952607'>0.1550196850393704</PinX>
+                <PinY F='Sheet.[%=mainShapeId%]!Height*0.5'>0.1909448818897637</PinY>
+                <Width F='Sheet.[%=mainShapeId%]!Width*0.29857819905213'>0.3100393700787407</Width>
+                <Height F='Sheet.[%=mainShapeId%]!Height*1'>0.3818897637795273</Height>
+                <LocPinX F='Width*0.5'>0.1550196850393704</LocPinX>
+                <LocPinY F='Height*0.5'>0.1909448818897637</LocPinY>
+                <Angle>0</Angle>
+                <FlipX>0</FlipX>
+                <FlipY>0</FlipY>
+                <ResizeMode>0</ResizeMode>
+            </XForm>
+            <TextBlock>
+                <LeftMargin Unit='PT' F='Inh'>0.05555555555555555</LeftMargin>
+                <RightMargin Unit='PT' F='Inh'>0.05555555555555555</RightMargin>
+                <TopMargin Unit='PT' F='Inh'>0.05555555555555555</TopMargin>
+                <BottomMargin Unit='PT' F='Inh'>0.05555555555555555</BottomMargin>
+                <VerticalAlign F='Inh'>1</VerticalAlign>
+                <TextBkgnd>#ffffff</TextBkgnd>
+                <DefaultTabStop F='Inh'>0.5905511811023622</DefaultTabStop>
+                <TextDirection F='Inh'>0</TextDirection>
+                <TextBkgndTrans F='Inh'>0</TextBkgndTrans>
+            </TextBlock>
+            <vx:TextBlock xmlns:vx='http://schemas.microsoft.com/visio/2006/extension'>
+                <vx:TextBkgnd F='THEMEGUARD(THEME("BackgroundColor")+1)'>#ffffff</vx:TextBkgnd>
+            </vx:TextBlock>
+            <Misc>
+                <NoObjHandles F='Inh'>0</NoObjHandles>
+                <NonPrinting F='Inh'>0</NonPrinting>
+                <NoCtlHandles F='Inh'>0</NoCtlHandles>
+                <NoAlignBox F='Inh'>0</NoAlignBox>
+                <UpdateAlignBox F='Inh'>0</UpdateAlignBox>
+                <HideText F='Inh'>0</HideText>
+                <DynFeedback F='Inh'>0</DynFeedback>
+                <GlueType F='Inh'>0</GlueType>
+                <WalkPreference F='Inh'>0</WalkPreference>
+                <BegTrigger F='No Formula'>0</BegTrigger>
+                <EndTrigger F='No Formula'>0</EndTrigger>
+                <ObjType F='Inh'>0</ObjType>
+                <Comment F='Inh'/>
+                <IsDropSource F='Inh'>0</IsDropSource>
+                <NoLiveDynamics F='Inh'>0</NoLiveDynamics>
+                <LocalizeMerge F='Inh'>0</LocalizeMerge>
+                <Calendar F='Inh'>0</Calendar>
+                <LangID F='Inh'>1040</LangID>
+                <ShapeKeywords F='Inh'/>
+                <DropOnPageScale F='Inh'>1</DropOnPageScale>
+            </Misc>
+            <Geom IX='0'>
+                <NoFill>1</NoFill>
+                <NoLine>0</NoLine>
+                <NoShow>0</NoShow>
+                <NoSnap>0</NoSnap>
+                <MoveTo IX='1'>
+                    <X F='Width*1'>0.3100393700787407</X><Y F='Height*1'>0.3818897637795273</Y>
+                </MoveTo>
+                <LineTo IX='2'>
+                    <X F='Width*0'>0</X><Y F='Height*1'>0.3818897637795273</Y>
+                </LineTo>
+                <LineTo IX='3'>
+                    <X F='Width*0'>0</X><Y F='Height*0'>0</Y>
+                </LineTo>
+                <LineTo IX='4'>
+                    <X F='Width*1'>0.3100393700787407</X><Y F='Height*0'>0</Y>
+                </LineTo>
+            </Geom>
+        </Shape>
+    </Shapes>
+</Shape>

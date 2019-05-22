@@ -1,0 +1,30 @@
+#?delimiters [%,%],[%=,%]
+[% setXMLOutput() %]
+<FormBean>
+
+	[% for (field in component.selectNodes("SelectionField")) { %]
+	  <Property name="[%=field["id"]%]Items" type="java.lang.Object[]"/>
+	[% } %]
+
+    <Property name="[%=component["id"]%]" indexed="true">
+      <Property name="key" type="java.lang.String"/>
+      [% for (field in component.selectNodes("Field")) { %]
+	    [% if (field["type"] == "blob") { %]
+	      <Property name="[%=field["id"]%]" type="com.webratio.web.mvc.form.FileProperty" init="true"/>
+	    [% } else { %]
+	      <Property name="[%=field["id"]%]" type="java.lang.String"/>
+	      [% if (field["hidden"] != "true" && isLocalizedType(field["type"])) { %]
+	        <Property name="[%=field["id"]%]_locale" type="java.lang.String"/>
+	      [% } %]
+	    [% } %]
+	  [% } %]
+	  [% for (field in component.selectNodes("SelectionField")) { %]
+	     <Property name="[%=field["id"]%]" type="java.lang.String"/>
+	  [% } %]
+    </Property>
+    
+	<Property name="[%=component["id"]%]DataSize" type="java.lang.Integer"/>
+	<Property name="[%=component["id"]%]Checked" type="java.lang.String[]"/>
+	<Property name="[%=component["id"]%]Keys" type="java.lang.String"/>
+
+</FormBean>

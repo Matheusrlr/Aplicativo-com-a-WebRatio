@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="operation" formBased="false" idPrefix="rsu" namePrefix="Response " label="Response" onlyForServiceView="true" navigationFlowTarget="true" dataFlowTarget="true"
+  errorFlowSource="true" errorFlowTarget="true" successFlowTarget="true">
+
+  <EnumProperty label="Content Type" attributeName="contentType" emptyInheritedLabel="XML" defaultValue="XML" figureDisplayOrder="1" hideFigureWhenEmpty="true">
+    <EnumItem value="XML" label="XML" />
+    <EnumItem value="JSON" label="JSON" />
+    <Description xml:space="preserve">The response content type.</Description>
+  </EnumProperty>
+  
+  <StringProperty label="Namespace URI" attributeName="nsURI">
+     <IsEnabled>return (element["contentType"] == "XML")</IsEnabled>
+    <Description xml:space="preserve">The namespace URI of the XML element to be included in
+the body of the SOAP response (could be empty).</Description>
+  </StringProperty>
+  
+  <EnumProperty label="Status Code" attributeName="statusCode" emptyInheritedLabel="200 - OK" defaultValue="200" figureDisplayOrder="2" hideFigureWhenEmpty="true">
+    <EnumItem value="200" label="200 - OK" />
+    <EnumItem value="201" label="201 - CREATED" />
+    <EnumItem value="202" label="202 - ACCEPTED" />
+    <EnumItem value="203" label="203 - NON-AUTHORITATIVE INFORMATION" />
+    <EnumItem value="204" label="204 - NO CONTENT" />
+    <EnumItem value="205" label="205 - RESET CONTENT" />
+    <EnumItem value="206" label="206 - PARTIAL CONTENT" />
+    <EnumItem value="207" label="207 - MULTI-STATUS" />
+    <Description xml:space="preserve">The HTTP response code.</Description>
+  </EnumProperty>
+  
+  <EnumProperty label="Attachment Style" attributeName="attachmentStyle" defaultValue="multipart">
+    <EnumItem value="multipart" label="Multi-Part" />
+    <EnumItem value="embedded" label="Embedded" />
+    <Description xml:space="preserve">The attachment handling behavior. If set to multipart, the attachments will be explicitly included in the response body.</Description>
+    <IsEnabled>return element["contentType"] == "JSON"</IsEnabled>
+  </EnumProperty>
+  
+  <SubComponent elementName="ResponseBodyParameter" idPrefix="rsp" namePrefix="BodyParameter" label="Body Parameter">
+    <XSDProviderProperty attributeName="xsdProvider" label="XSD Provider">
+      <IsEnabled>return (element.selectSingleNode("ComplexParameterFragment|SimpleParameterFragment") == null)</IsEnabled>
+      <Description xml:space="preserve">The optional XSD provider used to specify the parameter's type.</Description>
+    </XSDProviderProperty>
+    <XSDTypeProperty attributeName="xsdType" schemaExpr="@xsdProvider" includeSimpleTypes="true" includeElements="true"
+      includeComplexTypes="true" label="XSD Type/Element">
+      <IsEnabled>return (element.selectSingleNode("ComplexParameterFragment|SimpleParameterFragment") == null)</IsEnabled>
+      <Description xml:space="preserve">The parameter's type; it is a simple type if the XSD provider 
+		property is unspecified; otherwise it is either a element or a complex type of the underlying XSDs.</Description>
+    </XSDTypeProperty>
+    <StringProperty label="Namespace URI" attributeName="nsURI">
+      <IsEnabled>return !(element["xsdType"].endsWith("[Element]")) &amp;&amp; (element.parent["contentType"]== "XML")</IsEnabled>
+      <Description xml:space="preserve">The namespace URI of the XML element associated to this parameter.</Description>
+    </StringProperty>
+    <IntegerProperty label="Min Card." attributeName="minCard" defaultValue="1">
+      	<Description xml:space="preserve">A numerical value specifying the minimum cardinality of this parameter [0, N]. 
+      	If 0 this fragment is optional, default is 1.</Description>
+    </IntegerProperty>
+    <IntegerProperty label="Max Card." attributeName="maxCard" defaultValue="1">
+		<Description xml:space="preserve">A numerical value specifying the maximum cardinality of this parameter [1, N].
+		If -1 this fragment has an unbounded max cardinality, default is 1, 0 is not allowed.
+		</Description>
+    </IntegerProperty>
+    <OrderingProperty attributeName="fragmentOrder" elementsExpr="ComplexParameterFragment|SimpleParameterFragment">
+      <IsEnabled>return (element.selectSingleNode("ComplexParameterFragment|SimpleParameterFragment") != null)</IsEnabled>
+      <Description xml:space="preserve">The order of the child parameter fragments.</Description>
+    </OrderingProperty>
+    <Description xml:space="preserve">The parameter exposed by the component. Each parameter is exposed
+		as input parameter and its value will be included as a part of the resulting REST/SOAP response.
+    </Description>
+
+    <SubComponent elementName="ComplexParameterFragment" idPrefix="cpf" namePrefix="ComplexFragment" label="ComplexFragment">
+      <IsEnabled>return (element["xsdProvider"]=="")&amp;&amp;(element["xsdType"]=="")</IsEnabled>
+      <XSDProviderProperty attributeName="xsdProvider" label="XSD Provider">
+        <IsEnabled>return (element.selectSingleNode("ComplexParameterFragment|SimpleParameterFragment") == null)</IsEnabled>
+        <Description xml:space="preserve">The optional XSD provider used to specify the parameter's type.</Description>
+      </XSDProviderProperty>
+      <XSDTypeProperty attributeName="xsdType" schemaExpr="@xsdProvider" includeSimpleTypes="false" includeElements="true"
+        includeComplexTypes="true" label="XSD Type/Element">
+        <IsEnabled>return (element["xsdProvider"] != "" &amp;&amp; (element.selectSingleNode("ComplexParameterFragment|SimpleParameterFragment") == null))</IsEnabled>
+        <Description xml:space="preserve">The fragment's complex type or element.</Description>
+      </XSDTypeProperty>
+      <IntegerProperty label="Min Card." attributeName="minCard" defaultValue="1">
+      	<Description xml:space="preserve">A numerical value specifying the minimum cardinality of this fragment [0, N]. 
+      	If 0 this fragment is optional, default is 1.</Description>
+      </IntegerProperty>
+      <IntegerProperty label="Max Card." attributeName="maxCard" defaultValue="1">
+		<Description xml:space="preserve">A numerical value specifying the maximum cardinality of this fragment [1, N].
+		If -1 this fragment has an unbounded max cardinality, default is 1, 0 is not allowed.
+		</Description>
+      </IntegerProperty>
+      <OrderingProperty attributeName="fragmentOrder" elementsExpr="ComplexParameterFragment|SimpleParameterFragment">
+        <IsEnabled>return (element.selectSingleNode("ComplexParameterFragment|SimpleParameterFragment") != null)</IsEnabled>
+        <Description xml:space="preserve">The order of the child parameter fragments.</Description>
+      </OrderingProperty>
+      <SubComponentReference elementName="ComplexParameterFragment" />
+      <SubComponentReference elementName="SimpleParameterFragment" />
+      <Description xml:space="preserve">The parameter fragment which permits to model a complex value fragment.</Description>
+    </SubComponent >
+
+    <SubComponent elementName="SimpleParameterFragment" idPrefix="spf" namePrefix="SimpleFragment" label="SimpleFragment">
+      <IsEnabled>return ((element["xsdProvider"]=="")&amp;&amp;(element["xsdType"]==""))</IsEnabled>
+      <XSDProviderProperty attributeName="xsdProvider" label="XSD Provider">
+        <Description xml:space="preserve">The optional XSD provider used to specify the parameter's type.</Description>
+      </XSDProviderProperty>
+      <XSDTypeProperty attributeName="xsdType" schemaExpr="@xsdProvider" includeSimpleTypes="true" includeElements="false" includeComplexTypes="false" label="XSD Simple Type">
+        <Description xml:space="preserve">The fragment's simple type.</Description>
+      </XSDTypeProperty>
+      <IntegerProperty label="Min Card." attributeName="minCard" defaultValue="1">
+      	<Description xml:space="preserve">A numerical value specifying the minimum cardinality of this fragment [0, N]. 
+      	If 0 this fragment is optional, default is 1.</Description>
+      </IntegerProperty>
+      <IntegerProperty label="Max Card." attributeName="maxCard" defaultValue="1">
+		<Description xml:space="preserve">A numerical value specifying the maximum cardinality of this fragment [1, N].
+		If -1 this fragment has an unbounded max cardinality, default is 1, 0 is not allowed.
+		</Description>
+      </IntegerProperty>
+      <Description xml:space="preserve">The parameter fragment which permits to model a simple value fragment.</Description>
+    </SubComponent >
+  </SubComponent >
+  
+  <SubComponent elementName="Header" idPrefix="rh" namePrefix="Header" ignoreI18N="true">
+  	<StringProperty attributeName="value"> 
+  		<Description>The default header value.</Description>
+  	</StringProperty>
+  	<Description>An header to set to the HTTP response.</Description>
+  </SubComponent >
+
+  <Description xml:space="preserve">A Response component accepts as input XML or JSON documents and plain parameters, builds a 
+SOAP response envelope or a JSON response object on top of them, and sends the envelope back to the 
+caller that previously contacted a solicit component by sending a SOAP request. 
+More precisely, if the XML document is a SOAP response, the component publish 
+it as-is; otherwise the documents and the plain parameters are assembled to 
+form a SOAP body, and the entire SOAP envelope is published.</Description>
+
+  <InputDescription xml:space="preserve" name="SOAP Envelope">The SOAP response envelope; at execution time suitable
+SOAP envelope and SOAP body are built by the operation itself
+if the provided input document does not appear to be
+a valid SOAP envelope. This input parameter is hidden if
+the operation includes at least one response parameter.</InputDescription>
+  <InputDescription xml:space="preserve" name="Parameter-Name">The input parameter associated to one of the parameters
+defined for the operation.</InputDescription>
+  <OutputDescription xml:space="preserve" name="Error Message">The message produced by the operation in case of error. Useful
+to feed an error response operation through a Error Flow.</OutputDescription>
+  <OutputDescription xml:space="preserve" name="Exception">The exception thrown by the operation in case of error. Useful to
+feed an error response operation through a Error Flow.</OutputDescription>
+</Component>

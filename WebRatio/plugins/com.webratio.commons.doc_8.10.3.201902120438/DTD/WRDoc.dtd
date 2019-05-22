@@ -1,0 +1,81 @@
+<!ELEMENT doc (s1|img|anchor)* >
+<!ATTLIST doc title CDATA #REQUIRED>
+<!ATTLIST doc subTitle CDATA #IMPLIED>
+<!ATTLIST doc authors CDATA #IMPLIED>
+<!ATTLIST doc date (it|us) #IMPLIED>
+
+<!ELEMENT s1 ((svg|p|img|anchor|table|ul|ol|source)*, anchorSet*, s2*) >
+<!ATTLIST s1 title CDATA #REQUIRED>
+<!ATTLIST s1 id CDATA #IMPLIED>
+
+<!ELEMENT s2 ((svg|p|img|anchor|table|ul|ol|source)*, anchorSet*, s3*) >
+<!ATTLIST s2 title CDATA #REQUIRED>
+<!ATTLIST s2 img CDATA #IMPLIED>
+
+<!ELEMENT s3 ((svg|p|img|anchor|table|ul|ol|source)*, anchorSet*, s4*) >
+<!ATTLIST s3 title CDATA #REQUIRED>
+<!ATTLIST s3 img CDATA #IMPLIED>
+
+<!ELEMENT s4 ((svg|p|img|anchor|table|ul|ol|source)*, anchorSet*, s5*) >
+<!ATTLIST s4 title CDATA #REQUIRED>
+<!ATTLIST s4 img CDATA #IMPLIED>
+
+<!ELEMENT s5 ((svg|p|img|anchor|table|ul|ol|source)*, anchorSet*) >
+<!ATTLIST s5 title CDATA #REQUIRED>
+<!ATTLIST s5 img CDATA #IMPLIED>
+
+<!ELEMENT anchor EMPTY>
+<!ATTLIST anchor name CDATA #REQUIRED>
+
+<!ELEMENT p (#PCDATA|i|b|code|svg|img|a|ul|ol|table|source|br|anchor|command)* >
+
+<!ELEMENT i (#PCDATA|anchor)* >
+
+<!ELEMENT br EMPTY>
+
+<!ELEMENT b (#PCDATA|anchor)* >
+
+<!ELEMENT img EMPTY >
+<!ATTLIST img src CDATA #REQUIRED>
+<!ATTLIST img alt CDATA #REQUIRED>
+<!ATTLIST img alignment (center|right|left) 'center'>
+<!ATTLIST img caption CDATA #IMPLIED>
+<!ATTLIST img id CDATA #IMPLIED>
+
+<!ELEMENT svg EMPTY >
+<!ATTLIST svg src CDATA #REQUIRED>
+<!ATTLIST svg alignment (center|right|left) 'center'>
+<!ATTLIST svg height>
+<!ATTLIST svg width>
+
+<!ELEMENT anchorSet (a)* >
+<!ATTLIST anchorSet title CDATA #REQUIRED>
+
+<!ELEMENT a (#PCDATA|img)* >
+<!ATTLIST a href CDATA #REQUIRED>
+
+<!ELEMENT command (#PCDATA) >
+<!ATTLIST command alt CDATA #REQUIRED>
+<!ATTLIST command path CDATA #REQUIRED>
+
+<!ELEMENT ul (li)* >
+
+<!ELEMENT ol (li)* >
+
+<!ELEMENT li (#PCDATA|i|b|code|svg|img|a|ul|ol|br|p|command)* >
+
+<!ELEMENT table (header*, row*, anchor*) >
+<!ATTLIST table border CDATA 'none'>
+
+<!ELEMENT header (cell)* >
+
+<!ELEMENT row (cell)* >
+
+<!ELEMENT cell (#PCDATA|i|b|code|svg|img|a|ul|ol|br|p|command|anchor|div)* >
+<!ATTLIST cell alignment (center|right|left) #IMPLIED>
+<!ATTLIST cell valign (top|middle|bottom) #IMPLIED>
+<!ATTLIST cell width CDATA #IMPLIED>
+
+<!ELEMENT source (#PCDATA) >
+
+<!ELEMENT code (#PCDATA) >

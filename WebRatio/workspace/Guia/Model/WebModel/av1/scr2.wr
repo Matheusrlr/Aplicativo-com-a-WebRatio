@@ -1,0 +1,72 @@
+<Screen xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" gr:x="525" gr:y="-65" id="av1#scr2" name="T&#243;picos">
+  <ViewComponents>
+    <List gr:x="0" gr:y="0" id="av1#scr2#pwu2" name="List 2" checkable="false" eventOrder="av1#scr2#pwu2#oslte7 av1#scr2#pwu2#oslte13" dataBinding="cls2" displayAttributes="cls2#att5 cls2#att6">
+      <Events>
+        <OnSelectEvent id="av1#scr2#pwu2#oslte7" name="voltar" validate="true">
+          <NavigationFlow id="av1#scr2#pwu2#oslte7#nf7" to="av1#scr1#pwu1" automaticCoupling="true" gr:bendpoints="-98,12,97,17"/>
+        </OnSelectEvent>
+        <OnSelectEvent id="av1#scr2#pwu2#oslte13" name="Detalhes" validate="true">
+          <NavigationFlow id="av1#scr2#pwu2#oslte13#nf13" to="av1#scr2#dau3" automaticCoupling="true"/>
+        </OnSelectEvent>
+      </Events>
+    </List>
+    <Details id="av1#scr2#dau3" name="Detalhes T&#243;picos" eventOrder="av1#scr2#dau3#oslte12" gr:x="180" gr:y="0" dataBinding="cls2" displayAttributes="cls2#att5 cls2#att6 cls2#att7 cls2#att8 cls2#att9 cls2#att10 cls2#att20">
+      <ConditionalExpression id="av1#scr2#dau3#sc3" defaultPolicy="fill" booleanOperator="and">
+        <KeyCondition id="av1#scr2#dau3#sc3#kcond3" name="KeyCondition1" predicate="in" implied="false"/>
+      </ConditionalExpression>
+      <Events>
+        <OnSelectEvent id="av1#scr2#dau3#oslte12" name="voltar t&#243;picos">
+          <NavigationFlow id="av1#scr2#dau3#oslte12#nf12" to="av1#scr2#pwu2" automaticCoupling="true" gr:bendpoints="-108,4,87,24"/>
+        </OnSelectEvent>
+      </Events>
+    </Details>
+  </ViewComponents>
+  <layout:Grid containerType="grid">
+    <layout:Row>
+      <layout:Cell colspan="12">
+        <layout:Component componentId="av1#scr2#pwu2">
+          <layout:Attribute attribute="cls2#att5"/>
+          <layout:Attribute attribute="cls2#att6"/>
+          <layout:Event event="av1#scr2#pwu2#oslte7" eventType="OnSelectEvent"/>
+          <layout:Event event="av1#scr2#pwu2#oslte13" eventType="OnSelectEvent"/>
+        </layout:Component>
+      </layout:Cell>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+    <layout:Row>
+      <layout:Cell colspan="12">
+        <layout:Component componentId="av1#scr2#dau3">
+          <layout:Event eventType="OnSelectEvent" event="av1#scr2#dau3#oslte12"/>
+          <layout:Attribute attribute="cls2#att5"/>
+          <layout:Attribute attribute="cls2#att6"/>
+          <layout:Attribute attribute="cls2#att7"/>
+          <layout:Attribute attribute="cls2#att8"/>
+          <layout:Attribute attribute="cls2#att9"/>
+          <layout:Attribute attribute="cls2#att10"/>
+          <layout:Attribute attribute="cls2#att20"/>
+        </layout:Component>
+      </layout:Cell>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+  </layout:Grid>
+</Screen>

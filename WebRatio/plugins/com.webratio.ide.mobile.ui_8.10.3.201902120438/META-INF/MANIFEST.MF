@@ -1,0 +1,31 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: com.webratio.ide.mobile.ui;singleton:=true
+Require-Bundle: org.eclipse.core.runtime,org.eclipse.core.resources,or
+ g.eclipse.gef,org.eclipse.ui,org.eclipse.ui.ide,org.eclipse.ui.forms,
+ com.webratio.commons.mf.model,com.webratio.ide.core,com.webratio.ide.
+ ui,com.webratio.commons.startup,com.webratio.commons.eclipse.core,com
+ .webratio.commons.mf.ui.views.properties.tabbed,org.eclipse.ui.views.
+ properties.tabbed,com.webratio.commons.mf.ui,com.webratio.ide.units,c
+ om.webratio.generator.helpers,com.webratio.commons.eclipse.ui,com.web
+ ratio.commons.lib.google.guava,com.webratio.commons.lib.dom4j,com.web
+ ratio.commons.base,com.webratio.commons.eclipse.core,com.webratio.mod
+ el.query,com.webratio.commons.lib.jsr305,com.webratio.commons.libs
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: WebRatio
+Ant-Version: Apache Ant 1.9.2
+Export-Package: com.webratio.ide.mobile.ui,com.webratio.ide.mobile.ui.
+ model
+Bundle-Name: WebRatio Mobile UI Plug-in
+Bundle-Version: 8.10.3.201902120438
+Bundle-ClassPath: bin.jar
+Bundle-Activator: com.webratio.ide.mobile.ui.MobileUIPlugin
+Created-By: 1.8.0-b132 (Oracle Corporation)
+
+Name: plugin.xml
+SHA-256-Digest: 89fAohJfCgGKFnx9p9hw1mWbKruVCqcACFpvd/db4eI=
+
+Name: META-INF/signature
+SHA-256-Digest: PRYYgqFVErjMMx3lDuv1T8nEp66ZmsJ8BwS19rF+4z4=
+

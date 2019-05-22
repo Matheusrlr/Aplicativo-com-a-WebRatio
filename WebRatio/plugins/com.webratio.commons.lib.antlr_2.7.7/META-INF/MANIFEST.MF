@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Export-Package: antlr,antlr.ASdebug,antlr.actions.cpp,antlr.actions.cs
+ harp,antlr.actions.java,antlr.actions.python,antlr.build,antlr.collec
+ tions,antlr.collections.impl,antlr.debug,antlr.debug.misc,antlr.prepr
+ ocessor
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/antlr.jar
+Bundle-Version: 2.7.7
+Bundle-Name: WebRatio 3rd Party Library - ANTLR
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.antlr
+Bundle-RequiredExecutionEnvironment: J2SE-1.4
+
+Name: about_files/antlr2.txt
+SHA-256-Digest: SDQnLgs/+71JuaUdfy5d7rlIcvPm5O34DsBFG6fwaUE=
+
+Name: lib/antlr.jar
+SHA-256-Digest: iPvaS5Ellrn1bo4S5YDMlUus+1F3bs/d0+GPwc9W3Ew=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: sPaaytN69XK3PQ80Ux9cdRVw9GF4SjR4xZPozuJpAYE=
+

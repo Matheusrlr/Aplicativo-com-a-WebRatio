@@ -1,0 +1,21 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: dL7iA5Wo9h3bg1JKzfM5Mq9cnBCqh
+ eA3al2xdXLpYC0=
+SHA-256-Digest-Manifest: TFqdGkYtfXWEfHydHYv4t+5WLOsPLJ6CzRppUExNLqY=
+Created-By: 1.7.0_80 (Oracle Corporation)
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: a5fmgH7myHzNji9AMOfHrVh8fy7MOgIdRSUiRZ6EFA4=
+
+Name: lib/javassist.jar
+SHA-256-Digest: DDu6G6Tt5i52SyJJvhWjxbgsFS1H2TPdspClzkldZ7I=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: about.html
+SHA-256-Digest: L0FRrdRLKT4KlIWc2oVKcnQ4aQ7hsQzpaSZyZvuFBFU=
+
+Name: lib/javassistsrc.zip
+SHA-256-Digest: uTJw0U4m6QDEKwzF6Kx6dZberDSRr3XZORcObUWFFlw=
+

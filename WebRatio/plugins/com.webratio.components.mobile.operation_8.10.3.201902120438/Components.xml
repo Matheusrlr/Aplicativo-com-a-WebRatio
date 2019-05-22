@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Components priority="1200" label="Operations"> 
+  <Group>
+    <Component>Create</Component>  
+    <Component>Delete</Component>  
+    <Component>Update</Component>  
+  </Group>
+  <Group>
+  	<Component>Connect</Component>
+  	<Component>Disconnect</Component>
+  </Group>
+  <Group> 
+    <Component>RestfulRequestResponse</Component>  
+    <Component>Operation</Component>  
+  </Group>
+  <Group> 
+    <Component>Switch</Component>  
+  </Group>
+  <Group> 
+    <Component>Login</Component>  
+    <Component>Logout</Component>  
+    <Component>Register</Component>
+  </Group>
+</Components>

@@ -1,0 +1,36 @@
+	<Element name="WebView" lowerName="web view"
+		pluralLowerName="web views">
+		<Description>
+			TODO ....
+		</Description>
+
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+			<Property label="Home Element">
+				The page or action selected as the Home of the Web View.
+			</Property>
+			<Property label="Login Page">
+				The page selected as the Login Page of the Web Application.
+			</Property>			
+			<PropertyRef label="Home"/>		
+			<PropertyRef label="Protected"/>
+			<Property label="Roles">
+				If this <ElementRef /> is protected, it contains the list of user-defined roles having the access rights to this <ElementRef />. If no Roles are defined, this property is automatically set to the "Authenticated User" default role.
+			</Property>			
+			<Property label="URL Name">
+				TODO:WebView@URL Name
+			</Property>		
+			<PropertyRef label="URL Path" />
+			
+			<Property label="Name" onlyForNatureId="com.webratio.ide.WebNature">
+				The name of the Web View.
+			</Property>
+			<Property label="Home" onlyForNatureId="com.webratio.ide.WebNature">
+				If checked, the <ElementRef/> is set as the home <ElementRef/>.
+			</Property>
+			<Property label="Protected" onlyForNatureId="com.webratio.ide.WebNature">
+				If checked, the access to all the pages and actions contained at any level inside the <ElementRef /> is permitted only to users belonging to a role entitled to access the <ElementRef /> . If the  user is not authenticated or authorized to access the <ElementRef />, the Login Page is displayed for the user to provide his username and password.
+			</Property>
+		</PropertyCategory>
+	</Element>

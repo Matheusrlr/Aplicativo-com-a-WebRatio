@@ -1,0 +1,9 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+def componentId = component.attributeValue("id", "")
+%>
+<InputParameters>
+  <InputParameter  label="Current User" name="<%=componentId%>.userOid"  type="User.<%=getById("User").selectSingleNode("Attribute[@key='true']")["id"]%>" mandatory="true"/>
+  <InputParameter  label="Selected Role" name="<%=componentId%>.roleOid"  type="Role.<%=getById("Role").selectSingleNode("Attribute[@key='true']")["id"]%>" mandatory="true"/>
+</InputParameters>

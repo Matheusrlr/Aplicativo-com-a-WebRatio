@@ -1,0 +1,27 @@
+[21 mai 2019 21:22:54] DEBUG Executing SQL script
+[21 mai 2019 21:22:54] INFO ================================================================================
+[21 mai 2019 21:22:54] INFO onError= 'stop'
+[21 mai 2019 21:22:54] INFO encoding= ''
+[21 mai 2019 21:22:54] INFO statementSeparator= ';'
+[21 mai 2019 21:22:54] INFO eventSocketPort= '33669'
+[21 mai 2019 21:22:54] INFO outputLogPath= '/home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/workspace/Data/.Temp~/RollbackSQL.xml.log'
+[21 mai 2019 21:22:54] INFO url= 'jdbc:mysql://localhost:3306/database'
+[21 mai 2019 21:22:54] INFO password= 'tatau25..,'
+[21 mai 2019 21:22:54] INFO outputPath= '/home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/workspace/Data/.Temp~/RollbackSQL.xml'
+[21 mai 2019 21:22:54] INFO driverClass= 'com.mysql.jdbc.Driver'
+[21 mai 2019 21:22:54] INFO sqlScript= '/home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/workspace/Data/.Temp~/RollbackSQL.sql'
+[21 mai 2019 21:22:54] INFO autoCommit= 'false'
+[21 mai 2019 21:22:54] INFO derby.system.home= '/home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/workspace/.metadata/.plugins/com.webratio.commons.db/derby'
+[21 mai 2019 21:22:54] INFO username= 'root'
+[21 mai 2019 21:22:54] INFO ================================================================================
+[21 mai 2019 21:22:54] INFO Connecting to the Database...
+[21 mai 2019 21:22:55] INFO Database connection estabilished
+[21 mai 2019 21:22:55] INFO transaction isolation: 4
+[21 mai 2019 21:22:55] DEBUG ================================================================================
+[21 mai 2019 21:22:55] DEBUG Executing SQL script file: /home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/workspace/Data/.Temp~/RollbackSQL.sql
+[21 mai 2019 21:22:55] DEBUG Executing statement:  alter table `topico`   drop foreign key `fk_topico_tipo`
+[21 mai 2019 21:22:55] DEBUG Executing statement:  alter table `topico`  drop column  `oid_tipo`
+[21 mai 2019 21:22:55] DEBUG ================================================================================
+[21 mai 2019 21:22:55] DEBUG SQL SCRIPT SUCCESSFULLY EXECUTED
+[21 mai 2019 21:22:55] INFO Database connection closed
+[21 mai 2019 21:22:55] DEBUG Total time: 462 milliseconds

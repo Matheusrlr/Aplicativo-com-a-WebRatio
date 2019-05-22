@@ -1,0 +1,37 @@
+  <Element name="Toolbar" lowerName="toolbar"
+		pluralLowerName="toolbar">
+		<Description>
+			A toolbar
+			is a special page containing components, other sub-pages, and alternative 
+  		    pages which during the generation process are inserted into the Pages that refer to the Master Pages.
+		</Description>
+		<ActionRef label="Add Navigation Flow" />
+		<ActionRef label="Add Property" />
+		<ActionRef label="Find Model Problems"/>
+		<ActionRef label="Help"/>
+		
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+			<Property label="Overrides">
+				The user-defined toolbar to be replaced with this <ElementRef />.
+			</Property>			
+		</PropertyCategory>
+		
+		<PropertyCategory name="Layout">
+			<PropertyRef label="Style" />
+			<PropertyRef label="Page Layout" />
+			<PropertyRef label="Grid Layout"/>
+			<PropertyRef label="Frame Layout"/>
+			<PropertyRef label="Cell Layout"/>
+			<PropertyRef label="Attribute Layout"/>
+			<PropertyRef label="Field Layout"/>
+			<PropertyRef label="Event Layout"/>
+			<PropertyRef label="Component Configuration"/>
+			<PropertyRef label="Old Resources"/>
+		</PropertyCategory>
+		
+		<PropertyCategory name="Appearance">
+			<PropertyRef label="Show" />
+		</PropertyCategory>
+	</Element>

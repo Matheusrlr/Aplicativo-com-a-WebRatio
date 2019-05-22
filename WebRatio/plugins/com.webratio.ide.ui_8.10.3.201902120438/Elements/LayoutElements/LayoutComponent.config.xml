@@ -1,0 +1,49 @@
+  <Element name="LayoutComponent" lowerName="layout component"
+		pluralLowerName="layout component">
+		<Description>
+			A layout component
+			is the representation of a component in the layout.
+		</Description>
+		<ActionRef label="Add Property" />
+		<ActionRef label="Localize" />
+		<ActionRef label="Open in Browser" />
+		<ActionRef label="Help"/>
+		
+		<PropertyCategory name="Layout">
+			<PropertyRef label="Label" name="Title"/>
+			<PropertyRef label="Style" />
+			<PropertyRef label="Grid Layout"/>
+			<PropertyRef label="Frame Layout"/>
+			<PropertyRef label="Component Layout"/>
+			<PropertyRef label="Attribute Layout"/>
+			<Property label="Manual Shown Attributes">
+			   If checked, the layout attribute of the component are automatically managed. If the 
+			   shown attributes must be different from the displayed attribute uncheck the property and 
+			   open the &lt;a href="/Reference/WizardsAndDialogs/ShownAttributesDialog"/&gt; clicking on the 
+			   Edit button <Button name="Browse"/>. Choose the attributes to display.
+			</Property>
+			<PropertyRef label="Field Layout"/>
+			<Property label="Manual Shown Fields">
+			   If checked, the layout fields of the component are automatically managed. If not all fields 
+			   are to be rendered, uncheck the property and 
+			   open the &lt;a href="/Reference/WizardsAndDialogs/ShownFieldsDialog"/&gt; clicking on the 
+			   Edit button <Button name="Browse"/>. Choose the fields to display.
+			</Property>
+			<PropertyRef label="Event Layout"/>
+			<Property label="Manual Shown Events">
+			   If checked, the layout flow of the component are automatically managed. If not all flows 
+			   are to be rendered, uncheck the property and 
+			   open the &lt;a href="/Reference/WizardsAndDialogs/ShownLinksDialog"&gt;Shown Flows Selection Dialog&lt;/a&gt; clicking on the 
+			   Edit button <Button name="Browse"/>. Choose the flows to display.
+			</Property>
+			<PropertyRef label="Style Class"/>
+		</PropertyCategory>
+		<PropertyCategory name="Condition">
+			<PropertyRef name="Page Visibility Condition" label="Component Visibility Cond."/>
+			<PropertyRef name="Page Visibility Condition" label="Attribute Visibility Cond."/>
+			<PropertyRef name="Page Visibility Condition" label="Field Visibility Cond."/>
+			<PropertyRef name="Page Visibility Condition" label="Field Disable Cond."/>
+			<PropertyRef name="Page Visibility Condition" label="Event Visibility Cond."/>
+			<PropertyRef name="Page Visibility Condition" label="Event Disable Cond."/>
+		</PropertyCategory>
+	</Element>

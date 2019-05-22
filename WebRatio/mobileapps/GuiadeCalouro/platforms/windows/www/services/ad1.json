@@ -1,0 +1,43 @@
+{
+  "_" : "wrm.core.ActionDefService",
+  "input" : {
+    "id" : "sf2",
+    "navTo" : "lgu1",
+    "bindTo" : "lgu1",
+    "bind" : {
+      "username" : "username",
+      "password" : "password"
+    }
+  },
+  "outputPorts" : {
+    "success" : "spd1",
+    "error" : "epd1"
+  },
+  "progressNotification" : "notification.loginProgress",
+  "outputNotifications" : { },
+  "components" : {
+    "lgu1" : {
+      "success" : {
+        "id" : "sf1",
+        "navTo" : "spd1",
+        "bindTo" : "spd1"
+      },
+      "error" : {
+        "id" : "ef1",
+        "navTo" : "epd1",
+        "bindTo" : "epd1",
+        "bind" : {
+          "notificationMessage" : "errorMessage"
+        }
+      },
+      "error.Internal Error" : {
+        "id" : "ef2",
+        "navTo" : "epd1",
+        "bindTo" : "epd1",
+        "bind" : {
+          "notificationMessage" : "errorMessage"
+        }
+      }
+    }
+  }
+}

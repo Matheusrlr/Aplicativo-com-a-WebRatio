@@ -1,0 +1,28 @@
+Manifest-Version: 1.0
+Eclipse-RegisterBuddy: com.webratio.commons.lib.groovy
+Bundle-SymbolicName: com.webratio.commons.dom4j
+Export-Package: com.webratio.commons.dom4j,com.webratio.commons.dom4j.
+ transform,groovy.runtime.metaclass.org.dom4j.tree
+Bundle-Name: WebRatio dom4j Extensions
+Bundle-Version: 1.0.0.201810081230
+Bundle-ClassPath: com.webratio.commons.dom4j.jar
+Require-Bundle: com.webratio.commons.lib.dom4j,com.webratio.commons.li
+ b.jaxen,com.webratio.commons.lib.google.guava,com.webratio.commons.li
+ b.groovy,com.webratio.commons.lib.jsr305,com.webratio.commons.lib.jac
+ kson2
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: WebRatio
+
+Name: about.html
+SHA-256-Digest: Hm4N7WEhu9zVE3iYzg1Sf2ve1JvZFZPcMXdFW/cH0N4=
+
+Name: com.webratio.commons.dom4j.jar
+SHA-256-Digest: ZUx8ImwEPCRS+yxIrB4brmsQfOCt5WSAuJBM1vpr8+g=
+
+Name: about_files/Aho-Corasick.BSD.txt
+SHA-256-Digest: //5F5gHJTSC8jqy1YyNFcIYJs9UFaUpgpdA3AunzPXg=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+

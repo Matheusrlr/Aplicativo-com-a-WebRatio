@@ -1,0 +1,28 @@
+Manifest-Version: 1.0
+Export-Package: javax.validation,javax.validation.bootstrap,javax.vali
+ dation.constraints,javax.validation.constraintvalidation,javax.valida
+ tion.executable,javax.validation.groups,javax.validation.metadata,jav
+ ax.validation.spi
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/validation-api.jar
+Bundle-Version: 1.1.0
+Bundle-Name: WebRatio 3rd Party Library - Java Validation API
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.javax.validation
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
+Name: lib/validation-api.jar
+SHA-256-Digest: 8517pyU+NfWsSAgewbwoxd+bMqxLfbIIU+Wo52v3sO0=
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: se+i1bCuN1SDkO18Bs6rkWnXoDE2KaGfyF7VpweIgIY=
+
+Name: lib/validation-apisrc.zip
+SHA-256-Digest: MMQhrBhK5iBJYTBLYM0G21/ePbUVnoFDC83LOGzxlHA=
+

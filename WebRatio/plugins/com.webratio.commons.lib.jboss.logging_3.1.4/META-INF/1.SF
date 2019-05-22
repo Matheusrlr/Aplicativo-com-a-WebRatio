@@ -1,0 +1,21 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: XkPfmsWQWd7c3W86Hg8enNnaj0VZh
+ Ac1LD9rYzO1iFQ=
+SHA-256-Digest-Manifest: CmTdv5HSJEkjhLA/XSHgGRGtk2Vp5uNvwi6P7aJ24Wc=
+Created-By: 1.7.0_75 (Oracle Corporation)
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: about.html
+SHA-256-Digest: AVIBA6FH97oYkMuwxngYBPWXtna/aydEDSA3WRSrDLI=
+
+Name: lib/jboss-loggingsrc.zip
+SHA-256-Digest: /t29hAJbMhkO2zgDy+NeMRr1nGizSTcyTt48jsIoQj0=
+
+Name: about_files/lgpl-2.1.txt
+SHA-256-Digest: NjEvVJmW5ZqX4f1G3xI1YqqPU81tm1OCFDG4s4LZ/wo=
+
+Name: lib/jboss-logging.jar
+SHA-256-Digest: Flg4htRqqJ0SYnsPaDgZ0PuEjtbtV3d/4TlHHHewtUw=
+

@@ -1,0 +1,48 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: com.webratio.bpm.ui;singleton:=true
+Require-Bundle: org.apache.ant,org.eclipse.core.resources,org.eclipse.
+ gef,org.eclipse.jdt.ui,org.eclipse.search,org.eclipse.ui.console,org.
+ eclipse.ui.ide,com.webratio.commons.mf.ui.views.properties.tabbed,com
+ .webratio.commons.db,com.webratio.commons.libs,com.webratio.commons.m
+ f.model,com.webratio.commons.mf.ui,com.webratio.generator.helpers,com
+ .webratio.generator.webapp,com.webratio.bpm.core,org.eclipse.jdt.core
+ ,org.eclipse.team.core,org.eclipse.pde,org.eclipse.pde.core,org.eclip
+ se.pde.ui,org.eclipse.ant.core,org.eclipse.ant.ui,org.eclipse.ui.edit
+ ors,org.eclipse.core.filesystem,org.eclipse.help.ui,org.eclipse.ui.wo
+ rkbench.texteditor,org.eclipse.compare,org.eclipse.ui,org.eclipse.jfa
+ ce.text,org.eclipse.core.runtime,org.eclipse.swt,org.eclipse.jface,or
+ g.eclipse.ui.workbench,org.eclipse.ui.navigator,com.webratio.commons.
+ startup,com.webratio.bpm.signal.core,com.webratio.commons.eclipse.cor
+ e,com.webratio.commons.eclipse.ui,com.webratio.commons.lib.google.gua
+ va,com.webratio.commons.lib.itext,com.webratio.commons.lib.groovy,com
+ .webratio.commons.lib.apache.commons.collections,com.webratio.commons
+ .lib.apache.commons.lang,com.webratio.commons.lib.apache.commons.io,c
+ om.webratio.commons.lib.apache.log4j,com.webratio.commons.lib.dom4j,c
+ om.webratio.commons.eclipse.gef,com.webratio.commons.eclipse.core,com
+ .webratio.commons.lib.jsr305,com.webratio.commons.base,com.webratio.c
+ ommons.dom4j
+Bundle-ManifestVersion: 2
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: WebRatio
+Import-Package: junit.framework
+Ant-Version: Apache Ant 1.9.2
+Export-Package: com.webratio.bpm.ui,com.webratio.bpm.ui.actions,com.we
+ bratio.bpm.ui.bpmn20.export,com.webratio.bpm.ui.bpmn20.importt,com.we
+ bratio.bpm.ui.commands,com.webratio.bpm.ui.dialogs,com.webratio.bpm.u
+ i.editors,com.webratio.bpm.ui.editors.signal,com.webratio.bpm.ui.help
+ ers,com.webratio.bpm.ui.jobs,com.webratio.bpm.ui.properties.items,com
+ .webratio.bpm.ui.resources,com.webratio.bpm.ui.viewers,com.webratio.b
+ pm.ui.wizards
+Bundle-Name: WebRatio BPM UI Plug-in
+Bundle-Version: 8.10.3.201902120438
+Bundle-ClassPath: bin.jar,lib/jaxb-impl.jar,lib/jaxb-xjc.jar
+Bundle-Activator: com.webratio.bpm.ui.BPMUIPlugin
+Created-By: 1.8.0-b132 (Oracle Corporation)
+
+Name: plugin.xml
+SHA-256-Digest: bJ2QPOJ+YJLOsXkVaYulFZBoO+nDUz0VZL3NUTBjaDs=
+
+Name: META-INF/signature
+SHA-256-Digest: PRYYgqFVErjMMx3lDuv1T8nEp66ZmsJ8BwS19rF+4z4=
+

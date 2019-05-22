@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="operation" formBased="false" idPrefix="mfu" namePrefix="Update " label="Update" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" successFlowSource="true" successFlowTarget="true" multipleSuccessFlowCardinality="true" defaultLabel="Update {label(id(@dataBinding))}" validationAware="true"> 
+  <SuccessFlowCodes xml:space="preserve">return ["Not Found"]</SuccessFlowCodes>
+  <DomainClassProperty attributeName="dataBinding" includeDerived="false" figureDisplayOrder="1"> 
+    <Description xml:space="preserve">The class for which one or more instances must be modified.</Description> 
+  </DomainClassProperty>  
+  <BooleanProperty attributeName="bulk" label="Bulk"> 
+    <Description>If checked, the component is able to to perform the modifications of multiple objects at once.</Description> 
+  </BooleanProperty>  
+  <ConditionalExpression classIdExpr="../../@dataBinding" elementName="ConditionalExpression" defaultPolicy="true" figureDisplayOrder="2" automatic="true"> 
+    <Description xml:space="preserve">The set of selection criteria that retrieves the instances of the class of the component.</Description> 
+  </ConditionalExpression>  
+  <Description xml:space="preserve">A modify component enables the modification of a set of class instances or
+of an individual class instance.
+The instances to modify are identified using a conditional expression.
+A modify operation specification consists of two parts:
+&lt;ul&gt;
+  &lt;li&gt;The specification of the class to which the component refers and, optionally,
+of a conditional expression used to restrict the set of instances affected by the modification.&lt;/li&gt;
+  &lt;li&gt;The values to use for modifying the attributes of the class.&lt;/li&gt;
+&lt;/ul&gt;</Description>  
+  <InputDescription xml:space="preserve" name="Attribute Name">The value to use for modifying an attribute of the relevant
+class instance(s). In the case of BLOB attribute the operation exposes another input parameter named "&amp;lt;attribute-name&amp;gt; [file name]" 
+which permits to specify an alternative file name.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Association Role Name">The value to use to perform also a connect operation in the
+same instruction.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Modified Object(s)">The key attributes values of the object(s) to modify.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Condition-Name">The parameter associated to one of the Conditional Expressions
+of the operation.</InputDescription>  
+  <OutputDescription xml:space="preserve" name="Modified Object(s)">The key attributes values of the object(s) that have been actually modified.
+This can be a subset of the input objects of the operation,
+in case of partial or total failure.</OutputDescription> 
+</Component>

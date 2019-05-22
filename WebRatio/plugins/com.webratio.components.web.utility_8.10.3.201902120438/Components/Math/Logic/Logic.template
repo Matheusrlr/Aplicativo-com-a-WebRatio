@@ -1,0 +1,9 @@
+#?delimiters [%,%],[%=,%]
+[%setXMLOutput()%]
+<Descriptor service="com.webratio.components.web.utility.MathService">
+  <DefaultExpression>[%=component["defaultExpression"]%]</DefaultExpression>
+  <ResultType>[%=component["resultType"]%]</ResultType>
+  [%for(mv in component.selectNodes("MathVariable")){%]
+    <MathVariable id="[%=mv["id"]%]">[%=mv["name"]%]</MathVariable>
+  [%}%]
+</Descriptor>

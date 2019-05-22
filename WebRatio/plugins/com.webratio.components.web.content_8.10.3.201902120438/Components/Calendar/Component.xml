@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="content" formBased="false" idPrefix="ecu" namePrefix="Calendar " label="Calendar" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true"  errorFlowTarget="true"  successFlowTarget="true" canPlaceLayoutComponent="true"> 
+  <BooleanProperty label="Short Month Names" attributeName="shortMonths"> 
+    <Description xml:space="preserve">When set, the component will display the abbreviated form of
+month names.</Description> 
+  </BooleanProperty>  
+  <BooleanProperty label="Short Weekday Names" attributeName="shortWeekdays"> 
+    <Description xml:space="preserve">When set, the component will display the abbreviated form of
+weekday names.</Description> 
+  </BooleanProperty>  
+  <BooleanProperty attributeName="classBased"> 
+    <Description xml:space="preserve">Indicates whether the component is linked to a class for the purpose
+of showing events occurring in each day.</Description> 
+  </BooleanProperty>  
+  <DomainClassProperty label="Event Class" attributeName="dataBinding" includeDerived="true" figureDisplayOrder="1"> 
+    <IsEnabled>return (element["classBased"] == "true")</IsEnabled>  
+    <Description xml:space="preserve">The event class from which the content of the component is drawn.</Description> 
+  </DomainClassProperty>  
+  <ConditionalExpression classIdExpr="../../@dataBinding" elementName="ConditionalExpression" defaultPolicy="true" figureDisplayOrder="2"> 
+    <Description xml:space="preserve">The set of selection criteria that retrieves the instances of the class of the component.</Description> 
+  </ConditionalExpression>  
+  <AttributesProperty classIdExpr="@dataBinding" attributeName="displayAttributes" includeDerived="true" enabledImportExtraAttributes="true"> 
+    <IsEnabled>return (element["classBased"] == "true") &amp;&amp; (element["dataBinding"] != "")</IsEnabled>  
+    <Description xml:space="preserve">The list of class attributes displayed by the component.</Description> 
+  </AttributesProperty>  
+  <SortAttributesProperty label="Sort Attributes" elementName="SortAttribute" attributeName="attribute" classIdExpr="@dataBinding" attributeIdsExpr="@displayAttributes"> 
+    <IsEnabled>return (element["classBased"] == "true") &amp;&amp; (element["dataBinding"] != "")</IsEnabled>  
+    <Description xml:space="preserve">The sorting criteria used to display the event occurring in
+the same day.</Description> 
+  </SortAttributesProperty>  
+  <AttributeProperty attributeName="dateAttribute" classIdExpr="@dataBinding" includeDerived="true"> 
+    <IsEnabled>return (element["classBased"] == "true") &amp;&amp; (element["dataBinding"] != "")</IsEnabled>  
+    <Description xml:space="preserve">The attribute of the event class carrying the date (or timestamp)
+required to assign each event to a specific date.
+It must be of type date or timestamp.</Description> 
+  </AttributeProperty>  
+  <IntegerProperty label="Years Block Size" attributeName="years"> 
+    <Description xml:space="preserve">A numerical value specifying how many years can be scrolled.</Description> 
+  </IntegerProperty>  
+  <Description xml:space="preserve">The Calendar shows a perpetual calendar, 
+possibly enhanced with the list of events assigned to each day of the months.</Description>  
+  <InputDescription xml:space="preserve" name="Condition-Name">The parameter associated to one of the Conditional Expressions
+of the component.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Current Date">The current date to be set in the calendar.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Current Month">The current month to be set in the calendar.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Current Year">The current year to be set in the calendar.</InputDescription>  
+  <OutputDescription xml:space="preserve" name="Attribute-Name">The value of one of the class attributes for the event selected
+from the calendar.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="ForeignKey-Name">The values for one of the foreign key attributes of the objects 
+connected to the extracted objects.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Selected Date">A specific date selected from the calendar.</OutputDescription>  
+  <IsContextFreeComponent xml:space="preserve">return getIncomingFlows(component).empty</IsContextFreeComponent>  
+  <IsMultiConditionComponent xml:space="preserve">if (getIncomingFlows(component).size() &lt;= 1) {
+    return false
+}
+def sel = component.element("ConditionalExpression")
+if(sel == null){
+ return false
+}
+def count = sel.elements("AssociationRoleCondition").size() + sel.elements("KeyCondition").size()
+for (cond in sel.elements("AttributesCondition")) {
+    def pred = cond["predicate"]
+    if ((cond["value"] == "") &amp;&amp; !isUnaryPredicate(pred)) {
+        count++
+    }
+}
+return count &gt; 1</IsMultiConditionComponent>  
+  <AutoExpand xml:space="preserve">  import org.apache.commons.lang.StringUtils
+  import java.util.Locale
+  import java.text.DateFormatSymbols
+  import org.dom4j.Element
+
+  def defLocale = Locale.US
+  def useSelectiveRefresh = isSelectiveRefreshViewComponent(component)
+  def selected = (component["_sel"] == "t")
+  
+  def eventsBag = component.element("Events") ?: component.addElement("Events")
+  
+  //adds a month link depending on the given name and position
+  def addMonthLink = {name, pos -&gt;
+    def mEventId = component["id"] + "-month-" + pos
+    Element mEvent = eventsBag.addElement("OnSelectEvent")
+    mEvent.addAttribute("id", mEventId)
+    mEvent.addAttribute("name", name)
+    mEvent.addAttribute("_exp", "t")
+    Element mLink = mEvent.addElement("NavigationFlow")
+    mLink.addAttribute("id", mEventId + "Flow")
+    mLink.addAttribute("to", component["id"])
+    mLink.addAttribute("automaticCoupling", "false")
+    mLink.addAttribute("_exp", "t")
+    if (useSelectiveRefresh) {
+     	mLink.addAttribute("ajaxEnabled", "true")
+    }
+    mLink.addAttribute("ignoreReachable", "true")
+    if (selected) {
+       mLink.addAttribute("_sel", "t")
+    }
+    Element par = mLink.addElement("ParameterBinding")
+    par.addAttribute("id", mEventId + "Par")
+    par.addAttribute("sourceValue", Integer.toString(pos))
+    par.addAttribute("target", component["id"] + ".currentMonth")
+  }
+  
+  def sourcePage = getClosestTopGenericPage(component)?.attributeValue("id", "")
+  //appends to all component links the inputDate parameter 
+  for(link in getExitingFlows(component).findAll{ it.element("ParameterBinding") &amp;&amp; it["automaticCoupling"] != "true" }){
+    if(sourcePage == getClosestTopGenericPage(getById(link["to"]))?.attributeValue("id", "")){
+      Element inDatePar = link.addElement("ParameterBinding")
+      inDatePar.addAttribute("id", component["id"] + "Par")
+      inDatePar.addAttribute("source", "date[].date")
+      inDatePar.addAttribute("target", component["id"] + ".inputDate")
+      inDatePar.addAttribute("_exp", "t")
+    }
+  }
+  
+  //adds all month links
+  DateFormatSymbols symbols = new DateFormatSymbols(defLocale)
+  String[] months = symbols.getMonths()
+  def pos = 0
+  for(month in months){
+    addMonthLink(month, pos)
+    pos++
+  }
+  
+  //adds the year link
+  def yEventId = component["id"] + "-year"
+  Element yEvent = eventsBag.addElement("OnSelectEvent")
+  yEvent.addAttribute("id", yEventId)
+  yEvent.addAttribute("name", "Year")
+  yEvent.addAttribute("_exp", "t")
+  Element yLink = yEvent.addElement("NavigationFlow")
+  yLink.addAttribute("id", yEventId + "Flow")
+  yLink.addAttribute("to", component["id"])
+  yLink.addAttribute("automaticCoupling", "false")
+  yLink.addAttribute("_exp", "t")
+  if (useSelectiveRefresh) {
+  	yLink.addAttribute("ajaxEnabled", "true")
+  }
+  yLink.addAttribute("ignoreReachable", "true")
+  if (selected) {
+    yLink.addAttribute("_sel", "t")
+  }
+  Element par = yLink.addElement("ParameterBinding")
+  par.addAttribute("id", yEventId + "Par")
+  par.addAttribute("source", "years[]")
+  par.addAttribute("target", component["id"] + ".currentYear")
+  
+  
+  //update selector
+  if(component["classBased"] != "true"){
+    return
+  }
+  
+  if(!component["displayAttributes"].contains(component["dateAttribute"])){
+    def displayAttributes = component["displayAttributes"] + " " + component["dateAttribute"]
+    component["displayAttributes"] = displayAttributes.trim()
+  }
+  
+  Element selector = component.selectSingleNode("ConditionalExpression")
+  if(selector == null){
+     selector = component.addElement("ConditionalExpression")
+     selector.addAttribute("id", component["id"] + "Sel")
+     selector.addAttribute("defaultPolicy", "fill")
+     selector.addAttribute("booleanOperator", "and")
+  }   
+  Element ltEqSel = selector.addElement("AttributesCondition")
+  ltEqSel.addAttribute("id", component["id"] + ".lteq")
+  ltEqSel.addAttribute("predicate", "lteq")
+  ltEqSel.addAttribute("booleanOperator", "or")
+  ltEqSel.addAttribute("implied", "false")
+  ltEqSel.addAttribute("attributes", component["dateAttribute"])
+  Element gtEqSel = selector.addElement("AttributesCondition")
+  gtEqSel.addAttribute("id", component["id"] + ".gteq")
+  gtEqSel.addAttribute("predicate", "gteq")
+  gtEqSel.addAttribute("booleanOperator", "or")
+  gtEqSel.addAttribute("implied", "false")
+  gtEqSel.addAttribute("attributes", component["dateAttribute"])
+  
+  </AutoExpand>  
+  <LayoutAttributes xml:space="preserve">return component.attributeValue("displayAttributes", "").tokenize(" ")
+</LayoutAttributes>    <LayoutEvents xml:space="preserve">
+def eventOrderIds = component.attributeValue("eventOrder", "").tokenize(" ")
+def events = component.selectNodes("Events/*[not(self::OnLoadEvent)]").collect{it["id"]}
+
+def eventIds = []
+eventIds.addAll(eventOrderIds?.findAll{events?.contains(it)})
+eventIds.addAll(events?.findAll{!eventOrderIds?.contains(it)})
+
+for(i in 0..11){
+  eventIds.add(component["id"] + "-month-" + i)  
+}
+eventIds.add(component["id"] + "-year")  
+return eventIds</LayoutEvents>  
+  <BeanDescription xml:space="preserve">
+  	&lt;p&gt;The component state object for the Calendar is different if the component is 
+  	class based. If the component is not based on a class, it's state object consists of the 
+  	following properties: 
+  		&lt;ul&gt; 
+  			&lt;li&gt;&lt;code&gt;String[] monthNames&lt;/code&gt;: the array of month names&lt;/li&gt; 
+  			&lt;li&gt;&lt;code&gt;String[] dayOfWeekNames&lt;/code&gt;: the array of week days names&lt;/li&gt; 
+  			&lt;li&gt;&lt;code&gt;String[] years&lt;/code&gt;: the array of years&lt;/li&gt; 
+  			&lt;li&gt;&lt;code&gt;int[] daysOfWeek&lt;/code&gt;: the array of day numbers of a week&lt;/li&gt; 
+  			&lt;li&gt;&lt;code&gt;int datesSize&lt;/code&gt;: the number of days of a month&lt;/li&gt; 
+  			&lt;li&gt;&lt;code&gt;int currentMonth&lt;/code&gt;: the index of the current month&lt;/li&gt; 
+  			&lt;li&gt;&lt;code&gt;int currentDay&lt;/code&gt;: the index of the current day&lt;/li&gt; 
+  			&lt;li&gt;&lt;code&gt;int currentYear&lt;/code&gt;: the current year&lt;/li&gt; 
+  			&lt;li&gt;&lt;code&gt;GregorianCalendar calendar&lt;/code&gt;: the gregorian calendar&lt;/li&gt; 
+  		&lt;/ul&gt; 
+  	&lt;/p&gt; 
+  	&lt;p&gt;The component state bean for an Calendar based on a class, besides the properties listed above, contains: 
+  		&lt;ul&gt;
+  			&lt;li&gt;&lt;code&gt;DateBean[] date&lt;/code&gt;: an array of date beans&lt;/li&gt; 
+  		&lt;/ul&gt; 
+  	&lt;/p&gt;
+  	&lt;p&gt;A Date Bean is a bean that contains the properties of the events for a specific date. Each Date Bean contains the following properties: 
+  		&lt;ul&gt; 
+  			&lt;li&gt;&lt;code&gt;Date date&lt;/code&gt;: the value of the date&lt;/li&gt; 
+  			&lt;li&gt;&lt;code&gt;int dataSize&lt;/code&gt;: the number of class state objects&lt;/li&gt; 
+  			&lt;li&gt;&lt;code&gt;Object[] data&lt;/code&gt;: the array of class state objects&lt;/li&gt; 
+  		&lt;/ul&gt; 
+  	&lt;/p&gt; 
+  	&lt;p&gt;The class state object depends on the class the unt is based on. For example, the class &lt;i&gt;Event&lt;/i&gt; with the 
+  		attributes date and event is associated with a state object having the following properties: 
+  		&lt;ul&gt; 
+  			&lt;li&gt;&lt;code&gt;Integer OID&lt;/code&gt;: the value of the &lt;i&gt;oid&lt;/i&gt; attribute&lt;/li&gt; 
+  			&lt;li&gt;&lt;code&gt;Date date&lt;/code&gt;: the value of the &lt;i&gt;date&lt;/i&gt; attribute&lt;/li&gt; 
+  			&lt;li&gt;&lt;code&gt;String event&lt;/code&gt;: the value of the &lt;i&gt;event&lt;/i&gt; attribute&lt;/li&gt; 
+  		&lt;/ul&gt; 
+  	&lt;/p&gt;
+ </BeanDescription> 
+</Component>

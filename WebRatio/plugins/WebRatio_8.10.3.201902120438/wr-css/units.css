@@ -1,0 +1,98 @@
+/********************************************/
+/*                  GENERAL                 */
+/*  Default style rules for style elements  */
+/********************************************/
+
+/* Number values alignment */
+.integer, .float, .decimal {
+    text-align: right
+}
+/* Headers and attribute names */
+.header {
+    text-align: left;
+    padding: 3px;
+    font-weight:bold;
+}
+.value, .valueAlternate, .valueCurrent, .valueCurrentAlternate {
+    padding: 5px;
+}
+td.link, td.linkAlternate, td.linkCurrent, td.linkCurrentAlternate {
+    padding: 5px;
+}
+.error {
+    color:red;
+    font-weight:bold;
+}
+.button, input[type="submit"] {
+    border: 1px solid #999;
+    padding: 3px 8px;
+    background: #ccc;
+    cursor: pointer;
+    margin-top: 0;
+}
+.button:hover, input[type="submit"]:hover {
+    border: 1px solid #999;
+    padding: 3px 8px;
+    background: #eaeaea;
+    text-decoration: underline;
+}
+.scrollText {
+    padding: 3px;
+}
+/* Bullets */
+.bullet, .bulletCurrent, .bulletAlternate, .bulletCurrentAlternate {
+    width: 10px;
+    height: 10px;
+    background-image: url('../wr-images/icons/navigate_right_10.gif');
+    background-repeat: no-repeat;
+    background-position: center center;
+    max-width: none;
+}
+/* Alternate rows */
+.rowAlternate {
+    background: #F0F0F0;
+}
+/* Rows of current elements */
+.rowCurrent, .rowCurrentAlternate {
+    background: #EBF0FF;
+}
+/* Ascending sort links */
+.sortAscending {
+    width: 16px;
+    height: 16px;
+    background-image: url('../wr-images/icons/sort_ascending.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    max-width: none;
+}
+/* Descending sort links */
+.sortDescending {
+    width:16px;
+    height: 16px;
+    background-image: url('../wr-images/icons/sort_descending.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    max-width: none;
+}
+/* "Select All" link */
+.selectAll {
+    width: 16px;
+    height: 16px;
+    background-image: url('../wr-images/icons/selectAll.gif');
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+/* "Unselect All" link */
+.unSelectAll {
+    width: 16px;
+    height: 16px;
+    background-image: url('../wr-images/icons/unSelectAll.gif');
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+/* Hierarchy sub-level */
+.HierarchyLevel {
+    margin-left: 1.5em;
+    display: block;
+}

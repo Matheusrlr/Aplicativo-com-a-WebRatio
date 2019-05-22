@@ -1,0 +1,25 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import org.dom4j.DocumentFactory
+
+setXMLOutput()
+def componentId = component["id"]
+def mode = component["mode"]
+def domainClass = getByIdOptional(component["dataBinding"])
+%>
+<InputParameters>
+<% if(domainClass != null){%>
+
+<% for (a in getKeyAttributes(domainClass)) { %>
+   <InputParameter name="<%=componentId%>.<%=a["id"]%>" refId="<%=a["id"]%>" type="<%=getAssignableTypeExpression(domainClass, a, true, false)%>" label="<%=a["name"]%>" mandatory="false"/>
+<% } %>
+
+<% if(mode == "import"){%>
+   
+   <InputParameter name="<%=componentId%>.jsonDocument" label="<%=domainClass["name"]%> JSON Document"/>
+   
+<% } else { %>
+   <InputParameter name="<%=componentId%>.entityBeans" type="<%=domainClass["id"]%>" refId="<%=domainClass["id"]%>" label="<%=domainClass["name"]%> Class Objects"/>
+<%}%>
+<%}%> 
+</InputParameters>

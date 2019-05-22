@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="content|operation" idPrefix="exu" namePrefix="Excel " label="Excel" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" successFlowSource="true" successFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" canPlaceLayoutComponent="true"> 
+  <EnumProperty label="Mode" attributeName="mode" defaultValue="read"> 
+    <EnumItem value="read" label="Read"/>  
+    <EnumItem value="write" label="Write"/>  
+    <EnumItem value="update" label="Update/Evaluate"/>  
+    <IsEnabled>return (element.selectSingleNode("ancestor::ViewComponents") == null) || (element["mode"] != "read")</IsEnabled>  
+    <Description xml:space="preserve">Specifies the execution mode of the component.</Description> 
+  </EnumProperty>  
+  <EnumProperty label="Format" attributeName="format" defaultValue="xls"> 
+    <EnumItem value="xls" label="XLS"/>  
+    <EnumItem value="xlsx" label="XLSX"/>  
+    <IsEnabled>return (element.selectSingleNode("ancestor::Operations") != null) &amp;&amp; (element["mode"] == "write")</IsEnabled>  
+    <Description xml:space="preserve">In write mode specifies the result file format: XLS (default) or XLSX.</Description> 
+  </EnumProperty>  
+  <EnumProperty label="Source Type" attributeName="sourceType"> 
+    <EnumItem value="static" label="File"/>  
+    <EnumItem value="dynamic" label="Dynamic URL"/>  
+    <EnumItem value="blob" label="BLOB"/>  
+    <IsEnabled>return (element["mode"] == "read") || (element["mode"] == "update")</IsEnabled>  
+    <Description xml:space="preserve">Specifies if the source Excel file will be provided
+either as a property at design type (&lt;i&gt;File&lt;/i&gt;), as an input parameter
+at run-time (&lt;i&gt;Dynamic URL&lt;/i&gt;), or as a BLOB file (&lt;i&gt;BLOB&lt;/i&gt;)</Description> 
+  </EnumProperty>  
+  <FileProperty label="Excel File" attributeName="url"> 
+    <IsEnabled>return (element["sourceType"] == "static")</IsEnabled>  
+    <Description xml:space="preserve">Specifies the Excel file being read; available
+only if the Source Type property is set to &lt;i&gt;File&lt;/i&gt;.
+    </Description> 
+  </FileProperty>  
+  <BooleanProperty attributeName="useHeader"> 
+    <Description xml:space="preserve">If checked, the extracted columns are identified by matching the name of each &lt;i&gt;CellInfo&lt;/i&gt;
+with the value contained into the first row of each column. It works only in &lt;i&gt;Read&lt;/i&gt; mode and if the first row contains the header.</Description>  
+    <IsEnabled>return (element["mode"] == "read")</IsEnabled> 
+  </BooleanProperty>  
+  <OrderingProperty attributeName="cellInfoOrder" elementsExpr="CellInfo"> 
+    <IsEnabled>return (element.element("CellInfo") != null)</IsEnabled>  
+    <Description xml:space="preserve">The order of CellInfo sub-components.
+    </Description> 
+  </OrderingProperty>  
+  <Description xml:space="preserve">&lt;p&gt;The Excel component is designed to read/write Excel '97(-2007) files, leveraging the 
+Apache &lt;a href="http://poi.apache.org/hssf/index.html"&gt;POI&lt;/a&gt; project.&lt;/p&gt;
+  </Description>  
+  <SubComponent elementName="CellInfo" idPrefix="ci" namePrefix="CellInfo" label="Cell Info" ignoreI18N="true"> 
+    <BooleanProperty attributeName="useNameAsHeader"> 
+      <Description xml:space="preserve">If checked, the name of the CellInfo is used as column header. It works only in &lt;i&gt;Write&lt;/i&gt;.</Description>  
+      <IsEnabled>return (element.parent["mode"] == "write")</IsEnabled> 
+    </BooleanProperty>  
+    <TypeProperty attributeName="type" typeAttributeName="type" subTypeAttributeName="subType" defaultValue="string"> 
+      <Description xml:space="preserve">The type of the cell.
+    </Description> 
+    </TypeProperty>  
+    <ContentTypeProperty attributeName="contentType" typeAttributeName="type"> 
+      <Description xml:space="preserve">The content type of a cell of type string, text, BLOB or URL. The selected content type 
+determines the rendition of the cell value.</Description>  
+      <IsEnabled>return (element["type"] == "string") || (element["type"] == "text") || (element["type"] == "url") || (element["type"] == "blob")</IsEnabled> 
+    </ContentTypeProperty>  
+    <StringProperty attributeName="dataFormat"> 
+      <Description xml:space="preserve">The data format used to present the cell value into the created Excel file or into the JSP page (e.g. #.0## or dd/MM/yy). 
+      </Description>  
+      <IsEnabled>return org.apache.commons.lang.ArrayUtils.contains(["date", "time", "timestamp", "integer", "float", "bigDecimal"], component["type"])</IsEnabled> 
+    </StringProperty>  
+    <StringProperty label="Sheet" attributeName="sheet"> 
+      <Description xml:space="preserve">The number (1-based) or the name of the sheet holding the cell(s) to read or write. 
+The default one is the first available into the Excel.</Description> 
+    </StringProperty>  
+    <StringProperty label="Column" attributeName="column"> 
+      <Description xml:space="preserve">The column code holding the cell(s) to read or write, for example: A, B, AC</Description>  
+      <IsEnabled>return (element.parent["mode"] != "read" || element.parent["useHeader"] != "true")</IsEnabled> 
+    </StringProperty>  
+    <StringProperty label="Row(s)" attributeName="rows"> 
+      <Description xml:space="preserve">&lt;p&gt;The row index (1-based) to read or write, it can be a single row or a range of rows:&lt;/p&gt;
+    &lt;ul&gt;
+        &lt;li&gt;&lt;b&gt;2&lt;/b&gt; to process only the 2nd row&lt;/li&gt; 
+        &lt;li&gt;&lt;b&gt;3:8&lt;/b&gt; to process the rows between the 3rd and the 8th&lt;/li&gt;
+        &lt;li&gt;&lt;b&gt;:5&lt;/b&gt; to process the rows between the 1st and the 5th&lt;/li&gt;
+        &lt;li&gt;&lt;b&gt;3:&lt;/b&gt; to process the rows between the 3rd and the last one&lt;/li&gt;
+        &lt;li&gt;&lt;b&gt;UNSPECIFIED&lt;/b&gt; to process all the rows in the column&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;p&gt;In the case of range of rows both the indexes are considered.&lt;/p&gt;    
+</Description>     </StringProperty>      <BooleanProperty attributeName="preserveCellStyle" defaultValue="false">       <Description xml:space="preserve">If checked, the style of the column cells is preserved.</Description> 
+    </BooleanProperty>  
+    <StringProperty attributeName="headerStyle"> 
+      <IsEnabled>return (element["preserveCellStyle"] != "true") &amp;&amp; ((element.parent["mode"] == "write") &amp;&amp; (element["useNameAsHeader"] == "true"))</IsEnabled>  
+      <Description xml:space="preserve">Specifies the rendition of the header cell. The style value has the same format of the style 
+attribute used into the Excel style.	     	    
+	    </Description> 
+    </StringProperty>  
+    <StringProperty attributeName="valueStyle"> 
+      <IsEnabled>return (element["preserveCellStyle"] != "true") &amp;&amp; (element.parent["mode"] == "write" || element.parent["mode"] == "update")</IsEnabled>  
+      <Description xml:space="preserve">Specifies the rendition of the value cell. The style value has the same format of the style 
+attribute used into the Excel style.	     	    
+	    </Description> 
+    </StringProperty>  
+    <BooleanProperty attributeName="removeBlankRows"> 
+      <Description xml:space="preserve">If checked, the terminating blank rows are removed from the extracted data.</Description>  
+      <IsEnabled>return (element.parent["mode"] == "read" || element.parent["mode"] == "update")</IsEnabled> 
+    </BooleanProperty>  
+    <BooleanProperty attributeName="autoSizeColumn" defaultValue="true"> 
+      <Description xml:space="preserve">If checked, the column width is changed to fit the contents.</Description>  
+      <IsEnabled>return (element.parent["mode"] == "write" || element.parent["mode"] == "update")</IsEnabled> 
+    </BooleanProperty>  
+    <Description xml:space="preserve">A cell info describes where the component must read or write into the Excel spreadsheet.</Description> 
+  </SubComponent >  
+  <I18NLabels xml:space="preserve">
+   def labels = []
+   def cellInfos = component.selectNodes("CellInfo")
+   for (cellInfo in cellInfos) {
+     def label = [:]
+     label.id = cellInfo["id"]
+     label.key = cellInfo["name"]
+     labels.add(label)
+   }
+   return labels
+  </I18NLabels>  
+  <IsContextFreeComponent xml:space="preserve">return getIncomingFlows(component).empty</IsContextFreeComponent>  
+  <IsMultiConditionComponent xml:space="preserve">return getIncomingFlows(component).size &gt; 1</IsMultiConditionComponent>  
+  <InputDescription xml:space="preserve" name="CellInfo-Name">The array of values to set into a cell range identified by a &lt;i&gt;CellInfo&lt;/i&gt; (it works only in &lt;code&gt;Write&lt;/code&gt; and &lt;code&gt;Update/Evaluate&lt;/code&gt; mode).</InputDescription>  
+  <InputDescription xml:space="preserve" name="CellInfo-Sheet">The index (1-based) or the name of the &lt;i&gt;CellInfo&lt;/i&gt; sheet (available if not defined on the &lt;i&gt;CellInfo&lt;/i&gt;).</InputDescription>  
+  <InputDescription xml:space="preserve" name="Dynamic URL">The URL of the Excel file being read or updated; available only
+if the &lt;code&gt;Source Type&lt;/code&gt; property is set to&lt;i&gt; Dynamic URL&lt;/i&gt;.</InputDescription>  
+  <InputDescription xml:space="preserve" name="BLOB">The URL of the Excel file being read or updated; available only
+if the &lt;code&gt;Source Type&lt;/code&gt; property is set to&lt;i&gt; BLOB&lt;/i&gt;.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Excel File Name">The file name to give to the produced Excel file (available only in &lt;code&gt;Write&lt;/code&gt; or &lt;code&gt;Update/Evaluate&lt;/code&gt; mode).</InputDescription>  
+  <InputDescription xml:space="preserve" name="Input Cell Codes">The array of input cells codes to set (it works only in &lt;code&gt;Write&lt;/code&gt; or &lt;code&gt;Update/Evaluate&lt;/code&gt; mode). 
+  The cells codes are in the format &lt;code&gt;{sheet-index}&lt;/code&gt;!&lt;code&gt;{column-code}&lt;/code&gt;&lt;code&gt;{row-index}&lt;/code&gt; (e.g.  2!B25). All indexes are 1-based.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Input Cell Values">The array of input cells values to set (it works only in &lt;code&gt;Write&lt;/code&gt; or &lt;code&gt;Update/Evaluate&lt;/code&gt; mode).</InputDescription>  
+  <InputDescription xml:space="preserve" name="Output Cell Codes">The array of input cells codes to evaluate (it works only in &lt;code&gt;Read&lt;/code&gt; or &lt;code&gt;Update/Evaluate&lt;/code&gt; mode).</InputDescription>  
+  <OutputDescription xml:space="preserve" name="CellInfo-Name - Codes">The array of cell codes extracted from the Excel file (it works only in &lt;code&gt;Read&lt;/code&gt; or &lt;code&gt;Update/Evaluate&lt;/code&gt; mode).</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="CellInfo-Name">The array of values extracted from the Excel file (it works only in &lt;code&gt;Read&lt;/code&gt; or &lt;code&gt;Update/Evaluate&lt;/code&gt; mode).</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Excel">The created Excel file (it works only in &lt;code&gt;Write&lt;/code&gt; and &lt;code&gt;Update/Evaluate&lt;/code&gt; mode).</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Cell Codes">The array of cells codes corresponding to the input parameter &lt;code&gt;Output Cell Codes&lt;/code&gt; (it works only in &lt;code&gt;Read&lt;/code&gt; or &lt;code&gt;Update/Evaluate&lt;/code&gt; mode).</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Cell Values">The array of cells values corresponding to the input parameter &lt;code&gt;Output Cell Codes&lt;/code&gt; (it works only in &lt;code&gt;Read&lt;/code&gt; or &lt;code&gt;Update/Evaluate&lt;/code&gt; mode).</OutputDescription>  
+  <BeanDescription xml:space="preserve">
+    &lt;p&gt;The component state object for the Excel depends on the &lt;i&gt;CellInfo&lt;/i&gt; sub components. The component state object consists of the following properties:
+       &lt;ul&gt;
+        &lt;li&gt;&lt;code&gt;int dataSize&lt;/code&gt;: the number of row objects&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;Object[] data&lt;/code&gt;: the array of row objects&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;String[] &lt;i&gt;[CellInfo-Id]&lt;/i&gt;_codes&lt;/code&gt;: the array of the n-th &lt;i&gt;CellInfo&lt;/i&gt; cells codes&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;Object[] &lt;i&gt;[CellInfo-Id]&lt;/i&gt;Array&lt;/code&gt;: the array of the n-th &lt;i&gt;CellInfo&lt;/i&gt; values&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;String[] &lt;i&gt;cellCodes&lt;/i&gt;&lt;/code&gt;: The array of cells codes corresponding to the input parameter &lt;code&gt;Output Cell Codes&lt;/code&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;Object[] &lt;i&gt;cellCodes&lt;/i&gt;&lt;/code&gt;: The array of cells values corresponding to the input parameter &lt;code&gt;Output Cell Codes&lt;/code&gt;&lt;/li&gt;
+       &lt;/ul&gt;
+    &lt;/p&gt;
+    &lt;p&gt;The row object has the following properties:
+       &lt;ul&gt;
+        &lt;li&gt;&lt;i&gt;[CellInfo-Id]&lt;/i&gt;: the value of the &lt;i&gt;CellInfo&lt;/i&gt; at the n-th row&lt;/li&gt;
+        &lt;li&gt;&lt;i&gt;[CellInfo-Name]&lt;/i&gt;: the value of the &lt;i&gt;CellInfo&lt;/i&gt; at the n-th row&lt;/li&gt;
+       &lt;/ul&gt;
+    &lt;/p&gt;
+</BeanDescription> </Component>

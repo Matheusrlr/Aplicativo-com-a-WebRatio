@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page import="com.webratio.web.mvc.exceptions.ErrorInterpreter" %>
+<%
+  ErrorInterpreter interpreter = new ErrorInterpreter(request);
+%>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta http-equiv="cache-control" content="no-cache" />
+  <meta http-equiv="expires" content="3600" />
+  <meta name="revisit-after" content="2 days" />
+  <meta name="robots" content="index,follow" />
+  <meta name="publisher" content="Your publisher infos here ..." />
+  <meta name="copyright" content="Your copyright infos here ..." />
+
+  <meta name="author" content="Design: G. Wolfgang www.1-2-3-4.info / Author: Your author infos here ..." />
+  <meta name="distribution" content="global" />
+  <meta name="description" content="Your page description here ..." />
+  <meta name="keywords" content="Your keywords, keywords, keywords, here ..." />
+  <link rel="stylesheet" type="text/css" media="screen,projection,print" href="./css/layout2_setup.css" />
+  <link rel="stylesheet" type="text/css" media="screen,projection,print" href="./css/layout2_text.css" />
+  <link rel="icon" type="image/x-icon" href="./img/favicon.ico" />
+  <title>Error</title>
+</head>
+<!-- Global IE fix to avoid layout crash when single word size wider than column width -->
+<!--[if IE]><style type="text/css"> body {word-wrap: break-word;}</style><![endif]-->
+<body>
+  <!-- Main Page Container -->
+  <div class="page-container">
+
+   <!-- For alternative headers START PASTE here -->
+    <!-- A. HEADER -->      
+    <div class="header">
+      <!-- A.1 HEADER TOP -->
+      <div class="header-top">
+        <!-- Sitelogo and sitename -->
+        <a class="sitelogo" href="index.jsp" title="Go to Start page"></a>
+        <div class="sitename">
+          <h1><a href="index.jsp" title="Go to Start page">WebRatio</a></h1>
+
+          <h2>Changing the IT Equations</h2>
+        </div>
+        <!-- Navigation Level 1 -->
+        <div class="nav1">&nbsp;</div>
+      </div>
+      <!-- A.2 HEADER MIDDLE -->
+      <div class="header-middle">    
+        <!-- Site message -->
+        <div class="sitemessage">
+
+        </div>        
+      </div>
+      <!-- A.3 HEADER BOTTOM -->
+      <div class="header-bottom">
+        <!-- Navigation Level 2 (Drop-down menus) -->
+        <div class="nav2">
+        </div>
+	  </div>
+      <!-- A.4 HEADER BREADCRUMBS -->
+      <!-- Breadcrumbs -->
+      <div class="header-breadcrumbs">
+        <ul>
+        	<li>Error</li>
+
+        </ul>
+        <!-- Search form -->                  
+        <div class="searchform">
+        </div>
+      </div>
+    </div>
+    <!-- For alternative headers END PASTE here -->
+    <!-- B. MAIN -->
+    <div class="main">
+
+      <!-- B.1 MAIN NAVIGATION -->
+      <div class="main-navigation">
+        <!-- Navigation Level 3 -->
+        <div class="round-border-topright"></div>
+        <h1 class="first">Error</h1>
+        <!-- Navigation with grid style -->
+        <dl class="nav3-grid">
+        </dl>                        
+	</div>
+
+      <!-- B.2 MAIN CONTENT -->
+      <div class="main-content">
+        <!-- Pagetitle -->
+        <h1 class="pagetitle">An error occurred</h1>
+        <h3><%=interpreter.getMessage(ErrorInterpreter.Format.XML)%></h3>
+		<% if (interpreter.hasOccurred()) { %>
+		<h4>Occurred on:</h4>
+		<ul>
+		<li><%=interpreter.getOccurred()%></li>
+		</ul>
+		<% } %>
+		<% if (interpreter.hasDetails()) { %>
+		<h4>Details:</h4>
+		<ul>
+		<% for (java.util.Iterator it = interpreter.getDetails(ErrorInterpreter.Format.XML).iterator(); it.hasNext(); ) { %>
+		<li><%=it.next()%></li>
+		<% } %>
+		</ul>
+		<% } %>
+		<% if (interpreter.hasFixes()) { %>
+		<h4>Suggestions:</h4>
+		<ul>
+		<% for (java.util.Iterator it = interpreter.getFixes(ErrorInterpreter.Format.XML).iterator(); it.hasNext(); ) { %>
+		<li><%=it.next()%></li>
+		<% } %>
+		</ul>
+		<% } %>
+		<%if(interpreter.hasExceptionStackTrace()){%>
+		<!--
+		<%=interpreter.getExceptionStackTrace(ErrorInterpreter.Format.XML)%>
+		-->
+		<%}%>
+<div class="column3-unit-left">
+</div>
+<div class="column3-unit-middle">
+</div>
+<div class="column3-unit-right">
+	<p></p>
+</div>
+<hr class="clear-contentunit" />
+
+      </div>
+      <!-- B.3 SUBCONTENT -->
+      <div class="main-subcontent">
+      </div>
+    </div>
+    <!-- C. FOOTER AREA -->      
+    <div class="footer">
+      <p>Copyright &copy; 2006 Your Company | All Rights Reserved</p>
+
+      <p class="credits">Original design by <a href="http://www.1-2-3-4.info" title="Designer Homepage">G. Wolfgang</a> | Adapted by <a href="http://www.webratio.com" title="http://www.webratio.com">WebRatio srl</a> | Powered by <a href="http://www.webratio.com" title="http://www.webratio.com">WebRatio</a> | <a href="http://validator.w3.org/check?uri=referer" title="Validate XHTML code">W3C XHTML 1.0</a> | <a href="http://jigsaw.w3.org/css-validator/" title="Validate CSS code">W3C CSS 2.0</a></p>
+    </div>      
+  </div> 
+</body>
+</html>

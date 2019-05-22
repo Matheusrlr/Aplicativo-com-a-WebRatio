@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ValidationRule type="singleProperty" idPrefix="mnd" namePrefix="Mandatory " label="Mandatory"> 
+	<CompanionProperty attributeName="companionField"> 
+	    <Description xml:space="preserve">If the companion element is indicated, the element is mandatory only when the companion element is filled.</Description>
+	</CompanionProperty> 
+	<EnumProperty attributeName="predicate" defaultValue=""> 
+		<EnabledCondition xml:space="preserve">element["companionField"] != ""</EnabledCondition>
+		<EnumItem value="" label=" "/>
+    	<EnumItem value="eq" label="Equal"/>  
+    	<EnumItem value="gteq" label="Greater or Equal"/>  
+    	<EnumItem value="gt" label="Greater Than"/>  
+    	<EnumItem value="lteq" label="Less or Equal"/>  
+    	<EnumItem value="lt" label="Less Than"/>  
+    	<EnumItem value="neq" label="Not Equal"/>
+    	<Description xml:space="preserve">The comparison operator.</Description>
+  	</EnumProperty>
+  	<BooleanProperty attributeName="ignoreCase"> 
+    	<EnabledCondition xml:space="preserve">element["predicate"] == "eq" || element["predicate"] == "neq"</EnabledCondition>  
+    	<Description xml:space="preserve">If checked, the validation is performed ignoring case sensitivity.</Description>
+  	</BooleanProperty>
+  	<StringProperty attributeName="value"> 
+    	<EnabledCondition xml:space="preserve">element["companionField"] != ""</EnabledCondition>  
+    	<Description xml:space="preserve">The value to compare.</Description>
+  	</StringProperty>   
+  <Description xml:space="preserve">The Mandatory validation rules verifies that an
+element value is not empty.&lt;br/&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;${propertyValue}&lt;/b&gt;: the element value&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${propertyName}&lt;/b&gt;: the element name&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${objectName}&lt;/b&gt;: the parent element name&lt;/li&gt;
+&lt;/ul&gt;</Description>
+</ValidationRule>

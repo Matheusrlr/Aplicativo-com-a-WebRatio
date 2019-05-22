@@ -1,0 +1,19 @@
+<!-- directive: wr-screen scr6 -->
+<div>
+	<button type="button" class="button " ng-click="screen.throwEvent($event, 'HomeEvent', null, { position: $index })">
+	{{ 'event.Home' | wrLocalize }}
+	</button>
+	<ion-content class="has-header wr-safe-area">
+		<!-- directive: wr-component enu1 -->
+		<form class=" wr-comp-Form list ">
+			<div class="item item-divider">{{ 'Formul\u00E1rio' | wrLocalize }}</div>
+			<div class="item-buttons">    
+				<button type="button" class="button " ng-click="screen.throwEvent($event, 'OnSelectEvent', 'oslte9', { position: $index })">
+				{{ 'voltar' | wrLocalize }}
+				</button>
+			</div>
+		</form>
+		<!-- end_directive: wr-component -->
+	</ion-content>
+</div>
+<!-- end_directive: wr-screen -->

@@ -1,0 +1,23 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Report Type" name="type" type="enum" values="PDF|Excel|RTF" default="PDF">
+Defines the format of the report
+</wr:LayoutParameter>
+[%
+	setXMLOutput()
+%]
+<wr:Resources types="jspdeclaration"/>
+<%@ page contentType="text/xml; charset=UTF-8"%> 
+<wr:Page type="wr:report"/>
+<webratio:Page page="<wr:Id context="page"/>"/>
+<report:Report template="[%=toValidClassName(page["name"])%].jasper" type="[%=params["type"] == "Excel" ? "xls" : (params["type"] == "RTF" ? "rtf" : "pdf")%]">
+<Report>
+[% def i18nProperties = page.selectNodes("Property[@name='i18n']") 
+   for (i18Property in i18nProperties){
+   		def messageXMLName = toValidFieldName(i18Property["value"])
+   		def messageKey = i18Property["value"]
+%]
+   		<i18n.global.[%= messageXMLName %]><c:set var="i18nVar_[%=messageXMLName%]"><spring:message code="[% printJSPTagValue(messageKey) %]"/></c:set><c:out value="${i18nVar_[%=messageXMLName%]}"/></i18n.global.[%= messageXMLName %]>
+[%   } %]
+  <wr:Grid/>
+</Report>
+</report:Report>

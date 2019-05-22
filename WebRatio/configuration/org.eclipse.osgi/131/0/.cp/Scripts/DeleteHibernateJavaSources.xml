@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Delete Hibernate Java Sources" default="main">
+
+	<target name="main">
+		<delete failonerror="true">
+			<fileset dir="${OUTPUT_FOLDER}/WEB-INF/classes/com/webratio/webapp" includes="**/*.java" />
+		</delete>
+	</target>
+
+</project>

@@ -1,0 +1,71 @@
+{
+  "_" : "wrm.core.PanelService",
+  "navigations" : {
+    "0" : {
+      "nc" : true,
+      "flows" : "scr3",
+      "fr" : true
+    },
+    "1" : {
+      "nc" : true,
+      "flows" : "scr3.link",
+      "fr" : true
+    },
+    "2" : {
+      "flows" : "scr3.auto-link",
+      "fr" : true
+    },
+    "3" : {
+      "flows" : "scr3.auto-link"
+    },
+    "4" : {
+      "flows" : "nf3",
+      "fr" : true
+    },
+    "5" : {
+      "flows" : "nf3"
+    }
+  },
+  "knownEffects" : "#pr#",
+  "propagationSequence" : "",
+  "propagations" : { },
+  "components" : {
+    "pwu1" : {
+      "fb" : true,
+      "conds" : [ {
+        "fr" : false,
+        "navs" : "3",
+        "effects" : "#pr#"
+      } ],
+      "rf" : [ {
+        "all" : true,
+        "fr" : true,
+        "navs" : "0|1|4"
+      }, {
+        "all" : true,
+        "navs" : "5"
+      } ]
+    }
+  },
+  "events" : {
+    "oslte4" : {
+      "component" : "pwu1",
+      "type" : "OnSelectEvent",
+      "flow" : {
+        "id" : "nf7",
+        "navTo" : "scr4",
+        "bindTo" : "pwu4",
+        "preserve" : "",
+        "bind" : {
+          "maxResults" : "data.att7"
+        }
+      }
+    }
+  },
+  "autoFlow" : {
+    "preserve" : ""
+  },
+  "autoFlowFull" : {
+    "preserve" : ""
+  }
+}

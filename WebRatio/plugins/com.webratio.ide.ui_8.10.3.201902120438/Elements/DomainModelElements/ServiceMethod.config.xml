@@ -1,0 +1,27 @@
+<Element name="ServiceMethod" lowerName="method" pluralLowerName="methods">
+	<Description>
+		    	A service method represent a single REST Data Service method exposed by the service class.
+	</Description>
+	<ActionRef label="Help"/>
+	<PropertyCategory name="General">
+		<Property label="Class">
+	    	The reference to the Class defined in the Domain Model for which the selected data service is enabled.
+		</Property>
+		<Property label="Path">
+	    	The endpoint to which the service is exposed.
+		</Property>
+		<Property label="Method">
+	    	The HTTP method used to invoke the service exposed by the Class. Possible values are GET, POST, PUT, DELETE.
+		</Property>
+		<Property label="Custom Behaviour">
+	    	If checked, a custom behaviour can be associated to the method through an Action Definition.
+		</Property>
+		<Property label="Action Definition">
+	    	The reference to the Action Definition containing the custom behaviour for the service method. 
+			The Select button opens the dialog containing all the available Action Definitions. 
+		</Property>
+		<Property label="Associations">
+	    	The set of Associations connecting the Class for which the data service is enabled with the User Class. The selected Associations will contain at runtime the identifier of the user which is calling the data service.
+		</Property>
+	</PropertyCategory>
+</Element>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ComputeWarnings" default="main">
+
+	<import file="${webratio.classpath.file}" />
+	
+	<path id="classpath">
+		<path refid="webratio.classpath" />
+		<pathelement location="../com.webratio.generator.helpers/bin" />
+		<pathelement location="bin" />
+	</path>
+
+	<target name="main">
+		<fail unless="projectPath" message="Property not specified: projectPath" />
+		<available file="${projectPath}" property="projectPathPresent" />
+		<fail unless="projectPathPresent" message="File not found: ${projectPath}" />
+		<fail unless="projectDir" message="Property not specified: projectDir" />
+		<available file="${projectDir}" type="dir" property="projectDirPresent" />
+		<fail unless="projectDirPresent" message="Directory not found: ${projectDir}" />
+		<fail unless="unitPluginDirs" message="Property not specified: unitPluginDirs" />
+		<fail unless="stylePluginDirs" message="Property not specified: stylePluginDirs" />
+		<fail unless="eventSocketPort" message="Property not specified: eventSocketPort" />
+		<java classname="com.webratio.commons.transform.groovy.GroovyTemplateInvoker" failonerror="true" classpathref="classpath" fork="true">
+			<jvmarg value="-Xmx256m" />
+			<arg value="Warnings/Main.template" />
+			<arg value="${projectDir}/.Temp~/Warnings.xml" />
+			<arg value="uiPluginDir=${basedir}" />
+			<arg value="projectPath=${projectPath}" />
+			<arg value="projectDir=${projectDir}" />
+			<arg value="outputPath=${outputPath}" />
+			<arg value="unitPluginDirs=${unitPluginDirs}" />
+			<arg value="stylePluginDirs=${stylePluginDirs}" />
+			<arg value="eventSocketPort=${eventSocketPort}" />
+		</java>
+	</target>
+
+</project>

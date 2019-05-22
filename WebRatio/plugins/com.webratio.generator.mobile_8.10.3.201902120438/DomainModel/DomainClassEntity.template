@@ -1,0 +1,154 @@
+#?delimiters [%, %], [%=, %]
+[%
+setJSOutput()
+
+import com.webratio.model.domain.ServiceMethodType
+
+/* Collect attributes and roles to include in the entities */
+def attributes = getAttributes(dclass)
+def keyAttributes = getKeyAttributes(dclass)
+if (keyAttributes.size() != 1) {
+	throwGenerationException("Class has no key or multiple keys - ${dclass}")
+}
+def keyAttr = keyAttributes[0]
+def outgoingRoles = getDirectOutgoingRoles(dclass)
+%]
+
+/* Entity for [%= dclass["id"] %] */
+$data.Entity.extend("[%= getClassInfo(dclass).mappedName %]", {
+	
+	[% outgoingRoles.each { role -> %]
+		[%
+ 			def targetClass = getTargetDomainClass(role)
+			def targetKeyAttr = getKeyAttribute(targetClass)
+ 			def targetRole = getOppositeRole(role)
+ 		%]
+ 		
+		[% if (role["maxCard"] == "1") { // N:1, 1:1 %]
+			[%= getFieldName(role) %]: {
+				type: "[%= getClassInfo(targetClass).mappedName %]",
+				inverseProperty: "[%= getFieldName(targetRole) %]"
+				[% if ((!isWeakRole(role)) && (targetRole["maxCard"] == "1")) { %],
+					required: true
+				[% } %]
+			},
+		[% } else if (targetRole["maxCard"] != "N") { // 1:N %]
+			[%= getFieldName(role) %]: {
+				type: Array,
+				elementType: "[%= getClassInfo(targetClass).mappedName %]",
+				inverseProperty: "[%= getFieldName(targetRole) %]"
+			},
+		[% } else { // N:N %]
+			[%= getFieldName(role) %]: {
+				type: Array,
+				elementType: "[%= getAssociationClassInfo(role.parent).mappedName %]",
+				inverseProperty: "[%= getAssociationRoleFieldName(role) %]"
+			},
+		[% } %]
+		
+		[% if (isForeignKeyRole(role)) { %]
+			[%= getFieldName(role) %]__[%= getFieldName(targetKeyAttr) %]: {
+				type: "[%= getJayDataType(targetKeyAttr) %]",
+				enumerable: false
+			},
+		[% } %]
+		
+	[% } %]
+	
+	[% attributes.eachWithSeparator(",") { attr -> %]
+		
+    	[%= getFieldName(attr) %]: {
+    		[% if (attr.valueOf("Property[@name = 'OnFileSystem']/@value") == "true") { %]
+    			type: "[%= getJayDataType("string") %]"
+			[% } else { %] 
+				type: "[%= getJayDataType(attr) %]" 
+			[% } %]
+    		[% if (attr == keyAttr) { %],
+    			key: true,
+    			computed: true
+    		[% } %]
+    	}
+    	
+    	[% if (isBinaryType(attr["type"])) { %],
+    		[%= getFieldName(attr) %]_contentType: {
+    			type: "[%= getJayDataType("string") %]"
+    		},
+    		[%= getFieldName(attr) %]_fileName: {
+    			type: "[%= getJayDataType("string") %]"
+    		},
+    		[%= getFieldName(attr) %]_remoteFileId: {
+    			type: "[%= getJayDataType("string") %]"
+    		},
+    		[%= getFieldName(attr) %]_status: {
+    			type: "[%= getJayDataType("integer") %]"
+    		}
+    	[% } %]
+    	
+	[% } %]
+	
+});
+
+[%
+/* Find information controlling the need for an auxiliary entity */
+def remoteOidAttr = getRemoteOidAttribute(dclass)
+
+def trackDeletions = isServerMappedDomainClass(dclass, ServiceMethodType.DELETE)
+def trackedAttrs = getLocalTrackedAttributes(dclass)
+def trackedRoles = getRemoteTrackedOutgoingRoles(dclass)
+def trackedRolesLocally = getLocalTrackedOutgoingRoles(dclass) as Set
+%]
+[% if (trackDeletions || !trackedAttrs.isEmpty() || !trackedRoles.isEmpty()) { %]
+
+	/* Auxiliary entity for [%= dclass["id"] %] */
+	$data.Entity.extend("[%= getAuxiliaryClassInfo(dclass).mappedName %]", {
+		
+		oid: {
+			type: "integer",
+			key: true,
+			computed: true
+		},
+		
+		[% if (trackDeletions || !trackedAttrs.isEmpty()) { %]
+			dirty: {
+				type: "[%= getJayDataType("boolean") %]"
+			},
+		[% } %]
+		
+		[% if (trackDeletions) { %]
+			deletedAt: {
+				type: "[%= getJayDataType("timestamp") %]"
+			},
+		[% } %]
+		
+		[% trackedAttrs.each { attr -> %]
+	 		d_[%= getFieldName(attr) %]: {
+	 			type: "[%= getJayDataType("boolean") %]"
+	 		},
+		[% } %]
+		
+		[% trackedRoles.each { role -> %]
+			[%
+	 			def targetClassRemoteOidAttr = getRemoteOidAttribute(getTargetDomainClass(role))
+	 		%]
+	 		t_[%= getFieldName(role) %]: {
+	 			type: "[%= getJayDataType(targetClassRemoteOidAttr) %]"
+	 		},
+	 		[% if (trackedRolesLocally.contains(role)) { %]
+		 		addts_[%= getFieldName(role) %]: {
+		 			type: "[%= getJayDataType("timestamp") %]"
+		 		},
+		 		remts_[%= getFieldName(role) %]: {
+		 			type: "[%= getJayDataType("timestamp") %]"
+		 		},
+	 		[% } %]
+		[% } %]
+		
+		[% [keyAttr, remoteOidAttr].eachWithSeparator(",") { attr -> %]
+	    	t_[%= getFieldName(attr) %]: {
+	    		type: "[%= getJayDataType(attr) %]"
+	    	}
+		[% } %]
+		
+	});
+
+[% } %]

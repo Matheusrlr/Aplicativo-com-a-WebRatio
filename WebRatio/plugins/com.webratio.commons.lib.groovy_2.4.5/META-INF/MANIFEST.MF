@@ -1,0 +1,72 @@
+Manifest-Version: 1.0
+Export-Package: groovy.beans,groovy.grape,groovy.inspect,groovy.inspec
+ t.swingui,groovy.io,groovy.jmx.builder,groovy.json,groovy.json.intern
+ al,groovy.lang,groovy.mock.interceptor,groovy.model,groovy.security,g
+ roovy.servlet,groovy.sql,groovy.swing,groovy.swing.binding,groovy.swi
+ ng.factory,groovy.swing.impl,groovy.test,groovy.text,groovy.text.mark
+ up,groovy.time,groovy.transform,groovy.transform.builder,groovy.trans
+ form.stc,groovy.ui,groovy.ui.text,groovy.ui.view,groovy.util,groovy.u
+ til.logging,groovy.util.slurpersupport,groovy.xml,groovy.xml.dom,groo
+ vy.xml.streamingmarkupsupport,groovyjarjarantlr,groovyjarjarantlr.ASd
+ ebug,groovyjarjarantlr.actions.cpp,groovyjarjarantlr.actions.csharp,g
+ roovyjarjarantlr.actions.java,groovyjarjarantlr.actions.python,groovy
+ jarjarantlr.build,groovyjarjarantlr.collections,groovyjarjarantlr.col
+ lections.impl,groovyjarjarantlr.debug,groovyjarjarantlr.debug.misc,gr
+ oovyjarjarantlr.preprocessor,groovyjarjarasm.asm,groovyjarjarasm.asm.
+ commons,groovyjarjarasm.asm.signature,groovyjarjarasm.asm.tree,groovy
+ jarjarasm.asm.util,groovyjarjarcommonscli,org.codehaus.groovy,org.cod
+ ehaus.groovy.ant,org.codehaus.groovy.antlr,org.codehaus.groovy.antlr.
+ java,org.codehaus.groovy.antlr.parser,org.codehaus.groovy.antlr.treew
+ alker,org.codehaus.groovy.ast,org.codehaus.groovy.ast.builder,org.cod
+ ehaus.groovy.ast.expr,org.codehaus.groovy.ast.stmt,org.codehaus.groov
+ y.ast.tools,org.codehaus.groovy.binding,org.codehaus.groovy.bsf,org.c
+ odehaus.groovy.classgen,org.codehaus.groovy.classgen.asm,org.codehaus
+ .groovy.classgen.asm.indy,org.codehaus.groovy.classgen.asm.sc,org.cod
+ ehaus.groovy.cli,org.codehaus.groovy.control,org.codehaus.groovy.cont
+ rol.customizers,org.codehaus.groovy.control.customizers.builder,org.c
+ odehaus.groovy.control.io,org.codehaus.groovy.control.messages,org.co
+ dehaus.groovy.groovydoc,org.codehaus.groovy.jsr223,org.codehaus.groov
+ y.plugin,org.codehaus.groovy.reflection,org.codehaus.groovy.reflectio
+ n.android,org.codehaus.groovy.reflection.stdclasses,org.codehaus.groo
+ vy.reflection.v7,org.codehaus.groovy.runtime,org.codehaus.groovy.runt
+ ime.callsite,org.codehaus.groovy.runtime.dgmimpl,org.codehaus.groovy.
+ runtime.dgmimpl.arrays,org.codehaus.groovy.runtime.m12n,org.codehaus.
+ groovy.runtime.memoize,org.codehaus.groovy.runtime.metaclass,org.code
+ haus.groovy.runtime.powerassert,org.codehaus.groovy.runtime.typehandl
+ ing,org.codehaus.groovy.runtime.wrappers,org.codehaus.groovy.syntax,o
+ rg.codehaus.groovy.testng,org.codehaus.groovy.tools,org.codehaus.groo
+ vy.tools.ast,org.codehaus.groovy.tools.groovydoc,org.codehaus.groovy.
+ tools.groovydoc.gstringTemplates,org.codehaus.groovy.tools.gse,org.co
+ dehaus.groovy.tools.javac,org.codehaus.groovy.tools.shell,org.codehau
+ s.groovy.tools.shell.commands,org.codehaus.groovy.tools.shell.complet
+ ion,org.codehaus.groovy.tools.shell.util,org.codehaus.groovy.tools.xm
+ l,org.codehaus.groovy.transform,org.codehaus.groovy.transform.sc,org.
+ codehaus.groovy.transform.sc.transformers,org.codehaus.groovy.transfo
+ rm.stc,org.codehaus.groovy.transform.tailrec,org.codehaus.groovy.tran
+ sform.trait,org.codehaus.groovy.util,org.codehaus.groovy.vmplugin,org
+ .codehaus.groovy.vmplugin.v5,org.codehaus.groovy.vmplugin.v6,org.code
+ haus.groovy.vmplugin.v7
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/groovy-all.jar
+Bundle-Version: 2.4.5
+Eclipse-BuddyPolicy: registered
+Bundle-Name: WebRatio 3rd Party Library - Groovy
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.groovy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: lib/groovy-allsrc.zip
+SHA-256-Digest: 4jR0zA2LLUoSJFgNvV/Ul++giI8eX1wqfmm0ux3ruHo=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: InikNYFkMUF7NBINRqr/K6gfXBtPeLzLWtPHIPHwYt4=
+
+Name: lib/groovy-all.jar
+SHA-256-Digest: boNt0L8f40dW1T6+9WT4xDAK1oZnb5g/nhVYRboKLbg=
+

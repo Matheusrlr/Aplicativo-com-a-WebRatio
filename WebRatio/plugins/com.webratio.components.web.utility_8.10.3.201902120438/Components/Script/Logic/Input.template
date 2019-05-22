@@ -1,0 +1,33 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import com.webratio.generator.helpers.SpecialUtils
+import org.apache.commons.lang.StringUtils
+import org.apache.commons.io.FileUtils
+import org.apache.commons.io.IOUtils
+
+setXMLOutput()
+
+def inputs = []
+if (component["script"] != "") {
+    def scriptFile = getContentFile(component["script"])
+    if (scriptFile.exists() && scriptFile.isFile()) {
+    	inputs += SpecialUtils.getScriptInputs(scriptFile)
+    }
+} else {
+	inputs += SpecialUtils.getScriptInputs(component.valueOf("ScriptText"))
+}
+%>
+
+<InputParameters>
+<%  
+	if (! inputs.empty) {
+		for (input in inputs) {
+			%><InputParameter name="<%=component["id"]%>.<%=input%>" label="<%=input%>"/><%
+		}
+	} else {
+		for (input in component.selectNodes("ScriptInput")) {
+			%><InputParameter name="<%=input["id"]%>" refId="<%=input["id"]%>" label="<%=input["name"]%>"/><%
+		} 
+	}
+%>
+</InputParameters>

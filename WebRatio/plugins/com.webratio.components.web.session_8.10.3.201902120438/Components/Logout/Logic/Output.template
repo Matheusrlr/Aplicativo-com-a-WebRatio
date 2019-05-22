@@ -1,0 +1,5 @@
+#?delimiters <%,%>,<%=,%>
+<% setXMLOutput() %>
+<OutputParameters>
+   <OutputParameter name="modelElement"  type="" label="Model Element"/>
+</OutputParameters>

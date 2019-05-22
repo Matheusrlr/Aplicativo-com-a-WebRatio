@@ -1,0 +1,43 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Show Title" name="showTitle" type="boolean" default="true">
+Defines the rendition of the block title.
+Allowed values are: true(default) or false.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Title Font Weight" name="titlefont-weight" type="enum" values="normal|bold" default="bold">
+Defines the rendering of the block title.
+Allowed values are:
+- normal
+- bold (default)
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Title Background" name="titlebackground" type="color" default="">
+Defines the title background color.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Title Color" name="titlecolor" type="color" default="">
+Defines the title text color.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Title Borders" name="titleborder" type="string" default="">
+Defines the title borders to render.
+Value is a space-separated combination of the
+following keywords: top, left, right, bottom.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Title Border Style" name="titleborder-style" type="enum" values="NONE|THIN|MEDIUM|DASHED|DOTTED|THICK|DOUBLE|HAIR|MEDIUM_DASHED|DASH_DOT|MEDIUM_DASH_DOT|DASH_DOT_DOT|MEDIUM_DASH_DOT_DOT|SLANTED_DASH_DOT">
+Defines the title border style.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Title Border Color" name="titleborder-color" type="color" default="">
+Defines the title border color.
+</wr:LayoutParameter>
+[%
+import org.apache.commons.lang.StringUtils
+
+setXMLOutput()
+
+def writeStyle(params, prefix){
+   def style = params.entrySet().findAll{it.key.startsWith(prefix) && !StringUtils.isBlank(it.value)}.collect{StringUtils.uncapitalize(it.key - prefix) + ":" + it.value}.join(";")    
+   if(!StringUtils.isBlank(style)){%] style="[%= style%]"[%}
+}
+
+%]
+[%if("true" == params["showTitle"]){%]
+  <Title[%writeStyle(params, "title")%]><wr:Label context="element"/></Title>
+[%}%]
+<wr:FrameContent/>

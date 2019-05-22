@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component  type="operation" formBased="false" idPrefix="switch" namePrefix="Switch " label="Switch" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true"  errorFlowTarget="true" successFlowSource="true" successFlowTarget="true" multipleSuccessFlowCardinality="true"> 
+  <ListProperty elementName="Case" attributeName="value" label="Case Values">
+	<Description xml:space="preserve">The set of case values.</Description>
+  </ListProperty>
+  <SuccessFlowCodes xml:space="preserve">return ["&lt;EMPTY&gt;"] + component.elements("Case").collect{it["value"]}</SuccessFlowCodes>
+  <Description xml:space="preserve">The Switch implements the behavior of classical instruction 
+SWITCH-CASE of high level programming languages: given an input variable 
+and a set of Case Values respectively associated with a set of instruction 
+sequences, the actual value of the input variable univocally determines
+the instruction sequence to be executed.
+In the WebML model, the switch operation defines a set of alternative 
+navigational paths, and the path to be followed is chosen according to the value 
+of the input parameter received by the switch operation.</Description>
+  <InputDescription xml:space="preserve" name="Switch">The value on which the case expression is evaluated</InputDescription>  
+  <OutputDescription xml:space="preserve" name="Switch">The value on which the case expression is evaluated, forwarded
+as output when the case is verified. Each Success flow
+outgoing from the Switch can be associated to one of
+the case value using the flow property "Code". A Success flow
+whose property "Code" is not defined represents the default
+option: it is followed if the value of the input parameter
+differs from all the declared case values.</OutputDescription>  
+</Component>

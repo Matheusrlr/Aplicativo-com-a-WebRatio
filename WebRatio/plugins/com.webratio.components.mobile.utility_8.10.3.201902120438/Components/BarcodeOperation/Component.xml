@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="operation" version="1.0.0" idPrefix="brcd" namePrefix="Barcode " label="Barcode" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" successFlowSource="true" successFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" multipleSuccessFlowCardinality="true"> 
+  	<SuccessFlowCodes xml:space="preserve">return ["Cancel"]</SuccessFlowCodes>
+  	<NativePlugins>
+  		<RequiredPlugin localId="local:barcodescanner.zip"/>
+  	</NativePlugins> 
+  	<OutputDescription xml:space="preserve" name="Format">The format of the scanned QR Code/Barcode. (e.g. EAN 13)</OutputDescription>
+  	<OutputDescription xml:space="preserve" name="Value">The value of the scanned QR Code/Barcode. (e.g 9780128001080)</OutputDescription>
+  	<OutputDescription xml:space="preserve" name="Value Type">The value type of the scanned QR Code/Barcode (e.g. Text)</OutputDescription>
+	<Description xml:space="preserve">&lt;p&gt;The Barcode operation scans a QR Code or a Barcode and provides the readed information as output.&lt;/p&gt;
+&lt;p&gt;This component uses the &lt;b&gt;BarcodeScanner&lt;/b&gt; PhoneGap plugin to interact with the device. &lt;/p&gt;
+&lt;p&gt;More information about the plugin are available here: &lt;a href="https://github.com/webratio/phonegap-plugin-barcodescanner"&gt;https://github.com/webratio/phonegap-plugin-barcodescanner&lt;/a&gt;&lt;/p&gt;.</Description>
+</Component>

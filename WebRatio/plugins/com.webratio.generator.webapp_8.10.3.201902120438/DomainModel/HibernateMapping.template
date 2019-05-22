@@ -1,0 +1,501 @@
+#?delimiters <%, %>, <%=, %>
+<%
+// ==== INPUTS ====================================================
+// entity
+// ================================================================
+
+import org.apache.commons.lang.StringUtils
+
+setXMLOutput()
+
+def getKeyAtts(entity){
+   return wr.explorer.domainModel().getAllKeyAttributes(entity)
+}
+
+def entityClass = getClassInfo(entity)
+def keyAtts = getKeyAtts(entity)
+def subEntity = (getSuperDomainClass(entity) != null)
+def attrCols = new HashSet()
+def db = getById(entity.valueOf("@db:database"))
+if(db == null){
+  throw new Exception("Invalid or missing database for entity " + entity["name"] + "["+entity["id"] + "]")
+}
+def dbConfig = wr.explorer.databaseTypes().getConfiguration(db["type"])
+def openQuote = dbConfig["openQuote"]
+def closeQuote = dbConfig["closeQuote"]
+def enableOwnerFilter = !subEntity && (db["duration"] == "volatile") && (db["scope"] == "session")
+def notFoundPolicy = (db.selectSingleNode("Property[@name = 'ignoreInvalidForeignKey']") != null) ? "ignore" : "exception"
+def forceUpperCaseStyle = db.selectSingleNode("Property[@name = 'forceUpperCaseStyle' and @value='true']") != null 
+def useLazyEntityPersisters = wr.project.selectSingleNode("Property[@name = 'useLazyEntityPersisters' and @value='false']") == null
+def generateOneToOneMapping = entity.selectSingleNode("Property[@name='useSoftOneToOneMapping' and @value='true']") == null
+  
+def convertName ={name ->
+   if(forceUpperCaseStyle){
+      return name.toUpperCase()
+   }
+   return name
+}  
+
+  
+def isFKMapped(role, entity) {
+    def rel = role.parent
+    if (entity.valueOf("@db:table") != rel.valueOf("@db:table")) {
+        return false
+    } else {
+        def roleKeys = new HashSet(role.selectNodes("db:JoinColumn").collect{[it.valueOf("@attribute"), it.valueOf("@name")]})
+        def entKeys = null
+        if (entity.is(getTopSuperDomainClass(entity))) {
+            entKeys = new HashSet(entity.selectNodes("Attribute[@key = \'true\']").collect{[it.valueOf("@id"), it.valueOf("@db:column")]})
+        } else {
+            entKeys = new HashSet(entity.selectNodes("Generalization/db:JoinColumn").collect{[it.valueOf("@attribute"), it.valueOf("@name")]})
+        }
+        return roleKeys == entKeys
+    }
+}
+def writeSchemaAttribute(element) {
+    def schema = getSchema(element)
+    if (!StringUtils.isBlank(schema)) {
+        %>schema="<%=schema%>"<%
+    }
+}
+
+def writeOnlyReadAttributes(attr, column, columns){
+   if(columns.contains(column) || attr.valueOf("@db:table") != ''){
+     %>insert="false" update="false"<%
+   }else{
+    def table = attr.valueOf("../@db:table")
+    for(role in getIncomingRoles(attr.parent).findAll{!isMany(getOppositeRole(it))}){
+      if(role.valueOf("../@db:table") == table){
+        if(role.selectSingleNode("db:JoinColumn[@name = '" + column + "']") != null){
+          %>insert="false" update="false"<%
+          return
+        } 
+      }
+    }
+    for(role in getOutgoingRoles(attr.parent).findAll{!isMany(it)}){
+      if(role.valueOf("../@db:table") == table){
+        if(role.selectSingleNode("db:JoinColumn[@name = '" + column + "']") != null){
+          %>insert="false" update="false"<%
+          return
+        }
+      } 
+    }
+   }
+}
+
+def getHBJavaType(attr) {
+    if (attr == null) {
+        return null
+    }
+    def customHBType = attr.valueOf("@db:hibernateType")
+    if (customHBType != "") {
+        return customHBType
+    }
+    def attrType = attr["type"]
+    def db = getById(attr.parent.valueOf("@db:database"))
+    def typeProp = db?.selectSingleNode("Property[@name = 'hibernateType." + attrType + "']")
+    if(typeProp != null){
+      return typeProp["value"]
+    }
+    if (attrType == "decimal" && attr["key"] == "true") {
+        def idGen = attr.valueOf("@db:idGenerator") 
+        if(idGen == "sequence" || idGen == "identity"){
+            return "com.webratio.data.hibernate.NumberLongType"
+        }   
+    } else if ((attrType == "string") || (attrType == "password") || (attrType == "url") || (attrType == "blob")) {
+        if (attr.valueOf("@db:charLength") != "") {
+            return getPackageName()  + ".types." + "FixedChar_" + attr.valueOf("@db:charLength")
+        }
+    } else if (attrType == "boolean") {
+        if(attr.valueOf("@db:trueValue") != "" || attr.valueOf("@db:falseValue") != ""){
+            return getPackageName()  + ".types." + "BooleanType_" + attr["id"]
+        }
+    }
+    return getJavaType(attrType)
+}
+   
+def writePersisterAttribute(entity, useLazyEntityPersisters){
+   if(entity["volatileDB"] == "true"){
+     if(entity.selectSingleNode("Generalization") != null){
+        if(useLazyEntityPersisters){
+           %>persister="com.webratio.hibernate.persisters.LazyJoinedSubclassTableEntityPersister"<%
+        }
+     } else if(!wr.explorer.domainModel().getSubDomainClasses(entity).isEmpty()) {
+     	%>persister="com.webratio.hibernate.persisters.LazyGeneralizationPersister"<%
+     } else {
+        if(useLazyEntityPersisters){
+           %>persister="com.webratio.hibernate.persisters.LazySingleTableEntityPersister"<%
+        }
+     }    
+   } else {
+     if(entity.selectSingleNode("Generalization") == null) {
+        if(!wr.explorer.domainModel().getSubDomainClasses(entity).isEmpty()) {
+           %>persister="com.webratio.hibernate.persisters.GeneralizationPersister"<%
+        }
+     }      
+   } 
+} 
+
+def writePropertyMapping = { attr, columns ->
+  def attrCol = attr.valueOf("@db:column") 
+  if(attr["type"] == "blob"){
+    if(!StringUtils.isBlank(attrCol)){
+       %><property name="<%=toValidFieldName(getFieldName(attr) + "Ref")%>" column="`<%=convertName(attrCol)%>`" type="<%= getHBJavaType(attr) %>" <%writeOnlyReadAttributes(attr,attrCol,columns)%>/><%
+    }
+    if(attr["storageType"] == "database"){
+       def blobCol = attr.valueOf("@db:blobColumn")
+       %><property name="<%=toValidFieldName(getFieldName(attr) + "Binary")%>" column="`<%=convertName(blobCol)%>`" type="blob" <%writeOnlyReadAttributes(attr,blobCol,columns)%>/><%
+       columns.add(blobCol) 
+	}
+  } else if(attr.valueOf("@db:clob") == "true"){
+    %><property name="<%=toValidFieldName(getFieldName(attr) + "CLOB")%>" column="`<%=convertName(attrCol)%>`" type="clob" <%writeOnlyReadAttributes(attr,attrCol,columns)%>/><%
+    %><property name="<%=getFieldName(attr)%>" column="`<%=convertName(attrCol)%>`" type="text" insert="false" update="false"/><%
+  } else {
+	%><property name="<%=getFieldName(attr)%>" column="`<%=convertName(attrCol)%>`" type="<%= getHBJavaType(attr) %>" <%writeOnlyReadAttributes(attr,attrCol,columns)%>/><%
+  }
+  if(!StringUtils.isBlank(attrCol)){ 
+     columns.add(attrCol)
+  }    
+}
+
+def writeFormulaPropertyMapping = { attr ->
+   %><property name="<%=getFieldName(attr)%>" formula="<%=attr["formula"]%>" type="<%= getHBJavaType(attr) %>" insert="false" update="false"/><%
+}
+
+
+%><?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping <%writeSchemaAttribute(entity)%> auto-import="<%=wr.project.valueOf("DomainModel/@useQualifiedEntities") != "true" %>">
+
+<%if(enableOwnerFilter){%>
+  <filter-def name="ownerFilter">
+    <filter-param name="ownerId" type="int"/>
+  </filter-def>
+<%}%>
+
+<% if (subEntity) { %>
+  <joined-subclass <%writeSchemaAttribute(entity)%> 
+      name="<%=entityClass.name%>"
+      extends="<%=getClassInfo(getSuperDomainClass(entity)).name%>"
+      table="`<%=convertName(entity.valueOf("@db:table"))%>`" dynamic-update="true" dynamic-insert="true"
+      <%writePersisterAttribute(entity, useLazyEntityPersisters)%>>
+    <key>
+  <% for (keyAttr in getKeyAtts(entity)) { %>
+    <% def keyAttrId = keyAttr.valueOf("@id") %>
+    <% def keyCol = entity.valueOf("Generalization/db:JoinColumn[@attribute = '" + keyAttrId + "']/@name") %>
+    <% attrCols.add(keyCol) %>
+      <column name="`<%=convertName(keyCol)%>`"/>
+  <% } %>
+    </key>
+<% } else { %>
+  <class <%writeSchemaAttribute(entity)%>
+      name="<%=getClassInfo(entity).name%>"
+      table="`<%=convertName(entity.valueOf("@db:table"))%>`"
+      <%writePersisterAttribute(entity, useLazyEntityPersisters)%> dynamic-update="true" dynamic-insert="true">
+  <% if (keyAtts.size() == 1) { %>
+    <% def keyCol = keyAtts[0].valueOf("@db:column") %>
+    <% attrCols.add(keyCol) %>
+    <id name="<%=getFieldName(keyAtts[0])%>" column="`<%=convertName(keyCol)%>`" type="<%=getHBJavaType(keyAtts[0])%>">
+      <% def idGen = StringUtils.defaultIfEmpty(keyAtts[0].valueOf("Property[@name='idgen']/@value"), keyAtts[0].valueOf("@db:idGenerator")) 
+         if(StringUtils.isBlank(idGen)){
+            if(keyAtts[0].valueOf("@type") == "integer"){
+              if(entity["volatileDB"] == "true"){
+                idGen = "org.hibernate.id.IncrementGenerator"
+              } else {
+                idGen = "com.webratio.hibernate.id.MaxPlusOneIncrementGenerator"
+              }  
+            } else {
+              idGen =  "assigned"
+            } 
+         } 
+      %>
+      <% if (idGen == "sequence"){ %>
+         <generator class="sequence">
+            <param name="sequence"><%=openQuote%><%= keyAtts[0].valueOf("@db:sequenceName")%><%=closeQuote%></param>
+         </generator>
+      <% } else if (idGen == "increment") { %>
+         <generator class="com.webratio.hibernate.id.MaxPlusOneIncrementGenerator"/>
+      <% } else { %>
+         <generator class="<%= idGen%>"/>
+      <% } %>
+    </id>
+  <% }  else if (keyAtts.size() > 1) { %>
+    <composite-id>
+    <% for (keyAttr in keyAtts) { %>
+      <% def keyCol = keyAttr.valueOf("@db:column") %>
+      <% attrCols.add(keyCol) %>
+      <key-property name="<%=getFieldName(keyAttr)%>" column="`<%=convertName(keyCol)%>`" type="<%=getHBJavaType(keyAttr)%>"/>
+    <% } %>
+    </composite-id>
+  <% } %>
+<% } %>
+
+
+<% for (attr in entity.selectNodes("Attribute[string(@key) != \'true\'][string(@db:table) = \'\']")) {
+    if(attr["formula"] != ""){
+  	   writeFormulaPropertyMapping(attr)
+  	} else if(!isSimpleDerived(attr) && isValidMapping(attr)){
+  	   writePropertyMapping(attr, attrCols)
+  	} 
+ } %>
+
+<% for (role in getDirectOutgoingRoles(entity).findAll{isValidMapping(it)}) { %>
+  <% 
+    def fieldName = getFieldName(role)
+    def inverseRole = getOppositeRole(role)
+    def inverseFieldName = getFieldName(inverseRole)
+    def relTable = role.valueOf("../@db:table")
+    def inverse = isWeakRole(role) || isDerived(role)
+    def targetEntityClass = getClassInfo(getTargetDomainClass(role))
+    def sourceKeyAttrIds = getKeyAtts(getSourceDomainClass(role)).collect{it["id"]}
+    def sourceJoinCols = sourceKeyAttrIds.collect{role.valueOf("db:JoinColumn[@attribute = '" + it + "']/@name")}
+    def targetKeyAttrIds = getKeyAtts(getTargetDomainClass(role)).collect{it["id"]}
+    def targetJoinCols = targetKeyAttrIds.collect{inverseRole.valueOf("db:JoinColumn[@attribute = '" + it + "']/@name")}
+    def sourceKeyColumns = sourceKeyAttrIds.collect{getById(it)?.valueOf("@db:column")}
+    def isDerived = isDerived(role) || ("true" == role.parent.valueOf("@db:isView"))
+    def forceBridgeTable = isDerived
+    if(isDerived){
+      if (!isMany(role) || !isMany(inverseRole)){
+        def sourceEntity = getSourceDomainClass(role)
+        def targetEntity = getTargetDomainClass(role)
+        def sourceTable = getSchema(sourceEntity) + "." + sourceEntity.valueOf("@db:table")
+        def targetTable = getSchema(targetEntity) + "." + targetEntity.valueOf("@db:table") 
+        def qRelTable = getSchema(role.parent) + "." + role.valueOf("../@db:table")
+        if( sourceTable == qRelTable || targetTable == qRelTable){
+           forceBridgeTable = false
+        }
+      }            
+    }
+  %>
+  <% if (isMany(role) && isMany(inverseRole) || forceBridgeTable) { %>
+    <set name="<%=fieldName%>" table="`<%=convertName(relTable)%>`" <%writeSchemaAttribute(role.parent)%> inverse="<%=inverse%>" <%if(isDerived){%>persister="org.hibernate.persister.collection.UnmodifiableCollectionPersister"<%}%>>
+      <key>
+      <% for (joinCol in sourceJoinCols) { %>
+        <column name="`<%=convertName(joinCol)%>`"/>
+      <% } %>
+      </key>
+      <many-to-many class="<%=targetEntityClass.name%>" not-found="<%=notFoundPolicy%>">
+      <% for (joinCol in targetJoinCols) { %>
+        <column name="`<%=convertName(joinCol)%>`"/>
+      <% } %>
+      </many-to-many>
+    </set>
+  <% } else if (!isMany(role) && isMany(inverseRole)) { %>
+    <% def update = !isDerived && targetJoinCols.findAll{sourceKeyColumns.contains(it)}.empty%>
+    <many-to-one name="<%=fieldName%>" class="<%=targetEntityClass.name%>" update="<%=update%>" insert="<%=update%>" not-found="<%=notFoundPolicy%>">
+      <% for (joinCol in targetJoinCols) { %>
+        <column name="`<%=convertName(joinCol)%>`"/>
+      <% } %>
+    </many-to-one>
+  <% } else if (isMany(role) && !isMany(inverseRole)) { %>
+    <set name="<%=fieldName%>" inverse="true">
+	  <key>
+	    <% for (joinCol in sourceJoinCols) { %>
+	      <column name="`<%=convertName(joinCol)%>`"/>
+	    <% } %>
+	    </key>
+	  <one-to-many class="<%=targetEntityClass.name%>" not-found="<%=notFoundPolicy%>"/>
+	</set>
+  <% } else { // one-to-one %>
+    <% if (isFKMapped(role, entity)) { // one-to-one%>
+      <% def update = !isDerived && targetJoinCols.findAll{sourceKeyColumns.contains(it)}.empty%>
+      <many-to-one name="<%=fieldName%>" unique="false" update="<%=update%>" insert="<%=update%>" not-found="<%=notFoundPolicy%>">
+        <% for (joinCol in targetJoinCols) { %>
+        <column name="`<%=convertName(joinCol)%>`"/>
+        <% } %>
+      </many-to-one>
+    <% } else if (isFKMapped(inverseRole, getTargetDomainClass(role))) {%>
+      <%if(generateOneToOneMapping){%>
+        <one-to-one name="<%=fieldName%>" property-ref="<%=inverseFieldName%>"/>
+      <%}%>
+    <% } %>
+  <% } %>
+<% } %>
+
+<% def derivedAttributes = entity.selectNodes("Attribute[string(@key) != \'true\'][string(@db:table) != \'\']").findAll{!isSimpleDerived(it) && isValidMapping(it)}%>
+<% for (attr in derivedAttributes) { %>
+    <% def fieldName = getFieldName(attr)%>
+    <% def attrClassName = getClassInfo(attr.parent).name + "_" + toValidClassName(fieldName) + "Bean"  %> 
+    <% def keyCols = []
+       if(getSuperDomainClass(entity)){
+          keyCols.addAll(getKeyAtts(entity).collect{entity.selectSingleNode("Generalization/db:JoinColumn[@attribute = '" + it["id"] +  "']")}.collect{it.valueOf("@name")})
+       } else {
+          keyCols.addAll(getKeyAtts(entity).collect{it.valueOf("@db:column")})
+       }
+    %>
+    <many-to-one name="<%=toValidFieldName(fieldName)%>Bean" class="<%=attrClassName%>" insert="false" update="false" not-found="<%=notFoundPolicy%>">
+       <% for (keyCol in keyCols) { %>
+         <column name="`<%=convertName(keyCol)%>`"/>
+       <% } %>  
+    </many-to-one>
+<% } %>
+
+<%
+  def roles =  getDirectOutgoingRoles(entity).findAll{getKeyAtts(getTargetDomainClass(it)).size() > 1}
+  roles = roles.findAll{isValidMapping(it) && isFKMapped(it,entity)}
+  if(!roles.isEmpty()){
+    %><!-- 1:N relationship foreign keys mapping --><%    
+  }
+  for (role in roles) {
+    def fieldName = getFieldName(role)
+    def inverseRole = getOppositeRole(role)
+    def relTable = role.valueOf("../@db:table")
+    def targetEntity = getTargetDomainClass(role)
+    def targetKeyAttrIds = getKeyAtts(targetEntity).collect{it["id"]}
+    def targetJoinCols = targetKeyAttrIds.collect{inverseRole.selectNodes("db:JoinColumn[@attribute = '" + it + "']")}.flatten()
+    for (jc in targetJoinCols) { 
+      def attr = getById(jc, "attribute")
+      %><property name="Rel_<%=fieldName%>_<%=getFieldName(attr)%>" column="`<%=convertName(jc["name"])%>`" type="<%= getHBJavaType(attr) %>" insert="false" update="false"/><%
+    } 
+  } 
+%>
+
+
+<% if(entity["derivationQuery"] != "" || entity.valueOf("@db:isView") == "true") { %>
+   <sql-insert>empty</sql-insert>
+   <sql-update>empty</sql-update>
+   <sql-delete>empty</sql-delete>
+<% } %>
+
+<% if(enableOwnerFilter){ %>
+   <%def ownerIdAttr = entity.selectSingleNode("Attribute[@ownerId='true']")%>
+   <filter name="ownerFilter" condition="<%=ownerIdAttr.valueOf("@db:column")%> = :ownerId"/>
+<% } %>
+
+<% if (subEntity) { %>
+  </joined-subclass>
+<% } else { %>
+  </class>
+<% } %>
+
+
+<% for (attr in derivedAttributes) { %>
+    <% def fieldName = getFieldName(attr)
+       def attrClassName = getClassInfo(attr.parent).name + "_" + toValidClassName(fieldName) + "Bean"  
+       def keyAttrIds = getKeyAtts(entity).collect{it["id"]}
+       def jcs = keyAttrIds.collect{attr.selectSingleNode("db:JoinColumn[@attribute = '" + it + "']")}
+       def propSuffix = ("blob" == attr["type"]) ? "Ref" : ""
+       def dbBlob = ("blob" == attr["type"]) && ("database" == attr["storageType"])
+    %>
+    <!-- mapping for derived attribute '<%=attr["name"]%>[<%=attr["id"]%>]' -->
+    <class <%writeSchemaAttribute(attr)%> name="<%=attrClassName%>" table="`<%=convertName(attr.valueOf("@db:table"))%>`">
+       <% if (jcs.size() == 1) { %>
+         <% def keyAtt = getById(jcs[0].valueOf("@attribute")) %>
+         <% def keyCol = jcs[0].valueOf("@name") %>
+         <id name="<%=getFieldName(keyAtt)%>" column="`<%=convertName(keyCol)%>`" type="<%=getHBJavaType(keyAtt)%>"/>
+       <% }  else if (jcs.size() > 1) { %>
+         <composite-id class="<%=getClassInfo(attr.parent).name%>">
+		    <% for (jc in jcs) { %>
+		      <% def refAttr = getById(jc, "attribute")%>
+		      <key-property name="<%=getFieldName(refAttr)%>" column="`<%=convertName(jc["name"])%>`" type="<%=getHBJavaType(refAttr)%>"/>
+		    <% } %>
+         </composite-id>
+       <% } %>
+       <%def javaType = (attr.valueOf("@db:clob") == "true") ? "text" : getHBJavaType(attr) %>
+       <property name="value<%=propSuffix%>" column="`<%=convertName(attr.valueOf("@db:column"))%>`" type="<%=javaType%>" insert="false" update="false"/>
+       <%if(dbBlob){%>
+        <property name="valueBinary" column="`<%=convertName(attr.valueOf("@db:blobColumn"))%>`" type="blob" insert="false" update="false"/>
+       <%}%>
+    </class>
+<% } %>
+
+<% for (role in getDirectOutgoingRoles(entity).findAll{isValidMapping(it)}) { %>
+  <!-- mapping for relationship '<%=role["name"]%>[<%=role["id"]%>]' -->
+  <% 
+    def fieldName = getFieldName(role)
+    def inverseRole = getOppositeRole(role)
+    def relTable = role.valueOf("../@db:table")
+    def relSchema = getSchema(role.parent)
+    def sourceEntity = getSourceDomainClass(role)
+    def targetEntity = getTargetDomainClass(role)
+    def sourceKeyAttrIds = getKeyAtts(sourceEntity).collect{it["id"]}
+    def targetKeyAttrIds = getKeyAtts(targetEntity).collect{it["id"]}
+    def sourceJoinCols = sourceKeyAttrIds.collect{role.selectNodes("db:JoinColumn[@attribute = '" + it + "']")}.flatten()
+    def targetJoinCols = targetKeyAttrIds.collect{inverseRole.selectNodes("db:JoinColumn[@attribute = '" + it + "']")}.flatten()
+    def ownerIdColumn = null
+    def isDerived = isDerived(role) || ("true" == role.parent.valueOf("@db:isView"))
+    def forceBridgeTable = isDerived
+    if(isDerived){
+      if (!isMany(role) || !isMany(inverseRole)){
+        def sourceTable = getSchema(sourceEntity) + "." + sourceEntity.valueOf("@db:table")
+        def targetTable = getSchema(targetEntity) + "." + targetEntity.valueOf("@db:table") 
+        def qRelTable = getSchema(role.parent) + "." + role.valueOf("../@db:table")
+        if( sourceTable == qRelTable || targetTable == qRelTable){
+           forceBridgeTable = false
+        }
+      }            
+    }
+    def persister = null
+    if(useLazyEntityPersisters && sourceEntity["volatileDB"] == "true" && targetEntity["volatileDB"] == "true"){
+       persister = "com.webratio.hibernate.persisters.LazySingleTableEntityPersister"
+    }
+  %>
+  
+  <class <%writeSchemaAttribute(role)%>
+      entity-name="<%=entityClass.packageName%>.Rel_<%=entityClass.simpleName%>_to_<%=fieldName%>"
+      table="`<%=convertName(relTable)%>`" dynamic-update="true" dynamic-insert="true" <%if(persister != null){%>persister="<%=persister%>"<%}%>>
+   <% if ((isMany(role) && isMany(inverseRole)) || forceBridgeTable) { %>
+      <composite-id>
+		    <% for (jc in sourceJoinCols) { %>
+		      <% def refAttr = getById(jc, "attribute")
+		         def column = convertName(jc["name"])
+		         if(refAttr["ownerId"] == "true"){
+		      	     ownerIdColumn = column
+		         }
+		      %>
+		      <key-property name="source_<%=getFieldName(refAttr)%>" column="`<%=column%>`" type="<%=getHBJavaType(refAttr)%>"/>
+		    <% } %>
+		    <% for (jc in targetJoinCols) { %>
+		      <% def refAttr = getById(jc, "attribute")
+		         def column = convertName(jc["name"])
+		         if(refAttr["ownerId"] == "true"){
+		      	     ownerIdColumn = column
+		         }
+		      %>   
+		      <key-property name="target_<%=getFieldName(refAttr)%>" column="`<%=column%>`" type="<%=getHBJavaType(refAttr)%>"/>
+		    <% } %>
+      </composite-id>
+   <% } else { 
+     def fkMapped = isFKMapped(role, entity)
+     def keyColumns = fkMapped ? sourceJoinCols : targetJoinCols  
+     def otherColumns = fkMapped ? targetJoinCols : sourceJoinCols
+     def keyPrefix = fkMapped ? "source_" : "target_"
+     def otherPrefix = fkMapped ? "target_" : "source_"
+     def columns = new HashSet()
+     if (keyColumns.size() > 1) { %>
+     	<composite-id>
+		    <% for (jc in keyColumns) { 
+		      	def refAttr = getById(jc, "attribute")
+		      	columns.add(jc["name"])
+		      	def column = convertName(jc["name"])
+		      	if(refAttr["ownerId"] == "true"){
+		      	   ownerIdColumn = column
+		      	}
+		      	%><key-property name="<%=keyPrefix%><%=getFieldName(refAttr)%>" column="`<%=column%>`" type="<%=getHBJavaType(refAttr)%>"/>		      	
+		    <% } %>
+        </composite-id>
+     <% } else { %>
+        <% def refAttr = getById(keyColumns[0], "attribute") 
+           columns.add(keyColumns[0]["name"])
+        %>
+     	<id name="<%=keyPrefix%><%=getFieldName(refAttr)%>" column="`<%=convertName(keyColumns[0]["name"])%>`" type="<%=getHBJavaType(refAttr)%>"/>
+     <% } %> 
+     <% for (jc in otherColumns) { %>
+	      <% def attr = getById(jc, "attribute")
+	         def column = convertName(jc["name"])
+		     if(ownerIdColumn == null && attr["ownerId"] == "true"){
+		        ownerIdColumn = column
+		     }	      
+	      %>
+	      <property name="<%=otherPrefix%><%=getFieldName(attr)%>" column="`<%=column%>`" type="<%= getHBJavaType(attr) %>" <% if (columns.contains(jc["name"])) {%>insert="false" update="false"<% } %>/>
+	      <% } %>
+     <% } %>
+   
+     <% if(enableOwnerFilter && ownerIdColumn){ %>
+        <filter name="ownerFilter" condition="<%=ownerIdColumn%> = :ownerId"/>
+     <% } %>
+  </class>
+<% } %>
+</hibernate-mapping>

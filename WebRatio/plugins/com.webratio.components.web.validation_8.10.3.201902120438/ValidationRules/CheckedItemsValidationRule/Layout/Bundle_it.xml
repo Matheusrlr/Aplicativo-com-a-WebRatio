@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle>
+  <Entry key="CheckedItemsValidationRule.eq">${itemCount} elementi selezionati richiesti</Entry>
+  <Entry key="CheckedItemsValidationRule.min">selezionare almeno ${itemCount} elementi</Entry>
+  <Entry key="CheckedItemsValidationRule.max">selezionare al massimo ${itemCount} elementi</Entry>
+</Bundle>

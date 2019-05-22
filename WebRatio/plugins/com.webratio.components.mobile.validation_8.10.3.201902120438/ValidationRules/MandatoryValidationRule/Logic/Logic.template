@@ -1,0 +1,14 @@
+#?delimiters [%,%],[%=,%]
+[% setJSONOutput() %]
+{
+	"service": "wrm.comp.val.MandatoryValidationRuleService"
+	
+	[% if (element["companionField"]) { %] ,
+		"companionProperty": "[%= element["companionField"] %]",
+		"predicate": "[%= element["predicate"] %]"
+		[% if (!["empty", "notEmpty"].contains(element["predicate"])) { %],
+			"ignoreCase": [%= element["ignoreCase"] == "true" %],
+			"value": "[%= element["value"] %]"
+		[% } %]
+	[% } %]
+}

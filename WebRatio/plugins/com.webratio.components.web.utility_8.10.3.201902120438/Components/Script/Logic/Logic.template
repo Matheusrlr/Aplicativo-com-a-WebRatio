@@ -1,0 +1,33 @@
+#?delimiters [%,%],[%=,%]
+[%
+import org.apache.commons.lang.StringUtils
+setXMLOutput()
+
+def scriptPath = component["script"]
+def encoding = (scriptPath != "") ? getFileEncoding(scriptPath) : null
+def scriptText = StringUtils.defaultString(component.selectSingleNode("ScriptText")?.text)
+
+if(wr.projectType.name() in ["WEBMODEL","MODULE"]){
+    scriptPath = StringUtils.removeStart(scriptPath, rootModuleName + ".jar/") 	  
+}
+
+%]
+<Descriptor service="com.webratio.components.web.utility.ScriptService">
+   	[% if(!StringUtils.isBlank(scriptPath)){%]   	  
+   	  <Script path="[%=scriptPath%]"[%if(!StringUtils.isBlank(encoding)){%] encoding="[%=encoding%]"[%}%]/>
+	[%}else{%]
+	  <Script xml:space="preserve">[%=scriptText%]</Script>
+	[%}%]
+	
+	[%for(param in component.selectNodes("ScriptInput")){%]
+	  [% printRaw(serializeXML(param, false)) %]
+	[%}%]
+	
+	[%for(param in component.selectNodes("ScriptOutput")){%]
+	  [% printRaw(serializeXML(param, false)) %]
+	[%}%]
+	
+	[%for(prop in component.selectNodes("Property")){%]
+	  [% printRaw(serializeXML(prop, false)) %]
+	[%}%]
+</Descriptor>

@@ -1,0 +1,7 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+%]
+<InputParameters>
+	<InputParameter name="switch" label="Switch" mandatory="true"/>
+</InputParameters>

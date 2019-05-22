@@ -1,0 +1,43 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+def sheets = cell.selectNodes(".//layout:SubPage")
+
+/* returns the block position of the given unit */
+def getBlockPosition(unit) {
+	def parentCell = unit.parent
+	def cells = parentCell.selectNodes("../layout:Cell")
+	def parentRow = parentCell.parent
+	def rows = parentRow.selectNodes("../layout:Row")
+	return rows.indexOf(parentRow) + "_" + cells.indexOf(parentCell)
+}
+
+/* prints all the layout unit of the given element */
+def printUnits(element) {
+	for (unit in element.selectNodes(".//layout:Component")) {
+		blockPosition = getBlockPosition(unit)
+		%]<wr:Element context="unit"/>[%
+		blockPosition = null
+	}
+}
+%]
+
+[%
+if (sheets.empty) {
+	printUnits(cell)
+} else {
+	for (sheet in sheets) {
+		def alternative = getById(sheet["pageId"])?.parent?.selectSingleNode("self::Alternative")
+		if (alternative) {
+			%]<c:if test="${[%= alternative["id"] %] eq '[%= sheet["pageId"] %]'}">[%
+		}
+		%]<Sheet name="[%= getById(sheet["pageId"])["name"]%]">[%
+			printUnits(sheet)
+		%]</Sheet>[%
+		if (alternative) {
+			%]</c:if>[%
+		}
+	}
+}
+%]
+

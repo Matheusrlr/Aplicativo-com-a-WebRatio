@@ -1,0 +1,112 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.helpers.MultiFileHelper
+import com.webratio.generator.helpers.ModulesHelper
+import com.webratio.generator.helpers.ModulesExpandStrategy
+import com.webratio.generator.io.IOHelper
+import com.webratio.generator.contributors.GeneratorContributorHelper
+import com.webratio.generator.TimeLogger
+
+eventSocketClient.sendBeginTask("Project", 100)
+
+/* PARSE 1 - as is */
+def projectElement = parseXMLFile(new File(projectPath)).rootElement
+wr.project = projectElement
+
+/* Simplify multi-file ids */
+MultiFileHelper multiFileHelper = new MultiFileHelper(projectElement)
+multiFileHelper.simplifyIds(projectElement)
+TimeLogger.worked("MultiFileHelper")
+
+/* Apply the running profiles if any */
+/* TODO -----------------------------------------------------
+wr.helpers.runningProfiles.applyCurrentProfiles(projectElement)
+*/
+
+/* Execute the expander contributors */
+/* TODO -----------------------------------------------------
+def contributions = GeneratorContributorHelper.getExpanderContributors()
+if (!contributions.isEmpty()) {
+	eventSocketClient.sendTaskDetails("Project", "Waiting for file writes")
+	wr.outputManager.waitForAllWrites()
+	eventSocketClient.sendTaskDetails("Project", "")
+	contributions.each{it.expand(wr)}
+}
+*/
+TimeLogger.worked("ExpanderContributors")
+
+/* Replace some modules statically */
+/* TODO -----------------------------------------------------
+ModulesHelper modulesHelper = new ModulesHelper(projectElement, wr.projectType)
+modulesHelper.replaceModules()
+wr.generationExceptions.addAll(modulesHelper.getGenerationExceptions())
+*/
+TimeLogger.worked("ModulesHelper")
+
+/* Store away the id transformation maps */
+wr.multiFileIdConversionMap = new File(wr.projectDir, "/.Temp~/.multiFileIdConversionMap")
+IOHelper.serializeMap(multiFileHelper.getIdConversionMap(), wr.multiFileIdConversionMap)
+/* TODO -----------------------------------------------------
+wr.modulesIdConversionMap = new File(wr.projectDir, "/.Temp~/.modulesIdConversionMap")
+IOHelper.serializeMap(modulesHelper.getIdConversionMap(), wr.modulesIdConversionMap)
+*/
+
+/* Write to file */
+writeProjectToFile(projectElement.document, new File(projectPath))
+
+/* TODO -----------------------------------------------------
+multiFileHelper = null
+modulesHelper = null
+projectElement = null
+*/
+
+/* PARSE 2 - simplified ids, replaced modules */
+def parseResult = parseWebProject(new File(projectPath), null)
+wr.project = parseResult.document.rootElement
+wr.elementRetriever = parseResult.index
+TimeLogger.worked("Rebind")
+def bindingKeys = new HashSet(binding.getVariables().keySet())
+
+/* Auto-expand screen and top toolbars */
+for (screen in getAllScreens()) {
+	expandPanel(screen)
+}
+for (toolbar in getAllTopToolbars()) {
+	expandPanel(toolbar)
+}
+
+/* Auto-expand components */
+for (viewComp in getAllViewComponents()) {
+	try {
+		expandComponent(viewComp)
+	} catch (Throwable t) {
+		throw new Exception("Unable to expand view component " + viewComp["name"] + "[" + viewComp["id"] + "]", t)
+	}  
+}
+for (operation in getAllOperations()) {
+	try {
+		expandComponent(operation)
+	} catch (Throwable t) {
+		throw new Exception("Unable to expand operation " + operation["name"] + "[" + operation["id"] + "]", t)
+	}
+}
+
+def newBindingKeys = new HashSet(binding.getVariables().keySet())
+newBindingKeys.removeAll(bindingKeys)
+newBindingKeys.each{binding.getVariables().remove(it)}
+bindingKeys = newBindingKeys = null
+TimeLogger.worked("AutoExpand")
+
+/* Write to file */
+writeProjectToFile(wr.project.document, new File(projectPath))
+
+/* PARSE 3 - simplified ids, replaced modules, auto-expanded, dynamic modules */
+parseResult = parseExpandWebProject(new File(projectPath), new ModulesExpandStrategy(wr), null)
+wr.project = parseResult.document.rootElement
+wr.elementRetriever = parseResult.index
+wr.project.document.updateReplacements()
+
+TimeLogger.worked("VirtualExpand")
+
+eventSocketClient.sendTaskWorked("Project", 100)
+%]

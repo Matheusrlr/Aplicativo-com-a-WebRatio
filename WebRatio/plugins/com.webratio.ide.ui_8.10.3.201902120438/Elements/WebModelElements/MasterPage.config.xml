@@ -1,0 +1,46 @@
+  <Element name="MasterPage" lowerName="master page"
+		pluralLowerName="master pages">
+		<Description>
+			A Master Page
+			is a special page containing components, other sub-pages, and alternative 
+  		    pages which during the generation process are inserted into the Pages that refer to the Master Pages.
+		</Description>
+		<ActionRef label="Add Page" />
+		<ActionRef label="Add Alternative" />
+		<ActionRef label="Add Activation Expression"/>
+		<ActionRef label="Add Variable" />
+		<ActionRef label="Add Property" />
+		<ActionRef label="Localize" />
+		<ActionRef label="Surround with Area" />
+		<ActionRef label="Generate Layout Pages Only"/>
+		<ActionRef label="Generate Logic Descriptors Only"/>
+		<ActionRef label="Generate Selection"/>
+		<ActionRef label="Find Model Problems"/>
+		<ActionRef label="Help"/>
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+			<PropertyRef label="Localized"/>
+		</PropertyCategory>
+		<PropertyCategory name="Layout">
+			<PropertyRef label="Style" />
+			<PropertyRef label="Page Layout" />
+			<PropertyRef label="Grid Layout"/>
+			<PropertyRef label="Frame Layout"/>
+			<PropertyRef label="Cell Layout"/>
+			<PropertyRef label="Attribute Layout"/>
+			<PropertyRef label="Field Layout"/>
+			<PropertyRef label="Event Layout"/>
+			<PropertyRef label="Component Configuration"/>
+			<PropertyRef label="Old Resources"/>
+		</PropertyCategory>
+		<PropertyCategory name="Condition">
+			<PropertyRef name="Page Visibility Condition" label="Grid Visibility Cond." />
+			<PropertyRef name="Page Visibility Condition" label="Cell Visibility Cond."/>
+			<PropertyRef name="Page Visibility Condition" label="Attribute Visibility Cond."/>
+			<PropertyRef name="Page Visibility Condition" label="Field Visibility Cond."/>
+			<PropertyRef name="Page Visibility Condition" label="Field Disable Cond."/>
+			<PropertyRef name="Page Visibility Condition" label="Event Visibility Cond."/>
+			<PropertyRef name="Page Visibility Condition" label="Event Disable Cond."/>
+		</PropertyCategory>
+	</Element>

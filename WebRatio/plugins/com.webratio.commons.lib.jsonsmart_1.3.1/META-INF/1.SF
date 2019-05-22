@@ -1,0 +1,21 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: kDVFDfcuYTNls7siecs2LnThl6U7L
+ QoSJd1G7OkjC9M=
+SHA-256-Digest-Manifest: vW1WUKGx9BsEIM7Gd6x+uMhl6q0cqBLFRWuciL8jkbk=
+Created-By: 1.7.0_80 (Oracle Corporation)
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: a5fmgH7myHzNji9AMOfHrVh8fy7MOgIdRSUiRZ6EFA4=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: about.html
+SHA-256-Digest: ZnOKBJodDbNQrUDiKpuhnj9f17ILyI2Woa3UQLu1/PE=
+
+Name: lib/jsonsmart.jar
+SHA-256-Digest: XoTe7H0b5zLAAM4NTXMIzLWFbezP3LCogxCgfIWxBJ8=
+
+Name: lib/jsonsmartsrc.zip
+SHA-256-Digest: BubfaDPNQwkeCAZIGv1EA7RfLSs0dsYhQqkUINdPZGY=
+

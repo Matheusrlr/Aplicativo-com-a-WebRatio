@@ -1,0 +1,145 @@
+#?delimiters <%,%>,<%=,%>
+<% 
+import java.io.StringReader
+import org.dom4j.io.SAXReader
+import org.xml.sax.SAXException
+
+setXMLOutput()
+
+saxReader = new SAXReader()
+def fixNonASCIIChars(s) {
+    def buffer = new StringBuffer(s.length())
+    for (sc in s.toList()) {
+        if (sc.charAt(0) > 0x7F) {
+            buffer.append("&#")
+            buffer.append(sc.charAt(0) as int)
+            buffer.append(";");
+        } else {
+            buffer.append(sc)
+        }
+    }
+    return buffer.toString()
+}
+def printDescription(descr) {
+    def fixedDescr = fixNonASCIIChars(descr)
+    try {
+        saxReader.read(new StringReader("<p>" + fixedDescr + "</p>"))
+        printRaw(fixedDescr)
+    } catch (Throwable e) {
+        println "Wrong XML: " + descr
+        e.printStackTrace()
+    }
+}
+%><!DOCTYPE doc PUBLIC
+  "-//WebRatio//WebRatio Documentation DTD 1.0//EN"
+  "http://www.webratio.com/WRDoc.dtd">
+<doc 
+    title="<%=unitProject.externalName%>" 
+    subTitle="Reference Guide"
+    authors="The WebRatio Team"
+    date="us">
+  <% for (unitType in unitProject.unitTypes.sort()) { %>
+    <s1 title="<%= unitType.label %>">
+      <p>&#32;</p>
+      <p>
+        <img src="<%=unitType.absolutePath + "/Images/32.png"%>" alt="<%= unitType.label %>"/>
+      </p>
+      <p><% printDescription(unitType.description) %></p>
+      <% if (!unitType.properties.empty) { %>
+        <s2 title="Properties">
+          <p>
+            <table widths="30,70">
+              <header>
+                <cell>Property</cell><cell>Description</cell>
+              </header>
+              <% for (prop in unitType.properties) { %>
+                <row>
+                  <cell><%=prop.label%></cell>
+                  <cell><% printDescription(prop.description) %></cell>
+                </row>
+              <% } %>
+            </table>
+          </p>
+        </s2>
+      <% } %>
+      <% for (subUnitType in unitType.subUnitTypes) { %>
+        <s2 title="<%=subUnitType.label%>">
+	      <p><% printDescription(subUnitType.description) %></p>
+	      <% if (!subUnitType.properties.empty) { %>
+	        <s3 title="Properties">
+	          <p>
+	            <table widths="30,70">
+	              <header>
+	                <cell>Property</cell><cell>Description</cell>
+	              </header>
+	              <% for (prop in subUnitType.properties) { %>
+	                <row>
+	                  <cell><%=prop.label%></cell>
+	                  <cell><% printDescription(prop.description) %></cell>
+	                </row>
+	              <% } %>
+	            </table>
+	          </p>
+	        </s3>
+	      <% } %>
+	      <% for (subSubUnitType in subUnitType.subUnitTypes) { %>
+	        <s3 title="<%=subSubUnitType.label%>">
+		      <p><% printDescription(subSubUnitType.description) %></p>
+		      <% if (!subSubUnitType.properties.empty) { %>
+		        <s4 title="Properties">
+		          <p>
+		            <table widths="30,70">
+		              <header>
+		                <cell>Property</cell><cell>Description</cell>
+		              </header>
+		              <% for (prop in subSubUnitType.properties) { %>
+		                <row>
+		                  <cell><%=prop.label%></cell>
+		                  <cell><% printDescription(prop.description) %></cell>
+		                </row>
+		              <% } %>
+		            </table>
+		          </p>
+		        </s4>
+		      <% } %>
+	        </s3>
+	      <% } %>
+        </s2>
+      <% } %>
+      <% if (!unitType.inputDescriptions.empty) { %>
+        <s2 title="Input Parameters">
+          <p>
+            <table widths="30,70">
+              <header>
+                <cell>Parameter</cell><cell>Description</cell>
+              </header>
+              <% for (d in unitType.inputDescriptions) { %>
+                <row>
+                  <cell><%=d.name%></cell>
+                  <cell><% printDescription(d.description) %></cell>
+                </row>
+              <% } %>
+            </table>
+          </p>
+        </s2>
+      <% } %>
+      <% if (!unitType.outputDescriptions.empty) { %>
+        <s2 title="Output Parameters">
+          <p>
+            <table widths="30,70">
+              <header>
+                <cell>Parameter</cell><cell>Description</cell>
+              </header>
+              <% for (d in unitType.outputDescriptions) { %>
+                <row>
+                  <cell><%=d.name%></cell>
+                  <cell><% printDescription(d.description) %></cell>
+                </row>
+              <% } %>
+            </table>
+          </p>
+        </s2>
+      <% } %>
+    </s1>
+  <% } %>
+</doc>

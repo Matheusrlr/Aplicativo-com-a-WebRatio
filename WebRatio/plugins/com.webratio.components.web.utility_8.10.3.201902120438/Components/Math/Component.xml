@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="content|operation" formBased="false" idPrefix="mathu" namePrefix="Math " label="Math" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" successFlowSource="true" successFlowTarget="true"> 
+  <StringProperty attributeName="defaultExpression" figureDisplayOrder="1"> 
+    <Description xml:space="preserve">The mathematical expression to be used when a dynamic
+expression is not available at execution time through the
+input parameters.
+The operators supported by the Math are:
+
+&lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;+&lt;/b&gt;: Addition&lt;/li&gt;
+	&lt;li&gt;&lt;b&gt;-&lt;/b&gt;: Subtraction&lt;/li&gt;
+	&lt;li&gt;&lt;b&gt;*&lt;/b&gt;:  Multiplication&lt;/li&gt;
+	&lt;li&gt;&lt;b&gt;/&lt;/b&gt;: Division&lt;/li&gt;
+	&lt;li&gt;&lt;b&gt;%&lt;/b&gt;: Modulus&lt;/li&gt;
+	&lt;li&gt;&lt;b&gt;&amp;lt;=&lt;/b&gt;:  Less or Equal&lt;/li&gt;
+	&lt;li&gt;&lt;b&gt;&amp;lt;&lt;/b&gt;:  Less than&lt;/li&gt;
+	&lt;li&gt;&lt;b&gt;&amp;gt;=&lt;/b&gt;: Greater or Equal&lt;/li&gt;
+	&lt;li&gt;&lt;b&gt;&amp;gt;&lt;/b&gt;:  Greater than&lt;/li&gt;
+	&lt;li&gt;&lt;b&gt;=&lt;/b&gt;: Equal&lt;/li&gt;
+	&lt;li&gt;&lt;b&gt;!=&lt;/b&gt;: Not Equal&lt;/li&gt;
+	&lt;li&gt;&lt;b&gt;and&lt;/b&gt;: Boolean And&lt;/li&gt;
+	&lt;li&gt;&lt;b&gt;or&lt;/b&gt;: Boolean Or&lt;/li&gt;
+	&lt;li&gt;&lt;b&gt;not&lt;/b&gt;: Boolean Not&lt;/li&gt;
+&lt;/ul&gt;
+
+The supported functions are:
+&lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;cos&lt;/b&gt;: Cosine&lt;/li&gt;
+	&lt;li&gt;&lt;b&gt;sin&lt;/b&gt;: Sine&lt;/li&gt;
+	&lt;li&gt;&lt;b&gt;tan&lt;/b&gt;: Tangent&lt;/li&gt;
+	&lt;li&gt;&lt;b&gt;acos&lt;/b&gt;: Arc Cosine&lt;/li&gt;
+	&lt;li&gt;&lt;b&gt;asin&lt;/b&gt;: Arc Sine&lt;/li&gt;
+	&lt;li&gt;&lt;b&gt;atan&lt;/b&gt;:  Arc Tangent&lt;/li&gt;
+	&lt;li&gt;&lt;b&gt;sqrt&lt;/b&gt;: Square Root&lt;/li&gt;
+	&lt;li&gt;&lt;b&gt;sqr&lt;/b&gt;: Square&lt;/li&gt;
+	&lt;li&gt;&lt;b&gt;log&lt;/b&gt;:  Natural Logarithm&lt;/li&gt;
+	&lt;li&gt;&lt;b&gt;exp&lt;/b&gt;:  Exponential&lt;/li&gt;
+	&lt;li&gt;&lt;b&gt;abs&lt;/b&gt;: Absolute Value&lt;/li&gt;
+	&lt;li&gt;&lt;b&gt;neg&lt;/b&gt;:Negate&lt;/li&gt;
+	&lt;li&gt;&lt;b&gt;rnd&lt;/b&gt;:Random Number (between 0 and its argument)&lt;/li&gt;
+&lt;/ul&gt;
+</Description>   </StringProperty>    <EnumProperty attributeName="resultType" defaultValue="float">     <EnumItem value="boolean"/>      <EnumItem value="float"/>      <EnumItem value="integer"/>      <EnumItem value="decimal"/>      <Description xml:space="preserve">The type of the result exposed by the component as output parameter.</Description> 
+  </EnumProperty>  
+  <SubComponent elementName="MathVariable" idPrefix="mathv" namePrefix="Operand" label="Operand" ignoreI18N="true"> 
+    <Description xml:space="preserve">The parameter associated to one of the declared operands of the component.</Description> 
+  </SubComponent >  
+  <Description xml:space="preserve">The Math component is designed to parse a mathematical expression, either statically 
+defined at modeling time or dynamically provided through an input parameter 
+at run-time, replace a set of operands with their actual values provided 
+through input parameters, evaluate the expression, and propagate the
+result of the evaluation as an output parameter. 
+It can be used either as an operation or as a view component, and therefore 
+can be positioned either outside or inside the page.</Description>  
+  <InputDescription xml:space="preserve" name="Expression">The expression to be parsed and evaluated.
+      The available operators are the same supported by the default expression.
+  </InputDescription>  
+  <InputDescription xml:space="preserve" name="Operand-name">The parameter associated to one of the declared operands
+of the component.</InputDescription>  
+  <OutputDescription xml:space="preserve" name="Result">The result produced by the evaluation of the mathematical
+expression.</OutputDescription> 
+</Component>

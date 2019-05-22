@@ -1,0 +1,9 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+%>
+<OutputParameters>
+  <OutputParameter label="Current User" name="userOid" type="User"/>
+  <OutputParameter label="Chosen Role" name="roleOid" type="Role"/>
+  <OutputParameter name="modelElement"  type="" label="Model Element"/>
+</OutputParameters>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Event version="1.0.0" idPrefix="nte" namePrefix="Notification Event " label="Notification Event" platformServices="pushNotifications"> 
+  <SubElement elementName="NotificationEventParameter" idPrefix="ntp" maxCard="many" label="Notification Event Parameter" namePrefix="NotificationEventParameter">
+    <Description xml:space="preserve">Defines a parameter that represents a part of the notification message structure.</Description>
+  </SubElement>  
+  <Description xml:space="preserve">The Notification Event is a System Event which is triggered when a Push Notification is received by the mobile application.&lt;br/&gt;&lt;br/&gt;The specific properties of the Notification Event are:&lt;br/&gt;
+  &lt;b&gt;Notification Event Name&lt;/b&gt;
+  &lt;br/&gt;Identifies the notification message for which the event is listening and it must be one of the names used in the Notification Name property of a Send Notification operation.
+  &lt;br/&gt;This event does not have any incoming flow and it cannot be set as protected element.
+</Description>
+  <OutputDescription xml:space="preserve" name="Title">The default parameter that represents the title of the notification message.</OutputDescription>
+  <OutputDescription xml:space="preserve" name="Message">The default parameter that represents the notification message.</OutputDescription>
+  <OutputDescription xml:space="preserve" name="Parameter-Name">The name of the parameters added on the Notification Event.</OutputDescription>
+</Event>

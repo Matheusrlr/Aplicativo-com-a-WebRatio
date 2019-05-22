@@ -1,0 +1,84 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Color" name="color" type="enum" values="default|white|gray|blue|light blue|green|yellow|red|violet|black" default="default">
+Defines the color of the event.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Style" name="style" type="enum" values="button|link|outline" default="button">
+Defines the style of the event.
+Allowed values are:
+- button (default)
+- link
+- outline (button with transparent background)
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Size" name="size" type="enum" values="small|normal|large|block|full" default="normal">
+Defines the size of the event.
+Allowed values are:
+- small
+- normal (default)
+- large
+- block
+- full
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Show" name="show" type="enum" values="text|icon|icon &amp; text|text &amp; icon" default="text">
+Defines the content of the event.
+Allowed values are:
+- text (default)
+- icon & text
+- text & icon
+- icon
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Icon" name="icon" type="text">
+Defines the icon to be shown in the event label.
+The list of supported icons is available at http://ionicons.com
+</wr:LayoutParameter>
+[%
+setHTMLOutput()
+def colors = [
+	"white" : "light",
+	"gray" : "stable",
+	"blue" : "positive",
+	"light blue" : "calm",
+	"green" : "balanced",
+	"yellow" : "energized",
+	"red" : "assertive",
+	"violet" : "royal",
+	"black" : "dark"]
+	
+def styles = [
+	"link" : "clear",
+	"outline" : "outline"]
+	
+def type = event["eventType"] == 'OnSubmitEvent' ? 'submit' : 'button'
+
+/* Decide the classes to apply */
+def classes = []
+classes.add("button")
+
+if (params["color"] != "default") 
+	classes.add("button-" + colors[params["color"]])
+
+if (params["style"] != "button") 
+	classes.add("button-" + styles[params["style"]])
+
+if (params["size"] != "normal") 
+	classes.add("button-" + params["size"])
+	
+if (params["show"].contains("icon") && params["icon"] != "") {
+	if (params["show"] == "icon & text") {
+		classes.add("icon-left")
+	} else if (params["show"] == "icon") {
+		classes.add("icon")
+	} else if (params["show"] == "text & icon") {
+		classes.add("icon-right")
+	}
+	classes.add("ion-" + params["icon"])
+}
+%]
+<button
+	type="[%= type %]"
+	class="[%= classes.join(" ") %] [%= styleClass %]"
+	ng-click="[%= getEventThrowExpression(event, "{ position: ${position} }") %]"
+>
+	[% if (params["show"].contains("text")) { %]
+		<wr:Label context="event"/>
+	[% } %]
+</button>

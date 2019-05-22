@@ -1,0 +1,32 @@
+Manifest-Version: 1.0
+Export-Package: org.apache.commons.collections,org.apache.commons.coll
+ ections.bag,org.apache.commons.collections.bidimap,org.apache.commons
+ .collections.buffer,org.apache.commons.collections.collection,org.apa
+ che.commons.collections.comparators,org.apache.commons.collections.fu
+ nctors,org.apache.commons.collections.iterators,org.apache.commons.co
+ llections.keyvalue,org.apache.commons.collections.list,org.apache.com
+ mons.collections.map,org.apache.commons.collections.set
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/commons-collections.jar
+Bundle-Version: 3.2.2
+Bundle-Name: WebRatio 3rd Party Library - Apache Commons Collections
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.apache.commons.collectio
+ ns
+Bundle-RequiredExecutionEnvironment: J2SE-1.4
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: lib/commons-collectionssrc.zip
+SHA-256-Digest: pbXuFqAu2t9/5jfyUCF8GYeLxhNPFetVY1xImW9v7R0=
+
+Name: about.html
+SHA-256-Digest: U4PPFzDNK19aVeQxcxI6lRpDxGNhlXASTqJ41JjXM6w=
+
+Name: lib/commons-collections.jar
+SHA-256-Digest: 7urpF5FxRKaKdB1MDf9mqlxcX9hVk/8he87T/Iyng7g=
+

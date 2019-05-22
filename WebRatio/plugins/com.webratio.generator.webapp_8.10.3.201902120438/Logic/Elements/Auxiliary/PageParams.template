@@ -1,0 +1,37 @@
+#?delimiters [%, %], [%=, %]
+[%
+/** Applies to: Generic Page */
+setXMLOutput()
+
+/* Compute page runtime information */
+def runInfo = createSerializableProxy(wr.helpers.runtime.getPageRunInfo(page))
+%]
+<Descriptor service="com.webratio.rtx.page.DefaultPageDecoratorService">
+	<ModelName>[%= runInfo.modelName %]</ModelName>
+	[% if (!runInfo.urlFragments.isEmpty()) { %]
+		<URLFragment>[%= runInfo.urlFragments.join(" ") %]</URLFragment>
+	[% } %]
+	[% if (runInfo.parentModuleDefinition) { %]
+		<ParentModule>[%= runInfo.parentModuleDefinition %]</ParentModule>
+	[% } %]
+	<NavigationAncestors>[%= runInfo.ancestorAreaContainerIds.reverse().join("|") %]</NavigationAncestors>
+	
+	<LinkIdRequired>[%= runInfo.flowIdsRequired %]</LinkIdRequired>
+	<PageParams>
+		[% for (param in runInfo.parameters) { %]
+			<PageParam
+				[% if (param.preservedByForm) { %]
+					preservedByForm="true"
+					[% if (param.formPreserveGroup) { %]
+						formPreserveGroup="[%= param.formPreserveGroup %]"
+					[% } %]
+				[% } %]
+				[% if (param.componentId) { %]
+					component="[%= param.componentId %]"
+				[% } %]
+			>
+				[%= param.id %]
+			</PageParam>
+		[% } %]
+	</PageParams>
+</Descriptor>

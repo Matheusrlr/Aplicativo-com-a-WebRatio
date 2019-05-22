@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.9.2
+Bundle-SymbolicName: com.webratio.components.web.controlflow;singleton
+ :=true
+Bundle-Name: Control Flow Operations
+Bundle-Version: 8.10.3.201902120438
+Bundle-ClassPath: com.webratio.components.web.controlflow.jar
+Require-Bundle: com.webratio.commons.libs,com.webratio.rtx,com.webrati
+ o.ide.units,com.webratio.web.mvc,com.webratio.commons.lib.javax.servl
+ et,com.webratio.commons.base,com.webratio.log
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: WebRatio
+Import-Package: com.webratio.data.ds,com.webratio.data.model,com.webra
+ tio.data.model.query,com.webratio.data.query
+Created-By: 1.8.0-b132 (Oracle Corporation)
+
+Name: plugin.xml
+SHA-256-Digest: Lc6ujk9UB1vcGsTENv8ctAUP4uSv7McUSeeA6KDGW2E=
+
+Name: META-INF/signature
+SHA-256-Digest: PRYYgqFVErjMMx3lDuv1T8nEp66ZmsJ8BwS19rF+4z4=
+

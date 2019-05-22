@@ -1,0 +1,29 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+def classId = component["dataBinding"]
+%>
+<OutputParameters>
+  <% for (a in getAttributes(getById(classId))) { %>
+    <OutputParameter 
+        name="data.<%=a["id"]%>"
+        refId="<%=a["id"]%>"
+        type="<%=getTypeExpression(getById(classId), a, true, false)%>"
+        label="<%=getLabel(a)%>"/>
+  <% } %>
+  <% for (role in getOutgoingRoles(getById(classId)).findAll{!isMany(it)}) { %>
+    <% for (keyAttr in getKeyAttributes(getTargetDomainClass(role))) { %>
+      <OutputParameter 
+          name="data.<%=role["id"] + "_" + keyAttr["id"]%>"
+          refId="<%=role["id"]%>"
+          label="<%=getLabel(role) + "." + getLabel(keyAttr)%>"
+          mandatory="false"/>
+     <% } %>
+   <% } %>
+   
+    <%component["displayAttributes"].tokenize(" ").findAll{it.contains(".") || it.contains("(")}.each{%>
+      <OutputParameter name="data.<%=getAttributeExpressionId(it)%>" refId="importedAttribute" label="<%=getAttributeExpressionImportLabel(it)%>"/>
+    <%}%>
+   
+    <OutputParameter name="dataSize" label="Data Size"/>
+</OutputParameters>

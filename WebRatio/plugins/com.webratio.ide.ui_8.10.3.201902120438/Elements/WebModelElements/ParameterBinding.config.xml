@@ -1,0 +1,31 @@
+  <Element name="ParameterBinding" lowerName="parameter binding" pluralLowerName="parameters binding">
+		<Description>
+		A Parameter Binding is a value associated with a 
+		flow between components, which is transported, as an effect of the flow navigation, from the source component to the destination 
+  		component.
+	   </Description>
+	    <ActionRef label="Open in Browser"/>
+	    <ActionRef label="Generate Logic Descriptors Only"/>
+	    <ActionRef label="Generate Selection"/>
+	    <ActionRef label="Find Model Problems"/>
+	    <!--
+		<ActionRef label="Help"/>
+		-->
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+			<Property label="Source">
+				The output parameter of the source component.
+			</Property>
+			<Property label="Target">
+				The input parameter of the target component or the &lt;a href="/Reference/ElementsReference/WebModelElements/Variable"/&gt; 
+				of the target page.
+			</Property>
+			<Property label="Passing">
+				If checked, the input parameter is re-emitted as-is by the destination component.
+			</Property>
+			<Property label="Constant Value">
+				The constant value assigned to the parameter binding.
+			</Property>
+	  </PropertyCategory>
+	</Element>

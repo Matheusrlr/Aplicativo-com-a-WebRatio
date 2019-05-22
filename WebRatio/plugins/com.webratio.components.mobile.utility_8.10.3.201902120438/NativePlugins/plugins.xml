@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugins>
+
+	<plugin name="barcodescanner"
+		url="https://github.com/webratio/phonegap-plugin-barcodescanner.git"
+		tag="7.0.2.3wr" />
+
+	<plugin name="calendar"
+		url="https://github.com/webratio/phonegap-plugin-calendar.git"
+		tag="4.6.0.3wr" />
+
+	<plugin name="googlemaps"
+		url="https://github.com/webratio/phonegap-plugin-googlemaps.git"
+		tag="2.1.0.7wr" />
+
+	<plugin name="launchnavigator"
+		url="https://github.com/webratio/phonegap-plugin-launch-navigator.git"
+		tag="4.1.3.3wr" />
+	
+	<plugin name="actionsheet"
+		url="https://github.com/webratio/phonegap-plugin-actionsheet.git"
+		tag="2.3.3.1wr" />
+
+</plugins>

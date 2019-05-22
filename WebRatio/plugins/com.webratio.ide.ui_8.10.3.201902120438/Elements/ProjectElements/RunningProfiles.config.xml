@@ -1,0 +1,23 @@
+  <Element name="RunningProfiles" lowerName="running profiles"
+		pluralLowerName="running profiles">
+		<Description>
+			The Running Profiles
+			defines the Web Project profiles used during the editing and generation process. 
+		</Description>
+		<Action label="Add Running Profile">
+			Adds a new &lt;a href="#RunningProfile"&gt;Running Profile&lt;/a&gt;.
+		</Action>
+		<SubElement name="RunningProfile" lowerName="running profile"
+			pluralLowerName="running profile">
+			<Description>	
+				A Running Profile 
+				represents a Web Project profile.
+			</Description>
+			<ActionRef label="Add Property"/>
+			<ActionRef label="Help"/>		
+			<PropertyCategory name="General">
+				<PropertyRef label="Identifier" />
+				<PropertyRef label="Name" />
+			</PropertyCategory>
+		</SubElement>
+	</Element>

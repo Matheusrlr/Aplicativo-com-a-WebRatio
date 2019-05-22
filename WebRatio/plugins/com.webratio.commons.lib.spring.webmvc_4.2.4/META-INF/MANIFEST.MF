@@ -1,0 +1,46 @@
+Manifest-Version: 1.0
+Export-Package: org.springframework.web.servlet,org.springframework.we
+ b.servlet.config,org.springframework.web.servlet.config.annotation,or
+ g.springframework.web.servlet.handler,org.springframework.web.servlet
+ .i18n,org.springframework.web.servlet.mvc,org.springframework.web.ser
+ vlet.mvc.annotation,org.springframework.web.servlet.mvc.condition,org
+ .springframework.web.servlet.mvc.method,org.springframework.web.servl
+ et.mvc.method.annotation,org.springframework.web.servlet.mvc.multiact
+ ion,org.springframework.web.servlet.mvc.support,org.springframework.w
+ eb.servlet.resource,org.springframework.web.servlet.support,org.sprin
+ gframework.web.servlet.tags,org.springframework.web.servlet.tags.form
+ ,org.springframework.web.servlet.theme,org.springframework.web.servle
+ t.view,org.springframework.web.servlet.view.document,org.springframew
+ ork.web.servlet.view.feed,org.springframework.web.servlet.view.freema
+ rker,org.springframework.web.servlet.view.groovy,org.springframework.
+ web.servlet.view.jasperreports,org.springframework.web.servlet.view.j
+ son,org.springframework.web.servlet.view.script,org.springframework.w
+ eb.servlet.view.tiles2,org.springframework.web.servlet.view.tiles3,or
+ g.springframework.web.servlet.view.velocity,org.springframework.web.s
+ ervlet.view.xml,org.springframework.web.servlet.view.xslt
+Require-Bundle: com.webratio.commons.lib.spring.beans,com.webratio.com
+ mons.lib.spring.context,com.webratio.commons.lib.spring.core,com.webr
+ atio.commons.lib.spring.web
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/spring-webmvc.jar
+Bundle-Version: 4.2.4
+Bundle-Name: WebRatio 3rd Party Library - Spring Web MVC
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.spring.webmvc
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: Cck5uGWPTQ9dB7UcN4s/yquIn8iT7lqF6PMsj8xSbS4=
+
+Name: lib/spring-webmvcsrc.zip
+SHA-256-Digest: njTjl/wXUCq5nmR0hWbD4RspzD3PilbjzVGnscT4Iac=
+
+Name: lib/spring-webmvc.jar
+SHA-256-Digest: rNrX8aGSSUg9siRQUE7AyqRe84hGjyO2M7ZeM9fZodk=
+

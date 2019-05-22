@@ -1,0 +1,24 @@
+<Element name="EndErrorEvent" lowerName="end error event"
+		pluralLowerName="">
+		<Description>
+			A &lt;a href="/Concepts/Elements/Process/Events/ErrorEvents/EndErrorEvent"/&gt; indicates that a named Error should be generated. 
+		</Description>
+        
+        <ActionRef label="Add Lane" />
+        <ActionRef label="Add Property" />
+        <ActionRef label="Surround with Group" />
+        <ActionRef label="Move into Embedded Subprocess" />
+        <ActionRef label="Edit Process Parameters..." />
+        <Action label="Change Type to" >
+          Converts this event into another type of end event.
+        </Action>
+        <ActionRef label="Search References" />
+        <ActionRef label="Help" />
+
+    <PropertyCategory name="General">
+        <PropertyRef label="Id"/>
+        <PropertyRef label="Code"/>
+        <PropertyRef label="Name"/>
+        <PropertyRef label="Instance Name"/>
+    </PropertyCategory>
+</Element>

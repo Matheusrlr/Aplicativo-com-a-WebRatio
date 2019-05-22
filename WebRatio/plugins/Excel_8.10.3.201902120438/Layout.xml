@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Layout pageLayout="Excel" gridLayout="Excel" cellLayout="Excel" frameLayout="Excel" attributeLayout="Excel"> 
+  <ComponentConfiguration componentType="MultipleDetails" componentLayout="Excel"/>  
+  <ComponentConfiguration componentType="Details" componentLayout="Excel"/>  
+  <ComponentConfiguration componentType="Query" componentLayout="Excel"/>
+  <ComponentConfiguration componentType="Hierarchy" componentLayout="Excel"/>
+  <ComponentConfiguration componentType="Script" componentLayout="WRDefault/Value"/>
+  <Resources alwaysRequired="wr-taglib-xls"/>
+</Layout>

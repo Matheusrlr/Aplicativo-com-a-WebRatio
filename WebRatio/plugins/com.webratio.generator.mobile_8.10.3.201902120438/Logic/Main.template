@@ -1,0 +1,194 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.OrderingScheduler
+import com.webratio.generator.mobile.output.FileType
+
+wr.requiredPlatformServices = [] as Set
+wr.additionalRequiredNativePlugins = [] as Set
+
+def addAuxiliarylDescriptor(mainRoot, kind, template, parameters, wr) {
+	
+	/* Honor the element if it is already present in the output template */
+	def fieldName = "_" + kind
+	def existingAuxRoot = mainRoot.get(fieldName)
+	if (existingAuxRoot != null) {
+		return
+	}
+	
+	/* Generate from the auxiliary generator template */
+	def auxOutput = executeContextTemplate(template, parameters)?.trim()
+	def auxRoot = (auxOutput ? parseJSONString(auxOutput) : null)
+	
+	/* Append auxiliary root to the main descriptor */
+	if (auxRoot != null) {
+		mainRoot.put(fieldName, auxRoot)
+	}
+}
+
+def trackUsedServiceModule(mainRoot, optional, wr) {
+	def moduleName = mainRoot.get("service")?.textValue()
+	if (!moduleName) {
+		if (optional) {
+			return
+		}
+		throw throwGenerationException("Logic descriptor does not declare the service name")
+	}
+	wr.usedServiceModules.add(moduleName.replace(".", "/"))
+}
+
+def trackUsedPlatformSercices(definitionRoot, wr) {
+	def platformServicesNamesStr = definitionRoot["platformServices"].trim();
+	if (!platformServicesNamesStr) {
+		return
+	}
+	for (platformServiceName in platformServicesNamesStr.split(" ").collect { it.trim() }) {
+		if (wr.requiredPlatformServices.contains(platformServiceName)) {
+			continue
+		}
+		def serviceTemplate
+		switch (platformServiceName) {
+		case "pushNotifications":
+			serviceTemplate = wr.locateResourceFile("Logic/PushNotifications.template")
+			break;
+		default:
+			throw throwGenerationException("Unknown platform service ${platformServiceName}")
+		}
+		executeTemplate(serviceTemplate)
+		wr.requiredPlatformServices.add(platformServiceName)
+	}
+}
+
+eventSocketClient.sendBeginTask("Logic", 1 + 200 + 6)
+
+/*
+ * Generation group definitions
+ */
+
+def descriptorsGeneration = new OrderingScheduler("Descriptors generation")
+
+/* Screen and toolbar descriptors */
+descriptorsGeneration.addGroup("screens and toolbars", { screen ->
+	processOutputFile(FileType.LOGIC_DESCRIPTOR, screen) { outputFile ->
+		def output = executeContextTemplate("Logic/Screen.template", ["screen": screen])
+		outputFile.writeAsync(serializeJSON(output), "UTF-8")
+	}
+})
+
+/* Action descriptors */
+descriptorsGeneration.addGroup("actions", { action ->
+	processOutputFile(FileType.LOGIC_DESCRIPTOR, action) { outputFile ->
+		def output = executeContextTemplate("Logic/Action.template", ["action": action])
+		outputFile.writeAsync(serializeJSON(output), "UTF-8")
+	}
+})
+
+/* Action definition descriptors */
+descriptorsGeneration.addGroup("action definitions", { actionDef ->
+	processOutputFile(FileType.LOGIC_DESCRIPTOR, actionDef) { outputFile ->
+		def output = executeContextTemplate("Logic/ActionDefinition.template", ["actionDef": actionDef])
+		outputFile.writeAsync(serializeJSON(output), "UTF-8")
+	}
+})
+
+/* View component descriptors */
+descriptorsGeneration.addGroup("view components", { viewComp ->
+	processOutputFile(FileType.LOGIC_DESCRIPTOR, viewComp) { outputFile ->
+		def componentDir = wr.explorer.viewComponentTypes().getDirectory(viewComp.name)
+		def logicTemplate = new java.io.File(componentDir, "Logic/Logic.template")
+		def outputRoot = parseJSONString(executeTemplate(logicTemplate, ["component": viewComp]))
+		addAuxiliarylDescriptor(outputRoot, "form", "Logic/Auxiliary/Form.template", ["viewComp": viewComp], wr)
+		addAuxiliarylDescriptor(outputRoot, "validation", "Logic/Auxiliary/Validation.template", ["viewComp": viewComp], wr)
+		trackUsedServiceModule(outputRoot, false, wr)
+		outputFile.writeAsync(serializeJSON(outputRoot), "UTF-8")
+	}
+})
+
+/* Operation descriptors */
+descriptorsGeneration.addGroup("operations", { operation ->
+	processOutputFile(FileType.LOGIC_DESCRIPTOR, operation) { outputFile ->
+		def componentDir = wr.explorer.operationTypes().getDirectory(operation.name)
+		def logicTemplate = new java.io.File(componentDir, "Logic/Logic.template")
+		def outputRoot = parseJSONString(executeTemplate(logicTemplate, ["component": operation]))
+		trackUsedServiceModule(outputRoot, false, wr)
+		outputFile.writeAsync(serializeJSON(outputRoot), "UTF-8")
+	}
+})
+
+/* Floating events descriptors */
+def builtinEventLogicTemplates = [:]
+descriptorsGeneration.addGroup("floating events", { event ->
+	processOutputFile(FileType.LOGIC_DESCRIPTOR, event, { outputFile ->
+		def logicTemplate = builtinEventLogicTemplates[event.name]
+		def eventDefinition = null
+		if (!logicTemplate) {
+			def eventDir = wr.explorer.eventTypes().getDirectory(event.name)
+			logicTemplate = new java.io.File(eventDir, "Logic/Logic.template")
+			eventDefinition = wr.explorer.eventTypes().getDefinition(event.name)
+		}
+		def outputRoot = parseJSONString(executeTemplate(logicTemplate, ["event": event]))
+		trackUsedServiceModule(outputRoot, eventDefinition == null, wr)
+		if (eventDefinition != null) {
+			trackUsedPlatformSercices(eventDefinition, wr)
+		}
+		outputFile.writeAsync(serializeJSON(outputRoot), "UTF-8")
+	})
+})
+
+/*
+ * Actual generation sequence
+ */
+
+/* Collect model elements */
+descriptorsGeneration.addElements("screens and toolbars", getAllScreens().findAll{ it["_sel"] == "t"})
+descriptorsGeneration.addElements("screens and toolbars", getAllTopToolbars().findAll{ it["_sel"] == "t"})
+descriptorsGeneration.addElements("actions", getAllActions().findAll{ it["_sel"] == "t"})
+descriptorsGeneration.addElements("action definitions", getAllActionDefinitions().findAll{ it["_sel"] == "t"})
+descriptorsGeneration.addElements("view components", getAllViewComponents().findAll{ it["_sel"] == "t"})
+descriptorsGeneration.addElements("operations", getAllOperations().findAll{ it["_sel"] == "t"})
+descriptorsGeneration.addElements("floating events", getAllFloatingEvents().findAll{ it["_sel"] == "t"})
+eventSocketClient.sendTaskWorked("Logic", 1)
+
+/* Generate all normal descriptors */
+wr.usedServiceModules = [] as Set
+descriptorsGeneration.process(eventSocketClient, "Logic", 200)
+eventSocketClient.sendTaskDetails("Logic", "")
+
+/* Generate the application descriptor */
+processOutputFile("www/services/_app.json", "application descriptor", wr.project, { outputFile ->
+	def output = executeContextTemplate("Logic/App.template")
+	outputFile.writeAsync(serializeJSON(output), "UTF-8")
+})
+eventSocketClient.sendTaskWorked("Logic", 1)
+
+/* Generate the back-end descriptor */
+processOutputFile("www/services/_backend.json", "back-end descriptor", wr.project, { outputFile ->
+	def output = executeContextTemplate("Logic/BackEnd.template")
+	outputFile.writeAsync(serializeJSON(output), "UTF-8")
+})
+eventSocketClient.sendTaskWorked("Logic", 1)
+
+/* Generate the security descriptor */
+processOutputFile("www/services/_security.json", "security descriptor", wr.project, { outputFile ->
+	def output = executeContextTemplate("Logic/Security.template")
+	outputFile.writeAsync(serializeJSON(output), "UTF-8")
+})
+eventSocketClient.sendTaskWorked("Logic", 1)
+
+/* Generate the localization descriptor */
+processOutputFile("www/services/_l10n.json", "localization descriptor", wr.project, { outputFile ->
+	def output = executeContextTemplate("Logic/Localization.template")
+	outputFile.writeAsync(serializeJSON(output), "UTF-8")
+})
+eventSocketClient.sendTaskWorked("Logic", 1)
+
+/* Generate the update descriptor */
+processOutputFile("www/services/_update.json", "update descriptor", wr.project, { outputFile ->
+	def output = executeContextTemplate("Logic/Update.template")
+	outputFile.writeAsync(serializeJSON(output), "UTF-8")
+})
+eventSocketClient.sendTaskWorked("Logic", 1)
+
+/* Generate the resource bundles (www/conf/resources_<lang>_<country>.json) */
+executeContextTemplate("Logic/Resources.template")
+eventSocketClient.sendTaskWorked("Logic", 1)
+%]

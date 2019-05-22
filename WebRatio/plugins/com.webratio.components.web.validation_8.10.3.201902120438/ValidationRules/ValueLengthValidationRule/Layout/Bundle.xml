@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle>
+  <Entry key="ValueLengthValidationRule.eq">the value length must be ${length} characters</Entry>
+  <Entry key="ValueLengthValidationRule.neq">the value length must be different from ${length} characters</Entry>
+  <Entry key="ValueLengthValidationRule.min">the value length must be at least ${length} characters</Entry>
+  <Entry key="ValueLengthValidationRule.max">the value length must be at most ${length} characters</Entry>
+  
+  <Entry key="ValueLengthValidationRule.blob.eq">the file size must be ${length}</Entry>
+  <Entry key="ValueLengthValidationRule.blob.neq">the file size is not allowed ${length}</Entry>
+  <Entry key="ValueLengthValidationRule.blob.min">the file size must be greater than ${length}</Entry>
+  <Entry key="ValueLengthValidationRule.blob.max">the file size exceeds ${length}</Entry>
+</Bundle>

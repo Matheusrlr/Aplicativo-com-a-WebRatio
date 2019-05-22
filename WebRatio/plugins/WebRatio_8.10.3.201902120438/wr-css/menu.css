@@ -1,0 +1,174 @@
+/* Root = Horizontal, Secondary = Vertical */
+ .toggle-menu {
+    display: block;
+    color: #fff;
+    line-height: 2.5em;
+    padding: 0 34px 0 14px;
+    position: relative;
+}
+#navmenu {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    width: 100%;
+    /*For KHTML*/
+    list-style: none;
+    display: none;
+    background-color: #40668c;
+}
+#navmenu.active {
+    display: block;
+}
+#navmenu a.parent {
+    padding-right: 34px;
+}
+.toggle-menu:after, #navmenu a.parent:after {
+    top: 1em;
+    border: solid rgba(0, 0, 0, 0);
+    content:"";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(204, 0, 0, 0);
+    border-top-color: #fff;
+    border-width: 5px;
+    right: 14px;
+    margin-left: 0;
+}
+#navmenu li {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    /*For Gecko*/
+    display: block;
+    list-style: none;
+    position: relative;
+    line-height: 2.5em;
+    text-align: left;
+    border-top: 1px solid #999;
+}
+/* Root Menu */
+ #navmenu a {
+    padding: 0 14px;
+    display: block;
+    color: #fff;
+    text-decoration: none;
+}
+#navmenu a:hover {
+    text-decoration: underline;
+}
+/* 2nd Menu */
+ #navmenu ul {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    list-style: none;
+    display: none;
+    z-index: 1;
+    background-color: #6685a3;
+}
+#navmenu li.hover > ul {
+    display: block;
+}
+#navmenu ul li {
+    display: block;
+}
+/* 3rd Menu */
+ #navmenu ul ul, #navmenu ul ul ul {
+    display: none;
+    background-color: #99adc2;
+}
+/* Do Not Move - Must Come Before display:block for Gecko */
+ #navmenu li.hover ul ul, #navmenu li.hover ul ul ul {
+    display: none;
+}
+#navmenu li.hover ul, #navmenu ul li.hover ul, #navmenu ul ul li.hover ul {
+    display: block;
+}
+@media screen and (min-width: 768px) {
+    .toggle-menu {
+        display: none;
+    }
+    #navmenu {
+        display:block;
+    }
+    #navmenu li {
+        display: inline-block;
+        text-align: left;
+        line-height: 2em;
+        border-top: 0;
+    }
+    #navmenu a:hover {
+        text-decoration: none;
+    }
+    #navmenu a.parent {
+        padding-right: 14px;
+    }
+    #navmenu a.parent:after {
+        display: none;
+    }
+    #navmenu li:hover {
+        background-color: #036;
+    }
+    #navmenu li.current {
+        background-color: #036;
+    }
+    #navmenu ul {
+        width: 160px;
+        position: absolute;
+        top: 100%;
+        left: 0;
+    }
+    #navmenu ul li {
+        float: none;
+        /*For Gecko*/
+        display: block;
+        text-align: left;
+    }
+    #navmenu ul ul, #navmenu ul ul ul {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 160px;
+    }
+    /* 3rd Menu Hover Persistence */
+    #navmenu li:hover li:hover li:hover a, #navmenu li:hover li:hover li.current a {
+        background-color: #036;
+    }
+    #navmenu > li:hover:after, #navmenu > li.current:after {
+        top: 2em;
+        border: solid rgba(0, 0, 0, 0);
+        content:" ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-color: rgba(204, 0, 0, 0);
+        border-top-color: #036;
+        border-width: 10px;
+        left: 50%;
+        margin-left: -10px;
+    }
+    #navmenu ul li:hover:after, #navmenu ul li.current:after {
+        top: .25em;
+        border: solid rgba(0, 0, 0, 0);
+        content:" ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-color: rgba(204, 0, 0, 0);
+        border-left-color: #036;
+        border-width: 10px;
+        right: -20px;
+        margin-left: 0;
+    }
+    /* Do Not Move - Must Come Before display:block for Gecko */
+    #navmenu li:hover ul ul, #navmenu li:hover ul ul ul {
+        display: none;
+    }
+    #navmenu li:hover ul, #navmenu ul li:hover ul, #navmenu ul ul li:hover ul {
+        display: block;
+    }
+}

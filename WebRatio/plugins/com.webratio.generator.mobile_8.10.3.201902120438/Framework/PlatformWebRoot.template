@@ -1,0 +1,52 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.google.common.io.Files
+import com.webratio.generator.io.IOHelper
+
+def wwwDir = wr.outputManager.getFile(wwwPath)
+def platformDir = wr.outputManager.getFile(platformPath + "/platform_www/cordova.js")
+def commonWwwDir = wr.outputManager.getFile("www")
+wwwDir.mkdirs()
+
+/* Copy the Cordova library to the web root */
+Files.copy(platformDir, new File(wwwDir, "cordova.js"))
+
+/* Retrieve and copy the web interfaces of plugins */
+def jsModules = []
+processOutputFile(wwwPath + "/plugins", "plugin web interfaces", wr.project, { pluginsDir ->
+	for (plugin in appInfo.plugins.selected) {
+		def pluginId = plugin.pluginId
+		def manifest = plugin.instance.manifest
+		
+		def pluginJsModules = []
+		pluginJsModules.addAll(manifest.selectNodes("*[local-name() = 'js-module']"))
+		pluginJsModules.addAll(manifest.selectNodes("*[local-name() = 'platform'][@name = '${platformName}']/*[local-name() = 'js-module']"))
+		jsModules.addAll(pluginJsModules)
+		
+		def definitionDir = plugin.directory
+		def interfaceDir = new File(wwwDir, "plugins/${pluginId}")
+		
+		for (jsModule in pluginJsModules) {
+			def sourceFile = new File(definitionDir, jsModule["src"])
+			def moduleName = pluginId + "." + jsModule["name"]
+			def destinationFile = new File(interfaceDir, jsModule["src"])
+			destinationFile.parentFile.mkdirs()
+			destinationFile.write(executeContextTemplate("Framework/JsModule.template", ["sourceFile": sourceFile, "moduleName": moduleName])) 
+		}
+	}
+})
+
+/* Generate the Cordova Plugins module */
+processOutputFile(wwwPath + "/cordova_plugins.js", "Cordova plug-ins module", wr.project, { moduleFile ->
+	moduleFile.writeAsync(executeContextTemplate("Framework/CordovaPluginsJs.template", ["jsModules": jsModules]))
+})
+
+/* Generate the config.xml file */
+processOutputFile(wwwPath + "/config.xml", "configuration file", wr.project, { configFile ->
+	configFile.writeAsync(serializeXML(executeContextTemplate("Framework/ConfigXml.template"), true), "UTF-8")
+})
+
+/* Copy the common web content */
+wr.outputManager.waitForAllWrites() // ensure that the source files are ready
+IOHelper.copyDirectory(commonWwwDir, wwwDir, [IOHelper.CVS_AWARE_FILTER], [])
+%]

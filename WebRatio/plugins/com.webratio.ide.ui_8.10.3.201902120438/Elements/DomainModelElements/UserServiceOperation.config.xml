@@ -1,0 +1,11 @@
+<Element name="UserServiceOperation" lowerName="user service operation" pluralLowerName="user service operations">
+	<Description>
+	    	One of the methods available on the Class representing the User (e.g. Register, Login, Update).
+	</Description>
+	<ActionRef label="Help"/>
+	<PropertyCategory name="General">
+		<Property label="Assigned Roles">
+	    	The set of roles to which the user is associated when the User Service Operation is executed.
+		</Property>
+	</PropertyCategory>
+</Element>

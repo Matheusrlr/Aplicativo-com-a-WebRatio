@@ -1,0 +1,18 @@
+{
+  "_" : "wrm.core.AppService",
+  "startup" : {
+    "home" : "scr3",
+    "reAccess" : false
+  },
+  "resume" : {
+    "reAccess" : false
+  },
+  "home" : {
+    "home" : "scr3"
+  },
+  "back" : {
+    "home" : "scr3",
+    "homeLikePanels" : "scr3|scr2"
+  },
+  "events" : { }
+}

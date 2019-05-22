@@ -1,0 +1,13 @@
+#?delimiters [%, %], [%=, %]
+[% setXMLOutput() %]
+<InputParameters>
+	<InputParameter name="addresses" label="Addresses" />
+	<InputParameter name="images" label="Images" />
+	<InputParameter name="latitudes" label="Latitudes" />
+	<InputParameter name="locationIds" label="Location IDs" />
+	<InputParameter name="longitudes" label="Longitudes" />
+	<InputParameter name="snippets" label="Snippets" />
+	<InputParameter name="titles" label="Titles" />
+	<InputParameter name="htmlContents" label="HTML Contents" />
+	<InputParameter name="clusters" label="To Be Clustered" />
+</InputParameters>

@@ -1,0 +1,12 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+%]
+<Descriptor service="com.webratio.web.mvc.module.CollectorService">
+	<Type>OUTPUT</Type>
+	[% for (par in pageColl.elements("Parameter")) { %]
+		<Parameter name="[%= par["name"] %]">
+			[%= par["id"] %]
+		</Parameter>
+	[% } %]
+</Descriptor>

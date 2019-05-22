@@ -1,0 +1,24 @@
+#?delimiters <%, %>, <%=, %>
+<% setJavaOutput() 
+
+def className = "BooleanType_" + attr["id"]
+
+%>
+
+package <%= getPackageName()%>.types;
+
+import org.hibernate.type.CharBooleanType;
+
+public class <%= className%> extends CharBooleanType {
+ 
+    /** Serial version identifier. */
+    private static final long serialVersionUID = 1L;
+
+	public <%=className%>() {
+		super('<%= attr.valueOf("@db:trueValue")%>', '<%= attr.valueOf("@db:falseValue")%>');
+	}
+ 
+	public String getName() { 
+	    return "<%= className%>"; 
+	}
+}

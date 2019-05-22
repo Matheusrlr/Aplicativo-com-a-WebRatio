@@ -1,0 +1,8 @@
+#?delimiters [%, %], [%=, %]
+[%
+if (!wr.appConfig.notificationSenderId && getTargetPlatforms().contains("android")) {
+	throw new IllegalArgumentException("Invalid null NOTIFICATIONS_SENDER_ID")
+}
+
+wr.additionalRequiredNativePlugins.add(getBuiltinNativePlugin("phonegap-plugin-push"))
+%]

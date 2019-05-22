@@ -1,0 +1,106 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.google.common.base.CaseFormat
+
+setJSOutput()
+
+/* Compute the configuration values */
+def config = [:]
+config["LOG_ENABLED"] = wr.appConfig.logEnabled
+config["LOG_DB_ENABLED"] = (wr.project.valueOf("Property[@name = 'DbLog']/@value") == "true")
+config["LOG_TIMESTAMP"] = wr.appConfig.logTimestampFormat.configValue
+config["LOG_MAX_ARG_LENGTH"] = wr.appConfig.logMaxArgLength
+config["EXTRA_SAFE_URL_PROTOCOLS"] = wr.appConfig.safeUrlProtocols.join("|")
+config["EXTRA_SAFE_IMG_PROTOCOLS"] = wr.appConfig.safeImageProtocols.join("|")
+config["STORAGE_PREFIX"] = "wr|"
+config["NOTIFICATIONS_SENDER_ID"] = wr.appConfig.notificationSenderId
+config["DEFAULT_LOCALE"] = getISOCode(getDefaultLocale())
+config["ROUTER_VIEW_CACHE_SIZE"] = Integer.parseInt(wr.project.valueOf("Property[@name = 'viewCacheSize']/@value") ?: "10")
+config["NETWORK_TIMEOUT"] = Integer.parseInt(wr.project.valueOf("Property[@name = 'NetworkTimeout']/@value") ?: "30000");
+
+/* Compute the list of required Angular modules */
+def modules = []
+modules.add("wr.mvc.App")	// WR application engine
+modules.add("ngAnimate")	// for animating screen transitions
+if (wr.emulatorSupport) {
+	modules.add("wr.mvc.mgmt.AppManagement")	// WR application management module
+}
+resourceRegistry.entries.each{ entry ->
+	modules.addAll(getContributedAngularModuleNames(entry.resource))
+}
+%]
+(function() {
+	var GLOBAL = this;
+	var _emulatorSupport = null;
+	
+	function doBootstrap() {
+		defineModules()
+		configureApp().then(function() {
+			return bootstrapApp();
+		}).catch(function(e) {
+			console.error("Bootstrap error", e);
+		});
+	}
+	
+	function enableEmulatorSupport() {
+		var wrx = GLOBAL.wrx;
+		var emulatorSupport = wrx && wrx.EmulatorSupport;
+		if (emulatorSupport) {
+			emulatorSupport.start();
+			_emulatorSupport = emulatorSupport;
+		}
+	}
+	
+	function defineModules() {
+		[%
+			def bootstrapModulesScriptText = executeContextTemplate("MVC/BootstrapModules.template")
+			modules.addAll(getContributedAngularModuleNames(bootstrapModulesScriptText))
+			printRaw(bootstrapModulesScriptText)
+		%]
+	}
+	
+	function configureApp(overrides) {
+		var config = angular.module("wr.mvc.App.CONFIG", []);
+		
+		return Promise.resolve(_emulatorSupport ? _emulatorSupport.getConfigOverrides() : {}).then(function(configOverrides) {
+			function setConfigProp(name, overrideKey, value) {
+				var overrideValue = configOverrides[overrideKey];
+				if (typeof overrideValue !== "undefined") {
+					config.constant(name, overrideValue);
+				} else {
+					config.constant(name, value);
+				}
+			}
+			
+			[% config.each { key, value -> %]
+				setConfigProp("WRAPP_[%= key %]", "[%= CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, key) %]", [%
+					if (value == null) {
+						%]null[%
+					} else if (value instanceof Boolean) {
+						%][%= value ? "true" : "false" %][%
+					} else {
+						%]"[%= value %]"[%
+					}
+				%] );
+			[% } %]
+		});
+	}
+	
+	function bootstrapApp() {
+		var modules = [];
+		[% for (module in modules) { %]
+			modules.push("[%= module %]");
+		[% } %]
+		angular.bootstrap(document, modules);
+	}
+	
+	enableEmulatorSupport();
+	[% if (wr.bareWebapp) { %]
+		doBootstrap();
+	[% } else { %]
+		document.addEventListener("deviceready", function() {
+			doBootstrap();
+		}, false);
+	[% } %]
+	
+})();

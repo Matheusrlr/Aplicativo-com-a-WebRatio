@@ -1,0 +1,70 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.google.common.io.Files
+import com.webratio.generator.io.IOHelper
+
+eventSocketClient.sendBeginTask("Libs", 100)
+
+def copyLibrary = { dir, libPath ->
+	def lib = wr.locateResourceFile("lib:" + libPath)
+	dir.mkdirs()
+	Files.copy(lib, new File(dir, lib.name))
+}
+
+/* Copy built-in libraries */
+processOutputFile("www/app", "built-in libraries", wr.project, { appDir ->
+	def deploySources = (wr.rtxSourcesAvailable && wr.appConfig.sourceDeployed)
+	appDir.mkdirs()
+	
+	/* Copy the WebRatio runtime libraries */
+	def rtxDir = new File(appDir, "runtime")
+	copyLibrary(rtxDir, (deploySources ? "wrm.src.js" : "wrm.js"))
+	copyLibrary(rtxDir, (deploySources ? "mvc.src.js" : "mvc.js"))
+	
+	/* Copy select external libraries required by the runtime */
+	def libDir = new File(appDir, "lib")
+	// Shims and utilities
+	copyLibrary(libDir, "bluebird.js")
+	// X-Data
+	copyLibrary(libDir, "xdata.js")
+	copyLibrary(libDir, "xdata-websql.js")
+	// JayData
+	copyLibrary(libDir, "jaydata.js")
+	copyLibrary(libDir, "jaydata-promise.js")
+	copyLibrary(libDir, "SqLiteProvider.js")
+	// Angular and modules
+	copyLibrary(libDir, "angular.js")
+	copyLibrary(libDir, "angular-animate.js")
+	copyLibrary(libDir, "angular-route.js")
+	copyLibrary(libDir, "angular-sanitize.js")
+	copyLibrary(libDir, "angular-ui-router.js")
+	// Globalize
+	copyLibrary(libDir, "globalize-bundle.js")
+})
+eventSocketClient.sendTaskWorked("Libs", 20)
+
+/* Copy CLDR bundles */
+processOutputFile("www/app/lib/cldr", "CLDR bundles", wr.project, { cldrDir ->
+	cldrDir.mkdirs()
+	
+	/* Common supplemental data */
+	def supplementalBundle = wr.locateResourceFile("lib:cldr/supplemental.json")
+	Files.copy(supplementalBundle, new File(cldrDir, supplementalBundle.name))
+	
+	/* Locale-specific main data (for used locales) */
+	wr.project.selectNodes("WebModel/Locale").eachWithSeparator(",") { locale ->
+		def isoCode = getISOCode(locale)
+		def localeBundle = wr.locateResourceFile("lib:cldr/main-" + isoCode + ".json")
+		Files.copy(localeBundle, new File(cldrDir, localeBundle.name))
+	}
+})
+eventSocketClient.sendTaskWorked("Libs", 10)
+
+/* Copy the assembled runtime code of plugin components */
+processOutputFile("www/app/runtime/components.js", "component library", wr.project, { outputFile ->
+	executeContextTemplate("Libs/AssembleComponents.template")
+	def output = executeContextTemplate("Libs/WrapComponents.template")
+	outputFile.writeAsync(output, "UTF-8")
+})
+eventSocketClient.sendTaskWorked("Libs", 70)
+%]

@@ -1,0 +1,39 @@
+#?delimiters [%,%],[%=,%]
+[%
+import com.webratio.generator.contributors.GeneratorContributorHelper
+
+setXMLOutput()
+def componentId = component.valueOf("@id")
+def params = component.selectNodes("ResponseBodyParameter")
+%]
+<InputParameters>
+  [% if (params.empty) { %]
+    [%if(component["contentType"] == "XML"){%] 
+       <InputParameter name="[%=componentId%].soapEnvelope" label="XML Document" image="DOM_OBJECT"/>  
+    [%} else { %]
+       <InputParameter name="[%=componentId%].jsonDocument" type="json" label="JSON Document" image="JSON_OBJECT"/>
+    [%}%] 
+  [% } else { %]
+    [% for (rp in params) { 
+      def subParams = GeneratorContributorHelper.getInputParameters(rp, wr)
+      if(subParams.empty){
+       %]<InputParameter name="[%=rp["id"]%]" label="[%=rp["name"]%]" refId="[%=rp["id"]%]"/>[%
+      }
+        for(param in subParams){
+          %]<InputParameter name="[%=param.name%]" label="[%=param.label%]" type="[%=param.type%]" mandatory="[%=param.mandatory%]" image="[%=param.imageName%]">
+              [%if(param.description){%]<Description>[%=param.description%]</Description>[%}%]
+            </InputParameter> 
+          [%
+        }
+      %]
+    [% } %]
+  [% } %]
+  
+  [% for (h in component.selectNodes("Header")) { %]
+  	<InputParameter name="[%=h['id']%]" label="[%=h["name"]%]" refId="[%=h['id']%]"/>
+  [% } %]
+  
+  <InputParameter name="[%=componentId%].attachmentBlobs" label="Attachment BLOBs" image="BLOB"/>
+  <InputParameter name="[%=componentId%].attachmentCids" label="Attachment CIDs"/>
+  <InputParameter name="[%=componentId%].statusCode" label="HTTP Status Code" image="HEADER"/>
+</InputParameters>

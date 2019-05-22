@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle>
+  <!-- value test -->
+  <Entry key="LikeValidationRule.beginsWith">the value must begin with ${value}</Entry>
+  <Entry key="LikeValidationRule.notBeginsWith">the value must not begin with ${value}</Entry>
+  <Entry key="LikeValidationRule.contains">the value must contain ${value}</Entry>
+  <Entry key="LikeValidationRule.notContains">the value must not contain ${value}</Entry>
+  <Entry key="LikeValidationRule.endsWith">the value must end with ${value}</Entry>
+  <Entry key="LikeValidationRule.notEndsWith">the value must not end with ${value}</Entry>
+  
+  <!-- property value test -->
+  <Entry key="LikeValidationRule.beginsWith.property">the value must begin with the value of &apos;${otherPropertyName}&apos;</Entry>
+  <Entry key="LikeValidationRule.notBeginsWith.property">the value must not begin with the value of &apos;${otherPropertyName}&apos;</Entry>
+  <Entry key="LikeValidationRule.contains.property">the value must contain the value of &apos;${otherPropertyName}&apos;</Entry>
+  <Entry key="LikeValidationRule.notContains.property">the value must not contain the value of &apos;${otherPropertyName}&apos;</Entry>
+  <Entry key="LikeValidationRule.endsWith.property">the value must end with the value of &apos;${otherPropertyName}&apos;</Entry>
+  <Entry key="LikeValidationRule.notEndsWith.property">the value must not end with the value of &apos;${otherPropertyName}&apos;</Entry>
+</Bundle>

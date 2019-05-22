@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Layout pageLayout="Default" frameLayout="Default" attributeLayout="Default" gridLayout="Default" eventLayout="Default" fieldLayout="Form" errorPage="Default" expirePage="Default" loginPage="Default">
+  <Resources alwaysRequired="wrdefault-style">
+    <Resource name="wr-password-strengthness-css" type="css" path="wrdefault/validation/password-strengthness.css"/>  
+    <Resource name="wr-password-strengthness-js" type="javascript" path="wrdefault/validation/password-strengthness.js" requires="jquery"/>
+    <Resource name="wrdefault-style" type="css" path="wrdefault/css/default.css"/>
+    <Resource name="wrdefault-bpm-style" type="css" path="wrdefault/css/bpm.css"/>
+    <Resource name="humblesoftware-flotr2" version="2.0" type="javascript" path="wrdefault/js/flotr2.min.js" requires="google-excanvas:3.0"/>
+    <Resource name="google-excanvas" version="3.0"  type="javascript" path="wrdefault/js/excanvas.min.js" ieCondition="lt IE 9"/>    
+  </Resources>
+  <ComponentConfiguration componentType="Details" componentLayout="Normal"/>  
+  <ComponentConfiguration componentType="Form" componentLayout="Normal" fieldLayout="Form"/>  
+  <ComponentConfiguration componentType="MultipleForm" componentLayout="Normal" fieldLayout="MultipleForm"/>  
+  <ComponentConfiguration componentType="SimpleList" componentLayout="Normal"/>  
+  <ComponentConfiguration componentType="List" componentLayout="Normal"/>  
+  <ComponentConfiguration componentType="MultipleDetails" componentLayout="Normal"/>  
+  <ComponentConfiguration componentType="Hierarchy" componentLayout="Normal"/>  
+  <ComponentConfiguration componentType="CheckableList" componentLayout="Normal"/>  
+  <ComponentConfiguration componentType="Message" componentLayout="Normal"/>  
+  <ComponentConfiguration componentType="Scroller" componentLayout="Normal"/>  
+  <ComponentConfiguration componentType="Script" componentLayout="Normal"/>  
+  <ComponentConfiguration componentType="Alphabet" componentLayout="Normal"/>  
+  <ComponentConfiguration componentType="RecursiveHierarchy" componentLayout="Normal"/>  
+  <ComponentConfiguration componentType="Calendar" componentLayout="Normal"/>
+  <ComponentConfiguration componentType="ViewComponent" componentLayout="Normal"/>
+  <ComponentConfiguration componentType="Excel" componentLayout="Normal"/>  
+  <ComponentConfiguration componentType="Query" componentLayout="Normal"/>
+  <ComponentConfiguration componentType="JobStatus" componentLayout="Normal"/>
+  <ComponentConfiguration componentType="ProcessUnit" componentLayout="Normal"/>
+  <ComponentConfiguration componentType="ProcessDiagramUnit" componentLayout="Normal"/>
+</Layout>

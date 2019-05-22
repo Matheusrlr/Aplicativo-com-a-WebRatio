@@ -1,0 +1,139 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter name="show-header" label="Show Header" type="boolean" default="true">
+Toggles rendition of field headers.
+Allowed values are: true (default) or false.
+</wr:LayoutParameter>
+<wr:LayoutParameter name="header-position" label="Header Position" type="enum" values="top|left|right" default="top">
+Defines the position where headers are rendered.
+Allowed values are:
+- top (default): field labels appear once on the top
+- left: labels appear on the left of fields, repeated for each line
+- right: labels appear on the right of fields, repeated for each line
+</wr:LayoutParameter>
+<wr:LayoutParameter name="show-checkbox" label="Show Checked Checkbox" type="boolean" default="true">
+Defines the rendition of the checkbox for each row.
+Allowed values are: true (default) or false.
+</wr:LayoutParameter>
+<wr:LayoutParameter name="select-all" label="Select All" type="boolean" values="true|false" default="false">
+Defines the rendition of a link that allows to select or deselect
+all the checkboxes of the component.
+Allowed values are: true (default) or false.
+</wr:LayoutParameter>
+<wr:LayoutParameter name="link-orientation" label="Links Orientation" type="enum" values="horizontal|vertical" default="vertical">
+Defines the orientation of the links.
+Allowed values are:
+- horizontal: places the links on the same line, one next to the other
+- vertical (default): places one link per line
+</wr:LayoutParameter>
+[% 
+setHTMLOutput()
+
+def showHeader = params["show-header"]
+def headerPosition = params["header-position"]
+def showCheckBox = params["show-checkbox"]
+def selectAll = params["select-all"]
+def linkOrientation = params["link-orientation"] 
+def layoutId = getLayoutId(component)
+def indexedProp = component["id"] + "[\${index}]"
+
+def colSpan = component.selectNodes("layout:Field").size()
+def formBean = getFormBeanName(page)
+
+%]
+[% if (component["minLength"] == "0") { %]
+  <c:if test="${not(empty [%=formBean%].<wr:Id context="component"/>) and ([%=formBean%].<wr:Id context="component"/>DataSize gt 0)}">
+[% } %]
+<wr:Frame>
+	<div class="plain <wr:StyleClass/>">
+		<div class="plain MultipleForm">
+			<table cellspacing="2" cellpadding="2" border="0">
+				<tr>
+					<td colspan="[%= colSpan %]" class="error">
+						<form:errors path="<wr:Id context="component"/>" cssClass="error"/>
+						<form:errors path="<wr:Id context="component"/>Checked" cssClass="error"/>
+					</td>
+				</tr>
+				[% if (showHeader == "true" && headerPosition == "top") { %]
+					<tr>
+						<th class="<wr:StyleClass/> header">
+							[% if (selectAll == "true") { %]
+								<script>multiChoiceMap["[%= layoutId%]"] = "all";</script>
+								<a href="" onmouseover="this.cursor='pointer'" onmouseout="this.cursor='default'" onclick="return toggleCheckboxes('[%= layoutId%]', 'Checked')"> <img id="[%= layoutId%]image" src="WRResources/spacer.gif" class="selectAll" border="0" /></a>
+							[% } %]
+						</th>
+						<wr:Iterate var="field" context="component" select="layout:Field">
+							<wr:Visible>
+								<th align="left" nowrap class="<wr:StyleClass/> header"><wr:Label/></th>
+							</wr:Visible> 
+						</wr:Iterate>
+					</tr>
+				[% } %]
+				<script>multiChoiceMap["[%= layoutId%]"] = "all";</script>
+				<c:forEach var="<wr:Id context="component"/>" varStatus="status" items="${[%=formBean%].<wr:Id context="component"/>}">
+					<c:set var="index" value="${status.index}"/>
+					<tr>
+						<td>
+							<form:hidden path="[%=indexedProp%].key"/>
+							[% if (showCheckBox == "true") {%]
+								<form:checkbox id="[%= layoutId%]_${index}" path="<wr:Id context="component"/>Checked" value="${[%=formBean%].<wr:Id context="component"/>[index].key}"/>
+							[% } %]
+						</td>
+						<wr:Iterate var="field" context="component" select="layout:Field">
+							<wr:Visible position="'index'">
+								[% def fieldType = getById(field["field"])?.name %]
+								<td>
+									<table cellspacing="0" cellpadding="0">
+										<tr>
+											[% if (showHeader && headerPosition == "left") { %]
+												<td align="right" nowrap class="<wr:StyleClass/> header"><wr:Label/>&nbsp;</td>
+											[% } %]
+											<td class="<wr:StyleClass/> value">
+												[% if (fieldType == "Field") { %]
+													<wr:Value class="field"/>
+												[% } else if (fieldType == "SelectionField") { %]
+													<wr:Value class="selectionfield"/>
+												[% } %]
+											</td>
+											[% if (showHeader && headerPosition == "right") { %]
+												<td align="left" nowrap class="<wr:StyleClass/> header">&nbsp;<wr:Label/></td>
+											[% } %]
+										</tr>
+										<tr>
+											<td [% if (showHeader && ["left","right"].contains(headerPosition)) { %]colspan="2"[% } %] class="<wr:StyleClass/> error"><wr:FieldError/></td>
+										</tr>
+									</table>
+								</td>
+							</wr:Visible>
+						</wr:Iterate>
+					</tr>
+					[% for (hiddenField in getById(component["id"])?.selectNodes("Field[@hidden = 'true']")) {
+						def type = hiddenField["type"]
+						if (type == "blob") { %]
+							<form:hidden path="[%=indexedProp%].[%= hiddenField["id"]%].preload"/>
+						[% } else { %]
+							<form:hidden path="[%=indexedProp%].[%= hiddenField["id"]%]"/>
+						[% } %]
+					[% } %]
+				</c:forEach>
+				<tr>
+					<td colspan="[%= colSpan %]">
+						<table>
+							[% if (linkOrientation == "horizontal") { %]<tr>[% } %]
+								<wr:Iterate var="event" context="component" select="layout:Event">
+									<wr:Visible>
+										[% if (linkOrientation == "vertical") { %]<tr>[% } %]
+											<td><wr:Event type="button" class="button"/></td>
+										[% if (linkOrientation == "vertical") { %]</tr>[% } %]
+									</wr:Visible>
+								</wr:Iterate>
+							[% if (linkOrientation == "horizontal") { %]</tr>[% } %]
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</wr:Frame>
+[% if (component["minLength"] == "0") { %]
+	</c:if>
+[% } %]

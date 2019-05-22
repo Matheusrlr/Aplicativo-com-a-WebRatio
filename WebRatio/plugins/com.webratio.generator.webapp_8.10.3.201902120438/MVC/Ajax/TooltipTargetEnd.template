@@ -1,0 +1,7 @@
+#?delimiters [%, %], [%=, %]
+[%
+	def tooltipComponent = element?.selectSingleNode("ancestor::layout:Component")
+%]
+[% if (tooltipComponent && tooltipComponent["ajaxTooltipEnabled"] == "true" && tooltipComponent["ajaxTooltipElement"] == elementType) { %]
+	</div>
+[% } %]

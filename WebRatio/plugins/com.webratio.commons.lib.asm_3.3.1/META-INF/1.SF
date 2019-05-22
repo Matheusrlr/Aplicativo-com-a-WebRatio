@@ -1,0 +1,18 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: z1LMXNDypkGinyW/1YqHBO3ZQ3uCh
+ 5C2DACTvV+MXUY=
+SHA-256-Digest-Manifest: sx9j0hod42eIv/VwfVoQYzF7pOmwvgdQEE/MBP5XZSg=
+Created-By: 1.7.0_75 (Oracle Corporation)
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: about_files/asm.txt
+SHA-256-Digest: ZpEsuhxT2MrBFZd04SELQGjZ9iyz9DVFsOwUeC3Wuto=
+
+Name: about.html
+SHA-256-Digest: LukC4BtgJHFRjlChJ2VXDi6CEEhYbjA8+iLGNHplyck=
+
+Name: lib/asm.jar
+SHA-256-Digest: dUcNobvIhVh7yoDUeTZlxyPahx9nPtVaRMETZf34wqg=
+

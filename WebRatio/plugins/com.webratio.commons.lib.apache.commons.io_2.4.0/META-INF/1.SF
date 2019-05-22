@@ -1,0 +1,21 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: P1PXDF2iwWh+0yDBZUEuEwysUBhpv
+ KS3jRFDf6p2p+w=
+SHA-256-Digest-Manifest: dtxd8/XiEwER2ek44LOAwt+ilZScWVCIvFufrYkE94w=
+Created-By: 1.7.0_75 (Oracle Corporation)
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: a5fmgH7myHzNji9AMOfHrVh8fy7MOgIdRSUiRZ6EFA4=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: about.html
+SHA-256-Digest: X5fwsu0KIeCni3T3wnXsXlA8MJfg085D4T+0Jz3bOkc=
+
+Name: lib/commons-io.jar
+SHA-256-Digest: o6Z7tB/qRQb6c3r/67Zbn1pUkn1tV6ySEfsqHH761FM=
+
+Name: lib/commons-iosrc.zip
+SHA-256-Digest: klEY7U81QXSPSRtsfzq31H0+4FlEr1UZpWwYSgAPq4w=
+

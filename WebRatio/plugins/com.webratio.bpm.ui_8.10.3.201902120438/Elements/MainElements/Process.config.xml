@@ -1,0 +1,32 @@
+<Element name="Process" lowerName="process" pluralLowerName="processes">
+  <Description>
+    A &lt;a href="/Concepts/Elements/Process"/&gt; describes a sequence or flow of activities 
+ 	in an organization with the objective of carrying out work.
+  	A &lt;a href="/Concepts/Elements/Process/CommonElements/Lane"/&gt; represents a role participant in the Process.
+  </Description>
+    <ActionRef label="Add Property" />
+    <ActionRef label="Search References" />
+    <ActionRef label="Help" />
+    
+	<PropertyCategory name="General">
+        <PropertyRef label="Code"/>
+        <PropertyRef label="Name"/>
+        <Property label="Lane Order">
+		    Defines the order of the lanes.
+		    &lt;p&gt; 
+		    The Sort button <Button name="Browse"/> opens the 
+		    &lt;a href="/Reference/WizardsAndDialogs/OrderingDialog"/&gt;, which 
+		    allows to change the lane order.
+		    &lt;/p&gt;
+        </Property>
+        <Property label="Process Parameters">
+        	The set of information flowing through the activities of the process.
+			The Edit button opens the Process Parameter dialog, which allows to add, edit and remove the parameters.        
+        </Property>
+        <PropertyRef label="Instance Name"/>
+        <PropertyRef label="Save Policy"/>
+        <PropertyRef label="Leave Policy"/>
+        <PropertyRef label="Distribution Policy"/>
+	</PropertyCategory>
+</Element>
+		

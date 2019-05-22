@@ -1,0 +1,229 @@
+#?delimiters <%, %>, <%=, %>
+<%
+import org.apache.commons.lang.StringUtils
+import com.webratio.generator.resolvers.WebAppEntityResolver
+import org.dom4j.DocumentHelper
+import org.dom4j.QName
+import org.dom4j.Element
+
+def children = oldWebXML.content()
+def nsUri = oldWebXML.getDocument().getRootElement().getNamespaceURI()
+
+def filter = null
+
+/* updates the security filter */
+filter = oldWebXML.selectSingleNode("*[local-name() = 'filter'][*[local-name() = 'filter-name'] = 'security-filter']")
+if (filter == null) {
+     def filterIndex = children.indexOf(oldWebXML.selectSingleNode("*[local-name() = 'filter']"))
+     if (filterIndex < 0) {
+         filterIndex = children.indexOf(oldWebXML.selectSingleNode("*[local-name() = 'servlet']"))
+     }
+     if(filterIndex > 0){
+       filterIndex--
+     }
+     def newFilter = DocumentHelper.createElement(QName.get("filter", "", nsUri))
+     newFilter.addElement("filter-name").setText("security-filter")
+     newFilter.addElement("filter-class").setText("com.webratio.web.mvc.filters.SecurityFilter")
+     children.add(filterIndex, newFilter)
+     def newFilterMapping = DocumentHelper.createElement(QName.get("filter-mapping", "", nsUri))
+     newFilterMapping.addElement("filter-name").setText("security-filter")
+     newFilterMapping.addElement("url-pattern").setText("/*")
+     children.add(filterIndex + 1, newFilterMapping)
+} 
+
+/* updates the URL fragments filter */
+def useURLFragments = "true" == wr.project.valueOf("WebModel/@enableURLFragments")
+def useWebservicesFilter = !wr.project.selectNodes("WebModel/ServiceView/ServicePort/Operations/Solicit[@invocationStyle = 'REST']").isEmpty() || (wr.project.selectSingleNode("DomainModel/DataServices|UserServices") != null)
+filter = oldWebXML.selectSingleNode("*[local-name() = 'filter'][*[local-name() = 'filter-name'] = 'url-fragments-filter']")
+if (filter == null && (useURLFragments || useWebservicesFilter)) {
+     def filterIndex = children.indexOf(oldWebXML.selectSingleNode("*[local-name() = 'servlet']"))
+     if(filterIndex > 0){
+       filterIndex--
+     }
+     def newFilter = DocumentHelper.createElement(QName.get("filter", "", nsUri))
+     newFilter.addElement("filter-name").setText("url-fragments-filter")
+     newFilter.addElement("filter-class").setText("com.webratio.web.mvc.filters.URLFragmentsFilter")
+     children.add(filterIndex, newFilter)
+     def newFilterMapping = DocumentHelper.createElement(QName.get("filter-mapping", "", nsUri))
+     newFilterMapping.addElement("filter-name").setText("url-fragments-filter")
+     newFilterMapping.addElement("url-pattern").setText("/*")
+     children.add(filterIndex + 1, newFilterMapping)
+} else if(filter != null && !(useURLFragments || useWebservicesFilter)) {
+     children.remove(filter)     
+     def filterMapping = oldWebXML.selectSingleNode("*[local-name() = 'filter-mapping'][*[local-name() = 'filter-name'] = 'url-fragments-filter']")
+     if(filterMapping != null){
+        children.remove(filterMapping)
+     }
+} 
+
+/* updates the cachable resources filter */
+filter = oldWebXML.selectSingleNode("*[local-name() = 'filter'][*[local-name() = 'filter-name'] = 'static-resource-filter']")
+if (filter == null) {
+     def filterIndex = children.indexOf(oldWebXML.selectSingleNode("*[local-name() = 'servlet']"))
+     if(filterIndex > 0){
+       filterIndex--
+     }
+     def newFilter = DocumentHelper.createElement(QName.get("filter", "", nsUri))
+     newFilter.addElement("filter-name").setText("static-resource-filter")
+     newFilter.addElement("filter-class").setText("com.webratio.web.mvc.filters.StaticResourceFilter")
+     children.add(filterIndex, newFilter)
+     def newFilterMapping = DocumentHelper.createElement(QName.get("filter-mapping", "", nsUri))
+     newFilterMapping.addElement("filter-name").setText("static-resource-filter")
+     newFilterMapping.addElement("url-pattern").setText("/*")
+     children.add(filterIndex + 1, newFilterMapping)
+} 
+
+//ensures Servlet node presence
+def servlets = wr.project.selectSingleNode("Servlets");
+if(servlets == null){
+  servlets = wr.project.addElement("Servlets");
+}
+
+//adds the CKEditor upload/connector servlet and the wr-report servlet only if necessary.
+if (wr.project.selectSingleNode(".//Page") != null) {
+	def ckeServlet = servlets.addElement("Servlet")
+	ckeServlet.addAttribute("name", "Connector")
+	ckeServlet.addAttribute("class", "net.fckeditor.connector.ConnectorServlet")
+	ckeServlet.addAttribute("loadOnStartup", "1")
+	ckeServlet.addAttribute("url", "/WRResources/CKEditor/filemanager/connectors/*")
+	
+	def reportServlet = servlets.addElement("Servlet")
+	reportServlet.addAttribute("name", "wr-report")
+	reportServlet.addAttribute("class", "com.webratio.web.mvc.reports.ReportServlet")
+	reportServlet.addAttribute("loadOnStartup", "2")
+	reportServlet.addAttribute("url", "/wr-report/*")
+} else {
+	def oldCkEditorConnector = oldWebXML.selectSingleNode("*[local-name() = 'servlet'][*[local-name() = 'servlet-class' and text() = 'net.fckeditor.connector.ConnectorServlet']]")
+	if (oldCkEditorConnector != null) {
+		oldWebXML.remove(oldCkEditorConnector)
+	}
+	def oldCkEditorConnectorMapping = oldWebXML.selectSingleNode("*[local-name() = 'servlet-mapping'][*[local-name() = 'servlet-name' and text() = 'Connector']]")
+	if (oldCkEditorConnectorMapping != null) {
+		oldWebXML.remove(oldCkEditorConnectorMapping)
+	}
+	
+	def oldReportServlet = oldWebXML.selectSingleNode("*[local-name() = 'servlet'][*[local-name() = 'servlet-class' and text() = 'com.webratio.web.mvc.reports.ReportServlet']]")
+	if (oldReportServlet != null) {
+		oldWebXML.remove(oldReportServlet)
+	}
+	def oldReportServletMapping = oldWebXML.selectSingleNode("*[local-name() = 'servlet-mapping'][*[local-name() = 'servlet-name' and text() = 'wr-report']]")
+	if (oldReportServletMapping != null) {
+		oldWebXML.remove(oldReportServletMapping)
+	}
+}
+
+//removes the invalid servlets
+for(servlet in wr.project.selectNodes("Servlets/InvalidServlet")){
+    def invalidServlet = oldWebXML.selectSingleNode("*[local-name() = 'servlet'][*[local-name() = 'servlet-name'] = '" + servlet.getText() + "']")
+    if (invalidServlet != null) {
+       invalidServlet.detach()
+    }
+    def invalidServletMapping = oldWebXML.selectSingleNode("*[local-name() = 'servlet-mapping'][*[local-name() = 'servlet-name'] = '" + servlet.getText() + "']")
+    if (invalidServletMapping != null) {
+       invalidServletMapping.detach()
+    }
+}
+
+//adds the resoruce-refs
+def resRefElement = oldWebXML.selectSingleNode("*[local-name() = 'security-constraint']")
+if(resRefElement == null){
+   resRefElement = oldWebXML.selectSingleNode("*[local-name() = 'security-role']")
+}
+if(resRefElement == null){
+   resRefElement = oldWebXML.selectSingleNode("*[local-name() = 'servlet']")
+}
+def resRefIndex = children.indexOf(resRefElement)
+for(resourceRef in wr.project.selectNodes("ResourceRefs/ResourceRef")){
+    def resExists = oldWebXML.selectSingleNode("*[local-name() = 'resource-ref'][*[local-name() = 'res-ref-name'] = '" + resourceRef["name"] + "']") != null
+    if (!resExists) {
+        def newRes = DocumentHelper.createElement(QName.get("resource-ref", "", nsUri))
+        newRes.addElement("res-ref-name").setText(resourceRef["name"])
+        newRes.addElement("res-type").setText(resourceRef["type"])
+        newRes.addElement("res-auth").setText(resourceRef["auth"])
+        children.add(resRefIndex, newRes)
+    }
+}
+
+//adds all the servlets
+for(servlet in wr.project.selectNodes("Servlets/Servlet")){
+    def servletExists = oldWebXML.selectSingleNode("*[local-name() = 'servlet'][*[local-name() = 'servlet-name'] = '" + servlet["name"] + "']") != null
+    if (!servletExists) {
+        def lastIndex = children.indexOf(oldWebXML.selectNodes("*[local-name() = 'servlet']")[-1])
+        def newServlet = DocumentHelper.createElement(QName.get("servlet", "", nsUri))
+        newServlet.addElement("servlet-name").setText(servlet["name"])
+        newServlet.addElement("servlet-class").setText(servlet["class"])
+        
+        //creates parameters
+        for(initParam in servlet.selectNodes("init-param")){
+          def param = newServlet.addElement("init-param")
+          param.addElement("param-name").setText(initParam.valueOf("param-name"))
+          param.addElement("param-value").setText(initParam.valueOf("param-value"))
+        }
+        
+        //sets the loadOnStartup level
+        newServlet.addElement("load-on-startup").setText(servlet["loadOnStartup"])
+        children.add(lastIndex + 1, newServlet)
+        lastIndex = children.indexOf(oldWebXML.selectNodes("*[local-name() = 'servlet-mapping']")[-1])
+        def newServletMapping = DocumentHelper.createElement(QName.get("servlet-mapping", "", nsUri))
+        newServletMapping.addElement("servlet-name").setText(servlet["name"])
+        newServletMapping.addElement("url-pattern").setText(servlet["url"])
+        children.add(lastIndex + 1, newServletMapping)
+    }else{
+      //update parameters
+    }
+}
+
+if (!StringUtils.isBlank(wr.project["sessionTimeout"])) {
+    def sessionConfigElem = oldWebXML.selectSingleNode("*[local-name() = 'session-config']")
+    if (sessionConfigElem == null) {
+        sessionConfigElem = DocumentHelper.createElement(QName.get("session-config", "", nsUri))
+        oldWebXML.add(sessionConfigElem)
+    }
+    def sessionTimeoutElem = sessionConfigElem.selectSingleNode("*[local-name() = 'session-timeout']")
+    if (sessionTimeoutElem == null) {
+        sessionTimeoutElem = DocumentHelper.createElement(QName.get("session-timeout", "", nsUri))
+        sessionConfigElem.add(sessionTimeoutElem)
+    }
+    sessionTimeoutElem.setText(wr.project["sessionTimeout"])
+}
+
+// remove the session listener in case of enterprise root project
+if(wr.projectType.name() == "ENTERPRISE"){
+   oldWebXML.selectSingleNode("//*[local-name()='listener-class' and text()='com.webratio.web.mvc.listeners.WRSessionListener']")?.parent?.detach()
+}
+
+// update the resource servlet path
+def resourceServletPath = wr.project.valueOf("@resourceServletPath");
+def resourceNode = oldWebXML.selectSingleNode("//*[local-name()='servlet-name' and text()='wr-resource']/../*[local-name()='url-pattern']")
+if(!StringUtils.isBlank(resourceServletPath)) {
+	if(!resourceServletPath.startsWith("/")) {
+		resourceServletPath = "/" + resourceServletPath
+	} 
+	if(!resourceServletPath.endsWith("/*")) {
+		resourceServletPath = resourceServletPath + "/*"
+	}
+	resourceNode.setText(resourceServletPath)
+} else {
+	resourceNode.setText("/wr-resource/*")
+}
+
+// remove the session listener in case of enableSessionListener property false
+def enableSessionListener = (Element)wr.project.selectSingleNode("Property[@name='enableSessionListener']")
+if(enableSessionListener != null) {
+	def listener = oldWebXML.selectSingleNode("*[local-name() = 'listener'][*[local-name() = 'listener-class'] = 'com.webratio.web.mvc.listeners.WRSessionListener']")
+	if(enableSessionListener.attributeValue("value") == "false") {
+		if(listener != null) {
+			listener.detach()
+		}
+	} else if(enableSessionListener.attributeValue("value") == "true") {
+		if(listener == null) {
+			def firstIndex = children.indexOf(oldWebXML.selectNodes("*[local-name() = 'servlet']")[0])
+			def newListener = DocumentHelper.createElement(QName.get("listener", "", nsUri))
+        	newListener.addElement("listener-class").setText("com.webratio.web.mvc.listeners.WRSessionListener")
+        	children.add(firstIndex, newListener)
+		}
+	}
+} 
+
+printRaw(serializeXML(oldWebXML, true))
+%>

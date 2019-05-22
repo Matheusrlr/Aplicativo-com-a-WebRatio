@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: com.webratio.services.branding
+Bundle-Name: WebRatio Services
+Bundle-Version: 1.1.0.201802231629
+Bundle-ManifestVersion: 2
+Bundle-Vendor: WebRatio
+
+Name: about.html
+SHA-256-Digest: vuFwTp1xHKAQWF+DRiSVx6xqpwOvJaUcOSfU9wQtY+A=
+
+Name: about.ini
+SHA-256-Digest: 4qyEdzzbqC6l2yMQkOMDyEnKxTiaUwmz1SQxBaYCbrE=
+
+Name: webratio.png
+SHA-256-Digest: Lg3Kq58xPFAkSheNwOagvJec85lkk9T8O0/2BkXqT4o=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+

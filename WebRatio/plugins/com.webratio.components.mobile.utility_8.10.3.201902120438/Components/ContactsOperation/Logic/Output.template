@@ -1,0 +1,43 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+
+def bindingFlow = binding.variables["bindingFlow"]
+def showErrorOutputs = (!bindingFlow || bindingFlow?.getName() in ["ErrorFlow", "DataFlow"])
+%]
+
+<OutputParameters>	
+	<OutputParameter name = "id" label= "Contact ID" />
+	
+	[% if (component["mode"] == "pick") { %]
+		<OutputParameter name="firstName" label="First Name" />
+		<OutputParameter name="lastName" label="Last Name" />
+		<OutputParameter name="homePhone" label="Home Phone Number" />
+		<OutputParameter name="workPhone" label="Work Phone Number" />
+		<OutputParameter name="mobilePhone" label="Mobile Phone Number" />
+		<OutputParameter name="homeEmail" label="Home Email" />
+		<OutputParameter name="workEmail" label="Work Email" />
+		<OutputParameter name="homeStreet" label="Home Street Address" />
+		<OutputParameter name="homeCity" label="Home City" />
+		<OutputParameter name="homeRegion" label="Home Region" />
+		<OutputParameter name="homePostalCode" label="Home Postal Code" />
+		<OutputParameter name="homeCountry" label="Home Country" />	
+		[%
+		for (contactAddress in component.selectNodes("ContactAddress")) { %]
+			<OutputParameter name="[%= contactAddress["type"] + "Street" %]" label="[%= contactAddress["type"].capitalize() + " Street Address" %]" />
+			<OutputParameter name="[%= contactAddress["type"] + "City" %]" label="[%= contactAddress["type"].capitalize() + " City" %]" />
+			<OutputParameter name="[%= contactAddress["type"] + "Region" %]" label="[%= contactAddress["type"].capitalize() + " Region" %]" />
+			<OutputParameter name="[%= contactAddress["type"] + "PostalCode" %]" label="[%= contactAddress["type"].capitalize() + " Postal Code" %]" />
+			<OutputParameter name="[%= contactAddress["type"] + "Country" %]" label="[%= contactAddress["type"].capitalize() + " Country" %]" />
+		[% }
+		for (contactPhone in component.selectNodes("ContactPhone")) { %]
+			<OutputParameter name="[%= contactPhone["type"] + "Phone" %]" label="[%= contactPhone["type"].capitalize() + " Phone Number" %]" />
+		[% }
+		for (contactEmail in component.selectNodes("ContactEmail")) { %]
+			<OutputParameter name="[%= contactEmail["type"] + "Email" %]" label="[%= contactEmail["type"].capitalize() + " Email" %]" />
+		[% }
+	}
+	if (showErrorOutputs) { %]
+		<OutputParameter name="errorMessage" label="Error Message" type="ErrorMessage"/>
+	[% } %]
+</OutputParameters>

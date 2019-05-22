@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Custom Deployment" default="main">
+	<!--
+	Available properties:
+	${output_folder}
+	${local_web_app_folder}
+	${project_name}
+	${project_folder}
+	-->
+	<target name="main">
+
+	</target>
+
+</project>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Utils">
+
+	<target name="clearFolder">
+		<fail unless="folder" message="Missing script parameter 'folder'" />
+		<delete dir="${folder}" failonerror="true" verbose="false" quiet="true" />
+		<mkdir dir="${folder}" />
+	</target>
+
+	<target name="deleteFolder">
+		<fail unless="folder" message="Missing script parameter 'folder'" />
+		<delete dir="${folder}" failonerror="true" verbose="false" quiet="true" />
+	</target>
+
+	<target name="copyDir">
+		<fail unless="outputDir" message="Missing script parameter 'outputDir'" />
+		<fail unless="sourceDir" message="Missing script parameter 'sourceDir'" />
+		<copy todir="${outputDir}" overwrite="true">
+			<fileset dir="${sourceDir}">
+				<include name="**/*" />
+				<exclude name="**/CVS/*" />
+				<exclude name="**/.svn/*" />
+				<exclude name="**/.git/**/*" />
+			</fileset>
+		</copy>
+	</target>
+
+</project>

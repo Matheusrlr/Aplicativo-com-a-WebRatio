@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Components priority="200"> 
+  <Group>
+    <Component>Create</Component>  
+    <Component>Delete</Component>  
+    <Component>Update</Component> 
+  </Group>
+  <Group>
+    <Component>Connect</Component>  
+    <Component>Disconnect</Component>  
+    <Component>Reconnect</Component> 
+  </Group>
+  <Group>
+    <Component>StoredProcedure</Component>  
+    <Component>Operation</Component> 
+  </Group>
+</Components>

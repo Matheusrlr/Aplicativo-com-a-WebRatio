@@ -1,0 +1,21 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: Te7pYf8cNqkKlDVIl3WXCmaAkq5il
+ oPwycL6NtodH58=
+SHA-256-Digest-Manifest: IEc3ZCgjyRxXk1FtL5pHH6g/m4cJ1Vg2DZmYqP+A4c8=
+Created-By: 1.7.0_75 (Oracle Corporation)
+
+Name: about_files/jpa2.txt
+SHA-256-Digest: As9MIInwS0u88fTpVOh4AyfmGYu1/Jmt5ldtnyHjOgE=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: lib/jpa2.jar
+SHA-256-Digest: +T+a2GqI8f+bcBn4fDyYTTAp5Pmh0XKN+ylXxI7CK7c=
+
+Name: about.html
+SHA-256-Digest: GWoP3M1KPsCUT+FRflcZ83gMgKjotZnSLrRpOY1AoDg=
+
+Name: lib/jpa2src.zip
+SHA-256-Digest: 8lXOcszmiK6HD8aoRcE0UynnZm7RF1ZsTw3tZKMwO0o=
+

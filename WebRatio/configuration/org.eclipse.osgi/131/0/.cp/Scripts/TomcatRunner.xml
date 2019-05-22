@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<project name="Tomcat" basedir="." default="main">
+
+	<property name="checkURL" value="http://localhost:8080" />
+	<property name="maxwait" value="20" />
+
+	<target name="main" />
+
+	<target name="restart">
+		<antcall target="stop" />
+		<sleep seconds="2"/>
+		<antcall target="start" />
+	</target>
+
+	<target name="restart.wait">
+		<antcall target="stop.wait" />
+		<antcall target="start.wait" />
+	</target>
+
+	<target name="start">
+		<exec dir="${commandFolder}" executable="${startBatchFile}" vmlauncher="false" spawn="true" />
+	</target>
+
+	<target name="stop">
+		<exec dir="${commandFolder}" executable="${stopBatchFile}" vmlauncher="false" spawn="true" />
+	</target>
+
+	<target name="start.wait">
+		<exec dir="${commandFolder}" executable="${startBatchFile}" vmlauncher="false" spawn="true" />
+		<waitfor maxwait="${maxwait}" maxwaitunit="second" checkevery="1" checkeveryunit="second">
+			<http url="${checkURL}" />
+		</waitfor>
+	</target>
+
+	<target name="stop.wait">
+		<exec dir="${commandFolder}" executable="${stopBatchFile}" vmlauncher="false" spawn="true" />
+		<waitfor maxwait="${maxwait}" maxwaitunit="second" checkevery="1" checkeveryunit="second">
+			<not>
+				<http url="${checkURL}" />
+			</not>
+		</waitfor>
+	</target>
+
+</project>

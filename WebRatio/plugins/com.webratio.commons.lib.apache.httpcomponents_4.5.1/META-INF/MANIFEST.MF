@@ -1,0 +1,55 @@
+Manifest-Version: 1.0
+Export-Package: org.apache.http,org.apache.http.annotation,org.apache.
+ http.auth,org.apache.http.auth.params,org.apache.http.client,org.apac
+ he.http.client.config,org.apache.http.client.entity,org.apache.http.c
+ lient.methods,org.apache.http.client.params,org.apache.http.client.pr
+ otocol,org.apache.http.client.utils,org.apache.http.concurrent,org.ap
+ ache.http.config,org.apache.http.conn,org.apache.http.conn.params,org
+ .apache.http.conn.routing,org.apache.http.conn.scheme,org.apache.http
+ .conn.socket,org.apache.http.conn.ssl,org.apache.http.conn.util,org.a
+ pache.http.cookie,org.apache.http.cookie.params,org.apache.http.entit
+ y,org.apache.http.entity.mime,org.apache.http.entity.mime.content,org
+ .apache.http.impl,org.apache.http.impl.auth,org.apache.http.impl.boot
+ strap,org.apache.http.impl.client,org.apache.http.impl.conn,org.apach
+ e.http.impl.conn.tsccm,org.apache.http.impl.cookie,org.apache.http.im
+ pl.entity,org.apache.http.impl.execchain,org.apache.http.impl.io,org.
+ apache.http.impl.pool,org.apache.http.io,org.apache.http.message,org.
+ apache.http.params,org.apache.http.pool,org.apache.http.protocol,org.
+ apache.http.ssl,org.apache.http.util
+Require-Bundle: com.webratio.commons.lib.apache.commons.codec,com.webr
+ atio.commons.lib.apache.commons.logging
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/httpclient.jar,lib/httpcore.jar,lib/httpmime.jar
+Bundle-Version: 4.5.1
+Bundle-Name: WebRatio 3rd Party Library - Apache HttpComponents
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.apache.httpcomponents
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: lib/httpcore.jar
+SHA-256-Digest: 97wJ3IpwA4ItEJY0/9OEXVedEuclrlRnPjI6fOf14yU=
+
+Name: lib/httpmime.jar
+SHA-256-Digest: g3aAGSm4Lh1ky/VUq8YL6Uz+A5qHT45vNx0G29l7md8=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: lib/httpcoresrc.zip
+SHA-256-Digest: v4oXGJ5Irjlk+4q3nDLmuHQjIpw4VxAkiV2cUyu6YSk=
+
+Name: about.html
+SHA-256-Digest: 3G9fu3pHWHgkFr42Ls/waJ6t9IFd0xTGUIuu+f1L62o=
+
+Name: lib/httpclientsrc.zip
+SHA-256-Digest: w66YOmD/MGPNui7lLR6HGlqXXAz7VDINUVmnToX030o=
+
+Name: lib/httpmimesrc.zip
+SHA-256-Digest: jgZ9oqZ1on89baXGu5m9jluceoHfCYBGGw4U0+xiw5A=
+
+Name: lib/httpclient.jar
+SHA-256-Digest: C6GjQBiPM0CGMs7b4l1v4XwUWL3hdoCgbNb2ppR2/3Q=
+

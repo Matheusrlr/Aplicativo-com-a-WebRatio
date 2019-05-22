@@ -1,0 +1,16 @@
+#?delimiters [%, %], [%=, %]
+[%
+setJSONOutput()
+
+def dclassId = component["dataBinding"]
+def dclass = getById(dclassId)
+if (dclassId == "MUser" && dclass["serverClass"]) {
+    throwGenerationException("The domain-class " + dclass["name"] + " cannot be directly created, use the Register operation instead.")
+}
+def bulk = (component["bulk"] == "true")
+%]
+{
+	"service": "wrm.comp.CreateService",
+	"entity": "[%= component["dataBinding"] %]",
+	"bulk": [%= bulk %]
+}

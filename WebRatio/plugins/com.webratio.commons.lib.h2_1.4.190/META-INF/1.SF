@@ -1,0 +1,21 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: iXOmP7pUmW+GrpaTAey27gqOzOnmH
+ GJ4+iqk80dJcJ8=
+SHA-256-Digest-Manifest: Mq+UZCQd3dLZCL9OtaPfmZd242RWuiDUUNnFJso1ZJE=
+Created-By: 1.7.0_80 (Oracle Corporation)
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: lib/h2.jar
+SHA-256-Digest: P/Et0BnTxldulnFxLWab8RU8v5acDFacKvV6+gKcCdw=
+
+Name: about.html
+SHA-256-Digest: Uigz/h6hmLW1YePF3UGRlAncWGvNQuAtWyKfaAnJfN8=
+
+Name: about_files/MPL-1.1.txt
+SHA-256-Digest: qfSnLXbTDF/l/jZ9wYSl8UIk0brUwZr1avwuidNf/yM=
+
+Name: lib/h2src.zip
+SHA-256-Digest: MaWkJlsfSNOp4HOKiY8sGtnJ52WkSToth2jbpVLHMJ4=
+

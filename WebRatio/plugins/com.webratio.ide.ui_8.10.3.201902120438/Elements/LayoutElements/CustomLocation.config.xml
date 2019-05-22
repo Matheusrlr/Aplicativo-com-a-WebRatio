@@ -1,0 +1,45 @@
+  <Element name="CustomLocation" lowerName="custom location"
+		pluralLowerName="custom locations">
+		<Description>
+			A custom location
+			is the grid container of components, sub pages and sub grids.
+			Each cell is identified by its row and column coordinates, starting from [0,0].
+		</Description>
+		<ActionRef label="Add Grid"/>
+		<ActionRef label="Add Property" />
+		<ActionRef label="Localize" />
+		<ActionRef label="Open in Browser" />
+		<ActionRef label="Help"/>
+		
+		<PropertyCategory name="Layout">
+			<Property label="Name">
+				The Custom Location name deriving from the 
+				the page layout 
+				where it is defined.
+			</Property>
+			<PropertyRef label="Label" name="Title"/>
+			<PropertyRef label="Style" />
+			<PropertyRef label="Grid Layout"/>
+			<PropertyRef label="Frame Layout"/>
+			<PropertyRef label="Cell Layout"/>
+			<PropertyRef label="Attribute Layout"/>
+			<PropertyRef label="Field Layout"/>
+			<PropertyRef label="Event Layout"/>
+			<PropertyRef label="Component Configuration"/>
+			<PropertyRef label="Horizontal Align"/>
+			<PropertyRef label="Vertical Align"/>
+			<PropertyRef label="Width"/>
+			<PropertyRef label="Height"/>
+			<PropertyRef label="Padding"/>
+			<PropertyRef label="CSS Style"/>
+		</PropertyCategory>
+		<PropertyCategory name="Condition">
+			<PropertyRef name="Page Visibility Condition" label="Grid Visibility Cond." />
+			<PropertyRef name="Page Visibility Condition" label="Cell Visibility Cond."/>
+			<PropertyRef name="Page Visibility Condition" label="Attribute Visibility Cond."/>
+			<PropertyRef name="Page Visibility Condition" label="Field Visibility Cond."/>
+			<PropertyRef name="Page Visibility Condition" label="Field Disable Cond."/>
+			<PropertyRef name="Page Visibility Condition" label="Event Visibility Cond."/>
+			<PropertyRef name="Page Visibility Condition" label="Event Disable Cond."/>
+		</PropertyCategory>
+	</Element>

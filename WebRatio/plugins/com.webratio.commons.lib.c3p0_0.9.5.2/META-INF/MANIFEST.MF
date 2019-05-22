@@ -1,0 +1,55 @@
+Manifest-Version: 1.0
+Export-Package: com.mchange,com.mchange.io,com.mchange.io.impl,com.mch
+ ange.lang,com.mchange.net,com.mchange.rmi,com.mchange.util,com.mchang
+ e.util.impl,com.mchange.v1.cachedstore,com.mchange.v1.db.sql,com.mcha
+ nge.v1.db.sql.schemarep,com.mchange.v1.db.sql.xmlpropsschema,com.mcha
+ nge.v1.identicator,com.mchange.v1.identicator.test,com.mchange.v1.io,
+ com.mchange.v1.jvm,com.mchange.v1.lang,com.mchange.v1.lang.holders,co
+ m.mchange.v1.util,com.mchange.v1.xml,com.mchange.v1.xmlprops,com.mcha
+ nge.v2,com.mchange.v2.async,com.mchange.v2.async.test,com.mchange.v2.
+ beans,com.mchange.v2.beans.swing,com.mchange.v2.c3p0,com.mchange.v2.c
+ 3p0.cfg,com.mchange.v2.c3p0.codegen,com.mchange.v2.c3p0.debug,com.mch
+ ange.v2.c3p0.example,com.mchange.v2.c3p0.filter,com.mchange.v2.c3p0.i
+ mpl,com.mchange.v2.c3p0.jboss,com.mchange.v2.c3p0.management,com.mcha
+ nge.v2.c3p0.mbean,com.mchange.v2.c3p0.stmt,com.mchange.v2.c3p0.subst,
+ com.mchange.v2.c3p0.test,com.mchange.v2.c3p0.util,com.mchange.v2.cfg,
+ com.mchange.v2.cmdline,com.mchange.v2.coalesce,com.mchange.v2.codegen
+ ,com.mchange.v2.codegen.bean,com.mchange.v2.codegen.intfc,com.mchange
+ .v2.collection,com.mchange.v2.csv,com.mchange.v2.debug,com.mchange.v2
+ .encounter,com.mchange.v2.holders,com.mchange.v2.io,com.mchange.v2.la
+ ng,com.mchange.v2.lang.reflect,com.mchange.v2.lock,com.mchange.v2.log
+ ,com.mchange.v2.log.jdk14logging,com.mchange.v2.log.log4j,com.mchange
+ .v2.log.slf4j,com.mchange.v2.management,com.mchange.v2.naming,com.mch
+ ange.v2.net,com.mchange.v2.reflect,com.mchange.v2.resourcepool,com.mc
+ hange.v2.ser,com.mchange.v2.sql,com.mchange.v2.sql.filter,com.mchange
+ .v2.uid,com.mchange.v2.util,com.mchange.v3.decode,com.mchange.v3.file
+ cache,com.mchange.v3.hocon
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/c3p0.jar,lib/mchange-commons-java.jar
+Bundle-Version: 0.9.5.2
+Bundle-Name: WebRatio 3rd Party Library - c3p0
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.c3p0
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
+Name: lib/mchange-commons-javasrc.zip
+SHA-256-Digest: 2H51nBO3CbQ2ifSn1pxUG2qgA/EXDvq0L/sMNjSj1Ps=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: lib/c3p0src.zip
+SHA-256-Digest: XRQTRYwgEqrvZM/MpiZHoboKfUbKVRv3SkPnOQ3AGCk=
+
+Name: about.html
+SHA-256-Digest: krDPh5njb6lVrigs5EvPY/CnLLp0h6GZUvFZXNC3X6c=
+
+Name: lib/c3p0.jar
+SHA-256-Digest: pM9gGVIdGtR4YqseJ7eOQ6qOo/6W/LMDGQ/SUI7AkoU=
+
+Name: about_files/lgpl-2.1.txt
+SHA-256-Digest: Hn5rrlpb3jLxrlp8N6CC0asDz4k1T3+TasQL6eOaZTE=
+
+Name: lib/mchange-commons-java.jar
+SHA-256-Digest: s4+cOfvS39/7QOD8W2jKq2zMSU5H/OIU5cSrnjlomrs=
+

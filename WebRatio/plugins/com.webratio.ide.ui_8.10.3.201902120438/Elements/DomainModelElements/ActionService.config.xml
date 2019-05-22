@@ -1,0 +1,20 @@
+<Element name="ActionService" lowerName="action service" pluralLowerName="action services">
+	<Description>
+		TODO
+	</Description>
+	<ActionRef label="Help"/>
+	<PropertyCategory name="General">
+		<Property label="Action Definition">
+	    	TODO:ActionService@Action Definition
+		</Property>
+		<Property label="Path">
+	    	TODO:ActionService@Path
+		</Property>
+		<Property label="Method">
+	    	TODO:ActionService@Method
+		</Property>
+		<Property label="Roles">
+	    	TODO:ActionService@Roles
+		</Property>
+	</PropertyCategory>
+</Element>

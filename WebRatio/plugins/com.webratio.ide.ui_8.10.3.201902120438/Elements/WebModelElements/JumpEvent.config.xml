@@ -1,0 +1,36 @@
+<Element name="JumpEvent" lowerName="jump event" pluralLowerName="jump events">
+	<Description>
+		Lets the navigation jump away to another location, without modeling an explicit Flow.
+		The reached location can be a Landing Event
+		(forward jump) or the last visited Jump Event (backward jump). In both cases, parameter values
+		can be passed to the target location.
+	</Description>
+	<ActionRef label="Add Property" />
+	<ActionRef label="Localize" />
+	<ActionRef label="Surround with Area" />
+	<ActionRef label="Generate Logic Descriptors Only"/>
+	<ActionRef label="Generate Selection"/>
+	<ActionRef label="Find Model Problems"/>
+	<PropertyCategory name="General">
+		<PropertyRef label="Identifier" />
+		<PropertyRef label="Name" />
+		<Property label="Backward">
+			If checked, the a backward jump is performed instead of a forward jump.
+		</Property>
+		<Property label="Landing Event">
+			The destination Landing Event
+			to jump to when not in "backward" mode.
+			&lt;p&gt;The Select button <Button name="Browse"/> opens the 
+			&lt;a href="/Reference/WizardsAndDialogs/ElementSelectionDialog"/&gt; 
+			to select the target landing event.&lt;/p&gt;
+			<Button name="Clear"/>
+		</Property>
+		<Property label="Ignore History">
+			If checked, the history of the previously visited jumps will not be preserved
+			during the navigation (i.e. a backward jump will not be possible).
+		</Property>
+		<Property label="Back Target">
+	    	The element to which the <ElementRef /> goes back.
+		</Property>
+	</PropertyCategory>
+</Element>

@@ -1,0 +1,134 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.helpers.MultiFileHelper
+import com.webratio.generator.helpers.ModulesHelper
+import com.webratio.generator.helpers.ModulesExpandStrategy
+import com.webratio.generator.io.IOHelper
+import com.webratio.generator.contributors.GeneratorContributorHelper
+import com.webratio.generator.TimeLogger
+
+eventSocketClient.sendBeginTask("Project", 100)
+
+/* PARSE 1 - as is */
+def projectElement = parseXMLFile(new File(projectPath)).rootElement
+wr.project = projectElement; 
+
+/* Simplify multi-file ids */
+MultiFileHelper multiFileHelper = new MultiFileHelper(projectElement)
+multiFileHelper.simplifyIds(projectElement)
+TimeLogger.worked("MultiFileHelper")
+
+/* Apply the running profiles if any */
+wr.helpers.runningProfiles.applyCurrentProfiles(projectElement)
+
+/* Execute the expander contributors */
+def contributions = GeneratorContributorHelper.getExpanderContributors()
+if (!contributions.isEmpty()) {
+	eventSocketClient.sendTaskDetails("Project", "Waiting for file writes")
+	wr.outputManager.waitForAllWrites()
+	eventSocketClient.sendTaskDetails("Project", "")
+	contributions.each{it.expand(wr)}
+}
+TimeLogger.worked("ExpanderContributors")
+
+/* Replace some modules statically */
+ModulesHelper modulesHelper = new ModulesHelper(projectElement, wr.projectType)
+modulesHelper.replaceModules()
+wr.generationExceptions.addAll(modulesHelper.getGenerationExceptions())
+TimeLogger.worked("ModulesHelper")
+
+/* Store away the id transformation maps */
+wr.multiFileIdConversionMap = new File(wr.projectDir, "/.Temp~/.multiFileIdConversionMap")
+IOHelper.serializeMap(multiFileHelper.getIdConversionMap(), wr.multiFileIdConversionMap)
+wr.modulesIdConversionMap = new File(wr.projectDir, "/.Temp~/.modulesIdConversionMap")
+IOHelper.serializeMap(modulesHelper.getIdConversionMap(), wr.modulesIdConversionMap)  
+
+/* Write to file */
+writeProjectToFile(projectElement.document, new File(projectPath))
+
+multiFileHelper = null
+modulesHelper = null
+projectElement = null
+
+/* PARSE 2 - simplified ids, replaced modules */
+def parseResult = parseWebProject(new File(projectPath), null)
+wr.project = parseResult.document.rootElement
+wr.elementRetriever = parseResult.index
+wr.project.addAttribute("outputPath", wr.outputPath)
+TimeLogger.worked("Rebind")
+def bindingKeys = new HashSet(binding.getVariables().keySet())
+
+/* Auto-expand pages */
+for (page in getAllTopPages()) {
+	expandPage(page)
+}
+
+/* Auto-expands components */
+for (viewComp in getAllViewComponents()) {
+	try {
+		expandComponent(viewComp)
+	} catch (Throwable t) {
+		throw new Exception("Unable to expand view component " + viewComp["name"] + "[" + viewComp["id"] + "]", t)
+	}  
+}
+for (operation in getAllOperations()) {
+	try {
+		expandComponent(operation)
+	} catch (Throwable t) {
+		throw new Exception("Unable to expand operation " + operation["name"] + "[" + operation["id"] + "]", t)
+	}
+}
+
+/* Add a convenience "sbuTypeName" to attributes (Feature #1171) */
+def subTypeNames = [:]
+def subTypes = wr.project.selectNodes("DomainModel/SubType")
+if (!subTypes.empty) {
+	for (subType in subTypes) {
+		subTypeNames[subType["id"]] = subType["name"]
+	}
+	for (dclass in wr.project.selectNodes("DomainModel//Class")) {
+		for (attr in dclass.elements("Attribute")) {
+			if (attr["subType"] != "") {
+				def subTypeName = subTypeNames[attr["subType"]]
+				attr["subTypeName"] = subTypeName
+			}
+		}
+	}
+}
+
+/* Add a defualt locale if none is present */
+if (wr.project.selectNodes("WebModel/Locale").isEmpty()) {
+	def webModel = wr.project.selectSingleNode("WebModel")
+	def defaultLocale = webModel.addElement("Locale")
+	defaultLocale.addAttribute("id", "defaultlcl")
+	defaultLocale.addAttribute("country", "US")
+	defaultLocale.addAttribute("language", "en")
+	webModel.addAttribute("defaultLocale", "defaultlcl")
+}
+
+def newBindingKeys = new HashSet(binding.getVariables().keySet())
+newBindingKeys.removeAll(bindingKeys)
+newBindingKeys.each{binding.getVariables().remove(it)}
+bindingKeys = newBindingKeys = null
+TimeLogger.worked("AutoExpand")
+
+/* Write to file */
+writeProjectToFile(wr.project.document, new File(projectPath))
+
+/* PARSE 3 - simplified ids, replaced modules, auto-expanded, dynamic modules */
+parseResult = parseExpandWebProject(new File(projectPath), new ModulesExpandStrategy(wr), null)
+wr.project = parseResult.document.rootElement
+wr.elementRetriever = parseResult.index
+wr.project.document.updateReplacements()
+
+/* Update the wr context */
+if (wr.project.selectSingleNode("WebModel") == null) {
+	wr.project.addElement("WebModel")
+}
+
+/* Store away the deploy path */
+org.apache.commons.io.FileUtils.writeStringToFile(new File(wr.projectDir, "/.Temp~/.deployPath"), wr.outputPath)
+TimeLogger.worked("VirtualExpand")
+
+eventSocketClient.sendTaskWorked("Project", 100)
+%]

@@ -1,0 +1,19 @@
+<%
+setHTMLOutput()
+%><html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="WebRatioDocStyle/WebRatioDoc.css" />
+<meta name="author" content="<%=modelDocAuthor%>" />
+<meta name="company" content="<%=modelDocCompanyName%>" />
+<meta name="creator" content="<%=modelDocCreator%>" />
+<title><%=modelDocTitle%></title>
+</head>
+<body>
+<div class="FileHeader">
+	<div class="ProjectName"><%=modelDocTitle%></div>
+	<div class="ProjectRevision"><%=modelDocProjectRevision%></div>
+	<div class="Author"><%=modelDocAuthor%></div>
+	<div class="Company"><%=modelDocCompanyName%></div>
+	<div class="CreationDate"><%=modelDocGenerationDate%></div>
+</div>

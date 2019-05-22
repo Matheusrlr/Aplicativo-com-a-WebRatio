@@ -1,0 +1,45 @@
+  <Element name="ScreenSet" lowerName="screen set"
+		pluralLowerName="screen sets">
+		<Description>
+			A screen set 
+			is a container of screen or, recursively, other sub-screen set, which can be used to 
+			give a hierarchical organization to a app view.
+		</Description>
+
+		<ActionRef label="Add Action" />
+		<ActionRef label="Add Screen" />
+		<ActionRef label="Add Screen Set" />
+		<ActionRef label="Add Toolbar" />
+		<ActionRef label="Add Property" />
+		<ActionRef label="Surround with Screen Set"/>
+		<ActionRef label="Find Model Problems"/>
+		<ActionRef label="Help"/>
+		
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+			<PropertyRef label="Protected" />			
+			<PropertyRef label="Roles" />
+		</PropertyCategory>
+		
+		<PropertyCategory name="Layout">
+			<PropertyRef label="Style" />
+			<PropertyRef label="Page Layout" />
+			<PropertyRef label="Grid Layout"/>
+			<PropertyRef label="Frame Layout"/>
+			<PropertyRef label="Cell Layout"/>
+			<PropertyRef label="Attribute Layout"/>
+			<PropertyRef label="Field Layout"/>
+			<PropertyRef label="Event Layout"/>
+			<PropertyRef label="Error Style Page"/>
+			<PropertyRef label="Expire Style Page"/>
+			<PropertyRef label="Login Style Page"/>
+			<PropertyRef label="Component Configuration"/>
+			<PropertyRef label="Old Resources"/>
+		</PropertyCategory>
+		
+		<PropertyCategory name="Appearance">
+			<PropertyRef label="Show" />
+		</PropertyCategory>
+		
+	</Element>

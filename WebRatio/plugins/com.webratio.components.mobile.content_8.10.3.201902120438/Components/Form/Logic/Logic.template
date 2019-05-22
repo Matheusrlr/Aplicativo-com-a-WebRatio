@@ -1,0 +1,64 @@
+#?delimiters [%, %], [%=, %]
+[% setJSONOutput() 
+
+def fields = component.selectNodes("./Field | ./SelectionField")
+def slots = []
+def labelSlots = []
+def outputSlots = []
+
+%]
+{
+	"service": "wrm.comp.FormService",
+	"fields": [
+		[% fields.eachWithSeparator(",") { component -> %]
+			{
+				"id":"[%= component["id"] %]",
+				"fieldType":"[%= component.getName()%]",
+				"type":"[%= component["type"] %]",
+				[%
+					if (component.getName() == "SelectionField"){
+				%]
+				"preselectValue" : "[%= component["preselectValue"] %]",
+				"splitOutput" : [%= component["splitOutput"] == "true" %],
+					[%
+					}
+				 
+				 	slots.clear()
+				 	labelSlots.clear()
+				 	outputSlots.clear()
+				 	if(component["slotOrder"]){
+				 		slots = getOrderedItems(component["slotOrder"].split(" "))
+						for ( slot in slots ) {
+							if ( slot["label"] == "true" ){
+								labelSlots.push(slot)
+							}
+							if ( slot["output"] == "true" ){
+								outputSlots.push(slot)
+							}
+						}
+					}		
+				%]
+				"labelSlots" : [
+							[%
+								labelSlots.eachWithSeparator(","){ compSlot -> %]
+									{
+										"id" : "[%= compSlot["id"] %]",
+										"value" : "[%= compSlot["value"] %]"							
+									}	
+								[% }
+							%]
+				],
+				"outputSlots" : [
+							[%
+								outputSlots.eachWithSeparator(","){ compSlot -> %]
+									{
+										"id" : "[%= compSlot["id"] %]",
+										"value" : "[%= compSlot["value"] %]"							
+									}	
+								[% }
+							%]
+				]
+			}
+		[% } %]
+	]
+}

@@ -1,0 +1,57 @@
+#?delimiters [%, %], [%=, %]
+[%
+import org.apache.commons.lang.math.NumberUtils
+setJSONOutput() 
+
+def classBased = (component["classBased"] == "true" ? true : false)
+%]
+{
+	"service": "wrm.comp.CalendarService",
+	[% if (classBased) {
+		def dClass = component["dataBinding"]
+		def sortAttributes = component.selectNodes("SortAttribute")
+		def ce = component.selectSingleNode("ConditionalExpression")
+		def condExprs = ""
+		if (ce) {
+			condExprs = getConditionalExpressionJson( getById(dClass), ce )
+		}
+		def dateAttribute = component["dateAttribute"]
+		def output = (getOutputAttributes(component, "data.", null) + component["displayAttributes"].tokenize(" ") + dateAttribute)
+		
+		%]
+		"entity": "[%= dClass %]",
+		"dateAttribute": "[%= dateAttribute %]",
+		[% if (ce) { %]
+			"condExprs":  [% printRaw(condExprs) %],
+	 	[% } %]
+		"order": [[% sortAttributes.eachWithSeparator(","){ it -> %] 
+					{
+						"property": "[%= it["attribute"] %]",
+						"reverse": [%= it["order"] == "descending" %]
+					 } 
+				 [% } 
+			 %]],
+		"output": [
+					[% 
+						def importedKeyInOutput
+						def bindName
+						def normalizedId
+						output.eachWithSeparator(","){ it -> 
+							importedKeyInOutput = (it.indexOf('_') != -1 ? true : false)
+							normalizedId = (importedKeyInOutput ? it.replace("_",".") : it)
+							bindName =  (normalizedId.indexOf('.') != -1 ? getAttributeExpressionId(normalizedId) : normalizedId )
+						 	%] 
+								{
+									"ref": "[%= normalizedId %]",
+									"viewName": "[%= getFieldName(bindName) %]",
+									"bindName": [% if (importedKeyInOutput) { %] "[%= it %]" [% } else { %] "[%= bindName %]" [% } %]
+								}
+			 			[% } 
+			 		%]
+		 		],
+	[% } %]
+	"classBased": [%= classBased %],
+	"shortWeekdays": [%= (component["shortWeekdays"] == "true" ? true : false) %],
+	"shortMonths": [%= (component["shortMonths"] == "true" ? true : false) %],
+	"yearsBlockSize": [%= NumberUtils.toInt(component["years"], 5) %]
+}

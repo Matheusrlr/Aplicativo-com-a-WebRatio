@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="mfStartupContributors" name="MF Startup Contributors" schema="schema/mfStartupContributors.exsd"/>
+  <extension point="org.eclipse.ui.actionSets">
+    <actionSet id="com.webratio.commons.startup.actionSet" label="WebRatio" visible="true">
+      <action class="com.webratio.commons.startup.internal.actions.ResetActivationAction" icon="icons/full/ctool16/reset_license.png" id="com.webratio.commons.startup.actions.ResetActivationAction" label="Reset License Activation" menubarPath="help/helpEnd2" tooltip="Reset License Activation"/>
+      <action class="com.webratio.commons.startup.internal.actions.LicenseAction" icon="icons/full/ctool16/license.png" id="com.webratio.commons.startup.actions.LicenseAction" label="License Information" menubarPath="help/helpEnd2" tooltip="License Information"/>
+    </actionSet>
+  </extension>
+  <extension point="org.eclipse.ui.preferencePages">
+    <page id="com.webratio.commons.startup.preferences.GeneralPreferencePage" class="com.webratio.commons.startup.preferences.GeneralPreferencePage" name="WebRatio"/>
+    <!-- TODO:RESTORE #8691
+    <page category="com.webratio.commons.startup.preferences.GeneralPreferencePage" class="com.webratio.commons.startup.preferences.StartupPreferencePage" id="com.webratio.commons.startup.preferences.StartupPreferencePage" name="Activation"/>
+    -->
+    <page category="com.webratio.commons.startup.preferences.GeneralPreferencePage" class="com.webratio.commons.startup.preferences.UsageStatisticsPreferencePage" id="com.webratio.commons.startup.preferences.UsageStatisticsPreferencePage" name="Usage Statistics"/>
+  </extension>
+  <!--
+  BEGIN DEBUG (this is used for debug)
+  -->
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="WRUIStartupPlugin.commands.category"
+            name="WRUIStartupPlugin Commands Category">
+      </category>
+      <command
+            categoryId="WRUIStartupPlugin.commands.category"
+            id="WRUIStartupPlugin.commands.unscrambleCommand"
+            name="Unscramble Command">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="com.webratio.commons.startup.handlers.UnscrambleHandler"
+            commandId="WRUIStartupPlugin.commands.unscrambleCommand">
+      </handler>
+   </extension>
+  <!--
+  END DEBUG (this is used for debug)
+  -->
+</plugin>

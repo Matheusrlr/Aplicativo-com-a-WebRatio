@@ -1,0 +1,34 @@
+Manifest-Version: 1.0
+Export-Package: org.springframework.beans,org.springframework.beans.an
+ notation,org.springframework.beans.factory,org.springframework.beans.
+ factory.access,org.springframework.beans.factory.access.el,org.spring
+ framework.beans.factory.annotation,org.springframework.beans.factory.
+ config,org.springframework.beans.factory.groovy,org.springframework.b
+ eans.factory.parsing,org.springframework.beans.factory.serviceloader,
+ org.springframework.beans.factory.support,org.springframework.beans.f
+ actory.wiring,org.springframework.beans.factory.xml,org.springframewo
+ rk.beans.propertyeditors,org.springframework.beans.support
+Require-Bundle: com.webratio.commons.lib.spring.core
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/spring-beans.jar
+Bundle-Version: 4.2.4
+Bundle-Name: WebRatio 3rd Party Library - Spring Beans
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.spring.beans
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: QbXGFD48MwW7ZCOC8lr9DDQJGwdVWssqwc2ElzRjb5E=
+
+Name: lib/spring-beanssrc.zip
+SHA-256-Digest: K8BqItKEqvBMT7XTHxCONB8gdMIeR6yclqeI2DIP0Mc=
+
+Name: lib/spring-beans.jar
+SHA-256-Digest: 1Hz0tClJZiOWAMjgROVXZG+xOdrnWPhXSU7hwaseIEY=
+

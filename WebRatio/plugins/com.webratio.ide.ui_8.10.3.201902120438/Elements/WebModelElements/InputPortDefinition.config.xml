@@ -1,0 +1,37 @@
+<Element name="InputPortDefinition" lowerName="input port definition" pluralLowerName="input port definitions">
+	<Description>
+		An Input Port Definition
+		is the entry point of the model defined by a Module Definition or Action Definition.
+		Each Input Port Definition is referenced by a corresponding Input Port on the actual Module or,
+		implicitly, by an actual Action.
+		&lt;p&gt;
+		All parameters added to the definition are made available on the referencing Input Port or Action
+		and can be bound to external elements.
+		&lt;/p&gt;
+	</Description>
+	<ActionRef label="Add Navigation Flow"/>
+	<ActionRef label="Add Data Flow"/>
+	<ActionRef label="Add Property"/>
+	<ActionRef label="Convert To..."/>
+	<ActionRef label="Localize"/>
+	<ActionRef label="Surround with Area"/>
+	<ActionRef label="Surround with Operation Group"/>
+	<ActionRef label="Open Generated Code"/>
+	<ActionRef label="Generate Logic Descriptors Only"/>
+	<ActionRef label="Generate Selection"/>
+	<ActionRef label="Find Model Problems"/>
+	<ActionRef label="Help"/>
+	<PropertyCategory name="General">
+		<PropertyRef label="Identifier"/>
+		<PropertyRef label="Name"/>
+		<PropertyRef label="Custom Descriptor"/>
+	</PropertyCategory>
+	<PropertyCategory name="Appearance">
+		<Property label="Icon">
+			A distinctive icon displayed in the diagram and in the outline.
+		</Property>
+		<Property label="Show All Parts">
+			If checked, all parts belonging to this port definition will be displayed.
+		</Property>
+	</PropertyCategory>
+</Element>

@@ -1,0 +1,30 @@
+Manifest-Version: 1.0
+Export-Package: javassist,javassist.bytecode,javassist.bytecode.analys
+ is,javassist.bytecode.annotation,javassist.bytecode.stackmap,javassis
+ t.compiler,javassist.compiler.ast,javassist.convert,javassist.expr,ja
+ vassist.runtime,javassist.scopedpool,javassist.tools,javassist.tools.
+ reflect,javassist.tools.rmi,javassist.tools.web,javassist.util,javass
+ ist.util.proxy
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/javassist.jar
+Bundle-Version: 3.20.0
+Bundle-Name: WebRatio 3rd Party Library - Javassist
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.javassist
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: lib/javassist.jar
+SHA-256-Digest: 12kQYvt3nCOBZAyPcqy6LCOHOwHCQ4ZtQcFdxMiEjqI=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: iUPrqF/0DdE9YEgarDNhWO9CtiZYLtvuiKtgSq8LVD0=
+
+Name: lib/javassistsrc.zip
+SHA-256-Digest: 8Xiu3HjEtNKd7dq/1I+VOMRvvtjb82LK2jnAyVjkoMM=
+

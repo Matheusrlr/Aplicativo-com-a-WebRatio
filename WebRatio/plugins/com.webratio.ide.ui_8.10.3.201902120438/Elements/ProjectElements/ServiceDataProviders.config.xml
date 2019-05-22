@@ -1,0 +1,233 @@
+
+<Element name="ServiceDataProviders" lowerName="service/data providers" pluralLowerName="service/data providers">
+	<Description>
+		The Service/Data Providers
+		provide data, like the databases, or provide services, like the SMTP Server and Web Service Provider, that
+		are needed to the application to be completely working.
+		</Description>
+	<ActionRef label="Add Database" />
+	<Action label="Add SMTP Server">
+		Adds a new &lt;a href="/Reference/ElementsReference/ProjectElements/ServiceDataProviders#SMTPServer"&gt;SMTP Server&lt;/a&gt;
+		to the service/data providers. It opens the New SMTP Server Wizard to create the new server.
+	</Action>
+	<Action label="Add Cookie Storage Provider">
+		Adds a new &lt;a href="/Reference/ElementsReference/ProjectElements/ServiceDataProviders#CookieStorageProvider"&gt;Cookie Storage Provider&lt;/a&gt;
+		to the service/data providers.
+	</Action>
+	<Action label="Add Web Service Provider">
+		Adds a new &lt;a href="/Reference/ElementsReference/ProjectElements/ServiceDataProviders#WebServiceProvider"&gt;Web Service
+		Provider&lt;/a&gt;
+		to the service/data providers.
+		</Action>
+	<SubElement name="Database" lowerName="database" pluralLowerName="databases">
+		<Description>
+			A Database is a data source
+			hosting the content of the Web application.
+			</Description>
+
+		<ActionRef label="Remove Mapping" />
+		<ActionRef label="Add Property" />
+		<ActionRef label="Localize" />
+		<Action label="Refresh">
+			Refreshes the database.
+			</Action>
+		<Action label="Synchronize">
+			WebRatio allows to reconcile the structure model of a
+			project with its mapping database.
+			Opens the &lt;a href="/Reference/WizardsAndDialogs/SynchronizeWizard"/&gt; </Action>
+		<Action label="Generate SQL">
+			Generates the SQL of the selected database using the mapping declared on the datamodel elements.
+			Opens the &lt;a href="/Reference/WizardsAndDialogs/SQLWizard"/&gt; </Action>
+		<Action label="Execute SQL">
+			Execute a SQL script on the selected database.
+			Opens the &lt;a href="/Reference/WizardsAndDialogs/ExecuteSQLScriptDialog"/&gt; </Action>
+		<ActionRef label="Find Model Problems" />
+		<ActionRef label="Help" />
+		<PropertyCategory name="Mapping">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+			<PropertyRef label="Type" name="DB Type" />
+			<Property label="Sample URL">
+				A reference JDBC URL.
+				</Property>
+			<PropertyRef label="URL" />
+			<PropertyRef label="Username" />
+			<PropertyRef label="Password" />
+			<Property label="Default Schema">
+				The database default schema.
+				</Property>
+		</PropertyCategory>
+		<PropertyCategory name="Advanced">
+			<PropertyRef label="Schema Mask" />
+			<PropertyRef label="Table Mask" />
+			<PropertyRef label="Show SQL in Console" />
+			<PropertyRef label="Read Indexes" />
+			<PropertyRef label="Read Procedures" />
+			<PropertyRef label="Table Export Prefix" />
+			<PropertyRef label="View Export Prefix" />
+			<PropertyRef label="Disable View Export Suffix" />
+		</PropertyCategory>
+		<PropertyCategory name="Runtime">
+			<PropertyRef label="JNDI Name" />
+			<PropertyRef label="Connections" />
+			<PropertyRef label="Validate Connection" />
+			<PropertyRef label="Validation Query" />
+			<PropertyRef label="Transaction Isolation" />
+			<PropertyRef label="Type" name="DB Type" />
+			<PropertyRef label="URL" />
+			<PropertyRef label="Username" />
+			<PropertyRef label="Password" />
+			<PropertyRef label="Connection Provider" />
+			<PropertyRef label="Ignore Schema" />
+		</PropertyCategory>
+	</SubElement>
+	<SubElement name="SMTPServer" lowerName="SMTP server" pluralLowerName="SMTP servers">
+		<Description>
+			An SMTP Server is
+			the configuration of the server that permits the management of the e-mails.
+			The server will take care of delivering messages on behalf of the user.
+			</Description>
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+			<Property label="JNDI Name">
+				The JNDI name identifying the SMTP Server
+				</Property>
+			<Property label="Host">
+				The host of the SMTP Server
+				</Property>
+			<Property label="Port">
+				The port of the SMTP Server. Defaults to 25.
+				</Property>
+			<Property label="Use SSL">
+				If checked, the SSL protocol is used for connecting 
+				to the host.
+				</Property>
+			<Property label="Default From">
+				A default email address for the sender
+				</Property>
+			<Property label="Username">
+				The username used to access the SMTP Server
+				</Property>
+			<Property label="Password">
+				The password used to access the SMTP Server. If checked, the
+				password is encrypted.
+				</Property>
+		</PropertyCategory>
+	</SubElement>
+	<SubElement name="CookieStorageProvider" lowerName="Cookie Storage Provider" pluralLowerName="Cookie Storage Providers">
+		<Description>
+			A Cookie Storage Provider is
+			the configuration of the cookie used to store session data on client.
+			</Description>
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+			<Property label="Cookie Name">
+		        Specifies the name of the cookie.
+		        The cookie name must be a valid token according to RFC-2616.
+	        </Property>
+			<Property label="Domain">
+		        Specifies the domain the cookie belongs to.
+		        The domain name, if specified, must respect the RFC-2109.
+	        </Property>
+	        <Property label="Timeout">
+		        Specifies the max age of the cookie in minutes (default 30 days).
+		        A negative value (-1) means that the cookie is not stored persistently and will be deleted when the Web browser exits.
+	        </Property>
+	        <Property label="Encryption Key">
+		        The private key used to encrypt the cookie content.
+	        </Property>
+		</PropertyCategory>
+	</SubElement>
+	<SubElement name="WebServiceProvider" lowerName="Web service provider" pluralLowerName="Web service providers">
+		<Description>
+			A Web Service Provider
+			exposes a set of Web service operations.
+			</Description>
+		<Action label="Refresh XML Definitions">
+			WebRatio allows to refresh the local cache of the remote XML definitions.
+		</Action>
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+			<Property label="File">
+				The workspace file of the WSDL describing the public interface of the Web service operations. 
+				</Property>
+			<Property label="URI">
+				The endpoint URI of the WSDL describing the public interface of the Web service operations. 
+				</Property>
+			<Property label="Resource Type">
+				Indicates whether the referenced resource is a WSDL or a WADL file.
+			</Property>					
+		</PropertyCategory>
+	</SubElement>
+	<SubElement name="ServiceDataProvider" lowerName="Service/Data Provider" pluralLowerName="Service/Data Providers">
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+			<Property label="Type">
+				The provider's type.
+			</Property>	
+			<Property label="Platform">
+				The Platform for which the Notification Provider sends notifications.
+			</Property>	
+			<Property label="API Key">
+				The string representing the public API key.
+			</Property>	
+			<Property label="APNS Certificate">
+				Allows to select a certificate and copy it in a project folder.
+			</Property>	
+			<Property label="APNS Certificate Passphrase">
+				The password used to unlock the APNS Certificate.
+			</Property>				
+		</PropertyCategory>
+	</SubElement>
+
+
+	<SubElement name="XsdProvider" lowerName="XSD provider" pluralLowerName="XSD providers">
+		<Description>
+			An XSD Provider is
+			the container of the XSD resources. 
+			</Description>
+		<Action label="Synchronize XSD">
+			WebRatio allows to reconcile the structure model of a project with the XSD elements and types.
+		</Action>	
+		<Action label="Refresh XML Definitions">
+			WebRatio allows to refresh the local cache of the remote XML definitions.
+		</Action>	
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+		</PropertyCategory>
+	</SubElement>
+	
+	
+	<SubElement name="XsdResource" lowerName="XSD resource" pluralLowerName="XSD resources">
+		<Description>
+			An XSD Resource
+			represents an XSD located under the local file-system or remotely via URI. 
+		</Description>
+		<Action label="Synchronize XSD">
+			WebRatio allows to reconcile the structure model of a project with the XSD elements and types.
+		</Action>	
+		<Action label="Refresh XML Definitions">
+			WebRatio allows to refresh the local cache of the remote XML definitions.
+		</Action>
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+			<Property label="Type">
+				Indicates the kind of the resource: XML Schema means that the resource is an XML schema, 
+				Embedded WSDL Schema means that the resource is a WSDL document and the schema is embedded within it (wsdl:definition/wsdl:types/xsd:schema).    
+			</Property>
+			<Property label="File">
+				The workspace schema file. 
+			</Property>
+			<Property label="URI">
+				The schema endpoint URI. 
+			</Property>			
+		</PropertyCategory>
+	</SubElement>
+
+</Element>

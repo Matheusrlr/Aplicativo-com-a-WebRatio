@@ -1,0 +1,47 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+def componentId = component["id"]
+def domainClass = getByIdOptional(component["dataBinding"])
+def useClass = (domainClass != null)
+
+%>
+<OutputParameters>
+<%
+   if(!domainClass){
+      def keySlots = component.selectNodes("KeySlot")
+      if(keySlots.empty){
+          %><OutputParameter name="<%=componentId%>.key" mandatory="false" label="Shown Objects" providedByForm="true"/><%
+          %><OutputParameter name="<%=componentId%>Checked" mandatory="false" label="Checked Objects" providedByForm="true"/><%
+      }else{
+        for(keySlot in keySlots){
+          %><OutputParameter name="<%= keySlot["id"]%>" mandatory="true" label="Shown Objects [<%= keySlot["name"]%>]" providedByForm="true"/><%
+          %><OutputParameter name="<%= keySlot["id"]%>Checked" mandatory="true" label="Checked Objects  [<%= keySlot["name"]%>]" providedByForm="true"/><% 
+        }  
+      }
+   }
+%> 
+<% for (field in component.selectNodes("Field")) { %>
+  <OutputParameter name="<%=field["id"]%>" refId="<%=field["id"]%>" mandatory="<%=!useClass && field["modifiable"]%>" label="<%=field["name"]%>" providedByForm="true"/>   
+<% }  %>
+
+<% for (field in component.selectNodes("SelectionField")) { %>
+  <% if (field["splitOutput"] == "true") {%>
+      <% for (slot in field.selectNodes("Slot[@output = 'true']")) { %>
+        <OutputParameter name="<%=slot["id"]%>" refId="<%=field["id"]%>" mandatory="true" label="<%=field["name"]%>[<%=slot["name"]%>]" providedByForm="true"/>
+      <% } %>
+  <% } else {%>
+    <OutputParameter name="<%=field["id"]%>" refId="<%=field["id"]%>" mandatory="<%=!useClass%>" label="<%=field["name"]%>" providedByForm="true"/>
+  <% } %>
+<% }  %>
+
+<%if(domainClass){%>
+   <% for (a in getKeyAttributes(domainClass)) { %>
+      <OutputParameter name="<%=a["id"]%>Key" type="<%=getTypeExpression(domainClass, a, true, false)%>" refId="<%=a["id"]%>" label="Key [<%=a["name"]%>]" providedByForm="true"/>
+      <OutputParameter name="<%=a["id"]%>Checked" type="<%=getTypeExpression(domainClass, a, true, false)%>" refId="<%=a["id"]%>" label="Checked Key [<%=a["name"]%>]" providedByForm="true"/>
+      <OutputParameter name="<%=a["id"]%>Removed" type="<%=getTypeExpression(domainClass, a, true, false)%>" refId="<%=a["id"]%>" label="Removed Key [<%=a["name"]%>]" providedByForm="true"/>
+   <% } %>
+   <OutputParameter name="entityBeans" type="<%=domainClass["id"]%>" refId="<%=domainClass["id"]%>" label="<%=domainClass["name"]%> Objects" providedByForm="true"/>
+ <% } %>
+
+</OutputParameters>

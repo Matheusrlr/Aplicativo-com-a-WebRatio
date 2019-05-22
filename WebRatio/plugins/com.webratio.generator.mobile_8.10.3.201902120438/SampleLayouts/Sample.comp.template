@@ -1,0 +1,6 @@
+#?delimiters [%, %], [%=, %]
+[% setHTMLOutput()
+/*
+ *	Use the AngularJS variable "view" to access to the component
+ */
+%]

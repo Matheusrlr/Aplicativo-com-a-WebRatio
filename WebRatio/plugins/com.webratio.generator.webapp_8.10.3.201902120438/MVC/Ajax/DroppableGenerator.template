@@ -1,0 +1,38 @@
+#?delimiters [%, %], [%=, %]
+[% if (element["ajaxDropEnabled"] == "true") { %]
+	[%
+		/* Compute descriptor string */
+		def dropEvent = getById(element, "ajaxDropEvent")
+		def dropFlow = dropEvent.element("NavigationFlow")
+		if (!dropFlow) {
+			throwGenerationException("Drop event has no flow - ${dropEvent}")
+		}
+		def formPostDescriptor = ",,"
+		if (isFormBased(dropEvent.parent.parent)) {
+			formPostDescriptor = "," + getFormBeanName(page) + ",button:" + getEventRuntimeId(dropEvent)
+		}
+		def optionsDescriptor = ""
+		if (dropFlow["ajaxOpenWaitingDialog"] == "true") {
+			def wwOptions = [:]
+			wwOptions["id"] = "\\\"_oldajax_ww\\\""
+			wwOptions["width"] = (dropFlow["ajaxWaitingDialogWidth"] ?: "200")
+			wwOptions["height"] = (dropFlow["ajaxWaitingDialogHeight"] ?: "100")
+			wwOptions["message"] = "\\\"<spring:message code=\"" + (dropFlow["ajaxWaitingDialogMessage"] ?: "ajax.computingRequest") + "\"/>\\\""
+			wwOptions["duration"] = (dropFlow["ajaxWaitingDialogMinDuration"] ?: "1000")
+			wwOptions["className"] = "\\\"" + (dropFlow["ajaxWaitingDialogClassName"] ?: "") + "\\\""
+			optionsDescriptor = ",{\\\"waitWin\\\":{" + wwOptions.collect { "\\\"" + it["key"] + "\\\":" + it["value"] }.join(",") + "}}"
+		}
+		
+		/* Compute hover class name */
+		def hoverClassName = element["ajaxDropHoverClass"] ?: null
+	%]
+	<wr:RequireResource ref="jquery, wr-ui-widgets">
+		<script type="text/javascript">
+			jQuery("#<wr:AjaxUniqueIdentifier context="element" item="item" position="position"/>").wrDroppable({
+				scope: "[%= dropFlow["to"] %]",
+				[% if (hoverClassName) { %]hoverClass: "[%= hoverClassName %]",[% } %]
+				wrAction: "<webratio:Link link="[%= getEventRuntimeId(dropEvent) %]" position="[%= position %]" escapeXml="false"/>[%= formPostDescriptor %][%= optionsDescriptor %]"
+			});
+		</script>
+	</wr:RequireResource>
+[% } %]

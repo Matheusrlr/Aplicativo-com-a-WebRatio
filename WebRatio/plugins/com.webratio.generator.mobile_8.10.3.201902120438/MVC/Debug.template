@@ -1,0 +1,35 @@
+#?delimiters [%, %], [%=, %]
+[%
+setJSOutput()
+
+/* If not deploying sources, do not generate any debug code */
+if (!wr.appConfig.sourceDeployed) {
+	return
+}
+
+def agentUrl = wr.project.valueOf("Property[@name = 'DebugAgentUrl']/@value") ?: null
+%]
+(function() {
+
+	[% if (agentUrl) { %]
+		/* Inject debug agent */
+		(function() {
+			var head = document.getElementsByTagName("HEAD")[0];
+			if (head) {
+				var agentScript = document.createElement("SCRIPT");
+				agentScript.setAttribute("src", "[%= agentUrl %]");
+				head.appendChild(agentScript);
+			}
+		})();
+	[% } %]
+
+	/* Improve logging on some platforms */
+	if (navigator.userAgent.indexOf("Windows Phone ") >= 0) {
+
+		/* Ensure that unexpected errors are logged */
+		window.addEventListener("error", function(event) {
+			console.error("Uncaught error: " + event.message + "\n\tat " + event.filename + ":" + event.lineno + ":" + event.colno);
+		});
+	}
+
+})();

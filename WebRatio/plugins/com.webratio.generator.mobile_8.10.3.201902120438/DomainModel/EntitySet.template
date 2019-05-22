@@ -1,0 +1,73 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.model.domain.ServiceMethodType
+
+/* Find many-to-many associations of all classes */
+def nnAssocs = [] as Set
+for (dclass in dclasses) {
+	for (assoc in getOutgoingAssociations(dclass)) {
+		if (assoc.valueOf("AssociationRole1/@maxCard") == "N" && assoc.valueOf("AssociationRole2/@maxCard") == "N") {
+			nnAssocs.add(assoc)
+		}
+	}
+}
+
+/* Generate entities for all classes */
+for (dclass in dclasses) {
+	printRaw(executeContextTemplate("DomainModel/DomainClassEntity.template", ["dclass": dclass]))
+}
+
+/* Generate entities for all many-to-many associations */
+for (assoc in nnAssocs) {
+	printRaw(executeContextTemplate("DomainModel/AssociationEntity.template", ["assoc": assoc]))
+}
+%]
+
+/* Entity Context */
+$data.EntityContext.extend("ManagementContext", {
+	
+	[% executeWithSeparator(",") { %]
+		
+		[% dclasses.eachWithSeparator(",") { dclass -> %]
+			[%
+				def trackDeletions = isServerMappedDomainClass(dclass, ServiceMethodType.DELETE)
+				def trackedAttrs = getLocalTrackedAttributes(dclass)
+				def trackedRoles = getRemoteTrackedOutgoingRoles(dclass)
+			%]
+			
+			[%= getSetClassInfo(dclass).mappedName.replace(".", "_") %]: {
+				type: $data.EntitySet,
+				elementType: [%= getClassInfo(dclass).mappedName %]
+			}
+			
+			[% if (trackDeletions || !trackedAttrs.isEmpty() || !trackedRoles.isEmpty()) { %],
+				[%= getAuxiliarySetClassInfo(dclass).mappedName.replace(".", "_") %]: {
+					type: $data.EntitySet,
+					elementType: [%= getAuxiliaryClassInfo(dclass).mappedName %]
+				}
+			[% } %]
+		[% } %]
+		
+	[% } { %]
+		
+		[% nnAssocs.eachWithSeparator(",") { assoc -> %]
+			[%
+				def trackChanges = isServerMappedAssociation(assoc)
+			%]
+			
+			[%= getAssociationSetClassInfo(assoc).mappedName.replace(".", "_") %]: {
+				type: $data.EntitySet,
+				elementType: [%= getAssociationClassInfo(assoc).mappedName %]
+			}
+			
+			[% if (trackChanges) { %],
+				[%= getAssociationAuxiliarySetClassInfo(assoc).mappedName.replace(".", "_") %]: {
+					type: $data.EntitySet,
+					elementType: [%= getAssociationAuxiliaryClassInfo(assoc).mappedName %]
+				}
+			[% } %]
+		[% } %]
+		
+	[% } %]
+	
+});

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="operation" version="1.0.0" idPrefix="scju" namePrefix="Schedule Job " label="Schedule Job" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" successFlowSource="true" successFlowTarget="true"> 
+  <Description xml:space="preserve">The Schedule Job component permits to schedule a job.</Description>  
+  <JobProperty attributeName="job" figureDisplayOrder="1"> 
+    <Description xml:space="preserve">Specifies the job to schedule.</Description> 
+  </JobProperty>  
+  <EnumProperty attributeName="schedulePolicy" defaultValue="now" figureDisplayOrder="2"> 
+    <EnumItem value="now" label="Now"/>  
+    <EnumItem value="inXMinutes" label="In X Minutes"/>  
+    <EnumItem value="everyDay" label="Every Day"/>  
+    <EnumItem value="onceAWeek" label="Once a Week"/>  
+    <EnumItem value="onceAMonth" label="Once a Month"/>  
+    <EnumItem value="onceAYear" label="Once a Year"/>  
+    <EnumItem value="specificDate" label="Specific Date"/>  
+    <EnumItem value="everyXSeconds" label="Every X Seconds"/>  
+    <EnumItem value="everyXMinutes" label="Every X Minutes"/>  
+    <EnumItem value="everyXHours" label="Every X Hours"/>  
+    <EnumItem value="custom" label="Custom Cron Expression"/>  
+    <Description xml:space="preserve">Specifies the schedule policy of the job.
+The input parameters exposed by this component are based on the value of this property.</Description> 
+  </EnumProperty>  
+  <OutputDescription xml:space="preserve" name="Job Instance Identifier">The unique identifier of
+the scheduled job instance (group.name), which could be used later to force the cancellation of the job.</OutputDescription>
+  <InputDescription xml:space="preserve" name="Hours">For schedule policies requiring an exact time, specifies the hours part of the time
+as a number in the range 0-23. For the &lt;b&gt;Every X Hours&lt;/b&gt; policy, specifies
+the number of hours	between executions of the job.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Minutes">For schedule policies requiring an exact time, specifies the minutes part of the time
+as a number in the range 0-59. For the &lt;b&gt;Every X Minutes&lt;/b&gt; policy, specifies
+the number of minutes between executions of the job.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Seconds">For schedule policies requiring an exact time, specifies the seconds part of the time
+as a number in the range 0-59. For the &lt;b&gt;Every X Seconds&lt;/b&gt; policy, specifies
+the number of seconds between executions of the job.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Day of Week">For the &lt;b&gt;Once a Week&lt;/b&gt; policy, specifies the day of the week on which
+to execute the job as a three-character uppercase string (MON, TUE, WED, THU, FRI, SAT, SUN).</InputDescription>  
+  <InputDescription xml:space="preserve" name="Day">For policies requiring it, specifies a day of the month as a number in the range 1-31.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Month">For policies requiring it, specifies a month.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Year">For policies requiring it, specifies a year as a positive number.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Timestamp">For the &lt;b&gt;Specific Date&lt;/b&gt; policy permits to specify all the fields (year, month, day, etc..)
+as a single value.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Cron Expression">For the &lt;b&gt;Custom Cron Expression&lt;/b&gt; policy permits to specify
+a Cron expression (compatible with the Quartz format).</InputDescription>  
+  <InputDescription xml:space="preserve" name="Parameter-Name">The input parameter associated to one of the parameters
+defined for the referenced job.</InputDescription> 
+</Component>

@@ -1,0 +1,44 @@
+  <Element name="HybridModuleDefinition" lowerName="hybrid module definition" pluralLowerName="hybrid module definitions">
+	<Description>
+		An Hybrid Module Definition
+		is a collection of reusable interaction flow model, including view containers and
+		actions.
+	</Description>
+	<ActionRef label="Add Page" />
+	<ActionRef label="Add Property" />
+	<ActionRef label="Generate Logic Descriptors Only"/>
+	<ActionRef label="Generate Selection"/>
+	<ActionRef label="Find Model Problems"/>
+	<ActionRef label="Help"/>
+	<PropertyCategory name="General">
+		<PropertyRef label="Identifier" />
+		<PropertyRef label="Name" />
+		<PropertyRef label="Landmarks" />
+		<Property label="Content Page" >
+			Defines the page which contributes to the content of the page where the Module has been placed. It can be only one per hybrid module.   
+		</Property>
+		<PropertyRef label="Running Profiles" />
+	</PropertyCategory>
+	<PropertyCategory name="Layout">
+		<Property label="Single Layout">
+			If checked the layout of this module is generated once ignoring where 
+			the module referencing it are placed. Note that single layout feature
+			is available only if the module is an hybrid module without a content page.
+		</Property>
+		<PropertyRef label="Style" />
+		<PropertyRef label="Page Layout" />
+		<PropertyRef label="Grid Layout"/>
+		<PropertyRef label="Frame Layout"/>
+		<PropertyRef label="Cell Layout"/>
+		<PropertyRef label="Attribute Layout"/>
+		<PropertyRef label="Field Layout"/>
+		<PropertyRef label="Event Layout"/>
+		<PropertyRef label="Component Configuration"/>
+		<PropertyRef label="Old Resources"/>
+	</PropertyCategory>
+	<PropertyCategory name="Appearance">
+		<Property label="Icon">
+			A distinctive icon displayed by all the module referencing this component.
+		</Property>
+	</PropertyCategory>
+</Element>

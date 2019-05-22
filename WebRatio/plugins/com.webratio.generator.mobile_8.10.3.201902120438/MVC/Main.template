@@ -1,0 +1,69 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.io.IOHelper
+
+eventSocketClient.sendBeginTask("MVC", 6 + (1 + 200 /* Layout.template */))
+
+wr.usedStyles = [] as Set
+wr.bareWebapp = (wr.project.valueOf("Property[@name = 'BareWebapp']/@value") == "true")
+wr.debugMode = false
+
+def resourceRegistry = createResourceRegistry()
+
+/* Generate layout files */
+executeContextTemplate("MVC/Layout.template", ["resourceRegistry": resourceRegistry])
+eventSocketClient.sendTaskWorked("MVC", 1)
+
+/* Generate a script for bootstrapping the MVC */
+processOutputFile("www/app/bootstrap.js", "bootstrap script", wr.project, { outputFile ->
+	outputFile.writeAsync(executeContextTemplate("MVC/Bootstrap.template", ["resourceRegistry": resourceRegistry]), "UTF-8")
+})
+eventSocketClient.sendTaskWorked("MVC", 1)
+
+/* Generate a script for introducing debugging aids */
+processOutputFile("www/app/debug.js", "debug script", wr.project, { outputFile ->
+	def debugOutput = executeContextTemplate("MVC/Debug.template")
+	if (debugOutput.trim().length() > 0) {
+		outputFile.writeAsync(debugOutput, "UTF-8")
+		wr.debugMode = true
+	}
+})
+eventSocketClient.sendTaskWorked("MVC", 1)
+
+/* Generate the main index.html file */
+processOutputFile("www/index.html", "index file", wr.project) { indexHtmlFile ->
+	def output = executeContextTemplate("MVC/IndexHtml.template", ["resourceRegistry": resourceRegistry])
+	indexHtmlFile.writeAsync(serializeHTML(output), "UTF-8")
+}
+wr.requiredLayoutResources = resourceRegistry.getEntries().collect { it.resource }
+eventSocketClient.sendTaskWorked("MVC", 1)
+
+/* Copy sub-folders of used styles */
+processOutputFile("www", "style files", wr.project) { outputDir ->
+	
+	/* Collect all used styles, ensuring that MobileDefault is first */
+	def usedStyleList = []
+	if (wr.usedStyles.remove("MobileDefault")) {
+		usedStyleList.add("MobileDefault")
+	}
+	usedStyleList.addAll(wr.usedStyles)
+	
+	for (style in usedStyleList) {
+		def styleDir = getStyleDirectory(style)
+		def styleOutputDirPath = getStyleOutputDirectoryPath(style)
+		if (styleOutputDirPath) {
+			IOHelper.copyDirectory(new java.io.File(styleDir, styleOutputDirPath), new java.io.File(outputDir, styleOutputDirPath), IOHelper.CVS_AWARE_FILTER, IOHelper.THUMBS_FILE_FILTER)
+		} else {
+			IOHelper.copyDirectory(styleDir, outputDir, IOHelper.STYLE_DIR_FILTER, IOHelper.CVS_AWARE_FILTER, IOHelper.STYLE_FILE_FILTER, IOHelper.THUMBS_FILE_FILTER)
+		}
+	}
+}
+eventSocketClient.sendTaskWorked("MVC", 1)
+
+/* If generating as a bare webapp, copy "WebappContent" directory */
+if (wr.bareWebapp) {
+	def webappContentDir = wr.locateResourceFile("MVC/WebappContent")
+	IOHelper.copyDirectory(webappContentDir, wr.outputManager.getFile("www"), [IOHelper.CVS_AWARE_FILTER], [])
+}
+eventSocketClient.sendTaskWorked("MVC", 1)
+%]

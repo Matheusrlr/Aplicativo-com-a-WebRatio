@@ -1,0 +1,9 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+
+def unitId = unit["id"]
+%>
+<Descriptor service="com.mycompany.units.MyUnitService">
+<% printRaw(serializeXML(unit, false)) %>
+</Descriptor>

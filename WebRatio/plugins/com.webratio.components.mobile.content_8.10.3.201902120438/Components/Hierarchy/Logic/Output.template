@@ -1,0 +1,50 @@
+#?delimiters [%, %], [%= ,%]
+[%
+setXMLOutput()
+
+def getLevelFragment(elem) {
+	if (elem.name != "Hierarchy") {
+		return getLevelFragment(elem.parent) + "." + elem["id"] + "data"
+	}
+	return "data"
+}
+%]
+<OutputParameters>
+	[% printLevel(component) %]
+</OutputParameters>
+[%
+	def printLevel(level) {
+		def levelName = level["name"]
+		def levelPrefix = getLevelFragment(level)
+		def levelDClassId = level["dataBinding"]
+		def levelAttributes = getAttributes(getById(levelDClassId))
+		def levelRightRoles = getOutgoingRoles(getById(levelDClassId)).findAll{!isMany(it)}
+		def innerLevels = level.selectNodes("HierarchyLevel")
+		for (a in levelAttributes) {
+			if (isOutputBindableAttribute(a)) { %]
+				<OutputParameter
+					name="data.[%= levelPrefix + "." + a["id"] %]"
+					refId="[%= a["id"] %]"
+					type="[%= getTypeExpression(getById(levelDClassId), a, true, false) %]"
+					label="[%= getLabel(a) + " (" + levelName + ")" %]"
+					possiblyLarge="true"
+				/>
+			[% }
+		}
+		for (r in levelRightRoles) {
+			def keyAttrs = getKeyAttributes(getTargetDomainClass(r))
+			for (keyAttr in keyAttrs) { %]
+				<OutputParameter
+					name="data.[%= levelPrefix + "." + r["id"] + "_" + keyAttr["id"] %]"
+					refId="[%= r["id"] %]"
+					label="[%= getLabel(r) + "." + getLabel(keyAttr) + " (" + levelName + ")" %]"
+					mandatory="false"
+					possiblyLarge="true"
+				/>
+			[% }
+		} %]
+		[% for (innerLevel in innerLevels) {
+			printLevel(innerLevel)
+		} %]
+	[% } 
+%]

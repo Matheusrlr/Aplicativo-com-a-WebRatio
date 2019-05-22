@@ -1,0 +1,16 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+%>
+<OutputParameters>
+    <% for (par in component.selectNodes("StoredProcedureParameter[@direction  = 'output' or @direction  = 'inOutput']")) { %>
+        <OutputParameter name="<%=par["id"]%>" label="<%= par["name"]%>"/>
+    <% } %>
+	<% for (rs in component.selectNodes("OutputResultSet")) { %>
+		<% for (op in rs.selectNodes("OutputParameter")) { %>
+			<OutputParameter name="<%=op['id']%>" label="<%=rs['name']%>.<%=op['name']%> (Array)" />
+		<% } %>
+  	<% } %> 
+	<OutputParameter name="errorMessage" label="Error Message"/>
+	<OutputParameter name="exception" label="Exception"/>
+</OutputParameters>

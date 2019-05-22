@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="operation" formBased="false" idPrefix="eru" namePrefix="Error Response " label="Error Response" onlyForServiceView="true"  dataFlowTarget="true" navigationFlowTarget="true"  errorFlowTarget="true"  successFlowTarget="true"> 
+  <EnumProperty label ="Response Content Type" attributeName="contentType" emptyInheritedLabel="XML" defaultValue="XML" figureDisplayOrder="1" hideFigureWhenEmpty="true">
+  	<EnumItem value="XML" label="XML" />
+	<EnumItem value="JSON" label = "JSON" />  	
+  	<Description>The response content type.</Description>
+  </EnumProperty>
+
+  <EnumProperty label="Status Code" attributeName="statusCode" emptyInheritedLabel="500 - INTERNAL SERVER ERROR" defaultValue="500" figureDisplayOrder="2" hideFigureWhenEmpty="true">
+    <EnumItem value="400" label="400 - BAD REQUEST" />
+    <EnumItem value="401" label="401 - UNAUTHORIZED" />
+    <EnumItem value="403" label="403 - FORBIDDEN" />
+    <EnumItem value="404" label="404 - NOT FOUND" />
+    <EnumItem value="405" label="405 - METHOD NOT ALLOWED" />
+    <EnumItem value="406" label="406 - NOT ACCEPTABLE" />
+    <EnumItem value="407" label="407 - PROXY AUTHENTICATION" />
+    <EnumItem value="408" label="408 - REQUEST TIMEOUT" />
+    <EnumItem value="409" label="409 - CONFLICT" />
+    <EnumItem value="410" label="410 - GONE" />
+    <EnumItem value="413" label="413 - REQUEST ENTITY TOO LARGE" />
+    <EnumItem value="414" label="414 - REQUEST URI TOO LONG" />
+    <EnumItem value="415" label="415 - UNSUPPORTED MEDIA TYPE" />
+    <EnumItem value="500" label="500 - INTERNAL SERVER ERROR" />
+    <EnumItem value="501" label="501 - NOT IMPLEMENTED" />
+    <EnumItem value="502" label="502 - BAD GATEWAY" />
+    <EnumItem value="503" label="503 - SERVICE UNAVAILABLE" />
+    <EnumItem value="504" label="504 - GATEWAY TIMEOUT" />
+    <EnumItem value="505" label="505 - HTTP VERSION NOT SUPPORTED" />
+    <EnumItem value="507" label="507 - UNSUFFICIENT STORAGE" />
+    <Description xml:space="preserve">The response HTTP code.</Description>
+  </EnumProperty>
+  
+  <SubComponent elementName="ResponseBodyParameter" idPrefix="erp" namePrefix="BodyParameter" label="Body Parameter">
+    
+    <XSDProviderProperty attributeName="xsdProvider" label="XSD Provider">
+		<Description xml:space="preserve">The optional XSD provider used to specify the fault detail part type.</Description>
+	</XSDProviderProperty>
+	
+	<XSDTypeProperty attributeName="xsdType" schemaExpr="@xsdProvider" includeSimpleTypes="true" includeElements="true" includeComplexTypes="true" label="XSD Type">
+		<Description xml:space="preserve">The fault detail part type; it is a simple type if the XSD provider
+property is unspecified; otherwise it is either a element or a complex type of the underlying XSD.</Description>
+	</XSDTypeProperty>
+    
+    <Description xml:space="preserve">The parameter exposed by the component. Each parameter is exposed
+as input parameter and its value will be included as a part of the resulting SOAP fault detail element.</Description>  
+  </SubComponent >
+    
+  <Description xml:space="preserve">An Error Response component accepts as input either an XML document or an error message,
+builds a SOAP fault envelope on top of the input, and sends the envelope back
+to the caller that previously contacted a solicit operation by sending a SOAP request. 
+More precisely, if the input is a SOAP envelope, the operation publish it as-is; instead, 
+if the input is either a generic XML document or an error message, a suitable
+SOAP envelope is built, and the input parameter is placed into the SOAP fault 
+element enclosed in the envelope.</Description>  
+
+  <InputDescription xml:space="preserve" name="SOAP Envelope">The SOAP response envelope; at execution time suitable
+SOAP envelope, SOAP body, and SOAP fault are built by
+the operation itself if the provided input document does not appear
+to be a valid SOAP envelope. If this parameter is null,
+the fault message and fault exception input parameters (described
+below) are used.</InputDescription>
+  <InputDescription xml:space="preserve" name="Fault Message">The textual description of an error occurred in a preceding
+component. Ignored if the SOAP Envelope input parameter is
+provided.</InputDescription>
+  <InputDescription xml:space="preserve" name="Fault Exception">The stack trace of an exception occurred in a preceding
+component. Ignored if the SOAP Envelope input parameter is provided.</InputDescription> 
+</Component>

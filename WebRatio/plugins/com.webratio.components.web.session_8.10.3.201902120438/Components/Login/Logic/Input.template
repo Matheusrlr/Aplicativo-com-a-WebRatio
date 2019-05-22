@@ -1,0 +1,15 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+def componentId = component.attributeValue("id", "")
+def webProject = component.selectSingleNode("ancestor::WebProject")
+%>
+<InputParameters>
+  <InputParameter name="<%=componentId%>.username" mandatory="true" preservedByForm="true" label="Username" order="1"/>
+  <InputParameter name="<%=componentId%>.password" mandatory="true" preservedByForm="true" label="Password" order="2"/>
+  <InputParameter name="<%=componentId%>.rememberCredentials" preservedByForm="true" label="Remember Credentials (Persistent Cookie)" order="4"/>
+  <%
+  	if (webProject["enableAuthorizationToken"] == "true") {%>
+  	<InputParameter name="<%=componentId%>.token" label="Authorization Token" order="3"/>
+  <%}%>
+</InputParameters>

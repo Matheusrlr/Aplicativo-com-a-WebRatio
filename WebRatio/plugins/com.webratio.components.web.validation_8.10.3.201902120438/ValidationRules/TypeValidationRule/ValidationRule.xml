@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ValidationRule type="singleProperty" idPrefix="tvr" namePrefix="Type Validation " label="Type Validation" contexts="Form/Field|MultipleForm/Field"> 
+   <EnumProperty attributeName="type"> 
+    <EnumItem value="byte"/>  
+    <EnumItem value="boolean"/>
+    <EnumItem value="decimal"/>  
+    <EnumItem value="date"/>  
+    <EnumItem value="float"/>  
+    <EnumItem value="integer"/>  
+    <EnumItem value="long"/>
+    <EnumItem value="short"/>  
+    <EnumItem value="time"/>
+    <EnumItem value="timestamp"/>
+    <Description xml:space="preserve">The field value type.</Description>
+  </EnumProperty>
+  <StringProperty attributeName="pattern"> 
+    <EnabledCondition xml:space="preserve">element["type"] != ""</EnabledCondition>  
+    <Description xml:space="preserve">The pattern used to validate the field value. 
+    If unspecified the default type pattern will be used. </Description>
+  </StringProperty>  
+  <Description xml:space="preserve">The Type validation rule verifies
+if the value of a field is compatible with a specific type.&lt;br/&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;${propertyValue}&lt;/b&gt;: the field value&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${propertyName}&lt;/b&gt;: the field name&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${objectName}&lt;/b&gt;: the parent component name&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${type}&lt;/b&gt;: the field type&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${pattern}&lt;/b&gt;: the type pattern&lt;/li&gt;
+&lt;/ul&gt;</Description>
+</ValidationRule>

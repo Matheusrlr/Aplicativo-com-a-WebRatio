@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="operation" idPrefix="lpu" dataFlowSource="true" navigationFlowSource="true" namePrefix="Loop " label="Loop" dataFlowTarget="true" navigationFlowTarget="true" successFlowSource="true" successFlowTarget="true" multipleSuccessFlowCardinality="true"  errorFlowTarget="true"> 
+  <SuccessFlowCodes xml:space="preserve">return ["next", "end", "break"]</SuccessFlowCodes>  
+  <IntegerProperty attributeName="iterationSize" label="Max Iteration Size"> 
+    <Description xml:space="preserve">If set to a positive integer forces the iteration to end when the current index
+reaches this value (or on a previous index, if the size of the input array is less
+than this value)</Description> 
+  </IntegerProperty>  
+  <Description xml:space="preserve">The loop component is designed to iterate over an array of objects. At each iteration the 
+component provides as output parameters both the current object and the current index.
+The loop component must be the source of two distinct Success flows: one is followed when 
+the iteration is not finished, and must be marked with the 'next' flow code; the other
+is followed when the iteration has reached its end, and must be marked with the
+'end' flow code. It is also possible to define a third Success flow marked with the 'break' flow code in order to handle
+loop interruption. The loop component follows the break Success flow in case the 'Break Loop' input parameter is 'true'.     
+</Description>
+<SubComponent elementName="SecondaryArray" idPrefix="lsa" namePrefix="SecondaryArray" label="Secondary Array" ignoreI18N="true">     <Description xml:space="preserve">A secondary input array for the component. For each secondary array the loop component 
+requires an input parameter, i.e. the array of objects to iterate over, and provides
+an output parameter, i.e. the current element of the array. Note that the
+iteration is controlled by the mandatory input array, and therefore the length of
+iteration is not influenced by secondary arrays: if the current iteration index is
+greater than the size of the secondary array, a null value is provided in output
+</Description>   </SubComponent >    <InputDescription xml:space="preserve" name="Input Array">The array of objects to iterate over</InputDescription>  
+  <InputDescription xml:space="preserve" name="Iteration Count">The number of loop iterations to be performed</InputDescription>  
+  <InputDescription xml:space="preserve" name="Break Loop">The flag (true|false) indicating whether to break the loop</InputDescription>  
+  <InputDescription xml:space="preserve" name="Secondary Input Array">The secondary array of objects to iterate over</InputDescription>  
+  <OutputDescription xml:space="preserve" name="Next Element">The current iteration element, which is null when the Success flow marked with 'end' is followed</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Index">The current iteration index</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Loop Broken">The flag indicating whether the loop has been broken</OutputDescription>
+  <OutputDescription xml:space="preserve" name="Secondary Array Element">The current element of the n-th secondary array. Note that the
+iteration is controlled by the mandatory input array, and therefore the length of
+iteration is not influenced by secondary arrays: if the current iteration index is
+greater than the size of the secondary array, a null value is provided in output</OutputDescription> 
+</Component>

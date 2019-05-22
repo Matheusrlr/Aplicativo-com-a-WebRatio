@@ -1,0 +1,39 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.9.2
+Bundle-SymbolicName: com.webratio.web.mvc
+Export-Package: com.webratio.web.mvc,com.webratio.web.mvc.context,com.
+ webratio.web.mvc.controllers,com.webratio.web.mvc.controllers.data,co
+ m.webratio.web.mvc.el,com.webratio.web.mvc.exceptions,com.webratio.we
+ b.mvc.form,com.webratio.web.mvc.i18n,com.webratio.web.mvc.listeners,c
+ om.webratio.web.mvc.resource,com.webratio.web.mvc.security,com.webrat
+ io.web.mvc.servlets,com.webratio.web.mvc.session,com.webratio.web.mvc
+ .tags,com.webratio.web.mvc.uri,com.webratio.web.mvc.validation,com.we
+ bratio.web.mvc.ws
+Bundle-Name: WebRatio Web MVC Plug-in
+Bundle-Version: 8.10.3.201902120438
+Bundle-ClassPath: lib/fckeditor.jar,lib/standard-taglib.jar,lib/jasper
+ reports.jar,lib/jcommon.jar,lib/jfreechart.jar,com.webratio.web.mvc.j
+ ar
+Require-Bundle: com.webratio.rtx,com.webratio.lib.spring,com.webratio.
+ ws,com.webratio.xsd,com.webratio.commons.lib.javassist,com.webratio.c
+ ommons.lib.jackson2,com.webratio.commons.lib.apache.commons.fileuploa
+ d,com.webratio.commons.lib.apache.commons.codec,com.webratio.commons.
+ lib.apache.commons.beanutils,com.webratio.commons.lib.apache.commons.
+ io,com.webratio.commons.lib.apache.commons.logging,com.webratio.commo
+ ns.lib.apache.commons.httpclient,com.webratio.commons.lib.mimepull,co
+ m.webratio.commons.lib.apache.poi,com.webratio.commons.lib.apache.com
+ mons.collections,com.webratio.commons.lib.apache.commons.lang,com.web
+ ratio.commons.lib.javax.servlet.jsp,com.webratio.commons.lib.javax.se
+ rvlet.jsp.jstl,com.webratio.commons.lib.javax.servlet,com.webratio.co
+ mmons.lib.itext,com.webratio.lib.hibernate,com.webratio.commons.lib.d
+ om4j,com.webratio.commons.dom4j,com.webratio.commons.base,com.webrati
+ o.json,com.webratio.commons.libs,com.webratio.data,com.webratio.commo
+ ns.lib.google.guava,com.webratio.log
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: WebRatio
+Created-By: 1.8.0-b132 (Oracle Corporation)
+
+Name: META-INF/signature
+SHA-256-Digest: PRYYgqFVErjMMx3lDuv1T8nEp66ZmsJ8BwS19rF+4z4=
+

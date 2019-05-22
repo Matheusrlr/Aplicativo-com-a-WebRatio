@@ -1,0 +1,173 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.google.common.io.Files
+import com.webratio.model.query.mobile.nativ.PluginRegistry
+import com.webratio.model.query.mobile.nativ.PluginInstanceRequest
+import com.webratio.generator.io.IOHelper
+
+/* 
+ * App Info
+ */
+ 
+eventSocketClient.sendBeginTask("PrepareBuild", 1 + (3 * wr.appConfig.targetPlatforms.size()) + 3)
+
+def appInfo = [:]
+wr.appInfo = appInfo
+appInfo.id = wr.appConfig.id
+appInfo.version = wr.appConfig.version
+appInfo.name = wr.appConfig.name
+appInfo.author = wr.appConfig.author
+appInfo.className = toValidClassName(wr.appConfig.name)
+appInfo.packageName = appInfo.id
+
+/* Built-in native plugins to always require */
+def requiredBuiltinPluginIds = [
+	"com.webratio.accountmanager",                  // required by the Runtime
+	"cordova-plugin-device",                        // required by the Runtime
+	"cordova-plugin-dialogs",                       // required by the Runtime
+	"cordova-plugin-globalization",                 // required by the Runtime
+	"cordova-plugin-network-information",           // required by the Runtime
+	"cordova-plugin-file",                          // required by the Runtime
+	"cordova-plugin-file-transfer",                 // required by the Runtime
+	"cordova-plugin-splashscreen",                  // required by the Runtime and the build
+	"cordova-plugin-websql",                        // required by the Runtime
+	"cordova-plugin-whitelist",                     // required
+	"cordova-plugin-ionic-webview",                 // required 
+]
+
+/* Function for configuring native plugin variables */
+def configurePlugin = { instance ->
+	def vars = [:]
+	if (instance.pluginId == "cordova-plugin-googlemaps") { // TOOD hack! move to component
+		for (gmProvider in wr.project.selectNodes("ServiceDataProviders/ServiceDataProvider[@type = 'GoogleMapsProvider']")) {
+			if (gmProvider["platform"] == "Android") {
+				vars["API_KEY_FOR_ANDROID"] = gmProvider["apiKey"]
+			} else if (gmProvider["platform"] == "iOS") {
+				vars["API_KEY_FOR_IOS"] = gmProvider["apiKey"]
+			}
+		}
+		if (getTargetPlatforms().contains("android") && !vars.containsKey("API_KEY_FOR_ANDROID")) {
+			throw new RuntimeException("Missing API key for maps on Android")
+		}
+		if (getTargetPlatforms().contains("ios") && !vars.containsKey("API_KEY_FOR_IOS")) {
+			throw new RuntimeException("Missing API key for maps on iOS")
+		}
+	}
+	return new PluginInstanceRequest(instance, vars)
+}
+
+def androidVersionCode = { androidVersion -> 
+	def (major, minor, patch) = androidVersion.tokenize('.')
+	def majorCode = Integer.parseInt(major) * 100000
+	def minorCode = Integer.parseInt(minor) * 1000
+	def patchCode = Integer.parseInt(patch) * 10
+	def versionCode = majorCode + minorCode + patchCode
+	
+	return versionCode
+}
+
+/* Compute the correct android version code */
+if (getTargetPlatforms().contains("android")) {
+	appInfo.versionCode = androidVersionCode(wr.appConfig.version)
+}
+
+/* Prepare the native plugin registry, collecting all required native plugins */
+appInfo.plugins = PluginRegistry.create()
+for (builtinPluginId in requiredBuiltinPluginIds) {
+	appInfo.plugins.add(configurePlugin(getBuiltinNativePlugin(builtinPluginId)))
+}
+for (viewComp in getAllViewComponents()) {
+	appInfo.plugins.addAll(getRequiredNativePlugins(viewComp).collect { configurePlugin(it) })
+}
+for (operation in getAllOperations()) {
+	appInfo.plugins.addAll(getRequiredNativePlugins(operation).collect { configurePlugin(it) })
+}
+for (event in getAllFloatingEvents()) {
+	appInfo.plugins.addAll(getRequiredNativePlugins(event).collect { configurePlugin(it) })
+}
+if (wr.project.valueOf("Property[@name = 'AcceptUntrustedCertificates']/@value") == "true") {
+	appInfo.plugins.add(configurePlugin(getBuiltinNativePlugin("cordova-plugin-certificates")))
+}
+if (getTargetPlatforms().contains("ios")){
+	appInfo.plugins.add(configurePlugin(getBuiltinNativePlugin("cordova-plugin-localization-strings")))
+	appInfo.plugins.add(configurePlugin(getBuiltinNativePlugin("cordova-plugin-statusbar")))
+}
+for (nativePlugin in wr.additionalRequiredNativePlugins) {
+	appInfo.plugins.add(configurePlugin(nativePlugin))
+}
+for (layoutResource in wr.requiredLayoutResources) {
+	appInfo.plugins.addAll(getRequiredNativePlugins(layoutResource).collect { configurePlugin(it) })
+}
+
+eventSocketClient.sendTaskWorked("PrepareBuild", 1)
+
+/* Generate output specific to each platform */
+for (platformName in wr.appConfig.targetPlatforms) {
+	executeContextTemplate("PrepareBuild/Platforms/" + platformName + "/Platform.template", ["appInfo": appInfo])
+	eventSocketClient.sendTaskWorked("PrepareBuild", 1)
+}
+
+/* Copy resources for each platform */
+for (platformName in wr.appConfig.targetPlatforms) {
+
+	/* Copy icons */
+	processOutputFile("res/${platformName}/icons", "${platformName} icons", wr.project, { iconsDir ->
+		def lastInfo = null
+		for (info in getBuildIcons(platformName)) {
+			def imageFile = new File(iconsDir, info.flatFileName)
+			imageFile.parentFile.mkdirs()
+			Files.copy(info.file, imageFile)
+			lastInfo = info
+		}
+		
+		/* Copy the default icon */
+		if (lastInfo != null) {
+			def imageFile = new File(iconsDir, getDefaultIconFileName(platformName))
+			imageFile.parentFile.mkdirs()
+			Files.copy(lastInfo.file, imageFile)
+		} else {
+			throw new Exception("No default icon available") // should not happen
+		}
+	})
+	eventSocketClient.sendTaskWorked("PrepareBuild", 1)
+	
+	/* Copy splash screens */
+	processOutputFile("res/${platformName}/screens", "${platformName} splash screens", wr.project, { screensDir ->
+		for (info in getBuildSplashScreens(platformName)) {
+			def imageFile = new File(screensDir, info.flatFileName)
+			imageFile.parentFile.mkdirs()
+			Files.copy(info.file, imageFile)
+		}
+	})
+	eventSocketClient.sendTaskWorked("PrepareBuild", 1)
+}
+
+/* Copy build hooks */
+processOutputFile("hooks", "build hooks", wr.project, { hooksDir ->
+	IOHelper.copyDirectory(wr.locateResourceFile("PrepareBuild/hooks"), hooksDir, [IOHelper.CVS_AWARE_FILTER], [])
+})
+eventSocketClient.sendTaskWorked("PrepareBuild", 1)
+
+/* Copy translations */
+if (getTargetPlatforms().contains("ios")){
+	wr.project.selectNodes("WebModel/Locale").eachWithSeparator(",") { locale ->
+		def isoCode = getISOCode(locale)
+		processOutputFile("translations/app/${isoCode}.json", "translations", wr.project, { translationFile ->
+			translationFile.writeAsync(serializeJSON(executeContextTemplate("PrepareBuild/TranslationsJson.template", ["isoCode": isoCode, "platformName": "ios"])), "UTF-8")
+		})
+	}
+}
+eventSocketClient.sendTaskWorked("PrepareBuild", 1)
+
+/* Generate a global config.xml file */
+processOutputFile("config.xml", "configuration file", wr.project, { configFile ->
+	configFile.writeAsync(serializeXML(executeContextTemplate("PrepareBuild/ConfigXml.template", ["appInfo": appInfo]), true), "UTF-8")
+})
+eventSocketClient.sendTaskWorked("PrepareBuild", 1)
+
+/* Save a special output file with information about the plugins */
+def buildPluginsXmlFile = new File(wr.projectDir, "/.Temp~/BuildPlugins.xml")
+buildPluginsXmlFile.parentFile.mkdirs()
+buildPluginsXmlFile.write(serializeXML(executeContextTemplate("PrepareBuild/BuildPluginsXml.template", ["appInfo": appInfo]), true))
+eventSocketClient.sendTaskWorked("PrepareBuild", 1)
+%]

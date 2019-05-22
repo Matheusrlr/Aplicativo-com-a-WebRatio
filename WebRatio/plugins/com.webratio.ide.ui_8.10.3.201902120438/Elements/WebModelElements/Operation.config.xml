@@ -1,0 +1,57 @@
+   <Element name="Operation" lowerName="operation"
+		pluralLowerName="operations">
+		<Description>
+			An Operation is a new kind of components, 
+			which can be placed outside of pages and linked to other operations, or to 
+			view components defined inside pages.
+		</Description>
+		<ActionRef label="Add Property" />
+		<ActionRef label="Convert To..." />
+		<ActionRef label="Localize" />
+		<ActionRef label="Surround with Area" />
+		<ActionRef label="Surround with Operation Group" />
+		<ActionRef label="Open Generated Code" />
+		<ActionRef label="Generate Logic Descriptors Only"/>
+		<ActionRef label="Generate Selection"/>
+		<ActionRef label="Find Model Problems"/>
+		<ActionRef label="Help"/>
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+			<Property label="Home">
+				If checked, the operation is executed when the ancestor Site View is 
+				accessed.
+			</Property>
+			<PropertyRef label="Default"/>
+			<Property label="Landmark">
+				If checked, a flow will appear in the corresponding landmark 
+				menu that will activate the operation chain. If the 
+				operation or the operation chain has no outgoing flow, the 
+				final target page is the last visited page.
+			</Property>
+			<Property label="Protected">
+				If checked, the access to the operation is permitted only to users 
+				belonging to a group entitled to access the operation.
+			</Property>
+			<Property label="Secure">
+				If checked, all the flows whose navigation can activate the 
+				operation are implemented using the secure HTTP protocol, 
+				instead of the HTTP protocol.
+			</Property>
+			<PropertyRef label="Custom Descriptor"/>
+			<PropertyRef label="Custom URL Name"/>
+		</PropertyCategory>
+		<PropertyCategory name="Validation">
+			<Property label="Enable Validation">
+		    	TODO missing description ...
+			</Property>
+		</PropertyCategory>
+		<PropertyCategory name="Appearance">
+			<Property label="Icon">
+				A distinctive icon displayed in the diagram and in the outline.
+			</Property>
+			<Property label="Show All Parts">
+				If checked, all parts belonging to the view component will be displayed.
+			</Property>
+		</PropertyCategory>
+	</Element>

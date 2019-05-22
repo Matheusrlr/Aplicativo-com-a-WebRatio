@@ -1,0 +1,11 @@
+#?delimiters [%,%],[%=,%]
+[%
+setXMLOutput()
+%]
+<Descriptor service="com.webratio.components.web.utility.SendNotificationService">
+	 <NotificationName>[%=component["notificationName"]%]</NotificationName>
+     <NotificationProviderIds>[%=component["notificationProvider"]%]</NotificationProviderIds>
+     [% for(p in component.selectNodes("Parameter")) {
+            printRaw(p.asXML())
+     }%]
+</Descriptor>

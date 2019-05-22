@@ -1,0 +1,9 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+%]
+
+<InputParameters>
+	<InputParameter name="sourceAddress" label="Source Address" />
+	<InputParameter name="destinationAddress" label="Destination Address" />
+</InputParameters>

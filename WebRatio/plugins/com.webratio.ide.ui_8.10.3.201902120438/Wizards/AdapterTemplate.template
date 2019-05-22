@@ -1,0 +1,156 @@
+#?delimiters [%,%],[%=,%]
+[%  setXMLOutput() 
+    //println (styles); //TODO
+    printRaw("#?delimiters ${startScriptlet}, ${endScriptlet}, ${startExpression}, ${endExpression}")
+%]
+[%
+	def singleEntityFlag = (entities.size() == 1);
+	def inputParamsMap = [:];
+
+
+
+	/*
+	 * INPUT
+	 */
+	if (styles.contains("INPUT")) {
+	  // append wr:Input name="..."
+	  for (entName in entities.keySet()) {
+		def attrNames = entities.get(entName);
+		for(attrName in attrNames) {
+			def name = toValidFieldName((singleEntityFlag ? "" : entName) + attrName);
+			inputParamsMap.put(attrName, name);
+%]<wr:Input name="[%=name%]"/>
+[%
+		}
+	  }
+	}
+
+
+
+
+
+	/*
+	 * OUTPUT
+	 */
+	if (styles.contains("OUTPUT")) {
+	  // append wr:output name="..."
+	  for (entName in entities.keySet()) {
+		def attrNames = entities.get(entName);
+		for(attrName in attrNames) {
+			def name = toValidFieldName((singleEntityFlag ? "" : entName) + attrName);
+%]<wr:Output name="[%=name%]"/>
+[%
+		}
+	  } 
+	  
+%]
+[%=startScriptlet%]
+[%
+	  // append outputParams
+	  for (entName in entities.keySet()) {
+		def attrNames = entities.get(entName);
+		for(attrName in attrNames) {
+			def name = toValidFieldName((singleEntityFlag ? "" : entName) + attrName);
+%]	outputParams.[%=name%] = "" /* TODO */
+[%
+		}
+	  }
+%]
+[%=endScriptlet%]
+[% } %]
+[% 
+	
+	
+	
+	
+	
+	/*
+	 * XML
+	 */
+   if (styles.contains("XML")) { 
+   def indent = "" 
+
+ 
+	/*
+	 * XML + SOAP_ENVELOPE : start
+	 */
+   if (styles.contains("SOAP_ENVELOPE")) {
+	indent = "\t\t" %]
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+	<soapenv:Body>[%
+   } 
+   
+	/*
+	 * generic XML content
+	 */
+     %]
+[%=indent%]<Root>[%	
+	for (entName in entities.keySet()) {
+		def attrNames = entities.get(entName);
+		def tagParent = toValidClassName(entName);%]
+[%=indent%]	<[%=tagParent%]>
+[%=indent%]	[% printRaw("${startScriptlet} for (el in /* TODO: select a node collection */) { ${endScriptlet}"); %]
+[%=indent%]		<Instance>[%		
+		for (attrName in attrNames) {
+			def tagChild = toValidFieldName(attrName);%]
+[%=indent%]			<[%=tagChild%]></[%=tagChild%]>[%
+            def inputParam = inputParamsMap.get(attrName);
+			if (inputParam != null) {
+				// append input params
+ %]
+[%=indent%]			<[%=tagChild%]>[% printRaw("${startScriptlet}=inputParams.") %][%=inputParam%][% printRaw("${endScriptlet}") %]</[%=tagChild%]>[%
+			}
+		}
+%]
+[%=indent%]		</Instance>
+[%=indent%]	[% printRaw("${startScriptlet} } ${endScriptlet}") %]	
+[%=indent%]	</[%=tagParent%]>[%
+	}
+%]
+[%=indent%]</Root>[%
+
+
+	/*
+	 * XML + SOAP_ENVELOPE : end
+	 */
+   if (styles.contains("SOAP_ENVELOPE")) { %]
+	</soapenv:Body>
+</soapenv:Envelope>
+[% } 
+   } 
+
+
+
+
+%]
+[% 
+
+
+
+
+
+
+
+	/*
+	 * INPUT and not XML
+	 */
+   if (styles.contains("INPUT") && !styles.contains("XML")) { %]
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+	<soapenv:Body>
+		[% 
+			printRaw("${startScriptlet} /* TODO: request body here */ ${endScriptlet}");
+		%]
+	</soapenv:Body>
+</soapenv:Envelope>
+[% } 
+
+
+
+
+
+	/*
+	 * OUTPUT
+	 */
+   if (styles.contains("OUTPUT") && !styles.contains("INPUT") && !styles.contains("XML")) { %]
+<Root/>
+[% } %]

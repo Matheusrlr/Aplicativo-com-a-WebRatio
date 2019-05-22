@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping auto-import="true" default-cascade="none" default-access="property" default-lazy="true">
+  <class name="com.webratio.webapp.Categoria" table="`categoria_2`" dynamic-update="true" dynamic-insert="true" mutable="true" polymorphism="implicit" select-before-update="false" optimistic-lock="version">
+    <id name="oid" column="`oid`" type="java.lang.Integer">
+      <generator class="identity"/>
+    </id>
+    <property name="imagemRef" column="`imagem`" type="java.lang.String" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
+    <property name="descricao" column="`descricao`" type="java.lang.String" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
+    <property name="nome" column="`nome`" type="java.lang.String" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
+    <property name="createdAt" column="`createdat`" type="java.sql.Timestamp" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
+    <property name="updatedAt" column="`updatedat`" type="java.sql.Timestamp" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
+    <set name="categoriaToTipo" inverse="true" sort="unsorted" mutable="true" optimistic-lock="true" embed-xml="true">
+      <key on-delete="noaction">
+        <column name="`oid_categoria`"/>
+      </key>
+      <one-to-many class="com.webratio.webapp.Tipo" not-found="exception" embed-xml="true"/>
+    </set>
+  </class>
+  <!-- mapping for relationship 'CategoriaToTipo[role8]' -->
+  <class entity-name="com.webratio.webapp.Rel_Categoria_to_categoriaToTipo" table="`tipo`" dynamic-update="true" dynamic-insert="true" mutable="true" polymorphism="implicit" select-before-update="false" optimistic-lock="version">
+    <composite-id mapped="false" unsaved-value="undefined">
+      <key-property name="target_oid" column="`oid`" type="java.lang.Integer"/>
+      <key-property name="target_oidCategoria" column="`oid_categoria`" type="java.lang.Integer"/>
+    </composite-id>
+    <property name="source_oid" column="`oid_categoria`" type="java.lang.Integer" insert="false" update="false" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
+  </class>
+</hibernate-mapping>

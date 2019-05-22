@@ -1,0 +1,36 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.GenerationException
+import org.apache.commons.lang.StringUtils
+
+if (element == null) {
+	def title = "Undefined element variable"    
+	def reason = "Unable to generate the Frame layout."
+	def hint = "Specify a variable holding a layout:Cell or layout:Component"
+	throw new GenerationException(title, reason, [hint], null)
+}
+
+/* Get style */
+def frameLayout = getLayout(element, LayoutType.FRAME)
+def templatePath = frameLayout.path
+def templateParameters = frameLayout.parameters
+if (!templatePath) {
+	return  // tolerate calls related to elements that have no frame template
+}
+def templateFile = getLayoutFile(frameLayout.path, LayoutType.FRAME)
+if (!templateFile) {
+	def title = "Frame Layout Not Found"
+	def reason = "Unable to find the frame layout \'" + templatePath + "\'"
+	def hint = "Check the project for the missing frame layout [name = " + templatePath + "] associated with a cell or component of the page [id = " + page["id"] + "]"
+	throw new GenerationException(title, reason, [hint], null)
+}
+addUsedTemplate(templatePath)
+
+/* Render the frame, keeping only the requested part */
+def text = executeTemplate(templateFile.absolutePath, ["element": element, "params": templateParameters])
+if (frameMode == "start") {
+	printRaw(StringUtils.substringBefore(text, "__wr_FrameContent__"))
+} else {
+	printRaw(StringUtils.substringAfter(text, "__wr_FrameContent__"))
+}
+%]

@@ -1,0 +1,69 @@
+{
+  "_" : "wrm.core.PanelService",
+  "gateway" : true,
+  "navigations" : {
+    "0" : {
+      "nc" : true,
+      "flows" : "scr2",
+      "fr" : true
+    },
+    "1" : {
+      "nc" : true,
+      "flows" : "scr2.link",
+      "fr" : true
+    },
+    "2" : {
+      "flows" : "scr2.auto-link",
+      "fr" : true
+    },
+    "3" : {
+      "flows" : "scr2.auto-link"
+    },
+    "4" : {
+      "flows" : "nf2|validation-failed"
+    },
+    "5" : {
+      "flows" : "nf2|impl"
+    }
+  },
+  "knownEffects" : "#pr#",
+  "propagationSequence" : "",
+  "propagations" : { },
+  "components" : {
+    "enu1" : {
+      "fb" : true,
+      "conds" : [ {
+        "fr" : false,
+        "navs" : "3",
+        "effects" : "#pr#"
+      } ],
+      "rf" : [ {
+        "all" : true,
+        "fr" : true,
+        "navs" : "0|1"
+      } ]
+    }
+  },
+  "events" : {
+    "osbme1" : {
+      "component" : "enu1",
+      "type" : "OnSubmitEvent",
+      "flow" : {
+        "id" : "nf2",
+        "navTo" : "act1",
+        "bindTo" : "act1",
+        "preserve" : "",
+        "bind" : {
+          "act1.password" : "fld2",
+          "act1.username" : "fld1"
+        }
+      }
+    }
+  },
+  "autoFlow" : {
+    "preserve" : ""
+  },
+  "autoFlowFull" : {
+    "preserve" : ""
+  }
+}

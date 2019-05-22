@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="DBMetaData" default="main">
+	
+	<import file="${webratio.classpath.file}" />
+
+	<path id="classpath">
+		<path refid="webratio.classpath"/>
+		<filelist dir="${driverDir}" files="${driverFiles}" />
+		<pathelement location="bin" />
+		<pathelement location="bin.jar" />
+		<pathelement path="${metaDataProviderClasspath}" />
+	</path>
+
+
+	<target name="main">
+		<java classname="com.webratio.commons.db.metadata.MetaDataRetriever" failonerror="true" classpathref="classpath" fork="true">
+			<jvmarg value="-Xmx128m" />
+			<!-- uncomment for remote debugging 
+			  <jvmarg line="-Xnoagent -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8088 -Dremote_debug=true" />
+			-->
+			<arg value="outputPath=${outputPath}" />
+			<arg value="outputLogPath=${outputPath}.log" />
+			<arg value="eventSocketPort=${eventSocketPort}" />
+			<arg value="metaDataProviderClass=${metaDataProviderClass}" />
+			<arg value="driverClass=${driverClass}" />
+			<arg value="url=${url}" />
+			<arg value="username=${username}" />
+			<arg value="password=${password}" />
+			<arg value="includeTables=${includeTables}" />
+			<arg value="includeViews=${includeViews}" />
+			<arg value="includeSynonyms=${includeSynonyms}" />
+			<arg value="includePrimaryKeys=${includePrimaryKeys}" />
+			<arg value="includeForeignKeys=${includeForeignKeys}" />
+			<arg value="schemaRegex=${schemaRegex}" />
+			<arg value="tableRegex=${tableRegex}" />
+			<arg value="readIndexes=${readIndexes}" />
+			<arg value="readProcedures=${readProcedures}" />
+			<arg value="processColumnsUsingSelect=${processColumnsUsingSelect}" />
+			<arg value="derby.system.home=${derby.system.home}" />
+			<!-- partial selection props -->
+			<arg value="partialRefresh=${partialRefresh}" />
+			<arg value="tablesToRefresh=${tablesToRefresh}" />
+			<arg value="retrieveAllNames=${retrieveAllNames}" />
+			<!-- definition props -->
+			<arg value="readSQLDefinitions=${readSQLDefinitions}" />
+		</java>
+	</target>
+
+</project>

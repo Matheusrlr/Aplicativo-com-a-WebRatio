@@ -1,0 +1,65 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.GenerationException
+
+if (attr == null) {
+	def title = "Undefined attr variable"    
+	def reason = "Unable to generate the Attribute layout."
+	def hint = "Specify a variable holding a layout:Attribute"
+	throw new GenerationException(title, reason, [hint], null)
+}
+
+/* Get style */
+def attrLayout = getLayout(attr, LayoutType.ATTRIBUTE)
+def templatePath = attrLayout.path
+def templateParameters = attrLayout.parameters
+if (!templatePath) {
+    def title = "Undefined Attribute Layout"    
+    def reason = "Unable to find the attribute layout for an attribute."
+    def hint = "Specify an attribute layout for all the attributes of the page [id = " + page["id"] + "]"
+    throw new GenerationException(title, reason, [hint], null)
+}
+def templateFile = getLayoutFile(attrLayout.path, LayoutType.ATTRIBUTE)
+if (!templateFile) {
+	def title = "Attribute Layout Not Found"
+	def reason = "Unable to find the attribute layout \'" + templatePath + "\'"
+	def hint = "Check the project for the missing attribute layout [name = " + templatePath + "] associated with the attribute [id = " + attr["id"] + "]"
+	throw new GenerationException(title, reason, [hint], null)
+}
+addUsedTemplate(templatePath)
+
+/* Make the Layout Attribute refreshable only when directly placed */
+def placedDirectly = (attr["componentId"] as boolean)
+def refreshFragmentType = (placedDirectly ? "control" : null)
+
+/* Render the Layout Attribute in a wrapper */
+printRaw(executeContextTemplate("MVC/Wrapper.template", ["refreshFragmentType": refreshFragmentType, "allowLazyRefresh": placedDirectly, "element": attr, "content": {
+	
+	/* Visibility condition start */
+	def visibilityCondition = getVisibilityCondition(attr, (!placedDirectly ? position : null))
+	if (visibilityCondition) {
+		%]<c:if test="${[% printJSPTagValue(visibilityCondition) %]}">[%
+	}
+	
+	/* Support AJAX features only if rendered in an HTML page */
+	def attrAjaxSupported = ["html", "xhtml"].contains(pageOutputType.name)
+	
+	/* AJAX Tooltip target start */
+	if (attrAjaxSupported) {
+		printRaw(executeContextTemplate("MVC/Ajax/TooltipTargetStart.template", ["element": attr, "elementType": "row", "item": item, "position": position]).trim())
+	}
+	
+	/* Actual Attribute layout */
+	printRaw(executeTemplate(templateFile.absolutePath, ["params": templateParameters, "templateType": "attribute"]).trim())
+	
+	/* AJAX Tooltip target end */
+	if (attrAjaxSupported) {
+		printRaw(executeContextTemplate("MVC/Ajax/TooltipTargetEnd.template", ["element": attr, "elementType": "row", "item": item, "position": position]).trim())
+	}
+	
+	/* Visibility condition end */
+	if (visibilityCondition) {
+		%]</c:if>[%
+	}
+}]))
+%]

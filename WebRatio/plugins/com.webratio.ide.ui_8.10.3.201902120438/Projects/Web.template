@@ -1,0 +1,33 @@
+#?delimiters [%,%],[%=,%]
+<?xml version="1.0" encoding="UTF-8"?>
+<?webml version="8.2.0.0"?>
+[% setXMLOutput() %]
+<WebProject 
+    xmlns:gr="http://www.webratio.com/2006/WebML/Graph"
+    outputPath=""
+    gr:showUnitContent="true"
+    gr:showTooltip="true"
+	enableProjectDependencies="true"
+    >
+  <DomainModel> 
+	    <Class gr:x="150" gr:y="160" id="WUser" name="App User" singleton="true" attributeOrder="wUserOID wUsername">
+	        <Attribute id="wUserOID" key="true" name="oid" type="integer"/>
+	        <Attribute id="wUsername" name="username" type="string"/>
+	    </Class>
+	    <Class gr:x="450" gr:y="170" id="WRole" name="App Role" attributeOrder="wRoleOID wRoleName">
+	        <Attribute id="wRoleOID" key="true" name="oid" type="integer"/>
+	        <Attribute id="wRoleName" name="name" type="string"/>
+	    </Class>
+	    <Association id="WUser2WRole_WRole2WUser" sourceClass="WUser" targetClass="WRole">
+	        <AssociationRole1 id="WUser2WRole" name="AppUserToAppRole" maxCard="N"/>
+	        <AssociationRole2 id="WRole2WUser" name="AppRoleToAppUser" maxCard="1"/>
+	    </Association>
+  </DomainModel>
+  <WebModel homeWebView="wv1">
+      <Parameters/>
+      <WebView id="wv1" name="Public">
+          <Parameters/>
+      </WebView>
+  </WebModel>
+  <Roles/>
+</WebProject>

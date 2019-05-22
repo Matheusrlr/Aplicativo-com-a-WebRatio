@@ -1,0 +1,180 @@
+<Actions>
+	<Action label="Add Complex Gateway">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Gateways/ComplexGateway"/&gt;.
+	</Action>
+	<Action label="Add Condition Parameter">
+	  Adds a new  condition &lt;a href="/Reference/ElementsReference/CommonElements/Parameter"/&gt;
+	</Action>
+	<Action label="Add Embedded Subprocess">
+	  Adds a new &lt;a href="/Reference/ElementsReference/CommonElements/EmbeddedSubprocess"/&gt;.
+	</Action>
+	<Action label="Add End Cancel">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/EndCancelEvent"/&gt;.
+	</Action>
+	<Action label="Add End Compensation">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/EndCompensationEvent"/&gt;.
+	</Action>
+	<Action label="Add End Error">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/EndErrorEvent"/&gt;.
+	</Action>
+	<Action label="Add End Event">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/EndEvent"/&gt;.
+	</Action>
+	<Action label="Add End Message">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/EndMessageEvent"/&gt;.
+	</Action>
+	<Action label="Add End Multiple">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/EndMultipleEvent"/&gt;.
+	</Action>
+	<Action label="Add End Signal">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/EndSignalEvent"/&gt;.
+	</Action>
+	<Action label="Add End Terminate">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/EndTerminateEvent"/&gt;.
+	</Action>
+	<Action label="Add Exclusive Event Gateway">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Gateways/ExclusiveEventGateway"/&gt;.
+	</Action>
+	<Action label="Add Exclusive Gateway">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Gateways/ExclusiveGateway"/&gt;.
+	</Action>
+	<Action label="Add Group">
+	  Adds a new &lt;a href="/Reference/ElementsReference/CommonElements/Group"/&gt;.
+	</Action>
+	<Action label="Add Inclusive Gateway">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Gateways/InclusiveGateway"/&gt;.
+	</Action>
+	<Action label="Add Intermediate Catching Cancel">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/IntermediateCatchingCancelEvent"/&gt;.
+	</Action>
+	<Action label="Add Intermediate Catching Compensation">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/IntermediateCatchingCompensationEvent"/&gt;.
+	</Action>
+	<Action label="Add Intermediate Catching Conditional">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/IntermediateCatchingConditionalEvent"/&gt;.
+	</Action>
+	<Action label="Add Intermediate Catching Error">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/IntermediateCatchingErrorEvent"/&gt;.
+	</Action>
+	<Action label="Add Intermediate Catching Link">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/IntermediateCatchingLinkEvent"/&gt;.
+	</Action>
+	<Action label="Add Intermediate Catching Message">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/IntermediateCatchingMessageEvent"/&gt;.
+	</Action>
+	<Action label="Add Intermediate Catching Multiple">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/IntermediateCatchingMultipleEvent"/&gt;.
+	</Action>
+	<Action label="Add Intermediate Catching Signal">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/IntermediateCatchingSignalEvent"/&gt;.
+	</Action>
+	<Action label="Add Intermediate Catching Timer">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/IntermediateCatchingTimerEvent"/&gt;.
+	</Action>
+	<Action label="Add Intermediate Throwing Compensation">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/IntermediateThrowingCompensationEvent"/&gt;.
+	</Action>
+	<Action label="Add Intermediate Throwing Event">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/IntermediateThrowingEvent"/&gt;.
+	</Action>
+	<Action label="Add Intermediate Throwing Link">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/IntermediateThrowingLinkEvent"/&gt;.
+	</Action>
+	<Action label="Add Intermediate Throwing Message">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/IntermediateThrowingMessageEvent"/&gt;.
+	</Action>
+	<Action label="Add Intermediate Throwing Multiple">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/IntermediateThrowingMultipleEvent"/&gt;.
+	</Action>
+	<Action label="Add Intermediate Throwing Signal">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/IntermediateThrowingSignalEvent"/&gt;.
+	</Action>
+	<Action label="Add Lane">
+	  Adds a new &lt;a href="/Reference/ElementsReference/CommonElements/Lane"/&gt;
+	  to the container pool.
+	</Action>
+	<Action label="Add Message Flow">
+	  Adds a new &lt;a href="/Reference/ElementsReference/CommonElements/MessageFlow"/&gt;
+	  starting from the <ElementRef/>.
+	</Action>
+	<Action label="Add Parallel Gateway">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Gateways/ParallelGateway"/&gt;.
+	</Action>
+	<Action label="Add Parameter">
+	  Adds a new &lt;a href="/Reference/ElementsReference/CommonElements/Parameter"/&gt;.
+	</Action>
+	<Action label="Add Pool">
+	  Adds a new &lt;a href="/Reference/ElementsReference/CommonElements/Pool"/&gt;
+	  to the container process.
+	</Action>
+	<Action label="Add Property">
+	  Adds a new custom &lt;a href="/Reference/ElementsReference/CommonElements/Property"/&gt;.
+	</Action>
+	<Action label="Add Sequence Flow">
+	  Adds a new &lt;a href="/Reference/ElementsReference/CommonElements/SequenceFlow"/&gt;
+	  starting from the <ElementRef />.
+	</Action>
+	<Action label="Add Service Task">
+	  Adds a new &lt;a href="/Reference/ElementsReference/CommonElements/Task"/&gt; with Service execution-type.
+	</Action>
+	<Action label="Add Start Conditional">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/StartConditionalEvent"/&gt;.
+	</Action>
+	<Action label="Add Start Event">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/StartEvent"/&gt;.
+	</Action>
+	<Action label="Add Start Message">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/StartMessageEvent"/&gt;.
+	</Action>
+	<Action label="Add Start Multiple">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/StartMultipleEvent"/&gt;.
+	</Action>
+	<Action label="Add Start Signal">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/StartSignalEvent"/&gt;.
+	</Action>
+	<Action label="Add Start Timer">
+	  Adds a new &lt;a href="/Reference/ElementsReference/Events/StartTimerEvent"/&gt;.
+	</Action>
+	<Action label="Add Subprocess">
+	  Adds a new &lt;a href="/Reference/ElementsReference/CommonElements/Subprocess"/&gt;.
+	</Action>
+	<Action label="Add Text Annotation">
+	  Adds a new &lt;a href="/Reference/ElementsReference/CommonElements/TextAnnotation"/&gt;.
+	</Action>
+	<Action label="Add User Task">
+	  Adds a new &lt;a href="/Reference/ElementsReference/CommonElements/Task"/&gt; with User execution-type.
+	</Action>
+	<Action label="Collapse Embedded Process">
+	  Hides the details of the embedded process.
+	</Action>
+	<Action label="Edit Process Parameters...">
+	  Opens the &lt;a href="/Reference/WizardsAndDialogs/ProcessParametersDialog"/&gt;.
+	</Action>
+	<Action label="Edit Standalone">
+	  Opens a temporary editor for the embedded process.
+	</Action>
+    <Action label="Change Type to" >
+      Converts this event into another type of end event.
+    </Action>
+	<Action label="Expand Embedded Process">Shows the details of the embedded process.</Action>
+	<Action label="Help">
+	  Opens the reference help page related to the <ElementRef/>. The
+	  page shows a brief description of the <ElementRef/> properties and actions.
+	</Action>
+	<Action label="Move into Embedded Subprocess">
+	  Moves the <ElementRef /> into a new &lt;a href="/Reference/ElementsReference/CommonElements/EmbeddedSubprocess"/&gt;.
+	</Action>
+	<Action label="Move into External Subprocess">
+	  Moves the contents of this embedded subprocess into an external (non-embedded)
+	  &lt;a href="/Reference/ElementsReference/CommonElements/Subprocess"/&gt;.
+	</Action>
+	<Action label="Open Activity Module...">
+	  Opens the Module this <ElementRef/> is mapped on.	
+	</Action>
+	<Action label="Search References">
+	  Searches the identifier references of the <ElementRef /> in the project. 	  
+	</Action>
+	<Action label="Surround with Group">
+	  Surrounds the <ElementRef /> with a &lt;a href="/Reference/ElementsReference/CommonElements/Group"/&gt;.
+	</Action>
+</Actions>

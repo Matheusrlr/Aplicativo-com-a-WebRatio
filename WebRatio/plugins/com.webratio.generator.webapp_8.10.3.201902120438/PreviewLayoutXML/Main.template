@@ -1,0 +1,154 @@
+#?delimiters [%, %], [%=, %]
+[%
+import org.apache.commons.lang.StringUtils
+import org.apache.commons.lang.exception.ExceptionUtils
+import com.webratio.generator.helpers.MultiFileHelper
+import com.webratio.generator.helpers.ModulesHelper
+import com.webratio.generator.helpers.ModulesExpandStrategy
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.XMLWriter;
+import java.io.StringWriter;
+
+try {
+	
+	/*
+	 * Project parsing: this is roughly equivalent to Project/Main.template
+	 */
+	
+	/* Simplify ids and modules */
+	def projectElement = parseXMLFile(new File(projectPath)).rootElement
+	MultiFileHelper mfHelper = new MultiFileHelper(projectElement)
+	mfHelper.simplifyIds(projectElement)
+	layoutXMLPageId = mfHelper.getSimplifiedId(layoutXMLPageId);
+	new ModulesHelper(projectElement, wr.projectType).replaceModules()
+	new File(projectPath).write(serializeXML(projectElement, true))
+	
+	/* Auto-expand pages and components */
+	def parseResult = parseWebProject(new File(projectPath), null)
+	wr.project = parseResult.document.rootElement
+	wr.elementRetriever = parseResult.index
+	for (page in getAllTopPages()) {
+		expandPage(page)
+	}
+	for (viewComp in getAllViewComponents()) {
+		try{
+			if (viewComp.selectSingleNode("ancestor::ContentModuleDefinition") == null) {
+				expandComponent(viewComp)
+			}
+		} catch (Throwable t) {
+			throw new Exception("Unable to expand view component " + viewComp["name"] + "[" + viewComp["id"] + "]", t)
+		}  
+	}
+	for (operation in getAllOperations()) {
+		try {
+			expandComponent(operation)
+		} catch (Throwable t) {
+			throw new Exception("Unable to expand operation " + operation["name"] + "[" + operation["id"] + "]", t)
+		}
+	}
+	
+	/* Write to file */
+	new File(projectPath).write(serializeXML(wr.project, false))
+	
+	/* Parse again with dynamic module expansion */
+	parseResult = parseExpandWebProject(new File(projectPath), new ModulesExpandStrategy(wr), null)
+	wr.project = parseResult.document.rootElement
+	wr.elementRetriever = parseResult.index
+	wr.project.document.updateReplacements()
+	
+	/*
+	 * Layout XML computation: specific to this template
+	 */
+	
+	/* Expand layout elements as needed by the input element */
+	def selectedLayoutComp = null
+	def layoutComp = null
+	def page = wr.project.selectSingleNode(".//Page[@id = '" + layoutXMLPageId + "'] | .//MasterContainer[@id = '" + layoutXMLPageId + "']")
+	if (page) {
+		def getUniquePathInPage = { elem ->
+			return elem?.getUniquePath(page)?.replaceAll(/layout:Grid/, "layout:Grid[not(@moduleId)]")
+		}
+		if (model.name == "Event") { // layout:Event
+			def eventId = mfHelper.getSimplifiedId(model["event"])
+			def layoutEvents = page.selectNodes(".//layout:Event[@event='" + eventId + "'][parent::layout:Cell|parent::layout:CustomLocation]")
+			if (layoutEvents.size() > 0) {
+				layoutEvents.each{expandLayoutEvent(it)}
+			} else {
+				selectedLayoutComp = model.selectSingleNode("parent::layout:Component")
+				if (selectedLayoutComp != null) {
+					layoutComp = page.selectSingleNode(getUniquePathInPage(selectedLayoutComp))
+					expandLayoutComponent(layoutComp)
+				}
+			}
+		} else if (model.name == "Attribute") { // layout:Attribute
+			def attrId = mfHelper.getSimplifiedId(model["attribute"])
+			def layoutAtts = page.selectNodes(".//layout:Attribute[@attribute='" + attrId + "'][parent::layout:Cell|parent::layout:CustomLocation]")
+			if (layoutAtts.size() > 0) {
+				layoutAtts.each{expandLayoutAttribute(it)}
+			} else {
+				selectedLayoutComp = model.selectSingleNode("parent::layout:Component")
+				if (selectedLayoutComp != null) {
+					layoutComp = page.selectSingleNode(getUniquePathInPage(selectedLayoutComp))
+					expandLayoutComponent(layoutComp)
+				}
+			}
+		} else if (model.name == "Field") { // layout:Field
+			def fieldId = mfHelper.getSimplifiedId(model["field"])
+			def layoutFields = page.selectNodes(".//layout:Field[@field='" + fieldId + "'][parent::layout:Cell|parent::layout:CustomLocation]")
+			if (layoutFields.size() > 0) {
+				layoutFields.each{expandLayoutField(it)}
+			} else {
+				selectedLayoutComp = model.selectSingleNode("parent::layout:Component")
+				if (selectedLayoutComp != null) {
+					layoutComp = page.selectSingleNode(getUniquePathInPage(selectedLayoutComp))
+					expandLayoutComponent(layoutComp)
+				}
+			}
+		} else if (model.name == "Component") { // layout:Component
+			layoutComp = page.selectSingleNode(getUniquePathInPage(model))
+			expandLayoutComponent(layoutComp)
+		} else {
+			def selectedElement = page
+			if (model.name == "Module") { // layout:Module
+				selectedElement = page.selectSingleNode(".//layout:Grid[@moduleId='" + mfHelper.getSimplifiedId(model["moduleId"]) + "']")
+			} else if (model.name != "Page") {
+				selectedElement = page.selectSingleNode(getUniquePathInPage(model))
+			}
+			def layoutComps = selectedElement.selectNodes(".//layout:Component")
+			layoutComps.each{expandLayoutComponent(it)}
+			def layoutEvents = selectedElement.selectNodes(".//layout:Event[parent::layout:Cell|parent::layout:CustomLocation]")
+			layoutEvents.each{expandLayoutEvent(it)}
+			def layoutAtts = selectedElement.selectNodes(".//layout:Attribute[parent::layout:Cell|parent::layout:CustomLocation]")
+			layoutAtts.each{expandLayoutAttribute(it)}
+			def layoutFields = selectedElement.selectNodes(".//layout:Field[parent::layout:Cell|parent::layout:CustomLocation]")
+			layoutFields.each{expandLayoutField(it)}
+		}
+		
+		/* Get the input element */
+		def genElem = null
+		if (model.name == "Event" && layoutComp != null) { // layout:Event
+			def eventId = mfHelper.getSimplifiedId(model["event"])
+			genElem = layoutComp.selectSingleNode(".//layout:Event[@id='" + eventId + "']")
+		} else if (model.name == "Attribute" && layoutComp != null) { // layout:Attribute
+			def attrId = mfHelper.getSimplifiedId(model["attribute"])
+			genElem = layoutComp.selectSingleNode(".//layout:Attribute[@id='" + attrId + "']")
+		} else if (model.name == "Module") {
+			genElem = page.selectSingleNode(".//layout:Grid[@moduleId='" + mfHelper.getSimplifiedId(model["moduleId"]) + "']")
+		} else if (model.name == "Page" || model.name == "MasterContainer") {
+			genElem = page
+		} else {
+			genElem = page.selectSingleNode(getUniquePathInPage(model));
+		}
+		
+		/* Write the selected element to temp file */
+		if (genElem) {
+	       printRaw(StringUtils.stripStart(serializeXML(genElem, true), null))
+		} else {
+		   printRaw("Element removed from the layout")
+		}
+	}
+	mfHelper = null
+} catch (Throwable e) {
+	printRaw(ExceptionUtils.getFullStackTrace(e))
+}
+%]

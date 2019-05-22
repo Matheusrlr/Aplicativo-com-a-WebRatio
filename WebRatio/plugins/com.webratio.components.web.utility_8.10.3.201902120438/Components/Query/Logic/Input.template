@@ -1,0 +1,28 @@
+#?delimiters <%,%>,<%=,%>
+<% setXMLOutput() %>
+<InputParameters>
+     <%if(component["mode"] == "dynamic"){%>
+        <InputParameter name="<%=component["id"]%>.displayAttrIds" label="Display Attributes Ids" mandatory="true"/>
+        <InputParameter name="<%=component["id"]%>.displayAttrLabels" label="Display Attributes Labels" mandatory="false"/>
+        <InputParameter name="<%=component["id"]%>.agrOps" label="Aggregate Operators" mandatory="false"/>
+        <InputParameter name="<%=component["id"]%>.condAttrIds" label="Condition Attributes Ids" mandatory="false"/>
+        <InputParameter name="<%=component["id"]%>.condAttrPredicates" label="Condition Attributes Predicates" mandatory="false"/>
+        <InputParameter name="<%=component["id"]%>.condValues" label="Condition Values" mandatory="false"/>
+        <InputParameter name="<%=component["id"]%>.sortAttrIds" label="Sort Attributes Ids" mandatory="false"/>
+        <InputParameter name="<%=component["id"]%>.sortCriteria" label="Sort Criteria" mandatory="false"/>
+        <InputParameter name="<%=component["id"]%>.groupBy" label="Group by" mandatory="false"/>
+        <InputParameter name="<%=component["id"]%>.booleanOperator" label="Boolean Operator" mandatory="false"/>
+     <% } else { %>
+         <% for(queryInput in component.selectNodes("QueryInput")){ %>
+           <InputParameter name="<%=component["id"]%>.<%=queryInput["id"]%>" label="<%=queryInput["name"]%>" mandatory="<%=( "true".equals(queryInput["required"]) && "".equals(queryInput["value"]) )%>"/>
+         <%}%>
+     <% } %>
+     <%if(component["mode"] != "update"){%>
+        <%if(isViewComponent(component)){%>
+          <InputParameter name="<%=component["id"]%>.block" clearOnNewInputValues="true" hideCoupling="true"/>
+          <InputParameter name="<%=component["id"]%>.blockFactor" label="Block Factor" mandatory="false"/>
+          <InputParameter name="<%=component["id"]%>.blockWindow" label="Block Window" mandatory="false"/>
+        <%}%>
+        <InputParameter name="<%=component["id"]%>.maxResults" label="Max Results" mandatory="false"/>
+     <%}%>
+</InputParameters>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ValidationRule type="singleProperty" idPrefix="email" namePrefix="EMail " label="EMail"> 
+  <Description xml:space="preserve">The EMail validation rule verifies if an
+element value contains a valid email address.&lt;br/&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;${propertyValue}&lt;/b&gt;: the element value&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${propertyName}&lt;/b&gt;: the element name&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${objectName}&lt;/b&gt;: the parent element name&lt;/li&gt;
+&lt;/ul&gt;</Description>
+</ValidationRule>

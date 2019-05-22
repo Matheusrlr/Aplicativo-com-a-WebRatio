@@ -1,0 +1,28 @@
+#?delimiters [%, %], [%=, %]
+[%
+
+/* Determine the layout */
+def layout = getLayout(field, LayoutType.FIELD)
+if (!layout.path) {
+	throwGenerationException("Field has no layout defined - "  + field)
+}
+def layoutTemplate = getLayoutFile(layout.path, LayoutType.FIELD)
+if (!layoutTemplate) {
+	throwGenerationException("Field layout template not found: " + layout.path)
+}
+addUsedTemplate(layout.path)
+
+/* Standalone wrapper start */
+def componentId = field["componentId"]
+if (componentId) {
+	%]<!-- directive: wr-component [%= componentId %] -->[%
+}
+
+/* Actual Field layout */
+printRaw(executeTemplate(layoutTemplate.absolutePath, ["params": layout.parameters, "templateType": "field"]).trim())
+
+/* Standalone wrapper end */
+if (componentId) {
+	%]<!-- end_directive: wr-component -->[%
+}
+%]

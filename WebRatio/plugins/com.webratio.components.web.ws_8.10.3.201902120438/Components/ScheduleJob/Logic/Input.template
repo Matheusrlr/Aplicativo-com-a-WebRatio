@@ -1,0 +1,54 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+def componentId = component["id"]
+def job = getById(component["job"])
+def initJob = job?.selectSingleNode("Operations/InitJob")
+def policy = component["schedulePolicy"]
+%>
+<InputParameters>
+<% if (initJob != null) { %>
+     <% for(par in initJob.elements("JobInputParameter")){ %>
+       <InputParameter name="<%=componentId%>.<%=par["id"]%>" label="<%=par["name"]%>" order="100"/>
+    <% } %>
+<% } %> 
+<% if (policy == "inXMinutes") { %>
+  <InputParameter name="<%=componentId%>.minutes" label="Minutes" order="1"/>
+<% } else if (policy == "everyDay") { %>
+  <InputParameter name="<%=componentId%>.hours" label="Hours (0-23)" order="1"/>
+  <InputParameter name="<%=componentId%>.minutes" label="Minutes (0-59)" order="2"/>
+  <InputParameter name="<%=componentId%>.seconds" label="Seconds (0-59)" order="3"/>
+<% } else if (policy == "onceAWeek") { %>
+  <InputParameter name="<%=componentId%>.hours" label="Hours (0-23)" order="1"/>
+  <InputParameter name="<%=componentId%>.minutes" label="Minutes (0-59)" order="2"/>
+  <InputParameter name="<%=componentId%>.seconds" label="Seconds (0-59)" order="3"/>
+  <InputParameter name="<%=componentId%>.dayOfWeek" label="Day of Week (SUN, MON, ..))" order="4"/>
+<% } else if (policy == "onceAMonth") { %>
+  <InputParameter name="<%=componentId%>.hours" label="Hours (0-23)" order="1"/>
+  <InputParameter name="<%=componentId%>.minutes" label="Minutes (0-59)" order="2"/>
+  <InputParameter name="<%=componentId%>.seconds" label="Seconds (0-59)" order="3"/>
+  <InputParameter name="<%=componentId%>.day" label="Day (1-31)" order="4"/>
+<% } else if (policy == "onceAYear") { %>
+  <InputParameter name="<%=componentId%>.hours" label="Hours (0-23)" order="1"/>
+  <InputParameter name="<%=componentId%>.minutes" label="Minutes (0-59)" order="2"/>
+  <InputParameter name="<%=componentId%>.seconds" label="Seconds (0-59)" order="3"/>
+  <InputParameter name="<%=componentId%>.day" label="Day (1-31)" order="4"/>
+  <InputParameter name="<%=componentId%>.month" label="Month (1-12)" order="5"/>
+<% } else if (policy == "specificDate") { %>
+  <InputParameter name="<%=componentId%>.timestamp" label="Timestamp (yyyy-MM-dd hh:mm:ss)" order="1"/>
+  <InputParameter name="<%=componentId%>.hours" label="Hours (0-23)" order="2"/>
+  <InputParameter name="<%=componentId%>.minutes" label="Minutes (0-59)" order="3"/>
+  <InputParameter name="<%=componentId%>.seconds" label="Seconds (0-59)" order="4"/>
+  <InputParameter name="<%=componentId%>.day" label="Day (1-31)" order="5"/>
+  <InputParameter name="<%=componentId%>.month" label="Month (1-12)" order="6"/>
+  <InputParameter name="<%=componentId%>.year" label="Year" order="7"/>
+<% } else if (policy == "everyXSeconds") { %>
+  <InputParameter name="<%=componentId%>.seconds" label="Seconds" order="1"/>
+<% } else if (policy == "everyXMinutes") { %>
+  <InputParameter name="<%=componentId%>.minutes" label="Minutes" order="1"/>
+<% } else if (policy == "everyXHours") { %>
+  <InputParameter name="<%=componentId%>.hours" label="Hours" order="1"/>
+<% } else if (policy == "custom") { %>
+  <InputParameter name="<%=componentId%>.cronExpression" label="Cron Expression" order="1"/>
+<% } %>
+</InputParameters>

@@ -1,0 +1,27 @@
+#?delimiters [%, %], [%=, %]
+<%@ page import="org.apache.commons.lang.ObjectUtils"%>
+<%@ page import="com.fasterxml.jackson.core.io.JsonStringEncoder"%>
+<wr:LayoutParameter name="separator" label="Separator" type="string">
+Separator to use between attribute values in autocomplete
+suggestion labels.
+</wr:LayoutParameter>
+[%
+	setJSOutput();
+	
+	def separator = params["separator"]
+	def valueAttr = component.selectSingleNode("layout:Attribute[1]")
+	def keyAttrs = getKeyAttributes(getById(component["dataBinding"]))
+	def useLabel = component.selectNodes("layout:Attribute").size() > 1
+%]
+[
+	<c:forEach var="current" varStatus="status" items="${<wr:Id context="component"/>.data}">
+		<c:set var="index" value="${status.index}"/>
+		{
+			"value": "<c:set var="currentValue" value="${current.[%= getFieldName(valueAttr["attribute"]) %]}"/><%= JsonStringEncoder.getInstance().quoteAsString((String) pageContext.getAttribute("currentValue")) %>",
+			[% if (useLabel) { %]
+				"label": "<wr:Iterate var="attr" context="component" select="layout:Attribute">[% if (index > 0) { %][%= separator %][% } %]<wr:Value/></wr:Iterate>",
+			[% } %]
+			"wrId": "[% for (keyAttr in keyAttrs) { %]<c:set var="currentKey" value="${current.[%= getFieldName(keyAttr) %]}"/>[% } %]<%= JsonStringEncoder.getInstance().quoteAsString(ObjectUtils.toString(pageContext.getAttribute("currentKey"))) %>"
+		}<c:if test="${not(status.last)}">,</c:if>
+	</c:forEach>
+]

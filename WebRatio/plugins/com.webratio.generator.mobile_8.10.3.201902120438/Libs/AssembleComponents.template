@@ -1,0 +1,29 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.helpers.ProcessFailureException
+
+def tempDir = new File(wr.projectDir, "/.Temp~/components")
+tempDir.mkdirs()
+
+/* Prepare the root module */
+def rootModuleFile = new File(tempDir, "src/_wr_root.js")
+rootModuleFile.parentFile.mkdirs()
+rootModuleFile.write(executeContextTemplate("Libs/RootModule.template"), "UTF-8")
+
+/* Prepare the Webpack configuration file */
+def webpackConfigFile = new File(tempDir, "webpack.config.js")
+webpackConfigFile.write(executeContextTemplate("Libs/WebpackConfigJs.template"), "UTF-8")
+
+/* Invoke Webpack for creating the bundle */
+try {
+	executeNodeJsPackage( \
+		tempDir, \
+		"node_modules/webpack/bin/webpack.js", \
+		"--bail", \
+		"--output-file", \
+		"components.js" \
+	)
+} catch (ProcessFailureException e) {
+	throw new ProcessFailureException("Error generating components library", e.exitCode, e.outputText)
+}
+%]

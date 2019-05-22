@@ -1,0 +1,12 @@
+{
+  "_" : "wrm.core.ActionService",
+  "definition" : "ad1",
+  "flows" : {
+    "spd1" : {
+      "id" : "nf1",
+      "navTo" : "scr1",
+      "bindTo" : "scr1"
+    }
+  },
+  "notifications" : { }
+}

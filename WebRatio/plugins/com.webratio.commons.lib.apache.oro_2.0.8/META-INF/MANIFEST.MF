@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Export-Package: org.apache.oro.io,org.apache.oro.text,org.apache.oro.t
+ ext.awk,org.apache.oro.text.perl,org.apache.oro.text.regex,org.apache
+ .oro.util
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/oro.jar
+Bundle-Version: 2.0.8
+Bundle-Name: WebRatio 3rd Party Library - Apache ORO
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.apache.oro
+Bundle-RequiredExecutionEnvironment: J2SE-1.4
+
+Name: lib/orosrc.zip
+SHA-256-Digest: tMSSnpN9BGSAf0oX46D0b2kUhRTtswOYGkGz5bKoFdI=
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: I84Z3uClVtsuEIdrPqzCE8AmnNXnbkzZfrdzHyTwOH4=
+
+Name: lib/oro.jar
+SHA-256-Digest: 4AzNrV3360P97kQjLvZGAr9jgHwtEzp76Dugn9Sa8m4=
+

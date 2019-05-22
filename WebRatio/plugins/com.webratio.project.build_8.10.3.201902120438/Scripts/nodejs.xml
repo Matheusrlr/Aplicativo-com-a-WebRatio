@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="NodeJS" default="setup.nodejs" basedir=".">
+
+	<property environment="env" />
+
+	<target name="init">
+		<condition property="isWindows">
+			<os family="windows" />
+		</condition>
+		<condition property="isUnix">
+			<or>
+				<os family="mac" />
+				<os family="unix" />
+			</or>
+		</condition>
+	</target>
+
+	<!-- Setup Node.js + PhoneGap + Ripple -->
+	<target name="setup.nodejs" depends="init">
+		<available file="${nodejs.dir}" type="dir" property="nodejsAvailable" />
+		<antcall target="backup" />
+		<unzip src="${nodejs.source.zip}" dest="${nodejs.dir}">
+			<patternset>
+				<include name="nodejs/**/*" />
+			</patternset>
+			<cutdirsmapper dirs="1" />
+		</unzip>
+		<antcall target="setup.unix.permissions" />
+	</target>
+
+	<target name="backup" if="nodejsAvailable">
+		<echo>Nodejs is already present but it is out-of-date</echo>
+		<tstamp>
+			<format property="now" pattern="yyyyMMddHHmm" />
+		</tstamp>
+		<echo level="info">Creating a backup of the current Nodejs installation (${nodejs.dir}_${now})</echo>
+		<move file="${nodejs.dir}" tofile="${nodejs.dir}_${now}" />
+	</target>
+
+	<target name="setup.unix.permissions" if="isUnix">
+		<chmod perm="777" dir="${nodejs.dir}/bin" includes="*"/>
+		<chmod perm="777" dir="${nodejs.dir}/node_modules/.bin" includes="*"/>
+		<chmod perm="777" dir="${nodejs.dir}/node_modules/ripple-emulator/bin" includes="*" />
+		<chmod perm="777" dir="${nodejs.dir}/node_modules/phonegap/node_modules/.bin" includes="*" />
+	</target>
+
+	<target name="main">
+		<fail message="Use a specific target" />
+	</target>
+
+</project>

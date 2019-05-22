@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle>
+  <Entry key="Scroller.First">first</Entry>
+  <Entry key="Scroller.Jump">jump to</Entry>
+  <Entry key="Scroller.Last">last</Entry>
+  <Entry key="Scroller.Next">next</Entry>
+  <Entry key="Scroller.NoItemsShownOf">no items shown of</Entry>
+  <Entry key="Scroller.Previous">previous</Entry>
+  <Entry key="Scroller.Of">of</Entry>
+  <Entry key="Scroller.To">to</Entry>
+  <Entry key="Scroller.From">from</Entry>
+</Bundle>

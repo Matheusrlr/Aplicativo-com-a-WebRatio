@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle>
+  <Entry key="PasswordStrengthValidationRule.low">Password must be composed from 4 to 9 characters. Numbers and both lowercase and uppercase letters are required.</Entry>
+  <Entry key="PasswordStrengthValidationRule.medium">Password must be composed from 10 to 32 characters. At least 3 out 4 out of the following must be true: at least 1 uppercase character (A-Z), at least 1 lowercase character (a-z), at least 1 digit (0-9), at least 1 special character. No more than 3 repeated equal characters are accepted.</Entry>
+  <Entry key="PasswordStrengthValidationRule.high">Password must be composed from 10 to 128 characters. At least 3 out 4 out of the following must be true: at least 1 uppercase character (A-Z), at least 1 lowercase character (a-z), at least 1 digit (0-9), at least 1 special character. No more than 3 repeated equal characters are accepted.</Entry>
+  <Entry key="PasswordStrengthValidationRule.custom">Password must respect the required security criteria.</Entry>
+  <Entry key="PasswordStrengthValidationRule.boxTitle">Password must meet the following requirements:</Entry>
+  <Entry key="PasswordStrengthValidationRule.numbersCriteria">At least &lt;b>one number</Entry>
+  <Entry key="PasswordStrengthValidationRule.lowerCharCriteria">At least &lt;b>one lower letter</Entry>
+  <Entry key="PasswordStrengthValidationRule.capitalCharCriteria">At least &lt;b>one capital letter</Entry>
+  <Entry key="PasswordStrengthValidationRule.specialCharCriteria">At least &lt;b>one special character</Entry>
+  <Entry key="PasswordStrengthValidationRule.noRepetitionCriteria">Less then &lt;b>3 equal characters</Entry>
+  <Entry key="PasswordStrengthValidationRule.charactersWord">characters</Entry>
+</Bundle>

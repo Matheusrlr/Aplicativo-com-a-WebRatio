@@ -1,0 +1,1151 @@
+<?xml version="1.0" encoding="UTF-8"?><?eclipse version="3.2"?>
+
+<plugin>
+  <extension-point id="splashExtension" name="Splash Extensions" schema="schema/splashExtension.exsd"/>
+  <extension-point id="com.webratio.webProjectType" name="WebProject Type" schema="schema/webProjectType.exsd"/>
+  <extension point="org.eclipse.ui.actionSets">
+    <actionSet id="com.webratio.ide.ui.actionSet" label="WebRatio" visible="true">
+      <menu label="Search" path="navigate" id="org.eclipse.search.menu">
+        <groupMarker name="internalDialogGroup"/>
+        <!-- not to be used by clients  -->
+        <groupMarker name="dialogGroup"/>
+        <!-- to be used by clients      -->
+        <separator name="fileSearchContextMenuActionsGroup"/>
+        <!-- to be used by clients      -->
+        <separator name="contextMenuActionsGroup"/>
+        <!-- to be used by clients -->
+        <separator name="occurencesActionsGroup"/>
+        <!-- to be used by clients -->
+        <separator name="extraSearchGroup"/>
+        <!-- to be used by clients -->
+      </menu>
+      <action class="com.webratio.ide.ui.actions.OpenWebratioSearchAction" icon="icons/full/ctool16/search.png" id="com.webratio.ide.ui.actions.OpenWebratioSearchAction" label="IFML Search..." menubarPath="org.eclipse.search.menu/dialogGroup" tooltip="IFML Search"/>
+      <!--
+      <action class="com.webratio.ide.ui.actions.GenerateWebMLDocAction" icon="icons/full/ctool16/gen_webmldoc.png" id="com.webratio.ide.ui.actions.GenerateWebMLDocAction" label="Generate WebMLDoc..." menubarPath="project/additions"/>
+	-->
+    </actionSet>
+  </extension>
+  <extension point="org.eclipse.search.searchPages">
+    <page id="com.webratio.ide.ui.search.SearchPage" label="IFML" icon="icons/full/ctool16/search.png" sizeHint="250,160" tabPosition="1" extensions="*:1" showScopeSection="true" class="com.webratio.ide.ui.search.SearchPage"/>
+  </extension>
+  <extension point="org.eclipse.ui.preferencePages">
+    <page category="com.webratio.commons.startup.preferences.GeneralPreferencePage" class="com.webratio.ide.ui.preferences.ErrorWarningPreferencePage" id="com.webratio.ide.ui.preferences.ErrorWarningPreferencePage" name="Errors/Warnings"/>
+    <page category="com.webratio.ide.ui.preferences.ErrorWarningPreferencePage" class="com.webratio.ide.ui.preferences.WebClientErrorWarningPreferencePage" id="com.webratio.ide.ui.preferences.WebClientErrorWarningPreferencePage" name="Web Client"/>
+    <page category="com.webratio.ide.ui.preferences.ErrorWarningPreferencePage" class="com.webratio.ide.ui.preferences.WebErrorWarningPreferencePage" id="com.webratio.ide.ui.preferences.WebErrorWarningPreferencePage" name="Web"/>
+    <page category="com.webratio.ide.ui.preferences.ErrorWarningPreferencePage" class="com.webratio.ide.ui.preferences.MobileErrorWarningPreferencePage" id="com.webratio.ide.ui.preferences.MobileErrorWarningPreferencePage" name="Mobile"/>
+    <page id="com.webratio.ide.ui.preferences.ModelingPreferencePage" class="com.webratio.ide.ui.preferences.ModelingPreferencePage" name="Modeling" category="com.webratio.commons.startup.preferences.GeneralPreferencePage"/>
+    <page category="com.webratio.ide.ui.preferences.ModelingPreferencePage" class="com.webratio.ide.ui.preferences.MIMETypesPreferencePage" id="com.webratio.ide.ui.preferences.MIMETypesPreferencePage" name="MIME Types"/>
+    <page category="com.webratio.commons.startup.preferences.GeneralPreferencePage" class="com.webratio.ide.ui.preferences.MobilePreferencePage" id="com.webratio.ide.ui.preferences.MobilePreferencePage" name="Mobile"/>
+    <page category="com.webratio.ide.ui.preferences.ModelingPreferencePage" class="com.webratio.ide.ui.preferences.PrefixesPreferencePage" id="com.webratio.ide.ui.preferences.PrefixesPreferencePage" name="Prefixes"/>
+    <page category="com.webratio.commons.startup.preferences.GeneralPreferencePage" class="com.webratio.ide.ui.preferences.RuntimePreferencePage" id="com.webratio.ide.ui.preferences.RuntimePreferencePage" name="Runtime"/>
+    <page category="com.webratio.commons.startup.preferences.GeneralPreferencePage" class="com.webratio.ide.ui.preferences.BrowserExtensionsPreferencePage" id="com.webratio.ide.ui.preferences.BrowserExtensionsPreferencePage" name="Browser Extensions"/>
+    <page category="com.webratio.commons.startup.preferences.GeneralPreferencePage" class="com.webratio.ide.ui.preferences.VariablesPreferencePage" id="com.webratio.ide.ui.preferences.VariablesPreferencePage" name="Variables"/>
+  </extension>
+  <extension point="org.eclipse.ui.newWizards">
+    <category id="com.webratio.ide.ui" name="Web Application"/>
+    <wizard category="com.webratio.ide.ui" class="com.webratio.ide.ui.wizards.WebProjectWizardOld" icon="icons/full/ctool16/newprj_wiz.png" id="com.webratio.ide.ui.wizards.WebProjectWizardOld" name="Web Project (OLD)" project="true">
+      <description>Create a Web Project in the workspace.</description>
+    </wizard>
+    <wizard category="com.webratio.ide.ui" class="com.webratio.ide.ui.wizards.NewGenericPluginElementWizard" hasPages="true" icon="icons/full/ctool16/new_generic_custom_component_wiz.png" id="com.webratio.ide.ui.wizards.NewGenericPluginElementWizard" name="Custom Component" project="false">
+      <description>Choose where to create a new custom component.</description>
+    </wizard>
+  </extension>
+  <extension point="org.eclipse.ui.newWizards"></extension>
+  <extension point="org.eclipse.ui.newWizards">
+    <category id="com.webratio.ide.ui.mobile" name="Mobile Application"/>
+    <wizard category="com.webratio.ide.ui.mobile" class="com.webratio.ide.ui.wizards.MobileProjectWizard" icon="icons/full/ctool16/newmobileprj_wiz.png" id="com.webratio.ide.ui.wizards.MobileProjectWizard" name="Mobile Project" project="true">
+      <description>Create a Mobile Project in the workspace.</description>
+    </wizard>
+    <wizard category="com.webratio.ide.ui.mobile" class="com.webratio.ide.ui.wizards.DataServiceProjectWizard" icon="icons/full/ctool16/newdataserviceprj_wiz.png" id="com.webratio.ide.ui.wizards.DataServiceProjectWizard" name="DataService Project" project="true">
+      <description>Create a DataService Project in the workspace.</description>
+    </wizard>
+  </extension>
+  <extension point="org.eclipse.ui.ide.projectNatureImages">
+    <image icon="icons/full/ovr16/wr_ovr.png" id="com.webratio.ide.wrprojectnature" natureId="com.webratio.ide.wrprojectnature"/>
+    <image icon="icons/full/ovr16/wr_ovr.png" id="com.webratio.ide.WebNature" natureId="com.webratio.ide.WebNature"/>
+    <image icon="icons/full/ovr16/ep_wr_ovr.png" id="com.webratio.ide.EnterpriseNature" natureId="com.webratio.ide.EnterpriseNature"/>
+    <image icon="icons/full/ovr16/dmp_wr_ovr.png" id="com.webratio.ide.DataModelNature" natureId="com.webratio.ide.DataModelNature"/>
+    <image icon="icons/full/ovr16/wmp_wr_ovr.png" id="com.webratio.ide.WebModelNature" natureId="com.webratio.ide.WebModelNature"/>
+    <image icon="icons/full/ovr16/mp_wr_ovr.png" id="com.webratio.ide.ModuleNature" natureId="com.webratio.ide.ModuleNature"/>
+    <image icon="icons/full/ovr16/mbp_wr_ovr.png" id="com.webratio.ide.MobileNature" natureId="com.webratio.ide.MobileNature"/>
+    <image icon="icons/full/ovr16/dsp_wr_ovr.png" id="com.webratio.ide.DataServiceNature" natureId="com.webratio.ide.DataServiceNature"/>
+  </extension>
+  <extension point="org.eclipse.ui.importWizards">
+    <category id="com.webratio.ide.ui" name="Web Application"/>
+    <!-- used by cloud -->
+    <!--
+    <wizard category="com.webratio.ide.ui" class="com.webratio.ide.ui.wizards.WR4ImportProjectWizard" icon="icons/full/ctool16/import4x_wiz.png" id="com.webratio.ide.ui.wizards.WR4ImportProjectWizard" name="WebRatio 4.x Project">
+      <description>Import a project made with WebRatio 4.x.</description>
+    </wizard>
+    <wizard category="com.webratio.ide.ui" class="com.webratio.ide.ui.wizards.WR5ImportProjectWizard" icon="icons/full/ctool16/import4x_wiz.png" id="com.webratio.ide.ui.wizards.WR5ImportProjectWizard" name="WebRatio Project">
+      <description>Import a project made with WebRatio 5.x or 6.x.</description>
+    </wizard>
+    -->
+    <!-- TODO fix in according IFML
+    <wizard category="com.webratio.ide.ui" class="com.webratio.ide.ui.wizards.ImportProjectFragmentsWizard" icon="icons/full/ctool16/import4x_wiz.png" id="com.webratio.ide.ui.wizards.ImportProjectFragmentsWizard" name="WebRatio Project Fragments">
+      <description>Import WebRatio project fragments.</description>
+    </wizard>
+    -->
+  </extension>
+  <extension point="org.eclipse.ui.importWizards"></extension>
+  <extension point="org.eclipse.ui.views">
+    <!--
+    <view category="com.webratio.ui.views" class="com.webratio.ide.ui.views.WebProjectsView" icon="icons/full/cview16/web_projects_nav.png" id="com.webratio.ide.ui.views.WebProjectsView" name="Web Projects"/>
+    -->
+    <view category="com.webratio.ui.views" class="com.webratio.ide.ui.views.GenerationErrorsView" icon="icons/full/cview16/gen_err_nav.png" id="com.webratio.ide.ui.views.GenerationErrorsView" name="Generation Errors"/>
+    <view category="com.webratio.ui.views" class="com.webratio.ide.ui.explorer.views.WRExplorerView" icon="icons/full/cview16/wr_explorer_nav.png" id="com.webratio.ide.ui.explorer.views.WRExplorerView" name="WebRatio Explorer"/>
+    <view category="com.webratio.ui.views" class="com.webratio.ide.ui.views.WRLogView" icon="icons/full/cview16/wr_log.png" id="com.webratio.ide.ui.views.WRLogView" name="Runtime Log"/>
+    <view category="com.webratio.ui.views" class="com.webratio.ide.ui.views.WRAerialView" icon="icons/full/cview16/aerial_view.png" id="com.webratio.ide.ui.views.WRAerialView" name="Overview"/>
+    <view category="com.webratio.ui.views" class="com.webratio.ide.ui.views.ComponentReferenceView" icon="icons/full/cview16/component_ref.png" id="com.webratio.ide.ui.views.ComponentReferenceView" name="Component Reference"/>
+    <view category="com.webratio.ui.views" class="com.webratio.ide.ui.views.EventReferenceView" icon="icons/full/cview16/event_ref.png" id="com.webratio.ide.ui.views.EventReferenceView" name="Event Reference"/>
+    <!--
+    <view category="org.eclipse.ui" class="com.webratio.ide.ui.views.WRProblemView" icon="icons/full/cview16/problems_view.png" id="org.eclipse.ui.views.ProblemView" name="Problems"/>
+    -->
+  </extension>
+  <extension point="org.eclipse.ui.perspectives">
+    <perspective class="com.webratio.ide.ui.WRPerspectiveFactory" icon="icons/full/ctool16/ifml_perspective.png" id="com.webratio.ide.ui.WRPerspective" name="WebRatio"/>
+  </extension>
+  <extension point="org.eclipse.ui.perspectiveExtensions">
+    <perspectiveExtension targetID="com.webratio.ide.ui.WRPerspective">
+      <perspectiveShortcut id="com.webratio.ide.ui.WRPerspective"/>
+      <perspectiveShortcut id="org.eclipse.team.cvs.ui.cvsPerspective"/>
+    </perspectiveExtension>
+    <perspectiveExtension targetID="org.eclipse.ui.resourcePerspective">
+      <perspectiveShortcut id="com.webratio.ide.ui.WRPerspective"/>
+    </perspectiveExtension>
+    <perspectiveExtension targetID="org.eclipse.jdt.ui.JavaPerspective">
+      <perspectiveShortcut id="com.webratio.ide.ui.WRPerspective"/>
+    </perspectiveExtension>
+  </extension>
+  <extension point="com.webratio.commons.mf.ui.views.properties.tabbed.propertyContributor">
+    <propertyContributor contributorId="com.webratio.ide.ui.editors.WebProjectEditor" typeMapper="com.webratio.commons.mf.ui.properties.MFTypeMapper" labelProvider="com.webratio.ide.ui.properties.WebProjectEditorPropertyLabelProvider">
+      <propertyCategory category="default"/>
+    </propertyContributor>
+  </extension>
+  <extension point="com.webratio.commons.mf.ui.views.properties.tabbed.propertySections">
+    <propertySections contributorId="com.webratio.ide.ui.editors.WebProjectEditor">
+      <propertySection class="com.webratio.ide.ui.properties.AlternativePropertySection" filter="com.webratio.ide.ui.properties.WebNaturePropertySectionFilter" id="section1" tab="general">
+        <input type="com.webratio.ide.model.IAlternative"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.AlternativePropertySectionOld" filter="com.webratio.ide.ui.properties.NonWebNaturePropertySectionFilter" id="section2" tab="general">
+        <input type="com.webratio.ide.model.IAlternative"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.AreaPropertySectionOld" filter="com.webratio.ide.ui.properties.NonWebNaturePropertySectionFilter" id="section3" tab="general">
+        <input type="com.webratio.ide.model.IArea"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.AreaPropertySection" filter="com.webratio.ide.ui.properties.WebNaturePropertySectionFilter" id="section4" tab="general">
+        <input type="com.webratio.ide.model.IArea"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.AttributePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section5" tab="general">
+        <input type="com.webratio.ide.model.IAttribute"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.PackagePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section6" tab="general">
+        <input type="com.webratio.ide.model.IPackage"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.DomainClassWebPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section7" tab="general">
+        <input type="com.webratio.ide.model.IDomainClass"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.GeneralizationPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section8" tab="general">
+        <input type="com.webratio.ide.model.IGeneralization"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.AssociationPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section9" tab="general">
+        <input type="com.webratio.ide.model.IAssociation"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ARoleWebPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section10" tab="general">
+        <input type="com.webratio.ide.model.IAssociationRole"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.SubTypePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section11" tab="general">
+        <input type="com.webratio.ide.model.ISubType"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ContentModuleDefinitionPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section12" tab="general">
+        <input type="com.webratio.ide.model.IContentModuleDefinition"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ContextParameterPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section13" tab="general">
+        <input type="com.webratio.ide.model.IContextParameter"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.HybridModuleDefinitionPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section14" tab="general">
+        <input type="com.webratio.ide.model.IHybridModuleDefinition"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.PagePropertySectionOld" filter="com.webratio.ide.ui.properties.PagePropertySectionFilterOld" id="section15" tab="general">
+        <input type="com.webratio.ide.model.IPage"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.PagePropertySection" filter="com.webratio.ide.ui.properties.PagePropertySectionFilter" id="section16" tab="general">
+        <input type="com.webratio.ide.model.IPage"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.SubPagePropertySection" filter="com.webratio.ide.ui.properties.SubPagePropertySectionFilter" id="section17" tab="general">
+        <input type="com.webratio.ide.model.IPage"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.HybridModulePagePropertySection" filter="com.webratio.ide.ui.properties.HybridModulePagePropertySectionFilter" id="section18" tab="general">
+        <input type="com.webratio.ide.model.IPage"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.MasterContainerPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section19" tab="general">
+        <input type="com.webratio.ide.model.IMasterContainer"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.AbstractPagePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section20" tab="general">
+        <input type="com.webratio.ide.model.IAbstractPage"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.SiteViewPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section21" tab="general">
+        <input type="com.webratio.ide.model.ISiteView"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.WebViewPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section22" tab="general">
+        <input type="com.webratio.ide.model.IWebView"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.units.PluginComponentPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section23" tab="general">
+        <input type="com.webratio.ide.model.IPluginComponent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.units.PluginComponentPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section24" tab="general">
+        <input type="com.webratio.ide.model.IPluginEvent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ServicePortPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section25" tab="general">
+        <input type="com.webratio.ide.model.IServicePort"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.JobPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section26" tab="general">
+        <input type="com.webratio.ide.model.IJob"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.TriggerPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section27" tab="general">
+        <input type="com.webratio.ide.model.ITrigger"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ActionDefinitionWebPropertySection" filter="com.webratio.ide.ui.properties.WebProjectPropertySectionFilterOld" id="section28" tab="general">
+        <input type="com.webratio.ide.model.IActionDefinition"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ActionDefinitionBPMPropertySection" filter="com.webratio.ide.ui.properties.BusinessProjectPropertySectionFilter" id="section29" tab="general">
+        <input type="com.webratio.ide.model.IActionDefinition"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ActionDefinitionDataServicePropertySection" filter="com.webratio.ide.ui.properties.DataServiceProjectPropertySectionFilter" id="section30" tab="general">
+        <input type="com.webratio.ide.model.IActionDefinition"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ServiceViewPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section31" tab="general">
+        <input type="com.webratio.ide.model.IServiceView"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ModuleViewWebPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section32" tab="general">
+        <input type="com.webratio.ide.model.IModuleView"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ModulePackageWebPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section33" tab="general">
+        <input type="com.webratio.ide.model.IModulePackage"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.WebProjectPropertySection" filter="com.webratio.ide.ui.properties.WebNaturePropertySectionFilter" id="section34" tab="general">
+        <input type="com.webratio.ide.model.IWebProject"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.WebProjectWebModelAndModulePropertySection" filter="com.webratio.ide.ui.properties.WebProjectWebModelAndModulePropertySectionFilter" id="section35" tab="general">
+        <input type="com.webratio.ide.model.IWebProject"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.WebProjectWithDeployPropertySection" filter="com.webratio.ide.ui.properties.WebProjectCurrentDeployPropertySectionFilter" id="section36" tab="general">
+        <input type="com.webratio.ide.model.IWebProject"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.WebProjectWebPropertySection" filter="com.webratio.ide.ui.properties.WebProjectNoCurrentDeployWebPropertySectionFilter" id="section37" tab="general">
+        <input type="com.webratio.ide.model.IWebProject"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.WebProjectDataServicePropertySection" filter="com.webratio.ide.ui.properties.WebProjectNoCurrentDeployDataServicePropertySectionFilter" id="section38" tab="general">
+        <input type="com.webratio.ide.model.IWebProject"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.WebProjectBusinessPropertySection" filter="com.webratio.ide.ui.properties.WebProjectBusinessPropertySectionFilter" id="section39" tab="general">
+        <input type="com.webratio.ide.model.IWebProject"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.WebProjectEPWithDeployPropertySection" filter="com.webratio.ide.ui.properties.EnterpriseProjectCurrentDeployPropertySectionFilter" id="section40" tab="general">
+        <input type="com.webratio.ide.model.IWebProject"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.WebProjectEPPropertySection" filter="com.webratio.ide.ui.properties.EnterpriseProjectNoCurrentDeployPropertySectionFilter" id="section41" tab="general">
+        <input type="com.webratio.ide.model.IWebProject"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.EmptyPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section42" tab="general">
+        <input type="com.webratio.ide.model.IRoles"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.EmptyPropertySection" filter="com.webratio.ide.ui.properties.BusinessProjectPropertySectionFilter" id="section43" tab="general">
+        <input type="com.webratio.ide.model.IServiceDataProviders"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.EmptyPropertySection" filter="com.webratio.ide.ui.properties.DataServiceProjectPropertySectionFilter" id="section44" tab="general">
+        <input type="com.webratio.ide.model.IServiceDataProviders"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.EmptyPropertySection" filter="com.webratio.ide.ui.properties.WebNaturePropertySectionFilter" id="section45" tab="general">
+        <input type="com.webratio.ide.model.IDomainModel"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.WebModelPropertySectionOld" filter="com.webratio.ide.ui.properties.NonDataServicePropertySectionFilter" id="section46" tab="general">
+        <input type="com.webratio.ide.model.IWebModel"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.WebModelPropertySection" filter="com.webratio.ide.ui.properties.WebNaturePropertySectionFilter" id="section47" tab="general">
+        <input type="com.webratio.ide.model.IWebModel"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.EmptyPropertySection" filter="com.webratio.ide.ui.properties.BusinessProjectPropertySectionFilter" id="section48" tab="general">
+        <input type="com.webratio.ide.model.IWebModel"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.EmptyPropertySection" filter="com.webratio.ide.ui.properties.DataServiceProjectPropertySectionFilter" id="section49" tab="general">
+        <input type="com.webratio.ide.model.IWebModel"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ActionFlowWebPropertySection" filter="com.webratio.ide.ui.properties.ActionFlowPropertySectionFilter" id="section50" tab="general">
+        <input type="com.webratio.ide.model.IActionFlow"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.OperationActionFlowWebPropertySection" filter="com.webratio.ide.ui.properties.OperationActionFlowPropertySectionFilter" id="section51" tab="general">
+        <input type="com.webratio.ide.model.IActionFlow"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.DataFlowWebPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section52" tab="general">
+        <input type="com.webratio.ide.model.IDataFlow"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.NavigationFlowWebPropertySectionOld" filter="com.webratio.ide.ui.properties.NonWebNaturePropertySectionFilter" id="section53" tab="general">
+        <input type="com.webratio.ide.model.INavigationFlow"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.NavigationFlowWebPropertySection" filter="com.webratio.ide.ui.properties.WebNaturePropertySectionFilter" id="section54" tab="general">
+        <input type="com.webratio.ide.model.INavigationFlow"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ParameterBindingPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section55" tab="general">
+        <input type="com.webratio.ide.model.IParameterBinding"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.PropertyPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section56" tab="general">
+        <input type="com.webratio.ide.model.IProperty"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.units.SubComponentPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section57" tab="general">
+        <input type="com.webratio.ide.model.ISubUnit"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.units.SubComponentPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section58" tab="general">
+        <input type="com.webratio.ide.model.ISubEvent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.EmptyPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section59" tab="general">
+        <input type="com.webratio.ide.model.IDefinitionsBag"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.DataServicesPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section60" tab="general">
+        <input type="com.webratio.ide.model.IDataServices"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ServiceClassPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section61" tab="general">
+        <input type="com.webratio.ide.model.IServiceClass"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ReadServiceMethodPropertySection" filter="com.webratio.ide.ui.properties.ReadServiceMethodPropertySectionFilter" id="section62" tab="general">
+        <input type="com.webratio.ide.model.IServiceMethod"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.CreateServiceMethodPropertySection" filter="com.webratio.ide.ui.properties.CreateServiceMethodPropertySectionFilter" id="section63" tab="general">
+        <input type="com.webratio.ide.model.IServiceMethod"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.UpdateServiceMethodPropertySection" filter="com.webratio.ide.ui.properties.UpdateServiceMethodPropertySectionFilter" id="section64" tab="general">
+        <input type="com.webratio.ide.model.IServiceMethod"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.DeleteServiceMethodPropertySection" filter="com.webratio.ide.ui.properties.DeleteServiceMethodPropertySectionFilter" id="section65" tab="general">
+        <input type="com.webratio.ide.model.IServiceMethod"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.DataServiceRestrictionPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section66" tab="general">
+        <input type="com.webratio.ide.model.IDataServiceRestriction"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.AttributesRestrictionConditionPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section67" tab="general">
+        <input type="com.webratio.ide.model.IAttributesRestrictionCondition"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.UserAssociationRoleRestrictionConditionPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section68" tab="general">
+        <input type="com.webratio.ide.model.IUserAssociationRoleRestrictionCondition"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.UserServicesPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section69" tab="general">
+        <input type="com.webratio.ide.model.IUserServices"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.UserServiceOperationPropertySection" filter="com.webratio.ide.ui.properties.UserServiceRegisterOperationPropertySectionFilter" id="section70" tab="general">
+        <input type="com.webratio.ide.model.IUserServiceOperation"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.EmptyPropertySection" filter="com.webratio.ide.ui.properties.UserServiceLoginUpdateOperationPropertySectionFilter" id="section71" tab="general">
+        <input type="com.webratio.ide.model.IUserServiceOperation"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.BPMResourcesPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section72" tab="general">
+        <input type="com.webratio.ide.model.IBPMResources"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.BPMResourcePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section73" tab="general">
+        <input type="com.webratio.ide.model.IBPMResource"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.RunningProfilePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section74" tab="general">
+        <input type="com.webratio.ide.model.IRunningProfile"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.SMTPServerWithDeployPropertySection" filter="com.webratio.ide.ui.properties.CurrentDeployPropertySectionFilter" id="section75" tab="general">
+        <input type="com.webratio.ide.model.ISMTPServer"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.SMTPServerPropertySection" filter="com.webratio.ide.ui.properties.NoCurrentDeployPropertySectionFilter" id="section76" tab="general">
+        <input type="com.webratio.ide.model.ISMTPServer"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.CookieStorageProviderWithDeployPropertySection" filter="com.webratio.ide.ui.properties.CurrentDeployPropertySectionFilter" id="section77" tab="general">
+        <input type="com.webratio.ide.model.ICookieStorageProvider"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.CookieStorageProviderPropertySection" filter="com.webratio.ide.ui.properties.NoCurrentDeployPropertySectionFilter" id="section78" tab="general">
+        <input type="com.webratio.ide.model.ICookieStorageProvider"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.XsdProviderPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section79" tab="general">
+        <input type="com.webratio.ide.model.IXsdProvider"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.XsdResourcePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section80" tab="general">
+        <input type="com.webratio.ide.model.IXsdResource"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.WebServiceProviderPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section81" tab="general">
+        <input type="com.webratio.ide.model.IWebServiceProvider"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ServiceDataProviderWithDeployPropertySection" filter="com.webratio.ide.ui.properties.CurrentDeployPropertySectionFilter" id="section82" tab="general">
+        <input type="com.webratio.ide.model.IServiceDataProvider"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ServiceDataProviderPropertySection" filter="com.webratio.ide.ui.properties.NoCurrentDeployPropertySectionFilter" id="section83" tab="general">
+        <input type="com.webratio.ide.model.IServiceDataProvider"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.VariablePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section84" tab="general">
+        <input type="com.webratio.ide.model.IVariable"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ConditionExpressionPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section85" tab="general">
+        <input type="com.webratio.ide.model.IConditionExpression"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.vrules.VRulePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section86" tab="general">
+        <input type="com.webratio.ide.model.IVRuleLike"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.SubProjectPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section87" tab="general">
+        <input type="com.webratio.ide.model.ISubProject"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.JumpEventPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section88" tab="general">
+        <input type="com.webratio.ide.model.IJumpEvent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.LandingEventPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section89" tab="general">
+        <input type="com.webratio.ide.model.ILandingEvent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.GenericViewEventWebPropertySection" filter="com.webratio.ide.ui.properties.WebNaturePropertySectionFilter" id="section90" tab="general">
+        <input type="com.webratio.ide.model.IOnSelectEvent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.GenericViewEventPropertySection" filter="com.webratio.ide.ui.properties.NonWebNaturePropertySectionFilter" id="section91" tab="general">
+        <input type="com.webratio.ide.model.IOnSelectEvent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.GenericViewEventPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section92" tab="general">
+        <input type="com.webratio.ide.model.IOnSubmitEvent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.GenericEventPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section93" tab="general">
+        <input type="com.webratio.ide.model.IOnLoadEvent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.IFMLSetContextEventPropertySection" filter="com.webratio.ide.ui.properties.IFMLRealmPropertySectionFilter" id="section94" tab="general">
+        <input type="com.webratio.ide.model.ISetContextEvent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.OMLSetContextEventPropertySection" filter="com.webratio.ide.ui.properties.OMLRealmPropertySectionFilter" id="section95" tab="general">
+        <input type="com.webratio.ide.model.ISetContextEvent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.PageInputPortPropertySection" filter="com.webratio.ide.ui.properties.PagePortPropertySectionFilter" id="section96" tab="general">
+        <input type="com.webratio.ide.model.IInputPort"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ChainInputPortPropertySection" filter="com.webratio.ide.ui.properties.ChainPortPropertySectionFilter" id="section97" tab="general">
+        <input type="com.webratio.ide.model.IInputPort"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.OutputPortPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section98" tab="general">
+        <input type="com.webratio.ide.model.IOutputPort"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.SuccessEventWebPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section99" tab="general">
+        <input type="com.webratio.ide.model.ISuccessEvent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ErrorEventWebPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section100" tab="general">
+        <input type="com.webratio.ide.model.IErrorEvent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.LandingEventParameterPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section101" tab="general">
+        <input type="com.webratio.ide.model.ILandingEventParameter"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.JumpBackEventParameterPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section102" tab="general">
+        <input type="com.webratio.ide.model.IJumpBackEventParameter"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.IFMLPageActionPropertySection" filter="com.webratio.ide.ui.properties.IFMLWebPageComponentPropertySectionFilter" id="section103" tab="general">
+        <input type="com.webratio.ide.model.IAction"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.IFMLChainActionWebPropertySection" filter="com.webratio.ide.ui.properties.IFMLChainPropertySectionFilter" id="section104" tab="general">
+        <input type="com.webratio.ide.model.IAction"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.OMLActionWebPropertySection" filter="com.webratio.ide.ui.properties.OMLRealmPropertySectionFilter" id="section105" tab="general">
+        <input type="com.webratio.ide.model.IAction"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.IFMLPageModulePropertySection" filter="com.webratio.ide.ui.properties.IFMLWebPageComponentPropertySectionFilter" id="section106" tab="general">
+        <input type="com.webratio.ide.model.IModule"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.IFMLChainModuleWebPropertySection" filter="com.webratio.ide.ui.properties.IFMLChainPropertySectionFilter" id="section107" tab="general">
+        <input type="com.webratio.ide.model.IModule"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.InputPortActionDefinitionPropertySection" filter="com.webratio.ide.ui.properties.InputPortActionDefinitionPropertySectionFilter" id="section108" tab="general">
+        <input type="com.webratio.ide.model.IInputPortDefinition"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.InputPortModuleDefinitionPropertySection" filter="com.webratio.ide.ui.properties.InputPortModuleDefinitionPropertySectionFilter" id="section109" tab="general">
+        <input type="com.webratio.ide.model.IInputPortDefinition"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.OutputPortDefinitionPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section110" tab="general">
+        <input type="com.webratio.ide.model.IOutputPortDefinition"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ActionPortDefinitionWebPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section111" tab="general">
+        <input type="com.webratio.ide.model.IActionPortDefinition"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.GenericInputPortDefinitionParameterPropertySection" filter="com.webratio.ide.ui.properties.GenericInputPortDefinitionParameterPropertySectionFilter" id="section112" tab="general">
+        <input type="com.webratio.ide.model.IPortDefinitionParameter"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.GenericOutputPortDefinitionParameterPropertySection" filter="com.webratio.ide.ui.properties.GenericOutputPortDefinitionParameterPropertySectionFilter" id="section113" tab="general">
+        <input type="com.webratio.ide.model.IPortDefinitionParameter"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.RoleWebPropertySection" filter="com.webratio.ide.ui.properties.RoleWebPropertySectionFilter" id="section114" tab="general">
+        <input type="com.webratio.ide.model.IRole"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.MainParameterDeclarationPropertySection" filter="com.webratio.ide.ui.properties.MainParameterDeclarationPropertySectionFilter" id="section115" tab="general">
+        <input type="com.webratio.ide.model.IParameterDeclaration"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.PageParameterDeclarationPropertySection" filter="com.webratio.ide.ui.properties.PageParameterDeclarationPropertySectionFilter" id="section116" tab="general">
+        <input type="com.webratio.ide.model.IParameterDeclaration"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.EmptyPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section117" tab="general">
+        <input type="com.webratio.ide.model.IParameterDeclarations"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.RoleMobilePropertySection" filter="com.webratio.ide.ui.properties.RoleMobilePropertySectionFilter" id="section118" tab="mobile">
+        <input type="com.webratio.ide.model.IRole"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.RoleWebPropertySection" filter="com.webratio.ide.ui.properties.RoleWebPropertySectionFilter" id="section119" tab="mobile">
+        <input type="com.webratio.ide.model.IRole"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.WebProjectMobilePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section120" tab="mobile">
+        <input type="com.webratio.ide.model.IWebProject"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.PackageMobilePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section121" tab="mobile">
+        <input type="com.webratio.ide.model.IPackage"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.DomainClassMobilePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section122" tab="mobile">
+        <input type="com.webratio.ide.model.IDomainClass"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.AttributeMobilePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section123" tab="mobile">
+        <input type="com.webratio.ide.model.IAttribute"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.AssociationMobilePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section124" tab="mobile">
+        <input type="com.webratio.ide.model.IAssociation"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ARoleMobilePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section125" tab="mobile">
+        <input type="com.webratio.ide.model.IAssociationRole"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.AppViewPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section126" tab="mobile">
+        <input type="com.webratio.ide.model.IAppView"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ScreenSetPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section127" tab="mobile">
+        <input type="com.webratio.ide.model.IScreenSet"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ScreenPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section128" tab="mobile">
+        <input type="com.webratio.ide.model.IScreen"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ToolbarPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section129" tab="mobile">
+        <input type="com.webratio.ide.model.IToolbar"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.units.PluginComponentPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section130" tab="mobile">
+        <input type="com.webratio.ide.model.IPluginComponent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.units.PluginComponentPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section131" tab="mobile">
+        <input type="com.webratio.ide.model.IPluginEvent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.GenericViewEventPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section132" tab="mobile">
+        <input type="com.webratio.ide.model.IOnSelectEvent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.GenericViewEventPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section133" tab="mobile">
+        <input type="com.webratio.ide.model.IOnSubmitEvent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.BackEventPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section134" tab="mobile">
+        <input type="com.webratio.ide.model.IBackEvent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.DataFlowMobilePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section135" tab="mobile">
+        <input type="com.webratio.ide.model.IDataFlow"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.NavigationFlowMobilePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section136" tab="mobile">
+        <input type="com.webratio.ide.model.INavigationFlow"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ActionFlowMobilePropertySection" filter="com.webratio.ide.ui.properties.ActionFlowPropertySectionFilter" id="section137" tab="mobile">
+        <input type="com.webratio.ide.model.IActionFlow"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.OperationActionFlowMobilePropertySection" filter="com.webratio.ide.ui.properties.OperationActionFlowPropertySectionFilter" id="section138" tab="mobile">
+        <input type="com.webratio.ide.model.IActionFlow"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ParameterBindingPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section139" tab="mobile">
+        <input type="com.webratio.ide.model.IParameterBinding"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.PropertyPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section140" tab="mobile">
+        <input type="com.webratio.ide.model.IProperty"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.units.SubComponentPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section141" tab="mobile">
+        <input type="com.webratio.ide.model.ISubUnit"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.units.SubComponentPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section142" tab="mobile">
+        <input type="com.webratio.ide.model.ISubEvent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.IFMLChainActionMobilePropertySection" filter="com.webratio.ide.ui.properties.IFMLChainPropertySectionFilter" id="section143" tab="mobile">
+        <input type="com.webratio.ide.model.IAction"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.OMLActionMobilePropertySection" filter="com.webratio.ide.ui.properties.OMLRealmPropertySectionFilter" id="section144" tab="mobile">
+        <input type="com.webratio.ide.model.IAction"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.SuccessEventMobilePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section145" tab="mobile">
+        <input type="com.webratio.ide.model.ISuccessEvent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ErrorEventMobilePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section146" tab="mobile">
+        <input type="com.webratio.ide.model.IErrorEvent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.EmptyPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section147" tab="mobile">
+        <input type="com.webratio.ide.model.IDefinitionsBag"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ModuleViewMobilePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section148" tab="mobile">
+        <input type="com.webratio.ide.model.IModuleView"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ModulePackageMobilePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section149" tab="mobile">
+        <input type="com.webratio.ide.model.IModulePackage"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ActionDefinitionMobilePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section150" tab="mobile">
+        <input type="com.webratio.ide.model.IActionDefinition"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.InputPortActionDefinitionPropertySection" filter="com.webratio.ide.ui.properties.InputPortActionDefinitionPropertySectionFilter" id="section151" tab="mobile">
+        <input type="com.webratio.ide.model.IInputPortDefinition"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ActionPortDefinitionMobilePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section152" tab="mobile">
+        <input type="com.webratio.ide.model.IActionPortDefinition"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.GenericInputPortDefinitionParameterPropertySection" filter="com.webratio.ide.ui.properties.GenericInputPortDefinitionParameterPropertySectionFilter" id="section153" tab="mobile">
+        <input type="com.webratio.ide.model.IPortDefinitionParameter"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.GenericOutputPortDefinitionParameterPropertySection" filter="com.webratio.ide.ui.properties.GenericOutputPortDefinitionParameterPropertySectionFilter" id="section154" tab="mobile">
+        <input type="com.webratio.ide.model.IPortDefinitionParameter"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.vrules.VRulePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section155" tab="mobile">
+        <input type="com.webratio.ide.model.IVRuleLike"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.GenericSystemEventPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section156" tab="mobile">
+        <input type="com.webratio.ide.model.IGenericSystemEvent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ServiceDataProviderPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section157" tab="mobile">
+        <input type="com.webratio.ide.model.IServiceDataProvider"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.DomainModelMappingMobilePropertySection" filter="com.webratio.ide.ui.properties.DomainModelMappingMobilePropertySectionFilter" id="section158" tab="mobileMapping">
+        <input type="com.webratio.ide.model.IDomainModel"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.PackageMappingMobilePropertySection" filter="com.webratio.ide.ui.properties.PackageMappingMobilePropertySectionFilter" id="section159" tab="mobileMapping">
+        <input type="com.webratio.ide.model.IPackage"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.AttributeMappingMobilePropertySection" filter="com.webratio.ide.ui.properties.AttributeMappingMobilePropertySectionFilter" id="section160" tab="mobileMapping">
+        <input type="com.webratio.ide.model.IAttribute"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.DomainClassMappingMobilePropertySection" filter="com.webratio.ide.ui.properties.DomainClassMappingMobilePropertySectionFilter" id="section161" tab="mobileMapping">
+        <input type="com.webratio.ide.model.IDomainClass"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.AssociationMappingMobilePropertySection" filter="com.webratio.ide.ui.properties.AssociationMobilePropertySectionFilter" id="section162" tab="mobileMapping">
+        <input type="com.webratio.ide.model.IAssociation"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.AppUserAssociationMappingMobilePropertySection" filter="com.webratio.ide.ui.properties.AppUserAssociationMobilePropertySectionFilter" id="section163" tab="mobileMapping">
+        <input type="com.webratio.ide.model.IAssociation"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.AssociationRoleMappingMobilePropertySection" filter="com.webratio.ide.ui.properties.AssociationRoleMobilePropertySectionFilter" id="section164" tab="mobileMapping">
+        <input type="com.webratio.ide.model.IAssociationRole"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.KeyAttributeMappingPropertySection" filter="com.webratio.ide.ui.properties.KeyAttributePropertySectionFilter" id="section165" tab="mapping">
+        <input type="com.webratio.ide.model.IAttribute"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.NonKeyAttributeMappingPropertySection" filter="com.webratio.ide.ui.properties.NonKeyAttributePropertySectionFilter" id="section166" tab="mapping">
+        <input type="com.webratio.ide.model.IAttribute"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.DatabaseWithDeployMappingPropertySection" filter="com.webratio.ide.ui.properties.CurrentDeployPropertySectionFilter" id="section167" tab="mapping">
+        <input type="com.webratio.ide.model.IDatabase"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.DatabaseMappingPropertySection" filter="com.webratio.ide.ui.properties.NoCurrentDeployPropertySectionFilter" id="section168" tab="mapping">
+        <input type="com.webratio.ide.model.IDatabase"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.GeneralizationMappingPropertySection" filter="com.webratio.ide.ui.properties.PersistentGeneralizationPropertySectionFilter" id="section169" tab="mapping">
+        <input type="com.webratio.ide.model.IGeneralization"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ColumnMappingPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section170" tab="mapping">
+        <input type="com.webratio.ide.model.IColumn"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.DBMetaDataMappingPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section171" tab="mapping">
+        <input type="com.webratio.ide.model.IDBMetaData"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.DBErrorMappingPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section172" tab="mapping">
+        <input type="com.webratio.ide.model.IDBError"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.DomainClassMappingWebPropertySection" filter="com.webratio.ide.ui.properties.DomainClassMappingWebPropertySectionFilter" id="section173" tab="mapping">
+        <input type="com.webratio.ide.model.IDomainClass"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.IndexMappingPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section174" tab="mapping">
+        <input type="com.webratio.ide.model.IIndex"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.AssociationMappingWebPropertySection" filter="com.webratio.ide.ui.properties.PersistentAssociationPropertySectionFilter" id="section175" tab="mapping">
+        <input type="com.webratio.ide.model.IAssociation"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.StoredProcedureMappingPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section176" tab="mapping">
+        <input type="com.webratio.ide.model.IStoredProcedure"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.TableMappingPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section177" tab="mapping">
+        <input type="com.webratio.ide.model.ITable"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.AttributeXsdMappingPropertySection" filter="com.webratio.ide.ui.properties.XsdMappingPropertySectionFilter" id="section178" tab="xsd">
+        <input type="com.webratio.ide.model.IAttribute"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.DomainClassXsdMappingPropertySection" filter="com.webratio.ide.ui.properties.XsdMappingPropertySectionFilter" id="section179" tab="xsd">
+        <input type="com.webratio.ide.model.IDomainClass"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.AssociationXsdMappingPropertySection" filter="com.webratio.ide.ui.properties.XsdMappingPropertySectionFilter" id="section180" tab="xsd">
+        <input type="com.webratio.ide.model.IAssociation"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.BLOBAttributePropertySection" filter="com.webratio.ide.ui.properties.BLOBAttributePropertySectionFilter" id="section181" tab="blob">
+        <input type="com.webratio.ide.model.IAttribute"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.DatabaseWithDeployAdvancedMappingPropertySection" filter="com.webratio.ide.ui.properties.CurrentDeployPropertySectionFilter" id="section182" tab="advancedMapping">
+        <input type="com.webratio.ide.model.IDatabase"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.DatabaseAdvancedMappingPropertySection" filter="com.webratio.ide.ui.properties.NoCurrentDeployPropertySectionFilter" id="section183" tab="advancedMapping">
+        <input type="com.webratio.ide.model.IDatabase"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.DatabaseWithDeployRuntimeMappingPropertySection" filter="com.webratio.ide.ui.properties.CurrentDeployPropertySectionFilter" id="section184" tab="runtimeMapping">
+        <input type="com.webratio.ide.model.IDatabase"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.DatabaseRuntimeMappingPropertySection" filter="com.webratio.ide.ui.properties.NoCurrentDeployPropertySectionFilter" id="section185" tab="runtimeMapping">
+        <input type="com.webratio.ide.model.IDatabase"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.LayoutViewerPropertySection" filter="com.webratio.ide.ui.properties.LayoutViewerPropertySectionFilter" id="section186" tab="layout">
+        <input type="com.webratio.ide.model.ILayoutViewer"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.LayoutViewerFooMainGridPropertySection" filter="com.webratio.ide.ui.properties.LayoutViewerFooMainGridPropertySectionFilter" id="section187" tab="layout">
+        <input type="com.webratio.ide.model.ILayoutViewer"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.AreaLayoutPropertySection" filter="com.webratio.ide.ui.properties.AreaLayoutPropertySectionFilter" id="section188" tab="layout">
+        <input type="com.webratio.ide.model.IArea"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.OldAreaLayoutPropertySection" filter="com.webratio.ide.ui.properties.OldAreaLayoutPropertySectionFilter" id="section189" tab="layout">
+        <input type="com.webratio.ide.model.IArea"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.CellLayoutWebPropertySection" filter="com.webratio.ide.ui.properties.CellPropertySectionFilter" id="section190" tab="layout">
+        <input type="com.webratio.ide.model.ICell"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.CellGrSysLayoutWebPropertySection" filter="com.webratio.ide.ui.properties.CellPropertySectionFilter" id="section191" tab="layout">
+        <input type="com.webratio.ide.model.ICell"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.CellGrSysLayoutMobilePropertySection" filter="com.webratio.ide.ui.properties.CellPropertySectionFilter" id="section192" tab="layout">
+        <input type="com.webratio.ide.model.ICell"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.CustomLocationWebPropertySection" filter="com.webratio.ide.ui.properties.WebLayoutPropertySectionFilter" id="section193" tab="layout">
+        <input type="com.webratio.ide.model.ICustomLocation"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.CustomLocationMobilePropertySection" filter="com.webratio.ide.ui.properties.MobilePropertySectionFilter" id="section194" tab="layout">
+        <input type="com.webratio.ide.model.ICustomLocation"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.GridLayoutWebPropertySection" filter="com.webratio.ide.ui.properties.GridPropertySectionFilter" id="section195" tab="layout">
+        <input type="com.webratio.ide.model.IGrid"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.GridGrSysLayoutWebPropertySection" filter="com.webratio.ide.ui.properties.GridPropertySectionFilter" id="section196" tab="layout">
+        <input type="com.webratio.ide.model.IGrid"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.GridGrSysLayoutMobilePropertySection" filter="com.webratio.ide.ui.properties.GridPropertySectionFilter" id="section197" tab="layout">
+        <input type="com.webratio.ide.model.IGrid"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.units.LayoutComponentWebPropertySection" filter="com.webratio.ide.ui.properties.WebLayoutPropertySectionFilter" id="section198" tab="layout">
+        <input type="com.webratio.ide.model.ILayoutComponent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.units.LayoutComponentMobilePropertySection" filter="com.webratio.ide.ui.properties.MobilePropertySectionFilter" id="section199" tab="layout">
+        <input type="com.webratio.ide.model.ILayoutComponent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.units.LayoutModuleWebPropertySection" filter="com.webratio.ide.ui.properties.WebLayoutPropertySectionFilter" id="section200" tab="layout">
+        <input type="com.webratio.ide.model.ILayoutModule"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.units.LayoutModuleMobilePropertySection" filter="com.webratio.ide.ui.properties.MobilePropertySectionFilter" id="section201" tab="layout">
+        <input type="com.webratio.ide.model.ILayoutModule"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.units.LayoutFragmentMobilePropertySection" filter="com.webratio.ide.ui.properties.MobilePropertySectionFilter" id="section202" tab="layout">
+        <input type="com.webratio.ide.model.ILayoutFragment"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.PageLayoutPropertySection" filter="com.webratio.ide.ui.properties.TopLevelPagePropertySectionFilter" id="section203" tab="layout">
+        <input type="com.webratio.ide.model.IPage"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.OldPageLayoutPropertySection" filter="com.webratio.ide.ui.properties.OldTopLevelPagePropertySectionFilter" id="section204" tab="layout">
+        <input type="com.webratio.ide.model.IPage"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ContentPageLayoutPropertySection" filter="com.webratio.ide.ui.properties.ContentPagePropertySectionFilter" id="section205" tab="layout">
+        <input type="com.webratio.ide.model.IPage"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.MasterContainerLayoutPropertySection" filter="com.webratio.ide.ui.properties.MasterContainerLayoutPropertySectionFilter" id="section206" tab="layout">
+        <input type="com.webratio.ide.model.IMasterContainer"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.OldMasterContainerLayoutPropertySection" filter="com.webratio.ide.ui.properties.OldMasterContainerLayoutPropertySectionFilter" id="section207" tab="layout">
+        <input type="com.webratio.ide.model.IMasterContainer"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.SiteViewLayoutPropertySection" filter="com.webratio.ide.ui.properties.SiteViewLayoutPropertySectionFilter" id="section208" tab="layout">
+        <input type="com.webratio.ide.model.ISiteView"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.OldSiteViewLayoutPropertySection" filter="com.webratio.ide.ui.properties.OldSiteViewLayoutPropertySectionFilter" id="section209" tab="layout">
+        <input type="com.webratio.ide.model.ISiteView"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.RowLayoutPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section210" tab="layout">
+        <input type="com.webratio.ide.model.IRow"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.LayoutSubPagePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section211" tab="layout">
+        <input type="com.webratio.ide.model.ISubPage"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.WebModelLayoutWebPropertySection" filter="com.webratio.ide.ui.properties.WebModelLayoutWebPropertySectionFilter" id="section212" tab="layout">
+        <input type="com.webratio.ide.model.IWebModel"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.OldWebModelLayoutPropertySection" filter="com.webratio.ide.ui.properties.OldWebModelLayoutPropertySectionFilter" id="section213" tab="layout">
+        <input type="com.webratio.ide.model.IWebModel"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.WebModelLayoutMobilePropertySection" filter="com.webratio.ide.ui.properties.MobilePropertySectionFilter" id="section214" tab="layout">
+        <input type="com.webratio.ide.model.IWebModel"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.WebProjectLayoutWebPropertySection" filter="com.webratio.ide.ui.properties.WebLayoutPropertySectionFilter" id="section215" tab="layout">
+        <input type="com.webratio.ide.model.IWebProject"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.WebProjectLayoutMobilePropertySection" filter="com.webratio.ide.ui.properties.MobilePropertySectionFilter" id="section216" tab="layout">
+        <input type="com.webratio.ide.model.IWebProject"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.LayoutFieldPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section217" tab="layout">
+        <input type="com.webratio.ide.model.ILayoutField"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.LayoutAttributePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section218" tab="layout">
+        <input type="com.webratio.ide.model.ILayoutAttribute"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.LayoutEventPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section219" tab="layout">
+        <input type="com.webratio.ide.model.ILayoutEvent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.HybridModuleDefinitionLayoutPropertySection" filter="com.webratio.ide.ui.properties.HybridModuleDefinitionLayoutPropertySectionFilter" id="section220" tab="layout">
+        <input type="com.webratio.ide.model.IHybridModuleDefinition"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.OldHybridModuleDefinitionLayoutPropertySection" filter="com.webratio.ide.ui.properties.OldHybridModuleDefinitionLayoutPropertySectionFilter" id="section221" tab="layout">
+        <input type="com.webratio.ide.model.IHybridModuleDefinition"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ContentModuleDefinitionLayoutPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section222" tab="layout">
+        <input type="com.webratio.ide.model.IContentModuleDefinition"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ScreenLayoutPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section223" tab="layout">
+        <input type="com.webratio.ide.model.IScreen"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ScreenLayoutPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section224" tab="layout">
+        <input type="com.webratio.ide.model.IScreenSet"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ScreenLayoutPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section225" tab="layout">
+        <input type="com.webratio.ide.model.IAppView"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ScreenLayoutPropertySection" filter="com.webratio.ide.ui.properties.TopLevelToolbarPropertySectionFilter" id="section226" tab="layout">
+        <input type="com.webratio.ide.model.IToolbar"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.AjaxActionPropertySection" filter="com.webratio.ide.ui.properties.IFMLWebPageComponentPropertySectionFilter" id="section227" tab="ajax">
+        <input type="com.webratio.ide.model.IAction"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.AjaxModulePropertySection" filter="com.webratio.ide.ui.properties.IFMLWebPageComponentPropertySectionFilter" id="section228" tab="ajax">
+        <input type="com.webratio.ide.model.IModule"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.PageAJAXPropertySection" filter="com.webratio.ide.ui.properties.TopLevelPageAJAXPropertySectionFilter" id="section229" tab="ajax">
+        <input type="com.webratio.ide.model.IPage"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.AjaxFlowOpenWindowAndWaitingDialogPropertySectionSection" filter="com.webratio.ide.ui.properties.AjaxFlowOpenWindowAndWaitingDialogPropertySectionSectionFilter" id="section230" tab="ajax">
+        <input type="com.webratio.ide.model.INavigationFlow"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.AjaxFlowOnlyWaitingDialogPropertySection" filter="com.webratio.ide.ui.properties.AjaxFlowOnlyWaitingDialogPropertySectionFilter" id="section231" tab="ajax">
+        <input type="com.webratio.ide.model.INavigationFlow"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.AjaxFlowOnlyOpenWindowPropertySection" filter="com.webratio.ide.ui.properties.AjaxFlowOnlyOpenWindowPropertySectionFilter" id="section232" tab="ajax">
+        <input type="com.webratio.ide.model.INavigationFlow"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.units.ViewComponentAJAXPropertySection" filter="com.webratio.ide.ui.properties.units.ViewComponentAJAXPropertySectionFilter" id="section233" tab="ajax">
+        <input type="com.webratio.ide.model.IViewComponent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.units.SubUnitAJAXPropertySection" filter="com.webratio.ide.ui.properties.units.ViewComponentAJAXPropertySectionFilter" id="section234" tab="ajax">
+        <input type="com.webratio.ide.model.ISubUnit"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ValidationPropertySection" filter="com.webratio.ide.ui.properties.ValidationPropertySectionFilter" id="section235" tab="validation">
+        <input type="com.webratio.ide.model.IViewComponent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ValidationPropertySection" filter="com.webratio.ide.ui.properties.ValidationPropertySectionFilter" id="section236" tab="validation">
+        <input type="com.webratio.ide.model.ISubUnit"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ValidationPropertySection" filter="com.webratio.ide.ui.properties.ValidationPropertySectionFilter" id="section237" tab="validation">
+        <input type="com.webratio.ide.model.IVRule"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.AreaConditionPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section238" tab="condition">
+        <input type="com.webratio.ide.model.IArea"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.CellConditionPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section239" tab="condition">
+        <input type="com.webratio.ide.model.ICell"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.CustomLocationConditionPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section240" tab="condition">
+        <input type="com.webratio.ide.model.ICustomLocation"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.GridConditionPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section241" tab="condition">
+        <input type="com.webratio.ide.model.IGrid"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.units.ComponentConditionPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section242" tab="condition">
+        <input type="com.webratio.ide.model.ILayoutComponent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.units.ModuleConditionPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section243" tab="condition">
+        <input type="com.webratio.ide.model.ILayoutModule"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.PageConditionPropertySection" filter="com.webratio.ide.ui.properties.TopLevelPagePropertySectionFilter" id="section244" tab="condition">
+        <input type="com.webratio.ide.model.IPage"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.MasterContainerConditionPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section245" tab="condition">
+        <input type="com.webratio.ide.model.IMasterContainer"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.SiteViewConditionPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section246" tab="condition">
+        <input type="com.webratio.ide.model.ISiteView"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.LayoutSubPageConditionPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section247" tab="condition">
+        <input type="com.webratio.ide.model.ISubPage"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.WebModelConditionPropertySection" filter="com.webratio.ide.ui.properties.NonDataServicePropertySectionFilter" id="section248" tab="condition">
+        <input type="com.webratio.ide.model.IWebModel"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.WebProjectConditionPropertySection" filter="com.webratio.ide.ui.properties.NonBackendPropertySectionFilter" id="section249" tab="condition">
+        <input type="com.webratio.ide.model.IWebProject"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.FieldConditionPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section250" tab="condition">
+        <input type="com.webratio.ide.model.ILayoutField"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.AttributeConditionPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section251" tab="condition">
+        <input type="com.webratio.ide.model.ILayoutAttribute"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.EventConditionPropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section252" tab="condition">
+        <input type="com.webratio.ide.model.ILayoutEvent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.DefaultSecurityWithDeployPropertySection" filter="com.webratio.ide.ui.properties.CurrentDeployPropertySectionFilter" id="section253" tab="security">
+        <input type="com.webratio.ide.model.IWebProject"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.DefaultSecurityPropertySection" filter="com.webratio.ide.ui.properties.NoCurrentDeployPropertySectionFilter" id="section254" tab="security">
+        <input type="com.webratio.ide.model.IWebProject"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.EnterpriseProjectDefaultSecurityPropertySection" filter="com.webratio.ide.ui.properties.EnterpriseProjectNoCurrentDeployPropertySectionFilter" id="section255" tab="security">
+        <input type="com.webratio.ide.model.IWebProject"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.WebModelProjectDefaultSecurityPropertySection" filter="com.webratio.ide.ui.properties.WebModelProjectNoCurrentDeployPropertySectionFilter" id="section256" tab="security">
+        <input type="com.webratio.ide.model.IWebProject"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ModuleProjectDefaultSecurityPropertySection" filter="com.webratio.ide.ui.properties.ModuleProjectNoCurrentDeployPropertySectionFilter" id="section257" tab="security">
+        <input type="com.webratio.ide.model.IWebProject"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.EnterpriseProjectDefaultSecurityWithDeployPropertySection" filter="com.webratio.ide.ui.properties.EnterpriseProjectCurrentDeployPropertySectionFilter" id="section258" tab="security">
+        <input type="com.webratio.ide.model.IWebProject"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.WebProjectWithDeployServicesPropertySection" filter="com.webratio.ide.ui.properties.CurrentDeployPropertySectionFilter" id="section259" tab="services">
+        <input type="com.webratio.ide.model.IWebProject"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.WebProjectServicesPropertySection" filter="com.webratio.ide.ui.properties.NoCurrentDeployPropertySectionFilter" id="section260" tab="services">
+        <input type="com.webratio.ide.model.IWebProject"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.WebProjectWithDeployI18NPropertySection" filter="com.webratio.ide.ui.properties.WebProjectWithDeployI18NPropertyFilter" id="section261" tab="localization">
+        <input type="com.webratio.ide.model.IWebProject"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.WebProjectI18NPropertySection" filter="com.webratio.ide.ui.properties.WebProjectI18NPropertyFilter" id="section262" tab="localization">
+        <input type="com.webratio.ide.model.IWebProject"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.DomainModelDeploymentPropertySection" filter="com.webratio.ide.ui.properties.HasOwnerDomainModelPropertySectionFilter" id="section263" tab="deployment">
+        <input type="com.webratio.ide.model.IDomainModel"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.EmptyPropertySection" filter="com.webratio.ide.ui.properties.HasNoOwnerDomainModelPropertySectionFilter" id="section264" tab="deployment">
+        <input type="com.webratio.ide.model.IDomainModel"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.DomainModelStatisticsPropertySection" filter="com.webratio.ide.ui.properties.StatisticsPropertySectionFilter" id="section265" tab="statistics">
+        <input type="com.webratio.ide.model.IDomainModel"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.WebProjectStatisticsPropertySection" filter="com.webratio.ide.ui.properties.StatisticsPropertySectionFilter" id="section266" tab="statistics">
+        <input type="com.webratio.ide.model.IWebProject"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.SiteViewStatisticsPropertySection" filter="com.webratio.ide.ui.properties.StatisticsPropertySectionFilter" id="section267" tab="statistics">
+        <input type="com.webratio.ide.model.ISiteView"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ServiceViewStatisticsPropertySection" filter="com.webratio.ide.ui.properties.StatisticsPropertySectionFilter" id="section268" tab="statistics">
+        <input type="com.webratio.ide.model.IServiceView"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.PackageAppearancePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section269" tab="appearance">
+        <input type="com.webratio.ide.model.IPackage"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.DomainClassAppearancePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section270" tab="appearance">
+        <input type="com.webratio.ide.model.IDomainClass"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.GenericModuleAppearancePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section271" tab="appearance">
+        <input type="com.webratio.ide.model.IGenericModuleDefinition"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.units.PluginComponentAppearancePropertySection" filter="com.webratio.ide.ui.properties.WebMLBulkPropertySectionFilter" id="section272" tab="appearance">
+        <input type="com.webratio.ide.model.IPluginComponent"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.ContainerAppearancePropertySection" filter="com.webratio.ide.ui.properties.ContainerAppearancePropertySectionFilter" id="section273" tab="appearance">
+        <input type="com.webratio.ide.model.IWebMLElement"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.EmptyPropertySection" filter="com.webratio.ide.ui.properties.NonePropertySectionFilter" id="section274" tab="bam">
+        <input type="com.webratio.ide.model.IWebMLElement"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.WebMLElementCommentPropertySection" filter="com.webratio.ide.ui.properties.WebMLElementCommentPropertySectionFilter" id="section275" tab="comment">
+        <input type="com.webratio.ide.model.IWebMLElement"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.WebMLElementXMLPropertySection" filter="com.webratio.ide.ui.properties.WebMLElementXMLPropertySectionFilter" id="section276" tab="xml">
+        <input type="com.webratio.ide.model.IWebMLElement"/>
+      </propertySection>
+      <propertySection class="com.webratio.ide.ui.properties.WebMLElementLayoutXMLPropertySection" filter="com.webratio.ide.ui.properties.WebMLElementLayoutXMLPropertySectionFilter" id="section277" tab="xml">
+        <input type="com.webratio.ide.model.IWebMLElement"/>
+      </propertySection>
+    </propertySections>
+  </extension>
+  <extension point="org.eclipse.search.searchResultViewPages">
+    <viewPage class="com.webratio.ide.ui.search.SearchResultPage" icon="icons/full/ctool16/search.png" id="com.webratio.ide.ui.search.SearchResultPage" label="IFML Search" searchResultClass="com.webratio.ide.ui.search.SearchResult"/>
+    <viewPage class="com.webratio.ide.ui.search.SearchResultPage" icon="icons/full/ctool16/search.png" id="com.webratio.ide.ui.search.SearchResultPage1" label="WebRatio Component Search" searchResultClass="com.webratio.ide.ui.search.ComponentSearchResult"/>
+    <viewPage class="com.webratio.ide.ui.search.SearchResultPage" icon="icons/full/ctool16/search.png" id="com.webratio.ide.ui.search.SearchResultPage2" label="WebRatio Event Search" searchResultClass="com.webratio.ide.ui.search.EventSearchResult"/>
+    <viewPage class="com.webratio.ide.ui.search.SearchResultPage" icon="icons/full/ctool16/search.png" id="com.webratio.ide.ui.search.SearchResultPage3" label="WebRatio Validation Rule Search" searchResultClass="com.webratio.ide.ui.search.ValidationRuleSearchResult"/>
+    <viewPage class="com.webratio.ide.ui.search.SearchResultPage" icon="icons/full/ctool16/search.png" id="com.webratio.ide.ui.search.SearchResultPage4" label="WebRatio File Property Search" searchResultClass="com.webratio.ide.ui.search.FilePropertySearchResult"/>
+    <viewPage class="com.webratio.ide.ui.search.SearchResultPage" icon="icons/full/ctool16/search.png" id="com.webratio.ide.ui.search.SearchResultPage5" label="WebRatio Style Search" searchResultClass="com.webratio.ide.ui.search.StyleSearchResult"/>
+    <viewPage class="com.webratio.ide.ui.search.SearchResultPage" icon="icons/full/ctool16/search.png" id="com.webratio.ide.ui.search.SearchResultPage6" label="WebRatio File Search" searchResultClass="com.webratio.ide.ui.search.FileSearchResult"/>
+    <viewPage class="com.webratio.ide.ui.search.SearchResultPage" icon="icons/full/ctool16/search.png" id="com.webratio.ide.ui.search.SearchResultPage7" label="WebRatio Referenced Entities Search" searchResultClass="com.webratio.ide.ui.search.ReferencedEntitiesSearchResult"/>
+    <viewPage class="com.webratio.ide.ui.search.SearchResultPage" icon="icons/full/ctool16/search.png" id="com.webratio.ide.ui.search.SearchResultPage8" label="IFML Search" searchResultClass="com.webratio.ide.ui.search.SearchPrecomputedResult"/>
+  </extension>
+  <extension point="org.eclipse.ui.commands">
+    <command categoryId="org.eclipse.ui.category.edit" defaultHandler="com.webratio.ide.ui.handlers.NewSiteViewWizardHandler" description="Open the New site view wizard" id="com.webratio.ide.ui.newSiteViewWizard" name="New"/>
+    <command categoryId="org.eclipse.ui.category.edit" defaultHandler="com.webratio.ide.ui.handlers.NewServiceViewWizardHandler" description="Open the New service view wizard" id="com.webratio.ide.ui.newServiceViewWizard" name="New"/>
+    <command name="Up" description="Up" categoryId="org.eclipse.gef.category.view" id="com.webratio.ide.ui.grid.actions.up_grid_action"/>
+    <command id="com.webratio.ide.ui.ConvertProjectsCommand" name="Convert Projects" defaultHandler="com.webratio.ide.ui.handlers.ConvertProjectsHandler"/>
+  </extension>
+  <extension point="org.eclipse.ui.handlers">
+    <!-- to fix #9488 -->
+    <handler commandId="org.eclipse.ui.project.openProject" class="com.webratio.ide.ui.explorer.actions.OpenProjectHandler"/>
+    <handler commandId="org.eclipse.ui.project.closeProject" class="com.webratio.ide.ui.explorer.actions.CloseProjectHandler"/>
+  </extension>
+  <extension point="org.eclipse.ui.menus">
+    <menuContribution locationURI="menu:project">
+      <separator name="com.webratio.ide.ui.project.separator" visible="true"/>
+      <!--
+      <command commandId="com.webratio.ide.ui.ConvertProjectsCommand"/>
+      -->
+    </menuContribution>
+  </extension>
+  <extension point="org.eclipse.ui.exportWizards">
+    <category id="com.webratio.ide.ui" name="Web Application"/>
+    <!-- used by cloud -->
+    <!--
+    <wizard category="com.webratio.ide.ui" class="com.webratio.ide.ui.wizards.ExportSingleProjectFileWizard" icon="icons/full/ctool16/model_wr.png" id="com.webratio.ide.ui.ExportSingleProjectFile" name="Export Single Project file  "/>
+  -->
+  </extension>
+  <extension point="org.eclipse.ui.ide.markerResolution">
+    <markerResolutionGenerator class="com.webratio.ide.ui.validation.WRMarkerResolutionGenerator" markerType="com.webratio.ide.core.problem"/>
+  </extension>
+  <extension point="org.eclipse.ui.editors">
+    <editor class="com.webratio.ide.ui.editors.WebProjectEditor" contributorClass="com.webratio.ide.ui.editors.WebProjectEditorContributor" default="true" filenames="Model.wr" icon="icons/full/ctool16/model_wr.png" id="com.webratio.ide.ui.editors.WebProjectEditor" name="Web Project Editor"/>
+    <editor class="com.webratio.ide.ui.editors.template.RuntimeTemplateEditor" default="false" icon="icons/full/obj16/template_obj.png" id="com.webratio.ide.ui.editors.template.RuntimeTemplateEditor" name="Runtime Template Editor"/>
+    <editor class="com.webratio.ide.ui.editors.script.ProblemsScriptEditor" contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor" default="true" filenames="Problems.groovy" icon="icons/full/obj16/problems_script.png" id="com.webratio.ide.ui.editors.script.ProblemsScriptEditor" name="Problems Script Editor"/>
+  </extension>
+  <extension point="org.eclipse.ui.editors.annotationTypes">
+    <type markerType="com.webratio.ide.ui.generationError" name="com.webratio.ide.ui.annotations.generationError"/>
+  </extension>
+  <extension point="org.eclipse.ui.editors.markerAnnotationSpecification">
+    <specification annotationType="com.webratio.ide.ui.annotations.generationError" colorPreferenceKey="generationErrorIndicationColor" colorPreferenceValue="158,3,252" highlightPreferenceKey="generationErrorIndicationHighlight" highlightPreferenceValue="false" icon="icons/full/obj16/generr_obj.gif" includeOnPreferencePage="true" isGoToNextNavigationTargetKey="isGenerationErrorGoToNextNavigationTarget" isGoToPreviousNavigationTargetKey="isGenerationErrorGoToPreviousNavigationTarget" label="Generation Errors" overviewRulerPreferenceKey="generationErrorIndicationOverviewRuler" overviewRulerPreferenceValue="true" showInNextPrevDropdownToolbarActionKey="showGenerationErrorInNextPrevDropdownToolbarAction" textPreferenceKey="generationErrorIndication" textPreferenceValue="true" textStylePreferenceKey="generationErrorTextStyle" textStylePreferenceValue="SQUIGGLES" verticalRulerPreferenceKey="generationErrorIndicationVerticalRuler" verticalRulerPreferenceValue="true"/>
+  </extension>
+  <extension point="com.webratio.commons.mf.ui.views.properties.tabbed.propertyTabs">
+    <propertyTabs contributorId="com.webratio.ide.ui.editors.WebProjectEditor">
+      <propertyTab category="default" image="icons/full/elcl16/general.png" disabledImage="icons/full/dlcl16/general.png" id="general" label="General"/>
+      <propertyTab category="default" image="icons/full/elcl16/general.png" disabledImage="icons/full/dlcl16/general.png" id="mobile" label="Mobile" afterTab="general"/>
+      <propertyTab category="default" image="icons/full/elcl16/mapping.png" disabledImage="icons/full/dlcl16/mapping.png" id="mobileMapping" label="Mapping" afterTab="mobile"/>
+      <propertyTab category="default" image="icons/full/elcl16/mapping.png" disabledImage="icons/full/dlcl16/mapping.png" id="mapping" label="Mapping" afterTab="mobileMapping"/>
+      <propertyTab category="default" image="icons/full/elcl16/xsd.png" disabledImage="icons/full/dlcl16/xsd.png" id="xsd" label="XSD" afterTab="mapping"/>
+      <propertyTab category="default" image="icons/full/elcl16/blob.png" disabledImage="icons/full/dlcl16/blob.png" id="blob" label="BLOB" afterTab="xsd"/>
+      <propertyTab category="default" image="icons/full/elcl16/adv_mapping.png" disabledImage="icons/full/dlcl16/adv_mapping.png" id="advancedMapping" label="Advanced" afterTab="blob"/>
+      <propertyTab category="default" image="icons/full/elcl16/rt_mapping.png" disabledImage="icons/full/dlcl16/rt_mapping.png" id="runtimeMapping" label="Runtime" afterTab="advancedMapping"/>
+      <propertyTab category="default" image="icons/full/elcl16/layout.png" disabledImage="icons/full/dlcl16/layout.png" id="layout" label="Layout" afterTab="runtimeMapping"/>
+      <propertyTab category="default" image="icons/full/elcl16/ajax.png" disabledImage="icons/full/dlcl16/ajax.png" id="ajax" label="AJAX" afterTab="layout"/>
+      <propertyTab category="default" image="icons/full/elcl16/validation.png" disabledImage="icons/full/dlcl16/validation.png" id="validation" label="Validation" afterTab="ajax"/>
+      <propertyTab category="default" image="icons/full/elcl16/condition.png" disabledImage="icons/full/dlcl16/condition.png" id="condition" label="Condition" afterTab="validation"/>
+      <propertyTab category="default" image="icons/full/elcl16/security.png" disabledImage="icons/full/dlcl16/security.png" id="security" label="Security" afterTab="condition"/>
+      <propertyTab category="default" image="icons/full/elcl16/services.png" disabledImage="icons/full/dlcl16/services.png" id="services" label="Services/Jobs" afterTab="security"/>
+      <propertyTab category="default" image="icons/full/elcl16/i18n.png" disabledImage="icons/full/dlcl16/i18n.png" id="localization" label="Localization" afterTab="services"/>
+      <propertyTab category="default" image="icons/full/elcl16/deployment.png" disabledImage="icons/full/dlcl16/deployment.png" id="deployment" label="Deployment" afterTab="localization"/>
+      <propertyTab category="default" image="icons/full/elcl16/statistics.png" disabledImage="icons/full/dlcl16/statistics.png" id="statistics" label="Statistics" afterTab="deployment"/>
+      <propertyTab category="default" image="icons/full/elcl16/appearance.png" disabledImage="icons/full/dlcl16/appearance.png" id="appearance" label="Appearance" afterTab="statistics"/>
+      <propertyTab category="default" image="icons/full/elcl16/bam.png" disabledImage="icons/full/dlcl16/bam.png" id="bam" label="BAM" afterTab="appearance"/>
+      <propertyTab category="default" image="icons/full/elcl16/comment.png" disabledImage="icons/full/dlcl16/comment.png" id="comment" label="Comment" afterTab="bam"/>
+      <propertyTab category="default" image="icons/full/elcl16/xml.png" disabledImage="icons/full/dlcl16/xml.png" id="xml" label="XML" afterTab="comment"/>
+    </propertyTabs>
+  </extension>
+  <extension id="clientGridAreaInfo" name="Client Grid Area Info" point="org.eclipse.core.resources.markers">
+    <super type="org.eclipse.core.resources.marker"/>
+    <persistent value="true"/>
+  </extension>
+  <extension id="dontAskMeAgainLoosingInformation" name="DontAskMeAgainLoosingInformation" point="org.eclipse.core.resources.markers">
+    <super type="org.eclipse.core.resources.marker"/>
+    <persistent value="true"/>
+  </extension>
+  <extension id="generationError" name="Generation Error" point="org.eclipse.core.resources.markers"/>
+  <extension id="templateGenerationError" name="Template Generation Error" point="org.eclipse.core.resources.markers">
+    <super type="com.webratio.ide.ui.generationError"/>
+    <super type="org.eclipse.core.resources.textmarker"/>
+  </extension>
+  <extension point="org.eclipse.ui.popupMenus">
+    <viewerContribution id="com.webratio.ide.ui.wizards" targetID="com.webratio.commons.mf.ui.PopupMenu">
+      <action class="com.webratio.ide.ui.actions.FieldWizardAction" definitionId="before/com.webratio.ide.ui.i18n.actions.LocalizeAction" icon="icons/full/clcl16/field_wizard.png" id="com.webratio.ide.ui.wizards.fieldWizard" label="Class Fields Wizard..." tooltip="Class Fields Wizard"/>
+      <action class="com.webratio.ide.ui.actions.EditComponentParametersAction" icon="icons/full/clcl16/edit_unit_params.png" id="com.webratio.ide.ui.actions.EditUnitParametersAction" label="Edit Parameters..." tooltip="Edit Parameters"/>
+      <action class="com.webratio.ide.ui.actions.EditPortDefinitionParametersAction" icon="icons/full/obj16/port_definition_param_obj.png" id="com.webratio.ide.ui.actions.EditPortDefinitionParametersAction" label="Edit Parameters..." tooltip="Edit Parameters"/>
+      <action class="com.webratio.ide.ui.actions.EditDomainClassAction" icon="icons/full/obj16/entity_obj.png" id="com.webratio.ide.ui.actions.EditEntityAction" label="Edit Class..." tooltip="Edit Class"/>
+      <action class="com.webratio.ide.ui.actions.EditWebFormAction" icon="icons/full/clcl16/edit_entry_unit.png" id="com.webratio.ide.ui.actions.EditWebFormAction" label="Edit Form..." tooltip="Edit Form"/>
+      <action class="com.webratio.ide.ui.actions.EditWebMultipleFormAction" icon="icons/full/clcl16/edit_multi_entry_unit.png" id="com.webratio.ide.ui.actions.EditWebMultipleFormAction" label="Edit Multiple Form..." tooltip="Edit Multiple Form"/>
+      <action class="com.webratio.ide.ui.actions.EditMobileFormAction" icon="icons/full/clcl16/edit_entry_unit.png" id="com.webratio.ide.ui.actions.EditMobileFormAction" label="Edit Form..." tooltip="Edit Form"/>
+      <action class="com.webratio.ide.ui.actions.InputAdapterTemplateWizardAction" icon="icons/full/clcl16/in_adapter_template_wizard.png" id="com.webratio.ide.ui.wizards.InputAdapterTemplateWizard" label="Input Adapter Template Wizard..." tooltip="Input Adapter Template Wizard"/>
+      <action class="com.webratio.ide.ui.actions.OutputAdapterTemplateWizardAction" icon="icons/full/clcl16/out_adapter_template_wizard.png" id="com.webratio.ide.ui.wizards.OutputAdapterTemplateWizard" label="Output Adapter Template Wizard..." tooltip="Output Adapter Template Wizard"/>
+      <action class="com.webratio.ide.ui.actions.AdapterTemplateWizardAction" icon="icons/full/clcl16/adapter_template_wizard.png" id="com.webratio.ide.ui.wizards.AdapterTemplateWizard" label="Adapter Template Wizard..." tooltip="Adapter Template Wizard"/>
+      <action class="com.webratio.ide.ui.actions.CollectorWizardAction" icon="icons/full/clcl16/script_params_wizard.png" id="com.webratio.ide.ui.wizards.ScriptWizard" label="Script Parameters Wizard..." tooltip="Script Parameters Wizard"/>
+      <action class="com.webratio.ide.ui.actions.RequestResponseParametersWizardAction" icon="icons/full/clcl16/response_parameters_wizard.png" id="com.webratio.ide.ui.wizards.RequestResponseParametersWizard" label="Parameters Wizard..." tooltip="Parameters Wizard..."/>
+      <action class="com.webratio.ide.ui.actions.CollectorWizardAction" icon="icons/full/obj16/input_port_obj.png" id="com.webratio.ide.ui.wizards.InputPortDefinitionWizard" label="Input Port Wizard..." tooltip="Input Port Wizard"/>
+      <action class="com.webratio.ide.ui.actions.CollectorWizardAction" icon="icons/full/obj16/output_port_obj.png" id="com.webratio.ide.ui.wizards.OutputPortDefinitionWizard" label="Output Port Wizard..." tooltip="Output Port Wizard"/>
+      <action class="com.webratio.ide.ui.actions.CollectorWizardAction" icon="icons/full/obj16/success_port_obj.png" id="com.webratio.ide.ui.wizards.SuccessPortDefinitionWizard" label="Success Port Wizard..." tooltip="Success Port Wizard"/>
+      <action class="com.webratio.ide.ui.actions.CollectorWizardAction" icon="icons/full/obj16/error_port_obj.png" id="com.webratio.ide.ui.wizards.ErrorPortDefinitionWizard" label="Error Port Wizard..." tooltip="Error Port Wizard"/>
+      <action class="com.webratio.ide.ui.actions.IncludePatternsAction" id="com.webratio.ide.ui.actions.IncludePatternsAction" label="Include Pattern from library..." tooltip="Include Pattern from library"/>
+    </viewerContribution>
+    <objectContribution adaptable="false" id="com.webratio.ide.ui.fileContribution" nameFilter="*.sql" objectClass="org.eclipse.core.resources.IFile">
+      <action class="com.webratio.ide.ui.actions.ExecuteSQLFileAction" icon="icons/full/clcl16/execute_sql.png" id="com.webratio.ide.ui.actions.ExecuteSQLAction" label="Execute SQL..." tooltip="Execute SQL"/>
+    </objectContribution>
+    <objectContribution adaptable="false" id="com.webratio.ide.ui.builder.popupMenu" objectClass="org.eclipse.core.resources.IProject">
+      <action class="com.webratio.ide.ui.actions.EnableScriptValidationAction" enablesFor="1" id="com.webratio.ide.ui.actions.EnableScriptValidation" label="Enable Script Validation" menubarPath="additions" style="toggle"/>
+      <filter name="projectNature" value="com.webratio.ide.wrprojectnature"/>
+    </objectContribution>
+  </extension>
+  <extension point="org.eclipse.jdt.ui.classpathContainerPage">
+    <classpathContainerPage class="com.webratio.ide.ui.wizards.WebRatioClasspathContainerPage" id="com.webratio.ide.ui.WEBRATIO_CONTAINER" name="WebRatio Library"/>
+  </extension>
+  <extension point="org.eclipse.jdt.core.classpathContainerInitializer">
+    <classpathContainerInitializer class="com.webratio.ide.ui.buildpath.WebRatioClasspathContainerInitializer" id="com.webratio.ide.ui.WEBRATIO_CONTAINER"/>
+  </extension>
+  <extension point="org.eclipse.jdt.core.classpathVariableInitializer">
+    <classpathVariableInitializer class="com.webratio.ide.ui.buildpath.WebRatioDriversVariableInitializer" variable="WEBRATIO_DRIVERS_HOME"/>
+  </extension>
+  <extension point="org.eclipse.core.runtime.contentTypes">
+    <content-type base-type="org.eclipse.core.runtime.xml" file-extensions="descr" id="com.webratio.ide.ui.ELEMENT_DESCRIPTOR" name="Element Descriptor"/>
+  </extension>
+  <!-- **************** Decorator ******************* -->
+  <extension point="org.eclipse.ui.decorators">
+    <decorator lightweight="true" adaptable="true" location="REPLACE" label="WebRatio Lightweight Decorator" state="true" class="com.webratio.ide.ui.viewers.WRLightweightDecorator" id="com.webratio.ide.ui.team.WRLightweightDecorator">
+      <enablement>
+        <objectClass name="org.eclipse.core.resources.mapping.ResourceMapping"/>
+      </enablement>
+      <description>Shows WebRatio specific information.</description>
+    </decorator>
+  </extension>
+  <extension point="com.webratio.commons.mf.ui.templateTypes">
+    <templateType editorConfiguration="com.webratio.ide.ui.editors.template.RuntimeTemplateEditorConfiguration" extensions="xml" name="Runtime Template"/>
+  </extension>
+  <extension point="com.webratio.commons.mf.ui.mfuiContributors">
+    <MFMultiEditorContributor class="com.webratio.ide.ui.editors.WebProjectMultiEditorContributor"/>
+    <MFPerspectiveContributor class="com.webratio.ide.ui.views.WebProjectPerspectiveContributor"/>
+    <MFQuickOutlineContributor class="com.webratio.ide.ui.editors.WebMLQuickOutlineContributor"/>
+  </extension>
+  <extension id="webAppGenerator" point="org.eclipse.core.runtime.applications">
+    <application>
+      <run class="com.webratio.ide.ui.WebAppGeneratorApplication"/>
+    </application>
+  </extension>
+  <extension id="ifmlDocGenerator" point="org.eclipse.core.runtime.applications">
+    <application>
+      <run class="com.webratio.ide.ui.IFMLDocGeneratorApplication"/>
+    </application>
+  </extension>
+  <extension id="store" point="org.eclipse.core.runtime.applications">
+    <application>
+      <run class="com.webratio.ide.ui.StoreApplication"/>
+    </application>
+  </extension>
+  <extension point="com.webratio.ide.core.multifileContributors">
+    <MultiFileProjectChecker class="com.webratio.ide.ui.datamodel.DomainModelExtensions"/>
+  </extension>
+  <extension point="org.eclipse.ui.ide.markerSupport">
+    <markerContentGeneratorExtension generatorId="org.eclipse.ui.ide.problemsGenerator" id="com.webratio.ide.ui.markerContentGeneratorExtension">
+      <!--<markerFieldConfiguration enabled="true" id="com.webratio.ide.ui.markerFieldConfiguration" name="Issues on the Same Project" scope="ON_ANY_IN_SAME_CONTAINER"/>-->
+      <markerFieldConfiguration enabled="true" id="com.webratio.ide.ui.markerFieldConfiguration" name="Issues on the All Projects" scope="ON_ANY"/>
+    </markerContentGeneratorExtension>
+  </extension>
+  <extension point="org.eclipse.debug.ui.debugModelPresentations">
+    <debugModelPresentation class="com.webratio.ide.ui.debug.presentation.WebModelPresentation" id="web.debugModel"/>
+  </extension>
+  <extension point="com.webratio.ide.debug.core.webBreakpointIdProvider">
+    <provider class="com.webratio.ide.ui.editors.WebMLDebugLocationManager"/>
+  </extension>
+  <extension point="com.webratio.ide.debug.core.webDebugElementListener">
+    <listener class="com.webratio.ide.ui.editors.WebMLDebugElementListener"/>
+  </extension>
+  <extension point="com.webratio.commons.mf.ui.i18nExtension">
+    <BundleKeysProvider class="com.webratio.ide.ui.i18n.model.BundleKeysProvider"/>
+  </extension>
+  <extension point="com.webratio.commons.mf.model.mfContributors">
+    <CoreContributor class="com.webratio.ide.ui.WRUIContributor"/>
+  </extension>
+  <extension point="com.webratio.commons.mf.ui.uiInitializer">
+    <uiInitializer class="com.webratio.ide.ui.WebMLUIInitializer"/>
+  </extension>
+  <extension point="com.webratio.commons.mf.ui.mfuiContributors">
+    <MFGenericUIContributor class="com.webratio.ide.ui.transform.properties.WRGenericUIContributor"/>
+  </extension>
+</plugin>

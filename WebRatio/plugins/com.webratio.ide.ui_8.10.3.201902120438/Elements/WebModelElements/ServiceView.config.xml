@@ -1,0 +1,30 @@
+	<Element name="ServiceView" lowerName="service view"
+		pluralLowerName="service views">
+		<Description>
+			A service view is a collection of 
+			ports which expose the functionality of a Web Service 
+			through operations.
+		</Description>
+		<ActionRef label="Add Port"/>
+		<ActionRef label="Add Job"/>
+		<ActionRef label="Add Property" />
+		<ActionRef label="Export Diagram Image..."/>
+		<ActionRef label="Generate Logic Descriptors Only"/>
+		<ActionRef label="Generate Selection"/>
+		<ActionRef label="Find Model Problems"/>
+		<ActionRef label="Help"/>
+		
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+			<PropertyRef label="Secure" />
+		    <Property label="SOAP Version">
+                The SOAP protocol version used used by SOAP services (default 1.1).
+            </Property>	
+            <Property label="SOAP Binding Style">
+				The binding style used by SOAP services. 
+				The possible values are: RPC Literal (default) or Document Literal. 
+			</Property>
+			<PropertyRef label="Running Profiles" />
+		</PropertyCategory>
+	</Element>

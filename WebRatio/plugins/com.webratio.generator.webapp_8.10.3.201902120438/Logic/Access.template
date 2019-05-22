@@ -1,0 +1,98 @@
+#?delimiters [%,%],[%=,%]
+[%
+import org.apache.commons.lang.StringUtils
+
+setXMLOutput()
+
+if(wr.projectType.name() == "BPM"){
+  %]<Descriptor service="com.webratio.bpm.tee.rtx.services.ProcessAccessService" name="Process Access Service"/>[%
+  return
+}
+
+
+def useModuleDomainName = getByIdOptional("modelElementDomainName") != null && (wr.project["moduleDomainName"] != "" || wr.projectType.name() != "WEBPROJECT")
+
+def getAccessQuery = {useDefaultModule ->
+   
+  def modelElementIDField = "modelElementID"
+  def roleOIDField = getById("Role").selectSingleNode("Attribute[@key='true']")["id"]
+  def modelElementToGroupField = "ModelElement2Role"
+  def defaultmodelElementToGroupField = "DefaultModelElement2Role"  
+  def modelElementBeanID = "ModelElement"
+  
+  def query = createQuery(getById(modelElementBeanID)).select(modelElementIDField).select((useDefaultModule ? defaultmodelElementToGroupField : modelElementToGroupField) + "." + roleOIDField)
+  def selector = query.selector()
+  selector.attributeCondition("acond1", "roleOIDCond").attribute((useDefaultModule ? defaultmodelElementToGroupField : modelElementToGroupField) + "." + roleOIDField)
+  if(useModuleDomainName){
+     query.selector().attributeCondition("acond2", "modelElementDomainNameCond").attribute("modelElementDomainName")
+  }
+  return query.build()  
+}
+
+
+def getRoleQuery = {useDefaultGroup, useDefaultModule ->
+   
+   def roleOIDField = getById("Role").selectSingleNode("Attribute[@key='true']")["id"]
+   def modelElementIDField = "modelElementID"
+   def userOIDField = getById("User").selectSingleNode("Attribute[@key='true']")["id"]
+   def roleToDefaultModelElement = "Role2DefaultModelElement"
+   def roleToModelElement = "Role2ModelElement"
+   def defaultRoleToUser = "DefaultRole2User" 
+   def roleToUser = "Role2User"
+   def roleBeanName = "Role"
+   
+   def moduleRole = useDefaultModule ? roleToDefaultModelElement : roleToModelElement
+   def userRole = useDefaultGroup ? defaultRoleToUser : roleToUser
+   def query = createQuery(getById(roleBeanName)).select(roleOIDField).select(moduleRole + "." + modelElementIDField).select(userRole + "." + userOIDField)   
+   def selector = query.selector()
+   selector.attributeCondition("acond1", "userOidCond").attribute(userRole + "." + userOIDField)
+   if(useModuleDomainName){
+     selector.attributeCondition("acond2", "modelElementDomainNameCond").attribute(moduleRole + ".modelElementDomainName")
+   }
+   return query.build()  
+}
+
+
+%]
+
+
+
+
+<Descriptor service="com.webratio.rtx.security.DefaultAccessService" name="Access Service">
+   <DataSource>[%=getDataSourceId(getById("User"))%]</DataSource>
+   
+   <AccessQueries>
+     [%if(getByIdOptional("ModelElement")){%]
+     
+	     <!-- role model element query using role2modelelement association --> 
+		 [%printRaw(getAccessQuery(false).asXML())%]
+		 
+		 <!-- role model element query using role2defaultmodelelement association -->
+		 [%printRaw(getAccessQuery(true).asXML())%]
+		 
+	 [%}%]  
+   </AccessQueries>
+   
+   <GroupQueries>
+      [%if(getByIdOptional("ModelElement")){%] 
+      
+		  <!--role query using user2role and role2modelelement associations --> 
+		  [%printRaw(getRoleQuery(false,false).asXML())%]
+		  
+		  <!--role query using user2defaultrole and role2modelelement associations --> 
+		  [%printRaw(getRoleQuery(true,false).asXML())%]
+		  
+		  <!--role query using user2role and role2defaultmodelelement associations -->
+		  [%printRaw(getRoleQuery(false,true).asXML())%]
+		  
+		  <!--role query using user2defaultrole and role2defaultmodelelement associations-->
+		  [%printRaw(getRoleQuery(true,true).asXML())%]
+		  
+      [%}%]
+   </GroupQueries>
+   
+   <StrictModuleAccess>[%=wr.project["strictModuleAccess"]%]</StrictModuleAccess>
+
+</Descriptor>
+
+

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="operation" formBased="false" idPrefix="mlu" namePrefix="Mail " label="Mail" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" successFlowSource="true" successFlowTarget="true"> 
+  <SMTPServerProperty attributeName="smtpServer" label="SMTP Server"> 
+    <Description xml:space="preserve">The SMTP server to use for delivering messages.</Description> 
+  </SMTPServerProperty>  
+  <EnumProperty attributeName="format" defaultValue="plainText"> 
+    <EnumItem value="plainText" label="Plain Text"/>  
+    <EnumItem value="html" label="HTML"/>  
+    <Description xml:space="preserve">Indicates whether the mail must be sent as either plain text
+or HTML.</Description> 
+  </EnumProperty>  
+  <TextProperty elementName="SubjectTemplate"> 
+    <Description xml:space="preserve">The template used to generate the mail subject. The placeholder must be referenced
+using the following syntax $$name$$</Description> 
+  </TextProperty>  
+  <FileProperty label="Body Template File" attributeName="template"> 
+    <Description xml:space="preserve">The template file used to generate the mail body. The placeholder must be referenced
+using the following syntax $$name$$</Description> 
+  </FileProperty>  
+  <TextProperty elementName="BodyTemplate" canMoveToFile="true"> 
+    <Description xml:space="preserve">The template used to generate the mail body. The placeholder must be referenced
+using the following syntax $$name$$</Description> 
+  </TextProperty>  
+  <StringProperty label="Encoding" attributeName="encoding"> 
+    <Description xml:space="preserve">The character encoding used to send mail (eg. UTF-8)</Description> 
+  </StringProperty>  
+  <Description xml:space="preserve">The main features of the mail component are the following:
+&lt;ul&gt;
+  &lt;li&gt;Ability to send personalized emails to each destination address&lt;/li&gt;
+  &lt;li&gt;Ability to choose between either the HTML or the plain text format&lt;/li&gt;
+  &lt;li&gt;Emails' subject and body can be dynamically computed replacing placeholders into the defined templates&lt;/li&gt;
+&lt;/ul&gt;
+Arbitrary properties of the Java Mail SMTP protocol provider can be set adding a set of custom properties
+whose valid names and values can be found &lt;a href="http://java.sun.com/products/javamail/javadocs/com/sun/mail/smtp/package-summary.html"&gt;here&lt;/a&gt;.
+</Description>    <InputDescription xml:space="preserve" name="From">The email address of the sender. If not filled-in by any input
+flow, the address specified in the Default From property of the SMTP server is used.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Mail - To">The email address(es) of the recipient(s).</InputDescription>  
+  <InputDescription xml:space="preserve" name="Mail - CC">The email address(es) of the carbon copy recipient(s).</InputDescription>  
+  <InputDescription xml:space="preserve" name="Mail - BCC">The email address(es) of the blind carbon copy recipient(s).</InputDescription> 
+  <InputDescription xml:space="preserve" name="Mail - Subject">The email subject(s), can be a simple text or a template.</InputDescription> 
+  <InputDescription xml:space="preserve" name="Mail - Body">The email body(ies), can be a simple text or a template.</InputDescription>  
+  <InputDescription xml:space="preserve" name="SMTP Server - Host">The SMTP Server host.</InputDescription>
+  <InputDescription xml:space="preserve" name="SMTP Server - Port">The SMTP Server port.</InputDescription>
+  <InputDescription xml:space="preserve" name="SMTP Server - Username">The SMTP Server username.</InputDescription>
+  <InputDescription xml:space="preserve" name="SMTP Server - Password">The SMTP Server password.</InputDescription>
+  <InputDescription xml:space="preserve" name="SMTP Server - Protocol">The SMTP Server protocol.</InputDescription>
+  <InputDescription xml:space="preserve" name="SMTP Server - Use SSL">The flag indicating whether the SMTP Server uses a secure protocol.</InputDescription>
+  <InputDescription xml:space="preserve" name="Placeholder XXX">The n-th placeholder values used to compute the mails.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Attachment XXX">The n-th attachment of the mails.</InputDescription>
+  <OutputDescription xml:space="preserve" name="Email Subject (Array)">An array storing the list of sent mail subjects.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Email Body (Array)">An array storing the list of sent mail bodies.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Failure reason">An array storing the list of failure reasons encountered during
+the execution of the operation's service.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Exceptions">An array storing the list of low-level exceptions raised during
+the execution of the operation's service.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Invalid addresses">An array storing the list of addresses on which the send 
+operation fails; for each entry in the FAILURE REASONS array, an associated entry is included in this array.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Email ID (Array)">An array storing the list of sent mail IDs.</OutputDescription>  
+  <SubComponent elementName="Placeholder" sortable="false" idPrefix="ph" namePrefix="Placeholder" maxCard="many"> 
+    <TextProperty elementName="Value"> 
+      <Description xml:space="preserve">The default value used if the placeholder is not provided by an input flow.</Description> 
+    </TextProperty>  
+    <Description xml:space="preserve">The placeholder used to dynamically compute the mail content at runtime.</Description> 
+  </SubComponent >  
+  <SubComponent elementName="Attachment" sortable="false" idPrefix="at" namePrefix="Attachment" maxCard="many"> 
+    <Description xml:space="preserve">The sub-component which permits to specify more attachments of the mail.</Description>  
+    <EnumProperty label="Attachments Policy" attributeName="attachmentPolicy" defaultValue="multiple"> 
+      <EnumItem value="multiple" label="Multiple"/>  
+      <EnumItem value="oneToOne" label="One to One"/>  
+      <Description xml:space="preserve">Indicates whether all attachments must be sent to all users (Multiple), or
+the n-th attachment must be sent to the n-th user (One to One). 
+       </Description> 
+    </EnumProperty> 
+    <StringProperty label="Content Type" attributeName="contentType"> 
+      <Description xml:space="preserve">The attachment content-type (eg. text/xml;charset=UTF-8)</Description> 
+    </StringProperty> 
+  </SubComponent > 
+</Component>

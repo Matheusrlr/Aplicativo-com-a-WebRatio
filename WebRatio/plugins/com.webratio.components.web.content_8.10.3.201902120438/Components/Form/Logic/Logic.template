@@ -1,0 +1,81 @@
+#?delimiters [%,%],[%=,%]
+[%
+import org.apache.commons.lang.StringUtils
+
+setXMLOutput()
+
+def componentId = component["id"]
+def name = component["name"]
+def domainClass = getByIdOptional(component["dataBinding"])
+
+def getSlots(field){
+  def slotOrder = field["slotOrder"]
+  if(StringUtils.isBlank(slotOrder)){
+     return field.selectNodes("Slot")
+  }
+  return StringUtils.split(slotOrder, " ").collect{getById(it)}
+}
+
+def addCommonAttributes(field){
+   %] id="[%=field["id"]%]" [% 
+   %] name="[%=field["name"]%]" [%
+   %] type="[%=field["type"]%]" [%
+   if(!StringUtils.isBlank(field["subType"])){
+     %] subType="[%=field["subType"]%]" [%
+   }
+   %] localized="[%=(field["hidden"] != "true") && isLocalizedType(field["type"])%]"[%
+}
+
+%]
+
+<Descriptor service="com.webratio.components.web.content.[%if(domainClass){%]ClassBased[%}%]FormService">
+ 	[%if(domainClass){%]
+ 	   <Class>[%=domainClass["id"]%]</Class>
+ 	[%}%]
+ 	
+ 	
+ 	<FormFields>
+	    [% for (field in component.selectNodes("Field")) { %]
+             <Field [%addCommonAttributes(field)%] [%if(domainClass && field["attribute"] != ""){%]attributeId="[%=field["attribute"]%]"[%}%]> 
+                 [% for (slot in getSlots(field)) { %]
+		            <Slot id="[%=slot["id"]%]" label="true" output="true" value="[%=slot["value"]%]"/>
+		         [% } %]
+		         [% if (field["preloaded"]=='true' && field.selectSingleNode("Slot") == null) { %]
+		            <Slot id="[%=field["id"]%]_slot" label="true" output="true"/>
+		         [% } %]
+		     </Field>
+        [% } %]
+	
+		[% for (field in component.selectNodes("SelectionField")) { %]
+            <SelectionField [%addCommonAttributes(field)%] value="[%=field["preselectValue"]%]" splitOutput="[%=field["splitOutput"]%]" [%if(domainClass && field["attribute"] != ""){%]attributeId="[%=field["attribute"]%]"[%}%] [%if(domainClass && field["role"] != ""){%]roleId="[%=field["role"]%]"[%}%]> 
+                [% for (slot in getSlots(field)) { %]
+		            <Slot id="[%=slot["id"]%]" label="[%=slot["label"]%]" output="[%=slot["output"]%]" value="[%=slot["value"]%]"/>
+		        [% }  %]
+		        [% if (field.selectSingleNode("Slot") == null) { %]
+		            <Slot id="[%=field["id"]%]_label" label="true" output="false"/>
+		            <Slot id="[%=field["id"]%]_output" label="false" output="true"/>
+		         [% } %]
+		    </SelectionField>
+		[% } %]
+	
+		[% for (field in component.selectNodes("MultiSelectionField")) { %]
+            <MultiSelectionField [%addCommonAttributes(field)%] value="[%=field["preselectValue"]%]" splitOutput="[%=field["splitOutput"]%]" [%if(domainClass && field["role"] != ""){%]roleId="[%=field["role"]%]"[%}%]> 
+                [% for (slot in getSlots(field)) { %]
+		            <Slot id="[%=slot["id"]%]" label="[%=slot["label"]%]" output="[%=slot["output"]%]" value="[%=slot["value"]%]"/>
+		        [% }  %]
+		        [% if (field.selectSingleNode("Slot") == null) { %]
+		            <Slot id="[%=field["id"]%]_label" label="true" output="false"/>
+		            <Slot id="[%=field["id"]%]_output" label="false" output="true"/>
+		         [% } %]
+		    </MultiSelectionField>
+		[% } %]
+  </FormFields>
+  
+  <wr:ValidationSupport xmlns:wr="http://www.webratio.com/2013/WebML/Logic">
+	[%for(field in component.selectNodes("Field|SelectionField")){%]
+	  [%if(field["attribute"] != "" && !StringUtils.isBlank(getById(field["attribute"])?.valueOf("@wrxsd:element"))){%]
+	    <CheckedRowValidationRule service="com.webratio.components.web.validation.XsdTypeValidationRuleService" elementId="[%=field["id"]%]" id="[%=field["id"]%]XsdType" name="[%=field["name"]%]" attribute="[%=field["attribute"]%]"/>
+	  [%}%] 
+	[%}%]
+  </wr:ValidationSupport>
+</Descriptor>

@@ -1,0 +1,61 @@
+{
+	"prepare_queue": {
+		"installed": [],
+		"uninstalled": []
+	},
+	"config_munge": {
+		"files": {}
+	},
+	"installed_plugins": {
+		
+			"com.webratio.accountmanager": {
+				"PACKAGE_NAME": "com.webratio.mobileapp.Guia de Calouro"
+			}
+		,
+			"cordova-plugin-device": {
+				"PACKAGE_NAME": "com.webratio.mobileapp.Guia de Calouro"
+			}
+		,
+			"cordova-plugin-dialogs": {
+				"PACKAGE_NAME": "com.webratio.mobileapp.Guia de Calouro"
+			}
+		,
+			"cordova-plugin-file": {
+				"PACKAGE_NAME": "com.webratio.mobileapp.Guia de Calouro"
+			}
+		,
+			"cordova-plugin-file-transfer": {
+				"PACKAGE_NAME": "com.webratio.mobileapp.Guia de Calouro"
+			}
+		,
+			"cordova-plugin-globalization": {
+				"PACKAGE_NAME": "com.webratio.mobileapp.Guia de Calouro"
+			}
+		,
+			"cordova-plugin-ionic-webview": {
+				"PACKAGE_NAME": "com.webratio.mobileapp.Guia de Calouro"
+			}
+		,
+			"cordova-plugin-network-information": {
+				"PACKAGE_NAME": "com.webratio.mobileapp.Guia de Calouro"
+			}
+		,
+			"cordova-plugin-splashscreen": {
+				"PACKAGE_NAME": "com.webratio.mobileapp.Guia de Calouro"
+			}
+		,
+			"cordova-plugin-websql": {
+				"PACKAGE_NAME": "com.webratio.mobileapp.Guia de Calouro"
+			}
+		,
+			"cordova-plugin-whitelist": {
+				"PACKAGE_NAME": "com.webratio.mobileapp.Guia de Calouro"
+			}
+		,
+			"ionic-plugin-keyboard": {
+				"PACKAGE_NAME": "com.webratio.mobileapp.Guia de Calouro"
+			}
+		
+	},
+	"dependent_plugins": {}
+}

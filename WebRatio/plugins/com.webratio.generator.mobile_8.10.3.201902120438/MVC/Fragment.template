@@ -1,0 +1,15 @@
+#?delimiters [%, %], [%=, %]
+[%
+def fragmentType = fragment["type"]
+
+%]<span class="wr-frag-[%= fragmentType %] [%= styleClass %]">[%
+if (fragmentType == "applicationName") {
+	%][%= wr.appConfig.name %][%
+	
+} else if (fragmentType == "screenTitle") {
+	%]<wr:Label context="screen"/>[%
+	
+} else {
+	throwGenerationException("Invalid fragment type ${fragmentType} - ${fragment}")
+}
+%]</span>

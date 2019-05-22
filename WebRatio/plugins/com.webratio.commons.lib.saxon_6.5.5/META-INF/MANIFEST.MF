@@ -1,0 +1,30 @@
+Manifest-Version: 1.0
+Export-Package: com.icl.saxon,com.icl.saxon.aelfred,com.icl.saxon.char
+ code,com.icl.saxon.expr,com.icl.saxon.exslt,com.icl.saxon.functions,c
+ om.icl.saxon.handlers,com.icl.saxon.number,com.icl.saxon.om,com.icl.s
+ axon.output,com.icl.saxon.pattern,com.icl.saxon.sort,com.icl.saxon.sq
+ l,com.icl.saxon.style,com.icl.saxon.tinytree,com.icl.saxon.trace,com.
+ icl.saxon.tree
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/saxon.jar
+Bundle-Version: 6.5.5
+Bundle-Name: WebRatio 3rd Party Library - Saxon
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.saxon
+Bundle-RequiredExecutionEnvironment: J2SE-1.4
+
+Name: lib/saxon.jar
+SHA-256-Digest: F15gNqjPof/9aIwDzLrNKUi0B4gcTLL5sm7TElcIXLI=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: RVG2AE6LjYIdV53sjxnt1dfqfSda86l373M56vumA1g=
+
+Name: lib/saxonsrc.zip
+SHA-256-Digest: dKEOEB7Fx2C7K5xWs2Ol0RgDd06yVf8blwSatMxM5gU=
+
+Name: about_files/saxon.txt
+SHA-256-Digest: CxPnld6o99r2Am0I9BxNp6aeMEXbqOaGikAA15ZbAeg=
+

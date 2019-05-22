@@ -1,0 +1,85 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Background Color" name="background-color" type="enum" values="white|gray|blue|light blue|green|yellow|red|violet|black" default="blue">
+Defines the color of the toolbar.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="First Event On Left" name="first-event-on-left" type="boolean" default="true">
+Defines the first event of the toolbar is on the left.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Icon" name="icon" type="text" default="search">
+Defines the icon to be shown in the field label.
+</wr:LayoutParameter>
+[%
+def inTop = (cell.valueOf("ancestor::layout:CustomLocation[1]/@name") == "Top Bar")
+def inBottom = (cell.valueOf("ancestor::layout:CustomLocation[1]/@name") == "Bottom Bar")
+
+def firstEventOnLeft = params["first-event-on-left"] == "true"
+
+def colors = [
+	"white": "light",
+	"gray": "stable",
+	"blue": "positive",
+	"light blue": "calm",
+	"green": "balanced",
+	"yellow": "energized",
+	"red": "assertive",
+	"violet": "royal",
+	"black": "dark"
+]
+	
+def bgColor = colors[params["background-color"]]
+
+def eventSize = cell.selectNodes("layout:Event").size()
+def firstEvent = cell.selectSingleNode("layout:Event[1]")
+
+def field = cell.selectSingleNode("layout:Field")
+if (!field) {
+	throwGenerationException("Field missing for toolbar ${cell}")
+}
+def type = field["type"]
+def readOnly = (field["modifiable"] == "false")
+
+def inputTypes = [
+	"date": "date",
+	"decimal": "number",
+	"float": "number",
+	"integer": "number",
+	"password": "password",
+	"string": "text",
+	"time": "time",
+	"timestamp": "datetime-local",
+	"url": "url"
+]
+
+%]
+[% if (inTop) { %]
+	<ion-header-bar class="bar-[%= bgColor %] item-input-inset">
+[% } else if (inBottom) { %]
+	<ion-footer-bar keyboard-attach class="bar-[%= bgColor %] hide-on-keyboard-open item-input-inset">
+[% } %]
+	
+	[% if (firstEventOnLeft && firstEvent) { %]
+		<wr:Event context="firstEvent"/>
+	[% } %]
+	
+	<label class="item-input-wrapper">
+		[% if (params["icon"] != "") { %]<span class="icon ion-[%= params["icon"] %] placeholder-icon"></span>[% } %]
+		<input
+			type="[%= inputTypes[type] ?: "text" %]"
+			ng-model="[%= getView(field) %].form.[%= field["id"] %]"
+			wr-form-property
+			[% if (readOnly) { %]disabled[% } %]
+			placeholder="<wr:Label context="field"/>"
+		>
+	</label>
+	
+	<wr:Iterate var="event" context="cell" select="layout:Event">
+	[% if (!firstEventOnLeft || event != firstEvent) { %]
+		<wr:Event/>
+	[% } %]
+	</wr:Iterate>
+	
+[% if (inTop) { %]
+	</ion-header-bar>
+[% } else if (inBottom) { %]
+	</ion-footer-bar>
+[% } %]

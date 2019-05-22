@@ -1,0 +1,11 @@
+#?delimiters [%, %], [%=, %]
+[%
+setJSONOutput()
+
+%]
+
+{
+	"service": "wrm.comp.BarcodeService",
+	"format": "[%= component["format"] %]",
+	"valueType": "[%= component["valueType"] %]"
+}

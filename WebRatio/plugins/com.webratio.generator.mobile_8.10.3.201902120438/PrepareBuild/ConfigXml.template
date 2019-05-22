@@ -1,0 +1,165 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+
+def pushNotificationsUsed = wr.requiredPlatformServices.contains("pushNotifications")
+
+/* Decide the orientation to use */
+def prefOrientation = [ \
+	"landscape": "landscape", \
+	"portrait": "portrait", \
+	"free": "all" \
+].get(wr.project["orientation"])
+
+/* Decide the supported device kinds */
+def handsetSupported = wr.appConfig.targetDeviceKinds.contains("handset")
+def tabletSupported = wr.appConfig.targetDeviceKinds.contains("tablet")
+def handsetOnly = handsetSupported && !tabletSupported
+def tabletOnly = !handsetSupported && tabletSupported
+
+%]<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets"
+	xmlns:gap="http://phonegap.com/ns/1.0"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	id="[%= appInfo.id %]"
+	version="[%= appInfo.version %]"
+	[%if(wr.appConfig.targetPlatforms.contains("android")){%]
+		android-versionCode="[%= appInfo.versionCode %]"
+	[%}%]>
+	
+	[%if(wr.appConfig.targetPlatforms.contains("android")){%]
+	   <name>[%= toValidClassName(appInfo.name) %]</name>
+	[%}else{%]
+	   <name>[%= appInfo.name %]</name>
+	[%}%]
+	
+	<description>
+		Application generated using WebRatio.
+	</description>
+    <author>
+        [%= appInfo.author %]
+    </author>
+	
+	<content src="index.html"/>
+	<allow-navigation href="*"/>
+	<access origin="*"/>
+	<access origin="cdvfile://*"/>
+	<access origin="content://*"/>
+	[% wr.appConfig.safeUrlProtocols.each { protocol -> %]
+		<allow-intent href="[%= protocol %]:*"/>
+	[% } %]
+	
+	<preference name="wr-app-name" value="[%= org.apache.commons.lang.StringEscapeUtils.escapeXml(appInfo.name) %]" />
+	
+	<preference name="Fullscreen" value="[%= wr.project["fullScreen"] == "true" %]"/>
+	<preference name="Orientation" value="[%= prefOrientation ?: "default" %]"/>
+	<preference name="DisallowOverscroll" value="true"/>
+	
+    <preference name="AutoHideSplashScreen" value="false"/>
+	<preference name="ShowSplashScreenSpinner" value="false"/>
+	<preference name="FadeSplashScreenDuration" value="200"/>
+    
+	<preference name="BackupWebStorage" value="none" />
+	
+	<preference name="WebRatioPushEnabled" value="[%= pushNotificationsUsed %]" />
+	
+	<!-- Android -->
+	
+	<platform name="android">
+		<icon src="res/android/icons/[%= getDefaultIconFileName("android") %]"/>
+		[% for (info in getBuildIcons("android")) { %]
+			<icon src="res/android/icons/[%= info.flatFileName %]" density="[%= info.density %]"/>
+		[% } %]
+		
+		<preference name="SplashShowOnlyFirstTime" value="false"/>
+		<preference name="SplashScreenDelay" value="1000000"/>
+		<preference name="SplashMaintainAspectRatio" value="true" />
+		[%if(prefOrientation && prefOrientation == "all"){%]
+			<preference name="Orientation" value="fullUser"/>
+		[% } %]
+		[% for (info in getBuildSplashScreens("android")) { %]
+			<splash src="res/android/screens/[%= info.flatFileName %]" density="[%= info.density %]"/>
+		[% } %]
+		
+		<wr-config-file target="AndroidManifest.xml" parent="/manifest" mode="merge">
+			[% if (handsetOnly) { %]
+				<compatible-screens>
+					<screen android:screenSize="small" android:screenDensity="ldpi" />
+					<screen android:screenSize="small" android:screenDensity="mdpi" />
+					<screen android:screenSize="small" android:screenDensity="hdpi" />
+					<screen android:screenSize="small" android:screenDensity="280" />
+					<screen android:screenSize="small" android:screenDensity="xhdpi" />
+					<screen android:screenSize="small" android:screenDensity="360" />
+					<screen android:screenSize="small" android:screenDensity="420" />
+					<screen android:screenSize="small" android:screenDensity="480" /> <!-- xxhdpi -->
+					<screen android:screenSize="small" android:screenDensity="560" />
+					<screen android:screenSize="small" android:screenDensity="640" /> <!-- xxxhdpi -->
+					<screen android:screenSize="normal" android:screenDensity="ldpi" />
+					<screen android:screenSize="normal" android:screenDensity="mdpi" />
+					<screen android:screenSize="normal" android:screenDensity="hdpi" />
+					<screen android:screenSize="normal" android:screenDensity="280" />
+					<screen android:screenSize="normal" android:screenDensity="xhdpi" />
+					<screen android:screenSize="normal" android:screenDensity="360" />
+					<screen android:screenSize="normal" android:screenDensity="420" />
+					<screen android:screenSize="normal" android:screenDensity="480" /> <!-- xxhdpi -->
+					<screen android:screenSize="normal" android:screenDensity="560" />
+					<screen android:screenSize="normal" android:screenDensity="640" /> <!-- xxxhdpi -->
+				</compatible-screens>
+			[% } else if (tabletOnly) { %]
+				<supports-screens
+					android:smallScreens="false"
+					android:normalScreens="false"
+					android:largeScreens="true"
+					android:xlargeScreens="true"
+					android:requiresSmallestWidthDp="600"
+				/>
+			[% } %]
+		</wr-config-file>
+	</platform>
+	
+    <preference name="android-minSdkVersion" value="19" />
+    <preference name="android-targetSdkVersion" value="26" />
+    <preference name="android-theme" value="Theme.DeviceDefault.Light.NoActionBar" />
+    <preference name="AndroidPersistentFileLocation" value="Compatibility" />
+	
+	<!-- IOS -->
+	
+	<platform name="ios">
+		<icon src="res/ios/icons/[%= getDefaultIconFileName("ios") %]"/>
+		[% for (info in getBuildIcons("ios")) { %]
+			<icon src="res/ios/icons/[%= info.flatFileName %]" width="[%= info.width %]" height="[%= info.height %]"/>
+		[% } %]
+		
+		[% for (info in getBuildSplashScreens("ios")) { %]
+			<splash src="res/ios/screens/[%= info.flatFileName %]" width="[%= info.width %]" height="[%= info.height %]"/>
+		[% } %]
+		
+		[% if (handsetOnly) { %]
+			<preference name="target-device" value="handset" />
+		[% } else if (tabletOnly) { %]
+			<preference name="target-device" value="tablet" />
+		[% } else { %]
+			<preference name="target-device" value="universal" />
+		[% } %]
+		<allow-navigation href="http://localhost:8080/*" />
+		<feature name="CDVWKWebViewEngine">
+  			<param name="ios-package" value="CDVWKWebViewEngine" />
+		</feature>
+		<preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
+		<preference name="StatusBarStyle" value="default" />
+	</platform>
+	
+	<!-- Windows -->
+	
+	<platform name="windows">
+		[% for (info in getBuildIcons("windows")) { %]
+			<icon src="res/windows/icons/[%= info.flatFileName %]" width="[%= info.width %]" height="[%= info.height %]"/>
+		[% } %]
+		
+		<!-- TODO splash screen -->
+		
+		<preference name="windows-target-version" value="10.0" />
+		<preference name="WindowsDefaultUriPrefix" value="ms-appx-web://" />
+	</platform>
+	
+</widget>

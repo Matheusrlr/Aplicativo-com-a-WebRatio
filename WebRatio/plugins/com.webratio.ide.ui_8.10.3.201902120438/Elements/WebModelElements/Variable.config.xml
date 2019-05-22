@@ -1,0 +1,55 @@
+<Element name="Variable" lowerName="variable"
+		pluralLowerName="variables">
+		<Description>
+			A  variable can be defined on  
+			&lt;a href="/Reference/ElementsReference/WebModelElements/Page"&gt;top-level pages&lt;/a&gt; and on
+			&lt;a href="/Reference/ElementsReference/WebModelElements/MasterPage"&gt;master pages&lt;/a&gt;. 
+			A variable has page scope.
+		</Description>
+		<ActionRef label="Add Property" />
+		<ActionRef label="Generate Logic Descriptors Only"/>
+		<ActionRef label="Generate Selection"/>
+		<ActionRef label="Find Model Problems"/>
+		<ActionRef label="Help"/>
+		
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<Property label="Name">
+				The name that is used in the 
+				&lt;a href="/Reference/ElementsReference/WebModelElements/ConditionExpression"&gt;
+				Activation Expressions&lt;/a&gt; specification. The name must respect the 
+				Java code conventions because it identifies the variable name in the condition 
+				scripts.
+			</Property>
+            <Property label="Type">
+                The type of the value to be assigned to the variable before the activation expression evaluation. 
+				Admissible types are: 
+				&lt;ul&gt;
+					&lt;li&gt;String&lt;/li&gt;
+					&lt;li&gt;Integer&lt;/li&gt;
+					&lt;li&gt;Decimal&lt;/li&gt;
+					&lt;li&gt;Float&lt;/li&gt;
+					&lt;li&gt;Date&lt;/li&gt;
+					&lt;li&gt;Time&lt;/li&gt;
+					&lt;li&gt;Timestamp&lt;/li&gt;
+					&lt;li&gt;Boolean&lt;/li&gt;
+					&lt;li&gt;Blob&lt;/li&gt;
+				&lt;/ul&gt;
+				If the selected type is empty, no conversion is performed on the variable's value.
+            </Property>
+			<Property label="Component">
+				A component of the page which the variable is based on. If defined the variable 
+				is a &lt;b&gt;component-based&lt;/b&gt; variable.
+				The Browse button <Button name="Browse"/> opens the 
+		        &lt;a href="/Reference/WizardsAndDialogs/ElementSelectionDialog"/&gt;. 
+				It permits to choose the component which the component is based on.
+				<Button name="Clear"/>
+			</Property>
+			<Property label="Parameter">
+				An output parameter of the selected component.
+			</Property>
+			<Property label="Value">
+				The default variable value.
+			</Property>
+		</PropertyCategory>
+	</Element>

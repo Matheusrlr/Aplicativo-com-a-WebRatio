@@ -1,0 +1,33 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+
+def dclassId = component["dataBinding"]
+def dclass = getById(dclassId)
+def	inputAttributes = getAttributes(dclass)
+def	inputRoles = getOutgoingRoles(dclass).findAll { !isMany(it) }
+%]
+<InputParameters>
+	[% for (attr in inputAttributes) { %]
+		[% if (isInputBindableAttribute(attr) && isWritableAttribute(attr)) { %]
+			<InputParameter
+				name="[%= attr["id"] %]"
+				refId="[%= attr["id"] %]"
+				label="[%= getLabel(attr) %]"
+				mandatory="false"
+			/>
+		[% } %]
+	[% } %]
+	[% for (role in inputRoles) { %]
+		[% def a = getKeyAttribute(getTargetDomainClass(role)) %]
+		<InputParameter
+			name="[%= role["id"] %]"
+			refId="[%= role["id"] %]"
+			[% if(role["maxCard"] == "1") { %]
+				type="[%= getSuperDomainClassHierarchy(getTargetDomainClass(role)).collect { it["id"] + "." + a["id"] + ".single" }.join("|") %]"
+			[% } %]
+			label="[%= getLabel(role) %]"
+			mandatory="false"
+		/>
+	[% } %]
+</InputParameters>

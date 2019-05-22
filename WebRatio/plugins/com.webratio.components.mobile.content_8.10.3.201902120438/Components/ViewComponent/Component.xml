@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="content" formBased="false" idPrefix="gctu" namePrefix="ViewComponent " label="View Component" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true"  errorFlowTarget="true"  successFlowTarget="true" canPlaceLayoutComponent="true" canPlaceLayoutEvents="true"> 
+    <StringProperty attributeName="type">
+		<Description xml:space="preserve">The type of component, with no specific meaning.</Description>
+	</StringProperty>
+	<Description xml:space="preserve">A placeholder for a view component with no business logic.</Description>
+	<IsContextFreeComponent xml:space="preserve">return true</IsContextFreeComponent>
+</Component>

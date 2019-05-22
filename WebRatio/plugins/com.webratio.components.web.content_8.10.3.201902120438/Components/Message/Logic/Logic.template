@@ -1,0 +1,22 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+
+def msgFileEncoding = null
+if(component["messageFile"] != ""){
+  def messageFile = getContentFile(component["messageFile"])
+  if (messageFile.exists()) {
+ 	 executeQuietly{msgFileEncoding = getFileEncoding(component["messageFile"])}
+  }
+}
+
+%>
+<Descriptor service="com.webratio.components.web.content.MessageService">
+  <Message xml:space="preserve"><%=component.valueOf("Message")%></Message>
+  <%if(component["messageFile"] != ""){%>
+    <MessageFile encoding="<%=msgFileEncoding%>"><%=component["messageFile"]%></MessageFile>
+  <%}%>
+  <% for(p in component.selectNodes("Placeholder")) { %>
+	 <Placeholder id="<%=p["id"]%>" name="<%=p["name"]%>" sep="<%=p["valueSeparator"]%>"><%=p.valueOf("Value")%></Placeholder>    
+  <%}%>  
+</Descriptor>

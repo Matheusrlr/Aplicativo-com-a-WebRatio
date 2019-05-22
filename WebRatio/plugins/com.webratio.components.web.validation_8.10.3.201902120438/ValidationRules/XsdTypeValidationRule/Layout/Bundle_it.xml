@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle>
+    <Entry key="XsdTypeValidationRule.mandatory">valore obbligatorio</Entry>
+
+	<Entry key="XsdTypeValidationRule.invalid.boolean">il valore deve essere un booleano</Entry>
+	<Entry key="XsdTypeValidationRule.invalid.date">il valore deve essere una data</Entry>
+	<Entry key="XsdTypeValidationRule.invalid.decimal">il valore deve essere un numero</Entry>
+	<Entry key="XsdTypeValidationRule.invalid.float">il valore deve essere un float</Entry>
+	<Entry key="XsdTypeValidationRule.invalid.timestamp">il valore deve essere un timestamp</Entry>
+	<Entry key="XsdTypeValidationRule.invalid.time">il valore deve essere un time</Entry>
+	<Entry key="XsdTypeValidationRule.invalid.integer">il valore deve essere un intero</Entry>
+	<Entry key="XsdTypeValidationRule.positive.value">il valore deve essere un numero positivo</Entry>
+	<Entry key="XsdTypeValidationRule.negative.value">il valore deve essere un numero negativo</Entry>
+
+    <Entry key="XsdTypeValidationRule.min.inclusive">il valore deve essere maggiore o uguale a ${value}</Entry>
+	<Entry key="XsdTypeValidationRule.min.exclusive">il valore deve essere maggiore di ${value}</Entry>
+	<Entry key="XsdTypeValidationRule.max.inclusive">il valore deve essere minore o uguale a ${value}</Entry>
+	<Entry key="XsdTypeValidationRule.max.exclusive">il valore deve essere minore di ${value}</Entry>
+	
+	<Entry key="XsdTypeValidationRule.invalid.enum">il valore deve essere uno tra: ${values}</Entry>
+
+	<Entry key="XsdTypeValidationRule.invalid.length">il valore deve essere lungo ${length} caratteri</Entry>
+	<Entry key="XsdTypeValidationRule.min.length">il valore deve essere lungo almeno ${length} caratteri</Entry>
+	<Entry key="XsdTypeValidationRule.max.length">il valore deve essere lungo al massimo ${length} caratteri</Entry>
+	<Entry key="XsdTypeValidationRule.fraction.digits">il valore deve avere al massimo ${digits} cifre decimali</Entry>
+	<Entry key="XsdTypeValidationRule.total.digits">il valore deve avere al massimo ${digits} cifre</Entry>
+	<Entry key="XsdTypeValidationRule.invalid.pattern">il valore non è valido</Entry>
+</Bundle>

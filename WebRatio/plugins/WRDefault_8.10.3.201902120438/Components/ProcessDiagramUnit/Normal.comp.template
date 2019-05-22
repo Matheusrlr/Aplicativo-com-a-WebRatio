@@ -1,0 +1,91 @@
+#?delimiters [%, %], [%=, %]
+[%
+import org.apache.commons.lang.StringUtils
+
+setHTMLOutput()
+
+def parentProcessEvent = component.selectSingleNode("layout:Event[@name = 'Parent Level']")
+def subProcessEvent = component.selectSingleNode("layout:Event[@name = 'Sub Level']")
+def isAjax = isAjaxEvent(parentProcessEvent)
+%]
+<wr:RequireResource ref="wrdefault-bpm-style"/>
+<c:if test="${not(empty <wr:Id context="component"/>) and (<wr:Id context="component"/>.dataSize gt 0)}">
+    <div class="diagram-title" style="width:${<wr:Id context="component"/>.width}px">
+      <c:out value="${<wr:Id context="component"/>.processName}"/>
+	</div>
+	<div class="plain <wr:StyleClass/>">
+		<div class="ProcessDiagramUnit" style="position:relative; width:${<wr:Id context="component"/>.width}px; height:${<wr:Id context="component"/>.height}px; z-index:1">
+          <c:if test="${not(empty <wr:Id context="component"/>.data)}">
+          <c:forEach var="current" varStatus="status" items="${<wr:Id context="component"/>.data}">
+		     <c:set var="index" value="${status.index}"/>
+             [%def visibilityConditions = []
+               for(l in component.selectNodes("layout:Event[string(@_exp) = '']")){
+                  visibilityConditions.add(StringUtils.defaultIfEmpty(getVisibilityCondition(l, 'index'), "true"))
+               }
+               visibilityConditions.add("(not(empty current.parentProcessInstanceOid))")
+               visibilityConditions.add("(not(empty current.subProcessInstanceOids))")
+               visibilityConditions.add("(not(empty current.parentProcesses))")
+               visibilityConditions.add("(not(empty current.subProcesses))")
+             %]
+             <c:if test="${[%printJSPTagValue(StringUtils.join(visibilityConditions, "||"))%]}">
+              <div id="${current.uuid}" class="diagram-popup-div" style="position:absolute; top:${current.y}px; left:${current.x2 - 10}px; z-index:2; display:none;" onmouseover="jQuery(this).show()" onmouseout="jQuery(this).hide()">
+               <table class="diagram-popup-table">
+               <wr:Iterate var="ev" context="component" select="layout:Event[string(@_exp) = '']">
+				 <wr:Visible position="'index'"><tr><td nowrap="nowrap"><wr:Event class="diagram-link"/></td></tr></wr:Visible>
+			   </wr:Iterate>
+			   <c:choose>
+                  <c:when test="${not(empty current.parentProcessInstanceOid)}">
+                      <tr>
+                        <td nowrap="nowrap"><img src="Resources/parent_level.png"/></td>
+                        <td nowrap="nowrap"><a class="diagram-link" href="<wr:URL context="parentProcessEvent"/>" [%if(isAjax){%]onclick="<wr:AjaxURL context="parentProcessEvent"/>"[%}%]><c:out value="${current.parentProcessInstanceName}"/></a></td>
+                      </tr>
+                  </c:when>
+	              <c:when test="${not(empty current.parentProcesses)}">
+	                  <c:forEach var="process" varStatus="status2" items="${current.parentProcesses}">
+		                <c:set var="index2" value="${status2.index}"/>
+		                <tr>
+		                  <td nowrap="nowrap"><img src="Resources/parent_level.png"/></td>
+		                  <td nowrap="nowrap"><a class="diagram-link" href="<wr:URL context="parentProcessEvent" position="'index,index2'"/>" [%if(isAjax){%]onclick="<wr:AjaxURL context="parentProcessEvent" position="'index,index2'"/>"[%}%]><c:out value="${process.model.name}"/></a></td>
+		                </tr>
+		              </c:forEach>
+	              </c:when> 
+	           </c:choose>
+			   <c:choose>
+                  <c:when test="${not(empty current.subProcessInstanceOids)}">
+			         <c:forEach var="oid" varStatus="status2" items="${current.subProcessInstanceOids}">
+		               <c:set var="index2" value="${status2.index}"/>
+		               <tr>
+		                 <td nowrap="nowrap"><img src="Resources/sub_level.png"/></td>
+		                  <td nowrap="nowrap"><a class="diagram-link" href="<wr:URL context="subProcessEvent" position="'index,index2'"/>" [%if(isAjax){%]onclick="<wr:AjaxURL context="subProcessEvent" position="'index,index2'"/>"[%}%]><c:out value="${current.subProcessInstanceNames[index2]}"/></a></td>
+		               </tr>
+		             </c:forEach>   
+			      </c:when>
+	              <c:when test="${not(empty current.subProcesses)}">
+	                 <c:forEach var="process" varStatus="status2" items="${current.subProcesses}">
+		               <c:set var="index2" value="${status2.index}"/>
+		               <tr>
+		                 <td nowrap="nowrap"><img src="Resources/sub_level.png"/></td>
+		                 <td nowrap="nowrap"><a class="diagram-link" href="<wr:URL context="subProcessEvent" position="'index,index2'"/>" [%if(isAjax){%]onclick="<wr:AjaxURL context="subProcessEvent" position="'index,index2'"/>"[%}%]><c:out value="${process.model.name}"/></a></td>
+		               </tr>
+		             </c:forEach> 
+	              </c:when> 
+	           </c:choose>
+			   
+			   </table>
+			 </div>
+			 </c:if> 
+          </c:forEach>
+          </c:if>
+          <img src="<webratio:BLOB value="${<wr:Id context="component"/>.diagramFile}"/>" usemap="#diagramMap" width="${<wr:Id context="component"/>.width}" height="${<wr:Id context="component"/>.height}" border="0"/>
+        
+          <map name="diagramMap">
+            <c:forEach var="current" varStatus="status" items="${<wr:Id context="component"/>.data}">
+			  <c:set var="index" value="${status.index}"/>
+              <area shape="rect" coords="${current.coords}" onmouseover="jQuery(document.getElementById('${current.uuid}')).show()" onmouseout="jQuery(document.getElementById('${current.uuid}')).hide()" />
+            </c:forEach>
+          </map>       
+        
+      </div>
+    </div>
+    <div class="diagram-bottom" style="width:${<wr:Id context="component"/>.width}px"></div>
+</c:if>

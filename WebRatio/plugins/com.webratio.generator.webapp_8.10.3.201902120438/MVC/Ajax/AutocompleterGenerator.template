@@ -1,0 +1,75 @@
+#?delimiters [%, %], [%=, %]
+[%
+import org.apache.commons.lang.StringEscapeUtils
+import org.apache.commons.lang.StringUtils
+
+if (field["ajaxAutocompleteEnabled"] == "true" && getById(field, "field").name == "Field") { %]
+	[%
+		def fieldId = field["id"]
+		def parentComponent = field.selectSingleNode("ancestor::layout:Component")
+		if (parentComponent && parentComponent["unitTagName"] == "MultipleForm") {
+			fieldId = parentComponent["id"] + "[\${index}]." + fieldId
+		}
+		def selectionFieldMode = (field["ajaxAutocompleteType"] == "selectionField")
+	%]
+	[% if (mode == "replacement") { %]
+		[% if (selectionFieldMode) { %]
+			[%
+				/* Compute layout characteristics of the field as WRDefault would */
+				def inputSize = fieldLayout.parameters["input-size"]
+				def maxLength = fieldLayout.parameters["input-max-length"]
+				def fieldType = StringUtils.removeEnd(getById(field, "field").name, "Field")
+				def styleClass = field["styleClass"] ?: ""
+				if (fieldType == "") {
+					styleClass += " field"
+				} else if (fieldType == "Selection") {
+					styleClass += " selectionfield"
+				} else if (fieldType == "MultiSelection") {
+					styleClass += " multiselectionfield"
+				}
+			%]
+			<input type="text" id="[%= fieldId %]_helper" [% if (maxLength) { %]maxlength="[%= maxLength %]"[% } %] size="[%= inputSize %]" [%= styleClass ? "class=\"${styleClass}\"" : "" %] ignore="true" name="[%= fieldId %]_helper" value="${[%= getFormBeanName(page) %].map.[%= fieldId %]}"[% if (pageOutputType.name == "xhtml") { %]/[% } %]>
+			<form:hidden path="[%= fieldId %]" id="[%= fieldId %]"/>
+		[% } %]
+	[% } else { %]
+		[%
+			/* Compute descriptor string */
+			def autocompleteEvent = getById(field, "ajaxAutocompleteEvent")
+			def formPostDescriptor = ""
+			if (isFormBased(autocompleteEvent.parent.parent)) {
+				formPostDescriptor = "," + getFormBeanName(page) + ",button:" + getEventRuntimeId(autocompleteEvent)
+			}
+			
+			/* Compute token separators */
+			def tokensString = field["ajaxAutocompleteTokens"]
+			def tokens = tokensString ? "[" + tokensString.tokenize().collect{ "\"" + StringEscapeUtils.escapeJavaScript(it) + "\"" }.join(",") + "]" : null
+			
+			/* Compute min length */
+			def minLength = field["ajaxAutocompleteMinChars"] ?: "1"
+			
+			/* Compute custom callbacks */
+			def selectCallback = field["ajaxAutocompleteUpdateElement"]
+			def afterSelectCallback = field["ajaxAutocompleteAfterUpdateElement"]
+		%]
+		<wr:RequireResource ref="jquery, wr-ui-widgets">
+			<script type="text/javascript">
+				jQuery(function($) {
+					$(document.getElementById("[%= fieldId %][% if (selectionFieldMode) { %]_helper[% } %]")).wrAutocomplete({
+						[% if (tokens) { %]wrTokens: [%= tokens %],[% } %]
+						[% if (selectionFieldMode) { %]
+							wrTermFieldName: "[%= fieldId %]",
+							wrIdElement: "#[%= fieldId %]",
+						[% } %]
+						minLength: [%= minLength %],
+						[% if (selectCallback) { %]wrSelect: [%= selectCallback %],[% } %]
+						[% if (afterSelectCallback) { %]wrAfterSelect: [%= afterSelectCallback %],[% } %]
+						wrAction: "<webratio:Link link="[%= getEventRuntimeId(autocompleteEvent) %]" escapeXml="false"/>[%= formPostDescriptor %]"
+					});
+					[% if (field["ajaxAutocompleteIndicator"] == "true") { %]
+						$("<span>").addClass("wr-indicator").insertAfter("#[%= fieldId %][% if (selectionFieldMode) { %]_helper[% } %]");
+					[% } %]
+				});
+			</script>
+		</wr:RequireResource>
+	[% } %]
+[% } %]

@@ -1,0 +1,18 @@
+#?delimiters [%, %], [%=, %]
+[% setXMLOutput() %]
+<InputParameters>
+	[% if (component["mode"] == "save") { %]
+		<InputParameter name="title" label="Title" />
+		<InputParameter name="location" label="Location" />
+		<InputParameter name="notes" label="Notes" />
+		<InputParameter name="startDate" label="Start Date" />
+		<InputParameter name="startTime" label="Start Time" />
+		<InputParameter name="endDate" label="End Date" />
+		<InputParameter name="endTime" label="End Time" />
+		<InputParameter name="recurrence" label="Recurrence (daily, weekly, monthly, yearly)" />
+		<InputParameter name="recEndDate" label="Recurrence End Date" />
+		<InputParameter name="allDay" label="All Day" />
+	[% } else if (component["mode"] == "open") { %]
+		<InputParameter name="date" label="Date" />
+	[% } %]
+</InputParameters>

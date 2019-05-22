@@ -1,0 +1,28 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+
+import org.apache.commons.lang.StringUtils
+
+def componentId = component.attributeValue("id", "")
+def placeholderNames = new HashSet()
+def message = null
+message = StringUtils.defaultIfEmpty(component.valueOf("Message"), message);
+def stringToSplit = "_" + StringUtils.replace(message, "\$\$\$\$", "\$\$_\$\$") 
+def tokens = StringUtils.splitByWholeSeparator(stringToSplit, "\$\$")
+for (i in 0..tokens.size() - 1) {
+   	if (i % 2 != 0) {
+		if(tokens[i].indexOf("|") != -1){
+			tokens[i] = StringUtils.substringBefore(tokens[i], "|")
+		}
+		placeholderNames.add(toValidFieldName(tokens[i]))
+	}
+}
+%]
+
+<InputParameters>
+	<InputParameter name="messages" label="Shown Messages"/>
+	[% for (token in placeholderNames) { %]
+		<InputParameter name="[%=componentId %].[%=token %]" label="[%=token %]"/>
+	[% } %]
+</InputParameters>

@@ -1,0 +1,66 @@
+#?delimiters [%, %], [%=, %]
+[%
+setJSONOutput()
+
+def events = getAllFloatingEvents()
+def reAccess = (wr.project["checkCredentialsOnResume"] == "true")
+
+/* Find the home element proper */
+def homeElement = getHomeElement(wr.project.selectSingleNode("WebModel/AppView"))
+
+/* Find all screens that can be considered "home" */
+def homeLikeScreens
+if (homeElement.name == "Screen") {
+	homeLikeScreens = [ homeElement ]
+} else {
+	homeLikeScreens = getReachableTopPanels(homeElement).findAll { it.name == "Screen" }
+}
+def loginElement = getLoginElement()
+if (loginElement?.name == "Screen") {
+	homeLikeScreens.add(loginElement)
+}
+%]
+{
+	"_": "wrm.core.AppService",
+	
+	"startup": {
+		"home": "[%= homeElement["id"] %]",
+		"reAccess": [%= reAccess %]
+	},
+	
+	"resume": {
+		"reAccess": [%= reAccess %]
+	},
+	
+	"home": {
+		"home": "[%= homeElement["id"] %]"
+	},
+	
+	"back": {
+		"home": "[%= homeElement["id"] %]",
+		"homeLikePanels": "[%= homeLikeScreens.collect{ it["id"] }.join("|") %]"
+	},
+	
+	"events": {
+		[% events.eachWithSeparator(",") { event -> %]
+			[%
+				def flow = event.element("NavigationFlow")
+				def dataFlows = event.selectNodes("DataFlow")
+			%]
+			"[%= event["id"] %]": {
+				"type": "[%= event.valueOf("Property[@name = 'type']/@value") ?: event.name %]"
+				[% if (!dataFlows.isEmpty()) { %],
+					"dataFlows": [
+						[% dataFlows.eachWithSeparator(",") { dataFlow -> %]
+							[% printRaw(executeContextTemplate("Logic/Flow.template", ["flow": dataFlow])) %]
+						[% } %]
+					]
+				[% } %]
+				[% if (flow) { %],
+					"flow": [% printRaw(executeContextTemplate("Logic/Flow.template", ["flow": flow])) %]
+				[% } %]
+			}
+		[% } %]
+	}
+	
+}

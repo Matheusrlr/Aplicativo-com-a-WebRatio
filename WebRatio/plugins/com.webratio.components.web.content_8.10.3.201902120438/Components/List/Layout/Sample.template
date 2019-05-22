@@ -1,0 +1,13 @@
+#?delimiters [%, %], [%=, %]
+[%
+setHTMLOutput()
+def blockFactor = component["blockFactor"]
+def isSortable = component["sortable"]
+def isScrollable = blockFactor != "" ? "true": "false"
+def checkable = "true" == component["checkable"] && "true" != component["distinct"]
+def firstLink = component.selectSingleNode("layout:Event[contains(@event,'First')]")
+def previousLink = component.selectSingleNode("layout:Event[contains(@event,'Previous')]")
+def blockLink = component.selectSingleNode("layout:Event[contains(@event,'Block')]")
+def nextLink = component.selectSingleNode("layout:Event[contains(@event,'Next')]")
+def lastLink = component.selectSingleNode("layout:Event[contains(@event,'Last')]")
+%]

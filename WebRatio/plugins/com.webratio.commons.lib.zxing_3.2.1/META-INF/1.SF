@@ -1,0 +1,21 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: /yDCouWXKn4SWlM094ZWyz/67hEqI
+ UcldNUkGjjbPiM=
+SHA-256-Digest-Manifest: AsUGRXJdjBnpoReazEctV+5B4VbMlzLYWoMbXI0IKOE=
+Created-By: 1.7.0_80 (Oracle Corporation)
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: a5fmgH7myHzNji9AMOfHrVh8fy7MOgIdRSUiRZ6EFA4=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: about.html
+SHA-256-Digest: d2nC6crByeOuv+X4wFx177+//Q1ufA3UN7NTyMNEVcE=
+
+Name: lib/zxing-core.jar
+SHA-256-Digest: kHs2nVY8/ihJjS/z/lhR3gj+z1Bg1BPci8hPG15ZfUw=
+
+Name: lib/zxing-coresrc.zip
+SHA-256-Digest: A766H6afmuMyCPn3d4VrsV6MznrhosNfDDsUFG4Jre4=
+

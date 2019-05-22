@@ -1,0 +1,28 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.io.IOHelper
+
+def PLATFORM_NAME = "ios"
+def OUT_BASE = "platforms/" + PLATFORM_NAME
+def RES_BASE = "Framework/Platforms/" + PLATFORM_NAME
+
+/* Copy static files of the platform */
+processOutputFile(OUT_BASE, "static ${PLATFORM_NAME} files", wr.project, { rootDir ->
+	def staticDir = wr.locateResourceFile(RES_BASE + "/Static")
+	IOHelper.copyDirectory(staticDir, rootDir, [IOHelper.CVS_AWARE_FILTER], [])
+})
+
+/* Create and fill the platform www directory */
+executeContextTemplate("Framework/PlatformWebRoot.template", ["platformName": PLATFORM_NAME, "platformPath": OUT_BASE, "wwwPath": OUT_BASE + "/www"])
+
+/* Create the app info list file */
+def infoPlistFilePath = "/" + appInfo.className + "/" + appInfo.className + "-Info.plist"
+processOutputFile(OUT_BASE + infoPlistFilePath, "app info file", wr.project, { infoFile ->
+	infoFile.parentFile.mkdirs()
+	infoFile.writeAsync(executeContextTemplate(RES_BASE + "/InfoPlist.template"), "UTF-8")
+})
+
+/* Create the empty XCode project */
+def xcodeProjDirPath = "/" + appInfo.className + ".xcodeproj"
+wr.outputManager.getFile(OUT_BASE + xcodeProjDirPath).mkdir();
+%]

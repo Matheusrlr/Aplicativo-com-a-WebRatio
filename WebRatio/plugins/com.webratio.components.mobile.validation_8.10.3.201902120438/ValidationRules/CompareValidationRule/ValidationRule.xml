@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ValidationRule type="singleProperty" idPrefix="cmp" namePrefix="Compare " label="Compare"> 
+  <EnumProperty attributeName="predicate" defaultValue="eq"> 
+    <EnumItem value="eq" label="Equal"/>  
+    <EnumItem value="gteq" label="Greater or Equal"/>  
+    <EnumItem value="gt" label="Greater Than"/>  
+    <EnumItem value="lteq" label="Less or Equal"/>  
+    <EnumItem value="lt" label="Less Than"/>  
+    <EnumItem value="neq" label="Not Equal"/>
+    <Description xml:space="preserve">The comparison operator.</Description>
+  </EnumProperty>  
+  <BooleanProperty attributeName="ignoreCase"> 
+    <EnabledCondition xml:space="preserve">element["predicate"] == "eq" || element["predicate"] == "neq"</EnabledCondition>  
+    <Description xml:space="preserve">If checked, the validation is performed ignoring case sensitivity.</Description>
+  </BooleanProperty>
+  <CompanionProperty attributeName="valueField">
+    <Description xml:space="preserve">The element to compare.</Description>
+  </CompanionProperty>  
+  <StringProperty attributeName="value"> 
+    <EnabledCondition xml:space="preserve">element["valueField"] == ""</EnabledCondition>  
+    <Description xml:space="preserve">The value to compare.</Description>
+  </StringProperty> 
+  <Description xml:space="preserve">The Compare validation rule allows to compare
+the value of an element with another element or with a specific value.&lt;br/&gt;
+The validation error message can be composed using the following placeholders:&lt;br/&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;${propertyValue}&lt;/b&gt;: the element value&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${propertyName}&lt;/b&gt;: the element name&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${objectName}&lt;/b&gt;: the parent element name&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${value}&lt;/b&gt;: the comparison value&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${otherPropertyName}&lt;/b&gt;: the comparison element name&lt;/li&gt;
+&lt;/ul&gt;
+</Description>
+</ValidationRule>

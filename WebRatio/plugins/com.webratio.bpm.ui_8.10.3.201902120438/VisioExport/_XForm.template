@@ -1,0 +1,19 @@
+#?delimiters [%,%],[%=,%]
+[% 
+import org.apache.commons.lang.StringUtils
+setXMLOutput() 
+
+dimMap.put(mainShapeId, [ XForm_X, XForm_Y, XForm_W, XForm_H ] );
+
+%]   <XForm>
+        <PinX>[%=XForm_X%]</PinX>
+        <PinY>[%=XForm_Y%]</PinY>
+        <Width>[%=XForm_W%]</Width>
+        <Height>[%=XForm_H%]</Height>
+        <LocPinX>0</LocPinX>
+        <LocPinY>0</LocPinY>
+        <Angle>0</Angle>
+        <FlipX>0</FlipX>
+        <FlipY>0</FlipY>
+        <ResizeMode>0</ResizeMode>
+    </XForm>

@@ -1,0 +1,19 @@
+<!-- directive: wr-screen scr5 -->
+<div>
+	<ion-content class=" wr-safe-area">
+		<!-- directive: wr-component pwu2 -->
+		<div class=" wr-comp-List">
+			<div ng-if="view.data &amp;&amp; view.data.length" class="list ">
+				<div class="item item-divider">{{ 'List 2' | wrLocalize }}</div>
+				<div class="item" ng-repeat="current in view.data">
+					<h2>{{ current.nome }}</h2>
+					<p>{{ current.descricao }}</p>
+					<p>{{ current.endereco }}</p>
+					<p>{{ current.telefone }}</p>
+				</div>
+			</div>
+		</div>
+		<!-- end_directive: wr-component -->
+	</ion-content>
+</div>
+<!-- end_directive: wr-screen -->

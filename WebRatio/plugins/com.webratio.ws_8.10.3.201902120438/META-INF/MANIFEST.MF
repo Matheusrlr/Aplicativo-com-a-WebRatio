@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.9.2
+Bundle-SymbolicName: com.webratio.ws
+Export-Package: com.webratio.ws,com.webratio.ws.resources,com.webratio
+ .ws.rest,com.webratio.ws.soap,com.webratio.ws.wadl,com.webratio.ws.ws
+ dl
+Bundle-Name: Web Services
+Bundle-Version: 8.10.3.201902120438
+Bundle-ClassPath: com.webratio.ws.jar
+Require-Bundle: com.webratio.commons.libs,com.webratio.xsd,com.webrati
+ o.commons.lib.jackson2,com.webratio.commons.lib.javax.wsdl4j;visibili
+ ty:=reexport,com.webratio.commons.lib.apache.commons.lang,com.webrati
+ o.commons.lib.apache.commons.io,com.webratio.commons.lib.dom4j,com.we
+ bratio.xsd,com.webratio.json
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: WebRatio
+Created-By: 1.8.0-b132 (Oracle Corporation)
+
+Name: META-INF/signature
+SHA-256-Digest: PRYYgqFVErjMMx3lDuv1T8nEp66ZmsJ8BwS19rF+4z4=
+

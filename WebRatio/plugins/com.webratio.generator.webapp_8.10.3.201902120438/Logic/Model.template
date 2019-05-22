@@ -1,0 +1,349 @@
+#?delimiters [%,%],[%=,%]
+[%
+import org.apache.commons.lang.StringUtils
+import com.webratio.generator.helpers.PasswordUtils
+
+setXMLOutput()
+
+def getDefaultSpecialPageJsp(type) {
+	def rootElem = wr.project.element("WebModel") ?: wr.project  // WebProject as fallback for non-web projects (e.g. ENTERPRISE, DATAMODEL)
+	return getSpecialPageJsp(rootElem, type)
+}
+
+def getDeclaredSpecialPageJsp(elem, type) {
+	if (!StringUtils.isBlank(elem.attributeValue(type.getAttributeQName())) && elem.valueOf("@layout:style") != "") {
+		return getSpecialPageJsp(elem, type)
+	}
+	return null
+}
+
+def getSpecialPageJsp(elem, type) {
+	def specialPage = getStylePage(elem, type)
+	return StringUtils.replace(specialPage, "/", "_") + "." + type.fileSuffix + ".jsp"
+}
+
+def printModuleInfo(module){
+    def customURLName = wr.explorer.webModel().supportsEntrance(module) ? getWebAppPath(module) : null
+    def modId = module["id"]
+    def modName = module["name"]
+    def pages = []
+    def operationUnits = []
+    def protectUrlProp = module.selectSingleNode("Property[@name='protectURL' and @value='false']")
+    if(module.name == "SiteView"){   
+         def loginPage = getSpecialPageJsp(module, StylePageType.LOGIN)
+         def expirePage = getSpecialPageJsp(module, StylePageType.EXPIRE)
+         def errorPage = getSpecialPageJsp(module, StylePageType.ERROR)
+         %]<SiteView id="[%=modId%]" 
+                     homePage="[%=module["home"]%]" 
+                     name="[%=modName%]" 
+                     home="[%=module.parent["homeSiteView"] ==  modId%]" 
+                     [%if(module["protected"] == "true"){%]protected="true"[%}%] 
+                     [%if(module["id"] != customURLName){%]customURLName="[%=customURLName%]"[%}%]
+                     [%if(loginPage != null){%]loginPage="[%=loginPage%]"[%}%]
+                     [%if(expirePage != null){%]expirePage="[%=expirePage%]"[%}%]
+                     [%if(errorPage != null){%]errorPage="[%=errorPage%]"[%}%]
+                     [%if(protectUrlProp != null){%]protectUrl="false"[%}%]>[%
+         for(module2 in module.elements("Area")){
+             printModuleInfo(module2)
+         }
+         pages.addAll(module.elements("Page"))
+         operationUnits.addAll(module.selectNodes("Action|Module/InputPort|Events/*"))
+    }else if(module.name == "ModuleView" || module.name == "ModulePackage"){
+         if(module.name == "ModuleView"){
+           %]<ModuleView id="[%=modId%]"
+             [%if(protectUrlProp != null){%]protectUrl="false"[%}%]>[%
+         } 
+         for(module2 in module.elements("ModulePackage")){
+             printModuleInfo(module2)
+         }
+         for(module2 in module.selectNodes("ActionDefinition")){
+             printModuleInfo(module2)
+         }
+         for(module2 in module.selectNodes("HybridModuleDefinition[string(@contentPage) = '']")){
+             printModuleInfo(module2)
+         }
+    }else if(module.name == "ActionDefinition"){
+       %]<ActionDefinition id="[%=modId%]" 
+                         name="[%=modName%]" 
+                         [%if(module["protected"] == "true"){%]protected="true"[%}%]>[%
+    }else if(module.name == "HybridModuleDefinition"){
+         %]<HybridModule id="[%=modId%]" name="[%=modName%]"
+           [%if(protectUrlProp != null){%]protectUrl="false"[%}%]>[% 
+          for(module2 in module.elements("Area")){
+             printModuleInfo(module2)
+          }
+          pages.addAll(module.elements("Page"))
+          operationUnits.addAll(module.selectNodes("Action|Module/InputPort|Events/*"))       
+    }else if(module.name == "Area"){
+         def loginPage = getDeclaredSpecialPageJsp(module, StylePageType.LOGIN)
+         def expirePage = getDeclaredSpecialPageJsp(module, StylePageType.EXPIRE)
+         def errorPage = getDeclaredSpecialPageJsp(module, StylePageType.ERROR)
+         %]<Area id="[%=modId%]" 
+                 name="[%=modName%]" 
+                 topLevel="[%=module.parent.name == "SiteView"%]" 
+                 [%if(getByIdOptional(module, "default")?.name != "Area"){%]defaultPage="[%=getCallDelegate(getById(module["default"]))["id"]%]"[%}%] 
+                 [%if(getByIdOptional(module, "default")?.name == "Area"){%]defaultArea="[%=getCallDelegate(getById(module["default"]))["id"]%]"[%}%]
+                 [%if(module["protected"] == "true"){%]protected="true"[%}%] 
+                 [%if(modId != customURLName){%]customURLName="[%=customURLName%]"[%}%]
+                 [%if(loginPage != null){%]loginPage="[%=loginPage%]"[%}%]
+                 [%if(expirePage != null){%]expirePage="[%=expirePage%]"[%}%]
+                 [%if(errorPage != null){%]errorPage="[%=errorPage%]"[%}%]
+                 [%if(protectUrlProp != null){%]protectUrl="false"[%}%]>[%
+          for(module2 in module.elements("Area")){
+             printModuleInfo(module2)
+          }
+          pages.addAll(module.elements("Page"))
+          operationUnits.addAll(module.selectNodes("Action|Module/InputPort|Events/*"))  
+     }
+     for(page in pages){
+       customURLName = getWebAppPath(page)
+       def loginPage = getDeclaredSpecialPageJsp(page, StylePageType.LOGIN)
+       def expirePage = getDeclaredSpecialPageJsp(page, StylePageType.EXPIRE)
+       def errorPage = getDeclaredSpecialPageJsp(page, StylePageType.ERROR)
+       def protectUrlProperty = page.selectSingleNode("Property[@name='protectURL' and @value='false']")
+       if(page["protected"] == "true" || page["id"] != customURLName || loginPage != null || expirePage != null || errorPage != null || protectUrlProperty){
+          %]<Page id="[%=page["id"]%]" 
+                  name="[%=page["name"]%]"
+                  [%if("true" == page["protected"]){%]protected="true"[%}%]  
+                  [%if(page["id"] != customURLName){%]customURLName="[%=customURLName%]"[%}%]
+                  [%if(loginPage != null){%]loginPage="[%=loginPage%]"[%}%]
+                  [%if(expirePage != null){%]expirePage="[%=expirePage%]"[%}%]
+                  [%if(errorPage != null){%]errorPage="[%=errorPage%]"[%}%]
+                  [%if(protectUrlProperty != null){%]protectUrl="false"[%}%]>[%
+		     for (prop in page.selectNodes("Property")) {
+		         %]<Property name="[%=prop["name"]%]" value="[%=prop["value"]%]"/>[%
+		     }
+		     %]</Page>[%
+       }
+     }
+     for(op in operationUnits){
+       customURLName = getWebAppPath(op)
+       op = wr.explorer.webModel().getCallDelegate(op)
+       def protectUrlProperty = op.selectSingleNode("Property[@name='protectURL' and @value='false']")
+       if(op["protected"] == "true" || op["id"] != customURLName || protectUrlProperty){
+          %]<OperationUnit id="[%=op["id"]%]" 
+                           name="[%=op["name"]%]" 
+                           [%if("true" == op["protected"]){%]protected="true"[%}%]  
+		                   [%if(op["id"] != customURLName){%]customURLName="[%=customURLName%]"[%}%]
+		                   [%if(protectUrlProperty != null){%]protectUrl="false"[%}%]>[%
+		     for (prop in op.selectNodes("Property")) {
+		         %]<Property name="[%=prop["name"]%]" value="[%=prop["value"]%]"/>[%
+		     }
+		     %]</OperationUnit>[%
+       } 
+     }
+     for (prop in module.selectNodes("Property")) {
+         %]<Property name="[%=prop["name"]%]" value="[%=prop["value"]%]"/>[%
+     }
+     if(module.name == "SiteView"){   
+        %]</SiteView>[%
+     }else if(module.name == "ModuleView"){   
+        %]</ModuleView>[%
+     }else if(module.name == "Area"){
+        %]</Area>[%
+     }else if(module.name == "HybridModuleDefinition"){
+        %]</HybridModule>[%
+     }else if(module.name == "ActionDefinition"){
+        %]</ActionDefinition>[%
+     }      
+}
+
+
+def expandURLFragment(urlFragment){
+   if(StringUtils.isBlank(urlFragment)){
+       return null    
+   }
+   def defUserCtxParams = new HashSet(["UserCtxParam", "GroupCtxParam"])
+   def result = []
+   for(fragment in urlFragment.tokenize(" ")){
+      if(fragment == "targetURLName"){
+        result.add(fragment)
+      }else{
+        def ctxParam = getById(fragment)
+        if (ctxParam["type"] == "class") { 
+          def domainClass = getByIdOptional(ctxParam, "class")
+          if(domainClass == null || defUserCtxParams.contains(fragment)){
+             result.add(fragment)  
+          }else{
+             for (a in getKeyAttributes(domainClass)){ 
+               result.add(fragment + "." + a["id"])
+             }
+          }
+        }else{
+          result.add(fragment)
+        }   
+        }   
+      }
+   if(!result.contains("targetURLName")){
+      result.add("targetURLName")
+   }
+   return StringUtils.join(result, "|")
+}
+
+def rtxId = StringUtils.defaultIfEmpty(wr.project["id"], null)
+def subModel = (wr.projectType.name() in ["WEBMODEL","MODULE"])
+def useModuleDomainName = getByIdOptional("modelElementDomainName") != null && (wr.project["moduleDomainName"] != "" || wr.projectType.name() != "WEBPROJECT")
+
+%]
+<Descriptor service="com.webratio.rtx.model.ModelService" crc="[%=wr.project.valueOf("@crc")%]" [%if(rtxId){%]id="[%=rtxId%]" subModel="[%=subModel%]"[%}%] enterpriseApplication="[%=wr.projectType.name() != "WEBPROJECT"%]">
+  <WebRatioVersion>[%=wrVersion%]</WebRatioVersion>
+  <WebRatioBuildId>[%=wrBuildId%]</WebRatioBuildId>
+  <WebRatioProjectName>[%=projectName%]</WebRatioProjectName>
+  [%def runningProfiles = getByIdsOptional(wr.project, "runningProfile")
+    if(!runningProfiles.empty){%]
+      <RunningProfiles>[%=runningProfiles.collect{it["name"]}.join("|")%]</RunningProfiles>
+  [%}%]
+  [%if(wr.project.selectSingleNode("Property[@name='logSOAPFault' and @value='true']") != null){%]
+    <LogSOAPFault>true</LogSOAPFault>
+  [%}%]
+  [% def transformerFactoryClass = wr.project.valueOf("Property[@name = 'transformerFactoryClass']/@value") %]
+  [%if(!StringUtils.isBlank(transformerFactoryClass)){%]
+    <TransformerFactoryClass>[%=transformerFactoryClass%]</TransformerFactoryClass>
+  [%}%]  
+  [%def urlFragment = expandURLFragment(wr.project.valueOf("WebModel/@urlFragment"))%]
+  [%if("true" == wr.project.valueOf("WebModel/@enableURLFragments")){%]
+    <URLFragment>[%=urlFragment%]</URLFragment>
+  [%}%]
+  [%if(useModuleDomainName){%]
+     <ModuleDomainName>[%=StringUtils.defaultIfEmpty(wr.project["moduleDomainName"], projectName)%]</ModuleDomainName>
+  [%}%]
+  
+  [%if(wr.projectType.name() in ["ENTERPRISE","WEBPROJECT"]){%]
+    <ApplicationServer httpPort="[%=wr.project["httpPort"]%]"
+                  httpsPort="[%=wr.project["httpsPort"]%]"
+                  defaultApplicationEncoding="[%=StringUtils.defaultIfEmpty(wr.project["defaultApplicationEncoding"], "UTF-8")%]"
+                  defaultServerEncoding="[%=StringUtils.defaultIfEmpty(wr.project["defaultServerEncoding"], "ISO-8859-1")%]"
+                  useDefaultURLEncoding="[%=("true" == wr.project["useDefaultURLEncoding"])%]"
+                  serverName="[%=wr.project["serverName"]%]"
+                  useAbsoluteUrl="[%=("true" == wr.project["useAbsoluteURL"])%]"
+                  maxUploadFileSize="[%=StringUtils.defaultIfEmpty(wr.project["maxUploadFileSize"], "12M")%]"
+                  urlExt=".do"
+                  defaultCookieTimeout="[%=StringUtils.defaultIfEmpty(StringUtils.defaultIfEmpty(wr.project["defaultCookieTimeout"], wr.project["sessionTimeout"]), "30")%]"/>
+    
+    [%if("true" == wr.project["adminArea"]){%]
+      <AdminArea username="[%=StringUtils.defaultIfEmpty(wr.project["adminUser"], "manager")%]"
+                 password="[%=("true" == wr.project["adminCryptedPassword"]) ? com.webratio.generator.helpers.PasswordUtils.hashPassword(wr.project["adminPassword"], true) : StringUtils.defaultIfEmpty(wr.project["adminPassword"], "m4n4g3r")%]"
+                 cryptedPassword="[%=("true" == wr.project["adminCryptedPassword"])%]"
+                 path="[%=StringUtils.defaultIfEmpty(wr.project["adminPath"], "WRAdmin/Home")%]"/>
+    [%}%] 
+  [%}%]   
+  
+  [%
+   def defaultLoginPage = getDefaultSpecialPageJsp(StylePageType.LOGIN)
+   def defaultExpirePage = getDefaultSpecialPageJsp(StylePageType.EXPIRE)
+   def defaultErrorPage = getDefaultSpecialPageJsp(StylePageType.ERROR)
+  %]
+  <WebModel defaultLoginPage="[%=defaultLoginPage%]" defaultExpirePage="[%=defaultExpirePage%]" defaultErrorPage="[%=defaultErrorPage%]">
+    [% for(sv in wr.project.selectNodes("WebModel/SiteView").findAll{it["ownerProjectId"] == ""}.sort{it["id"]}) {
+         printModuleInfo(sv)
+       } 
+    %]
+    [% for(mv in wr.project.selectNodes("WebModel/ModuleView").findAll{it["ownerProjectId"] == ""}.sort{it["id"]}) {
+         printModuleInfo(mv)
+       } 
+    %]
+  </WebModel>
+  
+  <SessionParameters>
+    [% def baseIds = ["UserCtxParam", "RoleCtxParam", "LanguageISOCtxParam", "CountryISOCtxParam", "RunningProfileCtxParam"]
+       def ctxParams = wr.project.selectNodes("/WebProject/WebModel/ContextParameter").findAll{!baseIds.contains(it["id"])}.sort{it["name"]}
+       ctxParams.addAll(wr.project.selectNodes("/WebProject/WebModel/ContextParameter").findAll{baseIds.contains(it["id"])}.sort{it["name"]})
+       for (ctxParam in ctxParams.findAll{it["ownerProjectId"] == ""}) { 
+        def attrRequired = ctxParam["id"] != "UserCtxParam" && ctxParam["id"] != "RoleCtxParam"
+        def type = attrRequired ? ctxParam["type"] : "string"
+        def useURL = "true" == ctxParam["useURL"]
+        def csp = ctxParam["cookieStorageProvider"]        
+        if (type == "class" && attrRequired) { 
+         def domainClass = getById(ctxParam, "class")
+         if(domainClass == null){
+              %]<SessionParameter name="[%=ctxParam["name"]%]" type="string" [%if(useURL){%]useURL="true"[%}%] [%if(csp != ""){%]cookieStorageProvider="[%=csp%]"[%}%]>[%=ctxParam["id"]%]</SessionParameter>[%
+         }else{
+            for (a in getKeyAttributes(domainClass)){ 
+              %]<SessionParameter name="[%=ctxParam["name"]%]" class="[%=ctxParam["class"]%]" [%if(useURL){%]useURL="true"[%}%] [%if(csp != ""){%]cookieStorageProvider="[%=csp%]"[%}%]>[%=ctxParam["id"]%].[%=a["id"]%]</SessionParameter>[% 
+            }
+         }
+        } else { 
+         %]<SessionParameter name="[%=ctxParam["name"]%]" type="[%=type%]" [%if(useURL){%]useURL="true"[%}%] [%if(csp != ""){%]cookieStorageProvider="[%=csp%]"[%}%]>[%=ctxParam["id"]%]</SessionParameter>[% 
+        } 
+     } %]
+  </SessionParameters>
+  
+  [%if(wr.projectType.name()== "ENTERPRISE"){%]
+     <SharedContextParameters>
+       [%for(param in wr.project.selectNodes("/WebProject/Property[@name = 'sharedContextParameter']")){%]
+         <SharedContextParameter>[%=param["value"]%]</SharedContextParameter>
+       [%}%]
+     </SharedContextParameters>
+  [%}%]
+  
+  <ServiceDataProviders>
+     [%for(service in wr.project.selectNodes("/WebProject/ServiceDataProviders/*").findAll{it["ownerProjectId"] == ""}){%]
+       [%printRaw(service.asXML())%]
+     [%}%]
+  </ServiceDataProviders>
+    
+  <LinkPreservedParameters>
+     [%for(param in wr.project.selectNodes("/WebProject/Property[@name = 'linkPreservedParameter']").findAll{it["ownerProjectId"] == ""}){%]
+        <LinkPreservedParameter>[%=param["value"]%]</LinkPreservedParameter>
+     [%}%]
+     [%if((wr.projectType.name() in ["ENTERPRISE","WEBPROJECT"]) && wr.project.selectSingleNode("Property[@name='enableMultiSession' and @value='true']") != null){%]
+        <LinkPreservedParameter>msessionId</LinkPreservedParameter>
+     [%}%]
+     [%if(wr.projectType.name()== "ENTERPRISE"){%]
+        <LinkPreservedParameter>orig</LinkPreservedParameter>
+     [%}%]
+     <LinkPreservedParameter>boxed</LinkPreservedParameter>
+     <LinkPreservedParameter>fllbck</LinkPreservedParameter>
+  </LinkPreservedParameters>
+  
+  <DefaultFileEncoding>[%=wr.getDefaultContentFileCharset().or("")%]</DefaultFileEncoding>
+   
+  <Statistics [%printRaw(wrModelStatistics.tokenize("|").collect{StringUtils.substringBefore(it, "=") + "=\"" + StringUtils.substringAfter(it, "=") + "\""}.join(" "))%]/>
+  [%if((wr.project.valueOf("@bpm:bpmBased") == "true" && (wr.projectType.name() in ["ENTERPRISE","WEBPROJECT"] || wr.project.selectSingleNode("BPMResources/BPMResource") != null))){%]
+    <BPMBased>true</BPMBased>
+  [%}%]
+  
+  [% def props = (wr.projectType.name() == "ENTERPRISE") ? wr.project.selectNodes("Property") : wr.project.selectNodes("Property[string(@ownerProjectName) = '']")%]
+  [% for (prop in props) { %]
+    <Property name="[%=prop["name"]%]" value="[%=prop["value"]%]"/>
+  [% } %]
+  
+  [%if(wr.project["protectURL"] == "true" && (wr.projectType.name() in ["WEBMODEL","MODULE","WEBPROJECT"])){%]
+  <URLSecurity enable="[%=wr.project["protectURL"]%]" 
+               digestId="[%=wr.project["digestId"]%]" 
+               digestWithSessionId="[%=wr.project["digestWithSessionId"]%]" 
+               digestType="[%=wr.project["digestType"]%]" 
+               digestProviderClass="[%=wr.project["digestProviderClass"]%]" 
+               digestAlgorithm="[%=wr.project["digestAlgorithm"]%]"/>
+  [%}%]
+  [%if(wr.project["protectBLOB"] == "true" && (wr.projectType.name() in ["ENTERPRISE","WEBPROJECT"])){%]
+  <BLOBSecurity enable="[%=wr.project["protectBLOB"]%]" 
+                digestId="[%=StringUtils.defaultIfEmpty(wr.project["blobDigestId"], wr.project["digestId"])%]" 
+                digestWithSessionId="[%=StringUtils.defaultIfEmpty(wr.project["blobDigestWithSessionId"], wr.project["digestWithSessionId"])%]" 
+                digestType="[%=StringUtils.defaultIfEmpty(wr.project["blobDigestType"], wr.project["digestType"])%]" 
+                digestProviderClass="[%=StringUtils.defaultIfEmpty(wr.project["blobDigestProviderClass"], wr.project["digestProviderClass"])%]" 
+                digestAlgorithm="[%=StringUtils.defaultIfEmpty(wr.project["blobDigestAlgorithm"], wr.project["digestAlgorithm"])%]"/>
+  [%}%]
+  
+  [%
+    def autoLoadServices = []
+    if(wr.projectType.name() in ["ENTERPRISE","WEBPROJECT"]){
+      autoLoadServices.add("_i18n")
+      if(wr.project.valueOf("@bpm:bpmBased") == "true"){
+         autoLoadServices.add("_bpm")
+      }       
+    }
+    if(wr.projectType.name() != "BPM"){
+       autoLoadServices.add("_job.manager")
+    }
+  %]
+  
+  <AutoLoadServices>[%=StringUtils.join(autoLoadServices, "|")%]</AutoLoadServices>    
+  
+  <Roles>
+    [% for (role in wr.project.selectNodes("Roles/Role")) { %]
+      <Role id="[%=role["id"]%]" name="[%=role["name"]%]"/>
+    [% } %]
+  </Roles>
+            
+</Descriptor>

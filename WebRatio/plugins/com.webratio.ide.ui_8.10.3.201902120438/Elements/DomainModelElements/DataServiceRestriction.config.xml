@@ -1,0 +1,20 @@
+<Element name="DataServiceRestriction" lowerName="restriction" pluralLowerName="restrictions">
+	<Description>
+		    	A restriction is a Conditional Expression that returns a boolean value.
+				Only a single Restriction Expression can be defined on a Role and/or Method elements. 
+				The Restriction Expression can be composed of many conditions.
+	</Description>
+	<ActionRef label="Help"/>
+	<PropertyCategory name="General">
+		<Property label="Default Policy">
+	    	This property controls the component's behaviour in case no input parameter is available for all the not required conditions of the unit. If the value is set to Fill, the content of the component is filled up in the normal way, i.e. by ignoring the not required selector conditions lacking their input parameter. 
+			If the value is set to Empty (also with Required), the content of the units is left empty is the abovementioned pre-condition is satisfied (allowed also if there is one or more required conditions).
+		</Property>
+		<Property label="Boolean Operator">
+	    	If the selector needs more than one condition, this property defines whether the different conditions are considered either in conjunction (AND logical operator) or in disjunction (OR logical operator).
+		</Property>
+		<Property label="Expression">
+	    	The complex expression based on the condition of the selector.
+		</Property>
+	</PropertyCategory>
+</Element>

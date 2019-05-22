@@ -1,0 +1,82 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Cell Font Weight" name="cellfont-weight" type="enum" values="normal|bold" default="">
+Defines the rendering of a cell.
+Allowed values are:
+- normal (default)
+- bold
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Cell Background" name="cellbackground" type="color" default="">
+Defines the cell background color.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Text Color" name="cellcolor" type="color" default="">
+Defines the text color.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Cell Borders" name="cellborder" type="string" default="">
+Defines the cell borders to render.
+Value is a space-separated combination of the
+following keywords: top, left, right, bottom.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Cell Border style" name="cellborder-style" type="enum" values="NONE|THIN|MEDIUM|DASHED|DOTTED|THICK|DOUBLE|HAIR|MEDIUM_DASHED|DASH_DOT|MEDIUM_DASH_DOT|DASH_DOT_DOT|MEDIUM_DASH_DOT_DOT|SLANTED_DASH_DOT">
+Defines the cell border style.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Cell Border Color" name="cellborder-color" type="color" default="">
+Defines the cell border color.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Data Format" name="dataFormat" type="String" default="">
+The data format to use to presenting data into the cells.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Wrap Text" name="wrap-text" type="enum" values="true|false" default="false">
+Defines whether the text should be wrapped within the cell.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Line Width" name="line-width" type="int" default="">
+Defines the cell maximum line width in characters for string and text attributes
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Image Scale" name="imageScale" type="String" default="">
+The amount by which image dimensions are multiplied relative to the original size
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Image Overlay" name="imageOverlay" type="enum" values="true|false" default="false">
+The flag indicating whether the image must overlay the cells.
+</wr:LayoutParameter>
+[%
+import org.apache.commons.lang.StringUtils
+
+setXMLOutput()
+def type = attr["type"]
+def contentType = attr["contentType"]
+def attrProp = getFieldName(attr["attribute"])
+def isXml = (contentType == "text/xml")
+def isHtml = (contentType == "text/html")
+
+def writeBaseAttribute(params){
+   if(!StringUtils.isBlank(attr["id"])){%] id="[%= attr["id"]%]"[%}
+   if(StringUtils.isBlank(attr["id"])){%] type="[%= attr["type"]%]"[%}
+   if(!StringUtils.isBlank(attr["contentType"])){%] contentType="[%= attr["contentType"]%]"[%}
+   if(!StringUtils.isBlank(params["dataFormat"])){%] dataFormat="[%= params["dataFormat"]%]"[%}
+}
+
+def writeStyleAttributes(params, prefix){
+   def style = params.entrySet().findAll{it.key.startsWith(prefix) && !StringUtils.isBlank(it.value)}.collect{StringUtils.uncapitalize(it.key - prefix) + ":" + it.value}.join(";")    
+   if(!StringUtils.isBlank(style)){%] style="[%= style%]"[%}
+   if(!StringUtils.isBlank(params["imageScale"])){%] imageScale="[%= params["imageScale"]%]"[%}
+   if(attr["type"] == "blob"){%] imageOverlay="[%= params["imageOverlay"]%]"[%}
+   if(attr["type"] == "string" || attr["type"] == "text") {
+     if(params["line-width"] != ""){
+       %] lineWidth="[%= params["line-width"]%]"[%
+     }
+     if(params["wrap-text"] == "true"){
+       %] wrapText="true"[%
+     }
+   }
+}
+
+%]<Cell[%writeBaseAttribute(params)%][%writeStyleAttributes(params, "cell")%]>[%
+if(isXml){
+  %]<c:out value="${[%=item%].[%=attrProp%]}" escapeXml="false"/>[%
+} else if(isHtml){
+  %]<c:out value="${[%=item%].[%=attrProp%]}" escapeXml="true"/>[%
+} else if(type == "string" || type == "text"){
+  %]<c:set var="textToEscape" value="${[%=item%].[%=attrProp%]}"/><%=org.apache.commons.lang.StringEscapeUtils.escapeXml(org.apache.commons.lang.CharSetUtils.delete(org.apache.commons.lang.ObjectUtils.toString(pageContext.getAttribute("textToEscape")), new String[] {"\u0000-\u0008", "\u000b", "\u000c", "\u000e-\u001f"}))%>[%
+} else {
+  %]<c:out value="${[%=item%].[%=attrProp%]}" escapeXml="true"/>[%
+}
+%]</Cell>

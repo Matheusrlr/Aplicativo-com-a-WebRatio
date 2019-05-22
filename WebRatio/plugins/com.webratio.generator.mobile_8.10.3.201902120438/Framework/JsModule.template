@@ -1,0 +1,15 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.google.common.base.Charsets
+import com.google.common.io.Files
+
+setJSOutput()
+def moduleText = Files.toString(sourceFile, Charsets.UTF_8).trim()
+if(moduleText.charAt(0) as int == 65279){
+  // removes the BOM character if present
+  moduleText = moduleText.substring(1)
+}
+
+%]cordova.define("[%= moduleName %]", function(require, exports, module) {
+	[% printRaw(moduleText) %]
+});

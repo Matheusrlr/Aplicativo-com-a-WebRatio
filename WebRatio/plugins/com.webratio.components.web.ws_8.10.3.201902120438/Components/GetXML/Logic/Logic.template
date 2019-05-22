@@ -1,0 +1,10 @@
+#?delimiters [%,%],[%=,%]
+[%
+setXMLOutput()
+%]
+<Descriptor service="com.webratio.components.web.ws.GetXMLService">
+   <Document sourceType="[%=component.valueOf("@sourceType")%]" url="[%=component.valueOf("@url")%]"/>
+   [%for(xPath in component.selectNodes("XPath")){%]
+      <XPath id="[%=xPath["id"]%]" name="[%=xPath["name"]%]" resultType="[%=xPath["resultType"]%]">[%=xPath["expression"]%]</XPath>
+   [%}%]
+</Descriptor>

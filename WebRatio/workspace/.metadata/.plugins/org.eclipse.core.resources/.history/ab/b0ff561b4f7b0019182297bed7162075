@@ -1,0 +1,47 @@
+<Screen xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" gr:x="625" gr:y="85" id="av1#scr3" name="Categoria">
+  <ViewComponents>
+    <List gr:x="0" gr:y="0" id="av1#scr3#pwu1" name="Categorias" checkable="false" dataBinding="cls2" displayAttributes="cls2#att8 cls2#att9" eventOrder="av1#scr3#pwu1#oslte2">
+      <Events>
+        <OnSelectEvent id="av1#scr3#pwu1#oslte2" name="On Select Event 2" validate="true">
+          <NavigationFlow id="av1#scr3#pwu1#oslte2#nf5" to="av1#scr4#hinu1" automaticCoupling="true"/>
+        </OnSelectEvent>
+      </Events>
+    </List>
+  </ViewComponents>
+  <layout:Grid containerType="grid">
+    <layout:Row>
+      <layout:Cell colspan="12">
+        <layout:Component componentId="av1#scr3#pwu1">
+          <layout:Attribute attribute="cls2#att8"/>
+          <layout:Attribute attribute="cls2#att9"/>
+          <layout:Event event="av1#scr3#pwu1#oslte2" eventType="OnSelectEvent"/>
+        </layout:Component>
+      </layout:Cell>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+    <layout:Row>
+      <layout:Cell colspan="12"/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+  </layout:Grid>
+</Screen>

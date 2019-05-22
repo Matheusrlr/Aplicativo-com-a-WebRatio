@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="content" version="1.0.0" idPrefix="mpcmpnt" namePrefix="Map " label="Map" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" successFlowSource="true" successFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" canPlaceLayoutComponent="true"> 
+  	<ServiceDataProvidersProperty attributeName="mapsProvider" multiple="true" serviceDataProviderType="GoogleMapsProvider">
+		<Description>The list of the Maps Providers used to get directions.</Description>
+	</ServiceDataProvidersProperty>
+  	<NativePlugins>
+  		<RequiredPlugin localId="local:googlemaps.zip">
+  			<RequirementCondition xml:space="preserve">
+  				def requiresGoogleMaps = false;
+  				for (mapProviderId in component["mapsProvider"].tokenize(" ")) {
+  					if ("GoogleMapsProvider" == getById(mapProviderId)["type"]) {
+  						requiresGoogleMaps = true
+  						break;
+  					}
+  				}
+  				return requiresGoogleMaps
+			</RequirementCondition>
+		</RequiredPlugin>
+		<RequiredPlugin localId="local:launchnavigator.zip"/>
+  	</NativePlugins>
+	<Description xml:space="preserve">&lt;p&gt;The Map operation opens the native device application and shows the a location&lt;/p&gt;
+&lt;p&gt;This component uses the following:&lt;/p&gt; 
+&lt;ul&gt;
+  &lt;li&gt;The &lt;b&gt;googlemaps&lt;/b&gt; PhoneGap plugin to interact with the device (&lt;a href="https://github.com/webratio/phonegap-googlemaps-plugin"&gt;https://github.com/webratio/phonegap-googlemaps-plugin&lt;/a&gt;)&lt;/li&gt;
+  &lt;li&gt;The &lt;b&gt;google-playservices&lt;/b&gt; libraries for the Android device to use the map (&lt;a href="https://github.com/webratio/google-play-services"&gt;https://github.com/webratio/google-play-services&lt;/a&gt;)&lt;/li&gt;
+  &lt;li&gt;The &lt;b&gt;http-request&lt;/b&gt; PhoneGap plugin for the Android device to use the map&lt;/li&gt;
+  &lt;li&gt;The &lt;b&gt;googlemaps-ios-sdk&lt;/b&gt; PhoneGap plugin for the iOS device to use the map (&lt;a href="https://github.com/webratio/googlemaps-ios-sdk-for-phonegap"&gt;https://github.com/webratio/googlemaps-ios-sdk-for-phonegap&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;</Description>
+	<ServiceDataProvider type="GoogleMapsProvider" multipleInstances="true" label="Google Maps Provider">
+		<Description xml:space="preserve">The Google Maps Provider is necessary to show the Google Map in a screen.</Description>
+	    <StringProperty attributeName="name">
+			<Description xml:space="preserve">The user-defined Google Maps Provider name.</Description>
+		</StringProperty>					
+	    <EnumProperty attributeName="platform" label="Platform">
+		    <EnumItem value="iOS" label="iOS"/>
+		    <EnumItem value="Android" />
+			<Description xml:space="preserve">The device platform for which the Google Maps Provider is configured.
+			&lt;p&gt;The available options are:&lt;/p&gt;
+			&lt;ul&gt;&lt;li&gt;Android&lt;/li&gt;
+			&lt;li&gt;iOS&lt;/li&gt;
+			&lt;/ul&gt;</Description>
+	    </EnumProperty>
+	    <StringProperty attributeName="apiKey" label="API Key">
+			<Description xml:space="preserve">The platform-specific Google Maps API Key.</Description>
+		</StringProperty>
+    </ServiceDataProvider>
+	<InputDescription xml:space="preserve" name="Addresses">The array of addresses used to show the locations in the map;
+	&lt;p&gt;it is possible to use addresses in alternative to latitudes and longitudes.&lt;/p&gt;</InputDescription>
+	<InputDescription xml:space="preserve" name="Images">The array of images used in the tooltip of the location.</InputDescription>
+	<InputDescription xml:space="preserve" name="Latitudes">The array of latitudes used to show the locations in the map;
+	&lt;p&gt;it is possible to use latitudes and longitudes in alternative to addresses.&lt;/p&gt;</InputDescription>
+	<InputDescription xml:space="preserve" name="Location IDs">The IDs of the locations shown on the map.</InputDescription>
+	<InputDescription xml:space="preserve" name="Longitudes">The array of longitudes used the locations in the map;
+	&lt;p&gt;it is possible to use latitudes and longitudes in alternative to addresses.&lt;/p&gt;</InputDescription>
+	<InputDescription xml:space="preserve" name="Snippets">The array of descriptions used to show in the tooltip of the location.</InputDescription>
+	<InputDescription xml:space="preserve" name="Titles">The array of titles used in the tooltip of the location.</InputDescription>
+	<InputDescription xml:space="preserve" name="HTML Contents">The array of the HTML fragments used to render the tooltip of the location. To be used in alternative to Titles and Snippets.</InputDescription>
+	<InputDescription xml:space="preserve" name="To Be Clustered">The array of boolean values indicating if a location is part of a cluster. A cluster is a group of location that are close one to the other.</InputDescription>
+	<OutputDescription xml:space="preserve" name="Location ID">The ID of the location selected by the user from the tooltip.</OutputDescription>
+</Component>

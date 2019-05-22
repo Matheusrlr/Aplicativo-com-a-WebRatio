@@ -1,0 +1,66 @@
+<Element name="WebModel" lowerName="web model"
+		pluralLowerName="">
+		<Description>
+		    A Web Model 
+		    organizes in a hierarchy the elements composing the site views and 
+		    service views of the application.
+		</Description>
+		<ActionRef label="Add Site View" />
+		<ActionRef label="Add Service View" />
+		<ActionRef label="Add Module Definitions" />
+		<ActionRef label="Add Context Parameter" />
+		<ActionRef label="Add Activation Expression"/>
+		<ActionRef label="Add Property"/>
+		<ActionRef label="Localize"/>
+		<ActionRef label="Generate Layout Pages Only"/>
+		<ActionRef label="Generate Logic Descriptors Only"/>
+		<ActionRef label="Generate Selection"/>
+		<ActionRef label="Find Model Problems"/>
+		<ActionRef label="Help"/>
+		<PropertyCategory name="General">
+			<Property label="Home Site View">
+				The name of the site view marked as home 
+				&lt;a href="/Reference/ElementsReference/WebModelElements/SiteView"/&gt;.
+			</Property>
+			<Property label="Default Locale">
+				The locale marked as application default 
+				Locale
+			</Property>
+			
+			
+			
+			<Property label="Home Web View" onlyForNatureId="com.webratio.ide.WebNature">
+				The Web View selected as the Home of the Web Application.
+			</Property>
+			
+			
+			
+			
+		</PropertyCategory>
+		<PropertyCategory name="Layout">
+			<PropertyRef label="Style" />
+			<PropertyRef label="Page Layout" />
+			<PropertyRef label="Layout Manager" />
+			<PropertyRef label="Grid Layout"/>
+			<PropertyRef label="Frame Layout"/>
+			<PropertyRef label="Cell Layout"/>
+			<PropertyRef label="Attribute Layout"/>
+			<PropertyRef label="Field Layout"/>
+			<PropertyRef label="Event Layout"/>
+			<PropertyRef label="Error Style Page"/>
+			<PropertyRef label="Expire Style Page"/>
+			<PropertyRef label="Login Style Page"/>
+			<PropertyRef label="Component Configuration"/>
+			<PropertyRef label="Old Resources"/>
+			<PropertyRef label="Inherit Parameters"/>
+		</PropertyCategory>
+		<PropertyCategory name="Condition">
+			<PropertyRef name="Visibility Condition" label="Grid Visibility Cond." />
+			<PropertyRef name="Visibility Condition" label="Cell Visibility Cond."/>
+			<PropertyRef name="Visibility Condition" label="Attribute Visibility Cond."/>
+			<PropertyRef name="Visibility Condition" label="Field Visibility Cond."/>
+			<PropertyRef name="Visibility Condition" label="Field Disable Cond."/>
+			<PropertyRef name="Visibility Condition" label="Event Visibility Cond."/>
+			<PropertyRef name="Visibility Condition" label="Event Disable Cond."/>
+		</PropertyCategory>
+</Element>

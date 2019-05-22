@@ -1,0 +1,33 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: 0Kt01hLpRl9CCORrEVhHrDSiG5Gw2
+ tb8YF1Ktn9sKb0=
+SHA-256-Digest-Manifest: lu5VhCFGlKTm83tCQUo5XABGnHcr+eOWcKzFpd/Byus=
+Created-By: 1.7.0_80 (Oracle Corporation)
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: a5fmgH7myHzNji9AMOfHrVh8fy7MOgIdRSUiRZ6EFA4=
+
+Name: lib/httpcore.jar
+SHA-256-Digest: Izn+7xtPJCumc3DdN8Z65mGwAbN1Kjc1lPfePWQ7g2U=
+
+Name: lib/httpmime.jar
+SHA-256-Digest: lnQOGISFUvhHLZnFTEIVyxMFBNxAnBkNVXlB38a3ysA=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: about.html
+SHA-256-Digest: r9LAu3cEwJy4h/xfOxo+82/EsiZr9RcfOhRO0yXXZQo=
+
+Name: lib/httpcoresrc.zip
+SHA-256-Digest: 1ubv2VSF2FA+CRVOE0LAZko7swlDzl69rINtMqqjDFY=
+
+Name: lib/httpclientsrc.zip
+SHA-256-Digest: gsChoUuB00w5BHHoB7TQ29cQsZKc286lO44bBFRqW28=
+
+Name: lib/httpmimesrc.zip
+SHA-256-Digest: nMu4e/DHCIbu8rMlCdadTd39K2RLBVUPGY0tu5tewek=
+
+Name: lib/httpclient.jar
+SHA-256-Digest: qCzQ9/1WLk1uarPWYqJnHe2j95SjeGfXofpuMiFp4nU=
+

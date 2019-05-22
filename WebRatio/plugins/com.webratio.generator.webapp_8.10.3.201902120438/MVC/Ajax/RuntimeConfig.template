@@ -1,0 +1,93 @@
+#?delimiters [%, %], [%=, %]
+<c:if test="${not wrAjax and not webratio:isWindow(pageContext)}">
+	<script type="text/javascript">
+		<c:choose>
+			<c:when test="${wrBoxed}">
+				(wr._configs = (wr._configs || {}))["${wrClientAppName}"] = (function() {
+					var app = new wr.app.App("${wrClientAppName}");
+					app.configure({
+			</c:when>
+			<c:otherwise>
+				(function() { 
+					wr.getApp().mergeConfig({
+			</c:otherwise>
+		</c:choose>
+		[% if (getAjaxDebugLevel() != com.webratio.generator.helpers.webold.WebRuntimeHelper.AjaxDebugLevel.NONE) { %]
+			log: {
+				implementation: "wr.log.LogPlugin",
+				appenders: [
+					"wr.log.HtmlAppender"
+				],
+				categories: {
+					<c:choose>
+						<c:when test="${wrAjaxDebugLevel eq 'full'}">
+							"": wr.log.Level.DEBUG
+						</c:when>
+						<c:otherwise>
+							"": wr.log.Level.WARN,
+							"wr.logic.AjaxRequestActor._response": wr.log.Level.DEBUG,
+							"wr.ui.html.ElementViewer._code": wr.log.Level.DEBUG,
+							"wr.widgets": wr.log.Level.DEBUG
+						</c:otherwise>
+					</c:choose>
+				}
+			},
+		[% } %]
+		ui: {
+			implementation: "wr.ui.UIPlugin",
+			factories: {
+				"display": "wr.ui.DisplayControlFactory",
+				"window": "wr.ui.WindowControlFactory",
+				"default": "wr.ui.ViewerBasedControlFactory"
+			},
+			display: { 
+				factory: "display", 
+				viewer: "wr.ui.web.BrowserViewer",
+				views: {
+					"${wrCurrentWindowName}": {
+						factory: "window",
+						viewer: "${wrBoxed ? 'wr.ui.web.BoxViewer' : 'wr.ui.web.WindowViewer'}",
+						viewerConfig: { <c:if test="${wrBoxed}">boxSelector: "#wr-${wrClientAppName}"</c:if> },
+						views: {
+							"${wrCurrentWindowName}_page": {
+								viewer: "wr.ui.html.ContainerElementViewer",
+								viewerConfig: { containersFilter: ".wr-ajaxDiv" }
+							}
+						}
+					}
+				}
+			}
+		},
+		nav: {
+			implementation: "wr.nav.NavPlugin",
+			routers: [ {
+				name: "wr.nav.PropagationRouter",
+				priority: -50
+			}, {
+				name: "wr.nav.HttpWebRouter",
+				priority: -100
+			} ]
+		},
+		logic: {
+			implementation: "wr.logic.LogicPlugin"
+		},
+		oldajax: {
+			implementation: "wr.LegacyAjaxPlugin",
+				containersFilter: ".wr-ajaxDiv"
+			}
+		<c:choose>
+			<c:when test="${wrBoxed}">
+					}).chain(function() {
+						app.init();
+					}).chain(function() {
+						app.start();
+					});
+				});
+			</c:when>
+			<c:otherwise>
+					});
+				})();
+			</c:otherwise>
+		</c:choose>
+	</script>
+</c:if>

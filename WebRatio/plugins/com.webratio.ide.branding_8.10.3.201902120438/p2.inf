@@ -1,0 +1,8 @@
+requires.1.namespace=org.eclipse.equinox.p2.iu
+requires.1.name=com.webratio.ide.feature.group
+requires.1.range=[$version$, 8.11.0)
+requires.1.multiple=false
+ 
+  
+  
+ 

@@ -1,0 +1,11 @@
+#?delimiters <%,%>,<%=,%>
+<%setXMLOutput()%>
+<OutputParameters>
+  <OutputParameter name="jobInstanceId" label="Job Instance Identifier"/>
+  <OutputParameter name="jobInstanceGroup" label="Job Instance Group Name"/>
+  <OutputParameter name="jobInstanceFullId" label="Job Instance Full Identifier"/>
+  
+  <% for (par in component.selectNodes("JobInputParameter")) { %>
+    <OutputParameter name="<%=par["id"]%>" label="<%=par["name"]%>"/>
+  <% } %> 
+</OutputParameters>

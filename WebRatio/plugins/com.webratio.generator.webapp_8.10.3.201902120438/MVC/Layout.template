@@ -1,0 +1,169 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.commons.collections.SafeHashMap
+import com.webratio.generator.GenerationException
+import com.webratio.generator.OrderingScheduler
+import com.webratio.generator.TimeLogger
+
+def registerGenerationException(element, exception, reason, wr) {
+    def title = "Error generating project"
+    def hint = "Check the project model for errors or warnings"
+    def genExc = new GenerationException(title, reason, [hint], exception)
+    genExc.setTargetId(element["id"])
+    wr.generationExceptions.add(genExc)
+}
+
+//TimeLogger.startSubTasks()
+
+/*
+ * Generation group definitions
+ */
+
+def layoutGeneration = new OrderingScheduler("Layout generation")
+
+/* page layouts */
+def jspPageTemplatePath = wr.locateResourceFile("MVC/JSPPage.template")
+def ajaxJspPageTemplatePath = wr.locateResourceFile("MVC/Ajax/JSPPage.template")	
+layoutGeneration.addGroup("pages", { realPage ->
+	def pageModuleDef = realPage.selectSingleNode("ancestor::HybridModuleDefinition")
+	def possibleContexts
+	if (pageModuleDef && pageModuleDef["singleLayout"] != "true") {
+		possibleContexts = getPossibleElementContexts(realPage)
+	} else {
+		possibleContexts = [ null ]
+	}
+	
+	/* generate layouts for each actual page (may be 1:N in case of multi-layout modules) */
+	for (context in possibleContexts) {
+		def page = enterElementZone(realPage, context)
+		try {
+			if (page.attributeValue("_sel", "") != "t") {
+				continue
+			}
+			
+			def bindingKeys = new HashSet(binding.getVariables().keySet())	
+			def masterPage = (page["ignoreMasterContainer"] == "true") ? null : getEffectiveMasterContainer(page)
+			def _isAjaxPage = isAjaxGenericPage(page) || (masterPage && isAjaxGenericPage(masterPage))
+			def _isSelectiveRefreshPage = isSelectiveRefreshGenericPage(page) || (masterPage && isSelectiveRefreshGenericPage(masterPage))
+			if (_isAjaxPage) {
+				wr.index.ajaxGenericPages.add(page)
+			}
+			if (_isSelectiveRefreshPage) {
+				wr.index.selectiveRefreshGenericPages.add(page)
+			}
+			
+			/* materialize page contents */
+			if (page.isVirtual()) {
+				page.materialize()
+			}
+			if (masterPage && masterPage.isVirtual()) {
+				masterPage.materialize()
+			}
+			
+			/* collect page layout elements */	
+			def layoutComponents = []
+			def layoutAttributes = []
+			def layoutFields = []
+			def layoutEvents = []
+			def elements = page.selectNodes(".//*")
+			if (masterPage) {
+				elements.addAll(masterPage.selectNodes(".//*"))
+			}
+		    for (elem in elements) {
+				def qName = elem.qualifiedName
+				def parentQName = elem.parent.qualifiedName
+				if (qName == "layout:Component") {
+					layoutComponents.add(elem)
+				} else if (qName == "layout:Attribute") {
+					if (parentQName != "layout:Component") {
+						layoutAttributes.add(elem)
+					}
+				} else if (qName == "layout:Field") {
+					if (parentQName != "layout:Component") {
+						layoutFields.add(elem)
+					}
+				} else if (qName == "layout:Event") {
+					if (parentQName != "layout:Component") {
+						layoutEvents.add(elem)
+					}
+				}
+			}
+			
+			/* register depending autocomplete fields */
+			def autocompleteFields = []
+			if (_isAjaxPage) {
+				def dependingAutocompleteFields = autocompleteFields.findAll{it["ajaxAutocompleteDepending"] && it["ajaxAutocompleteDepending"] != ""}
+				def autocompleteMap = new SafeHashMap()
+				for (autocompleteField in dependingAutocompleteFields) {
+					def masterField = autocompleteField["ajaxAutocompleteDepending"]
+					if (autocompleteMap[masterField]) {
+						autocompleteMap[masterField].add(autocompleteField["id"])
+					} else {
+						def dependingFields = new HashSet()
+						dependingFields.add(autocompleteField["id"])
+						autocompleteMap[masterField] = dependingFields
+					}
+				}
+				wr.ajaxDependingAutocompleteFields = dependingAutocompleteFields.collect{it["id"]}
+				wr.ajaxDependingAutocompleteFieldsMap = autocompleteMap
+			}
+			
+			/* expand layout */
+			layoutComponents.each { expandLayoutComponent(it) }
+			layoutAttributes.each { expandLayoutAttribute(it) }
+			layoutFields.each { expandLayoutField(it) }
+			layoutEvents.each { expandLayoutEvent(it) }
+			
+			/* generate JSP files */
+			wr.ajaxGeneration = "false"
+			executeTemplate(jspPageTemplatePath, ["page": page])
+			wr.ajaxGeneration = "true"
+			if (_isSelectiveRefreshPage) { 
+				executeTemplate(ajaxJspPageTemplatePath, ["page": page])
+			}
+			
+			/* removes useless layout elements */
+			if (page.isVirtual()) {
+				page.dematerialize()
+			}
+			if (masterPage && masterPage.isVirtual()) {
+				masterPage.dematerialize()
+			}
+			
+			/* release memory */
+			wr.ajaxDependingAutocompleteFields = []
+			wr.ajaxDependingAutocompleteFieldsMap = new SafeHashMap()
+			wr.explorer.layoutModel().discardCache()
+			def newBindingKeys = new HashSet(binding.getVariables().keySet())
+			newBindingKeys.removeAll(bindingKeys)
+			newBindingKeys.each{binding.getVariables().remove(it)}
+			if (!isAjaxGenericPage(page)) {
+				wr.index.ajaxGenericPages.remove(page)
+			}
+			if (!isSelectiveRefreshGenericPage(page)) {
+				wr.index.selectiveRefreshGenericPages.remove(page)
+			}
+			
+			//TimeLogger.worked(page["id"] + getElementZoneImplicitContext())
+		} finally {
+			exitElementZone()
+		}
+	}
+})
+
+/*
+ * Actual generation sequence
+ */
+
+/* collects the pages to generate */
+def topPages = getAllTopPages().findAll{ it.attributeValue("_sel", "") == "t" }
+layoutGeneration.addElements("pages", topPages)
+
+eventSocketClient.sendTaskWorked(eventTaskName, 1)
+
+/* generate layouts for all pages */
+layoutGeneration.process(eventSocketClient, eventTaskName, 120)
+eventSocketClient.sendTaskDetails(eventTaskName, "")
+
+//TimeLogger.subTasksDone()
+%]

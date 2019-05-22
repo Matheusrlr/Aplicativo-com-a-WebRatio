@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<project name="WebRatio Generation Script" default="project.generate">
+
+	<fail unless="webratioDir" message="Missing script parameter 'webratioDir'" />
+	<fail unless="projectDir" message="Missing script parameter 'projectDir'" />
+	<fail unless="outputDir" message="Missing script parameter 'outputDir'" />
+
+	<import file="${webratioDir}/WebRatio/build/config/init.xml" />
+
+	<property name="backendURL" value="" />
+
+	<target name="project.generate">
+
+		<webratio.generate webratioDir="${webratioDir}" projectDir="${projectDir}" outputDir="${outputDir}" backendURL="${backendURL}" />
+
+	</target>
+
+</project>

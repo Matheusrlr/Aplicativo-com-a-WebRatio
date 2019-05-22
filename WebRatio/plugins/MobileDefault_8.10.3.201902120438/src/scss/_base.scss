@@ -1,0 +1,77 @@
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide:not(.ng-hide-animate) {
+  display: none !important;
+}
+
+[ng\:form] {
+  display: block;
+}
+
+.ng-animate-block-transitions {
+  transition: 0s all !important;
+  -webkit-transition: 0s all !important;
+}
+
+.ng-hide-add-active,
+.ng-hide-remove {
+  display: block!important;
+}
+
+input,
+select,
+textarea {
+  padding: 0; //reset
+}
+
+textarea {
+  @include border-radius(0);
+  @include flex(1, 0, 220px);
+  @include appearance(none);
+  margin: 0;
+  padding-right: 24px;
+  background-color: transparent;
+}
+
+.wr-attr-image {
+  > img {
+    max-width: 100%;
+  }
+  .wr-placeholder {
+    font-size: 24px;
+  }
+}
+
+.platform-ios.platform-cordova:not(.fullscreen) .scroll-content:not(.has-header) {
+  padding-top: 20px;
+  padding-top: env(safe-area-inset-top); /* iOS 11.2 */
+  padding-top: constant(safe-area-inset-top); /* iOS 11.0 */
+}
+.overflow-scroll {
+    overflow-y: auto;
+}
+
+/* Component Wait experience */
+
+.wr-view-updating {
+  position: relative;
+  z-index: 1;
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    min-height: 30px;
+    background: rgba(235, 235, 235, 0.6) url('../images/loader.gif') no-repeat center center;
+  }
+}
+
+.wr-safe-area {
+    padding-left: env(safe-area-inset-left); /* iOS 11.2 */
+    padding-right: env(safe-area-inset-right); /* iOS 11.2 */
+    margin-bottom: calc(env(safe-area-inset-bottom) - 4px); /* iOS 11.2 */
+    padding-left: constant(safe-area-inset-left); /* iOS 11.0 */
+    padding-right: constant(safe-area-inset-right); /* iOS 11.0 */
+    margin-bottom: calc(constant(safe-area-inset-bottom) - 4px); /* iOS 11.0 */
+}

@@ -1,0 +1,24 @@
+  <Element name="LayoutField" lowerName="layout field"
+		pluralLowerName="layout fields">
+		<Description>
+			A layout field
+			is a component field 
+			displayed by the component or simply placed in a &lt;a href="Cell"/&gt;.
+		</Description>
+		<ActionRef label="Add Property" />
+		<ActionRef label="Localize" />
+		<ActionRef label="Open in Browser" />
+		<ActionRef label="Help"/>
+		
+		<PropertyCategory name="Layout">
+			<PropertyRef label="Label" name="Title"/>
+			<PropertyRef label="Style" />
+			<PropertyRef label="Field Layout"/>
+			<PropertyRef label="Style Class"/>
+			<PropertyRef label="Component"/>
+		</PropertyCategory>
+		<PropertyCategory name="Condition">
+			<PropertyRef name="Page Visibility Condition" label="Field Visibility Cond."/>
+			<PropertyRef name="Page Visibility Condition" label="Field Disable Cond."/>
+		</PropertyCategory>
+	</Element>

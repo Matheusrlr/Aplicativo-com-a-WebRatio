@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Export-Package: javax.ws.rs,javax.ws.rs.client,javax.ws.rs.container,j
+ avax.ws.rs.core,javax.ws.rs.ext
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/javax.ws.rs-api.jar
+Bundle-Version: 2.0.1
+Eclipse-BuddyPolicy: registered
+Bundle-Name: WebRatio 3rd Party Library - JAX-RS
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.javax.ws.rs
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
+Name: lib/javax.ws.rs-apisrc.zip
+SHA-256-Digest: 5Rlb0Fn+W29G83a/UuK8IwsBejl17Fht7k+6yn7AIgY=
+
+Name: lib/javax.ws.rs-api.jar
+SHA-256-Digest: OGB9Ym8iiNj7wbH4piw2nmOAbZoxOsfLxfnWyU9LRm0=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: jouat0UDplcGfsjE50aQnUfJJX3PqbSsIO1bGJtT2WQ=
+
+Name: about_files/CDDL+GPL_1_1.txt
+SHA-256-Digest: rPs90Jccj5ZYwzJdY2o8rYOa8ik7b6TAC1AZB+iOvLg=
+

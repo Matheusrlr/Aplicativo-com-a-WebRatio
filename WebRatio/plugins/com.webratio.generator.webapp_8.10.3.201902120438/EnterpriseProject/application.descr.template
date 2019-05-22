@@ -1,0 +1,14 @@
+#?delimiters [%,%],[%=,%]
+[%setXMLOutput()%]
+<Application id="[%=wr.project["id"]%]" name="[%=projectName%]">
+	[%for(subPrj in wr.project.selectNodes("SubProject[@natureId='com.webratio.ide.WebModelNature']").findAll{!excludedProjects.contains(it["name"])}){%]
+    	<Model id="[%=subPrj["projectId"]%]">[%=subPrj["name"]%]</Model>
+	[%}%]
+	[%for(subPrj in wr.project.selectNodes("SubProject[@natureId='com.webratio.ide.ModuleNature']").findAll{!excludedProjects.contains(it["name"])}){%]
+	    <Model id="[%=subPrj["projectId"]%]">[%=subPrj["name"]%]</Model>
+	[%}%]
+	[%for(subPrj in wr.project.selectNodes("SubProject[@natureId='com.webratio.ide.wrprojectnature']").findAll{!excludedProjects.contains(it["name"])}){%]
+	    <Model id="[%=subPrj["projectId"]%]">[%=subPrj["name"]%]</Model>
+	[%}%]
+	<SessionTimeout>[%=org.apache.commons.lang.StringUtils.defaultIfEmpty(wr.project["sessionTimeout"], "30")%]</SessionTimeout>
+</Application>

@@ -1,0 +1,30 @@
+<Element name="StartSignalEvent" lowerName="start signal event"
+		pluralLowerName="">
+		<Description>
+			A &lt;a href="/Concepts/Elements/Process/Events/SignalEvents/StartSignalEvent"/&gt; is triggered when a signal arrives that has been broadcast from another Process. 
+		</Description>
+        
+        <ActionRef label="Add Lane" />
+        <ActionRef label="Add Sequence Flow" />
+        <ActionRef label="Add Property" />
+        <ActionRef label="Surround with Group" />
+        <ActionRef label="Move into Embedded Subprocess" />
+        <ActionRef label="Edit Process Parameters..." />
+        <Action label="Change Type to" >
+          Converts this event into another type of start event.
+        </Action>
+        <ActionRef label="Search References" />
+        <ActionRef label="Help" />
+
+    <PropertyCategory name="General">
+        <PropertyRef label="Id"/>
+        <PropertyRef label="Code"/>
+        <PropertyRef label="Name"/>
+        <PropertyRef label="Instance Name"/>
+        <PropertyRef label="Signal"/>
+        <!-- Out binding similar to Int.CatchingSignal (B4) -->
+	    <Property label="Output Binding">
+	    	The set of signal parameters bound to the available process parameters.  
+		</Property>
+    </PropertyCategory>
+</Element>

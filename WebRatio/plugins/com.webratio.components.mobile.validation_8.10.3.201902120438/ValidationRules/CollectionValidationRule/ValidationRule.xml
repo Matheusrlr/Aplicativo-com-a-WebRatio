@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ValidationRule type="singleProperty" idPrefix="clc" namePrefix="Collection " label="Collection"> 
+  <EnumProperty attributeName="predicate" defaultValue="in"> 
+    <EnumItem value="in" label="In"/>  
+    <EnumItem value="notIn" label="Not In"/>
+    <Description xml:space="preserve">The predicate defining whether the element value must
+be included or excluded from the list of values for the validation rule to succeed.</Description> 
+  </EnumProperty>  
+  <BooleanProperty attributeName="ignoreCase"> 
+    <Description xml:space="preserve">If checked, the validation is performed ignoring case sensitivity.</Description> 
+  </BooleanProperty>
+  <ListProperty elementName="Value" attributeName="value" label="Values"> 
+    <Description xml:space="preserve">The set of statically defined values.</Description>  
+    <EnabledCondition xml:space="preserve">return (element["dataBinding"] == "")</EnabledCondition> 
+  </ListProperty>  
+  <DomainClassProperty attributeName="dataBinding" includeDerived="true" removable="true"> 
+    <Description xml:space="preserve">The class from which the matching values are retrieved.</Description>   
+  </DomainClassProperty>    
+  <AttributeProperty attributeName="attribute" classIdExpr="@dataBinding" includeDerived="true">     
+    <EnabledCondition>return (element["dataBinding"] != "")</EnabledCondition>  
+    <Description xml:space="preserve">The attribute whose values have to be collected.</Description> 
+  </AttributeProperty>  
+  <ConditionalExpression elementName="ConditionalExpression" classIdExpr="../../@dataBinding" defaultPolicy="true"> 
+    <Description xml:space="preserve">The set of selection criteria that retrieves the 
+instances of the class of the validation rule.</Description> 
+  </ConditionalExpression>
+  
+  <InputDescription name="Values" xml:space="preserve">The input values.</InputDescription>  
+  <InputDescription name="Condition-Name" xml:space="preserve">The parameter associated to one of the Conditional Expressions
+of the validation rule.</InputDescription>
+    
+  <Description xml:space="preserve">A Collection validation rule matches the value of an 
+element with a collection of values, either statically
+defined at modeling-time or dynamically provided as
+an input parameter or dynamically retrieved from a 
+class.&lt;br/&gt;
+The validation error message can be composed using the following placeholders:&lt;br/&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;${propertyValue}&lt;/b&gt;: the element value&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${propertyName}&lt;/b&gt;: the element name&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${objectName}&lt;/b&gt;: the parent element name&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${values}&lt;/b&gt;: the collection values&lt;/li&gt;
+&lt;/ul&gt;</Description>  
+   
+</ValidationRule>

@@ -1,0 +1,52 @@
+Manifest-Version: 1.0
+Export-Package: com.codahale.metrics,com.codahale.metrics.health,com.c
+ odahale.metrics.health.jvm,com.codahale.metrics.json,com.codahale.met
+ rics.jvm,com.codahale.metrics.servlets
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/metrics-core.jar,lib/metrics-healthchecks.jar,li
+ b/metrics-servlets.jar,lib/metrics-jvm.jar,lib/metrics-json.jar
+Bundle-Version: 3.1.2
+Bundle-Name: WebRatio 3rd Party Library - Metrics
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.metrics
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
+Name: lib/metrics-healthcheckssrc.zip
+SHA-256-Digest: njffuoTVXAlZDLMyQ9FwTSjT4tliujM2mADSWzy1Fw8=
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: lib/metrics-core.jar
+SHA-256-Digest: JFuipmqbxxDOTbFHERJud7y05tlu9+YiZZKA88kMu1w=
+
+Name: lib/metrics-servlets.jar
+SHA-256-Digest: 5KZwmEL7eVS9O/ZFhlzghp49wzMpOfh19pK/haW9WEQ=
+
+Name: lib/metrics-jvm.jar
+SHA-256-Digest: A1DdEj0goQkIWKRO8oCczPttSfzzG8Y2obSqXPPnpQ0=
+
+Name: lib/metrics-servletssrc.zip
+SHA-256-Digest: J0vONNDjv5emrp2stz/QzZvVWLIR2YK/QKIPryDMMM4=
+
+Name: lib/metrics-healthchecks.jar
+SHA-256-Digest: 0K3yEGhoFYrHXx3K5KVxRGD4PWWvh1TyUN75GBHmJic=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: ZjauJ4BOAxEA8L6EJZQzspqmClVSptmxhh5EJeb4jrI=
+
+Name: lib/metrics-jvmsrc.zip
+SHA-256-Digest: L9pmcpi2KAymEYvnj9EJ/SNvQB+xEW+XU/wP9OacstY=
+
+Name: lib/metrics-jsonsrc.zip
+SHA-256-Digest: ON+7RvtguCY66LvFXzEhWTSUzefoSenhSSLkBmxMh6s=
+
+Name: lib/metrics-json.jar
+SHA-256-Digest: /O36AEDkQSrEOVBJpSxevkyn1qVemSB/P1COwiEIy50=
+
+Name: lib/metrics-coresrc.zip
+SHA-256-Digest: e2jCpDK9Uqmt3rMtFlbEm7S8tOsWwUPrC316+ROYaSQ=
+

@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Export-Package: javax.annotation,javax.annotation.security,javax.annot
+ ation.sql
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/javax.annotation-api.jar
+Bundle-Version: 1.2.0
+Bundle-Name: WebRatio 3rd Party Library - Java Annotation API
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.javax.annotation
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
+Name: lib/javax.annotation-apisrc.zip
+SHA-256-Digest: i9CDM6wsGV4iTMQGOnL0qrPJgM9en7aUEw+tQWiWidA=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: lib/javax.annotation-api.jar
+SHA-256-Digest: WQmzlso6K+ENDuoyx073jYFuG06tId4deN4fiQ0DPgQ=
+
+Name: about.html
+SHA-256-Digest: mcJFtZ7Ji5FToUKIzDagSwWY7Cu83P1fwWuyKY3VFNQ=
+
+Name: about_files/CDDL+GPL_1_1.txt
+SHA-256-Digest: rPs90Jccj5ZYwzJdY2o8rYOa8ik7b6TAC1AZB+iOvLg=
+

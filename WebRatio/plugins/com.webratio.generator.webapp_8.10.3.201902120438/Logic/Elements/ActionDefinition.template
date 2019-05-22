@@ -1,0 +1,56 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+
+def permissionElement = (actionDef["protected"] == "true" ? actionDef["id"] : null)
+
+def inputPortDef = null
+def successPortDefs = []
+def errorPortDefs = []
+
+for (portDef in actionDef.elements()) {
+	if (portDef.name == "InputPortDefinition") {
+		inputPortDef = portDef
+	} else if (portDef.name == "SuccessPortDefinition") {
+		successPortDefs.add(portDef)
+	} else if (portDef.name == "ErrorPortDefinition") {
+		errorPortDefs.add(portDef)
+	}
+}
+%]
+<Descriptor service="com.webratio.rtx.actions.DefaultActionService">
+	<CheckPermission>[%= permissionElement != null %]</CheckPermission>
+	[% if (permissionElement) { %]
+		<PermissionElement>[%= permissionElement %]</PermissionElement>
+	[% } %]
+	<InputPort name="[%= inputPortDef["name"] %]" id="[%= inputPortDef["id"] %]">
+	[% for (input in inputPortDef.selectNodes("PortDefinitionParameter")) { %]
+		<Parameter id="[%= input["id"] %]" name="[%= input["name"] %]"/>
+	[% } %]
+	</InputPort>
+	[% for (portDef in successPortDefs) { %]
+		<OKPort id="[%= portDef["id"] %]" name="[%= portDef["name"] %]"
+			[% if (portDef["id"] == actionDef["defaultSuccessPortDefinition"]) { %]
+				default="true"
+			[% } %]
+		>
+			[% for (output in portDef.selectNodes("PortDefinitionParameter") ) {%]
+				<Parameter id="[%= output["id"] %]" name="[%= output["name"] %]"/>
+			[% } %]
+		</OKPort>
+	[% } %]
+	[% for (portDef in errorPortDefs) { %]
+		<KOPort id="[%= portDef["id"] %]" name="[%= portDef["name"] %]"
+			[% if (portDef["id"] == actionDef["defaultErrorPortDefinition"]) { %]
+				default="true"
+			[% } %]
+		>
+			[% for (output in portDef.selectNodes("PortDefinitionParameter")) { %]
+				<Parameter id="[%=output["id"]%]" name="[%=output["name"]%]"/>
+			[% } %]
+		</KOPort>
+	[% } %]
+	[% if (actionDef["transaction"] == "true") { %]
+		<Transaction>true</Transaction>
+	[% } %]
+</Descriptor>

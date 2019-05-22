@@ -1,0 +1,67 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Width" name="width" type="enum" default="full" values="full|inset|card">
+Defines the width of the component inside their container.
+Allowed values are:
+- full: use the full width available
+- inset: add a margin
+- card: add a margin and a shadow
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Content Type" name="contentType" values="text/plain|text/html" type="enum" default="text/plain">
+Defines the type of content of the message to escape it, if necessary.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Events Style" name="events-style" type="enum" default="none" values="none|button-bar|tabs">
+Defines the style of the events.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Use Empty Message" name="use-empty-component-message" type="boolean" default="false">
+Defines the usage of a message for empty components.
+Allowed values are: true or false.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Empty Message Key" name="empty-component-message" type="string" default="emptyComponentMessage">
+Defines the key of the message to use if the component is empty.
+Default value: emptyComponentMessage
+</wr:LayoutParameter>
+[%
+setHTMLOutput()
+def listClass = (params["width"] != "full") ? params["width"] : ""
+listClass = (listClass == "inset") ? "list-" + listClass : listClass
+
+def contentType = params["contentType"]
+def eventTabs = params["events-style"] == "tabs"
+def hasEvents = (component.selectSingleNode("layout:Event") != null)
+
+def useEmptyComponentMessage = params["use-empty-component-message"] == "true"
+def emptyComponentMessage = params["empty-component-message"]
+%]
+<div class="<wr:StyleClass/> wr-comp-Message">
+	<div ng-if="view.messages && view.messages.length" class="list [%= listClass %]">
+		<wr:Frame>
+			<div 
+				ng-repeat="msg in view.messages track by $index"
+				class="item item-text-wrap" 
+				[% if (contentType == "text/html") { %]ng-bind-html="msg" 
+				[% } else { %]ng-bind="msg"[% } %]
+			></div>
+			
+			[% if (hasEvents) { %]
+				<div class="[%= (eventTabs) ? "item " : "" %][%= (params["events-style"] != "none") ? params["events-style"] : "item-buttons" %]">    
+					<wr:Iterate var="event" context="component" select="layout:Event">
+						[% if (eventTabs && !getLayout(event, LayoutType.EVENT).path.endsWith("Tab")) {
+								throwGenerationException("Use Tab event template for ${event['name']} (${event['id']})")
+							}
+						%]
+						<wr:Event/>
+					</wr:Iterate>
+				</div>
+			[% } %]
+		</wr:Frame>
+	</div>
+	[% if (useEmptyComponentMessage) { %]
+		<div ng-if="!view.messages || !view.messages.length" class="wr-empty-message list [%= listClass %]">
+			<wr:Frame>
+				<div class="item item-text-wrap">
+					{{ '[%= emptyComponentMessage %]' | wrLocalize }}
+				</div>
+			</wr:Frame>
+		</div>
+	[% } %]
+</div>

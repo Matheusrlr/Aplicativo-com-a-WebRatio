@@ -1,0 +1,33 @@
+#?delimiters [%, %], [%=, %]
+[% if (component["ajaxTooltipEnabled"] == "true") { %]
+	[%
+		/* Compute the types of event to respond to */
+		final def EVENTS = [
+			"": [open: "mouseover", close: "mouseleave"],
+			"click": [open: "click", close: ""],
+			"doubleClick": [open: "dblclick", close: ""]
+		]
+		def events = EVENTS[component["ajaxTooltipEventType"]] ?: EVENTS[""]
+		
+		/* Compute width and height */
+		def autoResizing = (component["ajaxTooltipAutoResizing"] == "true")
+		def width = autoResizing ? "\"auto\"" : (component["ajaxTooltipWidth"] ?: "200")
+		def height = autoResizing ? "\"auto\"" : (component["ajaxTooltipHeight"] ?: "200")
+		
+		/* Compute class name */
+		def className = component["ajaxTooltipClassName"] ?: null
+	%]
+	</div>
+	<wr:RequireResource ref="jquery, wr-ui-widgets">
+		<script type="text/javascript">
+			jQuery("#<wr:AjaxUniqueIdentifier context="component"/>_tooltipArea").wrTooltip({
+				[% if (className) { %]tooltipClass: "[%= className %]",[% } %]
+				wrEvents: [
+					["[%= events.open %]", "[%= events.close %]"]
+				],
+				wrWidth: [%= width %],
+				wrHeight: [%= height %]
+			});
+		</script>
+	</wr:RequireResource>
+[% } %]

@@ -1,0 +1,186 @@
+#?delimiters <%, %>, <%=, %>
+<%
+  import org.apache.commons.lang.StringUtils
+  import org.apache.commons.lang.math.NumberUtils
+  import com.webratio.generator.io.IOHelper
+  
+  setXMLOutput()
+  def dbTypeName = StringUtils.defaultIfEmpty(db["runtimeType"], db["type"])
+  def dbType = wr.explorer.databaseTypes().getConfiguration(dbTypeName)
+  def connectionProvider = db["connectionProvider"]
+  def isolation = db["isolation"]
+  if(db["duration"] == "volatile"){
+     connectionProvider = "com.webratio.data.hibernate.vdb.VolatileConnectionProvider"
+  } else if(connectionProvider == "" && db["jndiName"] == ""){
+     connectionProvider = "com.webratio.data.hibernate.C3P0ConnectionProvider"
+  }
+  def openQuote = dbType?.valueOf("@openQuote")
+  def closeQuote = dbType?.valueOf("@closeQuote")
+  def blobReader = dbType?.valueOf("@blobReaderClass")
+  def blobPersister = dbType?.valueOf("@blobPersisterClass")
+  def clobPersister = dbType?.valueOf("@clobPersisterClass")
+  def formatNumberFunction = dbType?.valueOf("@formatNumberFunction")
+  def formatDateFunction = dbType?.valueOf("@formatDateFunction")
+  def formatTimeFunction = dbType?.valueOf("@formatTimeFunction")
+  def formatTimestampFunction = dbType?.valueOf("@formatTimestampFunction")
+  def intervalToSecondsFunction = dbType?.valueOf("@intervalToSecondsFunction")
+  def extractTimeFunction = dbType?.valueOf("@extractTimeFunction")
+  def inClauseMaxCardinality = dbType?.valueOf("@inClauseMaxCardinality")
+  def dialectClass = StringUtils.defaultIfEmpty(db.valueOf("Property[@name = 'hibernate.dialect']/@value"), dbType?.valueOf("@sqlDialectClass"))
+  def idleConnectionTestPeriodProperty = db.selectSingleNode("Property[@name='hibernate.c3p0.idle_test_period' or @name='hibernate.c3p0.idleConnectionTestPeriod']")
+  def idleConnectionTestPeriod = idleConnectionTestPeriodProperty ? null : "7200"
+  
+  def getValidationQuery(db){
+     if(db["validationQuery"] != ""){
+        return db["validationQuery"]
+     }
+     def entities = db.parent.selectNodes(".//Class[@db:database = '" + db["id"] + "']")
+     for(ent in entities){
+       if(!isDerived(ent)){
+         def qTable = StringUtils.defaultString(getSchema(ent))
+         if(!StringUtils.isBlank(qTable)){
+           qTable = openQuote + qTable + closeQuote + "."
+         }
+         qTable += openQuote + ent.valueOf("@db:table") + closeQuote
+         return "select count(*) from " + qTable
+       }
+     }
+  }
+ 
+ def copyDerby(db){
+   def derbyHome = System.getProperty("derby.system.home")
+   def dbUrl = StringUtils.defaultIfEmpty(db["runtimeURL"], db["url"])
+   if(dbUrl.lastIndexOf("/")!=-1){
+   	  def dbName = ""
+   	  if(dbUrl.contains(";")){
+   	  	 dbName = dbUrl.substring(dbUrl.lastIndexOf("/"),dbUrl.lastIndexOf(";"))
+   	  }else{
+         dbName = dbUrl.substring(dbUrl.lastIndexOf("/"))
+      }
+      if(dbName != ""){
+         def sourceDerbyDbFolder = new File(derbyHome + "/" + dbName)
+         if(sourceDerbyDbFolder.exists()){ 
+           def derbyFolderPath = wr.outputPath + "/WEB-INF/derby"
+           IOHelper.copyDirectory(sourceDerbyDbFolder, new File(derbyFolderPath + "/" + dbName),IOHelper.CVS_AWARE_FILTER, IOHelper.THUMBS_FILE_FILTER)
+         }
+      }
+   }
+}
+   
+  
+%><?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+        
+<hibernate-configuration>
+
+  <session-factory>
+    <property name="webratio.database.id"><%=db["id"]%></property>
+    <%if(db["duration"] == "volatile"){%>
+    	<property name="webratio.database.duration">volatile</property>
+    	<property name="webratio.database.scope"><%=db["scope"]%></property>
+    <%}%>
+    <!-- Database connection settings -->
+    <% if (db["jndiName"] == "" ){ %>
+      <property name="connection.driver_class"><%=dbType?.valueOf("@driverClass")%></property>
+      <property name="connection.url"><%=StringUtils.defaultIfEmpty(db["runtimeURL"], db["url"])%></property>
+      <property name="connection.username"><%=StringUtils.defaultIfEmpty(db["runtimeUsername"], db["username"])%></property>
+      <property name="connection.password"><%=StringUtils.defaultIfEmpty(db["runtimePassword"], db["password"])%></property>
+      <property name="webratio.connection.cryptedPassword"><%=!StringUtils.isBlank(db["runtimePassword"]) ? db["runtimeCryptedPassword"] : db["cryptedPassword"]%></property>
+      <%if(db["duration"] == "volatile"){%>
+        <%if(wr.project.selectSingleNode("Property[@name='" + db["id"] + ".MULTI_THREADED' and @value='true']") != null){%>
+          <property name="connection.MULTI_THREADED">true</property>
+          <property name="connection.MVCC">false</property>
+        <%} else if(wr.project.selectSingleNode("Property[@name='" + db["id"] + ".useMVCC' and @value='false']") == null){%>
+          <property name="connection.MVCC">true</property>
+        <%}%>            
+	  <%}%>
+      <% if (isolation != "") { %>
+   	     <property name="connection.isolation"><%= isolation%></property>
+      <% } %>
+      <!-- JDBC connection pool (use the built-in) -->
+      <property name="c3p0.max_size"><%= NumberUtils.toInt(db["connectionCount"], 15)%></property>
+      <% def initialPoolSizeProp = wr.project.selectSingleNode("Property[@name='" + db["id"] + ".initialPoolSize']") %>
+      <%if(initialPoolSizeProp != null){%>
+        <property name="c3p0.min_size"><%=initialPoolSizeProp["value"]%></property>
+      <%}%>
+      <% if(db["validateConnection"] == "true"){ %>
+        <property name="c3p0.idle_test_period">60</property>
+        <property name="c3p0.preferredTestQuery"><%=getValidationQuery(db)%></property> 
+      <% } %>
+      <%if(idleConnectionTestPeriod){%>
+         <property name="c3p0.idle_test_period"><%= idleConnectionTestPeriod %></property>
+      <%}%>
+    <% } else { %>
+      <property name="connection.datasource"><%= db["jndiName"]%></property>
+    <% } %>
+    
+    <% if(connectionProvider != '') { %>
+      <property name="connection.provider_class"><%= connectionProvider%></property>
+    <% } %>
+    <% if(blobReader != "") { %>
+       <property name="webratio.lob.blobReader"><%= blobReader%></property>
+    <% } %>
+    <% if(blobPersister != "") { %>
+       <property name="webratio.lob.blobPersister"><%= blobPersister%></property>
+    <% } %>
+    <% if(clobPersister != "") { %>
+       <property name="webratio.lob.clobPersister"><%= clobPersister%></property>
+    <% } %>
+    <% if (formatNumberFunction != null && formatNumberFunction != "") { %>
+      <property name="webratio.format_number"><%= formatNumberFunction %></property>
+    <% } %>
+    <% if (formatDateFunction != null && formatDateFunction != "") { %>
+      <property name="webratio.format_date"><%= formatDateFunction %></property>
+    <% } %>
+    <% if (formatTimeFunction != null && formatTimeFunction != "") { %>
+      <property name="webratio.format_time"><%= formatTimeFunction %></property>
+    <% } %>
+    <% if (formatTimestampFunction != null && formatTimestampFunction != "") { %>
+      <property name="webratio.format_timestamp"><%= formatTimestampFunction %></property>
+    <% } %>
+    <% if (intervalToSecondsFunction != null && intervalToSecondsFunction != "") { %>
+      <property name="webratio.interval_to_seconds"><%= intervalToSecondsFunction %></property>
+    <% } %>
+    <% if (extractTimeFunction != null && extractTimeFunction != "") { %>
+      <property name="webratio.extract_time"><%= extractTimeFunction %></property>
+    <% } %>
+    <% if (inClauseMaxCardinality != null && inClauseMaxCardinality != "" && inClauseMaxCardinality != "-1") { %>
+      <property name="webratio.inClauseMaxCardinality"><%= inClauseMaxCardinality %></property>
+    <% } %>
+   
+        
+    <!-- SQL dialect -->
+    <property name="dialect"><%=dialectClass%></property>
+
+    <!-- Enable Hibernate's automatic session context management -->
+    <property name="current_session_context_class">thread</property>
+
+    <!-- Disable the second-level cache  -->
+    <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+
+    <!-- Echo all executed SQL to stdout -->
+    <property name="show_sql"><%= db.valueOf("@showSQL") == "true"%></property>
+    <property name="format_sql">true</property>
+
+  <% for (prop in db.selectNodes("Property[starts-with(@name, \'hibernate.\')]").findAll{it["name"] != "hibernate.dialect"}) { %>
+    <property name="<%=prop.valueOf("@name").substring(10)%>"><%=prop.valueOf("@value")%></property>
+  <% } %>
+
+  <% if (StringUtils.defaultIfEmpty(db["runtimeURL"], db["url"]).startsWith("jdbc:derby://")) { %>
+    	<property name="derby.system.home"><%=derbySystemHome%></property>
+  <%	if(cloudDeploy){
+  			copyDerby(db)
+  		} 
+  	}%>
+
+  <% for (domainClass in db.selectNodes("..//Class[string(@duration) != 'volatile'][@db:database = \'" + db.valueOf("@id") + "\']")) { %>
+    <% if (isValidMapping(domainClass)){ %>
+      <mapping resource="<%=getClassInfo(domainClass).name.replaceAll("\\.", "/")%>.hbm.xml"/>
+    <% } %>
+  <% } %>        
+  
+  </session-factory>
+
+</hibernate-configuration>

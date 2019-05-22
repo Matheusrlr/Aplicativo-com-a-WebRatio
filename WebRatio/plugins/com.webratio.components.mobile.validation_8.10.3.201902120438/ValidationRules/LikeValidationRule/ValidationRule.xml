@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ValidationRule type="singleProperty" idPrefix="like" namePrefix="Like " label="Like"> 
+  <EnumProperty attributeName="predicate" defaultValue="contains"> 
+    <EnumItem value="beginsWith" label="Begins With"/>  
+    <EnumItem value="contains" label="Contains"/>  
+    <EnumItem value="endsWith" label="Ends With"/>  
+    <EnumItem value="notBeginsWith" label="Not Begins With"/>  
+    <EnumItem value="notContains" label="Not Contains"/>
+    <EnumItem value="notEndsWith" label="Not Ends With"/>
+    <Description xml:space="preserve">The comparison operator.</Description>
+  </EnumProperty>  
+  <BooleanProperty attributeName="ignoreCase">
+    <Description xml:space="preserve">If checked, the validation is performed ignoring case sensitivity.</Description>
+  </BooleanProperty>  
+  <CompanionProperty attributeName="valueField">
+    <Description xml:space="preserve">The element to compare.</Description>
+  </CompanionProperty>  
+  <StringProperty attributeName="value"> 
+    <EnabledCondition xml:space="preserve">element["valueField"] == ""</EnabledCondition>  
+    <Description xml:space="preserve">The value to compare.</Description>
+  </StringProperty>  
+  <Description xml:space="preserve">The Like validation rule allows to perform a
+SQL-like comparison of an element with another element 
+or with a specific value.&lt;br/&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;${properyValue}&lt;/b&gt;: the element value&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${propertyName}&lt;/b&gt;: the element name&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${objectName}&lt;/b&gt;: the parent element name&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${value}&lt;/b&gt;: the comparison value&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${otherPropertyName}&lt;/b&gt;: the comparison element name&lt;/li&gt;
+&lt;/ul&gt;</Description>
+</ValidationRule>

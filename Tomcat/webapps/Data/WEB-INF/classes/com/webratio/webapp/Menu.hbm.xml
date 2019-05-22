@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping auto-import="true" default-cascade="none" default-access="property" default-lazy="true">
+  <class name="com.webratio.webapp.Menu" table="`menu`" dynamic-update="true" dynamic-insert="true" mutable="true" polymorphism="implicit" select-before-update="false" optimistic-lock="version">
+    <id name="oid" column="`oid`" type="java.lang.Integer">
+      <generator class="com.webratio.hibernate.id.MaxPlusOneIncrementGenerator"/>
+    </id>
+    <property name="createdAt" column="`createdat`" type="java.sql.Timestamp" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
+    <property name="updatedAt" column="`updatedat`" type="java.sql.Timestamp" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
+    <set name="menuToFeedback" inverse="true" sort="unsorted" mutable="true" optimistic-lock="true" embed-xml="true">
+      <key on-delete="noaction">
+        <column name="`menu_oid`"/>
+      </key>
+      <one-to-many class="com.webratio.webapp.Feedback" not-found="exception" embed-xml="true"/>
+    </set>
+  </class>
+  <!-- mapping for relationship 'MenuToFeedback[role6]' -->
+  <class entity-name="com.webratio.webapp.Rel_Menu_to_menuToFeedback" table="`feedback`" dynamic-update="true" dynamic-insert="true" mutable="true" polymorphism="implicit" select-before-update="false" optimistic-lock="version">
+    <id name="target_oid" column="`oid`" type="java.lang.Integer"/>
+    <property name="source_oid" column="`menu_oid`" type="java.lang.Integer" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
+  </class>
+</hibernate-mapping>

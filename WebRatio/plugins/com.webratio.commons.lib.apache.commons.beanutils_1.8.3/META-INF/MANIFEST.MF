@@ -1,0 +1,29 @@
+Manifest-Version: 1.0
+Export-Package: org.apache.commons.beanutils,org.apache.commons.beanut
+ ils.converters,org.apache.commons.beanutils.expression,org.apache.com
+ mons.beanutils.locale,org.apache.commons.beanutils.locale.converters,
+ org.apache.commons.collections
+Require-Bundle: com.webratio.commons.lib.apache.commons.logging
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/commons-beanutils-core.jar
+Bundle-Version: 1.8.3
+Bundle-Name: WebRatio 3rd Party Library - Apache Commons BeanUtils
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.apache.commons.beanutils
+Bundle-RequiredExecutionEnvironment: J2SE-1.4
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: lib/commons-beanutils-core.jar
+SHA-256-Digest: zFvX0t+xvHOVA0pViJj3KYcZEemvmgUUa9KuiEK59lA=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: fI7qTkT6xusUrCt4P67zVjMEScsixgptKxCw99gJbA4=
+
+Name: lib/commons-beanutils-coresrc.zip
+SHA-256-Digest: GnffoeZnd4XFH4V7qCB/IARRY36NlVUSHeiH3Mkqaqg=
+

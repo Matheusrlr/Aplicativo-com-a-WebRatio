@@ -1,0 +1,10 @@
+#?delimiters [%, %], [%=, %]
+[%
+setJSONOutput()
+
+def userDclass = getById("MUser")
+%]
+{
+	"service": "wrm.comp.RegisterService",
+	"backendAvailable": [%= (userDclass["serverClass"] as boolean) %]
+}

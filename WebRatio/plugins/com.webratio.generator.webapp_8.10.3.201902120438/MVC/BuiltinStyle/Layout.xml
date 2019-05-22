@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Layout>
+  <Resources alwaysRequired="jsp-jstl-core jsp-jstl-format jsp-jstl-functions spring-tags spring-form-tags wr-taglib wr-utils-supportscripts">
+    
+    <!-- Tag libraries -->
+    <Resource name="jsp-jstl-core" type="jsptaglib">
+      <TextContent xml:space="preserve">&lt;%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %&gt;</TextContent>
+    </Resource>
+    <Resource name="jsp-jstl-format" type="jsptaglib">
+      <TextContent xml:space="preserve">&lt;%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %&gt;</TextContent>
+    </Resource>
+    <Resource name="jsp-jstl-functions" type="jsptaglib">
+      <TextContent xml:space="preserve">&lt;%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %&gt;</TextContent>
+    </Resource>
+    <Resource name="spring-tags" type="jsptaglib">
+      <TextContent xml:space="preserve">&lt;%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %&gt;</TextContent>
+    </Resource>
+    <Resource name="spring-form-tags" type="jsptaglib">
+      <TextContent xml:space="preserve">&lt;%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %&gt;</TextContent>
+    </Resource>
+    <Resource name="wr-taglib" type="jsptaglib">
+      <TextContent xml:space="preserve">&lt;%@ taglib prefix="webratio" uri="http://www.webratio.com/2006/TagLib/JSP20" %&gt;</TextContent>
+    </Resource>
+    <Resource name="wr-taglib-xls" type="jsptaglib">
+      <TextContent xml:space="preserve">&lt;%@ taglib prefix="xls" uri="http://www.webratio.com/2006/TagLib/XLS/JSP20" %&gt;</TextContent>
+    </Resource>
+    <Resource name="wr-taglib-report" type="jsptaglib">
+      <TextContent xml:space="preserve">&lt;%@ taglib prefix="report" uri="http://www.webratio.com/2006/TagLib/Report/JSP20" %&gt;</TextContent>
+    </Resource>
+    
+    <!-- Grid System -->
+    <Resource name="wr-960gs-12" type="css" path="builtin/960_Fluid_Nestable_12.css"/>
+    <Resource name="wr-960gs-16" type="css" path="builtin/960_Fluid_Nestable_16.css"/>
+    <Resource name="wr-960gs-24" type="css" path="builtin/960_Fluid_Nestable_24.css"/>
+    <Resource name="wr-ui-gridsystem" type="css" path="builtin/grid_elements.css"/>
+    
+    <Resource name="wr-gs-responsive-12" type="css" path="builtin/grid_responsive_12.css"/>
+    <Resource name="wr-gs-responsive-16" type="css" path="builtin/grid_responsive_16.css"/>
+    <Resource name="wr-gs-responsive-24" type="css" path="builtin/grid_responsive_24.css"/>
+    <Resource name="wr-ui-gridresponsive" type="css" path="builtin/grid_responsive.css"/>
+    
+    <!-- jQuery -->
+    <Resource name="jquery" version="1.12.4" type="javascript" path="WRResources/ajax/jquery/jquery.min.js"/>
+    <Resource name="jquery-ui" version="1.9.2" type="javascript" path="WRResources/ajax/jquery-ui/jquery-ui.min.js" requires="jquery:1.6 jquery-ui-style:1.9.2"/>
+    <Resource name="jquery-ui-style" version="1.9.2" type="css" path="WRResources/ajax/jquery-ui/themes/smoothness/jquery-ui.min.css"/>
+    
+    <!-- Client Runtime and UI widgets -->
+    <Resource name="wr-runtime" version="8.10.3" type="javascript" path="WRResources/ajax/webratio/" requires="jquery:1.9.0 jquery-ui:1.8 wr-ui-style:8.10.3">
+	  <RuntimeContent xml:space="preserve">def wrAjaxDebugLevel = pageContext.getAttribute("wrAjaxDebugLevel")
+def url = content + ("full".equals(wrAjaxDebugLevel) ? "wr.debug.js" : "wr.js")
+if (!wrBoxed) {
+    url += "?createDocumentApp=true"
+}
+return url</RuntimeContent>
+    </Resource>
+    <Resource name="wr-ui-widgets" version="8.10.3" type="javascript" path="WRResources/ajax/webratio/widgets.js" requires="jquery jquery-ui:1.9.2 wr-ui-style"/>
+    <Resource name="wr-ui-style" version="8.10.3" type="css" path="WRResources/ajax/jquery-ui/themes/webratio/style.css"/>
+    
+    <!-- Calendar Utils -->
+  	<Resource name="wr-calendar-utils" version="7.2.5" type="javascript" path="WRResources/ajax/webratio/calendar-utils.js" requires="jquery"/>
+  	
+    <!-- Datepicker -->
+    <Resource name="jquery-ui-datepicker-lang" version="1.9.2" type="javascript" path="WRResources/ajax/jquery-ui/i18n/" requires="jquery-ui:1.9.2">
+	  <RuntimeContent xml:space="preserve">def language = locale?.language ?: "en"
+return content + "jquery.ui.datepicker-${language}.js"</RuntimeContent>
+    </Resource>
+    
+    <!-- Timepicker -->
+    <Resource name="richardson-timepicker" version="1.4.5" type="javascript" path="WRResources/timepicker/jquery-ui-timepicker-addon.js" requires="richardson-timepicker-style:1.4.5 jquery-ui:1.9.2"/>
+    <Resource name="richardson-timepicker-lang" version="1.4.5" type="javascript" path="WRResources/timepicker/i18n/" requires="richardson-timepicker:1.4.5">
+	  <RuntimeContent xml:space="preserve">def language = locale?.language ?: "en"
+return content + "jquery-ui-timepicker-${language}.js"</RuntimeContent>
+    </Resource>
+    <Resource name="richardson-timepicker-style" version="1.4.5" type="css" path="WRResources/timepicker/jquery-ui-timepicker-addon.css"/>
+    
+    <!-- CKEditor -->
+    <Resource name="cksource-ckeditor" version="4.3" type="javascript" path="WRResources/CKEditor/ckeditor.js">
+	  <RuntimeContent xml:space="preserve">return wrBaseURI + content</RuntimeContent>
+    </Resource>
+    
+  	<!-- Browser Integration -->
+  	<Resource name="wr-browsercontrol-style" type="css" path="WRResources/browsercontrol.css"/>
+  	
+  	<!-- Tools -->
+  	<Resource name="wr-utils-supportscripts" version="8.10.3" type="javascript" path="WRResources/script.js" requires="jquery"/>
+    
+  </Resources>
+</Layout>

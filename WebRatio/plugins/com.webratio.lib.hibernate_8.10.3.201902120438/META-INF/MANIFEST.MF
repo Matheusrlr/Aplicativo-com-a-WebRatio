@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.9.2
+Bundle-SymbolicName: com.webratio.lib.hibernate
+Export-Package: com.webratio.hibernate.dialect,com.webratio.hibernate.
+ function,com.webratio.hibernate.id,com.webratio.hibernate.persisters
+Bundle-Name: WebRatio 3rd Party Library - Hibernate
+Bundle-Version: 8.10.3.201902120438
+Bundle-ClassPath: com.webratio.lib.hibernate.jar
+Require-Bundle: com.webratio.commons.lib.apache.log4j,com.webratio.com
+ mons.lib.slf4j,com.webratio.commons.lib.apache.commons.lang,com.webra
+ tio.commons.lib.antlr;visibility:=reexport,com.webratio.commons.lib.j
+ boss.logging;visibility:=reexport,com.webratio.commons.lib.javax.tran
+ saction;visibility:=reexport,com.webratio.commons.lib.javax.persisten
+ ce;visibility:=reexport,com.webratio.commons.lib.hibernate;visibility
+ :=reexport
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: WebRatio
+Created-By: 1.8.0-b132 (Oracle Corporation)
+
+Name: META-INF/signature
+SHA-256-Digest: PRYYgqFVErjMMx3lDuv1T8nEp66ZmsJ8BwS19rF+4z4=
+

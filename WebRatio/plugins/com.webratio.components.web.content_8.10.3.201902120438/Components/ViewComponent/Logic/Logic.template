@@ -1,0 +1,3 @@
+#?delimiters [%,%],[%=,%]
+[%setXMLOutput()%]
+<Descriptor service="com.webratio.components.web.content.NoOpViewComponentService"/>

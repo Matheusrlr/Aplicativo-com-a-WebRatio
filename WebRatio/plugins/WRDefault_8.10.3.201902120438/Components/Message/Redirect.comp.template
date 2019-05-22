@@ -1,0 +1,3 @@
+#?delimiters [%, %], [%=, %]
+[%setHTMLOutput()%]
+<c:redirect url="${<wr:Id context="component"/>.data[0]}"/>

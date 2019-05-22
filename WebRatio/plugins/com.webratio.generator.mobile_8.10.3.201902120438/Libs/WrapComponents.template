@@ -1,0 +1,12 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.google.common.base.Charsets
+import com.google.common.io.Files
+
+setJSOutput()
+
+def componentsFile = new File(wr.projectDir, "/.Temp~/components/components.js")
+
+%](function(GLOBAL, undefined, define) {
+[% printRaw(Files.toString(componentsFile, Charsets.UTF_8)) %]
+})(this);

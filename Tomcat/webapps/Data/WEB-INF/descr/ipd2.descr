@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Descriptor service="com.webratio.web.mvc.module.CollectorService">
+  <Type>INPUT</Type>
+  <Parameter name="Keys">pdp1</Parameter>
+  <!--Port Definition Decorator Service-->
+  <wr:DecoratorService xmlns:wr="http://www.webratio.com/2013/WebML/Logic" service="com.webratio.rtx.components.DefaultOperationDecoratorService">
+    <ModelName>ipd2</ModelName>
+    <ParentContainer>ad2</ParentContainer>
+    <NavigationAncestors/>
+    <Secure>false</Secure>
+    <Localized>false</Localized>
+    <CheckPermission>false</CheckPermission>
+    <LinkIdRequired>true</LinkIdRequired>
+    <OperationParams>
+      <Params/>
+    </OperationParams>
+    <Outgoing>
+      <Link resultCode="success">sf1</Link>
+    </Outgoing>
+    <IsLinkHistoryRecorded>true</IsLinkHistoryRecorded>
+    <DomainModelValidationEnabled>true</DomainModelValidationEnabled>
+  </wr:DecoratorService>
+</Descriptor>

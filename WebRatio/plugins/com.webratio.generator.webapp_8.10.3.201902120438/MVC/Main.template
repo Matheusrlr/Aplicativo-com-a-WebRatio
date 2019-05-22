@@ -1,0 +1,244 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.io.IOHelper
+import com.webratio.generator.resolvers.WebAppEntityResolver
+import org.apache.commons.io.FileUtils
+import org.apache.commons.lang.StringUtils
+import com.webratio.generator.TimeLogger
+
+if (wr.projectType.name() == "ENTERPRISE") {
+	wr.outputPath = wr.outputPath + "/" + rootModuleName + ".war"
+}
+
+def _steps = 14
+_steps += (1 + 120) // from Layout.template
+eventSocketClient.sendBeginTask("MVC", _steps)
+TimeLogger.worked("CollectTopPages")
+
+wr.usedStyles = new HashSet()
+wr.errorPages = new HashSet()
+wr.expirePages = new HashSet()
+wr.loginPages = new HashSet()
+def hasLayoutPages = (wr.project.selectSingleNode("WebModel/SiteView") != null) || (wr.project.selectSingleNode("WebModel/ModuleView") != null)
+def hasRestSummary = (wr.project.attributeValue("wsEnableRestSummaryPage")=="true") && (wr.project.selectSingleNode("WebModel/ServiceView/ServicePort/Operations/Solicit[@invocationStyle='REST']") != null)
+
+/* Copy the shared resources */
+if (hasLayoutPages || (wr.projectType.name()== "ENTERPRISE") || hasRestSummary) {
+	IOHelper.copyDirectory(wr.locateResourceFile("MVC/WRResources"), new File(wr.outputPath, "WRResources"), IOHelper.CVS_AWARE_FILTER, IOHelper.THUMBS_FILE_FILTER)
+}
+if ("true" == wr.project.valueOf("@adminArea") && (wr.projectType.name() in ["ENTERPRISE", "WEBPROJECT"])) {
+	IOHelper.copyDirectory(wr.locateResourceFile("MVC/WRAdmin"), new File(wr.outputPath, "WEB-INF/administration"), IOHelper.CVS_AWARE_FILTER, IOHelper.THUMBS_FILE_FILTER)
+}
+eventSocketClient.sendTaskWorked("MVC", 1)
+TimeLogger.worked("SharedRes")
+
+/* Create controller-context.xml */
+def controllerContextTemplatePath = wr.locateResourcePath("MVC/ControllerContext.template")
+def contextFile = new File(wr.outputPath + "/WEB-INF/conf/ControllerContext.xml")
+def controllerCtxText = executeTemplate(controllerContextTemplatePath)
+contextFile.parentFile.mkdirs()
+contextFile.write(serializeXML(controllerCtxText, true))
+eventSocketClient.sendTaskWorked("MVC", 1)
+TimeLogger.worked("ControllerContext")
+
+/* Create or update WEB-INF/classes/fckeditor.properties */
+executeContextTemplate("MVC/FCKEditor.template")
+eventSocketClient.sendTaskWorked("MVC", 1)
+TimeLogger.worked("FCKEditor")
+
+/* Create WEB-INF/classes/ApplicationResources_<lang>[_<country>].properties for the various locales */
+executeContextTemplate("MVC/Bundle.template")
+eventSocketClient.sendTaskWorked("MVC", 1)
+TimeLogger.worked("ApplicationResources")
+
+/* Copy the _indexer.jsp file */
+if (wr.project.selectSingleNode("WebModel/SiteView") != null) {
+	FileUtils.copyFile(wr.locateResourceFile("MVC/_indexer.jsp"), new File(wr.outputPath + "/_indexer.jsp"))
+}
+eventSocketClient.sendTaskWorked("MVC", 1)
+TimeLogger.worked("Indexer")
+
+/* Copy the _debug.jsp file */
+FileUtils.copyFile(wr.locateResourceFile("MVC/_debug.jsp"), new File(wr.outputPath + "/_debug.jsp"))
+eventSocketClient.sendTaskWorked("MVC", 1)
+TimeLogger.worked("Debug")
+
+/* Generate the layout */
+def layoutTemplatePath = wr.locateResourcePath("MVC/Layout.template")
+executeTemplate(layoutTemplatePath, ["eventTaskName": "MVC"])
+eventSocketClient.sendTaskWorked("MVC", 1)
+TimeLogger.worked("Layout")
+
+/* Create the _response_ajax.jsp file */
+def ajaxResponsePageFile = new File(wr.outputPath + "/_response_ajax.jsp")
+ajaxResponsePageFile.write(executeContextTemplate("MVC/Ajax/ResponsePage.template"))
+eventSocketClient.sendTaskWorked("MVC", 1)
+TimeLogger.worked("AjaxResponsePage")
+
+/* Cretae the index.jsp welcome file */
+def enableRestSummaryPage = wr.project["wsEnableRestSummaryPage"] == "true"
+if (enableRestSummaryPage || wr.project.selectSingleNode("WebModel/SiteView") != null) {
+	def indexJSPFile = new File(wr.outputPath + "/index.jsp")
+	if (enableRestSummaryPage || (getHomeSiteView() != null && getHomeElement(getHomeSiteView()) != null)) {
+		def indexJSPTemplatePath = wr.locateResourcePath("MVC/IndexJSP.template")
+		def indexJSPText = executeTemplate(indexJSPTemplatePath)
+		indexJSPFile.write(indexJSPText)
+	} else {
+		def genErrorPageTemplatePath = wr.locateResourcePath("MVC/GenerationErrorPage.template")
+		def reason = "Unable to find the home element of the home site view."
+		def hint1 = "If your project contains more than one site view then please make sure to set one of them as \'Home Site View\'"
+		def hint2 = "If the home site view is correctly set then please make sure to set one of its elements as \'Home\'"
+		def errorText = executeTemplate(genErrorPageTemplatePath, ["title": "Invalid Address", "reason": reason, "hints": [hint1, hint2], "exception": null])
+		indexJSPFile.write(errorText)
+	}
+} else if (wr.projectType.name() == "ENTERPRISE") {
+	def indexJSPFile = new File(wr.outputPath + "/index.jsp")
+	def defaultSubProject = wr.project.selectSingleNode("SubProject[@natureId='com.webratio.ide.WebModelNature'][@default='true']")
+	if (defaultSubProject != null) {
+		def indexJSPTemplatePath = wr.locateResourcePath("MVC/IndexJSP.template")
+		def indexJSPText = executeTemplate(indexJSPTemplatePath)
+		indexJSPFile.write(indexJSPText)	
+	} else {
+		def genErrorPageTemplatePath = wr.locateResourcePath("MVC/GenerationErrorPage.template")
+		def reason = "Unable to find the default web model project of the application."
+		def hint = "If your enterprise project contains more than one web model project then please make sure to set one of them as default"
+		def errorText = executeTemplate(genErrorPageTemplatePath, ["title": "Invalid Address", "reason" : reason, "hints" : [hint], "exception" : null])
+		indexJSPFile.write(errorText)
+	}
+}
+eventSocketClient.sendTaskWorked("MVC", 1)
+TimeLogger.worked("IndexJSP")
+
+/* Copy style pages */
+for (errorPage in wr.errorPages) {
+	def sourceFile = getStylePageFile(errorPage, StylePageType.ERROR)
+	if (sourceFile != null) {
+		def styleName = StringUtils.substringBefore(errorPage, "/")
+		wr.usedStyles.add(styleName)
+		def pageName = StringUtils.substringAfter(errorPage, "/")
+		def targetFile = new File(wr.outputPath + "/" + styleName + "_" + pageName + ".error.jsp")
+		def pageCode =  sourceFile.getText()
+		if (pageCode.startsWith("#?delimiters ")) {
+			targetFile.write(executeTemplate(sourceFile.absolutePath))
+		} else {
+			FileUtils.copyFile(sourceFile, targetFile)
+		}
+	}
+}
+for (expirePage in wr.expirePages) {
+	def sourceFile = getStylePageFile(expirePage, StylePageType.EXPIRE)
+	if (sourceFile != null) {
+		def styleName = StringUtils.substringBefore(expirePage, "/")
+		wr.usedStyles.add(styleName)
+		def pageName = StringUtils.substringAfter(expirePage, "/")
+		def targetFile = new File(wr.outputPath + "/" + styleName + "_" + pageName + ".expire.jsp")
+		def pageCode =  sourceFile.getText()
+		if (pageCode.startsWith("#?delimiters ")) {
+			targetFile.write(executeTemplate(sourceFile.absolutePath))
+		} else {
+			FileUtils.copyFile(sourceFile, targetFile)
+		}
+	}
+}
+for (area in getAllAreas()) {
+	wr.loginPages.add(getStylePage(area, StylePageType.LOGIN))
+}
+for (loginPage in wr.loginPages) {
+	def sourceFile = getStylePageFile(loginPage, StylePageType.LOGIN)
+	if (sourceFile != null) {
+		def styleName = StringUtils.substringBefore(loginPage, "/")
+		wr.usedStyles.add(styleName)
+		def pageName = StringUtils.substringAfter(loginPage, "/")
+		def targetFile = new File(wr.outputPath + "/" + styleName + "_" + pageName + ".login.jsp")
+		def pageCode =  sourceFile.getText()
+		if (pageCode.startsWith("#?delimiters ")) {
+			targetFile.write(executeTemplate(sourceFile.absolutePath))
+		} else {
+			FileUtils.copyFile(sourceFile, targetFile)
+		}
+	}
+}
+eventSocketClient.sendTaskWorked("MVC", 1)
+
+/* Copy the WRGenericExpire.jsp expire page */
+FileUtils.copyFile(wr.locateResourceFile("/MVC/WRGenericExpire.jsp"), new File(wr.outputPath + "/WRGenericExpire.jsp"))
+eventSocketClient.sendTaskWorked("MVC", 1)
+
+/* Copy the WRGenericLogin.jsp error page */
+if (hasLayoutPages) {
+	FileUtils.copyFile(wr.locateResourceFile("MVC/WRGenericLogin.jsp"), new File(wr.outputPath + "/WRGenericLogin.jsp"))
+}
+
+/* Copy the RESTSummary.jsp page */
+if(wr.project["wsEnableRestSummaryPage"] == "true"){
+	FileUtils.copyFile(wr.locateResourceFile("MVC/RestSummary.jsp"), new File(wr.outputPath + "/RestSummary.jsp"))
+}
+
+eventSocketClient.sendTaskWorked("MVC", 1)
+TimeLogger.worked("SpecialPages")
+
+/* Create or update the layout descriptor */
+processOutputFile("WEB-INF/descr/_layout.descr", "layout descriptor", wr.project, { layoutFile ->
+	try {
+		layoutFile.parentFile.mkdirs()
+		if (!layoutFile.exists()) {
+			layoutFile.write(executeContextTemplate("MVC/LayoutDescr.template", ["root": null]))
+		}
+		def rootElement = parseXMLFile(layoutFile, WebAppEntityResolver.INSTANCE).rootElement
+		layoutFile.write(executeContextTemplate("MVC/LayoutDescr.template", ["root": rootElement]))
+	} catch (Throwable e) {
+		e.printStackTrace()
+	}
+})
+eventSocketClient.sendTaskWorked("MVC", 1)
+TimeLogger.worked("LayoutDescriptor")
+
+/* Copy sub-folders of used styles */
+def outputDir = new File(wr.outputPath)
+def usedStyleList = []
+if (wr.usedStyles.remove("WRDefault")) {
+	usedStyleList.add("WRDefault")
+}
+usedStyleList.addAll(wr.usedStyles)
+for (style in usedStyleList) {
+	def styleDir = getStyleDirectory(style)
+	def styleOutputDirPath = getStyleOutputDirectoryPath(style)
+	if (styleOutputDirPath) {
+		IOHelper.copyDirectory(new java.io.File(styleDir, styleOutputDirPath), new java.io.File(outputDir, styleOutputDirPath), IOHelper.CVS_AWARE_FILTER, IOHelper.THUMBS_FILE_FILTER)
+	} else {
+		IOHelper.copyDirectory(styleDir, outputDir, IOHelper.STYLE_DIR_FILTER, IOHelper.CVS_AWARE_FILTER, IOHelper.STYLE_FILE_FILTER, IOHelper.THUMBS_FILE_FILTER)
+	}
+}
+eventSocketClient.sendTaskWorked("MVC", 1)
+TimeLogger.worked("StyleResources")
+
+/* Create or update web.xml */
+def webXMLFile = new File(wr.outputPath + "/WEB-INF/web.xml")
+webXMLFile.parentFile.mkdirs()
+try {
+	def oldWebXML = null
+	if (webXMLFile.exists()) {
+		oldWebXML = parseXMLFile(webXMLFile, WebAppEntityResolver.INSTANCE).rootElement
+	} else {
+		oldWebXML = parseXMLFile(wr.locateResourceFile("MVC/web.xml"), WebAppEntityResolver.INSTANCE).rootElement
+	}
+	def tempWebXMLFile = File.createTempFile("web", ".xml.temp")
+	def updateWebXMLTemplatePath = wr.locateResourcePath("MVC/UpdateWebXML.template")
+	def webXMLText = executeTemplate(updateWebXMLTemplatePath, ["oldWebXML" : oldWebXML])
+	tempWebXMLFile.write(webXMLText)
+	wr.set("temp.webxml", tempWebXMLFile)
+} catch (Throwable e) {
+	e.printStackTrace()
+	if (webXMLFile.exists()) {
+		FileUtils.copyFile(webXMLFile, new File(webXMLFile.parent, "web.xml.bak"))
+	}
+	FileUtils.copyFile(wr.locateResourceFile("MVC/web.xml"), webXMLFile, false)
+}
+eventSocketClient.sendTaskWorked("MVC", 1)
+TimeLogger.worked("WebXML")
+
+
+if(wr.projectType.name() == "ENTERPRISE"){
+  wr.outputPath = wr.outputPath - ("/" + rootModuleName + ".war")
+}
+%]

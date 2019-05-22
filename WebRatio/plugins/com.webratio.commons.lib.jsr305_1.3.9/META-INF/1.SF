@@ -1,0 +1,18 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: twkVpKZybmShOPfqXzvichxIaTGfs
+ a+hmxrGfNiD2mE=
+SHA-256-Digest-Manifest: BFf9HsWwg6RRJvbkKTdpSt+7UxDErN0Ctmr3sm1PokE=
+Created-By: 1.7.0_75 (Oracle Corporation)
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: about_files/jsr305.txt
+SHA-256-Digest: xEq8SEjAE2CMq9YdRGvOnPgQJ0k1DOmcF/tyfBBOq/A=
+
+Name: about.html
+SHA-256-Digest: Z3ZQeeorMQpecwQgHY6xP3wYAymg0lUKTrHvsEU2OuE=
+
+Name: lib/jsr305.jar
+SHA-256-Digest: RInsghOUNcD2fu+1T2mjGKIF9ESx6VtcDi/OdLGM4F4=
+

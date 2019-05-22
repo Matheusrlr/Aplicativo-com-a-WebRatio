@@ -1,0 +1,41 @@
+{
+  "service" : "wrm.comp.DetailsService",
+  "entity" : "cls2",
+  "condExprs" : {
+    "property" : "att4",
+    "operator" : "in",
+    "valueInput" : "kcond1.att4",
+    "config" : {
+      "oneImpliedInputRequired" : false
+    }
+  },
+  "output" : [ {
+    "ref" : "att20",
+    "viewName" : "logo",
+    "bindName" : "att20"
+  }, {
+    "ref" : "att9",
+    "viewName" : "telefone",
+    "bindName" : "att9"
+  }, {
+    "ref" : "att6",
+    "viewName" : "descricao",
+    "bindName" : "att6"
+  }, {
+    "ref" : "att5",
+    "viewName" : "nome",
+    "bindName" : "att5"
+  }, {
+    "ref" : "att8",
+    "viewName" : "link",
+    "bindName" : "att8"
+  }, {
+    "ref" : "att7",
+    "viewName" : "endereco",
+    "bindName" : "att7"
+  }, {
+    "ref" : "att10",
+    "viewName" : "valor",
+    "bindName" : "att10"
+  } ]
+}

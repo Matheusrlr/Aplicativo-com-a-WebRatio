@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+
+	<!-- ================================================================================================================== -->
+	<!-- Simple TAG -->
+	<!-- ================================================================================================================== -->
+
+	<Tag name="OutputParameters" prefix="" body="true" inline="false">
+		<Description>
+			The root node containing all OutputParameters.
+		</Description>
+	</Tag>
+
+	<Tag name="OutputParameter" prefix="" body="false">
+		<Description>The output parameter of the component.</Description>
+		<Attribute name="name" def="true" required="true" defValue="">
+			The name of the output parameter
+		</Attribute>
+		<Attribute name="type" def="true" required="true" defValue="">
+			The type of the output parameter.
+		</Attribute>
+		<Attribute name="label" def="true" required="true" defValue="">
+			The shown label of the parameter.
+		</Attribute>
+		<Attribute name="mandatory" def="false" defValue="true">
+			Indicates whether this output parameter is mandatory.
+		</Attribute>
+	</Tag>
+
+	<!-- ================================================================================================================== -->
+	<!-- Groovy statements                                                                                                   -->
+	<!-- ================================================================================================================== -->
+
+	<Function name="XML Expression Filter" declaration="setXMLOutput()" image="FILTER" contentType="script">
+		<Description>
+			The XML expression filter declaration statement.
+		</Description>
+		<Value>setXMLOutput()</Value>
+	</Function>
+
+</Configuration>

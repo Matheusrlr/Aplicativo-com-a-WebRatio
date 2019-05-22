@@ -1,0 +1,31 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+
+def backward = (event["backward"] == "true")
+def targetId = event["target"]
+def backTargetId = event["backTarget"]
+%]
+<Descriptor service="com.webratio.components.web.controlflow.JumpEventService">
+	<Direction>[%= backward ? "backward" : "forward" %]</Direction>
+	[% if (!backward) { %]
+		[% if (targetId) { %]
+			[%
+				def projectId = getById(targetId).valueOf("ancestor::*/@ownerProjectId")
+				if (projectId) {
+					targetId = projectId + ":" + targetId 
+				}
+			%]
+			<LandingCollector>[%= targetId %]</LandingCollector>
+			[% for (parameter in getById(event, "target").selectNodes("LandingEventParameter")) { %]
+				<ForwardParameter id="[%= parameter["id"] %]" name="[%= parameter["name"] %]"/>
+			[% } %]
+		[% } %]
+		[% if (backTargetId) { %]
+			<BackCollector>[%= backTargetId %]</BackCollector>
+		[% } %]
+	[% } %]
+	[% for (parameter in event.selectNodes("JumpBackEventParameter")) { %]
+		<BackwardParameter id="[%= parameter["id"] %]" name="[%= parameter["name"] %]"/>
+	[% } %]
+</Descriptor>

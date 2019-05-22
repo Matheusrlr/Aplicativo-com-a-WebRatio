@@ -1,0 +1,55 @@
+#?delimiters [%,%],[%=,%]
+[%
+import org.apache.commons.lang.StringUtils
+
+setXMLOutput()
+def domainClass = getById(component["dataBinding"])
+def distinct = component["distinct"] == "true"
+def sortable = component["sortable"] == "true"
+def checkable = !distinct && component["checkable"] == "true"
+def ignoreCase = (domainClass != null) && (domainClass["duration"] == "volatile") || "true" == component.valueOf("Property[@name='ignoreCaseSorting']/@value")
+def preConditionalExpression = component.element("PreConditionalExpression")
+
+//computes select attributes
+def displayAtts = component["displayAttributes"].tokenize(" ")
+def keyAttributes = getKeyAttributes(domainClass).collect{it["id"]} 
+def selectAttributes = (distinct) ? new LinkedHashSet() : new LinkedHashSet(keyAttributes) 
+selectAttributes.addAll(displayAtts)
+selectAttributes.addAll(getOutputAttributes(component, "data[].", null))
+
+//computes the sort attributes
+def dynamicSortAttributes = sortable ? component.selectNodes("SortAttribute") : []
+def defaultSortAttributes = component.selectNodes("DefaultSortAttribute")
+if(defaultSortAttributes.empty){
+   defaultSortAttributes = component.selectNodes("SortAttribute")
+}
+%]
+<Descriptor service="com.webratio.components.web.content.datasource.ListService">
+[% if (domainClass == null) { %]
+  <Error>Could not find a domain-class identified by '[%=component["dataBinding"]%]'</Error>
+[% } else { %]
+  <UseFirstRowAsDefaultCurrent>[%=component.selectSingleNode("DataFlow[ParameterBinding[starts-with(@source, 'data[]')]]") != null%]</UseFirstRowAsDefaultCurrent>
+  <DataSource>[%=getDataSourceId(domainClass)%]</DataSource>
+  <Checkable>[%=checkable%]</Checkable>
+  <ScrollerSupport blockFactor="[%=component["blockFactor"]%]" blockWindow="[%=component["blockWindow"]%]"/>
+  <SortSupport history="[%=StringUtils.defaultIfEmpty(component["sortHistorySize"], "1")%]">
+    [% for(att in dynamicSortAttributes){ %] 
+      <Sort by="[%=att["attribute"]%]" order="[%=att["order"]%]" ignoreCase="[%=ignoreCase%]" dynamic="true"/>
+    [% } %]
+    [% for(att in defaultSortAttributes){ %]
+      <Sort by="[%=att["attribute"]%]" order="[%=att["order"]%]" ignoreCase="[%=ignoreCase%]"/>
+    [% } %]
+  </SortSupport>
+  
+  [%
+    def query = createQuery(domainClass).select(selectAttributes).distinct(distinct).maxResults(component["maxResults"]).selector(component.element("ConditionalExpression"))  
+    component.selectNodes("SortAttribute").each{query.sort(it["attribute"], it["order"], ignoreCase)}
+    printRaw(query.build().asXML())
+    if(checkable && preConditionalExpression != null){
+       printRaw(createQuery(domainClass).select(keyAttributes).selector(preConditionalExpression).build("PreselectionQuery").asXML())
+    }
+  %]
+  
+  
+[% } %]
+</Descriptor>

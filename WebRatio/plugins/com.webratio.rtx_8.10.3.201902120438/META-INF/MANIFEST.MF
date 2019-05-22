@@ -1,0 +1,35 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.9.2
+Bundle-SymbolicName: com.webratio.rtx
+Export-Package: com.webratio.rtx,com.webratio.rtx.actions,com.webratio
+ .rtx.application,com.webratio.rtx.beans,com.webratio.rtx.blob,com.web
+ ratio.rtx.cache,com.webratio.rtx.components,com.webratio.rtx.context,
+ com.webratio.rtx.core,com.webratio.rtx.datasource,com.webratio.rtx.de
+ bug,com.webratio.rtx.events,com.webratio.rtx.excel,com.webratio.rtx.f
+ orm,com.webratio.rtx.groovy,com.webratio.rtx.jobs,com.webratio.rtx.li
+ nks,com.webratio.rtx.localization,com.webratio.rtx.model,com.webratio
+ .rtx.net,com.webratio.rtx.page,com.webratio.rtx.resource,com.webratio
+ .rtx.security,com.webratio.rtx.validation,com.webratio.rtx.ws,com.web
+ ratio.rtx.xml,com.webratio.rtx.xsd
+Bundle-Name: WebRatio Runtime Framework Plug-in
+Bundle-Version: 8.10.3.201902120438
+Bundle-ClassPath: com.webratio.rtx.jar
+Require-Bundle: com.webratio.commons.transform,com.webratio.debug,com.
+ webratio.commons.lib.quartz,com.webratio.ws,com.webratio.xsd,com.webr
+ atio.json,com.webratio.data,com.webratio.log,com.webratio.lib.apache.
+ derby,com.webratio.lib.apache.lucene,com.webratio.lib.hibernate,com.w
+ ebratio.commons.dom4j,com.webratio.commons.base,com.webratio.commons.
+ lib.groovy,com.webratio.commons.lib.dom4j,com.webratio.commons.lib.mi
+ mepull,com.webratio.commons.lib.jackson2,com.webratio.commons.lib.c3p
+ 0,com.webratio.commons.lib.saxon,com.webratio.commons.lib.javax.mail,
+ com.webratio.commons.lib.h2,com.webratio.commons.lib.apache.commons.f
+ ileupload,com.webratio.commons.lib.google.guava,com.webratio.commons.
+ libs,com.webratio.commons.lib.apache.httpcomponents
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: WebRatio
+Created-By: 1.8.0-b132 (Oracle Corporation)
+
+Name: META-INF/signature
+SHA-256-Digest: PRYYgqFVErjMMx3lDuv1T8nEp66ZmsJ8BwS19rF+4z4=
+

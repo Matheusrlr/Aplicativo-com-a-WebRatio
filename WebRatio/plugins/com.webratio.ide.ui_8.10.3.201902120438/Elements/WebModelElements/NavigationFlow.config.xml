@@ -1,0 +1,174 @@
+<Element name="NavigationFlow" lowerName="navigation flow" pluralLowerName="navigation flows">
+	<Description>
+		A Navigation Flow 
+		abstracts and generalizes the fundamental notion of hypertexts: the concept of anchor.
+	</Description>
+	<ActionRef label="Add Property" />
+	<ActionRef label="Localize" />
+	<ActionRef label="Go to Source"/>
+	<ActionRef label="Go to Target"/>
+	<ActionRef label="Straighten Connections" />
+	<ActionRef label="Separate Overlapping Connections" />
+	<ActionRef label="Open Generated Code" />
+	<ActionRef label="Generate Layout Pages Only"/>
+	<ActionRef label="Generate Logic Descriptors Only"/>
+	<ActionRef label="Generate Selection"/>
+	<ActionRef label="Find Model Problems"/>
+	<ActionRef label="Help"/>
+	<PropertyCategory name="General">
+		<PropertyRef label="Identifier" />
+		<PropertyRef label="Name" />		
+		<Property label="Source/Source Toolbar" onlyForNatureId="com.webratio.ide.MobileNature">
+			The component or toolbar from which starts the <ElementRef />.
+		</Property>		
+		<Property label="Source/Source Page">
+			The component or page from which starts the <ElementRef />.
+		</Property>		
+		<Property label="Target" onlyForNatureId="com.webratio.ide.MobileNature">
+			The component or toolbar to which ends the <ElementRef />.
+		</Property>	
+		<Property label="Target/Target Page" name="Target Component">
+			The component or page to which ends the <ElementRef />.
+		</Property>	
+		
+		<Property label="Target Action" onlyForNatureId="com.webratio.ide.MobileNature">
+			The Action to which ends the <ElementRef />.
+		</Property>	
+		<Property label="Target Action">
+			The component or toolbar to which ends the <ElementRef />.
+		</Property>		
+		
+		<Property label="Target Toolbar" name="Target Component">
+			The toolbar to which ends the <ElementRef />.
+		</Property>			
+
+		
+		<Property label="Type">
+			If the value is &lt;b&gt;Normal Navigation Flow&lt;/b&gt;, the flow is rendered as a clickable 
+			anchor; if the value is &lt;b&gt;Automatic Navigation Flow&lt;/b&gt;, the flow is rendered as a 
+			clickable anchor and the default output of the source component 
+			is automatically supplied to the destination component when the 
+			page that contains the flow is accessed; if the value is &lt;b&gt;Data Flow&lt;/b&gt;, 
+			the flow is not rendered, but serves the sole purpose of transporting 
+			parameter values.
+		</Property>
+		<PropertyRef label="Port Code" />
+		<PropertyRef label="Binding" />
+		<Property label="New Window">
+			If checked, the navigation of the (normal interaction) flow opens a new browser window.
+		</Property>
+		<PropertyRef label="Preserve Form"/>
+		<PropertyRef label="Custom Descriptor"/>
+	</PropertyCategory>
+	<PropertyCategory name="AJAX">
+		<Property label="Enable AJAX">
+			If checked, the flow performs a selective refresh of the source page at the end of
+			navigation, updating the user interface only for the sub-set of components that changed.&lt;br/&gt;
+			If the navigation ends on a different page, this property has no effect.
+		</Property>
+		<PropertyRef label="Component Computations"/>
+		<Property label="On Failure Callback">
+			Name of a global JavaScript function to invoke for handling errors in a server
+			request performed asynchronously. The specified function does not replace the normal
+			error handling behavior.
+			&lt;p&gt;The function receives no arguments.&lt;/p&gt;
+		</Property>
+		
+		<Property label="Open Window">
+			If checked, the target page is opened inside a user interface window behaving as a child
+			of the source page.
+		</Property>
+		<Property label="Replace Existing Window">
+			If checked, the user interface window containing the source page is closed before opening
+			the new window. This effectively causes the new window to replace the previous one under
+			the same parent page.
+		</Property>
+		<Property label="Use Title">
+			If checked, the opened window is displayed with a title.&lt;br/&gt;
+			The displayed title depends on the 'Window Title' property.
+		</Property>
+		<Property label="Window Title">
+			Text used as title for the opened window.&lt;br/&gt;
+			Has no effect if 'Use Title' is unchecked.
+		</Property>
+		<Property label="Window Width">
+			Width of the opened window in pixels.&lt;br/&gt;
+			Default value: 200
+		</Property>
+		<Property label="Window Height">
+			Height of the opened window in pixels.&lt;br/&gt;
+			Default value: 300
+		</Property>
+		<Property label="Resizable">
+			If checked, the opened window can be resized by the user.
+		</Property>
+    	<Property label="Auto Resizing">
+			If checked, the opened window automatically resizes itself according to the content.
+    	</Property>
+		<Property label="Closable">
+			If checked, the opened window displays a button to close it on the client-side.&lt;br/&gt;
+			Note that no model flow is navigated when windows are closed this way.
+		</Property>
+		<Property label="Maximizable">
+			If checked, the opened window displays a button to maximize it.
+		</Property>
+		<Property label="Minimizable">
+			If checked, the opened window displays a button to minimize it.
+		</Property>
+		<Property label="Draggable">
+			If checked, the opened window can be moved by the user.
+		</Property>
+		<Property label="Modal">
+			If checked, the opened window blocks interaction with all parent pages until it is closed.
+		</Property>
+		<Property label="Class">
+			The CSS class to apply to the opened window.
+		</Property>
+		<Property label="Show Effect">
+			Effect to use for showing the opened window.&lt;br/&gt;
+			Possible values are:
+			&lt;ul&gt;
+				&lt;li&gt;None,&lt;/li&gt;
+				&lt;li&gt;Appear,&lt;/li&gt;
+				&lt;li&gt;BlindDown,&lt;/li&gt;
+				&lt;li&gt;SlideDown,&lt;/li&gt;
+				&lt;li&gt;Grow.&lt;/li&gt;
+			&lt;/ul&gt;
+		</Property>
+		<Property label="Hide Effect">
+			Effect to user for hiding the opened window.&lt;br/&gt;
+			Possible values are:
+			&lt;ul&gt;
+				&lt;li&gt;None,&lt;/li&gt;
+				&lt;li&gt;Fade,&lt;/li&gt;
+				&lt;li&gt;BlindUp,&lt;/li&gt;
+				&lt;li&gt;SlideUp,&lt;/li&gt;
+				&lt;li&gt;Shrink.&lt;/li&gt;
+			&lt;/ul&gt;
+		</Property>
+		
+		<Property label="Open Waiting Dialog">
+			If checked, this flow displays a waiting dialog with a custom message while
+			the navigation is occurring, closing it at the end.
+		</Property>
+		<Property label="Dialog Message">
+			Key of the message to show in the waiting dialog.&lt;br/&gt;
+			Default value: ajax.computingRequest
+		</Property>
+		<Property label="Dialog Show Time">
+			The minimum time in milliseconds for which to show the waiting dialog.&lt;br/&gt;
+			Default value: 1000
+		</Property>
+		<Property label="Dialog Width">
+			Width of the opened waiting dialog in pixels.&lt;br/&gt;
+			Default value: 200
+		</Property>
+		<Property label="Dialog Height">
+			Height of the opened waiting dialog in pixels.&lt;br/&gt;
+			Default value: 100
+		</Property>
+		<Property label="Dialog Class Name">
+			The CSS class to apply to the opened waiting dialog.
+		</Property>
+	</PropertyCategory>
+</Element>

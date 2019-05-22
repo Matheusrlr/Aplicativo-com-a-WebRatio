@@ -1,0 +1,15 @@
+<Element name="Roles" lowerName="roles"
+		pluralLowerName="">
+		<Description>
+			The Roles element provides the list of user defined roles used by by the data service project to manage the access permission to exposed services.
+		</Description>
+		<Action label="Add Role">
+			Adds a new role 
+			to the project
+		</Action>
+		<ActionRef label="Add Property"/>
+		<ActionRef label="Localize"/>
+		<ActionRef label="Find Model Problems"/>
+		<ActionRef label="Help"/>
+</Element>
+		

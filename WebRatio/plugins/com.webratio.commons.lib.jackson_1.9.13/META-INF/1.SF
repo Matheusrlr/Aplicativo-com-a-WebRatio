@@ -1,0 +1,39 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: OOKt0sJwXGsahcHHG1suaQMvU2TQG
+ wl/K2r2Ypv5ci4=
+SHA-256-Digest-Manifest: MXhGW2DEoi2KxO9v2LZieBH2Gh1URzuyfxGJFXXKOgU=
+Created-By: 1.7.0_75 (Oracle Corporation)
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: a5fmgH7myHzNji9AMOfHrVh8fy7MOgIdRSUiRZ6EFA4=
+
+Name: lib/jackson-xcsrc.zip
+SHA-256-Digest: xb7kxfYJbB4EpkgzaeSxlcATPlfnswahpmsKqrZfAwI=
+
+Name: lib/jackson-mapper-asl.jar
+SHA-256-Digest: vEwQA/3j7Ue6Dkbl98IetmBzsaRT3XNBFhdrGyx8jqc=
+
+Name: lib/jackson-xc.jar
+SHA-256-Digest: eqh23+Rcph2f3hN8NqlqWOyY2vVgk5xoFr+oNxGKmLE=
+
+Name: lib/jackson-mapper-aslsrc.zip
+SHA-256-Digest: Myazi87fyfnG8MeqmTLUfipjCwMck/IX03MkhI/OMfQ=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: lib/jackson-core-aslsrc.zip
+SHA-256-Digest: XnFMMwXJ2Ru7d09IYB8l3qxHV8shdzotH4S9jFn8Ya8=
+
+Name: lib/jackson-jaxrs.jar
+SHA-256-Digest: Try449zwdbW0AZF7ElThT8TVXjCYx6UoL6RE3jtIW7Q=
+
+Name: about.html
+SHA-256-Digest: jTXoQbMeYFGrohfOvDjNZ0AAcALTyO1r0GZwLzd8c68=
+
+Name: lib/jackson-core-asl.jar
+SHA-256-Digest: 1nrpTdGqFICpXB6WA6e5hXs6ZmijoB4ZoDCmyopWRq4=
+
+Name: lib/jackson-jaxrssrc.zip
+SHA-256-Digest: +2nBkOZQHiE00/IFTX118m2Eolw4Ba0734VmeLU7aUs=
+

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="content|operation" idPrefix="dmu" formBased="false" namePrefix="Get Domain Model " label="Get Domain Model" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" successFlowSource="true" successFlowTarget="true" errorFlowSource="true" errorFlowTarget="true"> 
+  <SubComponent elementName="DomainModelClass" idPrefix="dme" namePrefix="Class" label="Class"> 
+    <DomainClassProperty attributeName="dataBinding" includeDerived="true" figureDisplayOrder="1"> 
+      <Description xml:space="preserve">The domain-class from which attributes and association-roles must be retrieved.</Description> 
+    </DomainClassProperty>  
+    <AttributesProperty classIdExpr="@dataBinding" attributeName="attributes" includeDerived="true"> 
+      <Description xml:space="preserve">The list of attributes to show.</Description>  
+      <IsEnabled>return (element["dataBinding"] != "")</IsEnabled> 
+    </AttributesProperty>  
+    <BooleanProperty attributeName="hideRoles"> 
+      <Description xml:space="preserve">If checked all outgoing association roles are not shown.</Description> 
+    </BooleanProperty>  
+    <Description xml:space="preserve">Allows to define the classes whose domain model information must be shown</Description>  
+    <SubComponent elementName="DomainModelRole" idPrefix="mdr" namePrefix="Association Role " label="Association Role"> 
+      <AssociationRoleProperty label="Role" attributeName="role" includeDerived="true" sourceClassIdExpr="../@dataBinding"> 
+        <Description xml:space="preserve">The association role used to retrieve the reachable classes to show.</Description> 
+      </AssociationRoleProperty>  
+      <Description xml:space="preserve">The outgoing association-role of the domain-class to show.</Description> 
+    </SubComponent > 
+  </SubComponent >  
+  <Description xml:space="preserve">This component permits to retrieve information about classes and association-roles of the DomainModel, like:
+    &lt;ul&gt;
+      &lt;li&gt;the available class identifiers and labels&lt;/li&gt;
+      &lt;li&gt;the reachable classes identifiers and labels navigating the association roles outgoing of a class&lt;/li&gt;
+      &lt;li&gt;the attributes identifiers and labels of a class&lt;/li&gt;
+      &lt;li&gt;the available condition predicates values and labels&lt;/li&gt;
+      &lt;li&gt;the available aggregate functions&lt;/li&gt;
+      &lt;li&gt;the available sorting criteria values and labels&lt;/li&gt;
+      &lt;li&gt;the available condition boolean operators&lt;/li&gt;
+    &lt;/ul&gt;
+    </Description>  
+  <IsContextFreeComponent xml:space="preserve">return getIncomingFlows(component).empty</IsContextFreeComponent>  
+  <IsMultiConditionComponent xml:space="preserve">return getIncomingFlows(component).size &gt; 1</IsMultiConditionComponent>  
+  <InputDescription xml:space="preserve" name="Entity Id">The class id whose attributes and associations must be shown.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Attributes Identifiers">The attributes identifiers to transform into the relative parent class identifiers.</InputDescription>  
+  <OutputDescription xml:space="preserve" name="Entity Identifiers">The identifiers of all the domain model classes, or the reachable classes from the input class.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Entity Labels">The labels of all the domain model classes, or the reachable classes from the input class.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Attributes Identifiers">The attributes identifiers of the input class.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Attributes Labels">The attributes labels of the input class.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Predicates Values">The condition predicates values</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Predicates Labels">The condition predicates labels</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Aggregate Functions">The aggregate functions</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Sort Criteria Values">The sort criteria values</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Sort Criteria Labels">The sort criteria labels</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Boolean Operators">The list of available condition boolean operators</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Relative Attributes Identifiers">The relative attributes identifiers</OutputDescription> 
+</Component>

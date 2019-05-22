@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Layout pageLayout="Basic" frameLayout="Basic" loginPage="Default" errorPage="Default"> 
+  <Resources alwaysRequired="WebRatio-global-style WebRatio-menu-style WebRatio-units-style WebRatio-respond-js WebRatio-responsive-menu-js">
+    <Resource name="WebRatio-global-style" type="css" path="wr-css/global.css"/>
+    <Resource name="WebRatio-menu-style" type="css" path="wr-css/menu.css" requires="WebRatio-global-style"/>
+    <Resource name="WebRatio-units-style" type="css" path="wr-css/units.css" requires="WebRatio-global-style"/>
+    <Resource name="WebRatio-respond-js" type="javascript" path="wr-js/respond.min.js" ieCondition="lt IE 9" requires="WebRatio-menu-style WebRatio-global-style"/>
+    <Resource name="WebRatio-responsive-menu-js" type="javascript" path="wr-js/responsive-menu.js" requires="jquery"/>
+  </Resources>
+  <ComponentConfiguration componentType="SimpleList" componentLayout="WRDefault/Normal"> 
+    <LayoutParameter name="use-alternate" value="true" type="component"/> 
+  </ComponentConfiguration>  
+  <ComponentConfiguration componentType="CheckableList" componentLayout="WRDefault/Normal">
+    <LayoutParameter name="use-alternate" value="true" type="component"/>
+  </ComponentConfiguration>
+  <ComponentConfiguration componentType="List" componentLayout="WRDefault/Normal">
+    <LayoutParameter name="use-alternate" value="true" type="component"/>
+  </ComponentConfiguration>
+</Layout>

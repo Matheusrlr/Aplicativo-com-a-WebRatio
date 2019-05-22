@@ -1,0 +1,60 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+def componentId = component["id"]
+def roleId = component["association"]
+def role = getById(roleId)
+%>
+<InputParameters>
+<% for (cond in component.selectNodes("SourceConditionalExpression/*|TargetConditionalExpression/*")) { %>
+<% def condSuffix = cond.parent.name - "ConditionalExpression" %>
+<% if (cond.name == "AssociationRoleCondition" && cond["role"]) { %>
+    <% for (a in getKeyAttributes(getSourceDomainClass(getRoleByExpression(cond["role"])))) { %>
+      <InputParameter 
+          name="<%=cond["id"]%>.<%=a["id"]%>"
+          refId="<%=cond["id"]%>"
+          type="<%=getAssignableTypeExpression(getSourceDomainClass(getRoleByExpression(cond["role"])), a, true, true)%>"
+          label="<%=getRoleConditionLabel(cond, a)%> [<%= getSourceDomainClass(getRoleByExpression(cond["role"]))?.attributeValue("name", "") %>] [<%=condSuffix%>]"
+          mandatory="<%=isRequiredConditionalExpressionPart(cond)%>"/>
+   <% } %>
+  <% } else if (cond.name == "AttributesCondition" && cond["attributes"]) { %>
+    <% def predicate = cond["predicate"]%>
+    <% if ((cond["value"] == "") && !isUnaryPredicate(predicate)) { %>
+      <% 
+        def classId = ""
+        if (cond.parent.name == "SourceConditionalExpression") {
+            classId = getSourceDomainClass(role)?.attributeValue("id", "")
+        } else {
+            classId = getTargetDomainClass(role)?.attributeValue("id", "")
+        }
+      %>
+      <InputParameter
+          name="<%=cond["id"]%>"
+          refId="<%=cond["id"]%>"
+          type="<%=cond["attributes"].tokenize(" ").collect{classId + "." + it}.join("|")%>"
+          label="<%=getAttributesConditionLabel(cond)%> [<%=condSuffix%>]"
+          mandatory="<%=isRequiredConditionalExpressionPart(cond)%>"/>
+    <% } %>
+  <% } else if (cond.name == "KeyCondition") { %>
+  	<% if (role != null) { %>
+  	  <% def domainClass = null %>
+  	  <% if (cond.parent.selectSingleNode("self::SourceConditionalExpression")) { %>
+  	  	<% domainClass = getSourceDomainClass(role)%>
+  	  <% } else { %>
+  	  	<% domainClass = getTargetDomainClass(role)%>
+  	  <% } %>
+  	  <% if (domainClass != null) {%>
+  	    <%def classId = domainClass.valueOf("@id")%>
+	  	<% for (a in getKeyAttributes(domainClass)) { %>
+	      <InputParameter 
+	          name="<%=cond["id"]%>.<%=a["id"]%>"
+	          refId="<%=cond["id"]%>"
+              type="<%=getAssignableTypeExpression(domainClass, a, true, true)%>"
+	          label="<%=getKeyConditionLabel(cond, domainClass, a)%> [<%=domainClass["name"]%>] [<%=condSuffix%>]"
+	          mandatory="<%=isRequiredConditionalExpressionPart(cond)%>"/>
+	    <% } %>
+	  <% } %>
+	<% } %>
+  <% } %>
+<% } %>
+</InputParameters>

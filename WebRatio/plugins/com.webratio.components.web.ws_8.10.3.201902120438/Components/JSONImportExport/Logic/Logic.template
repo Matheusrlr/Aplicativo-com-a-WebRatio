@@ -1,0 +1,25 @@
+#?delimiters [%,%],[%=,%]
+[%setXMLOutput()
+
+def domainClass = getByIdOptional(component["dataBinding"])
+
+%]
+<Descriptor service="com.webratio.components.web.ws.datasource.JSONImportExportService">
+  [%if(domainClass){%]
+    <DataSource>[%=getDataSourceId(domainClass)%]</DataSource>
+    <Class>[%=component["dataBinding"]%]</Class>
+  [%}%]
+  <Attributes>[%=component["attributes"]%]</Attributes>
+  <MappingType>[%=component["mappingType"]%]</MappingType>
+  [%
+  if(component["mode"] == "import"){%]
+  	<KeyAttributes>[%=component["keyAttributes"]%]</KeyAttributes>
+  [%}%]
+  <Mode>[%=component["mode"]%]</Mode>
+  <DeleteAllBefore>[%=component["deleteAllBefore"]%]</DeleteAllBefore>
+  [%
+  	for(node in component.selectNodes("Node")){
+  		printRaw(node.asXML())
+  	}
+  %]
+</Descriptor>

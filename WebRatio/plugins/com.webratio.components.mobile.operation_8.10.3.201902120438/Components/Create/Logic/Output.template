@@ -1,0 +1,21 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+
+def dclassId = component["dataBinding"]
+def dclass = getById(dclassId)
+def paramSuffix = (component["bulk"] == "true") ? "" : ".single"
+def outputAttributes = getAttributes(dclass)
+%]
+<OutputParameters>
+	[% for (a in outputAttributes) { %]
+		[% if (isOutputBindableAttribute(a)) { %]
+			<OutputParameter
+				name="[%= a["id"] %]"
+				refId="[%= a["id"] %]"
+				type="[%= a["key"] == "true" ? getSuperDomainClassHierarchy(dclass).collect{it["id"] + "." + a["id"] + paramSuffix}.join("|") : "" %]"
+				label="[%= getLabel(a) %]"
+			/>
+		[% } %]
+	[% } %]
+</OutputParameters>

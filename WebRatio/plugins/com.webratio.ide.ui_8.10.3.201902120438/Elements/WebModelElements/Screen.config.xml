@@ -1,0 +1,45 @@
+<Element name="Screen" lowerName="screen" pluralLowerName="screens">
+	<Description>
+		A screen
+		is a container of components and toolbars.
+	</Description>
+		<ActionRef label="Add Toolbar" />
+		<ActionRef label="Add Property" />
+		<ActionRef label="Surround with Screen Set"/>		
+		<ActionRef label="Find Model Problems"/>
+		<ActionRef label="Help"/>
+		
+	<PropertyCategory name="General">
+		<PropertyRef label="Identifier" />
+		<PropertyRef label="Name" />
+		<PropertyRef label="Home" />
+		<Property label="Login" >
+			If checked, the <ElementRef/> is set as the login <ElementRef/>.
+		</Property>
+		<PropertyRef label="Protected" />
+		<PropertyRef label="Roles" />
+		<Property label="Ignore Toolbars">
+			If checked, the generated layout screen does not include the toolbars.
+		</Property>
+	</PropertyCategory>
+	
+	<PropertyCategory name="Layout">
+		<PropertyRef label="Style" />
+		<PropertyRef label="Page Layout" />
+		<PropertyRef label="Grid Layout"/>
+		<PropertyRef label="Frame Layout"/>
+		<PropertyRef label="Cell Layout"/>
+		<PropertyRef label="Attribute Layout"/>
+		<PropertyRef label="Field Layout"/>
+		<PropertyRef label="Event Layout"/>
+		<PropertyRef label="Error Style Page"/>
+		<PropertyRef label="Expire Style Page"/>
+		<PropertyRef label="Login Style Page"/>
+		<PropertyRef label="Component Configuration"/>
+		<PropertyRef label="Old Resources"/>
+	</PropertyCategory>
+
+		<PropertyCategory name="Appearance">
+			<PropertyRef label="Show" />
+		</PropertyCategory>
+</Element>

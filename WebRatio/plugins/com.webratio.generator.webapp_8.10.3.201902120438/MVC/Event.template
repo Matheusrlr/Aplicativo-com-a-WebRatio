@@ -1,0 +1,68 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.GenerationException
+
+if (event == null) {
+	def title = "Undefined event variable"    
+	def reason = "Unable to generate the Event layout."
+	def hint = "Specify a variable holding a layout:Event"
+	throw new GenerationException(title, reason, [hint], null)
+}
+if (isClientLogicLayoutEvent(event)) {
+	return  // ignore events that do not have their own user interface
+}
+
+/* Get style */
+def eventLayout = getLayout(event, LayoutType.EVENT)
+def templatePath = eventLayout.path
+def templateParameters = eventLayout.parameters
+if (!templatePath) {
+    def title = "Undefined Event Layout"    
+    def reason = "Unable to find the event layout for an event."
+    def hint = "Specify an event layout for all the events of the page [id = " + page["id"] + "]"
+    throw new GenerationException(title, reason, [hint], null)
+}
+def templateFile = getLayoutFile(templatePath, LayoutType.EVENT)
+if (!templateFile) {
+	def title = "Event Layout Not Found"
+	def reason = "Unable to find the event layout \'" + templatePath + "\'"
+	def hint = "Check the project for the missing event layout [name = " + templatePath + "] associated with the event [id = " + event["id"] + "]"
+	throw new GenerationException(title, reason, [hint], null)
+}
+addUsedTemplate(templatePath)
+
+/* Make the Layout Event refreshable only when directly placed and not roaming */
+def placedDirectly = (event["componentId"] as boolean)
+def refreshFragmentType = (placedDirectly ? "control" : null)
+
+/* Render the Layout Event in a wrapper */
+printRaw(executeContextTemplate("MVC/Wrapper.template", ["refreshFragmentType": refreshFragmentType, "allowLazyRefresh": placedDirectly, "element": event, "content": {
+	
+	/* Visibility condition start */
+	def visibilityCondition = getVisibilityCondition(event, (!placedDirectly ? position : null))
+	if (visibilityCondition) {
+		%]<c:if test="${[% printJSPTagValue(visibilityCondition) %]}">[%
+	}
+	
+	/* Support AJAX features only if rendered in an HTML page */
+	def linkAjaxSupported = ["html", "xhtml"].contains(pageOutputType.name)
+	
+	/* AJAX Tooltip target start */
+	if (linkAjaxSupported) {
+		printRaw(executeContextTemplate("MVC/Ajax/TooltipTargetStart.template", ["element": event, "elementType": "", "position": position]).trim())
+	}
+	
+	/* Actual event layout */
+	printRaw(executeTemplate(templateFile.absolutePath, ["params": templateParameters, "templateType": "event"]).trim())
+	
+	/* AJAX Tooltip target end */
+	if (linkAjaxSupported) {
+		printRaw(executeContextTemplate("MVC/Ajax/TooltipTargetEnd.template", ["element": event, "elementType": "", "position": position]).trim())
+	}
+	
+	/* Visibility condition end */
+	if (visibilityCondition) {
+		%]</c:if>[%
+	}
+}]))
+%]

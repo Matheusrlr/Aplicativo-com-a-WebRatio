@@ -1,0 +1,111 @@
+#?delimiters [%,%],[%=,%]
+[%
+import org.dom4j.DocumentFactory
+import com.webratio.generator.helpers.SpecialUtils
+import org.apache.commons.lang.StringUtils
+
+setXMLOutput()
+
+def oneWay = component["oneWay"] == "true"
+
+def inputXSLFile = null
+if (component.valueOf("@inputXSLFile") != "") {
+    inputXSLFile = getContentFile(component.valueOf("@inputXSLFile"))
+}
+def outputXSLFile = null
+if (!oneWay && component.valueOf("@outputXSLFile") != "") {
+    outputXSLFile = getContentFile(component.valueOf("@outputXSLFile"))
+}
+def webServiceProvider = component["webServiceProvider"]
+def webServiceOperation = component["webServiceOperation"]
+def httpAuth = component["httpAuthentication"] == "true" ? "BASIC" : component["httpAuthentication"];
+%]
+<Descriptor service="com.webratio.components.web.ws.SoapRequestResponseService">
+  <OneWay>[%=oneWay%]</OneWay>
+  
+  <RequestHeaders>
+     [% for (header in component.selectNodes("RequestHeader")) { %]
+         <Header id="[%=header["id"]%]" name="[%=header["name"]%]">[%=header["value"]%]</Header> 
+     [% } %]	
+  </RequestHeaders>
+  
+  [%if(!StringUtils.isBlank(webServiceOperation)){%]
+     <WebServiceProvider>[%=component["webServiceProvider"]%]</WebServiceProvider>
+     <WebServiceOperation>[%=component["webServiceOperation"]%]</WebServiceOperation>
+  [%}else{%]
+     <Endpoint>[%=component["endpointURL"]%]</Endpoint>
+     <SoapVersion>[%=StringUtils.defaultIfEmpty(component["soapVersion"], "1.1")%]</SoapVersion>
+     <SoapActionURI>[%=component["soapActionURI"]%]</SoapActionURI>
+     <Method name="[%=component["methodName"]%]" nsURI="[%=component["methodNSURI"]%]"/>
+     <WebServiceParameters>
+       [% 
+         def parameters = StringUtils.split(component["parameterOrder"], " ").collect{getById(it)}
+         parameters.addAll(component.selectNodes("RequestResponseParameter").findAll{!parameters.contains(it)})
+       %]
+       [% for (param in parameters) { %]
+         <Parameter name="[%=param["name"]%]" nsURI="[%=param["nsURI"]%]" value="[%=param["value"]%]"/> 
+       [% } %]
+     </WebServiceParameters>
+  [%}%]
+  <CompressRequest>[%=component["compressRequest"]%]</CompressRequest>
+  <Authentication signRequestMsg="[%=component["signRequestMsg"] == "true"%]" 
+                  httpAuthentication="[%=httpAuth%]"
+                  [%if(httpAuth == "BASIC" || httpAuth == "NTLM"){%] 
+                     httpUsername="[%=component["username"]%]" 
+                     httpPassword="[%=component["password"]%]" 
+                     cryptedHttpPassword="[%=component["cryptedPassword"]%]"
+                  [%}%]
+                  [%if(httpAuth == "NTLM"){%]
+                     httpHost="[%=component["httpAuthHost"]%]" 
+                     httpDomain="[%=component["httpAuthDomain"]%]" 
+                  [%}%]/>
+                    
+  <Timeout>[%=component["timeout"]%]</Timeout>
+  <SOTimeout>[%=component["soTimeout"]%]</SOTimeout>
+  <SSLProtocol>[%=component["sslProtocol"]%]</SSLProtocol>
+  
+  <RequestHeaders>
+     [%for(prop in component.selectNodes("Property").findAll{it["name"].startsWith("http.header.")}){%]
+         <Header name="[%=StringUtils.removeStart(prop["name"], "http.header.")%]">[%=prop["value"]%]</Header> 
+     [%}%] 
+  </RequestHeaders>
+  
+  <SoapHeaders>
+     [%
+      for(soapHeader in component.selectNodes("SoapHeader")){
+         def templateFile = soapHeader["templateFile"]
+         if(!StringUtils.isBlank(templateFile)){   	  
+   	       if((projectType == "WEBMODEL") || (projectType == "MODULE")){
+              templateFile = StringUtils.removeStart(templateFile, rootModuleName + ".jar/") 	  
+           }
+   	       %]<SoapHeader id="[%=soapHeader["id"]%]" name="[%=soapHeader["name"]%]" templateFile="[%=templateFile%]"/>[%
+	     } else {
+	       def scriptText = StringUtils.defaultString(soapHeader.selectSingleNode("Value")?.text)
+	       %]<SoapHeader id="[%=soapHeader["id"]%]" name="[%=soapHeader["name"]%]" xml:space="preserve">[%=scriptText%]</SoapHeader>[%
+	     }
+      }
+     %]
+  </SoapHeaders>
+  
+  <Input type="[%=component["inputType"]%]" transformer="[%=component["inputXSLFile"]%]"/>
+  [%if(!oneWay){%]
+  <Output fullEnvelope="[%=component["fullEnvelopeOutput"]%]" transformer="[%=component["outputXSLFile"]%]"/>
+  [%}%]
+   
+  [% if (inputXSLFile != null) { %] 
+    <InputTransformParameters>
+      [% for (p in SpecialUtils.getTransformationInputs(inputXSLFile)) { %]
+        <Parameter name="[%=p%]"/>
+      [% } %]
+    </InputTransformParameters>
+  [% } %]
+  
+  [% if (!oneWay && outputXSLFile != null) { %]
+    <OutputTransformParameters>
+      [% for (p in SpecialUtils.getTransformationInputs(outputXSLFile)) { %]
+        <Parameter name="[%=p%]"/>
+      [% } %]
+    </OutputTransformParameters>
+  [% } %]
+      
+</Descriptor>

@@ -1,0 +1,19 @@
+#?delimiters <%, %>, <%=, %>
+<%
+import org.apache.commons.io.FileUtils
+
+def outputFolder = null
+if(wr.projectType.name() == "WEBPROJECT"){
+   outputFolder = new File(wr.outputPath + "/WEB-INF/classes")
+} else if(wr.projectType.name() == "ENTERPRISE"){
+   outputFolder = new File(wr.outputPath + "/../" + rootModuleName + ".jar")
+} else {
+   outputFolder = new File(wr.outputPath + "/../" + rootModuleName + ".jar")
+}
+
+def configFile = new File(outputFolder, "fckeditor.properties")
+if (!configFile.exists()) {
+    def originalConfigFile = wr.locateResourceFile("MVC/fckeditor.properties")
+    FileUtils.copyFile(originalConfigFile, configFile)
+}
+%>

@@ -1,0 +1,6 @@
+#?delimiters [%,%],[%=,%]
+[%setXMLOutput()%]
+<OutputParameters>
+    <OutputParameter name="errorMessage" label="Error Message"/>
+    <OutputParameter name="exception" label="Exception"/>
+</OutputParameters>

@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Export-Package: javax.persistence,javax.persistence.criteria,javax.per
+ sistence.metamodel,javax.persistence.spi
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/jpa2.jar
+Bundle-Version: 1.0.1
+Bundle-Name: WebRatio 3rd Party Library - Java Persistence 2.0 API
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.javax.persistence
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+
+Name: about_files/jpa2.txt
+SHA-256-Digest: BEABUVs79QI7SDoSTGOWhDGPnrw/RYsWwYExT1AedqA=
+
+Name: lib/jpa2.jar
+SHA-256-Digest: us+2RgMX1CGqKQbZ5jwpO2ncGl2sSA0PZBbfUHlqS7M=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: lib/jpa2src.zip
+SHA-256-Digest: WWYf0iNs5z1hps4UqBAHeBQ9YpPAXTrrjlXhSpPIkoU=
+
+Name: about.html
+SHA-256-Digest: STrV/JRa9r8p0dhO8ZKYyXwZWF1Mlt5MukcPj6jTXEE=
+

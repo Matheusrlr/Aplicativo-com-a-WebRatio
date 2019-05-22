@@ -1,0 +1,15 @@
+<Element name="TextAnnotation" lowerName="text annotation"
+		pluralLowerName="text annotation">
+		<Description>
+			&lt;a href="/Concepts/Elements/Process/CommonElements/TextAnnotation"/&gt; are a mechanism for a modeler 
+			to provide additional information for the reader of a BPM Diagram.
+		</Description>
+        
+        <ActionRef label="Add Lane" />
+        <ActionRef label="Surround with Group" />
+        <ActionRef label="Move into Embedded Subprocess" />
+        <ActionRef label="Edit Process Parameters..." />
+        <ActionRef label="Search References" />
+        <ActionRef label="Help" />		
+</Element>
+		

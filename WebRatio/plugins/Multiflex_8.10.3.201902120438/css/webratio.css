@@ -1,0 +1,47 @@
+/****************************************************/
+/* Additional rules for rendering WebRatio layouts. */
+/****************************************************/
+
+.Form label + table {
+	clear: none;
+	width: auto;
+	border: none;
+}
+
+.Form label + table td {
+	border: none;
+}
+
+.Form label + table input {
+	width: auto !important;
+	vertical-align: middle;
+}
+
+.Form input[type="checkbox"] {
+	border: none !important;
+}
+
+.Form input + img {
+	float: none !important; clear: none;
+	padding: 0;
+	margin: 0;
+	vertical-align: top;
+}
+
+.footer span.blu {
+	color: rgb(0, 24, 96);
+}
+
+.footer span.red {
+	color: rgb(224, 30, 0);
+}
+
+.footer img {
+	width: 8px; height: 8px;
+	border: 0;
+}
+
+.footer sup {
+	vertical-align: top;
+	font-size: 80%;
+}

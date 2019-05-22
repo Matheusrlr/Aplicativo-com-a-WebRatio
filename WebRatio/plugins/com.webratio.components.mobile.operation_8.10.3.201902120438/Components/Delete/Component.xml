@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component  type="operation" formBased="false" idPrefix="dlu" namePrefix="Delete " label="Delete" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" errorFlowSource="true" errorFlowTarget="true" successFlowSource="true" successFlowTarget="true" multipleSuccessFlowCardinality="true" defaultLabel="Delete {label(id(@dataBinding))}"> 
+    <SuccessFlowCodes xml:space="preserve">return ["Not Found"]</SuccessFlowCodes>
+    <DomainClassProperty attributeName="dataBinding" includeDerived="false" figureDisplayOrder="1">  
+		<Description xml:space="preserve">The class for which one or more instance must be deleted.</Description>
+	</DomainClassProperty>
+    <ConditionalExpression classIdExpr="../../@dataBinding" elementName="ConditionalExpression" defaultPolicy="true" figureDisplayOrder="2" automatic="true">
+		<Description xml:space="preserve">The set of selection criteria that retrieves the instances of the class of the component.</Description> 
+	</ConditionalExpression>
+	<Description xml:space="preserve">A delete component removes a set of class instances or
+an individual class instance.
+The instances to delete are identified using a conditional expression.
+A delete component specification consists of the specification of the class to
+which the component refers and of a conditional expression used to restrict the set
+of instances to delete.</Description>
+	<InputDescription xml:space="preserve" name="Condition-Name">The parameter associated to one of the Conditional Expressions
+of the operation.</InputDescription>
+</Component>

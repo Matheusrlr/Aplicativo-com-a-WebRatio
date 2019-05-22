@@ -1,0 +1,36 @@
+<Element name="StopMeasurement" lowerName="stop measurement"
+		pluralLowerName="">
+		<Description>
+			A &lt;a href="/Concepts/Elements/Process/CommonElements/StopMeasurement"/&gt; is a process 
+	        checkpoint designed to measure time or business variables.
+		</Description>	
+        
+        <ActionRef label="Add Lane" />
+        <ActionRef label="Add Property" />
+        <ActionRef label="Surround with Group" />
+        <ActionRef label="Move into Embedded Subprocess" />
+        <ActionRef label="Edit Process Parameters..." />
+        <ActionRef label="Search References" />
+        <ActionRef label="Help" />		
+        		
+    <PropertyCategory name="General">
+        <PropertyRef label="Id"/>
+        <PropertyRef label="Name"/>
+        <Property label="Measured Element">
+          The element on which the measurement is computed. 
+        </Property>	
+		<Property label="Status">
+          The observed status, either &lt;b&gt;Completed&lt;/b&gt;, &lt;b&gt;Active&lt;/b&gt; or &lt;b&gt;Ready&lt;/b&gt;. 
+        </Property>	
+        <Property label="Start">
+	      &lt;p&gt;
+	      The Select button <Button name="Select"/> opens the 
+	      &lt;a href="/Reference/WizardsAndDialogs/StartMeasurementSelectionDialog"/&gt;.
+	      &lt;/p&gt;
+	      &lt;p&gt;
+	      The Go to Start Measurement button <Button name="Go to Start Measurement"/> moves 
+	      the selection to the referenced start measurement element.
+	      &lt;/p&gt;
+        </Property>
+    </PropertyCategory>
+</Element>

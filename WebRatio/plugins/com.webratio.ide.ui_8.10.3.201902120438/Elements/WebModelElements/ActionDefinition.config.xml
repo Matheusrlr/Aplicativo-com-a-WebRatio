@@ -1,0 +1,47 @@
+  <Element name="ActionDefinition" lowerName="action definition" pluralLowerName="action definitions">
+	<Description>
+		An Action Definition 
+		is a collection of reusable operations and actions.
+	</Description>
+	<ActionRef label="Add Property" />
+	<ActionRef label="Generate Logic Descriptors Only"/>
+	<ActionRef label="Generate Selection"/>
+	<ActionRef label="Find Model Problems"/>
+	<ActionRef label="Help"/>
+	<PropertyCategory name="General">
+		<PropertyRef label="Identifier" />
+		<PropertyRef label="Name" />
+		<PropertyRef label="Running Profiles" />
+		<Property label="Default Success Port Definition">
+			The default exit point of the Action Definition used when the operation chain ends successfully.
+		</Property>	
+		<Property label="Default Error Port Definition">
+			The defaul exit point of the Action Definition used when the operation chain fails.
+		</Property>	
+		<Property label="Source/Source Page">
+			If checked the <ElementRef /> is set as the Login <ElementRef />.
+		</Property>			
+	    <Property label="Transaction">
+	    	If checked all the operations in the Action Definition are considered as a unique transaction.
+	    </Property>
+		<Property label="Login Definition">
+			If checked the <ElementRef /> is set as the Login <ElementRef />.
+		</Property>			
+		
+		
+		
+		
+		<Property label="Paginated" onlyForNatureId="com.webratio.ide.WebNature">
+			TODO:ActionDefinition@Paginated
+		</Property>
+		
+		
+		
+		
+	</PropertyCategory>
+	<PropertyCategory name="Appearance">
+		<Property label="Icon">
+			A distinctive icon displayed by all the module instance components referencing this component.
+		</Property>
+	</PropertyCategory>
+</Element>

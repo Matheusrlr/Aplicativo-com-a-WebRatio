@@ -1,0 +1,12 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+%]
+<Descriptor service="com.webratio.web.mvc.module.CollectorService">
+	<Type>OK</Type>
+	[% for (par in chainColl.elements("Parameter")) { %]
+		<Parameter name="[%= par["name"] %]">
+			[%= par["id"] %]
+		</Parameter>
+	[% } %]
+</Descriptor>

@@ -1,0 +1,72 @@
+#?delimiters [%, %], [%=, %]
+[% 
+for (fragment in fragments) { 
+	def fragmentsStack = [fragment] + parentFragments
+	def childFragments = fragment.children["control"] ?: []
+	
+	/* Render the fragment text as control data, then recurse into child fragments */
+	def textClosure = {
+		%]
+		<c:if test="${webratio:isLayoutRefreshed('[% printJSPTagValue(fragmentsStack.collect { getLayoutId(it.element) }.join(",")) %]', pageContext)}">
+			<ControlData control="[%= getLayoutId(fragment.element) %]" type="text/html">
+				<![CDATA[[% 
+					
+					/* Boxing script capture start */
+					%]<webratio:CollectScripts var="inlineScripts" enabled="${wrBoxed}" eventHandlerWrapper="wr.keepScoped">[%
+					
+					/* Fragment text */
+					printRaw(fragment.text)
+					
+					/* Boxing script capture end */
+					%]</webratio:CollectScripts>
+					<c:if test="${wrBoxed and not(empty inlineScripts)}">
+						<wr:RequireResource ref="wr-runtime" condition="wrBoxed">
+							<script type="text/javascript">
+								wr.runScoped("${wrClientAppName}", function(ajaxRequest, WRAjaxRequest, $H, WRAjax, WRAjaxRequestUtils, WRAjaxRequestQueue, WREvent, WREventUtils, Form) {
+									${inlineScripts}
+								});
+							</script>
+						</wr:RequireResource>
+					</c:if>[%
+					
+				%]]]>
+			</ControlData>
+		</c:if>
+		[%
+		
+		if (!childFragments.isEmpty()) {
+			
+			/* Alternative condition start */
+			def alternative = getByIdOptional(fragment.element, "pageId")?.parent?.selectSingleNode("self::Alternative")
+			if (alternative) {
+				%]<c:if test="${[%= alternative["id"] %] eq '[%= fragment.element["pageId"] %]'}">[%
+			}
+			
+			/* Visibility condition start */
+			def visibilityCondition = getVisibilityCondition(fragment.element)
+			if (visibilityCondition) {
+				%]<c:if test="${[% printJSPTagValue(visibilityCondition) %]}">[%
+			}
+			
+			/* Process child fragments recursively */
+			printRaw(executeContextTemplate("MVC/Ajax/ControlData.template", ["fragments": childFragments, "parentFragments": fragmentsStack]))
+			
+			/* Visibility condition end */
+			if (visibilityCondition) {
+				%]</c:if>[%
+			}
+			
+			/* Alternative condition end */
+			if (alternative) {
+				%]</c:if>[%
+			}
+		}
+	}
+	
+	/* If asked, print inside an auxiliary page; otherwise, print it as normal */
+	if (fragment.askedAuxId) {
+		printRaw(executeContextTemplate("MVC/AuxPage.template", ["auxId": fragment.askedAuxId, "content": textClosure]))
+	} else {
+		printRaw(executeTemplate(textClosure))
+	}
+} %]

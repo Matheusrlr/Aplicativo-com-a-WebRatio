@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="content" formBased="false" idPrefix="mssu" namePrefix="Message " label="Message" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true"  errorFlowTarget="true"  successFlowTarget="true" canPlaceLayoutComponent="true"> 
+  <FileProperty label="Message File" attributeName="messageFile" extension="txt"> 
+    <Description xml:space="preserve">A file containing the message text. Useful in case of multiple components sharing the same text.</Description> 
+  </FileProperty>  
+  <TextProperty elementName="Message" label="Message Text"> 
+    <IsEnabled>return (element["messageFile"] == "")</IsEnabled>  
+    <Description xml:space="preserve">The message to be printed out.</Description> 
+  </TextProperty>  
+  <IsContextFreeComponent xml:space="preserve">return getIncomingFlows(component).empty</IsContextFreeComponent>  
+  <IsMultiConditionComponent xml:space="preserve">return getIncomingFlows(component).size &gt; 1</IsMultiConditionComponent>  
+  <SubComponent elementName="Placeholder" sortable="false" idPrefix="ph" namePrefix="Placeholder" maxCard="many"> 
+    <TextProperty elementName="Value"> 
+      <Description xml:space="preserve">The default placeholder value.</Description> 
+    </TextProperty>  
+    <StringProperty attributeName="valueSeparator"> 
+      <Description xml:space="preserve">The separator value used to concatenate placeholder multiple values (default ", ").</Description> 
+    </StringProperty>  
+    <Description xml:space="preserve">The placeholder used to dynamically compute the messages at runtime.</Description> 
+  </SubComponent >  
+  <Description xml:space="preserve">The message lets the user to print out messages within the page. 
+The messages passed on the component input flows will be used instead of the message text or file specified on the component.
+Within the messages is possible to use placeholders using the following syntax: $$placeholder-name$$ (eg. $$FOO$$ baz $$BAR$$).
+To specify a multiple values separator for a certain placeholder is also possible to use the inline syntax: $$placeholder-name|separator$$.
+The component input parameters are automatically updated depending on the declared placeholders.
+Placeholders can be also defined as sub-components in case the input messages are dynamically provided at runtime.
+</Description>    <InputDescription xml:space="preserve" name="Shown Messages">A string or an array of strings to be displayed by the component.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Placeholder-Name">The value(s) associated to a certain placeholder.</InputDescription>  
+  <BeanDescription xml:space="preserve">
+	&lt;p&gt;The component state object for the Message consists of the following properties:
+	   &lt;ul&gt;
+  		&lt;li&gt;&lt;code&gt;int dataSize&lt;/code&gt;: the number of messages to show&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;String[] data&lt;/code&gt;: the array of messages to show&lt;/li&gt;
+  	   &lt;/ul&gt;
+	&lt;/p&gt;
+    </BeanDescription> 
+</Component>

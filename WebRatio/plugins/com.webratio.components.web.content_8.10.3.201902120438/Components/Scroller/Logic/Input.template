@@ -1,0 +1,64 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import org.apache.commons.lang.math.NumberUtils
+
+setXMLOutput()
+def componentId = component["id"]
+def classId = component["dataBinding"]
+def domainClass = getById(classId)
+def virtual = (domainClass != null) && (domainClass["duration"] == "volatile" && domainClass["volatileStorage"] != "database")
+def currentParamSuffix = (NumberUtils.toInt(component["blockFactor"], 1) == 1) ? ".single" : ""
+def showCurrent = (component["blockFactor"] == "") || (component["useCountQuery"] != "true" && component.selectSingleNode("Property[@name = 'useCount']") == null) || virtual 
+%>
+<InputParameters>
+<InputParameter name="<%=component["id"]%>.maxResults" label="Max Results" mandatory="false"/>
+<%if(showCurrent){%>
+  <% for (a in getKeyAttributes(domainClass)) { %>
+      <InputParameter 
+          name="<%=componentId%>.scroller.<%=a["id"]%>" 
+          refId="<%=a["id"]%>"
+          type="<%=classId%>.<%=a["id"]%><%=currentParamSuffix%>"
+          label="current <%=getLabel(a)%>"
+          mandatory="false"
+          clearOnIncomingLinkClick="true"
+          selfUpdated="true"/>
+  <% } %>
+<% } %>
+<% for (cond in component.selectNodes("ConditionalExpression/*")) { 
+    if (cond.name == "AssociationRoleCondition" && cond["role"]) { 
+     for (a in getKeyAttributes(getSourceDomainClass(getRoleByExpression(cond["role"])))) { %>
+      <InputParameter 
+          name="<%=cond["id"]%>.<%=a["id"]%>"
+          refId="<%=cond["id"]%>"
+          type="<%=getAssignableTypeExpression(getSourceDomainClass(getRoleByExpression(cond["role"])), a, true, true)%>"
+          label="<%=getRoleConditionLabel(cond, a)%>"
+          mandatory="<%=isRequiredConditionalExpressionPart(cond)%>"/>
+    <% } %>
+  <% } else if (cond.name == "AttributesCondition" && cond["attributes"]) { 
+        def predicate = cond["predicate"] 
+        if ((cond["value"] == "") && !isUnaryPredicate(predicate)) { %>
+          <InputParameter
+            name="<%=cond["id"]%>"
+            refId="<%=cond["id"]%>"
+            type="<%=cond["attributes"].tokenize(" ").collect{classId + "." + it}.join("|")%>"
+            label="<%=getAttributesConditionLabel(cond)%>"
+            mandatory="<%=isRequiredConditionalExpressionPart(cond)%>"/>
+    <% } %>
+  <% } else if (cond.name == "KeyCondition") { 
+        for (a in getKeyAttributes(domainClass)) { %>
+         <InputParameter 
+            name="<%=cond["id"]%>.<%=a["id"]%>"
+            refId="<%=a["id"]%>"
+            type="<%=getAssignableTypeExpression(domainClass, a, true, true)%>"
+            label="<%=getKeyConditionLabel(cond, domainClass, a)%>"
+            mandatory="<%=isRequiredConditionalExpressionPart(cond)%>"/>
+    <% } %>
+  <% } %>
+<% } %>
+
+<InputParameter name="<%=componentId%>.block" clearOnNewInputValues="true" hideCoupling="true"/>
+<InputParameter name="<%=componentId%>.blockFactor" label="Block Factor" mandatory="false"/>
+<InputParameter name="<%=componentId%>.blockWindow" label="Block Window" mandatory="false"/>
+
+
+</InputParameters>

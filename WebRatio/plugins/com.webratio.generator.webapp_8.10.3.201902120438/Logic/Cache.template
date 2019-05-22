@@ -1,0 +1,32 @@
+#?delimiters [%,%],[%=,%]
+[%
+setXMLOutput()
+import org.apache.commons.lang.StringUtils
+%]
+
+<Descriptor service="com.webratio.rtx.cache.CacheService" name="Cache Service">
+	[% if (wr.project.selectNodes(".//ServiceClass[@dataServiceCaching='defaultCache']|.//DataServices[@dataServiceCaching='defaultCache']").size() > 0) {%]
+		<Cache id="defaultCache" class="com.webratio.data.cache.EHCache">
+			<Property name="timeToLive">${ehcache.timeToLive}</Property>
+			<Property name="timeToIdle">${ehcache.timeToIdle}</Property>
+			<Property name="maxEntriesLocalHeap">${ehcache.maxEntriesLocalHeap}</Property>
+			<Property name="maxEntriesLocalDisk">${ehcache.maxEntriesLocalDisk}</Property>
+			<Property name="clearOnFlush">true</Property>
+			<Property name="copyOnRead">false</Property>
+			<Property name="copyOnWrite">false</Property>
+			<Property name="diskExpiryThreadIntervalSeconds">120</Property>
+			<Property name="diskSpoolBufferSizeMB">30</Property>
+			<Property name="eternal">true</Property>
+			<Property name="memoryStoreEvictionPolicy">LRU</Property>
+			<Property name="logging">false</Property>
+		</Cache>
+	 [%}
+	   if (wr.project.selectSingleNode(".//DataServices") != null) {
+	 	def dataServiceCaching = StringUtils.defaultIfEmpty(wr.project.selectSingleNode(".//DataServices")["dataServiceCaching"], "defaultCache")
+	 %]
+	 	<DataServiceCaching cacheId="[%=dataServiceCaching%]"/>
+	   [%for (serviceClass in wr.project.selectNodes(".//ServiceClass")) {%]
+	   		<ServiceClass id="[%=serviceClass["class"]%]" cacheId="[%=StringUtils.defaultIfEmpty(serviceClass["dataServiceCaching"], dataServiceCaching)%]"/> 
+	   [%}
+	   }%]
+</Descriptor>

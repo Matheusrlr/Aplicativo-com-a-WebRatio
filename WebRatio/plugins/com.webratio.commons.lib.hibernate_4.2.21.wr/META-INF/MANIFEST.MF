@@ -1,0 +1,125 @@
+Manifest-Version: 1.0
+Export-Package: org.hibernate,org.hibernate.action.internal,org.hibern
+ ate.action.spi,org.hibernate.annotations,org.hibernate.annotations.co
+ mmon,org.hibernate.annotations.common.annotationfactory,org.hibernate
+ .annotations.common.reflection,org.hibernate.annotations.common.refle
+ ction.java,org.hibernate.annotations.common.reflection.java.generics,
+ org.hibernate.annotations.common.util,org.hibernate.annotations.commo
+ n.util.impl,org.hibernate.bytecode.buildtime.internal,org.hibernate.b
+ ytecode.buildtime.spi,org.hibernate.bytecode.enhance,org.hibernate.by
+ tecode.enhance.spi,org.hibernate.bytecode.instrumentation.internal,or
+ g.hibernate.bytecode.instrumentation.internal.javassist,org.hibernate
+ .bytecode.instrumentation.spi,org.hibernate.bytecode.internal.javassi
+ st,org.hibernate.bytecode.spi,org.hibernate.cache,org.hibernate.cache
+ .internal,org.hibernate.cache.spi,org.hibernate.cache.spi.access,org.
+ hibernate.cache.spi.entry,org.hibernate.cfg,org.hibernate.cfg.annotat
+ ions,org.hibernate.cfg.annotations.reflection,org.hibernate.cfg.beanv
+ alidation,org.hibernate.cfg.naming,org.hibernate.classic,org.hibernat
+ e.collection.internal,org.hibernate.collection.spi,org.hibernate.cont
+ ext,org.hibernate.context.internal,org.hibernate.context.spi,org.hibe
+ rnate.criterion,org.hibernate.dialect,org.hibernate.dialect.function,
+ org.hibernate.dialect.lock,org.hibernate.dialect.pagination,org.hiber
+ nate.dialect.resolver,org.hibernate.dialect.unique,org.hibernate.engi
+ ne,org.hibernate.engine.internal,org.hibernate.engine.jdbc,org.hibern
+ ate.engine.jdbc.batch.internal,org.hibernate.engine.jdbc.batch.spi,or
+ g.hibernate.engine.jdbc.internal,org.hibernate.engine.jdbc.spi,org.hi
+ bernate.engine.loading.internal,org.hibernate.engine.profile,org.hibe
+ rnate.engine.query.spi,org.hibernate.engine.query.spi.sql,org.hiberna
+ te.engine.spi,org.hibernate.engine.transaction.internal,org.hibernate
+ .engine.transaction.internal.jdbc,org.hibernate.engine.transaction.in
+ ternal.jta,org.hibernate.engine.transaction.spi,org.hibernate.engine.
+ transaction.synchronization.internal,org.hibernate.engine.transaction
+ .synchronization.spi,org.hibernate.event.internal,org.hibernate.event
+ .service.internal,org.hibernate.event.service.spi,org.hibernate.event
+ .spi,org.hibernate.exception,org.hibernate.exception.internal,org.hib
+ ernate.exception.spi,org.hibernate.hql.internal,org.hibernate.hql.int
+ ernal.antlr,org.hibernate.hql.internal.ast,org.hibernate.hql.internal
+ .ast.exec,org.hibernate.hql.internal.ast.tree,org.hibernate.hql.inter
+ nal.ast.util,org.hibernate.hql.internal.classic,org.hibernate.hql.spi
+ ,org.hibernate.id,org.hibernate.id.enhanced,org.hibernate.id.factory,
+ org.hibernate.id.factory.internal,org.hibernate.id.factory.spi,org.hi
+ bernate.id.insert,org.hibernate.id.uuid,org.hibernate.integrator.inte
+ rnal,org.hibernate.integrator.spi,org.hibernate.internal,org.hibernat
+ e.internal.jaxb,org.hibernate.internal.jaxb.cfg,org.hibernate.interna
+ l.jaxb.mapping.hbm,org.hibernate.internal.jaxb.mapping.orm,org.hibern
+ ate.internal.util,org.hibernate.internal.util.beans,org.hibernate.int
+ ernal.util.collections,org.hibernate.internal.util.compare,org.hibern
+ ate.internal.util.config,org.hibernate.internal.util.io,org.hibernate
+ .internal.util.jndi,org.hibernate.internal.util.xml,org.hibernate.jdb
+ c,org.hibernate.jmx,org.hibernate.loader,org.hibernate.loader.collect
+ ion,org.hibernate.loader.criteria,org.hibernate.loader.custom,org.hib
+ ernate.loader.custom.sql,org.hibernate.loader.entity,org.hibernate.lo
+ ader.hql,org.hibernate.lob,org.hibernate.mapping,org.hibernate.metada
+ ta,org.hibernate.metamodel,org.hibernate.metamodel.binding,org.hibern
+ ate.metamodel.domain,org.hibernate.metamodel.relational,org.hibernate
+ .metamodel.relational.state,org.hibernate.metamodel.source,org.hibern
+ ate.metamodel.source.annotations,org.hibernate.metamodel.source.annot
+ ations.attribute,org.hibernate.metamodel.source.annotations.attribute
+ .type,org.hibernate.metamodel.source.annotations.entity,org.hibernate
+ .metamodel.source.annotations.global,org.hibernate.metamodel.source.a
+ nnotations.xml,org.hibernate.metamodel.source.annotations.xml.filter,
+ org.hibernate.metamodel.source.annotations.xml.mocker,org.hibernate.m
+ etamodel.source.binder,org.hibernate.metamodel.source.hbm,org.hiberna
+ te.metamodel.source.internal,org.hibernate.metamodel.spi,org.hibernat
+ e.param,org.hibernate.persister.collection,org.hibernate.persister.en
+ tity,org.hibernate.persister.internal,org.hibernate.persister.spi,org
+ .hibernate.pretty,org.hibernate.property,org.hibernate.proxy,org.hibe
+ rnate.proxy.dom4j,org.hibernate.proxy.map,org.hibernate.proxy.pojo,or
+ g.hibernate.proxy.pojo.javassist,org.hibernate.secure.internal,org.hi
+ bernate.service,org.hibernate.service.classloading.internal,org.hiber
+ nate.service.classloading.spi,org.hibernate.service.config.internal,o
+ rg.hibernate.service.config.spi,org.hibernate.service.internal,org.hi
+ bernate.service.jdbc.connections.internal,org.hibernate.service.jdbc.
+ connections.spi,org.hibernate.service.jdbc.dialect.internal,org.hiber
+ nate.service.jdbc.dialect.spi,org.hibernate.service.jmx.internal,org.
+ hibernate.service.jmx.spi,org.hibernate.service.jndi,org.hibernate.se
+ rvice.jndi.internal,org.hibernate.service.jndi.spi,org.hibernate.serv
+ ice.jta.platform.internal,org.hibernate.service.jta.platform.spi,org.
+ hibernate.service.spi,org.hibernate.sql,org.hibernate.sql.ordering.an
+ tlr,org.hibernate.stat,org.hibernate.stat.internal,org.hibernate.stat
+ .spi,org.hibernate.tool.enhance,org.hibernate.tool.hbm2ddl,org.hibern
+ ate.tool.instrument,org.hibernate.tool.instrument.javassist,org.hiber
+ nate.transaction,org.hibernate.transform,org.hibernate.tuple,org.hibe
+ rnate.tuple.component,org.hibernate.tuple.entity,org.hibernate.type,o
+ rg.hibernate.type.descriptor,org.hibernate.type.descriptor.java,org.h
+ ibernate.type.descriptor.sql,org.hibernate.usertype
+Require-Bundle: com.webratio.commons.lib.antlr,com.webratio.commons.li
+ b.dom4j,com.webratio.commons.lib.javassist,com.webratio.commons.lib.j
+ avax.persistence,com.webratio.commons.lib.javax.transaction,com.webra
+ tio.commons.lib.jboss.logging
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/hibernate-core.jar,lib/hibernate-commons-annotat
+ ions.jar,lib/hibernate-c3p0.jar
+Bundle-Version: 4.2.21.wr
+Bundle-Name: WebRatio 3rd Party Library - Hibernate
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.hibernate
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
+Name: lib/hibernate-coresrc.zip
+SHA-256-Digest: 5n8fb4Xl+Ij8nosk8ZsCFEGYCBrjNpc2HVqfk+t9pVA=
+
+Name: lib/hibernate-commons-annotations.jar
+SHA-256-Digest: rmtnCKA6FEJlrHvx3vZLGN7ztldqilLXpnh9nPAKoOw=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: lib/hibernate-c3p0src.zip
+SHA-256-Digest: cfnHiNSOuCiJOVr4Wu2/EAn2ANa0xd7dNDOjSm47UbE=
+
+Name: lib/hibernate-core.jar
+SHA-256-Digest: mDqwLkf0ACLW4fwWdK1nzKNLlZhnshKmbdgLLr+1ODE=
+
+Name: lib/hibernate-c3p0.jar
+SHA-256-Digest: IhGtaS/hK1ZFU8+kKxC01t7PRn0Pf5FGZ/8gncEWpaU=
+
+Name: about.html
+SHA-256-Digest: Tf/M59OH9cBKE3LnxK7hsKmo5ZLqex6U6ix0QnJ/aO4=
+
+Name: lib/hibernate-commons-annotationssrc.zip
+SHA-256-Digest: viOPchpgsC+5qz99w4RU85Y/61SIgftHHavwndKD/A0=
+
+Name: about_files/lgpl-2.1.txt
+SHA-256-Digest: Hn5rrlpb3jLxrlp8N6CC0asDz4k1T3+TasQL6eOaZTE=
+

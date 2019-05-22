@@ -1,0 +1,101 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.helpers.mobile.DataMappingHelper.UnaryCompoundNode
+import com.webratio.generator.helpers.mobile.DataMappingHelper.BinaryCompoundNode
+import com.webratio.generator.helpers.mobile.DataMappingHelper.VariableConditionTermNode
+import com.webratio.generator.helpers.mobile.DataMappingHelper.ConstantConditionTermNode
+
+setJSONOutput()
+
+/* Function for printing a generic tree node */
+def printNode(node) {
+	switch (node.getClass()) {
+	case UnaryCompoundNode.class:
+		return printUnaryCompoundNode(node)
+	case BinaryCompoundNode.class:
+		return printBinaryCompoundNode(node)
+	case ConstantConditionTermNode.class:
+		return printConstantTermNode(node)
+	case VariableConditionTermNode.class:
+		return printVariableTermNode(node)
+	default:
+		throwGenerationException("Unexpected node type " + node.getClass())
+	}
+}
+
+/* Function for printing Unary Compound nodes */
+def printUnaryCompoundNode(node) { %]
+	{
+		"[%= node.operator %]": [% printNode(node.operand) %]
+		[% printConfig(node) %]
+	}
+[% }
+
+/* Function for printing Binary Compound nodes */
+def printBinaryCompoundNode(node) { %]
+	{
+		"[%= node.operator %]": [
+			[% node.operands.eachWithSeparator(",") { operand -> %]
+				[% printNode(operand) %]
+			[% } %]
+		]
+		[% printConfig(node) %]
+	}
+[% }
+
+/* Function for printing Constant Term nodes */
+def printConstantTermNode(node) { %]
+	{
+		"property": "[%= node.property %]",
+		"operator": "[%= node.operator %]",
+		[% if (node.valueOperator && node.valueOperator != "or") { %]
+			"valueOp": "[%= node.valueOperator %]",
+		[% } %]
+		[% if (node.values.size() > 1) { %]
+			"value": [
+				[% node.values.eachWithSeparator(",") { value -> %]
+					"[%= value %]"
+				[% } %]
+			]
+		[% } else { %]
+			"value": "[%= node.values[0] %]"
+		[% } %]
+		[% if (node.impliedResult != null) { %],
+			"implied": [%= node.impliedResult %]
+		[% } %]
+		[% printConfig(node) %]
+	}
+[% }
+
+/* Function for printing Variable Term nodes */
+def printVariableTermNode(node) { %]
+	{
+		"property": "[%= node.property %]",
+		"operator": "[%= node.operator %]",
+		[% if (node.valueOperator && node.valueOperator != "or") { %]
+			"valueOp": "[%= node.valueOperator %]",
+		[% } %]
+		"valueInput": "[%= node.inputName %]"
+		[% if (node.impliedResult != null) { %],
+			"implied": [%= node.impliedResult %]
+		[% } %]
+		[% printConfig(node) %]
+	}
+[% }
+
+/* Function for printing the configuration part of a node, if present */
+def printConfig(node) { %]
+	[% if (node.config) { %],
+		"config": {
+			"oneImpliedInputRequired": [%= node.config.oneImpliedInputRequired %]
+		}
+	[% } %]
+[% }
+
+def tree = buildConditionalExpressionFilterTree(dclass, conditionalExpr)
+if (tree) {
+	printNode(tree)
+} else {
+	%]null[%
+}
+%]

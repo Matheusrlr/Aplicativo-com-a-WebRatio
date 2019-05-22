@@ -1,0 +1,9 @@
+#?delimiters [%, %], [%=, %]
+[%
+def type = attr["type"]
+if (type == "blob") {
+%]
+<c:out value="${webratio:encodeURL([%=item%].[%=getFieldName(attr["attribute"])%], pageContext)}"/>
+[% } else { %]
+<c:out value="${[%=item%].[%=getFieldName(attr["attribute"])%]}"/>
+[% } %]

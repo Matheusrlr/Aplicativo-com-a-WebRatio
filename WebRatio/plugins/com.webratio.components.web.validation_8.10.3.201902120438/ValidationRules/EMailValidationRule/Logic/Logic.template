@@ -1,0 +1,3 @@
+#?delimiters <%,%>,<%=,%>
+<%setXMLOutput()%>
+<ValidationRule service="com.webratio.components.web.validation.EMailValidationRuleService"/>

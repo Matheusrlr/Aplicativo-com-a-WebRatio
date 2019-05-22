@@ -1,0 +1,21 @@
+	  <Element name="SubType" lowerName="sub type"
+		pluralLowerName="sub types">
+		<Description>
+			A type can be specialized in multiple sub types. 
+			Each sub type can be associated with a different formatting pattern that can be defined 
+			using the &lt;a href="/Reference/WizardsAndDialogs/LocalizeDialog"/&gt;.
+		</Description>
+		<Action label="Add Property"/>
+		<Action label="Localize">
+			Opens the &lt;a href="/Reference/WizardsAndDialogs/LocalizeDialog"/&gt;
+			to allow formatting the type pattern.
+		</Action>
+		<ActionRef label="Find Model Problems"/>
+		<ActionRef label="Help"/>
+		
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+			<PropertyRef label="Type" name="SubType"/>
+		</PropertyCategory>
+   	</Element>

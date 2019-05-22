@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root>
+	
+	<Statement name="SOAP Envelope" image="STATEMENT" templateTypes="xml" indent="true">
+		<Description>
+			Outputs a full SOAP envelope, including an empty SOAP body.
+		</Description>
+		<Value><![CDATA[
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+	<soapenv:Body>
+		$$CURSOR$$
+	</soapenv:Body>
+</soapenv:Envelope>
+]]></Value>
+	</Statement>
+	
+</Root>

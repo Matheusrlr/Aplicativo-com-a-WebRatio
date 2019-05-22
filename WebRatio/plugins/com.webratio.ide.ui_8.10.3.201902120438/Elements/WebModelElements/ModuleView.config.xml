@@ -1,0 +1,22 @@
+	<Element name="ModuleView" lowerName="module definitions"
+		pluralLowerName="Module Definitions">
+		<Description>
+			A Module View is a collection of 
+			modules which contain the reusable operations, view components, operation groups and pages.
+		</Description>
+		<ActionRef label="Add Content Module"/>
+		<ActionRef label="Add Action"/>
+		<ActionRef label="Add Hybrid Module"/>
+		<ActionRef label="Add Property" />
+		<ActionRef label="Export Diagram Image..."/>
+		<ActionRef label="Generate Logic Descriptors Only"/>
+		<ActionRef label="Generate Selection"/>
+		<ActionRef label="Find Model Problems"/>
+		<ActionRef label="Help"/>
+		
+		<PropertyCategory name="General">
+			<PropertyRef label="Identifier" />
+			<PropertyRef label="Name" />
+			<PropertyRef label="Running Profiles" />
+		</PropertyCategory>
+	</Element>

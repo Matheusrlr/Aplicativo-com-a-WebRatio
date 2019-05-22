@@ -1,0 +1,19 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import org.apache.commons.lang.StringUtils
+setXMLOutput()
+
+def predicate = element["predicate"]
+
+%>
+<ValidationRule service="com.webratio.components.web.validation.CompareValidationRuleService">
+  <Predicate><%=predicate%></Predicate>
+  <%if(predicate == "eq" || predicate == "neq"){%>
+    <IgnoreCase><%=element["ignoreCase"] == "true"%></IgnoreCase>
+  <%}%>
+  <%if(StringUtils.isBlank(element["valueField"])){%>
+    <Value><%=element["value"]%></Value>
+  <%}else{%>  
+    <ValueProperty><%=element["valueField"]%></ValueProperty>
+  <%}%>  
+</ValidationRule>

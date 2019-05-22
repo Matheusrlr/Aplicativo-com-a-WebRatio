@@ -1,0 +1,54 @@
+#?delimiters [%, %], [%=, %]
+[%
+def sharedSources = new java.util.HashSet()
+def defaultSources = new java.util.HashSet()
+def specificSources = com.google.common.collect.HashMultimap.create()
+
+/*
+ * CSP configuration
+ */
+
+/* Source valid for all cases */
+sharedSources.add("*")                                  // any network host, HTTP(S)
+sharedSources.add("'self'")                             // same origin
+sharedSources.add("cdvfile://*")                        // Cordova file system
+sharedSources.add("content://*")                        // app content in iOS
+sharedSources.add("blob:")                              // object URIs
+sharedSources.add("data:")                              // data URIs
+sharedSources.add("filesystem:")                        // browser file system (mainly for Ripple)
+sharedSources.add("gap:")                               // used by Cordova bridge on iOS
+sharedSources.add("https://ssl.gstatic.com")            // used by Android TalkBack
+sharedSources.addAll(wr.appConfig.extraAllowedSources)  // custom sources specific to the app
+
+/* Additional sources for SCRIPTS */
+specificSources.put("script-src", "'unsafe-inline'")
+specificSources.put("script-src", "'unsafe-eval'")
+
+/* Additional sources for STYLESHEETS */
+specificSources.put("style-src", "'unsafe-inline'")
+
+/* 
+ * Create the CSP string; keep 'default-src' at the first place for readability
+ */
+def cspString 
+buildCspString: {
+
+	/* Distribute shared sources to all directives */
+	defaultSources.addAll(sharedSources)
+	for (directiveName in specificSources.keySet()) {
+		specificSources.putAll(directiveName, sharedSources)
+	}
+
+	def sb = new StringBuilder()
+	def concatenateDirective = { directiveName, sources ->
+		if (!sources.isEmpty()) {
+			sb.append(directiveName + " " + sources.toSorted().join(" ") + ";\r\n")
+		}
+	}
+	concatenateDirective("default-src", defaultSources)
+	for (directiveName in specificSources.keySet()) {
+		concatenateDirective(directiveName, specificSources.get(directiveName))
+	}
+	cspString = sb.toString()
+}
+%][%= cspString %]

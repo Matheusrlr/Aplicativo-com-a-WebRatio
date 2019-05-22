@@ -1,0 +1,52 @@
+#?delimiters [%, %], [%=, %]
+[%
+setXMLOutput()
+
+def useBody = (component["requestMethod"] == "PUT" || component["requestMethod"] == "POST")
+%]
+<InputParameters>
+	
+	[% 
+		def printRequestParameterInput(param, labelPrefix = "", isArrayContext = false, skipContent = false) {
+			def label = labelPrefix + param["name"]
+			if (isArrayContext && param["isArray"] == "true") {
+				return
+			}
+			def isArray = isArrayContext || param["isArray"] == "true"
+			%]
+			<InputParameter
+				name="[%= param["id"] %]"
+				label="[%= label %][% if (param["isArray"] == "true") { %] [array][% } %]"
+			/>
+			[%
+			if (!skipContent && (param.name == "RequestParameter" || param.name == "ComplexParameterFragment")) {
+				def childLabelPrefix = label + "/"
+				for (childParam in param.selectNodes("SimpleParameterFragment|ComplexParameterFragment")) {
+					printRequestParameterInput(childParam, childLabelPrefix, isArray) // recurse
+				}
+			}
+		}
+	%]
+	[% for (param in component.selectNodes("RequestParameter")) { %]
+		[% printRequestParameterInput(param, "", !useBody) %]
+	[% } %]
+	
+	[% if (useBody) { %]
+		<InputParameter name="attachmentBlobs" label="Attachment BLOBs" image="BLOB"/>
+	[% } %]
+	
+	[% (component["endpointURL"] =~ /(?<!\$)\{(.+?)\}/).each { match -> %]
+		[% def inputName = match[1] %]
+		<InputParameter name="path.[%= inputName %]" label="Path.[%= inputName %]"/>
+	[% } %]
+	
+	[% for (requestHeader in component.selectNodes("RequestHeader")) { %]
+		<InputParameter name="[%= requestHeader["id"] %]" label="[%= requestHeader["name"] %]" image="RestfulRequestResponse/RequestHeader"/>
+	[% } %]
+	
+	[% if (component["httpAuthentication"] == "true") { %]
+		<InputParameter name="httpUsername" label="HTTP Security Username" order="1"/>
+		<InputParameter name="httpPassword" label="HTTP Security Password" order="2"/>
+	[% } %]
+
+</InputParameters>

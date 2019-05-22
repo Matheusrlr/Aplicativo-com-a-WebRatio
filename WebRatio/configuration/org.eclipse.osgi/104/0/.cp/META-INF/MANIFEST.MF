@@ -1,0 +1,970 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: com.webratio.commons.startup;singleton:=true
+Export-Package: com.webratio.commons.startup,com.webratio.commons.star
+ tup.commons,com.webratio.commons.startup.commons.dialogs,com.webratio
+ .commons.startup.commons.resources,com.webratio.commons.startup.commo
+ ns.wizards,com.webratio.commons.startup.contributors,com.webratio.com
+ mons.startup.preferences
+Bundle-Name: WebRatio Commons UI Startup Plug-in
+Bundle-Version: 8.10.3.201902120438
+Require-Bundle: org.eclipse.ui,org.eclipse.core.runtime,com.webratio.c
+ ommons.libs,org.eclipse.core.resources,org.eclipse.ui.forms,org.eclip
+ se.search,org.eclipse.equinox.ds,com.webratio.commons.eclipse.ui,com.
+ webratio.commons.lib.google.guava,com.webratio.commons.lib.apache.com
+ mons.lang,com.webratio.commons.lib.apache.commons.httpclient,com.webr
+ atio.commons.lib.apache.commons.io,com.webratio.commons.lib.dom4j,com
+ .webratio.commons.eclipse.core,com.webratio.eclipse.cloud.core,com.we
+ bratio.cloud,com.webratio.commons.base,com.webratio.commons.lib.jsr30
+ 5,com.webratio.services.licensing.client,org.eclipse.equinox.p2.ui.sd
+ k.scheduler,org.eclipse.equinox.p2.updatechecker,org.eclipse.equinox.
+ p2.updatesite,org.eclipse.equinox.p2.ui,org.eclipse.equinox.p2.operat
+ ions,org.eclipse.equinox.p2.core,org.eclipse.equinox.p2.engine,org.ec
+ lipse.equinox.p2.metadata
+Bundle-ManifestVersion: 2
+Bundle-Activator: com.webratio.commons.startup.WRUIStartupPlugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: WebRatio
+
+Name: plugin.xml
+SHA-256-Digest: w2xs/HKZlgtTKPoshqAT5T1l1Q7soTJSMNOR3Ua/cRU=
+
+Name: com/webratio/commons/startup/commons/wizards/SelectionWizardPage
+ $2.class
+SHA-256-Digest: pTU0pSu+5JiQYMRsxElsY+/CImyctQCcrtFk3gN64yw=
+
+Name: com/webratio/commons/startup/Configuration$WorkingMode.class
+SHA-256-Digest: U5Gp+CMssOMCuwf0C9x3Dvhr++Kh+PTh3iSTyjlr2hM=
+
+Name: com/webratio/commons/startup/internal/wizards/ConnectionWizardPa
+ ge.class
+SHA-256-Digest: rOxge9S0J57vfa7wsux+1xOC1o/JPLw3D4403cy9HuQ=
+
+Name: com/webratio/commons/startup/commons/MFDebugHelper$Timer.class
+SHA-256-Digest: 8gGCq4DUtv56aHOqR6inJdsvf1SZdyDKddXJIlNTWoA=
+
+Name: com/webratio/commons/startup/ILicenseURLProvider.class
+SHA-256-Digest: 3PCnSeJ7KcHXJtuahej2MY3sVlnPp5671U17rQLHIQU=
+
+Name: com/webratio/commons/startup/commons/dialogs/BrowserDialog$2.cla
+ ss
+SHA-256-Digest: tnazfNq/ny5x8eBNZT31EclnPHLFWYeLoLkY8c8USRk=
+
+Name: com/webratio/commons/startup/internal/wizards/WizardFactory$Manu
+ alOfflineWizard$1.class
+SHA-256-Digest: wroEQVtaNh/a3yHykbxMGQL6arqb2bMGm1ap7IkxkSU=
+
+Name: com/webratio/commons/startup/commons/dialogs/AbstractStartupWiza
+ rdEndingPagePart.class
+SHA-256-Digest: qJ5t8yCwixSqo/ouelKci5sVCGlguqXQw3xf72sq8uk=
+
+Name: com/webratio/commons/startup/commons/wizards/SelectionWizard$Pag
+ e.class
+SHA-256-Digest: 342HWyoO7s0n8ZTbFRvhfqiECytq240HJRdtrQOnY4Y=
+
+Name: com/webratio/commons/startup/preferences/UsageStatisticsFieldEdi
+ tor$2.class
+SHA-256-Digest: 2pzYd4G6ecyF/oa0plzY54UyaB6y7zr2cIfqRxhJlOk=
+
+Name: com/webratio/commons/startup/IRequestCodeProvider.class
+SHA-256-Digest: VmRWegCGCD1gvEHtykZHzBrMQJvxPs+blL2ZbYzyiG4=
+
+Name: com/webratio/commons/startup/WRUIStartupPlugin$1.class
+SHA-256-Digest: P+/h0+IKQBUG015sRZ61TBoeQkgxUyHWeeSMmGxzw44=
+
+Name: com/webratio/commons/startup/internal/helpers/StartupContributor
+ sHelper.class
+SHA-256-Digest: l+fmYcKJrPJ8hkprEi2wqo3wyZkqhyMs+D9Dguw8xTs=
+
+Name: com/webratio/commons/startup/commons/wizards/SelectionWizard$1.c
+ lass
+SHA-256-Digest: S/884V65nEvW1t2WrMz2IaZz3r/NNRWSc4KNxSfPCY4=
+
+Name: com/webratio/commons/startup/commons/MultipleRunner$MultipleRunn
+ erAdapter.class
+SHA-256-Digest: 3cgucrmYw+sS6JLWiaNRlTLQKgu+HaZptH1w2KwSINc=
+
+Name: com/webratio/commons/startup/commons/dialogs/AbstractStartupWiza
+ rdCommunityEndingPagePart$MissingConnectionDialog.class
+SHA-256-Digest: b+eff0CsGQZzOFWhLPHS8TgEdIGiTje4FDyL0fqpwq0=
+
+Name: com/webratio/commons/startup/commons/dialogs/DialogUtils$LoopFir
+ e$1.class
+SHA-256-Digest: Tbdtj47rJj/vpXR++SZc73dxhQBI8k1MIh+UMrlrOZ0=
+
+Name: com/webratio/commons/startup/internal/helpers/PropertyHelper.cla
+ ss
+SHA-256-Digest: nKcM1FiV7DubmagE/f8JR+JT7s2SIHqJkX+jsceHKfI=
+
+Name: com/webratio/commons/startup/internal/server/UsageStatisticsServ
+ erHandler.class
+SHA-256-Digest: Qlj48jv/sqsKJBTZB2IUOLE+zSRO1QkM/Crwbuj2lnY=
+
+Name: com/webratio/commons/startup/internal/server/WR8CRMServerHandler
+ $Request.class
+SHA-256-Digest: 7DuWZqYd9HARGilaRoiw6HAc4U+STBUlihSNmQFXKHQ=
+
+Name: icons/full/ctool16/reset_license.png
+SHA-256-Digest: OCHGvzp3LDvMwVUxgR8dTHd9v/modheAnsTdotg8tYM=
+
+Name: com/webratio/commons/startup/UsageStatisticsManager$UsageStatist
+ icsType.class
+SHA-256-Digest: Ws1a3NF6WJr7ObUc3NrUTOUofVpaewsCDnQenTnMzWA=
+
+Name: com/webratio/commons/startup/internal/dialogs/LicenseDialog$1.cl
+ ass
+SHA-256-Digest: oFmiBAm/QupDMN1t59tDteyMacuS7OTgDHR+wfnQJRM=
+
+Name: com/webratio/commons/startup/commons/dialogs/AbstractStartupWiza
+ rdEndingPagePart$3.class
+SHA-256-Digest: XjeL2TnHHj01A4IGl6pmcI3RJobLztKK5GDIS8ye3vo=
+
+Name: com/webratio/commons/startup/commons/dialogs/StartupWizardFields
+ .class
+SHA-256-Digest: vQXQ5t1ggLORs7DCpKBBbeg67m74P9+EDVqTcLFxRvo=
+
+Name: com/webratio/commons/startup/commons/resources/ResourceChangeLis
+ tenerTester.class
+SHA-256-Digest: k4M13jKU2hVsilrqeGsRPhjn6qQVnC1j1gz+GkOId9I=
+
+Name: com/webratio/commons/startup/internal/server/ServerHandlerFactor
+ y.class
+SHA-256-Digest: MyFTG7krjYyJRxlq2wXyHoWbrQEN4X1IzVE5fYK9iqU=
+
+Name: com/webratio/commons/startup/ProductUtils$WebRatioVersion.class
+SHA-256-Digest: t82PoaKNRneT9RmtQLWgZtCgXGesZWprMkkksNIPCAA=
+
+Name: com/webratio/commons/startup/commons/resources/AbstractMFResourc
+ eCache$3.class
+SHA-256-Digest: MFFmk+amlu7VjmDgW0ZWmuqAJTgNNL7wAZqvwLnQPII=
+
+Name: com/webratio/commons/startup/commons/dialogs/WebRatioUpgradePopu
+ p.class
+SHA-256-Digest: 1FwYUaXQl/g6kTUR6Lx/DrINd5hOhKeC9qx93AJqO4o=
+
+Name: com/webratio/commons/startup/WRUIStartupPlugin$EngineProperties.
+ class
+SHA-256-Digest: jBX4S5tb/5YPQnp+Lla0aRv/KTJYM8iQVV+uyqD6jY0=
+
+Name: com/webratio/commons/startup/commons/dialogs/DialogUtils$LoopFir
+ e$2.class
+SHA-256-Digest: 15qQqGBWI45d3OUoYXK2+tsGo6yCLG7pCDNWNgGAKdw=
+
+Name: com/webratio/commons/startup/internal/server/AbstractServerHandl
+ er.class
+SHA-256-Digest: VPrJSqLGB35yeECyBIUXEo1d6CoCm+49Y/PYwGT41BA=
+
+Name: com/webratio/commons/startup/internal/dialogs/ResetActivationDia
+ log.class
+SHA-256-Digest: Qe1ApcIrug7HbVmwQXTSCMaim4qP1axawZmrdu+229Y=
+
+Name: com/webratio/commons/startup/commons/resources/AbstractMFResourc
+ eCache$1$1.class
+SHA-256-Digest: 8VW+Ipgp711By925HmuZpjolK+6w7mJ75DycWJxFkX4=
+
+Name: com/webratio/commons/startup/internal/wizards/ServerSettingsPane
+ l.class
+SHA-256-Digest: U10wm1Ry4luT7QZgxVQcPGWnnt9n/Lh8zf8qMxZXBjA=
+
+Name: com/webratio/commons/startup/internal/server/IRequestCode.class
+SHA-256-Digest: yL7FAj75AX/bkIy7jR0yds3Zs5KwnRe/pMNNmXMYFio=
+
+Name: com/webratio/commons/startup/commons/dialogs/DialogUtils$LoopFir
+ e$2$1.class
+SHA-256-Digest: mFA1W1Y3zLNFqafAnF702LGXFSqEY72ZVLznluFa4GU=
+
+Name: com/webratio/commons/startup/commons/resources/ResourceChangeLis
+ tenerTester$1.class
+SHA-256-Digest: jQk9Qo56bcf9mIXEBZN+KmxoY2BK/CukOQITBj1mvZE=
+
+Name: com/webratio/commons/startup/internal/data/ActivationFileCRMBase
+ d$ActivationFileWriter.class
+SHA-256-Digest: qwqRmioJ4y5rUrnwk6bPvXhkBjgVxEM43hemhJLmU3U=
+
+Name: com/webratio/commons/startup/internal/wizards/ServerSettingsPane
+ l$1.class
+SHA-256-Digest: rmz+3jzVBrIhJ4N9Ew7PjnXPj7JBtYuSHRQk88SKup4=
+
+Name: com/webratio/commons/startup/IConfigurationOptions.class
+SHA-256-Digest: 7hIoNIyRunYF39ykvX98WOryucunDA5O7mfmmn6sP2k=
+
+Name: com/webratio/commons/startup/commons/resources/AbstractMFResourc
+ eCache$2.class
+SHA-256-Digest: 6FoWB5AAgNUCR/qIQ9qr0d3/b1xExcfkTzAaWGKkeH4=
+
+Name: icons/full/ctool16/start.png
+SHA-256-Digest: bMgH9OsUDTyRN7F2tqumltq5Hf3v9hJlzecHtOBZz4w=
+
+Name: com/webratio/commons/startup/internal/wizards/WizardFactory$Manu
+ alOfflineWizard.class
+SHA-256-Digest: ZkynwBZz5234j8KX1wYrX3y6jsjnzefPgu2UeffFDEo=
+
+Name: licenses/license_academic.1.txt
+SHA-256-Digest: qn/ZwOfs3k1B7tgkXs7ZOM2ao67UewOY+vfDPRJfLt8=
+
+Name: com/webratio/commons/startup/commons/dialogs/BrowserDialog.class
+SHA-256-Digest: hXfnqR8DgCA1k9uCMCIr+fmHVzHd9f8egTGJgP1FBEc=
+
+Name: com/webratio/commons/startup/internal/server/GetSerialHelper.cla
+ ss
+SHA-256-Digest: aLPKXzWGxYd4jr00CqSEelUjJsdDHliSrRP9rpxeDk4=
+
+Name: com/webratio/commons/startup/WRSplashHelper.class
+SHA-256-Digest: nSrvnEKU1Pq7Za+ra0/HbImikmnSIMBvVX+C9xcK2TY=
+
+Name: com/webratio/commons/startup/commons/dialogs/BrowserDialog$3.cla
+ ss
+SHA-256-Digest: rCselpQ6BrHi+w5xlyBzGLwq5NHjKQxMWSQ3EOhzuUA=
+
+Name: com/webratio/commons/startup/commons/Pair.class
+SHA-256-Digest: 59DeLglwY7TCXcEH7egQxO5VFut3ZLYj2NVstetsxLA=
+
+Name: com/webratio/commons/startup/commons/dialogs/DialogUtils$TableCe
+ llInfo.class
+SHA-256-Digest: P3jpZug65XhyfQxroLEG+NxR2OA7B19xOzjYLRnYPRk=
+
+Name: com/webratio/commons/startup/TestRunnerHelper.class
+SHA-256-Digest: wnGOlHfEijkPaqun6Zv3nA09BgVzPjyN2VuUais2UAs=
+
+Name: com/webratio/commons/startup/internal/helpers/PropertyHelper$1.c
+ lass
+SHA-256-Digest: FxyAHF7BULwZMXvhG8FJXhCfF03W+RVaIi4LtykFJ2E=
+
+Name: com/webratio/commons/startup/internal/server/GetSerialServerHand
+ lerCRMBased.class
+SHA-256-Digest: Cp498Iway/7vOrsZ+f5AQv4Wj8lswg1n3qEI8xDEN30=
+
+Name: com/webratio/commons/startup/UsageStatisticsManager$WorkspaceUsa
+ geStatistics.class
+SHA-256-Digest: CXb5owornnfOydBwZGfol4boX/vBCf0lDJ0mrpCXods=
+
+Name: com/webratio/commons/startup/commons/wizards/SelectionWizard$2.c
+ lass
+SHA-256-Digest: yZXNZDT62Hqd4rG5YKX5KjfgrxUuNZB48yrVPj0IEsU=
+
+Name: com/webratio/commons/startup/commons/resources/JarHelper.class
+SHA-256-Digest: hmSWNULv+LI6V2rXRs4zwlBzbjsIkKOYWd7asExSlOo=
+
+Name: com/webratio/commons/startup/Engine$RestartResult.class
+SHA-256-Digest: kOo7icTtMlayK+gEYec7peil0n/DXEl8WZGy8BC0gaQ=
+
+Name: com/webratio/commons/startup/WRUIStartupImages.class
+SHA-256-Digest: kAR8BISX4f6BcvcY4L+SsfSQ1wThRl2uIAUjseOn+GA=
+
+Name: com/webratio/commons/startup/commons/wizards/SelectionWizard.cla
+ ss
+SHA-256-Digest: CCai9+752peqAx8GQtaLw3clQVVAZw89SBhTwh3KGAE=
+
+Name: com/webratio/commons/startup/Configuration$BombRTMode.class
+SHA-256-Digest: M5+bWI6EXjpC3ncaVmSnWq86CTrfgsCSHhwNC4r8YxU=
+
+Name: com/webratio/commons/startup/commons/dialogs/StartupWizardNPPage
+ Part.class
+SHA-256-Digest: LxxbmQXD16vTYGIZ2wcqykGzUlYoZzz+LKPnmZk0t/c=
+
+Name: com/webratio/commons/startup/commons/dialogs/AbstractStartupWiza
+ rdEndingPagePart$1.class
+SHA-256-Digest: 6QisA6lT4kqQQ6IZxHWmupQRwS8/PwSfGM/Ff2jtfTY=
+
+Name: com/webratio/commons/startup/commons/dialogs/DialogUtils$1.class
+SHA-256-Digest: qw80fOaXfG+j/mC9R3fs705UOq7FjmbfU6M5RAIzOsQ=
+
+Name: com/webratio/commons/startup/commons/dialogs/AbstractStartupWiza
+ rdCommunityEndingPagePart$1.class
+SHA-256-Digest: Pl/yVJKcbR8TNQNwdy0t1I7MtCmoqaptvyus9Uxyqv8=
+
+Name: com/webratio/commons/startup/commons/dialogs/AbstractStartupWiza
+ rdEndingPagePart$4.class
+SHA-256-Digest: FP0nZZckxrbtq8/HthfruN6OTcf/Ff6TSCaenD/6qZE=
+
+Name: com/webratio/commons/startup/preferences/StartupPreferencePage.c
+ lass
+SHA-256-Digest: 6+mgxy9S7GuKPapXViCMzyBHDNwqRY0u3B/KYWzaXrk=
+
+Name: com/webratio/commons/startup/CloudServiceTypeProvider.class
+SHA-256-Digest: w0iioTVG+FJTEXMy/dfbSrRFS7B2JYAVdPDUappLHdI=
+
+Name: com/webratio/commons/startup/commons/dialogs/AbstractStartupWiza
+ rdPagePart$1.class
+SHA-256-Digest: iC5cOtZus4dt/HoD5aA/7BbAwUntWfw3P/MnEjskmCU=
+
+Name: com/webratio/commons/startup/commons/dialogs/WebRatioUpgradePopu
+ p$1.class
+SHA-256-Digest: lhOQ/pLg7jQoH3cGeffb83qEEMQA/eTtN2AmeAj3h+E=
+
+Name: com/webratio/commons/startup/commons/dialogs/WebRatioSetBrowserP
+ opup.class
+SHA-256-Digest: ImTcfdKHwNUtZ2GoZRBDouGYnmFGBmaSD5uiqkNCFGk=
+
+Name: com/webratio/commons/startup/commons/MultipleRunner$IMultipleRun
+ nerListener.class
+SHA-256-Digest: acZyrA+ExfaniKO92m8PICIiMEJ3+PclkU/GICP9Sr4=
+
+Name: com/webratio/commons/startup/internal/wizards/ApprovalLicenseWiz
+ ardPage$IMasterServerHandlerProvider.class
+SHA-256-Digest: KX+T935susdHw5tlklsZmyUbEe36LUcUsLHM8ljTEgg=
+
+Name: icons/full/ctool16/close.png
+SHA-256-Digest: aUyOgNvEhulQVnmLgZaKL5G3xCTOSw7w5SsvtD8zTpA=
+
+Name: com/webratio/commons/startup/internal/server/AbstractServerRespo
+ nse.class
+SHA-256-Digest: +LCGWcph0kZWck5DsK52sDRU8USHyjjtmLga8bahUgA=
+
+Name: com/webratio/commons/startup/WRUIStartupPlugin$5$1.class
+SHA-256-Digest: w2vc2fzgqrzoGqxbL/BzXPK37T1zWMIHciqHnsmFK90=
+
+Name: com/webratio/commons/startup/ActivationTimeListener$2.class
+SHA-256-Digest: rfuz0hwJnIPbii4YWmbZa+OfVoSgsCIymm6zBdo8w+8=
+
+Name: com/webratio/commons/startup/internal/wizards/ApprovalLicenseWiz
+ ardPage.class
+SHA-256-Digest: jghrZBpgPZ+UN/aq6ISMvHInMfQr8rMTB+UInpFLnKM=
+
+Name: com/webratio/commons/startup/commons/MultipleRunner$_Runnable.cl
+ ass
+SHA-256-Digest: 2WXRLlEkwoPbkQYAY4K96W9JqZz6sIEMATrZaR9bSgw=
+
+Name: com/webratio/commons/startup/internal/wizards/WR8CRMServerManual
+ ActivationWizardPage.class
+SHA-256-Digest: v7OHcem/Wmk6ZuZIqSj6B7DCOscDe/dNCT3tVFq3Owo=
+
+Name: com/webratio/commons/startup/internal/data/ActivationFileSavingR
+ esult.class
+SHA-256-Digest: HHDeoq5dLTl2PhqgEznV5WPB/5RcFzzRa9pWSX+YQOI=
+
+Name: com/webratio/commons/startup/internal/data/UsageStatisticsData.c
+ lass
+SHA-256-Digest: nf7zCXMA6TfEBTFmFjMuT6ZquJqUjUS4L3MmsWlksO0=
+
+Name: icons/full/ctool16/refresh.png
+SHA-256-Digest: 8ZH8ILpnJVom4rYi0klAnAtpnkF3no3QlvngunkWKgY=
+
+Name: com/webratio/commons/startup/AbstractActivationFile.class
+SHA-256-Digest: +nAgbW1ZFz9+zHC204ueut8Fu5AbilmPENPjnd1H5zc=
+
+Name: com/webratio/commons/startup/commons/dialogs/StartupWizardAutoRe
+ activePagePart.class
+SHA-256-Digest: A5QGmXS4pP5yyrkLLPwPyLcy5CVQ7a3XNU/YdwSrnEg=
+
+Name: com/webratio/commons/startup/WRUIStartupImages$Key.class
+SHA-256-Digest: tFq82Z5rJi7lWMHXusO5mq73IXImpGBzRLcrUEOUM48=
+
+Name: com/webratio/commons/startup/internal/server/UsageStatisticsServ
+ erResponse.class
+SHA-256-Digest: ZjOPy47rzqwJQnElRrVIubuclocxhJpHRpzeOAs7eEg=
+
+Name: com/webratio/commons/startup/UsageStatisticsManager.class
+SHA-256-Digest: Jeulop5JsOZC8NFC2W0hDc3n0P5MwRCClEX9/aVgReQ=
+
+Name: com/webratio/commons/startup/internal/helpers/CheckCodeHelper.cl
+ ass
+SHA-256-Digest: 5NkZlB2xbICua1VIHaY1Y7vKgmNbkI5E7KBMcNCwj/0=
+
+Name: com/webratio/commons/startup/internal/server/SimpleStringRequest
+ Code.class
+SHA-256-Digest: LBfjW7TCbVcfZV6GULKAPhdjN/Z6k0w6s5nTNkgcXaA=
+
+Name: com/webratio/commons/startup/commons/wizards/WR4ProjectEntityRes
+ olver.class
+SHA-256-Digest: SlxAkOJbWbEPJjKG9t0mNQuaeAoLTAqCiTFsZ7ALB/g=
+
+Name: com/webratio/commons/startup/IRequestCodeProvider$DefaultRequest
+ CodeProvider.class
+SHA-256-Digest: /xd7OjzTDu179deNe0fEGUDOpOGfbCmook4hFW9wP0c=
+
+Name: com/webratio/commons/startup/commons/dialogs/AbstractStartupWiza
+ rdPagePart.class
+SHA-256-Digest: aGLJIQp2DVfOMitj17DHTICLFd/LIfrZlmbDzyyhToE=
+
+Name: com/webratio/commons/startup/internal/wizards/ServerSettingsPane
+ l$2.class
+SHA-256-Digest: SeL0NgbtmuY1zkeLjLrWfsIDhc21otn2f+h/l00XQk0=
+
+Name: com/webratio/commons/startup/commons/dialogs/WebRatioSetBrowserP
+ opup$2.class
+SHA-256-Digest: KqlDfZAafIovpi4csc38Zs42sr19hN07yBx8HVqeE6E=
+
+Name: com/webratio/commons/startup/IActivationFile.class
+SHA-256-Digest: UaMmtbhzTA9WP+WekUfa4PRgmI7ZdHJBwIpKhZZKzWg=
+
+Name: com/webratio/commons/startup/WRUIStartupPlugin$3.class
+SHA-256-Digest: K128dTk9B/mTRMqskFf98sQyHnLyjGeNTP8Ot7maiaA=
+
+Name: com/webratio/commons/startup/commons/resources/DuplicatedDeclara
+ tionFileException.class
+SHA-256-Digest: yUfpECD5I5ikgW3AtxpKvgurAHuox3R4/l6xDpr+AIU=
+
+Name: com/webratio/commons/startup/internal/server/WR8CRMServerHandler
+ .class
+SHA-256-Digest: FLifIAxmM5FCRQn3xqQi6u5Khv0zVu8wnpwb9NWph2Y=
+
+Name: com/webratio/commons/startup/commons/dialogs/AbstractStartupWiza
+ rdCommunityEndingPagePart$2.class
+SHA-256-Digest: 3hgRRsrFKxduZ2rmpVt+QHy7fy1PsY5dWIIhj2jRS0Q=
+
+Name: com/webratio/commons/startup/commons/dialogs/DialogUtils.class
+SHA-256-Digest: qoh/oUOIBa5Tobu832gUj6CQQ/4jqcsbji3Se/Nl7n4=
+
+Name: com/webratio/commons/startup/IConfigurationOptions$AbstractConfi
+ gurationOptions.class
+SHA-256-Digest: ntFzkNMLkPUvNNfmAY/uKXDBf3yUnYrG8fa5EK8B9GU=
+
+Name: com/webratio/commons/startup/commons/dialogs/AbstractStartupWiza
+ rdEndingPagePart$2.class
+SHA-256-Digest: V3W684HO9jQkgg82v8WMbSK70HUVo+ifMsEiZPidhdI=
+
+Name: com/webratio/commons/startup/internal/dialogs/ConfigureProxyDial
+ og.class
+SHA-256-Digest: fFNut13grVuyJ06RUu6SZiZCDX/9iZjfXSa7k4EvyZ4=
+
+Name: com/webratio/commons/startup/ProductUtils.class
+SHA-256-Digest: zuy2FujAPdyY4ZwwRKH1jjNTZhQtuXqkKJAfk5OtsT8=
+
+Name: com/webratio/commons/startup/commons/dialogs/SimpleWizardDialog.
+ class
+SHA-256-Digest: 7VcGk9jErX4/s6h9TcrSbR8zXs2ZYRb3K5e05FkgwUo=
+
+Name: com/webratio/commons/startup/internal/wizards/WizardFactory.clas
+ s
+SHA-256-Digest: xsnQ5IV5AXyOSAmSr2pQjWpEnTw/8wXD1erlyOS1dek=
+
+Name: com/webratio/commons/startup/commons/resources/AbstractMFCachedR
+ esource$_Model.class
+SHA-256-Digest: V0TjjDfODxU//ugg/Igb7KUsYdH9tE4jGuVgassdL2o=
+
+Name: com/webratio/commons/startup/WRUIStartupPlugin$2.class
+SHA-256-Digest: LVIek0WQ2QeJhqzJeoSMnKc5DxysUk/iXqUifU1PEC8=
+
+Name: com/webratio/commons/startup/commons/dialogs/MessageDialogWithLi
+ nk$1.class
+SHA-256-Digest: Y5DBGxQaeebYtFZPmGkEltQBov+xxSr06oFdT5roOf8=
+
+Name: com/webratio/commons/startup/internal/wizards/WizardFactory$Sele
+ ctionModeWizard.class
+SHA-256-Digest: KVBcIp6rNfiPY5YHPoDdPmN5r3HNZb4JsJ3NoL1a7A0=
+
+Name: com/webratio/commons/startup/internal/server/IServerHandler.clas
+ s
+SHA-256-Digest: 4dq1R8oZNNVECKTYM0G8A4dSoq0T1gCZc64Z94JcPoo=
+
+Name: com/webratio/commons/startup/commons/dialogs/DialogUtils$2.class
+SHA-256-Digest: fH0If3DmCwAphiwEy6tBm2WC22XjNhw4Ea5pqaeiinc=
+
+Name: com/webratio/commons/startup/commons/dialogs/WebRatioUpgradePopu
+ p$2.class
+SHA-256-Digest: 91biOVc7ssFi1LI5JQOOjE0+My/g72Vd71UBy5ZHl7Y=
+
+Name: com/webratio/commons/startup/internal/wizards/ServerSettingsPane
+ l$3.class
+SHA-256-Digest: rtXnL7JbdnsAIjgsTgSFhJeA8OuatC3RTtB9o/8CiV8=
+
+Name: com/webratio/commons/startup/preferences/UsageStatisticsFieldEdi
+ tor$1.class
+SHA-256-Digest: 1D+Ls/p9SSUDm1wzcmIfPWEXUf3oJOFTeXwTPbYWCd4=
+
+Name: com/webratio/commons/startup/IConfOptionsConfigurator$AbstractCo
+ nfOptionsConfigurator.class
+SHA-256-Digest: Hgzk7MrQWKUJic2PKoaTEpFHzhiY/UTK3PaKh/o2b8w=
+
+Name: com/webratio/commons/startup/commons/dialogs/WebRatioSetBrowserP
+ opup$1.class
+SHA-256-Digest: dyZa6ql2w7DO7+zORMGNTQeVafsWlEDfH6w5E5P+fxs=
+
+Name: com/webratio/commons/startup/internal/actions/ResetActivationAct
+ ion.class
+SHA-256-Digest: 0d3/NAvD3LlbVo9q7nPR+YSyvDEm6wYz5PTZnl203EQ=
+
+Name: com/webratio/commons/startup/internal/server/IGetSerialServerRes
+ ponse.class
+SHA-256-Digest: quoNE7h63hysFMkXNHtp6fFq9aQ5mehFfTBM9AxQKU0=
+
+Name: com/webratio/commons/startup/commons/MultipleRunner$ExecutionRes
+ ult.class
+SHA-256-Digest: 9ElkvUJLdpqAk8FoGNdS9HQKSFbM8/+d18EzhJuaPKo=
+
+Name: licenses/license_academic.2.txt
+SHA-256-Digest: 4PUCLVhrGMOpVq5oitT2++gH1ZXRJigFSqCx6YMMhw4=
+
+Name: com/webratio/commons/startup/ActivationTimeListener.class
+SHA-256-Digest: qGBl6BB1NiwGN2Tp3hU4lyhF8uf6LfQTxXUoMvRwB8k=
+
+Name: icons/full/wizban/license_wiz.png
+SHA-256-Digest: W61taX9/0KQ9ancSGycKsKH0yrjygSLR15Q7aa+9SQw=
+
+Name: com/webratio/commons/startup/internal/dialogs/UsageStatisticsAct
+ ivationDialog.class
+SHA-256-Digest: XTyo6rTurAku/VvpdOvP5Fk4VIxcJzSOtHz2zBC5BkE=
+
+Name: com/webratio/commons/startup/internal/server/WR8CRMServerHandler
+ $Choose.class
+SHA-256-Digest: A1gzOu/FKy0PHAQ/g5R4eDrJmJujLoXVohMtP6187w4=
+
+Name: com/webratio/commons/startup/handlers/UnscrambleHandler.class
+SHA-256-Digest: OZv8nLn5uBZkwt8gGruPEz0d5KN8gknH8Cxmj/Tmesc=
+
+Name: com/webratio/commons/startup/commons/dialogs/StartupWizardAutoRe
+ activePagePart$1.class
+SHA-256-Digest: 2lC6X1/c4hjJUH2WPn73cHh3Ru4xr4MvGreuJ2hMvOU=
+
+Name: com/webratio/commons/startup/RunningMode.class
+SHA-256-Digest: WodN+R6icjJ6xRyQkpGqi5KH76ZY47Lz9yymgSkwZdw=
+
+Name: com/webratio/commons/startup/commons/resources/ResourceHelper.cl
+ ass
+SHA-256-Digest: xrN7jFkarN9zGluAqXuamryLa79ym862h25og5N8GIQ=
+
+Name: com/webratio/commons/startup/internal/data/AbstractActivationFil
+ eWriter.class
+SHA-256-Digest: 0IF0UQg4EupdIWlgHMR+L2Vi8A+eDZcUs9yI1HivWLI=
+
+Name: com/webratio/commons/startup/SerialType$1.class
+SHA-256-Digest: V1EFVukmsx0MpcyCaJfX9bsjemlgARb+7VtQwUEkxho=
+
+Name: com/webratio/commons/startup/internal/dialogs/ResetActivationDia
+ log$1.class
+SHA-256-Digest: S7T8IR5GbC9G2pVMUmBwj/ZlyEl/vfIR+oLKKYPseYE=
+
+Name: com/webratio/commons/startup/internal/data/VersionFile.class
+SHA-256-Digest: 8xB9TSV9XJ+fsjtfjR5U2couUl8VQDg9tuUbBKGuSxg=
+
+Name: com/webratio/commons/startup/internal/server/WR8CRMServerHandler
+ $1.class
+SHA-256-Digest: yWUljSGz0apxYxwr72pdT39aYlOYExP76vxd3NsXqZY=
+
+Name: com/webratio/commons/startup/internal/wizards/AbstractActivation
+ WizardPage$1.class
+SHA-256-Digest: rAq9ioh/dWtIieSDYlE2di8V2Cq7ubsejS/AiwVjhcU=
+
+Name: com/webratio/commons/startup/commons/resources/AbstractMFCachedR
+ esource.class
+SHA-256-Digest: 8vPcXGAlkLBk/UlORWy9N7shLsFjRQx3CydcFibBVCg=
+
+Name: com/webratio/commons/startup/internal/actions/ResetActivationAct
+ ion$1.class
+SHA-256-Digest: 4tUbqpFAXdTSifFzK9VGOcN1gq2p49DHQcCTBybqQAI=
+
+Name: com/webratio/commons/startup/WRUIStartupPlugin$IntroId.class
+SHA-256-Digest: K0OxDq+BFOrbBU1t7G2aCyyCA4QUA7PA2iIfNIvDPxY=
+
+Name: com/webratio/commons/startup/internal/actions/LicenseAction.clas
+ s
+SHA-256-Digest: RlbvCkmcCJ684aKkEhm/Sh0NZ8hACSGBrtyf0e4pU/E=
+
+Name: com/webratio/commons/startup/commons/dialogs/WebRatioSetBrowserP
+ opup$3.class
+SHA-256-Digest: 7yk2pRKTKTmPtMo9aaqP7nwuRyK0ZW1JPLmgMDK8qY8=
+
+Name: com/webratio/commons/startup/commons/dialogs/StartupWizardPart$S
+ tepId.class
+SHA-256-Digest: eBMOtO3NlgR5oyAjMKJ5CzNSEW9Cp15tAr3YRT6451c=
+
+Name: com/webratio/commons/startup/Configuration$1.class
+SHA-256-Digest: YGx++gQX4HxuP1aDi5gCH3rWjy3EO/+EBhlk4CrTefA=
+
+Name: com/webratio/commons/startup/internal/data/SerializedActionObjec
+ t.class
+SHA-256-Digest: Pb5FIzAWHu9XnasZL7ztkrzLx17RGi0mCQJV944OAi4=
+
+Name: com/webratio/commons/startup/commons/resources/ZipHelper.class
+SHA-256-Digest: vWSbyzH47MAplEMZfq5Fynl/AUX90mswvJQ0s68UI4U=
+
+Name: com/webratio/commons/startup/WRUIStartupPlugin$4.class
+SHA-256-Digest: +J0JX6oFH57C0LqS/1rLR9yT/t09uIhcFrhrVT2VnD8=
+
+Name: com/webratio/commons/startup/commons/dialogs/WebRatioUpgradePopu
+ p$3.class
+SHA-256-Digest: juGSq5EFKdjW3y5dQXKfYeGLaLCKqx98HnACtR/w9kQ=
+
+Name: com/webratio/commons/startup/internal/helpers/Scrambler.class
+SHA-256-Digest: lJ9duewetQ2OSi08lg3vfD0QySoUUVSMFK0kpTmkY1o=
+
+Name: com/webratio/commons/startup/internal/dialogs/ConfigureProxyDial
+ og$1.class
+SHA-256-Digest: B7lnr2j+WRhkZ19wXNa8iwNxKm0tfeWrtx+QR7xKL60=
+
+Name: com/webratio/commons/startup/commons/wizards/FakeWebML.dtd
+SHA-256-Digest: dC7ZWYwkjGC7czmy6gH6KzBGSCxqap5efmZbxpChXUw=
+
+Name: com/webratio/commons/startup/SerialType.class
+SHA-256-Digest: 7bqjqG6KWhankPnBfp0FtcHQaTU/uh8er91JBzY2hqY=
+
+Name: com/webratio/commons/startup/commons/wizards/SelectionWizardPage
+ $IWorkbenchWizardInitInfoProvider.class
+SHA-256-Digest: EZWlknWAJTS9asAmIeQLwrffX9i0aCsA6xOgvtKet+w=
+
+Name: com/webratio/commons/startup/commons/dialogs/WebRatioSetBrowserP
+ opup$1$1.class
+SHA-256-Digest: sEMfN4V8r8LdbdO29j7jHjNMeAfOJyCcO2zb2ikOf8Y=
+
+Name: com/webratio/commons/startup/commons/dialogs/StackLayoutHelper.c
+ lass
+SHA-256-Digest: rThu0R2JIP3D58uDP+f4SoiDALr5a8t5wWRBwfeSGGY=
+
+Name: com/webratio/commons/startup/internal/data/UsageStatisticsData$1
+ .class
+SHA-256-Digest: xH02F5WMKEw+BD/LGkcDF8AiNty5yq1TOMQJ4B4IEvI=
+
+Name: licenses/license_commercial.2.txt
+SHA-256-Digest: cHpknXyo2aKmoWSlTX6SBlC67I4UpQHqxxlALowzjYQ=
+
+Name: com/webratio/commons/startup/commons/MFDebugHelper.class
+SHA-256-Digest: Q9GwkNVSCBSolN48wEStLTyrN19XwX+m8G3wYYEjSn8=
+
+Name: com/webratio/commons/startup/internal/wizards/WR8CRMServerManual
+ ActivationWizardPage$3.class
+SHA-256-Digest: hrPTUqAg9Ct83lLcfSwQJFUy1qWdWbnCnHWoksIxxas=
+
+Name: com/webratio/commons/startup/ActivationTimeListener$1.class
+SHA-256-Digest: x0oflGge4EdCs+lj4/wvagJChggZKZC2ARjpVR+eaZM=
+
+Name: com/webratio/commons/startup/commons/dialogs/AbstractStartupWiza
+ rdPagePart$3.class
+SHA-256-Digest: BOlZdbsx83qYCXGX5ba5tbZ3x4yN4GQOwvOuzBICATg=
+
+Name: com/webratio/commons/startup/CloudServiceTypeProvider$1.class
+SHA-256-Digest: SllFVs3qqY4MZ0Bjmk0SbICXK3UHdAgdOI7+0k4eCXM=
+
+Name: com/webratio/commons/startup/commons/dialogs/AbstractStartupWiza
+ rdPagePart$_TextFieldListener.class
+SHA-256-Digest: fCfhdr2Y98BisvLVjBPM2Ug025u2qdL7zx6myaVkgaI=
+
+Name: com/webratio/commons/startup/Engine$2.class
+SHA-256-Digest: 5u3/phamIRl/R5gfr6QDtbpt8y+AmL+s7GguKjHMbp4=
+
+Name: com/webratio/commons/startup/internal/helpers/PropertyHelper$2.c
+ lass
+SHA-256-Digest: LFjEXvJgWdy3MsUlHSMrGFImHGZTprzCB4WJ4w5/ckU=
+
+Name: com/webratio/commons/startup/Engine$FlowState.class
+SHA-256-Digest: KeQxcfBJ1RUUgVpClhDrLSkez9BPfcXuSZLYcbeJhkI=
+
+Name: com/webratio/commons/startup/commons/dialogs/AbstractStartupWiza
+ rdProfessionalEndingPagePart.class
+SHA-256-Digest: jAOMk0TPpx2ICXubz6tbx2Cj3VOWpoJgdbXepFRB0+Q=
+
+Name: com/webratio/commons/startup/preferences/GeneralPreferencePage.c
+ lass
+SHA-256-Digest: eT0Dg/7/h3I++32rt1g3kcNMtNwiv9nmLCuiPZ8/6hw=
+
+Name: com/webratio/commons/startup/commons/FontHelper.class
+SHA-256-Digest: 5dt7jeCYFOmj4LlLD/A2wN11pD3A1CoFyp10hpLlHgY=
+
+Name: com/webratio/commons/startup/internal/data/ActivationFileValidat
+ ion.class
+SHA-256-Digest: MnwofFXeXseAxW/Gsdh6hMeECNrarU+fJDL+zDozsVs=
+
+Name: com/webratio/commons/startup/commons/dialogs/AbstractStartupWiza
+ rdEndingPagePart$5.class
+SHA-256-Digest: Ol8NkF2FPhnOQsM2W4op3Fe+IbG+r8OyaZDUGWOBRHM=
+
+Name: com/webratio/commons/startup/internal/wizards/WizardFactory$Auto
+ maticOfflineWizard$1.class
+SHA-256-Digest: dPssPsgHSZuMIaG8wffZ9J6KPzlQ0LLGplBW5oGj/4c=
+
+Name: com/webratio/commons/startup/commons/dialogs/StartupWizardPart.c
+ lass
+SHA-256-Digest: 7Ko+Rfk00kUUsg3uNa/UM3JQggszKw66q11CeIGhoG4=
+
+Name: com/webratio/commons/startup/internal/wizards/WizardFactory$Auto
+ maticOfflineWizard.class
+SHA-256-Digest: JYBOpGZXH3h8ELMhvTScJuGUWBhSFS08NuFSlUINc2Q=
+
+Name: com/webratio/commons/startup/internal/wizards/WR8CRMServerSettin
+ gsWizardPage.class
+SHA-256-Digest: CdtBkD37Rbw1dT0iBrpB0nzLd5kbc1uxLJu0mTP5WRQ=
+
+Name: com/webratio/commons/startup/internal/data/ActivationFileFactory
+ .class
+SHA-256-Digest: U8X7jQc8gcpXSpoL6WkPNPTpx5y3jp7umCV92n7ekAw=
+
+Name: com/webratio/commons/startup/CredentialsInfo.class
+SHA-256-Digest: RFJmzI/qm0NMlx8vgnQAMOPGFxv0qgAs457fRAzQ+Og=
+
+Name: com/webratio/commons/startup/UsageStatisticsManager$UsageStatist
+ icsState.class
+SHA-256-Digest: m5ws8nFX8uTLDjCzwOoMULg9HrAQpeC8rV/NneS7sS0=
+
+Name: com/webratio/commons/startup/commons/dialogs/AbstractStartupWiza
+ rdPagePart$2.class
+SHA-256-Digest: nN8z8ySFXVRih9Nt5NJ8uyCnJR3TOXtFxKfcpeQx2fg=
+
+Name: com/webratio/commons/startup/commons/dialogs/MessageDialogWithLi
+ nk.class
+SHA-256-Digest: h8TeIFeifUArkW2AvgKjbZ82O/yfln4V7fXUs6jxAts=
+
+Name: com/webratio/commons/startup/commons/dialogs/AbstractStartupWiza
+ rdCommunityEndingPagePart$MissingConnectionDialog$1.class
+SHA-256-Digest: oRPpAsdGrIhodB88A9/DrMlaq1FCx1vuoRMHwy6/MnY=
+
+Name: com/webratio/commons/startup/preferences/StartupPreferencePage$A
+ bstractPart.class
+SHA-256-Digest: 9ktrAH/0U8hvR4RTrquF2PyiV9cJGWM4nKs182l9FtU=
+
+Name: com/webratio/commons/startup/WRUIStartupPlugin$5.class
+SHA-256-Digest: h/HzjyWbspgWm7/Fd34Lb8wX6C2V1KFUA4XjF1CUE78=
+
+Name: com/webratio/commons/startup/internal/dialogs/ConfigureProxyDial
+ og$2.class
+SHA-256-Digest: ijjd1HVyPSuSajY7QbDkFOyxUizaT6OWJEmSaoEYmAE=
+
+Name: com/webratio/commons/startup/commons/dialogs/StartupWizardNPSPag
+ ePart.class
+SHA-256-Digest: STDelx7Byo5OLPANAZ695UkvXCgO3MJczXOCt4uIDGw=
+
+Name: com/webratio/commons/startup/commons/resources/AbstractMFResourc
+ eCache$1.class
+SHA-256-Digest: DOdUxZk6VknU1TU2Q7k00YR81bjnH+gmMsy2vp+CT5w=
+
+Name: com/webratio/commons/startup/commons/wizards/SelectionWizardPage
+ .class
+SHA-256-Digest: /v7PfGdIzmeRVVcx6dCVTJ39XKljCW5irRM7uKhOXiA=
+
+Name: com/webratio/commons/startup/commons/MultipleRunner$MultipleRunn
+ erListenerTest.class
+SHA-256-Digest: DDTNCc4fYtaJ3Z6/dPTqlLQzqg8mPzDfpFMddutUvZk=
+
+Name: com/webratio/commons/startup/internal/data/CredentialsFile.class
+SHA-256-Digest: f0le2xn5+r5d1bJ/1eLBBoY35+u1gqokdA3zFoTgjOc=
+
+Name: com/webratio/commons/startup/commons/dialogs/DialogUtils$LoopFir
+ e.class
+SHA-256-Digest: osFirv1q39iDKPKkEpE0g/rzi0bBNY6YiAh2rfa7cHg=
+
+Name: com/webratio/commons/startup/internal/server/WR8CRMServerHandler
+ $WR8CRMServerRequestCode.class
+SHA-256-Digest: 8lFBye9iWunB9smfE6aJp4V8r9zqUK1ApyYFITeRfYc=
+
+Name: com/webratio/commons/startup/commons/MultipleRunner$_Runnable$1.
+ class
+SHA-256-Digest: N9UxaIru9sPWeMYgjoluAJfO5268uNpRRBSwCg4bP5I=
+
+Name: com/webratio/commons/startup/commons/resources/IMFCachedResource
+ .class
+SHA-256-Digest: FQ8LDZmYsGT1SOVbVxYJHMSf/Gv3EcFevMaoRMjaXJM=
+
+Name: com/webratio/commons/startup/commons/wizards/AbstractSelectionWi
+ zard.class
+SHA-256-Digest: 5S3U7OVq6+0fm2IDDq4WUmF3tlOwFS77K4xHtIUXr5k=
+
+Name: com/webratio/commons/startup/commons/wizards/ISelectionableWizar
+ d.class
+SHA-256-Digest: 1dEDB2ceHH0dIDAxmBMqReVoVGijd5v58St2w3A28X4=
+
+Name: com/webratio/commons/startup/internal/wizards/WizardFactory$Onli
+ neServerLicenseWizard$1.class
+SHA-256-Digest: rhI6866Id+SixIJf5OGhzWqost+JmRmehT8Mk1TT56k=
+
+Name: com/webratio/commons/startup/internal/helpers/MACAddressHelper.c
+ lass
+SHA-256-Digest: odptEASvQRlyLmmU/JcEXKZXqNRwePrf6NOkE2FAr/0=
+
+Name: com/webratio/commons/startup/WRUIStartupPlugin$1$1.class
+SHA-256-Digest: RVxYK3aNKY6T6wtbh56mp4kvyHvGioFUDVWA1IQgfiU=
+
+Name: com/webratio/commons/startup/internal/wizards/WR8CRMServerManual
+ ActivationWizardPage$2.class
+SHA-256-Digest: u+PPOFJLow30+V97gc2zK5rfqlrOYDOaeKmfyD34vYM=
+
+Name: icons/full/ctool16/license.png
+SHA-256-Digest: Ar1/Rhe8DzJgYJQiR1o6E/9mHOdFSlQ2DyK93YtnFyQ=
+
+Name: com/webratio/commons/startup/WRUIStartupPlugin.class
+SHA-256-Digest: ym2BABlt7A7SjcVdG5nQ2GOZ915YR/Qbt3Beq8cR5YM=
+
+Name: com/webratio/commons/startup/commons/dialogs/AbstractStartupWiza
+ rdCommunityEndingPagePart.class
+SHA-256-Digest: 5RYs1uR5yv/aEFyUX2/HE79RT1t+bzDv+x4dMjFu05w=
+
+Name: com/webratio/commons/startup/preferences/StartupPreferenceConsta
+ nts.class
+SHA-256-Digest: jFXCREt85UXbLjUgIE1KpaFf+fUkU9gfpYVX6GoFY6M=
+
+Name: licenses/license_commercial.1.txt
+SHA-256-Digest: nVv/wQPKP7H1sB6Nfq3GS0oO+42rtGSTEl8P5fCEM7o=
+
+Name: com/webratio/commons/startup/internal/data/ActivationFileCRMBase
+ d$_ConfigurationOptions.class
+SHA-256-Digest: auPAjVzxXiit7EafMmXzxjMpNpFzhXzH9JZO8Q5NMQ8=
+
+Name: com/webratio/commons/startup/IConfOptionsConfigurator.class
+SHA-256-Digest: 5UD3QjqgOj+0AaYWsEMI41fUhSTSvwXpUc1gCJUkB6o=
+
+Name: com/webratio/commons/startup/internal/server/GetSerialServerResp
+ onseCRMBased.class
+SHA-256-Digest: el6aFumZ1P8j0AppqMsd+ESOolhQ+U7YoPt0X39cTTg=
+
+Name: com/webratio/commons/startup/ILicenseURLProvider$DefaultLicenseU
+ RLProvider.class
+SHA-256-Digest: HL/9aWcfsP0c9fuVRq5KuEfIkET5iQuaYcA8q2ktai4=
+
+Name: com/webratio/commons/startup/commons/resources/AbstractMFResourc
+ eCache$CachedResourceIds.class
+SHA-256-Digest: HZDcgI/JMaX9Rk3eXDhMBI2bnDdNDs1r7qU1bpWoeD0=
+
+Name: com/webratio/commons/startup/internal/dialogs/LicenseDialog.clas
+ s
+SHA-256-Digest: A2govaxUwUlNHv8XpP0Kgs8HEra1nG8DqJZ8V4UWF3I=
+
+Name: com/webratio/commons/startup/commons/resources/AbstractMFResourc
+ eCache.class
+SHA-256-Digest: pSFlXBY/H4nqCKq+Gw6YQ67GvqwmpQPoUu2gnUEghmk=
+
+Name: com/webratio/commons/startup/commons/wizards/SelectionWizardPage
+ $1.class
+SHA-256-Digest: dYcr6E1OdhOEvEF1XRTpJfWlVtOOCOauEDkPzu/Ku8s=
+
+Name: com/webratio/commons/startup/WRUIStartupPlugin$EditionId.class
+SHA-256-Digest: rRdRBU9BqVQpkLfEZaubHwKD73AopkM3CE3PYAl0t/I=
+
+Name: com/webratio/commons/startup/commons/resources/FileSystemStorage
+ .class
+SHA-256-Digest: C+corWPlJXiXJhrQXrrHJDT51+8bq8/mejalMaJeXF0=
+
+Name: com/webratio/commons/startup/internal/wizards/WizardFactory$Loca
+ lLicenseServerWizard$1.class
+SHA-256-Digest: TwKEI4KKHtrX2AxXTbqhI6Hz1f+r+2Ax+jsflAB966Y=
+
+Name: com/webratio/commons/startup/preferences/UsageStatisticsPreferen
+ ceConstants.class
+SHA-256-Digest: YwNhkOc2BmrcPEZWW1kgfnNGK1O6lc59yCkv7pAV4Bc=
+
+Name: com/webratio/commons/startup/Engine$1.class
+SHA-256-Digest: qpOr8WeynMi0Jnb00Ewk3cClVr4EVClwQuigU33sGQk=
+
+Name: com/webratio/commons/startup/ConfigurationOptionsHelper.class
+SHA-256-Digest: lUXRkWVzsyZ8Ub2lfLQ4bOZjq8yhka1C3wUVrxBt140=
+
+Name: com/webratio/commons/startup/commons/MultipleRunner.class
+SHA-256-Digest: lerJQ1ANue41xth2Iqwyv5iCwfKHAcQie2D+iNryaPM=
+
+Name: com/webratio/commons/startup/contributors/IUsageStatisticsContri
+ butor.class
+SHA-256-Digest: OVxM0ZvBKuZjYJWroXyC0qNQa/bq8RygS2JgF/sw8MI=
+
+Name: com/webratio/commons/startup/internal/data/ActivationFileCRMBase
+ d.class
+SHA-256-Digest: rD5lE7MIyKPqDCeQf4BRNcxTypraABaxdbBk6uIkn/c=
+
+Name: com/webratio/commons/startup/internal/server/WR8CRMServerHandler
+ $2.class
+SHA-256-Digest: G31D9YUaAuSQ1X0ZFL6ieMWplf5ttzTna5jZSh/RNv0=
+
+Name: com/webratio/commons/startup/commons/dialogs/BrowserDialog$1.cla
+ ss
+SHA-256-Digest: TuXHVET5rtPz7La2pMjVXBy6laxw2FuP64eO/GBZtG0=
+
+Name: com/webratio/commons/startup/commons/UnmodifiablePair.class
+SHA-256-Digest: 6WVKvZ9b7t+J/LrbwqQvHVqftGWWvlc6NmdPuf0c0q0=
+
+Name: com/webratio/commons/startup/commons/dialogs/StartupWizardNPSPag
+ ePart$1.class
+SHA-256-Digest: ZJzx28R/L73RGHB0D+zP8uoHm/hQyaWRCAqqDxGspbM=
+
+Name: com/webratio/commons/startup/internal/wizards/WizardFactory$Loca
+ lLicenseServerWizard.class
+SHA-256-Digest: auEYkMHynNfU9ZSH2KX5uXfGNA0tT7XzAHabsx2BufM=
+
+Name: com/webratio/commons/startup/commons/resources/IMFResourceCache.
+ class
+SHA-256-Digest: jBHU1dBnK90PZn90uqcljSJLNhJ2C69Zk7jp3VQjFRs=
+
+Name: com/webratio/commons/startup/internal/wizards/ApprovalLicenseWiz
+ ardPage$1.class
+SHA-256-Digest: t1knoNpO1Gh/ZHGCGSnpNSeYdGS2jCjMpyOz5ZrJdjE=
+
+Name: com/webratio/commons/startup/SerialTypeHelper.class
+SHA-256-Digest: 8BhiRSj1qlkuZp0EJt3krNdpMWq6dW5GDXVp263qMpg=
+
+Name: com/webratio/commons/startup/internal/server/UsageStatisticsServ
+ erHandler$ServerResponse.class
+SHA-256-Digest: i1WOmF1GiaU90JhrlawDf82/nWGIZRoNOyrdqRDbSD4=
+
+Name: com/webratio/commons/startup/preferences/UsageStatisticsPreferen
+ cePage.class
+SHA-256-Digest: hQzHBWokwlELUKIdMB0WNDhL18jUFRr2HRCCNXy/Jxo=
+
+Name: com/webratio/commons/startup/UsageStatisticsManager$UsageStatist
+ icsCounter.class
+SHA-256-Digest: 0d9+dDS95wJsbDfrmpEnInKyTFliHr8jtLrdgDSgbB0=
+
+Name: com/webratio/commons/startup/commons/MultipleRunner$IMultipleRun
+ nable.class
+SHA-256-Digest: REQQgG2Zg0WJyVhZcQERp6I/C+7gYoXfF02KiPRyGf8=
+
+Name: com/webratio/commons/startup/commons/wizards/SelectionWizardPage
+ $WizardNode.class
+SHA-256-Digest: OKWJ2KF7qgnvM58MO57XveCcbouPke3IiHLrGe71YDc=
+
+Name: com/webratio/commons/startup/Engine.properties
+SHA-256-Digest: YhtuBuja+eMtbOMc40sFg/tgqEcyADDSq/A7yM/kIWA=
+
+Name: com/webratio/commons/startup/internal/server/WR8CRMServerHandler
+ $2$1.class
+SHA-256-Digest: 40ZG6a9XKkrykToauTQXpd2TAGMROFGGUfNlIDgAxnE=
+
+Name: com/webratio/commons/startup/CloudServiceTypeProvider$StaticClou
+ dServiceTypeProvider.class
+SHA-256-Digest: y3fe+n444F0bEXiS9q0JtUvTqlqmMXZqfYfZMmpweLQ=
+
+Name: com/webratio/commons/startup/internal/data/IActivationFileWriter
+ .class
+SHA-256-Digest: jkVxveSHwyvXWoHJO0svgmfxCIT0w9uSrPpgObI1Z2E=
+
+Name: com/webratio/commons/startup/commons/dialogs/SelectionWizardDial
+ og.class
+SHA-256-Digest: wECjDwQSTKFpahMjIPeMgozJl/nHAuzI3d3Cb/vSqTA=
+
+Name: com/webratio/commons/startup/internal/data/ActivationFileCRMBase
+ d$1.class
+SHA-256-Digest: PhDfVcBYUmH1RSSKl/NIrmqMMB6IiFtp5kP1xZKwZjc=
+
+Name: com/webratio/commons/startup/commons/dialogs/StartupWizardNPSPag
+ ePart$2.class
+SHA-256-Digest: xD77cj0Wo8TDZhKRYeZm03nQ1EPRyrjSYmkhyV1bDV8=
+
+Name: com/webratio/commons/startup/Configuration.class
+SHA-256-Digest: rPkYBv9QcEMS06ebkCgpBnGspv8c4ORMV0N/hENKYlE=
+
+Name: com/webratio/commons/startup/internal/wizards/WR8CRMServerManual
+ ActivationWizardPage$1.class
+SHA-256-Digest: 7Z4CO7y3YUoGPfmh8iqP4EhA9XgXw1Q9QF4DI9fbx/s=
+
+Name: icons/full/ctool16/close_hot.png
+SHA-256-Digest: fD9Iid3fx4buqnXzP83Op2qv79eVKYJ79NebSPeuVMs=
+
+Name: com/webratio/commons/startup/internal/wizards/WR8LocalLicenseSer
+ verSettingsWizardPage.class
+SHA-256-Digest: l3zWLYDymbBLVCY3FWxTJ+eENd7MW7cGpJQyVbfJNEs=
+
+Name: com/webratio/commons/startup/internal/server/UsageStatisticsServ
+ erResponse$RESPONSE_CODES.class
+SHA-256-Digest: yTXXnKeI8razQm2uU17dgp/WFqam0y30Dwa3So6Ce9A=
+
+Name: com/webratio/commons/startup/internal/server/WR8CRMServerRespons
+ e.class
+SHA-256-Digest: bNU/OWB++2GURYoYLnc35BMK2QgzqHtMwJQJgrwv+4s=
+
+Name: com/webratio/commons/startup/preferences/UsageStatisticsFieldEdi
+ tor.class
+SHA-256-Digest: PxT5pn4ag7IUBi4C62kWIcLwlDn5cDBjcWhuSoavZEc=
+
+Name: com/webratio/commons/startup/internal/server/IServerResponse.cla
+ ss
+SHA-256-Digest: 1UlsaIzbwiZ/fYTwdfgYW3bFZxd0eVoJ3HuSGaSkd0Y=
+
+Name: com/webratio/commons/startup/internal/wizards/AbstractActivation
+ WizardPage.class
+SHA-256-Digest: QrUq1As/RxPvGUR+B9efFmfCwbkR6yMAf+56XUmVL4Q=
+
+Name: com/webratio/commons/startup/Engine.class
+SHA-256-Digest: 7B/TI3iT/gWxCtZ14lfKhxJynTdNpw0s+BH3qoKc+Xs=
+
+Name: com/webratio/commons/startup/internal/wizards/WizardFactory$Onli
+ neServerLicenseWizard.class
+SHA-256-Digest: XakPteZzJKaSNNI+2qXWCJ08dcisbPYSJfT96cwI31A=
+
+Name: com/webratio/commons/startup/preferences/StartupPreferencePage$P
+ roxyPart.class
+SHA-256-Digest: u/qfR2oppT0SfLqZdpwF7qbCM3medh6aiGMJUs5TQG0=
+

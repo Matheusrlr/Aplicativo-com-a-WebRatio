@@ -1,0 +1,68 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: com.webratio.ide.ui;singleton:=true
+Require-Bundle: org.apache.ant,org.eclipse.core.resources,org.eclipse.
+ gef,org.eclipse.jdt.ui,org.eclipse.search,org.eclipse.ui.console,org.
+ eclipse.ui.ide,com.webratio.commons.mf.ui.views.properties.tabbed,com
+ .webratio.commons.db,com.webratio.commons.libs,com.webratio.commons.m
+ f.model,com.webratio.commons.mf.ui,com.webratio.commons.transform,com
+ .webratio.generator.helpers,com.webratio.generator.webapp,com.webrati
+ o.commons.startup,com.webratio.ide.core,com.webratio.ide.derivation,c
+ om.webratio.ide.styles,com.webratio.ide.units,com.webratio.rtx,org.ec
+ lipse.jdt.core,org.eclipse.team.core,org.eclipse.pde,org.eclipse.pde.
+ core,org.eclipse.pde.ui,org.eclipse.ant.core,org.eclipse.ant.ui,org.e
+ clipse.ui.editors,org.eclipse.core.filesystem,org.eclipse.help.ui,org
+ .eclipse.ui.workbench.texteditor,org.eclipse.compare,org.eclipse.ui,o
+ rg.eclipse.jface.text,org.eclipse.core.runtime,org.eclipse.swt,org.ec
+ lipse.jface,org.eclipse.ui.workbench,org.eclipse.ui.navigator,org.ecl
+ ipse.team.ui,org.eclipse.equinox.launcher,com.webratio.ide.debug.core
+ ,com.webratio.ide.debug.ui,com.webratio.debug,com.webratio.ide.compon
+ ents.core,com.webratio.ide.components.ui,com.webratio.mf.core,com.web
+ ratio.commons.eclipse.ui,com.webratio.ide.store.ui,com.webratio.ide.s
+ tore.core,com.webratio.ide.xsd.ui,com.webratio.json,com.webratio.ws,o
+ rg.eclipse.equinox.p2.artifact.repository,org.eclipse.equinox.p2.meta
+ data.repository,org.eclipse.equinox.p2.ui,org.eclipse.equinox.p2.ui.s
+ dk,org.eclipse.equinox.p2.metadata,org.eclipse.equinox.p2.repository,
+ org.eclipse.equinox.p2.operations,com.webratio.commons.lib.jsr305,com
+ .webratio.commons.lib.google.guava,com.webratio.commons.lib.javax.mai
+ l,com.webratio.commons.lib.saxon,com.webratio.commons.lib.itext,com.w
+ ebratio.commons.dom4j,com.webratio.commons.lib.groovy,com.webratio.co
+ mmons.base,com.webratio.commons.lib.apache.commons.beanutils,com.webr
+ atio.commons.lib.apache.commons.collections,com.webratio.commons.lib.
+ apache.commons.lang,com.webratio.commons.lib.apache.commons.httpclien
+ t,com.webratio.commons.lib.apache.commons.io,com.webratio.commons.lib
+ .apache.commons.net,com.webratio.commons.lib.apache.log4j,com.webrati
+ o.commons.lib.dom4j,com.webratio.commons.eclipse.gef,com.webratio.com
+ mons.eclipse.core,com.webratio.model,com.webratio.model.query,com.web
+ ratio.commons.eclipse.core,org.eclipse.debug.ui,com.webratio.generato
+ r.mobile,com.webratio.commons.lib.jackson2,com.webratio.commons.lib.j
+ axen,com.webratio.services.updates.client
+Bundle-ManifestVersion: 2
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: WebRatio
+Ant-Version: Apache Ant 1.9.2
+Export-Package: com.webratio.ide.ui,com.webratio.ide.ui.actions,com.we
+ bratio.ide.ui.commands;x-friends:="com.webratio.ide.ui.tests",com.web
+ ratio.ide.ui.dialogs,com.webratio.ide.ui.editors,com.webratio.ide.ui.
+ enterprise,com.webratio.ide.ui.explorer.views,com.webratio.ide.ui.fig
+ ures,com.webratio.ide.ui.grid.grsys.editparts,com.webratio.ide.ui.gri
+ d.grsys.views,com.webratio.ide.ui.grid.managers,com.webratio.ide.ui.g
+ rid.std.actions,com.webratio.ide.ui.grid.std.commands,com.webratio.id
+ e.ui.grid.std.editparts,com.webratio.ide.ui.grid.std.views,com.webrat
+ io.ide.ui.grid.views,com.webratio.ide.ui.i18n.model,com.webratio.ide.
+ ui.jobs,com.webratio.ide.ui.mobile,com.webratio.ide.ui.patterns,com.w
+ ebratio.ide.ui.properties,com.webratio.ide.ui.properties.items,com.we
+ bratio.ide.ui.viewers,com.webratio.ide.ui.views,com.webratio.ide.ui.w
+ izards
+Bundle-Name: WebRatio IDE UI Plug-in
+Bundle-Version: 8.10.3.201902120438
+Bundle-ClassPath: bin.jar
+Bundle-Activator: com.webratio.ide.ui.WRUIPlugin
+Created-By: 1.8.0-b132 (Oracle Corporation)
+
+Name: plugin.xml
+SHA-256-Digest: QJvf2XhQShl7JjH3UOMgjt8ytF2+S5X91VwvM1OeA48=
+
+Name: META-INF/signature
+SHA-256-Digest: PRYYgqFVErjMMx3lDuv1T8nEp66ZmsJ8BwS19rF+4z4=
+

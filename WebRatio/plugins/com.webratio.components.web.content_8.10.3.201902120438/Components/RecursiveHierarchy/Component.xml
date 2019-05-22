@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="content" formBased="false" idPrefix="rtu" namePrefix="RecursiveHierarchy " label="Recursive Hierarchy" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true"  errorFlowTarget="true"  successFlowTarget="true" canPlaceLayoutComponent="true"> 
+  <DomainClassProperty attributeName="dataBinding" includeDerived="true" figureDisplayOrder="1"> 
+    <Description xml:space="preserve">The class from which the content of the component is drawn.</Description> 
+  </DomainClassProperty>  
+  <ConditionalExpression label="Root Conditional Expression" classIdExpr="../../@dataBinding" elementName="RootConditionalExpression" defaultPolicy="true" figureDisplayOrder="2"> 
+    <Description xml:space="preserve">The set of selection criteria that retrieves the root instances of the class of the component.</Description> 
+  </ConditionalExpression>  
+  <BooleanProperty label="Show All as Root" attributeName="showAllAsRoot" defaultValue="false"> 
+    <Description xml:space="preserve">If checked, all the retrieved instances are shown as root nodes, with their associated
+descendants. If unchecked, only elements with no parent are shown as root nodes.</Description> 
+  </BooleanProperty>  
+  <ConditionalExpression classIdExpr="../../@dataBinding" elementName="ConditionalExpression" defaultPolicy="false" figureDisplayOrder="3"> 
+    <Description xml:space="preserve">The set of selection criteria that retrieves the instances of the class of the component.</Description> 
+  </ConditionalExpression>  
+  <AttributesProperty label="Display Attributes" classIdExpr="@dataBinding" attributeName="displayAttributes" includeDerived="true" enabledImportExtraAttributes="true"> 
+    <Description xml:space="preserve">The list of class attributes displayed by the component.</Description>  
+    <IsEnabled>return (element["dataBinding"] != "")</IsEnabled> 
+  </AttributesProperty>  
+  <SortAttributesProperty label="Sort Attributes" elementName="SortAttribute" attributeName="attribute" classIdExpr="@dataBinding" attributeIdsExpr="@displayAttributes"> 
+    <Description xml:space="preserve">The sorting criteria used to display the objects in the recursive
+hierarchy.</Description>  
+    <IsEnabled>return (element["dataBinding"] != "")</IsEnabled> 
+  </SortAttributesProperty>  
+  <AssociationRoleProperty label="Child To Parent Role" attributeName="association" includeDerived="true" sourceClassIdExpr="@dataBinding" targetClassIdExpr="@dataBinding" figureDisplayOrder="2"> 
+    <IsEnabled>return (element["dataBinding"] != "")</IsEnabled>  
+    <Description xml:space="preserve">The loop association used to retrieve the parent of the instances of the class.</Description> 
+  </AssociationRoleProperty>  
+  <LayoutAttributes xml:space="preserve">return component.attributeValue("displayAttributes", "").tokenize(" ")</LayoutAttributes>  
+  <IsContextFreeComponent xml:space="preserve">def temp = []
+
+def incomingLinks = getIncomingFlows(component)
+temp.addAll(incomingLinks)
+temp.addAll(component.selectNodes("RootConditionalExpression/*"))
+temp.addAll(component.selectNodes("ConditionalExpression/*"))
+if(temp.empty){
+  return true
+}
+
+def currentPrefix = component["id"] + ".current"
+for(link in incomingLinks){
+    def parameterBindings = link.selectNodes("ParameterBinding")
+    def automaticLinkParams = parameterBindings.empty ? getAutomaticParameterBindings(link) : []
+    if (!parameterBindings.empty)  {
+       if (parameterBindings.any{!it["target"].startsWith(currentPrefix)}) {
+           return false
+      }
+   } else {
+       if (automaticLinkParams.any{!it.target.startsWith(currentPrefix)}) {
+           return false
+      }
+   }
+}
+
+return true
+  </IsContextFreeComponent>  
+  <IsMultiConditionComponent xml:space="preserve">
+if (getIncomingFlows(component).size() &lt;= 1) {
+    return false
+}
+def count = 0
+def sel = component.element("ConditionalExpression")
+if(sel != null){
+	count += sel.elements("AssociationRoleCondition").size() + sel.elements("KeyCondition").size()
+	for (cond in sel.elements("AttributesCondition")) {
+	  def pred = cond["predicate"]
+	  if ((cond["value"] == "") &amp;&amp; !isUnaryPredicate(pred)) {
+	     count++
+	  }
+	}
+}
+sel = component.element("RootConditionalExpression")
+if(sel != null){
+	count += sel.elements("AssociationRoleCondition").size() + sel.elements("KeyCondition").size()
+	for (cond in sel.elements("AttributesCondition")) {
+	  def pred = cond["predicate"]
+	  if ((cond["value"] == "") &amp;&amp; !isUnaryPredicate(pred)) {
+	     count++
+	  }
+	}
+}
+return count &gt; 1
+  
+  </IsMultiConditionComponent>  
+  <AutoExpand xml:space="preserve">import org.dom4j.Element
+
+  def domainClass = getById(component["dataBinding"])
+  
+  for(link in getExitingFlows(component, FlowType.NAVIGATION)){
+     def connectionType = getConnectionType(link)
+     if(connectionType == "contentToContentIntraPage"){
+       if(link["automaticCoupling"] == "true"){
+           def i = 1
+           for(par in getAutomaticParameterBindings(link)){
+               Element curPar = link.addElement("ParameterBinding");
+               curPar.addAttribute("id", link["id"] + "_par" + i)
+               curPar.addAttribute("source", par["source"])
+               curPar.addAttribute("target", par["target"])
+               i++
+           }
+           link["automaticCoupling"] = "false"
+       }
+       for (a in getKeyAttributes(domainClass)) {
+          Element curPar = link.addElement("ParameterBinding");
+          curPar.addAttribute("id", link["id"] + "_" + a["id"])
+          curPar.addAttribute("source", "data[]." + a["id"])
+          curPar.addAttribute("target", component["id"] + ".current." + a["id"])
+       }
+     }
+  }</AutoExpand>  
+  <Description xml:space="preserve">The recursive hierarchy shows a hierarchy of objects belonging to
+a class.
+A recursive hierarchy specification consists of three parts:
+&lt;ul&gt;
+  &lt;li&gt;The specification of the class to which the component refers and, optionally, 
+of a conditional expression used to restrict the set of instances contributing to the content 
+of the component.&lt;/li&gt;
+  &lt;li&gt;The selection of the attributes to be included in the component.&lt;/li&gt;
+  &lt;li&gt;The child-parent association which connects the instances of
+the class&lt;/li&gt;
+&lt;/ul&gt;</Description>  
+  <InputDescription xml:space="preserve" name="Current Object">The set of key attributes values of the object that define the current 
+object selected.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Condition-Name">The parameter associated to one of the root conditional expression or conditional expression
+of the component.</InputDescription>  
+  <OutputDescription xml:space="preserve" name="Attribute-Name">The value of one of the class attributes for the object selected
+from the component.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="ForeignKey-Name">The value for one of the foreign key attributes of the object 
+connected to the object selected.</OutputDescription>  
+  <BeanDescription xml:space="preserve">
+	&lt;p&gt;The component state object for the Simple List consists of the following properties:
+	   &lt;ul&gt;
+  		&lt;li&gt;&lt;code&gt;int dataSize&lt;/code&gt;: the number of class state objects&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Object[] data&lt;/code&gt;: the array of class state objects&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;int level&lt;/code&gt;: the index of the hierarchical level&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;boolean hasCurrent&lt;/code&gt;: if true, the current level has a current state object&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;boolean isCurrent&lt;/code&gt;: if true, the current object is the current state object&lt;/li&gt;
+  	&lt;li&gt;&lt;code&gt;String currentKey&lt;/code&gt;: the pipe-separated list of the class key attributes ids&lt;/li&gt;
+  	   &lt;/ul&gt;
+	&lt;/p&gt;
+	&lt;p&gt;The class state object depends on the class the component is based on. For example, the class 
+	&lt;i&gt;Category&lt;/i&gt; that has a association on itself (i.e., each category has sub categories) is associated with a state object 
+	having the following properties:
+	   &lt;ul&gt;
+  		&lt;li&gt;&lt;code&gt;Integer OID&lt;/code&gt;: the value of the &lt;i&gt;oid&lt;/i&gt; attribute&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;String category&lt;/code&gt;: the value of the &lt;i&gt;category&lt;/i&gt; attribute&lt;/li&gt;
+  	   &lt;/ul&gt;
+	&lt;/p&gt;
+</BeanDescription> </Component>

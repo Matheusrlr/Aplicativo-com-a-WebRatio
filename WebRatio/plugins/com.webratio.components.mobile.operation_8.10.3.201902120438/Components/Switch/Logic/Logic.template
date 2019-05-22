@@ -1,0 +1,10 @@
+#?delimiters [%, %], [%=, %]
+[% setJSONOutput() %]
+{
+	"service": "wrm.comp.SwitchService",
+	"codes": [
+		[% component.selectNodes("Case[string(@value) != '']").eachWithSeparator(",") { c -> %]
+			"[%= c["value"] %]"
+		[% } %]
+	]
+}

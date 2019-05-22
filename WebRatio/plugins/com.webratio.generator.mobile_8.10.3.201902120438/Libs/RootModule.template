@@ -1,0 +1,11 @@
+#?delimiters [%, %], [%=, %]
+[%
+setJSOutput()
+
+def moduleCount = 0
+%]
+
+[% wr.usedServiceModules.each { moduleName -> %]
+	import * as mod[%= moduleCount %] from "[%= moduleName %]";
+	wrm.defineModule("[%= moduleName %]", mod[%= moduleCount++ %])
+[% } %]

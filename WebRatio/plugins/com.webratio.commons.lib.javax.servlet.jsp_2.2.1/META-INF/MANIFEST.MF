@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Export-Package: javax.servlet.jsp,javax.servlet.jsp.el,javax.servlet.j
+ sp.tagext
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/jsp-api.jar
+Bundle-Version: 2.2.1
+Bundle-Name: WebRatio 3rd Party Library - JSP API
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.javax.servlet.jsp
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
+Name: lib/jsp-apisrc.zip
+SHA-256-Digest: 16m6Gvd8h0Z3pSTzXX+0RvrdqtaItvNOaApU1dy0M5Q=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: b6TlQCxe5fA5IOZLajaFXpNy45PyG026vbEBuW5HlBc=
+
+Name: about_files/CDDL+GPL.txt
+SHA-256-Digest: cMY5g9SNG44frMYbx+Hau6mOvkBm9aZlZ6bztqAiGPQ=
+
+Name: lib/jsp-api.jar
+SHA-256-Digest: 52cGG1OdbGhtZD7uCtjyJEKSIxL9oE1OM2/jo8uRF6I=
+

@@ -1,0 +1,61 @@
+#?delimiters [%, %], [%=, %]
+[%
+def localized = (getEffectiveLocalizedElement(component) != null)
+%]
+<c:if test="${not(empty <wr:Id context="component"/>) and (<wr:Id context="component"/>.dataSize gt 0)}">
+<wr:Frame>
+ <div class="plain <wr:StyleClass/>">
+	<div class="plain ProcessUnit">
+      <table>
+	      <c:forEach var="current" varStatus="status" items="${<wr:Id context="component"/>.data}">
+	           <c:set var="index" value="${status.index}"/>    
+	           <c:set var="type" value="${current.type}"/>
+	           <c:set var="typePattern" value="${type}Pattern"/>
+	           <tr class="row">
+	           	<th class="header">
+	           		[% if (localized) { %]<spring:message code="${current.name}"/>[%
+					} else { %]<c:out value="${current.name}"/>[% } %]
+	           	</th>
+	           	<td class="value ${type}">
+		           <c:forEach var="value" varStatus="vStatus" items="${current.values}">
+		                <c:choose>
+		                   <c:when test="${type eq 'boolean'}">
+		                      <c:choose>
+		                        <c:when test="${value}"><spring:message code="${type}.yes"/></c:when>
+		                        <c:otherwise><spring:message code="${type}.no"/></c:otherwise>
+		                      </c:choose>
+		                   </c:when>
+		                   <c:when test="${type eq 'date' or type eq 'time' or type eq 'timestamp'}">
+		                     <fmt:formatDate value="${value}" pattern="${pageScope[typePattern]}"/>
+		                   </c:when>
+		                   <c:when test="${type eq 'integer' or type eq 'float' or type eq 'decimal'}">
+		                     <fmt:formatNumber value="${value}" pattern="${pageScope[typePattern]}"/>
+		                   </c:when>
+		                   <c:when test="${type eq 'blob'}">
+		                     <c:if test="${not (empty value)}">
+		                       <a target="_blank" border="0" href="<webratio:BLOB value="${value}"/>"><c:out value="${value.name}"/></a>
+		                     </c:if>
+		                   </c:when>
+		                   <c:when test="${type eq 'url'}">
+		                     <c:if test="${not(empty value)}">
+		                       <a target="_blank" href="<c:out value="${value}"/>"><c:out value="${value}"/></a>
+		                     </c:if>
+		                   </c:when>
+		                   <c:when test="${type eq 'text'}">
+		                     <c:out value="${value}"/>
+		                   </c:when>
+		                   <c:when test="${current.hasCases}">
+		                     [%if(localized && isBpmLocalizedModel()){%]<spring:message code="${value}"/>[%}else{%]<c:out value="${value}"/>[%}%]
+		                   </c:when>
+		                   <c:otherwise><c:out value="${value}"/></c:otherwise>
+		                </c:choose>
+		                <c:if test="${not vStatus.last}">&nbsp;</c:if>
+		            </c:forEach>
+	             </td>
+	            </tr>
+	        </c:forEach>
+		</table>
+	</div>
+ </div>	
+</wr:Frame>
+</c:if>

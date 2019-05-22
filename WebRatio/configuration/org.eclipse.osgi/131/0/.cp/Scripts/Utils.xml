@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Utilities" default="main">
+
+	<target name="main" />
+
+	<target name="copy-files">
+		<copy todir="${OUTPUT_FOLDER}" preservelastmodified="true" overwrite="true" failonerror="true">
+			<fileset dir="${LOCAL_WEB_APP_FOLDER}" />
+		</copy>
+	</target>
+
+	<target name="copy-folder">
+		<copy todir="${OUTPUT_FOLDER}" preservelastmodified="true" overwrite="true" failonerror="true">
+			<fileset dir="${SOURCE_FOLDER}/..">
+				<include name="${SOURCE_FOLDER_NAME}/**" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="clear-folder">
+		<delete dir="${OUTPUT_FOLDER}" failonerror="true" />
+		<mkdir dir="${OUTPUT_FOLDER}" />
+	</target>
+
+	<target name="delete-folder">
+		<delete dir="${OUTPUT_FOLDER}" failonerror="false" />
+	</target>
+
+</project>

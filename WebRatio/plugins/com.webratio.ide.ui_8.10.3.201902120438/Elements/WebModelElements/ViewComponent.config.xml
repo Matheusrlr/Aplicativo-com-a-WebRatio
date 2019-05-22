@@ -1,0 +1,281 @@
+<Element name="ViewComponent" lowerName="view component" pluralLowerName="view components">
+	<Description>
+		A View Component is the atomic element for specifying 
+		the content of a Web page. View components has some common actions and properties, but refer to 
+		&lt;a href="/Reference/ComponentsReference"&gt;Components Reference&lt;/a&gt; to have specific reference.
+	</Description>
+	<ActionRef label="Add Navigation Flow"/>
+	<ActionRef label="Add Property" />
+	<ActionRef label="Convert To..."/>
+	<ActionRef label="Localize" />
+	<ActionRef label="Open in Browser" />
+	<!--
+	<Action label="Field Wizard...">
+		Opens the &lt;a href="/Reference/WizardsAndDialogs/FieldWizard"/&gt; in order 
+		to configure the Form or 
+		Multiple Form fields, selection 
+		fields and multi selection fields.
+	</Action>
+	-->
+	<!--
+	<Action label="Transform into Module">
+		Opens the &lt;a href="/Reference/WizardsAndDialogs/TransformIntoModuleWizard/TransformIntoContentModuleWizard"/&gt; 
+		or &lt;a href="/Reference/WizardsAndDialogs/TransformIntoModuleWizard/TransformIntoHybridModuleWizard"/&gt; in order 
+		to transform the component into a content or hybrid module.
+	</Action>
+	-->
+	<Action label="Go to Action Definition">
+		Goes to the &lt;a href="/Reference/ElementsReference/WebModelElements/ActionDefinition"/&gt;
+		that the component refers to.
+	</Action>
+	<ActionRef label="Open Generated Code" />
+	<ActionRef label="Generate Layout Pages Only"/>
+	<ActionRef label="Generate Logic Descriptors Only"/>
+	<ActionRef label="Generate Selection"/>
+	<ActionRef label="Find Model Problems"/>
+	<ActionRef label="Help"/>
+	<PropertyCategory name="General">
+		<PropertyRef label="Identifier" />
+		<PropertyRef label="Name" />
+		<PropertyRef label="Flow Order" />
+		<PropertyRef label="Custom Descriptor"/>
+	</PropertyCategory>
+	<PropertyCategory name="AJAX">
+		<Property label="Computation Mode">
+			Computation mode to always enforce for this component when the page is refreshed
+			selectively. Ignored for flows that specify another mode for this same component.&lt;br/&gt;
+			Possible values are:
+			&lt;ul&gt;
+			&lt;li&gt;&lt;b&gt;Execute&lt;/b&gt; - component is always executed;&lt;/li&gt;
+			&lt;li&gt;&lt;b&gt;Skip&lt;/b&gt; - component is never executed.&lt;/li&gt;
+			&lt;/ul&gt;
+			Incoming flows may override the computation mode set on a component.
+			When no value is set, the most appropriate mode is selected automatically for each
+			navigation, depending on propagated data.
+		</Property>
+		<Property label="Enable AJAX for expanded flows">
+			If checked, flows automatically expanded by this component (as scroll flows) are set
+			to perform a selective refresh of the page, updating the user interface only for the
+			sub-set of components that changed.&lt;br/&gt;
+			To be effective, the 'Enable AJAX' property must be checked on the page.
+		</Property>
+		
+		<Property label="Enable Tooltip">
+			If checked, this component displays dynamic tooltips on part of its generated interface.
+		</Property>
+		<Property label="Tooltip Position">
+			Elements of this component interface that have a tooltip associated automatically.&lt;br/&gt;
+			Possible values are:
+			&lt;ul&gt;
+			&lt;li&gt;&lt;b&gt;On Attributes&lt;/b&gt; - tooltips are attached to all Layout Attributes;&lt;/li&gt;
+			&lt;li&gt;&lt;b&gt;On Flow&lt;/b&gt; - tooltips are attached to all Layout Flows;&lt;/li&gt;
+			&lt;li&gt;&lt;b&gt;Custom&lt;/b&gt; - no tooltips are attached automatically, leaving this up to the templates.&lt;/li&gt;
+			&lt;/ul&gt;
+			Custom tooltip targets may be defined, in all cases, by manually placing the required wrapper
+			code in custom templates.
+		</Property>
+		<Property label="Tooltip Flow">
+			Flow that is navigated to get the tooltip contents.
+			&lt;p&gt;The Select button <Button name="Browse"/> opens the 
+			&lt;a href="/Reference/WizardsAndDialogs/ElementSelectionDialog"/&gt;, which 
+			permits to select the flow.&lt;/p&gt;
+			<Button name="Clear"/>
+		</Property>
+		<Property label="Tooltip Event">
+			Event that causes the tooltip to be shown.&lt;br/&gt;
+			Possible values are:
+			&lt;ul&gt;
+			&lt;li&gt;On Mouse Over,&lt;/li&gt;
+			&lt;li&gt;On Click,&lt;/li&gt;
+			&lt;li&gt;On Double Click.&lt;/li&gt;
+			&lt;/ul&gt;
+		</Property>
+		<Property label="Tooltip Width">
+			Width of the tooltip box in pixels.&lt;br/&gt;
+			Default value: 200
+		</Property>
+		<Property label="Tooltip Height">
+			Height of the tooltip box in pixels.&lt;br/&gt;
+			Default value: 200
+		</Property>
+		<Property label="Tooltip Class Name">
+			The CSS class to apply to the tooltip box.
+		</Property>
+		<Property label="Tooltip Auto Resizing">
+			If checked, the tooltip box automatically resizes itself according to the content.
+		</Property>
+		
+		<Property label="Enable Drag">
+			If checked, this component enables parts of its generated interface to become draggable
+			by the user.&lt;br/&gt;
+			Draggable elements are defined by the template, via the &lt;code&gt;wr:AjaxDraggable&lt;/code&gt;
+			tag.&lt;br/&gt;
+			Valid targets for dragged elements are component with 'Enable Drop' checked and a 'Drop Flow'
+			having the same target of this component 'Drag Flow'.
+		</Property>
+		<Property label="Drag Flow">
+			Flow that is navigated when an element of this component is dropped on a valid target, 
+			together with the 'Drop Flow' of the target.
+			&lt;p&gt;The Select button <Button name="Browse"/> opens the 
+			&lt;a href="/Reference/WizardsAndDialogs/ElementSelectionDialog"/&gt;, which 
+			permits to select the flow.&lt;/p&gt;
+			<Button name="Clear"/>
+		</Property>
+		<Property label="Enable Drop">
+			If checked, this component enables parts of its generated interface to become targets
+			for draggable elements coming from another component.&lt;br/&gt;
+			Drop target elements are defined by the template, via the &lt;code&gt;wr:AjaxDroppable&lt;/code&gt;
+			tag.&lt;br/&gt;
+			Valid dragged elements are those coming from components with 'Enable Drag' checked and a
+			'Drag Flow' having the same target of this component 'Drop Flow'.
+		</Property>
+		<Property label="Drop Flow">
+			Flow that is navigated when a valid element is dropped on this component, 
+			together with the 'Drag Flow' of the source component.
+			&lt;p&gt;The Select button <Button name="Browse"/> opens the 
+			&lt;a href="/Reference/WizardsAndDialogs/ElementSelectionDialog"/&gt;, which 
+			permits to select the flow.&lt;/p&gt;
+			<Button name="Clear"/>
+		</Property>
+		<Property label="Hover Class">
+			The CSS class to apply on a drop target element when a valid draggable element
+			is dragged over it. The class usually provides a visual feedback to let the user know
+			the exact target on which they are about to drop.
+		</Property>
+	</PropertyCategory>
+	<PropertyCategory name="Validation">
+		<Property label="Validation Flows">
+			The list of validation actions to be performed for each submit flow. 
+		</Property>
+	</PropertyCategory>
+	<PropertyCategory name="AJAX Fields">
+		<Property label="Enable Event">
+			If checked, this field responds to user interface events by navigating a flow.
+		</Property>
+		<Property label="Event Type">
+			User interface event that starts navigation of the 'Event Flow'.&lt;br/&gt;
+			Possible values are:
+			&lt;ul&gt;
+			&lt;li&gt;On Change,&lt;/li&gt;
+			&lt;li&gt;On Blur,&lt;/li&gt;
+			&lt;li&gt;On Focus,&lt;/li&gt;
+			&lt;li&gt;On Keypress,&lt;/li&gt;
+			&lt;li&gt;On KeyUp.&lt;/li&gt;
+			&lt;/ul&gt;
+		</Property>
+		<Property label="Event Flow">
+			Flow that is navigated when an event matching 'Event Type' occurs.
+			&lt;p&gt;The Select button <Button name="Browse"/> opens the 
+			&lt;a href="/Reference/WizardsAndDialogs/ElementSelectionDialog"/&gt;, which 
+			permits to select the flow.&lt;/p&gt;
+			<Button name="Clear"/>
+		</Property>
+		<Property label="Event Indicator">
+			If checked, a visual indicator is displayed near this field interface
+			while the navigation started by 'Event Flow' is occurring.
+		</Property>
+		
+		<Property label="Enable Autocompletion">
+			If checked, an auto-completion suggestion menu is displayed when this
+			field contents are edited on the user interface.
+		</Property>
+		<Property label="Autocompletion Type">
+			Behavior to use when auto-completing this field.
+			&lt;ul&gt;
+			&lt;li&gt;&lt;b&gt;Normal&lt;/b&gt; - The field output value is the one selected
+			from the suggestion menu, as displayed in the page;&lt;/li&gt;
+			&lt;li&gt;&lt;b&gt;Selection Field&lt;/b&gt; - The field output value is the 
+			ID corresponding to the chosen suggestion, which is usually not the same
+			as the value displayed in-page.&lt;/li&gt;
+			&lt;/ul&gt;
+		</Property>
+		<Property label="Autocompletion Flow">
+			Flow that is navigated for computing the suggestions to display on the auto-complete
+			menu.&lt;br/&gt;
+			The flow should lead to a Page that produces the correct output expected by the 
+			client widget. This is usually accomplished by using the 'WRDefault/Autocomplete'
+			page and component templates.
+			&lt;p&gt;The Select button <Button name="Browse"/> opens the 
+			&lt;a href="/Reference/WizardsAndDialogs/ElementSelectionDialog"/&gt;, which 
+			permits to select the flow.&lt;/p&gt;
+			<Button name="Clear"/>
+		</Property>
+		<Property label="Depends on Field">
+			&lt;b&gt;DEPRECATED.&lt;/b&gt; As of WebRatio 7.0, it is no longer necessary to
+			explicitly state field dependencies.
+			&lt;p&gt;Signals that the value of an additional field is required in order to
+			compute suggestions for this field. This must be accompanied by a correct
+			coupling on the 'Autocompletion Flow'.&lt;/p&gt;
+			&lt;p&gt;The Select button <Button name="Browse"/> opens the 
+			&lt;a href="/Reference/WizardsAndDialogs/ElementSelectionDialog"/&gt; 
+			to select the depending field.&lt;/p&gt;
+			<Button name="Clear"/>
+		</Property>
+		<Property label="Autocomplete Indicator">
+			If checked, a visual indicator is displayed near this field interface
+			while 'Autocompletion Flow' navigation is occurring.
+		</Property>
+		<Property label="Autocomplete Tokens">
+			Whitespace-separated strings to use for enabling auto-completion
+			of multiple tokens.
+			&lt;p&gt;If separators are specified, text entered in the field is taken as
+			being composed of multiple tokens; each token is then auto-completed separately.
+			If no separator is specified, the field is always treated as containing a single 
+			token.&lt;/p&gt;
+		</Property>
+		<Property label="Autocomplete Min Chars">
+			Minimum number of characters to enter before suggestions are computed.
+			When 'Autocomplete Tokens' are used, the number of characters is evaluated for each
+			token.
+			Default value: 1
+		</Property>
+		<Property label="Autocomplete Update Element CallBack">
+			Name of a global JavaScript function to invoke for updating the field interface
+			value with the chosen suggestion. If specified, it replaces the built-in behavior.
+			&lt;p&gt;The function receives one argument: a HTMLLIElement containing the
+			selected value in its text and the selected ID in its 'id' attribute.&lt;/p&gt;
+		</Property>
+		<Property label="Autocomplete After Update Element CallBack">
+			Name of a global JavaScript function to invoke after updating the field interface
+			value with the chosen suggestion.
+			&lt;p&gt;The function receives two argument: the updated HTMLInputElement and a
+			HTMLLIElement containing the selected value in its text and the selected ID
+			in its 'id' attribute.&lt;/p&gt;
+		</Property>
+		
+		<Property label="Upload Enabled">
+			&lt;b&gt;DEPRECATED.&lt;/b&gt; As of WebRatio 5.1.1, files can be uploaded in the
+			background by just modeling BLOB fields.
+			&lt;p&gt;If checked, the field uses the AJAX upload feature.&lt;/p&gt;
+		</Property>
+		<Property label="Upload Page">
+			&lt;b&gt;DEPRECATED.&lt;/b&gt; As of WebRatio 5.1.1, files can be uploaded in the
+			background by just modeling BLOB fields.
+			&lt;p&gt;The page containing the real BLOB field for the file upload.&lt;/p&gt;
+			&lt;p&gt;The Select button <Button name="Browse"/> opens the 
+			&lt;a href="/Reference/WizardsAndDialogs/ElementSelectionDialog"/&gt; 
+			to select the upload page.&lt;/p&gt;
+			<Button name="Clear"/>
+		</Property>
+		<Property label="Upload Page Width">
+			&lt;b&gt;DEPRECATED.&lt;/b&gt; As of WebRatio 5.1.1, files can be uploaded in the
+			background by just modeling BLOB fields.
+			&lt;p&gt;The width of the upload page container.
+			Default value: 100%&lt;/p&gt;
+		</Property>
+		<Property label="Upload Page Height">
+			&lt;b&gt;DEPRECATED.&lt;/b&gt; As of WebRatio 5.1.1, files can be uploaded in the
+			background by just modeling BLOB fields.
+			&lt;p&gt;The heignt of the upload page container.
+			Default value: 70&lt;/p&gt;
+		</Property>
+	</PropertyCategory>
+	<PropertyCategory name="Appearance">
+		<Property label="Icon">
+			A distinctive icon displayed in the diagram and in the outline.
+		</Property>
+		<Property label="Show All Parts">
+			If checked, all parts belonging to the view component will be displayed.
+		</Property>
+	</PropertyCategory>	
+</Element>

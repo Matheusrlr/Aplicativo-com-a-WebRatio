@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<introContent>
+  	<extensionContent id="com.webratio.ide.ui.community" name="WebRatio Resources" alt-style="css/webresources.properties" style="css/webresources.css" path="webresources/@">
+  	   <group style-id="content-group" id="content-group">
+       		<link style-id="content-link" label="WebRatio Wiki" url="http://org.eclipse.ui.intro/openBrowser?url=http://wiki.webratio.com" id="wr_wiki">
+          		<text>Find useful information on the WebRatio Wiki</text>
+       		</link>
+       		
+       		<link style-id="content-link" label="WebRatio Discussion Group" 
+       		url="http://org.eclipse.ui.intro/openBrowser?url=http://groups.google.it/group/webratio" 
+       		id="wr_discussion_group">
+          		<text>Join other users to exchange help and information about WebRatio</text>
+       		</link>
+       		
+       		<link style-id="content-link" label="WebRatio LinkedIn Group" 
+       		url="http://org.eclipse.ui.intro/openBrowser?url=http://www.linkedin.com/e/gis/121222/34AD5D0AC43A" 
+       		id="wr_linkedin_group">
+          		<text>Join the LinkedIn community dedicated to everyone who is interested in our innovative tool and development method</text>
+       		</link>
+       		
+       		
+       		<link style-id="content-link" label="WebRatio resources" url="http://org.eclipse.ui.intro/openBrowser?url=http://www.webratio.com" id="wr_community">
+          		<text>Read articles and news on WebRatio.com</text>
+       		</link>
+  	   		<link style-id="content-link" label="WebML resources" url="http://org.eclipse.ui.intro/openBrowser?url=http://www.webml.org" id="wr_webml">
+          		<text>Read articles and news on WebML.org</text>
+       		</link>
+       		<!--
+	       <group id="wr_rss_news" label="Latest News" expandable="true" expanded="true">
+			  <contentProvider id="wr_rss_viewer" pluginId="com.webratio.ide.ui" class="com.webratio.ide.ui.intro.WebRatioRSSViewer">
+			  </contentProvider>
+	       </group>
+	       -->
+	    </group>
+  	</extensionContent>
+</introContent>

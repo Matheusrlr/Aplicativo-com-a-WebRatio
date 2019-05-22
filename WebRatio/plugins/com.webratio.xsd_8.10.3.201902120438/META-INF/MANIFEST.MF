@@ -1,0 +1,28 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.9.2
+Bundle-SymbolicName: com.webratio.xsd
+Export-Package: com.webratio.lib.apache.ws.commons.schema,com.webratio
+ .lib.apache.ws.commons.schema.constants,com.webratio.lib.apache.ws.co
+ mmons.schema.extensions,com.webratio.lib.apache.ws.commons.schema.res
+ olver,com.webratio.lib.apache.ws.commons.schema.tools,com.webratio.li
+ b.apache.ws.commons.schema.utils,com.webratio.xsd,com.webratio.xsd.do
+ cuments,com.webratio.xsd.json,com.webratio.xsd.json.digesters,com.web
+ ratio.xsd.mapping,com.webratio.xsd.objects,com.webratio.xsd.resources
+ ,com.webratio.xsd.schema,com.webratio.xsd.validation,com.webratio.xsd
+ .xml,com.webratio.xsd.xml.digesters
+Bundle-Name: WebRatio XSD Plug-in
+Bundle-Version: 8.10.3.201902120438
+Bundle-ClassPath: com.webratio.xsd.jar
+Require-Bundle: com.webratio.commons.libs,com.webratio.commons.lib.apa
+ che.commons.codec,com.webratio.commons.lib.apache.commons.beanutils,c
+ om.webratio.commons.lib.apache.commons.collections,com.webratio.commo
+ ns.lib.apache.commons.lang,com.webratio.commons.lib.apache.commons.io
+ ,com.webratio.commons.lib.jackson2
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: WebRatio
+Created-By: 1.8.0-b132 (Oracle Corporation)
+
+Name: META-INF/signature
+SHA-256-Digest: PRYYgqFVErjMMx3lDuv1T8nEp66ZmsJ8BwS19rF+4z4=
+

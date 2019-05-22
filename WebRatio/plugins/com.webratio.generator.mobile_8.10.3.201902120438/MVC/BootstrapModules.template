@@ -1,0 +1,13 @@
+#?delimiters [%, %], [%=, %]
+[%
+setJSOutput();
+
+/* Accept untrusted SSL certificates */
+if (wr.project.valueOf("Property[@name = 'AcceptUntrustedCertificates']/@value") == "true") {
+	%]
+	angular.module("wr.mvc.App.acceptUntrustedCerts", []).config(function() {
+		console.warn("Will accept untrusted SSL certificates");
+		cordova.plugins.certificates.trustUnsecureCerts(true);
+	});
+	[%
+}

@@ -1,0 +1,5 @@
+#?delimiters [%, %], [%=, %]
+[% setXMLOutput() %]
+<Form viewRef="">
+	<Property name="checkedKeys"/>
+</Form>

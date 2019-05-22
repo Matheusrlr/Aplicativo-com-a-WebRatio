@@ -1,0 +1,261 @@
+#?delimiters [%, %], [%=, %]
+[%
+setJSONOutput()
+
+import com.webratio.model.domain.ServiceMethodType
+
+/* Find many-to-many associations of all classes */
+def nnAssocs = [] as Set
+for (dclass in dclasses) {
+	for (assoc in getOutgoingAssociations(dclass)) {
+		if (assoc.valueOf("AssociationRole1/@maxCard") == "N" && assoc.valueOf("AssociationRole2/@maxCard") == "N") {
+			nnAssocs.add(assoc)
+		}
+	}
+}
+%]
+{
+	"_": "wrm.data.DataService",
+	
+	"databaseName": "[%= dbName %]",
+	"contextName": "ManagementContext",
+	
+	"metadata": {
+		
+		"version": [%= ((System.currentTimeMillis().intdiv(1000)) - 1001894400) %],
+		
+		"entities": {
+			[% dclasses.eachWithSeparator(",") { dclass -> %]
+				[%
+					def keyAttr = getKeyAttributes(dclass)[0]
+					def remoteOidAttr = getRemoteOidAttribute(dclass)
+					def serverReadable = isServerMappedDomainClass(dclass, ServiceMethodType.READ)
+					def createTsAttr = getCreateTimestampAttribute(dclass)
+					def updateTsAttr = getUpdateTimestampAttribute(dclass)
+					
+					def trackDeletions = isServerMappedDomainClass(dclass, ServiceMethodType.DELETE)
+					def trackedAttrs = getLocalTrackedAttributes(dclass) as Set
+					def trackedRoles = getRemoteTrackedOutgoingRoles(dclass) as Set
+					def trackedRolesLocally = getLocalTrackedOutgoingRoles(dclass) as Set
+					
+					def hasAuxEntity = (trackDeletions || !trackedAttrs.isEmpty() || !trackedRoles.isEmpty())
+				%]
+	    		"[%= dclass["id"] %]": {
+	    			"name": "[%= getClassInfo(dclass).mappedName %]",
+	    			"setName": "[%= getSetClassInfo(dclass).mappedName.replace("." ,"_") %]",
+	    			[% if (isServerMappedDomainClass(dclass)) { %]
+	    				"serverName": "[%= getMappedServerResource(dclass) %]",
+	    				[% if (!serverReadable) { %]
+	    					"serverReadable": false,
+	    				[% } %]
+	    			[% } %]
+	    			[% if (hasAuxEntity) { %]
+	    				"auxEntity": {
+	    					"name": "[%= getAuxiliaryClassInfo(dclass).mappedName %]",
+	    					"setName": "[%= getAuxiliarySetClassInfo(dclass).mappedName.replace(".", "_") %]",
+	    					"attributes": {
+	    						"[%= dclass["id"] %]_auxOid": {
+	    							"name": "oid",
+	    							"type": "integer",
+	    							"key": true
+	    						}
+	    					}
+	    				},
+	    			[% } %]
+	    			
+	    			[% if (trackDeletions || !trackedAttrs.isEmpty()) { %]
+	    				"dirtyName": "dirty",
+	    			[% } %]
+	    			
+					[% if (trackDeletions) { %]
+						"deleteTimestampName": "deletedAt",
+					[% } %]
+	    			
+	    			"attributes": {
+						[% getAttributes(dclass).eachWithSeparator(",") { attr -> %]
+							"[%= attr["id"] %]": {
+								"name": "[%= getFieldName(attr) %]",
+								[% if (isServerMappedAttribute(attr)) { %]
+									"serverName": "[%= getMappedServerProperty(attr) %]",
+								[% } %]
+								
+								[% if (attr == keyAttr || attr == remoteOidAttr) { %]
+									
+					    			[% if (hasAuxEntity) { %]
+					    				"trackerName": "t_[%= getFieldName(attr) %]",
+					    			[% } %]
+									
+								[% } else { %]
+									
+					    			[% if (trackedAttrs.contains(attr)) { %]
+					    				"dirtyName": "d_[%= getFieldName(attr) %]",
+					    			[% } %]
+									
+								[% } %]
+				    			
+								"type": "[%= attr["type"] %]"
+								[% if (attr == keyAttr) { %],
+									"key": true
+								[% } %]
+								[% if (attr == remoteOidAttr) { %],
+									"serverKey": true,
+									"indexed": true
+								[% } %]
+								[% if (attr == createTsAttr) { %],
+									"createTS": true
+								[% } %]
+								[% if (attr == updateTsAttr) { %],
+									"updateTS": true
+								[% } %]
+								
+						    	[% if (isBinaryType(attr["type"])) { %],
+						    		"meta": {
+						    			"contentType": {
+						    				"name": "[%= getFieldName(attr) %]_contentType",
+						    				"type": "string"
+						    			},
+						    			"fileName": {
+						    				"name": "[%= getFieldName(attr) %]_fileName",
+						    				"type": "string"
+						    			},
+						    			"serverFileId": {
+						    				"name": "[%= getFieldName(attr) %]_remoteFileId",
+						    				"type": "string"
+						    			},
+						    			"status": {
+						    				"name": "[%= getFieldName(attr) %]_status",
+						    				"type": "integer"
+						    			}
+						    		}
+						    		[% if (attr.valueOf("Property[@name = 'OnFileSystem']/@value") == "true") { %],
+						    			"onFileSystem" : true
+						    		[% } %]
+						    	[% } %]
+							}
+						[% } %]
+	    			},
+	    			
+	    			"roles": {
+						[% getDirectOutgoingRoles(dclass).eachWithSeparator(",") { role -> %]
+							[%
+ 								def targetClass = getTargetDomainClass(role)
+								def targetKeyAttrs = getKeyAttributes(targetClass)
+								if (targetKeyAttrs.size() != 1) {
+									throwGenerationException("Class has no key or multiple keys - ${targetClass}")
+								}
+								def targetKeyAttr = targetKeyAttrs[0]
+							%]
+							"[%= role["id"] %]": {
+								"name": "[%= getFieldName(role) %]",
+								[% if (isServerMappedRole(role)) { %]
+									"serverName": "[%= getMappedServerProperty(role) %]",
+								[% } %]
+								
+				    			[% if (trackedRoles.contains(role)) { %]
+				    				"serverTrackerName": "t_[%= getFieldName(role) %]",
+				    				[% if (trackedRolesLocally.contains(role)) { %]
+					    				"addTimestampName": "addts_[%= getFieldName(role) %]",
+					    				"removeTimestampName": "remts_[%= getFieldName(role) %]",
+				    				[% } %]
+				    			[% } %]
+								
+								[% if (isForeignKeyRole(role)) { %]
+									"foreignKeyName": "[%= getFieldName(role) %]__[%= getFieldName(targetKeyAttr) %]",
+								[% } %]
+								
+								"many": [%= role["maxCard"] == "N" %],
+								"inverse": "[%= getOppositeRole(role)["id"] %]"
+								
+								[% if (nnAssocs.contains(role.parent)) { %],
+									"bridgeHeadRole": {
+										"name": "[%= getFieldName(role) %]"
+									}
+								[% } %]
+							}
+						[% } %]
+	    			}
+	    		}
+			[% } %]
+		},
+		
+		"associations": {
+			[% associations.eachWithSeparator(",") { assoc -> %]
+				[%
+					def role1 = assoc.element("AssociationRole1")
+					def role2 = assoc.element("AssociationRole2")
+					
+					def trackChanges = isServerMappedAssociation(assoc)
+					def trackLocalChanges = isServerMappedAssociation(assoc, ServiceMethodType.UPDATE)
+				%]
+				"[%= assoc["id"] %]": {
+					"name": "[%= toValidFieldName(role1["name"]) %]_[%= toValidFieldName(role2["name"]) %]",
+	    			[% if (assoc["serverAssociation"]) { %]
+	    				"serverName": "[%= assoc["serverAssociation"] %]",
+	    			[% } %]
+					
+					"roles": [
+						"[%= role1["id"] %]",
+						"[%= role2["id"] %]"
+					]
+					
+					[% if (nnAssocs.contains(assoc)) { %],
+						"bridgeEntity": {
+			    			"name": "[%= getAssociationClassInfo(assoc).mappedName %]",
+			    			"setName": "[%= getAssociationSetClassInfo(assoc).mappedName.replace("." ,"_") %]",
+			    			
+			    			[% if (trackChanges) { %]
+			    				"auxEntity": {
+			    					"name": "[%= getAssociationAuxiliaryClassInfo(assoc).mappedName %]",
+			    					"setName": "[%= getAssociationAuxiliarySetClassInfo(assoc).mappedName.replace(".", "_") %]",
+			    					"attributes": {
+			    						"[%= assoc["id"] %]_auxOid": {
+			    							"name": "oid",
+			    							"type": "integer",
+			    							"key": true
+			    						}
+			    					}
+			    				},
+			    				[% if (trackLocalChanges) { %]
+				    				"addTimestampName": "addedAt",
+				    				"removeTimestampName": "removedAt",
+			    				[% } %]
+			    			[% } %]
+			    			
+			    			"attributes": {
+			    				"[%= assoc["id"] %]_bridgeKey": {
+			    					"name": "rowid",
+			    					"type": "integer",
+			    					"key": true
+			    				}
+			    			},
+							"bridgeRoles": [
+								[% [role1, role2].eachWithSeparator(",") { role -> %]
+									[%
+										def targetClass = getSourceDomainClass(role)
+										def targetKeyAttr = getKeyAttribute(targetClass)
+									%]
+									{
+										"name": "[%= getAssociationRoleFieldName(role) %]",
+										"foreignKeyName": "[%= getAssociationRoleFieldName(role) %]__[%= getFieldName(targetKeyAttr) %]"
+										
+										[% if (trackChanges) { %],
+											"serverTrackerName": "t_[%= getAssociationRoleFieldName(role) %]"
+										[% } %]
+									}
+								[% } %]
+							]
+						}
+					[% } %]
+				}
+			[% } %]
+		}
+		
+	},
+	
+	"dataRestoreDisabled": [
+		[% dclasses.findAll { getSynchronizationPolicy(it).manual }.eachWithSeparator(",") { dclass -> %]
+			"[%= dclass["id"] %]"
+		[% } %]
+	]
+	
+}

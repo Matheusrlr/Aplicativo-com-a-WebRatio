@@ -1,0 +1,15 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+%>
+<InputParameters>
+   
+   <InputParameter name="<%= component["id"]%>.array" label="Input Array"/>
+   <InputParameter name="<%= component["id"]%>.iterationCount" label="Iteration Count"/>
+   <InputParameter name="<%= component["id"]%>.breakLoop" label="Break Loop"/>
+   
+   <% for (secArray in component.elements("SecondaryArray")) { %>
+    <InputParameter name="<%= secArray["id"]%>" label="<%=secArray["name"]%>"/>
+   <% } %>
+  
+</InputParameters>

@@ -1,0 +1,13 @@
+#?delimiters [%,%],[%=,%]
+[%setXMLOutput()
+def domainClass = getById(component["dataBinding"])
+
+%]
+<Descriptor service="com.webratio.components.web.ws.datasource.XMLImportExportService">
+  <DataSource>[%=getDataSourceId(domainClass)%]</DataSource>
+  <Class>[%=domainClass["id"]%]</Class>
+  <RootElement>[%=component["rootElement"]%]</RootElement>
+  <Mode>[%=component["mode"]%]</Mode>
+  <DeleteAllBefore>[%=component["deleteAllBefore"]%]</DeleteAllBefore>
+  <ValidateDocuments>[%=component["validateDocuments"] == "true"%]</ValidateDocuments>
+</Descriptor>

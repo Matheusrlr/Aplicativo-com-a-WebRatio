@@ -1,0 +1,10 @@
+#?delimiters [%, %], [%=, %]
+[% setXMLOutput() %]
+<Descriptor service="com.webratio.rtx.links.DefaultLinkService">
+	<Target>[%= element["id"] %]</Target>
+	<Secure>[%= getEffectiveSecureElement(element) != null %]</Secure>
+	<Landmark>true</Landmark>
+	<Navigates>true</Navigates>
+	<StartPageIdRequiredByTarget>[%= element.name != "Page" %]</StartPageIdRequiredByTarget>
+	<ContextPropagations/>
+</Descriptor>

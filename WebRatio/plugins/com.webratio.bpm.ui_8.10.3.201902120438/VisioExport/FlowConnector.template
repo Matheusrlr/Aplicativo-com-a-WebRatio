@@ -1,0 +1,177 @@
+#?delimiters [%,%],[%=,%]
+[% 
+import org.apache.commons.lang.StringUtils
+import org.apache.commons.lang.ArrayUtils
+setXMLOutput() 
+
+shapeIdCounter++;
+def mainShapeId = shapeIdCounter;
+idMap.put(bpmElementId, mainShapeId);
+
+def text2 = StringUtils.split(text, "\n");
+
+def srcId = idMapInv.get(sourceShape);
+def tgxId = idMapInv.get(targetShape);
+
+
+
+def sourceRay = sourceRays.get(srcId + " " + tgxId);
+if (sourceRay == null) {
+    println ("Visio Export FlowConnector.template sourceRay not found:"); 
+    println (" text:" + text);
+    println (" mainShapeId:" + mainShapeId);
+    println (" sourceShape:" + sourceShape + " srcId" + srcId);
+    println (" targetShape:" + targetShape + " tgxId" + tgxId);
+    return;
+}
+def sourceRayX = sourceRay[0]
+def sourceRayY = sourceRay[1]
+
+def targetRayX = 0
+def targetRayY = 0.5
+
+def sourceShapeGrInfo = dimMap.get(sourceShape)
+def targetShapeGrInfo = dimMap.get(targetShape)
+if (targetShapeGrInfo == null || sourceShapeGrInfo == null) {
+    println ("Visio Export FlowConnector.template value not found:"); 
+    println (" bpmElementId:" + bpmElementId);
+    println (" text:" + text);
+    println (" mainShapeId:" + mainShapeId);
+    println (" sourceShape:" + sourceShape + "  " + ArrayUtils.toString(sourceShapeGrInfo));
+    println (" targetShape:" + targetShape + "  " + ArrayUtils.toString(targetShapeGrInfo));
+    return;
+}
+
+def sourceShapeW = sourceShapeGrInfo[2];
+def sourceShapeH = sourceShapeGrInfo[3];
+def sourceX = (sourceShapeGrInfo[0] + sourceShapeW * sourceRayX);
+def sourceY = (sourceShapeGrInfo[1] + sourceShapeH * sourceRayY);
+//def sourceX = (sourceShapeGrInfo[0] + sourceShapeW);
+//def sourceY = sourceShapeGrInfo[1] + (sourceShapeH / 2);
+
+def targetShapeW = targetShapeGrInfo[2];
+def targetShapeH = targetShapeGrInfo[3];
+def targetX = (targetShapeGrInfo[0] + targetShapeW * targetRayX);
+def targetY = (targetShapeGrInfo[1] + targetShapeH * targetRayY);
+//def targetX = targetShapeGrInfo[0];
+//def targetY = targetShapeGrInfo[1] + (targetShapeH / 2);
+
+def deltaX = (targetX - sourceX);
+def deltaY = (targetY - sourceY);
+def deltaX2 = (deltaX > 0 ? (bendpointX == 0 ? (deltaX / 2) : bendpointX) : 0.0);
+def deltaY2 = 0.0;//(deltaX < 0 ? (bendpointY == 0 ? (deltaY / 2) : -bendpointY) : 0.0);
+
+%]
+<!--
+    Sequence Flow
+-->    
+<Shape ID='[%=mainShapeId%]' NameU='Dynamic connector' Type='Shape' Master='0'>
+    <XForm>
+        <PinX F='Inh'>0</PinX>
+        <PinY F='Inh'>0</PinY>
+        <Width F='GUARD(0)'>0</Width>
+        <Height F='GUARD(0)'>0</Height>
+        <LocPinX F='Inh'>0</LocPinX>
+        <LocPinY F='Inh'>0</LocPinY>
+        <Angle F='Inh'>0</Angle>
+        <FlipX F='Inh'>0</FlipX>
+        <FlipY F='Inh'>0</FlipY>
+        <ResizeMode F='Inh'>0</ResizeMode>
+    </XForm>
+    <XForm1D>
+        <BeginX F='PAR(PNT(Sheet.[%=sourceShape%]!Connections.X1,Sheet.[%=sourceShape%]!Connections.Y1))'>0</BeginX>
+        <BeginY F='PAR(PNT(Sheet.[%=sourceShape%]!Connections.X1,Sheet.[%=sourceShape%]!Connections.Y1))'>0</BeginY>
+        <EndX F='PAR(PNT(Sheet.[%=targetShape%]!Connections.X1,Sheet.[%=targetShape%]!Connections.Y1))'>0</EndX>
+        <EndY F='PAR(PNT(Sheet.[%=targetShape%]!Connections.X1,Sheet.[%=targetShape%]!Connections.Y1))'>0</EndY>
+    </XForm1D>
+    <LayerMem>
+        <LayerMember>0</LayerMember>
+    </LayerMem>
+    <Event>
+        <TheData F='No Formula'>0</TheData>
+        <TheText F='No Formula'>0</TheText>
+        <EventDblClick F='No Formula'>0</EventDblClick>
+        <EventXFMod F='No Formula'>0</EventXFMod>
+        <EventDrop F='No Formula'>0</EventDrop>
+    </Event>
+    <vx:Event xmlns:vx='http://schemas.microsoft.com/visio/2006/extension'>
+        <vx:EventMultiDrop F='No Formula'>0</vx:EventMultiDrop>
+    </vx:Event>
+    <Misc>
+        <NoObjHandles F='Inh'>0</NoObjHandles>
+        <NonPrinting F='Inh'>0</NonPrinting>
+        <NoCtlHandles F='Inh'>0</NoCtlHandles>
+        <NoAlignBox F='Inh'>1</NoAlignBox>
+        <UpdateAlignBox F='Inh'>0</UpdateAlignBox>
+        <HideText F='Inh'>0</HideText>
+        <DynFeedback F='Inh'>2</DynFeedback>
+        <GlueType F='Inh'>2</GlueType>
+        <WalkPreference F='Inh'>0</WalkPreference>
+        <BegTrigger F='_XFTRIGGER(Sheet.[%=sourceShape%]!EventXFMod)'>2</BegTrigger>
+        <EndTrigger F='_XFTRIGGER(Sheet.[%=targetShape%]!EventXFMod)'>2</EndTrigger>
+        <ObjType F='Inh'>2</ObjType>
+        <Comment F='Inh'/>
+        <IsDropSource F='Inh'>0</IsDropSource>
+        <NoLiveDynamics F='Inh'>1</NoLiveDynamics>
+        <LocalizeMerge F='Inh'>0</LocalizeMerge>
+        <Calendar F='Inh'>0</Calendar>
+        <LangID F='Inh'>1040</LangID>
+        <ShapeKeywords F='Inh'/>
+        <DropOnPageScale F='Inh'>1</DropOnPageScale>
+    </Misc>
+    <TextXForm>
+        <TxtPinX F='Inh'>0.7</TxtPinX>
+        <TxtPinY F='Inh'>0.1</TxtPinY>
+        <TxtWidth F='Inh'>0.5</TxtWidth>
+        <TxtHeight F='Inh'>0.2</TxtHeight>
+        <TxtLocPinX F='Inh'>0.2</TxtLocPinX>
+        <TxtLocPinY F='Inh'>0.1</TxtLocPinY>
+        <TxtAngle F='Inh'>0</TxtAngle>
+    </TextXForm>
+    <Line>
+        <LineWeight Unit='PT'>0.01</LineWeight>
+        <LineColor>#764a15</LineColor>
+        <LinePattern F='Inh'>1</LinePattern>
+        <Rounding Unit='MM'>0.1</Rounding>
+        <EndArrowSize F='Inh'>2</EndArrowSize>
+        <BeginArrow F='Inh'>0</BeginArrow>
+        <EndArrow>13</EndArrow>
+        <LineCap F='Inh'>0</LineCap>
+        <BeginArrowSize F='Inh'>2</BeginArrowSize>
+        <LineColorTrans F='Inh'>0</LineColorTrans>
+    </Line>
+    <vx:Line xmlns:vx='http://schemas.microsoft.com/visio/2006/extension'>
+        <vx:LineWeight Unit='PT' F='THEMEGUARD(IF(CELLISTHEMED(FALSE),THEME("ConnectorWeight"),SETATREFEXPR(0.72PT)))'>0.01</vx:LineWeight>
+        <vx:LineColor F='THEMEGUARD(IF(CELLISTHEMED(FALSE),SETATREFEXPR(THEMEGUARD(RGB(118,74,21))),SETATREFEXPR(THEMEGUARD(RGB(118,74,21)))))'>#764a15</vx:LineColor>
+        <vx:Rounding Unit='MM' F='THEMEGUARD(IF(CELLISTHEMED(FALSE),THEME("ConnectorRounding"),SETATREFEXPR(2MM)))'>0.07874015748031496</vx:Rounding>
+    </vx:Line>
+    <Control NameU='TextPosition' ID='1'>
+        <X>[%=sourceX + 0.4%]</X><Y>[%=sourceY + 0.1 + (text2.length * 0.1)%]</Y>
+        <XDyn F='Inh'>0</XDyn>
+        <YDyn F='Inh'>0</YDyn>
+        <XCon F='Inh'>0</XCon>
+        <YCon F='Inh'>0</YCon>
+        <CanGlue F='Inh'>0</CanGlue>
+        <Prompt F='Inh'>Reposition Text</Prompt>
+    </Control>
+    <Geom IX='0'>
+        <NoFill>1</NoFill>
+        <NoLine>0</NoLine>
+        <NoShow>0</NoShow>
+        <NoSnap>0</NoSnap>
+        <MoveTo IX='1'>
+            <X>[%=sourceX%]</X><Y>[%=sourceY%]</Y>
+        </MoveTo>
+        <LineTo IX='2'>
+            <X>[%=sourceX+deltaX2%]</X><Y>[%=sourceY+deltaY2%]</Y>
+        </LineTo>
+        <LineTo IX='3'>
+            <X>[%=sourceX+deltaX2%]</X><Y>[%=targetY+deltaY2%]</Y>
+        </LineTo>
+        <LineTo IX='4'>
+            <X>[%=targetX%]</X><Y>[%=targetY%]</Y>
+        </LineTo>
+    </Geom>
+    <Text><cp IX='0'/>[%for(String s in text2) {%][%=s%]
+[%}%]</Text>
+</Shape>

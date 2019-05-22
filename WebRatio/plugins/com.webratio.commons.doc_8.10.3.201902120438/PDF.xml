@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="HTML4" default="main">
+
+	<path id="classpath">
+		<fileset dir="../com.webratio.commons.libs/lib">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="../com.webratio.lib.apache.commons.lang/lib">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="../com.webratio.lib.apache.commons.logging/lib">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="../com.webratio.lib.apache.commons.collections/lib">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="../com.webratio.lib.apache.commons.codec/lib">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="../com.webratio.lib.apache.commons.httpclient/lib">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="../com.webratio.lib.javassist/lib">
+			<include name="**/*.jar" />
+		</fileset>
+		<pathelement location="../com.webratio.commons.transform/bin" />
+		<pathelement location="bin" />
+	</path>
+
+	<target name="main">
+		<!-- checks the input file -->
+		<fail unless="inputDocPath" message="Property not specified: inputDocPath" />
+		<available file="${inputDocPath}" property="inputDocPathPresent" />
+		<fail unless="inputDocPathPresent" message="File not found: ${inputDocPath}" />
+		<!-- checks the output path -->
+		<fail unless="outputDocPath" message="Property not specified: outputDocPath" />
+		<!-- generates the PDF -->
+		<java classname="com.webratio.commons.transform.groovy.GroovyTemplateInvoker" failonerror="true" classpathref="classpath" fork="true">
+			<jvmarg value="-Xmx256m" />
+			<arg value="PDF/Main.template" />
+			<arg value="inputDocPath=${inputDocPath}" />
+			<arg value="outputDocPath=${outputDocPath}" />
+			<arg value="docPluginDirPath=${basedir}" />
+		</java>
+	</target>
+
+</project>

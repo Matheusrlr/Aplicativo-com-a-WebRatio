@@ -1,0 +1,4 @@
+#?delimiters [%, %], [%=, %]
+[% if (component["ajaxTooltipEnabled"] == "true") { %]
+	<div id="<wr:AjaxUniqueIdentifier context="component"/>_tooltipArea" class="wr-tooltipArea">
+[% } %]

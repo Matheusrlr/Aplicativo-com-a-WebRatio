@@ -1,0 +1,1061 @@
+<%
+import com.lowagie.text.*
+import com.lowagie.text.pdf.*
+import java.awt.Color
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.IOException
+import java.net.MalformedURLException
+import java.net.URL
+import java.text.DateFormat
+import java.util.Date
+import java.util.Locale
+import org.apache.commons.lang.ArrayUtils
+import org.apache.commons.lang.StringUtils
+import org.apache.commons.lang.CharSetUtils
+import org.apache.commons.lang.math.NumberUtils
+import org.dom4j.Node
+import org.dom4j.io.SAXReader
+import org.xml.sax.EntityResolver
+import org.xml.sax.InputSource
+import org.xml.sax.SAXException
+import org.dom4j.Document
+import org.dom4j.DocumentHelper
+import org.dom4j.Element
+import org.dom4j.QName
+
+class WRDocResolver implements EntityResolver {
+
+    private File dtdFile
+    
+    public WRDocResolver(File dtdFile) {
+        this.dtdFile = dtdFile
+    }
+
+    public InputSource resolveEntity(String publicId, String systemId)
+			throws SAXException, IOException {
+	    if ("-//WebRatio//WebRatio Documentation DTD 1.0//EN".equals(publicId)) {
+		    return new InputSource(new FileReader(dtdFile))
+		} else {
+    	    return null
+    	}
+	}
+}
+
+class MyPageEvents extends PdfPageEventHelper {
+
+    private String currentChapterTitle = ""
+    
+    private PdfTemplate template
+    
+    private BaseFont baseFont
+    
+    private headerImage
+    
+    public MyPageEvents(Image headerImage) {
+        this.headerImage = headerImage
+    }
+    
+    public void onOpenDocument(PdfWriter writer, com.lowagie.text.Document document) {
+	    baseFont = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED)
+	    template = writer.getDirectContent().createTemplate(50, 50);
+    }
+    
+    public void onChapter(PdfWriter writer, com.lowagie.text.Document document, float paragraphPosition, Paragraph title) {
+        currentChapterTitle = title.chunks.collect{it.content}.join("")
+    }
+    
+    public void onEndPage(PdfWriter writer, com.lowagie.text.Document document) {
+		int pageN = writer.getPageNumber()
+		if (pageN == 1) {
+		    return
+		}
+		String text = "Page " + pageN + " of "
+		float len = baseFont.getWidthPoint(text, 8)
+		PdfContentByte cb = writer.getDirectContent()
+		cb.addImage(headerImage, headerImage.width, 0, 0, headerImage.height, (document.pageSize.width - headerImage.width - 30) as float, (document.pageSize.height - headerImage.height - 30) as float);
+		cb.beginText()
+		cb.setFontAndSize(baseFont, 8)
+		cb.setTextMatrix(280, 30)
+		cb.showText(text)
+		cb.endText()
+		cb.addTemplate(template, (280 + len) as float, 30 as float)
+        cb.beginText();
+		cb.setFontAndSize(baseFont, 8);
+		cb.setTextMatrix(280, 800);
+		cb.showText(currentChapterTitle);
+		cb.endText();
+        cb.saveState();
+        cb.setColorStroke(Color.orange);
+        cb.setLineWidth(1);
+        cb.moveTo(50, 50)
+        cb.lineTo((document.pageSize.width - 50) as float, 50)
+        cb.moveTo(50, (document.pageSize.height - 90) as float)
+        cb.lineTo((document.pageSize.width - 50) as float, (document.pageSize.height - 90) as float)
+        cb.stroke();
+        cb.restoreState();
+    }
+    
+    public void onCloseDocument(PdfWriter writer, com.lowagie.text.Document document) {
+        template.beginText()
+		template.setFontAndSize(baseFont, 8)
+		template.showText(String.valueOf(writer.getPageNumber() - 1))
+		template.endText()
+    }
+}
+
+getNormalizedLabel = { elementName ->
+		def s2 = elementName
+    	def upperChars = new HashSet()
+    	for (c in CharSetUtils.keep(elementName, "A-Z")) {
+        	upperChars.add(c)
+    	}
+    	for (c in upperChars) {
+        	s2 = StringUtils.replace(s2, c, " " + c)
+    	}
+    	s2 = StringUtils.replace(s2, "Web Ratio", "WebRatio")
+    	s2 = StringUtils.replace(s2, "xsl", "XSL")
+    	s2 = StringUtils.replace(s2, "xml", "XML")
+    	s2 = StringUtils.replace(s2, "url", "URL")
+    	s2 = StringUtils.replace(s2, "uri", "URI")
+    	s2 = StringUtils.replace(s2, "X M L", "XML")
+    	s2 = StringUtils.replace(s2, "X S L", "XSL")
+    	s2 = StringUtils.replace(s2, "U R L", "URL")
+    	s2 = StringUtils.replace(s2, "U R I", "URI")
+    	s2 = StringUtils.replace(s2, "N S", "NS")
+    	s2 = StringUtils.replace(s2, "O K", "OK")
+    	s2 = StringUtils.replace(s2, "K O", "KO")
+    	s2 = StringUtils.replace(s2, "C S S", "CSS")
+    	s2 = StringUtils.replace(s2, "S M T P", "SMTP")
+    	s2 = StringUtils.replace(s2, "B P M", "BPM")
+    	s2 = StringUtils.replace(s2, "B A M", "BAM")
+    	s2 = StringUtils.replace(s2, "W S D L", "WSDL")
+    	s2 = StringUtils.replace(s2, "M I M E", "MIME")
+    	return s2.trim()
+}
+
+
+normalize = { text, first = false ->
+    def prefix = ((StringUtils.stripStart(text, null) == text) || first) ? "" : " "
+    def suffix = (StringUtils.stripEnd(text, null) == text) ? "" : " "
+    return prefix + StringUtils.join(StringUtils.split(text), " ") + suffix
+}
+
+doSElement = {sElem, parent, font ->
+    def stringTitle = sElem["docTitle"] != "" ? sElem["docTitle"]: sElem["title"]
+    def title = new Paragraph(stringTitle, FontFactory.getFont(FontFactory.HELVETICA, font, Font.BOLD))
+    def section = parent.addSection(title)
+    def nodes = sElem.selectNodes("text()|p|img|ul|ol|table|anchor|source|b|i|a|command")
+    def paragraph = new Paragraph()
+    paragraph.setAlignment(Paragraph.ALIGN_JUSTIFIED)
+    if (sElem["absolutePath"] != "") {
+		def name = sElem["absolutePath"]
+		chunk = new Chunk(" ", FontFactory.getFont(FontFactory.HELVETICA, Font.DEFAULTSIZE, Font.NORMAL, new Color(0, 0, 255))) 
+		chunk.setLocalDestination(name)
+		paragraph.add(chunk)
+	}
+    for (elem in nodes) {
+    	if (elem.nodeType == Node.TEXT_NODE) {
+            doText(elem.text, paragraph)
+        } else if (elem.nodeType == Node.ELEMENT_NODE) {
+	        if (elem.name == "p") {
+	            doP(elem, paragraph)
+	        } else if (elem.name == "img"){
+	            doImg(elem, paragraph)
+	        } else if (elem.name == "ul"){
+	        	doUL(elem, paragraph)
+	        } else if (elem.name == "ol") {
+	        	doOL(elem, paragraph)
+	        } else if (elem.name == "table") {
+	        	doTable(elem, paragraph)
+	        } else if (elem.name == "anchor") {
+	        	doAnchor(elem, paragraph)
+	        } else if (elem.name == "i") {
+	        	doI(elem, paragraph)
+	        } else if (elem.name == "b") {
+	        	doB(elem, paragraph)
+	        } else if (elem.name == "a") {
+	        	doA(elem, paragraph)
+	        } else if (elem.name == "source") {
+	        	doSource(elem, paragraph)
+	        } else if (elem.name == "command") {
+	        	doCommand(elem, paragraph)
+	        }
+        }
+    }
+    section.add(paragraph)
+    return section
+}
+
+doS1 = { s1, parent, chapterNum ->
+	if (s1["absolutePath"] != "") {
+		def name = s1["absolutePath"]
+		def paragraph = new Paragraph()
+		chunk = new Chunk(" ", FontFactory.getFont(FontFactory.HELVETICA, Font.DEFAULTSIZE, Font.NORMAL, new Color(0, 0, 255))) 
+		chunk.setLocalDestination(name)
+		paragraph.add(chunk)
+	    outputDoc.add(paragraph)
+	}
+	def stringTitle = s1["docTitle"] != "" ? s1["docTitle"]: s1["title"]
+    def title = new Paragraph(stringTitle, FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLD))
+    def chapter = new Chapter(title, chapterNum)
+    chapter.setBookmarkOpen(false)
+    def nodes = s1.selectNodes("p|img|ul|table|anchor|anchorSet|source|command")
+    for (elem in nodes) {
+    	if (elem.nodeType == Node.TEXT_NODE) {
+            doText(elem.text, chapter)
+        } else if (elem.nodeType == Node.ELEMENT_NODE) {
+	        if (elem.name == "p") {
+	            doP(elem, chapter)
+	        } else if (elem.name == "img"){
+	            doImg(elem, chapter)
+	        } else if (elem.name == "ul") {
+	        	doUL(elem, chapter)
+	        } else if (elem.name == "table"){
+	        	doTable(elem, chapter)
+	        } else if (elem.name == "anchor"){
+	        	doAnchor(elem,chapter)
+	        } else if (elem.name == "anchorSet") {
+	        	doAnchorSet(elem, chapter)
+	        } else if (elem.name == "source"){
+	        	doSource(elem, chapter)
+	        } else if (elem.name == "command") {
+	        	doCommand(elem, chapter)
+	        }
+	     }
+    }
+    s1.selectNodes("s2").each{doS2(it, chapter)}    
+    parent.add(chapter)
+}
+
+doS2 = { s2, parent ->
+	def section = doSElement(s2, parent, 19)
+	s2.selectNodes("s3").each{doS3(it, section)}
+}
+doS3 = { s3, parent ->
+	def section = doSElement(s3, parent, 18)
+    s3.selectNodes("s4").each{doS4(it, section)}
+}
+
+doS4 = { s4, parent ->
+	def section = doSElement(s4, parent, 17)
+    s4.selectNodes("s5").each{doS5(it, section)}
+}
+
+doS5 = { s5, parent ->
+	def section = doSElement(s5, parent, 16)
+    s5.selectNodes("s6").each{doS6(it, section)}
+}
+
+doS6 = { s6, parent ->
+	def section = doSElement(s6, parent, 15)
+    s6.selectNodes("s7").each{doS7(it, section)}
+}
+
+doS7 = { s7, parent ->
+	def section = doSElement(s7, parent, 14)
+    s7.selectNodes("s8").each{doS8(it, section)}
+}
+
+doS8 = { s8, parent ->
+	def section = doSElement(s8, parent, 13)
+    s8.selectNodes("s9").each{doS9(it, section)}
+}
+
+doS9 = { s9, parent ->
+	def section = doSElement(s9, parent, 12)
+}
+
+doCommand = { command, parent ->
+	def nodes = command.selectNodes("text()")
+	for (elem in nodes) {
+    	if (elem.nodeType == Node.TEXT_NODE) {
+            doText(elem.text, parent)
+        }
+    }
+}
+doAnchorSet = { set, parent ->
+	def paragraph = new Paragraph(set.valueOf("@title"))
+	paragraph.setFont(FontFactory.getFont(FontFactory.HELVETICA, 14, Font.BOLD, Color.BLACK))
+	def nodes = set.selectNodes("a")
+	def list = new List(false, 15)
+    list.setAutoindent(true)
+    list.setIndentationLeft(10)
+    for (node in nodes) {
+		def listItem = new ListItem(20)
+		doA(node, listItem)
+		list.add(listItem)
+	}
+	paragraph.add(list)
+	addToParent(paragraph, parent)
+}
+
+doP = { p, parent ->
+    def paragraph = new Paragraph()
+    paragraph.setAlignment(Paragraph.ALIGN_JUSTIFIED)
+    def nodes = p.selectNodes("text()|i|b|code|img|a|ul|ol|table|source|anchor|command")
+    for (node in nodes) {
+        if (node.nodeType == Node.TEXT_NODE) {
+            doText(node.text, paragraph, node == nodes[0])
+        } else if (node.nodeType == Node.ELEMENT_NODE) {
+            switch (node.name) {
+            case "i":
+                doI(node, paragraph)
+                break
+            case "b":
+                doB(node, paragraph)
+                break
+            case "code":
+                doCode(node, paragraph)
+                break
+            case "img":
+            	doInlineImg(node, paragraph)
+                break
+            case "a":
+                if (node.selectSingleNode("img") != null) {
+                    doAnchorImg(node, paragraph)
+                } else {
+                    doA(node, paragraph)
+                }
+                break
+            case "ul":
+                doUL(node, paragraph)
+                break
+            case "ol":
+                doOL(node, paragraph)
+                break
+            case "table":
+                doTable(node, paragraph)
+                break
+            case "source":
+                doSource(node, paragraph)
+                break
+            case "anchor":
+            	doAnchor(node, paragraph)
+            	break
+            case "command":
+            	doCommand(node, paragraph)
+            	break
+            }
+        }
+    }
+    parent.add(paragraph)
+}
+
+doSource = { source, parent, pdfTable = null ->
+    def baseFont = FontFactory.getFont(FontFactory.COURIER, Font.DEFAULTSIZE).getBaseFont()
+    def pageWidth = outputDoc.pageSize.width - outputDoc.rightMargin() - outputDoc.leftMargin()
+    if (source.parent.name == "cell") {
+    	pageWidth = pdfTable.totalWidth/Integer.parseInt(source.parent.parent.valueOf("count(cell)"))
+    }
+    def fontSize = Font.DEFAULTSIZE + 1
+    def textWidth = pageWidth + 1
+    def maxLine = new StringReader(source.valueOf(".")).readLines().max{it.length()}
+    if (maxLine == null) {
+    	maxLine = ""
+    }
+    while (textWidth > pageWidth) {
+        fontSize--
+        textWidth = baseFont.getWidthPoint(maxLine, fontSize)
+    }
+    def fontFactory = FontFactory.COURIER
+    def color = new Color(0, 0, 0)
+    if (source.valueOf("@style").contains("#CC0000")) {
+    	color = new Color(255, 0, 0)
+    } else if (source.valueOf("@style").contains("blue")) {
+    	color = new Color(0, 0, 255)
+    } else if (source.valueOf("@style").contains("font-size:")) {
+        def style = source.valueOf("@style")
+    	def size = StringUtils.substringAfter(style, "font-size:")
+    	size = StringUtils.substringBefore(size, "px;")
+    	fontSize = NumberUtils.toInt(size)
+    	fontFactory = FontFactory.HELVETICA
+    }
+    def paragraph = new Paragraph(source.valueOf("."), FontFactory.getFont(fontFactory, fontSize, Font.NORMAL, color))
+    parent.add(paragraph)
+}
+
+doTable = { table, parent ->
+	if (table.parent.name != "cell") {
+		def chunk = new Chunk(Chunk.NEWLINE) 
+		parent.add(chunk)
+	}
+	def pdfWidth = table["pdfWidth"]
+    def width = "500" 
+    if (pdfWidth == "") {
+    	def tableWidth = table.attributeValue("width", "")
+    	if (tableWidth != "" && tableWidth != "100%" && Float.parseFloat(tableWidth - "%") <= 100) {
+    		width = tableWidth
+    	}
+    	
+    } else {
+    	width = pdfWidth
+    }
+	def cols = table.selectNodes("row[1]/cell")
+	def pdfWidths = table.valueOf("@pdfWidths")
+	def widths = []
+	if (pdfWidths != "") {
+		widths = pdfWidths.tokenize(",")
+	} else {
+		widths = cols.collect{it.valueOf("@width") - "%"}.findAll{it != ""}
+	}
+	if (!widths.empty && widths.size() != cols.size()) {
+	    println table.asXML()
+		throw  new PdfException(new IllegalArgumentException("Not all the cells have a width specified in document '" + table.valueOf("ancestor::*[@absolutePath != '']/@absolutePath") + "'")) 
+	}
+	def pdfTable = new PdfPTable(cols.size() > 0 ? cols.size() : 1)
+	if (!widths.empty) {
+    	pdfTable = new PdfPTable(widths.collect{Float.parseFloat(it)} as Float[])
+    }
+    pdfTable.setTotalWidth(Float.parseFloat(width))
+    pdfTable.setLockedWidth(true)
+    for (elem in table.selectNodes("header | row")) {
+	    for (cell in elem.selectNodes("cell")) {
+	        doCell(cell, pdfTable, elem.name == "header")
+	    }
+    }
+    pdfTable.setSpacingBefore(10)
+    if (parent instanceof PdfPCell) {
+    	parent.addElement(pdfTable)
+    } else {
+    	parent.add(pdfTable)
+    }
+	if (table.parent.name != "cell") {
+		def chunk = new Chunk(Chunk.NEWLINE) 
+		parent.add(chunk)
+	}
+}
+
+getImageCell = {node, cell, pdfCell ->
+	def image = null
+    def src = node.valueOf("@src")
+    try {
+    	if (src.startsWith("PLUGIN_ID")) {
+    		src = StringUtils.replace(src, "PLUGIN_ID=", "/Images/")
+    	} else if (src.startsWith("PLUGINS_ROOT")) {
+    		src = "http://help.eclipse.org/helios/topic/" + src
+    	}
+        def url = new URL(src)
+        image = Image.getInstance(url)
+    } catch (MalformedURLException e) {
+        def file = new File(src)
+        if (!file.absolute) {
+            file = new File(imagesDir, src)
+        }
+        image = Image.getInstance(file.absolutePath)
+    }
+    
+    image.setAlt(node.valueOf("@alt"))
+    image.scalePercent(80)
+    switch (node.valueOf("@alignment")) {
+        case "right":
+            image.setAlignment(Image.RIGHT)
+            break
+        case "left":
+            image.setAlignment(Image.LEFT)
+            break
+        default:
+            image.setAlignment(Image.MIDDLE)
+            break
+    }
+	result = [new PdfPCell(image), image]
+	return result
+}
+
+doCellParagraph = {paragraph, header ->
+	if (header) {
+		paragraph.setFont(FontFactory.getFont(FontFactory.HELVETICA, 14, Font.BOLD, Color.BLACK))
+	    paragraph.setAlignment(Paragraph.ALIGN_CENTER)
+    } else {
+    	paragraph.setFont(FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, Color.BLACK))
+    	paragraph.setAlignment(Paragraph.ALIGN_LEFT)
+    }
+	paragraph.setSpacingAfter(5)
+}
+doCell = { cell, pdfTable, header ->
+    def pdfCell = new PdfPCell()
+    
+    // cells with single images
+    if (cell.valueOf("@image") == "true") {
+    	def pdfCellAndImage = getImageCell(cell.selectSingleNode("img"), cell, pdfCell)
+    	pdfCell = pdfCellAndImage[0]
+    	def image = pdfCellAndImage[1]
+    	if (image != null) {
+    		if (image.width > (pdfTable.totalWidth/Integer.parseInt(cell.parent.valueOf("count(cell)")))) {
+    			pdfCell = new PdfPCell(image, true)
+    		}
+    	}
+    }
+    
+    //colspan
+    if (cell.valueOf("@colspan") != "") {
+    	pdfCell.setColspan(Integer.parseInt(cell.valueOf("@colspan")))
+    }
+    
+    // border (from table)
+    def border = cell.valueOf("ancestor::table[1]/@border")
+    if (header) {
+        pdfCell.setBorderWidth(1)
+    }
+    if (border == "none") {
+    	pdfCell.setBorderColor(Color.WHITE)
+    }
+    
+    //cell border 
+    def cellBorder = cell.valueOf("@border")
+    if (cellBorder == "true" && border == "none") {
+    	pdfCell.setBorderWidthBottom(1)
+    	pdfCell.setBorderColorBottom(Color.BLACK)
+    } else if (border == "none") {
+    	pdfCell.setBorderWidthBottom(1)
+    	pdfCell.setBorderColorBottom(Color.WHITE)
+    } else {
+    	pdfCell.setBorderWidthBottom(1)
+    	pdfCell.setBorderColorBottom(Color.BLACK)
+    }
+    
+    //vertical alignment
+    def valign = cell.valueOf("@valign")
+    if (valign == "top") {
+    	pdfCell.setVerticalAlignment(PdfPCell.ALIGN_TOP)
+    } else if (valign == "bottom") {
+    	pdfCell.setVerticalAlignment(PdfPCell.ALIGN_BOTTOM)
+    } else {
+    	pdfCell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE)
+    }
+    
+    //horizontal alignment
+    def halign = cell.valueOf("@alignment")
+    if (halign == "center") {
+    	pdfCell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER)
+    } else if (halign == "right") {
+    	pdfCell.setHorizontalAlignment(PdfPCell.ALIGN_RIGHT)
+    } else {
+    	pdfCell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT)
+    }
+    
+    def paragraph = null
+    def nodes = cell.selectNodes("text()|i|b|code|img|a|anchor|ul|ol|div|p|table|source")
+    for (node in nodes) {
+        if (node.nodeType == Node.TEXT_NODE) {
+            if (paragraph == null) {
+                paragraph = new Paragraph()
+                doCellParagraph(paragraph, header)
+            }
+            doText(node.text, paragraph, node == nodes[0])
+        } else if (node.nodeType == Node.ELEMENT_NODE) {
+            switch (node.name) {
+            case "i":
+	            if (paragraph == null) {
+	                paragraph = new Paragraph()
+	                doCellParagraph(paragraph, header)
+	            }
+                doI(node, paragraph)
+                break
+            case "b":
+	            if (paragraph == null) {
+	                paragraph = new Paragraph()
+	            }
+                doB(node, paragraph)
+                break
+            case "code":
+	            if (paragraph == null) {
+	                paragraph = new Paragraph()
+	            }
+                doCode(node, paragraph, pdfTable)
+                break
+            case "img":
+            	if (cell.valueOf("@image") != "true") {
+	            	if (paragraph == null) {
+	                	paragraph = new Paragraph()
+	                	doCellParagraph(paragraph, header)
+	            	}
+	            	doInlineImg(node, paragraph)
+            	}
+                break
+            case "a":
+	            if (paragraph == null) {
+	                paragraph = new Paragraph()
+	            }
+                if (node.selectSingleNode("img") != null) {
+                    doAnchorImg(node, paragraph)
+                } else {
+                    doA(node, paragraph)
+                }
+                break
+            case "ul":
+	            if (paragraph != null) {
+	                pdfCell.addElement(paragraph)
+	                paragraph = null
+	            }
+                doUL(node, pdfCell)
+                break
+            case "ol":
+	            if (paragraph != null) {
+	                pdfCell.addElement(paragraph)
+	                paragraph = null
+	            }
+                doOL(node, pdfCell)
+                break
+             case "div":
+	            def top = cell.parent?.parent?.valueOf("top")
+	            if (top != "none") {
+	            	 pdfCell.setBorderWidthTop(2)
+                     pdfCell.setBorderColorTop(Color.BLACK)
+	            }
+	            pdfCell.setBorderWidthBottom(2)
+                pdfCell.setBorderColorBottom(Color.BLACK)
+                def text = node.valueOf(".")
+            	if (paragraph == null) {
+            		paragraph = new Paragraph()
+            	}
+            	paragraph.add(text)
+            	paragraph = null
+                break
+             case "anchor":
+                if (paragraph == null) {
+                	paragraph = new Paragraph()
+                }
+             	if (cell.selectSingleNode("div") != null) {
+             		paragraph.setFont(FontFactory.getFont(FontFactory.HELVETICA, 14, Font.BOLD, Color.BLACK))
+            		paragraph.setAlignment(Paragraph.ALIGN_CENTER)
+            		paragraph.setSpacingBefore(10)
+            		pdfCell.addElement(paragraph)
+             	}
+	            doAnchor(node, paragraph)
+	            break
+	         case "p":
+	         	if (paragraph == null) {
+	                paragraph = new Paragraph()
+	                doCellParagraph(paragraph, header)
+	            }
+	         	def par = new Paragraph()
+	         	doCellParagraph(par, header)
+	            doP(node, par)
+	            paragraph.add(par)
+	            break
+	         case "table":
+	         	doTable(node, pdfCell)
+	         	break
+	         case "command":
+	         	if (paragraph == null) {
+	                paragraph = new Paragraph()
+	            }
+	            doCommand(node, paragraph)
+	            break
+	         case "source":
+	         	if (paragraph == null) {
+	                paragraph = new Paragraph()
+	            }
+	            doSource(node, paragraph, pdfTable)
+	            break
+            }
+        }
+    }
+    if (paragraph != null) {
+        pdfCell.addElement(paragraph)
+    }
+    pdfTable.addCell(pdfCell)
+}
+
+doText = { text, parent, first = false ->
+    addToParent(new Chunk(normalize(text, first)), parent)
+}
+
+doI = { i, parent ->
+    addToParent(new Chunk(normalize(i.valueOf(".")), FontFactory.getFont(FontFactory.HELVETICA, Font.DEFAULTSIZE, Font.ITALIC)), parent)
+}
+
+doB = { b, parent ->
+    addToParent(new Chunk(normalize(b.valueOf(".")), FontFactory.getFont(FontFactory.HELVETICA, Font.DEFAULTSIZE, Font.BOLD)), parent)
+}
+
+doCode = { code, parent, pdfTable = null ->
+	def fontSize = Font.DEFAULTSIZE
+	def baseFont = FontFactory.getFont(FontFactory.COURIER, Font.DEFAULTSIZE).getBaseFont()
+	if (code.parent.name == "cell") {
+		def pageWidth = pdfTable.totalWidth/Integer.parseInt(code.parent.parent.valueOf("count(cell)"))
+    	fontSize = Font.DEFAULTSIZE + 1
+	    def textWidth = pageWidth + 1
+	    def maxLine = new StringReader(code.valueOf(".")).readLines().max{it.length()}
+	    if (maxLine == null) {
+	    	maxLine = ""
+	    }
+	    while (textWidth > pageWidth) {
+	        fontSize--
+	        textWidth = baseFont.getWidthPoint(maxLine, fontSize)
+	    }
+    }
+    
+    addToParent(new Chunk(normalize(code.valueOf(".")), FontFactory.getFont(FontFactory.COURIER, fontSize)), parent)
+}
+
+doImg = { img, parent ->
+    def image = null
+    def src = img.valueOf("@src")
+    try {
+    	if (src.startsWith("PLUGIN_ID")) {
+    		src = StringUtils.replace(src, "PLUGIN_ID=", "/Images/")
+    	} else if (src.startsWith("PLUGINS_ROOT")) {
+    	    src = "http://help.eclipse.org/helios/topic" + StringUtils.substringAfterLast(src, "PLUGINS_ROOT") 
+    	}
+        def url = new URL(src)
+        image = Image.getInstance(url)
+    } catch (MalformedURLException e) {
+        def file = new File(src)
+        if (!file.absolute) {
+            file = new File(imagesDir, src)
+        }
+        image = Image.getInstance(file.absolutePath)
+    }
+    image.setAlt(img.valueOf("@alt"))
+    def scaledWidth = image.width
+    def percent = 100
+    while (scaledWidth > 500) {
+    	percent = percent - 10
+    	image.scalePercent(percent)
+    	scaledWidth = image.scaledWidth
+    }
+    switch (img.valueOf("@alignment")) {
+        case "right":
+            image.setAlignment(Image.RIGHT)
+            break
+        case "left":
+            image.setAlignment(Image.LEFT)
+            break
+        default:
+            image.setAlignment(Image.MIDDLE)
+            break
+    }
+    addToParent(image, parent)
+}
+
+doInlineImg = { img, parent ->	
+    def src = img.valueOf("@src")
+    if (img.parent.name == "p" && img.parent.elements().size() == 1 && img.parent.text.trim().length() == 0) {
+        System.err.println("Warning: <img src='${src}'> tag into <p> as unique child is discouraged")
+    }
+    def image = null
+    try {
+    	if (src.startsWith("PLUGIN_ID")) {
+    		src = StringUtils.replace(src, "PLUGIN_ID=", "/Images/")
+    	} else if (src.startsWith("PLUGINS_ROOT")) {
+    		src = "http://help.eclipse.org/helios/topic/" + src
+    	}
+        def url = new URL(src)
+        image = Image.getInstance(url)
+    } catch (MalformedURLException e) {
+        def file = new File(src)
+        if (!file.absolute) {
+            file = new File(imagesDir, src)
+        }
+        image = Image.getInstance(file.absolutePath)
+    }
+    image.setAlt(img.valueOf("@alt"))
+	
+	int y = 5
+	if (img.parent?.name == "p" && image.width > 20) {
+		if (img.parent?.selectNodes("*").size() == 1) {
+			y = image.getHeight() + 5
+		}
+	}
+	addToParent(new Chunk(image, 0, -y), parent)
+}
+
+doA = { a, parent ->
+	def href = a.valueOf("@href")
+	def label = a.valueOf(".")
+	if ((label == "") && !(href.startsWith("#"))) {
+		label = getNormalizedLabel(StringUtils.substringAfterLast(href, "/"))
+		if (label == "") {
+			label = getNormalizedLabel(href)
+		}
+	}
+	
+	if (href.startsWith("PLUGINS_ROOT")) {
+		href = StringUtils.replace(href, "PLUGINS_ROOT", "http://help.eclipse.org/helios/index.jsp?topic=")
+	}
+    def Anchor anchor = new Anchor(label, FontFactory.getFont(FontFactory.HELVETICA, Font.DEFAULTSIZE, Font.NORMAL, new Color(0, 0, 255)))
+    def chunk = null
+    if (href.startsWith("#")) {
+    	chunk = new Chunk(label, FontFactory.getFont(FontFactory.HELVETICA, Font.DEFAULTSIZE, Font.NORMAL, new Color(0, 0, 255))) 
+    	chunk.setLocalGoto(a["absolutePath"] + href)
+    	addToParent(chunk, parent)
+    } else if (href.startsWith("http://")){
+    	anchor.setReference(href)
+    	addToParent(anchor, parent)
+    } else if (href.startsWith("/")){
+    	chunk = new Chunk(label, FontFactory.getFont(FontFactory.HELVETICA, Font.DEFAULTSIZE, Font.NORMAL, new Color(0, 0, 255))) 
+    	chunk.setLocalGoto(href)
+    	addToParent(chunk, parent)
+    } else {
+    	chunk = new Chunk(label, FontFactory.getFont(FontFactory.HELVETICA, Font.DEFAULTSIZE, Font.NORMAL, new Color(0, 0, 255))) 
+    	chunk.setLocalGoto(a["absoluteParentPath"] + "/" + href)
+    	addToParent(chunk, parent)
+    }
+}
+
+doAnchorImg = { a, parent ->
+    def image = null
+    try {
+        def url = new URL(a.valueOf("img/@src"))
+        image = Image.getInstance(url)
+    } catch (MalformedURLException e) {
+        def file = new File(a.valueOf("img/@src"))
+        if (!file.absolute) {
+            file = new File(inputDocFile.parentFile, a.valueOf("img/@src"))
+        }
+        image = Image.getInstance(file.absolutePath)
+    }
+    image.setAlt(a.valueOf("img/@alt"))
+    image.setAnnotation(new Annotation(0, 0, 0, 0, a.valueOf("@href")))
+    addToParent(new Chunk(image, 0, -5), parent)
+}
+
+doAnchor = {a, parent ->
+	def name = a["name"]
+    chunk = new Chunk(" ", FontFactory.getFont(FontFactory.HELVETICA, Font.DEFAULTSIZE, Font.NORMAL, new Color(0, 0, 255))) 
+    def destination = a["absolutePath"] + "#" + name
+    chunk.setLocalDestination(destination)
+    addToParent(chunk, parent)
+}
+doUL = { ul, parent ->
+	def paragraph = new Paragraph()
+	paragraph.setAlignment(Paragraph.ALIGN_JUSTIFIED)
+    def list = new List(false, 15)
+    list.setAutoindent(true)
+    list.setIndentationLeft(10)
+    paragraph.add(list)
+    for (li in ul.selectNodes("li")) {
+        doLI(li, list)
+    }
+    addToParent(list, parent)
+}
+
+doOL = { ul, parent ->
+    def paragraph = new Paragraph()
+    paragraph.setAlignment(Paragraph.ALIGN_JUSTIFIED)
+    def list = new List(true, 15)
+    paragraph.add(list)
+    for (li in ul.selectNodes("li")) {
+        doLI(li, list)
+    }
+    addToParent(list, parent)
+}
+
+doLI = { li, parent ->
+    def listItem = new ListItem(20)
+    def nodes = li.selectNodes("text()|i|b|code|img|a|ul|ol")
+    for (node in nodes) {
+        if (node.nodeType == Node.TEXT_NODE) {
+            doText(node.text, listItem, node == nodes[0])
+        } else if (node.nodeType == Node.ELEMENT_NODE) {
+            switch (node.name) {
+            case "i":
+                doI(node, listItem)
+                break
+            case "b":
+                doB(node, listItem)
+                break
+            case "code":
+                doCode(node, listItem)
+                break
+            case "img":
+                doInlineImg(node, listItem)
+                break
+            case "a":
+                if (node.selectSingleNode("img") != null) {
+                    doAnchorImg(node, listItem)
+                } else {
+                    doA(node, listItem)
+                }
+                break
+            case "ul":
+                doUL(node, listItem)
+                break
+            case "ol":
+                doOL(node, listItem)
+                break
+            }
+        }
+    }
+    addToParent(listItem, parent)
+}
+
+addToParent = { elem, parent ->
+    if (parent.class.simpleName == "PdfPCell") {
+        parent.addElement(elem)
+    } else {
+        parent.add(elem)
+    }
+}
+
+def getSortedFiles(dir) {
+    def map = [:]
+	for (file in dir.listFiles()) {
+	    if (file.isDirectory() && (file.name != "CVS") && (file.name != "Images")) {
+	        map[file.name] = file
+	    }
+	}
+	for (file in dir.listFiles()) {
+	    if (file.isFile() && file.name.endsWith(".wrdoc") && !map.containsKey(file.name - ".wrdoc")) {
+	        map[file.name - ".wrdoc"] = file
+	    }
+	}
+	def size = map.size()
+	def list = []
+	def wrDocFile = new File(dir, "WRDoc.txt")
+	if (wrDocFile.exists() && wrDocFile.isFile()) {
+	    for (fileName in wrDocFile.readLines()) {
+	        def key = StringUtils.substringBefore(fileName, "|")
+	        def file = map.remove(key.trim())
+	        if (file != null) {
+	            list.add(file)
+	        }
+	    }
+	}
+	for (file in map.values()) {
+	    list.add(file)
+	}
+	return list
+}
+
+def adjustSectionLevels(elem, level) {
+    if (level == 0) {
+       return
+    }
+    if (elem.name.startsWith("s") && StringUtils.isNumeric(elem.name.substring(1))) {
+        def newNumber = Integer.parseInt(elem.name.substring(1)) + level
+        elem.setQName(QName.get("s" + newNumber))
+    }
+    for (childElem in elem.elements()) {
+        adjustSectionLevels(childElem, level)
+    }
+}
+
+def getFileSection(file) {
+	def saxReader = new SAXReader()
+	saxReader.setEntityResolver(new WRDocResolver(new File(docPluginDirPath + "/DTD/WRDoc.dtd")))
+	def inStream = new FileInputStream(file)
+	def doc = saxReader.read(inStream).rootElement
+	def s1 = doc.selectSingleNode("s1")
+	def filePath = file.canonicalPath - ".wrdoc"
+	filePath = StringUtils.replace(filePath, inputDocFile.canonicalPath, "")
+	def absolutePath = StringUtils.replace(filePath, "\\", "/")
+	s1.addAttribute("absolutePath", absolutePath)
+	def absoluteParentPath = StringUtils.substringBeforeLast(absolutePath, "/")
+	s1.addAttribute("absoluteParentPath", absoluteParentPath)
+	s1.addAttribute("docTitle", s1.parent["title"])
+   	def anchors = doc.selectNodes(".//a | .//anchor")
+   	for (anchor in anchors) {
+   		anchor.addAttribute("absolutePath", absolutePath)
+   		anchor.addAttribute("absoluteParentPath", absoluteParentPath)
+   	}
+	return s1
+}
+
+def doProcessFolder(dir, elem, level) {
+   println "PROCESSING --- " + dir.name
+   def sortedFiles = getSortedFiles(dir)
+   for (file in sortedFiles) {
+   	   if (file.isDirectory()) {
+  		  def wrDocFile =  new File(file.parentFile, file.name + ".wrdoc")
+  		  if (wrDocFile.exists() && wrDocFile.name != "GettingStarted.wrdoc") {
+  		      def fileSection = getFileSection(wrDocFile)
+  		      def importedFileSection = fileSection.createCopy()
+  		      adjustSectionLevels(importedFileSection, level)
+  		      elem.elements().add(importedFileSection)
+  		      doProcessFolder(file, importedFileSection, level + 1)
+  		  }
+  		} else {
+  		    if (file.name == "GettingStarted.wrdoc" || file.name == "WebRatioUserGuide.wrdoc" || file.name == "Legal.wrdoc" || file.name == "BPMUserGuide.wrdoc") {
+  		    	// ignore file
+  		    } else if (file.parentFile.name == "WRDoc" && file.name == "Overview.wrdoc") {
+  		    	// ignore file
+  		    } else {
+	  		    def fileSection = getFileSection(file)
+	  		    def importedFileSection = fileSection.createCopy()
+	  		    adjustSectionLevels(importedFileSection, level)
+	  		    elem.elements().add(importedFileSection)
+  		    }
+  		}
+   }
+}
+
+inputDocFile = new File(inputDocPath)
+outputDocFile = new File(outputDocPath)
+def docs = []
+if (inputDocFile.isDirectory()) {
+   Document md = DocumentHelper.createDocument()
+   def root = md.addElement("doc")
+   doProcessFolder(inputDocFile, root, 0)
+   docs.add(root)
+} else {
+	Document md = DocumentHelper.createDocument()
+    def root = md.addElement("doc")
+	def fileSection = getFileSection(inputDocFile)
+  	def importedFileSection = fileSection.createCopy()
+  	root.elements().add(importedFileSection)
+	docs.add(root)
+}
+
+/* kills Acrobat Reader */
+try {
+    Runtime.getRuntime().exec("taskkill -im AcroRd32.exe");
+    Thread.sleep(1000)
+} catch (Throwable e) {
+    // ignore any exception
+}
+
+/* creates the PDF output document */
+
+outputDoc = new com.lowagie.text.Document(PageSize.A4, 50, 50, 100, 50)
+def writer = PdfWriter.getInstance(outputDoc, new FileOutputStream(outputDocFile))
+writer.setViewerPreferences(PdfWriter.PageModeUseOutlines | PdfWriter.CenterWindow)
+def logo50 = Image.getInstance(docPluginDirPath + "/Images/WRLogo50.png")
+writer.setPageEvent(new MyPageEvents(logo50))
+outputDoc.addTitle(outputDocTitle)
+outputDoc.addCreator("WebRatio Document Framework")
+outputDoc.open()
+outputDoc.add(new Paragraph(" "))
+
+def bannerParagraph = new Paragraph()
+bannerParagraph.setSpacingBefore(100)
+bannerParagraph.setSpacingAfter(50)
+def bannerImage = Image.getInstance(docPluginDirPath + "/Images/WRBanner.png")
+bannerImage.scalePercent(40)
+bannerParagraph.add(bannerImage)
+bannerImage.setAlignment(Image.MIDDLE)
+outputDoc.add(bannerParagraph)
+
+def titleTable = new PdfPTable(1)
+def titleCell = new PdfPCell(new Phrase(outputDocTitle, FontFactory.getFont(FontFactory.HELVETICA, 36, Font.BOLD)))
+titleCell.setHorizontalAlignment(Phrase.ALIGN_CENTER)
+titleCell.setPadding(10)
+titleCell.setBorderWidth(0)
+titleCell.setBorderWidthTop(2)
+titleCell.setBorderWidth(0)
+titleCell.setBorderWidthBottom(2)
+titleTable.addCell(titleCell)
+outputDoc.add(titleTable)
+
+def chapterNum = 0
+def chapter = null
+for (doc in docs) {
+	for (s1 in doc.selectNodes("s1")) {
+		chapterNum++
+	    doS1(s1, outputDoc, chapterNum)
+	}
+}
+outputDoc.close()
+
+/* opens Acrobat Reader */
+/*
+try {
+    Runtime.getRuntime().exec("rundll32 SHELL32.DLL,ShellExec_RunDLL " + outputDocFile)
+} catch (Throwable e) {
+    // ignore any exception
+}
+*/
+%>

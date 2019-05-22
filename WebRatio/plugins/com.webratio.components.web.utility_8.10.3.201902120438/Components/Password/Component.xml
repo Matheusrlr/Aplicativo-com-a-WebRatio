@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="content|operation"  idPrefix="pwu" namePrefix="Password " label="Password" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" successFlowSource="true" successFlowTarget="true" errorFlowSource="true" errorFlowTarget="true"> 
+ <StringProperty attributeName="passwordSize" defaultValue="8" label="Password Size">
+    <Description xml:space="preserve">The number of characters of the randomly generated password.</Description>
+  </StringProperty>
+  <IntegerProperty attributeName="minLowerCaseCharacters" label="Minimum Lower Case Characters" defaultValue="">
+    <Description xml:space="preserve">The minimum number of lowercase characters that the password must include.</Description>
+  </IntegerProperty>
+  <IntegerProperty attributeName="minUpperCaseCharacters" label="Minimum Upper Case Characters">
+    <Description xml:space="preserve">The minimum number of uppercase characters that the password must include.</Description>
+  </IntegerProperty>
+  <IntegerProperty attributeName="minDigits" label="Minimum Digits">
+    <Description xml:space="preserve">The minimum number of digits that the password must include.</Description>
+  </IntegerProperty>
+  <IntegerProperty attributeName="minSpecialCharacters" label="Minimum Special Characters">
+    <Description xml:space="preserve">The minimum number of special characters that the password must include.</Description>
+  </IntegerProperty>
+  <StringProperty attributeName="specialCharacters" label="Special Characters">
+    <Description xml:space="preserve">The set of special characters from which the password generator could choose, without separator, for instance: (){}[]-_+*=</Description>
+  </StringProperty>
+  <OutputDescription xml:space="preserve" name="Generated Password">The random generated password</OutputDescription>  
+  <IsMultiConditionComponent xml:space="preserve">return false</IsMultiConditionComponent>  
+  <IsContextFreeComponent xml:space="preserve">return true</IsContextFreeComponent>  
+  <Description xml:space="preserve">The password component is able to randomly generate a password having a specified length.</Description>
+</Component>

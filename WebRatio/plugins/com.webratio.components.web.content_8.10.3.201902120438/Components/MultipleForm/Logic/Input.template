@@ -1,0 +1,78 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+def componentId = component["id"]
+def domainClass = getByIdOptional(component["dataBinding"])
+
+def getSlotPreserveGroups = { slot ->
+	def groups = [], parentId = slot.parent["id"]
+	if (slot["output"] == "true") {
+		groups.add(parentId)
+	}
+	if (slot["label"] == "true") {
+		groups.add(parentId + "_label")
+	}
+	return groups.join("|")
+}
+%>
+<InputParameters  acceptNull="true">
+<%if(!domainClass){%>
+   <%def keySlots = component.selectNodes("KeySlot")
+     if(keySlots.empty){%>
+         <InputParameter name="<%=componentId%>.key.set" preservedByForm="true" label="Input Objects"/>
+         <InputParameter name="<%=componentId%>.pre.key.set" preservedByForm="true" label="Checked Objects"/>
+    <%}else{
+        for(keySlot in keySlots){%>
+         <InputParameter name="<%=componentId%>.<%= keySlot["id"]%>" preservedByForm="true" formPreserveGroup="<%=componentId%>" label="Input Objects [<%= keySlot["name"]%>]"/>
+         <InputParameter name="<%=componentId%>.pre.<%= keySlot["id"]%>" preservedByForm="true" formPreserveGroup="<%=componentId%>_pre" label="Checked Objects  [<%= keySlot["name"]%>]"/> 
+        <%}  
+     }
+   %> 
+<%}%>
+<% 	def slots = component.selectNodes("Field[@preloaded = 'true']/Slot")
+	for (slot in slots)  {
+	  def label = slot.parent["name"]
+	  if(slots.size() > 1){
+  		label += "[" + slot["name"] + "]"
+	  }
+      %><InputParameter name="<%=slot["id"]%>" refId="<%=slot["id"]%>" preservedByForm="true" formPreserveGroup="<%= getSlotPreserveGroups(slot) %>" label="<%=label%>" mandatory="<%=slot["value"] == ""%>"/><%
+    }  
+%>
+
+<% for (field in component.selectNodes("SelectionField[not(Slot)]"))  { %>
+	<InputParameter name="<%=field["id"]%>_label" refId="<%=field["id"]%>" preservedByForm="true" label="<%=field["name"]%> [label]" mandatory="<%=field["attribute"] == "" && field["type"] != "boolean"%>"/>
+    <InputParameter name="<%=field["id"]%>_output" refId="<%=field["id"]%>" preservedByForm="true" label="<%=field["name"]%> [output]" mandatory="<%=field["attribute"] == "" && field["type"] != "boolean"%>"/>
+<% }  %>
+
+<% for (field in component.selectNodes("Field[@preloaded = 'true'][not(Slot)]"))  { %>
+	<InputParameter name="<%=field["id"]%>_slot" refId="<%=field["id"]%>" preservedByForm="true" label="<%=field["name"]%>" mandatory="<%=!domainClass%>"/>
+<% }  %>
+
+<% for (field in component.selectNodes("SelectionField"))  { %>
+	<% if (field["splitOutput"] == "true") {%>
+	 <% for (slot in field.selectNodes("Slot[@output = 'true']")) { %>
+	    <InputParameter name="<%=slot["id"]%>_presel" refId="<%=field["id"]%>" preservedByForm="true" formPreserveGroup="<%= field["id"] %>_presel" label="<%=field["name"]%>[<%=slot["name"]%>] - Preselection" mandatory="false"/>
+	 <% } %>	
+	<% } else {%>
+	  <InputParameter name="<%=field["id"]%>_presel" refId="<%=field["id"]%>" preservedByForm="true" formPreserveGroup="<%= field["id"] %>_presel" label="<%=field["name"]%> - Preselection" mandatory="false"/>
+	<% } %>
+	<% for (slot in field.selectNodes("Slot"))  {
+		 def label = field["name"]
+		 if(field.selectNodes("Slot").size() > 1){
+			label += "[" + slot["name"] + "]"
+		 }
+	     %><InputParameter name="<%=slot["id"]%>" refId="<%=slot["id"]%>" preservedByForm="true" formPreserveGroup="<%= getSlotPreserveGroups(slot) %>" label="<%=label%>" mandatory="<%=slot["value"] == ""%>"/><% 
+	   }  
+	%>
+	<% }  %>
+
+<%if(domainClass){%>	
+  <% for (a in getKeyAttributes(domainClass)) { %>
+     <InputParameter name="<%=componentId%>.<%=a["id"]%>" refId="<%=a["id"]%>" preservedByForm="true" type="<%=getAssignableTypeExpression(domainClass, a, true, false)%>" label="Key Condition [<%=a["name"]%>]" mandatory="false"/>
+     <InputParameter name="<%=componentId%>.pre.<%=a["id"]%>" refId="<%=a["id"]%>" preservedByForm="true" label="Checked Objects [<%=a["name"]%>]"/>
+  <% } %>
+<% } %> 
+
+<%getValidationInputParameters(component).each{printRaw(it.asXML())}%>
+
+</InputParameters>

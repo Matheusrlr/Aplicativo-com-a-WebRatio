@@ -1,0 +1,72 @@
+#?delimiters [%, %], [%=, %]
+[%
+setHTMLOutput()
+def unitId = component["id"]
+def homePage = getByIdOptional(page.valueOf("ancestor::SiteView/@home"))
+
+%]
+<c:if test="${not(empty <wr:Id context="component"/>.exception)}">
+<wr:Frame>
+<div class="plain <wr:StyleClass/>">
+ <div class="plain ProcessUnit">
+	<c:set var="exc" value="${<wr:Id context="component"/>.exception}"/>
+	<c:set var="errorTitle">
+		<c:choose>
+			<c:when test="${<wr:Id context="component"/>.errorType eq 'ASSIGNED_ACTIVITY'}">Unable to start or resume the work item</c:when>
+			<c:when test="${<wr:Id context="component"/>.errorType eq 'COMPLETED_ACTIVITY'}">The work item has already been completed</c:when>
+			<c:when test="${<wr:Id context="component"/>.errorType eq 'ABORTED_ACTIVITY'}">The work item has been aborted</c:when>
+			<c:otherwise>An Error Occurred</c:otherwise>
+		</c:choose>   
+	</c:set>
+
+	<h2><c:out value="${errorTitle}"/></h2>
+
+	<table>
+		<c:choose>
+		  <c:when test="${<wr:Id context="component"/>.errorType eq 'ASSIGNED_ACTIVITY'}">
+			<tr>
+			  <td class="value">The work item "<b><c:out value="${<wr:Id context="component"/>.activityInstanceName} [#${<wr:Id context="component"/>.activityInstanceOid}]"/></b>" has already been assigned to another user and group.</td>
+		    </tr>
+		    <tr>
+		       <td class="value" title="Assigned Group" style="padding-left:10px">
+		       	Group: <b><c:out value="${<wr:Id context="component"/>.activityGroupName} [#${<wr:Id context="component"/>.activityGroupOid}]"/></b>
+		       </td>
+		    </tr>
+		    <tr>
+		       <td class="value" title="Assigned User" style="padding-left:10px">
+		         User: <b><c:out value="${<wr:Id context="component"/>.activityUserName} [#${<wr:Id context="component"/>.activityUserOid}]"/></b>
+		       </td>
+		    </tr>
+		    <tr>
+		    	<td class="value">
+		    		Go back to your <a class="link" href="<wr:URL context="homePage"/>">home</a> page and select another work item to execute.
+		    	</td>
+		    </tr>
+		  </c:when>
+		  <c:when test="${<wr:Id context="component"/>.errorType eq 'COMPLETED_ACTIVITY'}">
+			<tr>
+			  <td class="value">The work item "<b><c:out value="${<wr:Id context="component"/>.activityInstanceName} [#${<wr:Id context="component"/>.activityInstanceOid}]"/></b>" has already been completed.</td>
+		    </tr>
+		    <tr><td class="value">Go back to your <a class="link" href="<wr:URL context="homePage"/>">home</a> page and select another work item to execute.</td></tr>
+		  </c:when>
+		  <c:when test="${<wr:Id context="component"/>.errorType eq 'ABORTED_ACTIVITY'}">
+			<tr><td class="value">The work item "<b><c:out value="${<wr:Id context="component"/>.activityInstanceName} [#${<wr:Id context="component"/>.activityInstanceOid}]"/></b>" has been aborted.</td></tr>
+			<tr><td class="value">Go back to your <a class="link" href="<wr:URL context="homePage"/>">home</a> page and select another work item to execute.</td></tr>
+		  </c:when>
+		  <c:otherwise>
+		    <tr>
+			  <td class="value"><c:out value="${exc.message}"/></td>
+		    </tr>   
+		  </c:otherwise>
+		</c:choose>
+		<tr>
+			<td class="value">If the error persists please contact the system administrator.</td>
+		</tr> 
+	</table>
+<!--
+<%=org.apache.commons.lang.exception.ExceptionUtils.getFullStackTrace((Exception) pageContext.getAttribute("exc"))%>
+--> 
+	</div>
+  </div>   
+</wr:Frame> 
+</c:if>

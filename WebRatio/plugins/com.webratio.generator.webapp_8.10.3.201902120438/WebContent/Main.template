@@ -1,0 +1,43 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import com.webratio.generator.io.IOHelper
+import org.apache.commons.io.FileUtils
+import java.io.File
+import com.webratio.generator.io.DescriptorFileFilter
+
+eventSocketClient.sendBeginTask("WebContent", 100)
+def srcDir = new File(wr.projectDir, "/WebContent")
+if (srcDir.isDirectory() && srcDir.exists()) {
+    def destDir = new File(wr.outputPath)
+    if ("MVCPagesOnly" == phases) {
+        IOHelper.copyDirectory(srcDir, destDir, IOHelper.CVS_AWARE_NO_WEB_INF_FILTER, IOHelper.THUMBS_FILE_FILTER)
+    } else if ("Logic" == phases) {
+    	for (subPath in ["WEB-INF/descr", "WEB-INF/groovy"]) {
+	        srcSubDir = new File(srcDir, subPath)
+	        if (srcSubDir.isDirectory() && srcSubDir.exists()) {
+	            destSubDir = new File(destDir, subPath)
+	            destSubDir.mkdirs()
+	            IOHelper.copyDirectory(srcSubDir, destSubDir, [IOHelper.CVS_AWARE_FILTER], [IOHelper.THUMBS_FILE_FILTER, new DescriptorFileFilter(wr.descrToSkip)])
+	        }
+    	}
+    } else {
+        IOHelper.copyDirectory(srcDir, destDir, [IOHelper.CVS_AWARE_FILTER], [IOHelper.GENERATION_FILE_FILTER, new DescriptorFileFilter(wr.descrToSkip)])
+        def srcWebXml = new File(srcDir, "/WEB-INF/web.xml")
+        if(srcWebXml.exists()){
+          try {
+            //updates temporary web.xml
+            def tempWebXMLFile = wr.getOptional("temp.webxml").orNull()
+            if(tempWebXMLFile == null || !tempWebXMLFile.exists()){
+               tempWebXMLFile = File.createTempFile("web", ".xml.temp")
+	           wr.set("temp.webxml", tempWebXMLFile)
+            }
+            FileUtils.copyFile(srcWebXml, tempWebXMLFile)
+	      } catch (Throwable e) {
+	        e.printStackTrace()
+	      }
+        }
+    }    
+}
+eventSocketClient.sendTaskWorked("WebContent", 100)
+
+%>

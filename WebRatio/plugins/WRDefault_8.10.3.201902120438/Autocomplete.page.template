@@ -1,0 +1,6 @@
+#?delimiters [%, %], [%=, %]
+[% setJSOutput() %]
+<wr:Resources types="jspdeclaration"/>
+<%@ page contentType="text/plain; charset=UTF-8"%>  
+<webratio:Page page="<wr:Id context="page"/>"/>
+<wr:CustomLocation name="source"/>

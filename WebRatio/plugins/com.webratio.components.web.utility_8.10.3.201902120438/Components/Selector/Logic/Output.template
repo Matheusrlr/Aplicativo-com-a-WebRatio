@@ -1,0 +1,46 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+def componentId = component["id"]
+def classId = component["dataBinding"]
+%>
+<OutputParameters>
+    <% if (component["distinct"] == "true") { 
+       def distinctAttrIds = new HashSet(component["distinctAttributes"].tokenize(" ")) 
+       for (a in getAttributes(getById(classId))) { 
+         if (distinctAttrIds.contains(a["id"])) { %>
+          <OutputParameter 
+              name="<%=a["id"]%>Array"
+              type="<%=getTypeExpression(getById(classId), a, true, true)%>"
+              refId="<%=a["id"]%>"
+              label="<%=getLabel(a)%>"
+              possiblyLarge="true"/>
+        <% } 
+       } 
+    } else { 
+       for (a in getAttributes(getById(classId))) { %>
+        <OutputParameter 
+            name="<%=a["id"]%>Array"
+            type="<%=getTypeExpression(getById(classId), a, true, true)%>"
+            refId="<%=a["id"]%>"
+            label="<%=getLabel(a)%>"
+            possiblyLarge="true"/>
+      <% } %>
+      <% for (role in getOutgoingRoles(getById(classId)).findAll{!isMany(it)}) { %>
+        <% for (keyAttr in getKeyAttributes(getTargetDomainClass(role))) { %>
+          <OutputParameter 
+              name="<%=role["id"] + "_" + keyAttr["id"]%>Array"
+              refId="<%=role["id"]%>"
+              label="<%=getLabel(role) + "." + getLabel(keyAttr)%>"
+              mandatory="false"
+              possiblyLarge="true"/>
+         <% } %>
+       <% } %>
+    <% } %>
+    
+    <%component["distinctAttributes"].tokenize(" ").findAll{it.contains(".") || it.contains("(")}.each{%>
+      <OutputParameter name="<%=getAttributeExpressionId(it)%>Array" refId="importedAttribute" label="<%=getAttributeExpressionImportLabel(it)%>" possiblyLarge="true"/>
+    <%}%>
+    
+    <OutputParameter name="dataSize" label="Data Size"/>
+</OutputParameters>

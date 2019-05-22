@@ -1,0 +1,150 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: com.webratio.commons.eclipse.ui
+Export-Package: com.webratio.commons.eclipse.ui,com.webratio.commons.e
+ clipse.ui.actions,com.webratio.commons.eclipse.ui.browsers,com.webrat
+ io.commons.eclipse.ui.commands,com.webratio.commons.eclipse.ui.debug,
+ com.webratio.commons.eclipse.ui.dialogs,com.webratio.commons.eclipse.
+ ui.editors,com.webratio.commons.eclipse.ui.fieldassist,com.webratio.c
+ ommons.eclipse.ui.forms,com.webratio.commons.eclipse.ui.forms.editor,
+ com.webratio.commons.eclipse.ui.graphics,com.webratio.commons.eclipse
+ .ui.launching,com.webratio.commons.eclipse.ui.operations,com.webratio
+ .commons.eclipse.ui.text,com.webratio.commons.eclipse.ui.viewers,com.
+ webratio.commons.eclipse.ui.widgets,com.webratio.commons.eclipse.ui.w
+ izards
+Bundle-Name: WebRatio Eclipse UI Extensions
+Bundle-Version: 1.0.0.201810081230
+Bundle-ClassPath: com.webratio.commons.eclipse.ui.jar
+Require-Bundle: com.webratio.commons.lib.jsr305,com.webratio.commons.l
+ ib.google.guava,com.webratio.commons.lib.apache.commons.codec,com.web
+ ratio.commons.lib.apache.commons.httpclient,com.webratio.commons.lib.
+ apache.commons.lang,org.eclipse.core.runtime,org.eclipse.ui,org.eclip
+ se.ui.views,org.eclipse.ui.ide,org.eclipse.ui.forms,org.eclipse.core.
+ resources,org.eclipse.jface.text,org.eclipse.debug.core,org.eclipse.u
+ i.editors,org.eclipse.debug.ui,com.webratio.commons.base,com.webratio
+ .commons.eclipse.core
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Activator: com.webratio.commons.eclipse.ui.CommonUIPlugin
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: WebRatio
+
+Name: icons/full/ovr16/secure_ovr.png
+SHA-256-Digest: 6A0YeLEFmkVZF7CqpQRlhrnJq+DJEskuuEUX2dIaSw8=
+
+Name: icons/full/obj16/web_service_obj.png
+SHA-256-Digest: 1ltT3wkFDvia1dmGxfs+5aNo05TlnU4QdpCl66qfUrg=
+
+Name: icons/full/ovr16/remove_ovr.png
+SHA-256-Digest: IBzAyI4yj+2PLQS5BpmNzbDAmudh0G0AAfb4nK0yLzg=
+
+Name: icons/full/ovr16/edit_ovr.png
+SHA-256-Digest: 16n7Z0tnElabhNOBzqvaRyoBnrcG0GSgYieoi1vouqA=
+
+Name: icons/full/ovr16/deny_ovr.png
+SHA-256-Digest: guHM6a5kxPBGn1ufY39mDbM1VzrQ9Otn7wPfgJxvh4g=
+
+Name: icons/full/ovr16/key_ovr.png
+SHA-256-Digest: 0H9oFwl47pt9ZGXJVZI5vUqLwSIHhZiga2oY0W5MLqk=
+
+Name: icons/full/obj16/types_obj.png
+SHA-256-Digest: bbG7FRgIHeNZ8pmBDiRs61xhRkl+3FkdHWwFdhJypDg=
+
+Name: icons/full/obj16/xsd_provider_obj.png
+SHA-256-Digest: Q5+Uc8XOhjf8hlt7BVoWlTjt1MQ8qxCJy699bZxk1dU=
+
+Name: icons/full/obj16/new_obj.png
+SHA-256-Digest: rx+bPee3YQPAErxPSvB8mj93OnxQ3IdXzbOl2rJoUs8=
+
+Name: com.webratio.commons.eclipse.ui.jar
+SHA-256-Digest: deHb7d5anIH4qjJDIljXDm2kcu3lUeXyEQuWMZApuPA=
+
+Name: icons/full/obj16/database_obj.png
+SHA-256-Digest: 8uzi6W3qHnu0utKfEvjNyIiI6LZZuRUh7nPiATtd7is=
+
+Name: icons/full/tool16/refresh_tool.png
+SHA-256-Digest: rsIt0TgzB9ji6v/72xsxmp6QPVKeRsc/3xk7Tjl97vM=
+
+Name: icons/full/ovr16/application_ovr.png
+SHA-256-Digest: dmj2a2oDJp9sp+hiXekX5kKWptySBvjN8hKkyAHEJXM=
+
+Name: icons/full/tool16/install_tool.png
+SHA-256-Digest: ooIMRgAhl7kERw7Stimn+1mdBrb2CT8BEaMmUaXEMCc=
+
+Name: icons/full/obj16/user_obj.png
+SHA-256-Digest: ixYfmB9Ay+8GwZvA8wYFV+4Nge6nfc+Cn+tpU5OSM1I=
+
+Name: icons/full/obj16/half_star_obj.png
+SHA-256-Digest: d/cIUsxeI9sbx7NlcbPMLlhgdzyj/AmZ6v/eqcvytcA=
+
+Name: icons/full/obj16/users_obj.png
+SHA-256-Digest: XjZPW4XWay+TwQWepVU7O2skkq9KhUGz+g7jpmJgiCU=
+
+Name: icons/full/obj16/hash_obj.png
+SHA-256-Digest: 0z0/5ew5teJPD6737rmRb5y6/aRzLTNAY8kI0zEAJXo=
+
+Name: about.html
+SHA-256-Digest: vuFwTp1xHKAQWF+DRiSVx6xqpwOvJaUcOSfU9wQtY+A=
+
+Name: icons/full/obj16/transparent_obj.png
+SHA-256-Digest: a7GfSGDTkf4cIdXmcVjrBJEGzFk9f5ud2Wu6ynmjPkM=
+
+Name: icons/full/ovr16/new_ovr.png
+SHA-256-Digest: nrRmUMNa1z6UdoRIvMdDlGO3mN7vg0DWsw/oMygl9mI=
+
+Name: icons/full/obj16/edit_obj.png
+SHA-256-Digest: 6dGjaOPwfm8q3hp5UEmnwIzSdaUKQ9TSitnn/aMeC/w=
+
+Name: icons/full/ovr16/question_ovr.png
+SHA-256-Digest: Zmw18A6WIrzIeeKncMJojjzP9uSbtLisd5VWOVCPx7c=
+
+Name: icons/full/wizban/download_wizban.png
+SHA-256-Digest: IWkd2C549R2jSfgC0+Q81YMWYOq0OUz/glttLtKgYOo=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: icons/full/ovr16/run_ovr.png
+SHA-256-Digest: Sfsi9XJ00jnhP+A8725ofwg47ERYA6aJ6r9mUoyXOGg=
+
+Name: icons/full/ovr16/completed_ovr.png
+SHA-256-Digest: qAnFRt/irMegOe0ufrWSkz3Ln2T0QhxmejkbttIgo5c=
+
+Name: icons/full/tool16/up_navigation_tool.png
+SHA-256-Digest: TAdPmgnvAxqLwFX9Gi/m91WDneq/fy+rLmRdEW91bno=
+
+Name: icons/full/obj16/properties_obj.png
+SHA-256-Digest: xqXR3aKBRfmaaZ5Vf1Sr2c0NYtH1CnsaJJ5/1TpqQrA=
+
+Name: icons/full/obj16/smtp_server_obj.png
+SHA-256-Digest: 4j89ZJHr+sBQKsljrWW0OhwPOUscpiGT3FbScq3K+TM=
+
+Name: icons/full/obj16/xsd_resource_obj.png
+SHA-256-Digest: qjP66mmfE0YHsx7mDHlZWt16XV2um2lLdjxZeL5KGyU=
+
+Name: icons/full/ovr16/user_ovr.png
+SHA-256-Digest: jE6ig6rS3mrKDSuykw6xHsoUyjRTCngC3DZySYA4PH4=
+
+Name: icons/full/obj16/cookie_storage_provider_obj.png
+SHA-256-Digest: i9AD7N48wiys2V5wDGR4ROvFaeiboEVYrp0WCvNv86I=
+
+Name: icons/full/obj16/application_obj.png
+SHA-256-Digest: n2q0JVTJXEDdOdbbpdLhzzDgVyDo6/cJFPfZ+0KjgAA=
+
+Name: icons/full/obj16/blank_obj.png
+SHA-256-Digest: 9b4WTrQ0LI5NpY2UqPHuu8vCYAWO7QQX9BY38t2oFWQ=
+
+Name: icons/full/ovr16/default_ovr.png
+SHA-256-Digest: XyPoRST4rbTMmLDT+lXlxpuIz7D1U3hV8MYpoQwlMh4=
+
+Name: icons/full/obj16/star_obj.png
+SHA-256-Digest: TJAWNALoJWnHOyFTHezb+fQK5xiSPDtDtYT1qW9C200=
+
+Name: icons/full/ovr16/pinned_ovr.png
+SHA-256-Digest: MYK2xPPCkcTVXflE/awBWU1Nm5OkBpjfIrnCjHfG+iU=
+
+Name: icons/full/obj16/question_obj.png
+SHA-256-Digest: HLC0Cug+x6iwoEikTPzWvSlvIjRjqnA76nOam1QCzoo=
+
+Name: icons/full/ovr16/database_ovr.png
+SHA-256-Digest: LO222YiZSXrLDnIryM4IGJhUmZLFNW3nPF5sw8DGgMw=
+

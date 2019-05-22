@@ -1,0 +1,115 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Use Empty Message" name="use-empty-component-message" type="boolean" default="false">
+Defines the usage of a message for empty components.
+Allowed values are: true or false.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Empty Message Key" name="empty-component-message" type="string" default="emptyComponentMessage">
+Defines the key of the message to use if the component is empty.
+Default value: emptyComponentMessage
+</wr:LayoutParameter>
+[%
+setHTMLOutput()
+
+def wrPosition = []
+wrPosition.push("{data:dataIndex}")
+
+def attrs = component.selectNodes("layout:Attribute")
+def attrsCount = attrs.size()
+def avatar = (attrsCount && attrs[0]["type"] == "blob" && (attrs[0]["contentType"] == "" || attrs[0]["contentType"].startsWith("image"))) ? attrs[0] : null
+def title = attrs.find{it["type"] != "blob"}
+
+def events = component.selectNodes("layout:Event")
+
+def useEmptyComponentMessage = params["use-empty-component-message"] == "true"
+def emptyComponentMessage = params["empty-component-message"]
+%]
+<div class="<wr:StyleClass/> wr-comp-Hierarchy">
+	<div ng-if="view.data && view.data.length" class="list">
+		<wr:Frame>
+			<div 
+				class="item" 
+				ng-repeat="current in view.data" 
+				ng-init="dataIndex = $index"
+			>
+				<div class="[%= (avatar) ? " item-avatar" : "" %][%= (events.size() == 1) ? " item-button-right" : "" %]">
+					[% if (avatar) { %]
+						<wr:Value context="avatar" class="item-image"/>
+					[% } %]
+					[% if (title) { %]
+						<h2><wr:Value context="title"/></h2>
+					[% } %]
+					<wr:Iterate var="attr" context="component" select="layout:Attribute">
+						[% if (attr != avatar && attr != title) { %]
+							<p><wr:Value/></p>
+						[% } %]
+					</wr:Iterate>
+					
+					[% if (events.size() > 1) { %]<div class="button-bar">[% } %]
+						<wr:Iterate var="event" context="component" select="layout:Event">
+							<wr:Value position="wrPosition.toString()"/>
+						</wr:Iterate>
+					[% if (events.size() > 1) { %]</div>[% } %]
+				</div>
+				
+				<wr:Iterate var="level" context="component" select="./HierarchyLevel">
+					[% printLayoutLevel(level, 2, wrPosition) %]
+				</wr:Iterate>
+			</div>
+		</wr:Frame>
+	</div>
+	[% if (useEmptyComponentMessage) { %]
+		<div ng-if="!view.data || !view.data.length" class="wr-empty-message list">
+			<wr:Frame>
+				<div class="item item-text-wrap">
+					{{ '[%= emptyComponentMessage %]' | wrLocalize }}
+				</div>
+			</wr:Frame>
+		</div>
+	[% } %]
+</div>
+[%
+def printLayoutLevel(currLevel, levelDeepth, parentPosition) {
+	levelDeepth++
+	def currLevid = currLevel["id"]
+	def innerPosition = parentPosition
+	innerPosition.push( "{" + currLevid + "data:" + currLevid + "Index}" )
+	
+	def attrs = currLevel.selectNodes("layout:Attribute")
+	def attrsCount = attrs.size()
+	def avatar = (attrsCount && attrs[0]["type"] == "blob" && (attrs[0]["contentType"] == "" || attrs[0]["contentType"].startsWith("image"))) ? attrs[0] : null
+	def title = attrs.find{it["type"] != "blob"}
+	
+	def events = currLevel.selectNodes("layout:Event")
+	%]
+	<div class="sublist" ng-if="current.[%= currLevel["id"] %]data.length">
+		<div 
+			class="item" 
+			ng-repeat="current in current.[%= currLevid %]data" 
+			ng-init="[%= currLevid %]Index = $index"
+		>
+			<div class="item-content[%= (avatar) ? " item-avatar" : "" %][%= (events.size() == 1) ? " item-button-right" : "" %]">
+				[% if (avatar) { %]
+					<wr:Value context="avatar" class="item-image"/>
+				[% } %]
+				[% if (title) { %]
+					<h2><wr:Value context="title"/></h2>
+				[% } %]
+				<wr:Iterate var="attr" context="currLevel" select="layout:Attribute">
+					[% if (attr != avatar && attr != title) { %]
+						<p><wr:Value/></p>
+					[% } %]
+				</wr:Iterate>
+				
+				[% if (events.size() > 1) { %]<div class="button-bar">[% } %]
+					<wr:Iterate var="event" context="currLevel" select="layout:Event">
+						<wr:Value position="innerPosition.toString()"/>
+					</wr:Iterate>
+				[% if (events.size() > 1) { %]</div>[% } %]
+			</div>
+			<wr:Iterate var="level" context="currLevel" select="./HierarchyLevel">
+				[% printLayoutLevel(level, levelDeepth, innerPosition) %]
+			</wr:Iterate>
+		</div>
+	</div>
+	[%
+} %]

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ValidationRule type="singleProperty" idPrefix="vl" namePrefix="Value Length " label="Value Length"> 
+  <EnumProperty attributeName="predicate" defaultValue="min"> 
+    <EnumItem value="eq" label="Exactly"/>  
+    <EnumItem value="neq" label="Not"/>  
+    <EnumItem value="min" label="Min"/>  
+    <EnumItem value="max" label="Max"/>  
+    <Description xml:space="preserve">The comparison operator.</Description>
+  </EnumProperty>  
+  <StringProperty attributeName="value">
+    <Description xml:space="preserve">The length compare value. 
+    Can be the number of characters in case of string elements, or the number of bytes in case of BLOB elements (e.g. 10MB, 20KB, 1024). 
+    </Description>
+  </StringProperty>  
+  <Description xml:space="preserve">The Value Length validation rule allows to validate the length 
+  of the element value, or the size in bytes of the selected file.&lt;br/&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;${propertyValue}&lt;/b&gt;: the element value&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${propertyName}&lt;/b&gt;: the element name&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${objectName}&lt;/b&gt;: the parent element name&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${valueLength}&lt;/b&gt;: the submitted value length&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${length}&lt;/b&gt;: the comparison value length&lt;/li&gt;
+&lt;/ul&gt;</Description>
+</ValidationRule>

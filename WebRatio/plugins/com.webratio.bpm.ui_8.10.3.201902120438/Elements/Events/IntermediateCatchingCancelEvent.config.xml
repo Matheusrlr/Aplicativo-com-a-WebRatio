@@ -1,0 +1,26 @@
+<Element name="IntermediateCatchingCancelEvent" lowerName="intermediate catching cancel event"
+		pluralLowerName="">
+		<Description>
+			 A &lt;a href="/Concepts/Elements/Process/Events/CancelEvents/IntermediateCatchingCancelEvent"/&gt; is used within a Transaction Sub-Process 
+		</Description>
+        
+        <ActionRef label="Add Lane" />
+        <ActionRef label="Add Sequence Flow" />
+        <ActionRef label="Add Property" />
+        <ActionRef label="Add Intermediate Catching Error" />
+        <ActionRef label="Edit Process Parameters..." />
+        <Action label="Change Catching Type to">
+          Convert this event into a different catching event.
+        </Action>
+        <Action label="Change Throwing Type to">
+          Convert this event into a different throwing event.
+        </Action>
+        <ActionRef label="Search References" />
+        <ActionRef label="Help" />
+
+    <PropertyCategory name="General">
+        <PropertyRef label="Id"/>
+        <PropertyRef label="Code"/>
+        <PropertyRef label="Name"/>
+    </PropertyCategory>
+</Element>

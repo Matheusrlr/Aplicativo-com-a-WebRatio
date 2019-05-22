@@ -1,0 +1,7 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+%>
+<OutputParameters>
+  <OutputParameter name="result" label="Result"/>
+</OutputParameters>

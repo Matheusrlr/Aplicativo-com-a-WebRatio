@@ -1,0 +1,7 @@
+#?delimiters [%,%],[%=,%]
+[%setXMLOutput()%]
+<Descriptor service="com.webratio.components.web.ws.InitJobService">
+   [% for (par in component.selectNodes("JobInputParameter")) { %]
+     <Parameter id="[%=par["id"]%]" name="[%=par["name"]%]"/>
+   [% } %] 
+</Descriptor>

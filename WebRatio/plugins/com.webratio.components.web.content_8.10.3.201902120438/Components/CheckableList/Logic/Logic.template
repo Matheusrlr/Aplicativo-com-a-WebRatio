@@ -1,0 +1,29 @@
+#?delimiters [%,%],[%=,%]
+[%
+import org.apache.commons.lang.StringUtils
+
+setXMLOutput()
+def domainClass = getById(component["dataBinding"])
+def preConditionalExpression = component.element("PreConditionalExpression")
+def keyAttributes = getKeyAttributes(domainClass).collect{it["id"]}
+def selectAttributes = new HashSet(keyAttributes)
+selectAttributes.addAll(component["displayAttributes"].tokenize(" "))
+selectAttributes.addAll(getOutputAttributes(component, "data[].", null))
+    
+%]
+<Descriptor service="com.webratio.components.web.content.datasource.CheckableListService">
+[% if (domainClass == null) { %]
+  <Error>Could not find a domain-class identified by '[%=component["dataBinding"]%]'</Error>
+[% } else { %]
+  <DataSource>[%=getDataSourceId(domainClass)%]</DataSource>
+  [%
+    def query = createQuery(domainClass).select(selectAttributes).maxResults(component["maxResults"]).selector(component.element("ConditionalExpression"))  
+    component.selectNodes("SortAttribute").each{query.sort(it["attribute"], it["order"])}
+    printRaw(query.build().asXML())
+    if(preConditionalExpression){
+       printRaw(createQuery(domainClass).select(keyAttributes).selector(preConditionalExpression).build("PreselectionQuery").asXML())
+    }
+  %]
+  
+ [% } %]
+</Descriptor>

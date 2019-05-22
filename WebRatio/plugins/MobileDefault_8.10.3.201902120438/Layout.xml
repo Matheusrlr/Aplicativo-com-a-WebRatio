@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Layout screenLayout="Default" cellLayout="Default" frameLayout="Default" eventLayout="Default" attributeLayout="Default" fieldLayout="Default">
+	<ComponentConfiguration componentType="Barcode" componentLayout="Normal"/>
+	<ComponentConfiguration componentType="Calendar" componentLayout="Normal"/>
+	<ComponentConfiguration componentType="Details" componentLayout="Normal"/>
+	<ComponentConfiguration componentType="Form" componentLayout="Normal"/>
+	<ComponentConfiguration componentType="Hierarchy" componentLayout="Accordion"/>
+	<ComponentConfiguration componentType="List" componentLayout="Normal"/>
+	<ComponentConfiguration componentType="Map" componentLayout="Normal"/>
+	<ComponentConfiguration componentType="Message" componentLayout="Normal"/>
+	<ComponentConfiguration componentType="ViewComponent" componentLayout="Normal"/>
+	<Resources alwaysRequired="mobiledefault-activity-behaviour mobiledefault-angular-extension mobiledefault-ionic-extension keyboard-plugin">
+		<Resource name="drifty-ionic" version="1.3.5" type="javascript" path="MobileDefault/ionic/js/ionic.min.js"/>
+		<Resource name="drifty-ionic-angular" version="1.3.5" type="javascript" requires="drifty-ionic drifty-ionic-style" path="MobileDefault/ionic/js/ionic-angular.min.js"/>
+		<Resource name="drifty-ionic-style" version="1.3.5" type="css" path="MobileDefault/ionic/css/ionic.min.css"/>
+		<Resource name="mobiledefault-action-sheet" type="javascript" path="MobileDefault/js/directive/action-sheet.js" requires="actionsheet-plugin"/>
+		<Resource name="mobiledefault-activity-behaviour" type="javascript" path="MobileDefault/js/activity-behavior.js"/>
+		<Resource name="mobiledefault-ionic-extension" type="javascript" requires="drifty-ionic-angular mobiledefault-style" path="MobileDefault/js/ionic-extension.js" />
+		<Resource name="mobiledefault-angular-extension" type="javascript" path="MobileDefault/js/angular-extension.js"/>
+		<Resource name="mobiledefault-calendar" type="javascript" path="MobileDefault/js/directive/calendar.js"/>
+		<Resource name="mobiledefault-date-input" type="javascript" path="MobileDefault/js/directive/date-input.js" requires="mobiledefault-ionic-extension datepicker-plugin"/>
+		<Resource name="mobiledefault-select" type="javascript" path="MobileDefault/js/directive/select.js" requires="drifty-ionic-angular"/>
+		<Resource name="mobiledefault-external-open" type="javascript" path="MobileDefault/js/directive/external-open.js" requires="inappbrowser-plugin"/>
+		<Resource name="mobiledefault-map" type="javascript" path="MobileDefault/js/directive/map.js"/>
+		<Resource name="mobiledefault-menu-popover" type="javascript" path="MobileDefault/js/directive/menu-popover.js" requires="drifty-ionic-angular"/>
+		<Resource name="mobiledefault-number-input" type="javascript" path="MobileDefault/js/directive/number-input.js"/>
+		<Resource name="mobiledefault-style" type="css" requires="drifty-ionic-style" path="MobileDefault/css/app.css" />
+		<Resource name="inappbrowser-plugin" type="nativePlugin" nativePluginLocalId="builtin:cordova-plugin-inappbrowser"/>
+		<Resource name="keyboard-plugin" type="nativePlugin" nativePluginLocalId="local:ionic-keyboard.zip"/>
+		<Resource name="actionsheet-plugin" type="nativePlugin" nativePluginLocalId="local:actionsheet.zip"/>
+		<Resource name="datepicker-plugin" type="nativePlugin" nativePluginLocalId="local:datepicker.zip"/>
+		<Resource name="blob-camera-plugin" type="nativePlugin" nativePluginLocalId="builtin:cordova-plugin-camera"/>
+		<Resource name="blob-opener-plugin" type="nativePlugin" nativePluginLocalId="builtin:cordova-plugin-file-opener2"/>
+	</Resources>
+	<OutputFolder path="MobileDefault"/>
+</Layout>

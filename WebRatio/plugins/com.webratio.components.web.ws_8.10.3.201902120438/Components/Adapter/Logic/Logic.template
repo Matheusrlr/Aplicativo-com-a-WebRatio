@@ -1,0 +1,24 @@
+#?delimiters [%,%],[%=,%]
+[%
+import org.dom4j.DocumentFactory
+import com.webratio.generator.helpers.SpecialUtils
+
+setXMLOutput()
+
+def xslFile = null
+if (component.valueOf("@xslFile") != "") {
+    xslFile = getContentFile(component["xslFile"])
+}
+%]
+
+<Descriptor service="com.webratio.components.web.ws.AdapterService">
+   	  <InputDocCount>[%=component["inputDocCount"]%]</InputDocCount>
+   	  <Transformer>[%=component.valueOf("translate(@xslFile,'\','/')")%]</Transformer>
+      <InputParameters>
+        [% if (xslFile != null) { %]  
+          [% for (p in SpecialUtils.getTransformationInputs(xslFile)) { %]
+            <InputParameter>[%=p%]</InputParameter>
+          [% } %]
+        [% } %]
+      </InputParameters>
+</Descriptor>

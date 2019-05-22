@@ -1,0 +1,54 @@
+<Buttons>
+	<Button name="Browse">
+		(&lt;img src="PLUGIN_ID=com.webratio.commons.mf.ui/icons/full/elcl16/browse.png"/&gt;)
+	</Button>
+	<Button name="Clear">
+		&lt;p&gt;The Clear button (&lt;img src="PLUGINS_ROOT/org.eclipse.ui/icons/full/obj16/delete_obj.gif"/&gt;) 
+		clears the property.&lt;/p&gt;
+	</Button>
+	<Button name="Edit">
+		(&lt;img src="PLUGIN_ID=com.webratio.commons.mf.ui/icons/full/elcl16/browse.png"/&gt;)
+	</Button>
+	<Button name="Edit Standalone">
+		(&lt;img src="PLUGIN_ID=com.webratio.bpm.ui/icons/full/obj16/em_subprocess.png"/&gt;)
+	</Button>
+	<Button name="Go to Business Object">
+		(&lt;img src="PLUGIN_ID=com.webratio.bpm.ui/icons/full/elcl16/open_bo.png"/&gt;)
+	</Button>
+	<Button name="Go to Catching Link">
+		(&lt;img src="PLUGIN_ID=com.webratio.bpm.ui/icons/full/obj16/intermediate_catching_link.png"/&gt;)
+	</Button>
+	<Button name="Go to Pool">
+		(&lt;img src="PLUGIN_ID=com.webratio.bpm.ui/icons/full/obj16/pool.png"/&gt;)
+	</Button>
+	<Button name="Go to Roles">
+		(&lt;img src="PLUGIN_ID=com.webratio.bpm.ui/icons/full/elcl16/open_roles.png"/&gt;)
+	</Button>
+	<Button name="Go to Signal">
+		(&lt;img src="PLUGIN_ID=com.webratio.bpm.ui/icons/full/elcl16/open_signal.png"/&gt;)
+	</Button>
+	<Button name="Go to Start Event">
+		(&lt;img src="PLUGIN_ID=com.webratio.bpm.ui/icons/full/obj16/start_event.png"/&gt;)
+	</Button>
+	<Button name="Go to Start Measurement">
+		(&lt;img src="PLUGIN_ID=com.webratio.bpm.ui/icons/full/obj16/measurement_start.png"/&gt;)
+	</Button>
+	<Button name="Select Business Object">
+		(&lt;img src="PLUGIN_ID=com.webratio.commons.mf.ui/icons/full/elcl16/browse.png"/&gt;)
+	</Button>
+	<Button name="Select Pool">
+		(&lt;img src="PLUGIN_ID=com.webratio.commons.mf.ui/icons/full/elcl16/browse.png"/&gt;)
+	</Button>
+	<Button name="Select Roles">
+		(&lt;img src="PLUGIN_ID=com.webratio.commons.mf.ui/icons/full/elcl16/browse.png"/&gt;)
+	</Button>
+	<Button name="Select Signal">
+		(&lt;img src="PLUGIN_ID=com.webratio.commons.mf.ui/icons/full/elcl16/browse.png"/&gt;)
+	</Button>
+	<Button name="Select Start Event">
+		(&lt;img src="PLUGIN_ID=com.webratio.commons.mf.ui/icons/full/elcl16/browse.png"/&gt;)
+	</Button>
+	<Button name="Select">
+		(&lt;img src="PLUGIN_ID=com.webratio.commons.mf.ui/icons/full/elcl16/browse.png"/&gt;)
+	</Button>
+</Buttons>

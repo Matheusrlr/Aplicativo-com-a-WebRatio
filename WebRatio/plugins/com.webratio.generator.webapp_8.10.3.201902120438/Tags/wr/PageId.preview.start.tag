@@ -1,0 +1,1 @@
+$$ setJavaOutput() $$[%=page.attributeValue("id", "")%]

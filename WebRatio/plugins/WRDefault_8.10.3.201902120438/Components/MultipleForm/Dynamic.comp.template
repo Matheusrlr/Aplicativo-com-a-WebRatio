@@ -1,0 +1,95 @@
+#?delimiters [%, %], [%=, %]
+
+[% 
+setHTMLOutput()
+
+def formBean = getFormBeanName(page)
+def indexedProp = component["id"] + "[\${index}]"
+%]
+<wr:Frame>
+    <table cellspacing="2" cellpadding="2" border="0">
+	  <tr>
+	  	<td class="error">
+	  		<form:errors path="<wr:Id context="component"/>"/>
+	  		<form:errors path="<wr:Id context="component"/>Checked"/>
+	  	</td>
+	  </tr>
+    </table>
+	<div class="plain <wr:StyleClass/>">
+		<div class="plain MultipleForm">
+            <form:hidden path="<wr:Id context="component"/>Keys" id="<wr:Id context="component"/>Key"/>
+			<form:hidden path="<wr:Id context="component"/>DataSize" id="<wr:Id context="component"/>DataSize"/>
+			<script>
+			multiEntryMap["<wr:Id context="component"/>LastIndex"] = "<c:out value="${[%= formBean %].<wr:Id context="component"/>DataSize -1}"></c:out>";
+			</script>
+			
+			<table cellspacing="0" cellpadding="0" border="0">
+				<tr>
+			     <td>
+			  		<div id="<wr:Id context="component"/>">
+					<c:forEach var="<wr:Id context="component"/>" varStatus="status" items="${[%=getFormBeanName(page)%].<wr:Id context="component"/>}">
+					  <c:set var="index" value="${status.index}"/>
+					  <div id="<c:out value="<wr:Id context="component"/>[${index}]"/>" class="ajaxPreservedMarkup">
+					  <table>
+						<tr style="<c:if test="${index gt 0}">display:none;</c:if>" id="<c:out value="<wr:Id context="component"/>[${index}]Header"/>">
+						<wr:Iterate var="field" context="component" select="layout:Field">
+						    <th align="left" nowrap class="<wr:StyleClass/> header"><wr:Label/></th>
+						</wr:Iterate>
+						<th class="<wr:StyleClass/> header"></th>
+						</tr>
+						<tr>
+							<wr:Iterate var="field" context="component" select="layout:Field">
+								[% def fieldType = getById(field["field"])?.name %]
+								<td>
+									<table cellspacing="0" cellpadding="0">
+										<tr>
+											<td class="<wr:StyleClass/> value">
+											[% if (fieldType == "Field") { %]
+												<wr:Value class="field"/>
+											[% } else if (fieldType == "SelectionField") { %]
+												<wr:Value class="selectionfield"/>
+											[% } %]
+											</td>
+										</tr>
+										<tr>
+											<td class="<wr:StyleClass/> error">
+												<wr:FieldError/>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</wr:Iterate>
+							<td>
+							<form:hidden path="[%=indexedProp%].key"/>
+							<img src="Resources/minus.png" alt="Delete Row" onClick="removeRow('<wr:Id context="component"/>','<c:out value="<wr:Id context="component"/>[${index}]"/>');"></td>
+						</tr>
+						[% // prints hidden fields, which do not have associated layout:Field elements
+						for (hiddenField in getById(component["id"])?.selectNodes("Field[@hidden = 'true']")) {
+						  def type = hiddenField["type"]
+					  	  if (type == "blob") { %]
+						<form:hidden path="value([%= hiddenField["id"]%].preload)"/>
+						  [% } else { %]
+						<form:hidden path="value([%= hiddenField["id"]%])"/>
+						  [% }
+						} 
+						%]
+					  </table>
+					  </div>
+					</c:forEach>
+					</div>
+			     </td>
+			    </tr>
+			    <tr>
+			     <td align="right">
+			       <img src="Resources/plus.png" alt="Add Row" onClick="addRow('<wr:Id context="component"/>');">
+			     </td>
+			    </tr>
+			    <wr:Iterate var="event" context="component" select="layout:Event">
+			      <tr>
+			        <td align="left"><wr:Event class="button" type="button"/></td>
+			      </tr>
+			    </wr:Iterate>
+			</table>
+		</div>
+	</div>
+</wr:Frame>

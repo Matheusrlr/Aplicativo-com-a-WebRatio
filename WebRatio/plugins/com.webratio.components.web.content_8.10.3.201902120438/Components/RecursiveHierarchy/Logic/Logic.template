@@ -1,0 +1,31 @@
+#?delimiters [%,%],[%=,%]
+[%
+setXMLOutput()
+
+def domainClass = getById(component["dataBinding"])
+def keyAtts = getKeyAttributes(domainClass).collect{it["id"]}
+def selectAttributes = new LinkedHashSet()
+selectAttributes.addAll(keyAtts)
+selectAttributes.addAll(component["displayAttributes"].tokenize(" "))
+selectAttributes.addAll(getOutputAttributes(component, "data[].", null))
+selectAttributes.addAll(keyAtts.collect{component["association"] + "_" + it})
+
+%]
+<Descriptor service="com.webratio.components.web.content.datasource.RecursiveHierarchyService">
+[% if (domainClass == null) { %]
+  <Error>Could not find a domain-class identified by '[%=component["dataBinding"]%]'</Error>
+[% } else { %]
+  <DataSource>[%=getDataSourceId(domainClass)%]</DataSource>
+  <ShowAllAsRoot>[%=component["showAllAsRoot"]%]</ShowAllAsRoot>
+  <ParentAssociationRole>[%=component["association"]%]</ParentAssociationRole>
+  [%
+    def query = createQuery(domainClass).select(selectAttributes).maxResults(component["maxResults"]).selector(component.element("ConditionalExpression"))  
+    component.selectNodes("SortAttribute").each{query.sort(it["attribute"], it["order"])}
+    printRaw(query.build().asXML())
+ 
+    def rootQuery = createQuery(domainClass).select(selectAttributes).selector(component.element("RootConditionalExpression"))  
+    component.selectNodes("SortAttribute").each{rootQuery.sort(it["attribute"], it["order"])}
+    printRaw(rootQuery.build("RootQuery").asXML())
+  %]
+[% } %]
+</Descriptor>

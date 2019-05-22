@@ -1,0 +1,29 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: com.webratio.commons.eclipse.core
+Export-Package: com.webratio.commons.eclipse.core,com.webratio.commons
+ .eclipse.core.debug,com.webratio.commons.eclipse.core.net,com.webrati
+ o.commons.eclipse.core.resources,com.webratio.commons.eclipse.core.ru
+ ntime,com.webratio.commons.eclipse.core.runtime.preferences,com.webra
+ tio.commons.eclipse.osgi
+Bundle-Name: WebRatio Eclipse Core Extensions
+Bundle-Version: 1.0.0.201810081230
+Bundle-ClassPath: com.webratio.commons.eclipse.core.jar
+Require-Bundle: com.webratio.commons.lib.jsr305,com.webratio.commons.l
+ ib.google.guava,com.webratio.commons.lib.apache.commons.httpclient,co
+ m.webratio.commons.base,org.eclipse.core.runtime,org.eclipse.debug.co
+ re,org.eclipse.core.net
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Bundle-Activator: com.webratio.commons.eclipse.core.CommonCore
+Bundle-Vendor: WebRatio
+
+Name: about.html
+SHA-256-Digest: vuFwTp1xHKAQWF+DRiSVx6xqpwOvJaUcOSfU9wQtY+A=
+
+Name: com.webratio.commons.eclipse.core.jar
+SHA-256-Digest: VywZRHf7Gugswn7TYptAryF9bp2/JZ9tClkYGn9YE/E=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+

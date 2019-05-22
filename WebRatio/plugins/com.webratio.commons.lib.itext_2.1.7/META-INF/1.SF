@@ -1,0 +1,24 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: 3RYnJg2bcB0UmCD9ozvKEL81NIvkX
+ rZk10ZiFqlZ5EU=
+SHA-256-Digest-Manifest: wrwJVj1g5D1V8d7ujFmWnnIeFQObxFHgUea191UeFSo=
+Created-By: 1.7.0_75 (Oracle Corporation)
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: about.html
+SHA-256-Digest: wqN4lk8Dav3WjmGLohdV6p3BkFXJluHZTknpQ0RHotc=
+
+Name: lib/itext.jar
+SHA-256-Digest: 98dquLnJeSl9tyctZjCxHz2AL/8g7g9l76GW1cd/Kgw=
+
+Name: lib/itextsrc.zip
+SHA-256-Digest: dC7oNv6Ya78Lg8zKeDt03MMgZ4wmaEq9/uFdu0UrzwA=
+
+Name: about_files/MPL-1.1.txt
+SHA-256-Digest: rMz4tJc9fGpkixHBztWloBuEmatch2DrDehiHFQcuIM=
+
+Name: lib/itext-rtf.jar
+SHA-256-Digest: 0z2xDafIxm/IzAmRyu0ioieK/D8HIijhat4JynS6b4M=
+

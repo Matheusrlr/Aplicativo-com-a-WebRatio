@@ -1,0 +1,21 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: iom0EZsn0dMN1M3YbLwJHgfEUi+ft
+ CTfqAuQ7oa1XF0=
+SHA-256-Digest-Manifest: SMvbf6NfaMly8NwOBV4NjPTcSpQqM1A2lVJBVkscKm0=
+Created-By: 1.7.0_75 (Oracle Corporation)
+
+Name: lib/servlet-apisrc.zip
+SHA-256-Digest: 5dGda9lcoTRpvdvz0zn/NTcmad19wh73Le42ayolg1c=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: ROcRhD7uXSX1l3Eq0lRqXhhnq6dWFXgz+F5r+s2D4BQ=
+
+Name: lib/servlet-api.jar
+SHA-256-Digest: hJ60oN5Vt8tSnwRbFHjaCCrtrMv8dCNp489N2UWRFFg=
+
+Name: about.html
+SHA-256-Digest: di8A8gGftUQywKeqIXLP50q6eeY4e/Py4T/jCoH9oe0=
+
+Name: about_files/CDDL+GPL.txt
+SHA-256-Digest: /zfVPBSZsxpofyQKgWpZQcuXETI5vkZ+ccWJMz5i+BU=
+

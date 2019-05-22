@@ -1,0 +1,10 @@
+#?delimiters [%,%],[%=,%]
+[%setXMLOutput()%]
+<Descriptor service="com.webratio.components.web.utility.PasswordService">
+   <PasswordSize>[%=component["passwordSize"]%]</PasswordSize>
+   <MinLowerCaseCharacters>[%=component["minLowerCaseCharacters"]%]</MinLowerCaseCharacters>
+   <MinUpperCaseCharacters>[%=component["minUpperCaseCharacters"]%]</MinUpperCaseCharacters>
+   <MinDigits>[%=component["minDigits"]%]</MinDigits>
+   <MinSpecialCharacters>[%=component["minSpecialCharacters"]%]</MinSpecialCharacters>
+   <SpecialCharacters>[%=component["specialCharacters"]%]</SpecialCharacters>
+</Descriptor>

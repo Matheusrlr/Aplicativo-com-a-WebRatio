@@ -1,0 +1,62 @@
+#?delimiters [%, %], [%=, %]
+[%
+setJSONOutput()
+
+// TODO make the notification events part dependent on the "pushNotifications" platform service and not on the events
+def notificationEvents = getAllFloatingEvents().findAll{ it.name == "NotificationEvent" }
+
+def domainModel = wr.project.selectSingleNode("DomainModel")
+def dbName = domainModel.valueOf("Property[@name = 'DBName']/@value") ?: wr.projectDir.name
+%]
+{
+	"runtime": [{}],
+	
+	"classes": {
+		[% getAllDomainClasses().eachWithSeparator(",") { dclass -> %]
+			"[%= getClassInfo(dclass).name %]": {
+				"id": "[%= dclass["id"] %]"
+			}
+		[% } %]
+	},
+	
+	"notifications": {
+		[% notificationEvents.eachWithSeparator(",") { event -> %]
+			[% def params = event.elements("NotificationEventParameter") %]
+			"[%= event["name"] %]": {
+				"params": [
+					[% params.eachWithSeparator(",") { param -> %]
+						"[%= param["name"] %]"
+					[% } %]
+				]
+			}
+		[% } %]
+	},
+	
+	"databases": { 
+		"[%= dbName %]": {}
+	},
+	
+	"screens": {
+		[% getAllScreens().eachWithSeparator(",") { screen -> %]
+			"[%= screen["id"] %]": {
+				"name": "[%= screen["name"] %]",
+				"setNames": [
+					[% screen.selectNodes("ancestor::ScreenSet").eachWithSeparator(",") { screenSet -> %]
+						"[%= screenSet["name"] %]"
+					[% } %]
+				]
+			}
+		[% } %]
+	},
+	
+	"locales": {
+		[% wr.project.selectNodes("WebModel/Locale").eachWithSeparator(",") { locale -> %]
+			"[%= getISOCode(locale) %]": {
+				"language": "[%= locale["language"] %]"
+				[% if (locale["country"]) { %],
+					"country": "[%= locale["country"] %]"
+				[% } %]
+			}
+		[% } %]
+	}
+}

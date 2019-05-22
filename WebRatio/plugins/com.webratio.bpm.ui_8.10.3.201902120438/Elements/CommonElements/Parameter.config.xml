@@ -1,0 +1,30 @@
+<Element name="Parameter" lowerName="parameter"
+		pluralLowerName="">
+		<Description>
+			Parameters provide information about what activities are required to be
+			triggered and/or what they produce. They are considered as Artefacts
+			because they do not have any direct effect on the Sequence Flow or
+			Message Flow of the Process. The state of the data object should also be
+			set.
+		</Description>	
+        
+        <ActionRef label="Add Lane" />
+        <ActionRef label="Add Property" />
+        <ActionRef label="Edit Process Parameters..." />
+        <ActionRef label="Search References" />
+        <ActionRef label="Help" />		
+    <PropertyCategory name="General">
+        <PropertyRef label="Id"/>
+        <PropertyRef label="Name"/>
+        <Property label="Type">
+          The Parameter's type.
+        </Property>
+        <Property label="Class">
+        	The Class from which the parameter is exposed.
+        </Property>
+        <Property label="Max Card.">
+        	The maximum number of instances that the parameter must have. 
+			Valid values are &lt;b&gt;one&lt;/b&gt; and &lt;b&gt;many&lt;/b&gt;.
+        </Property>
+    </PropertyCategory>
+</Element>

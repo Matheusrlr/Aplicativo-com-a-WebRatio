@@ -1,0 +1,26 @@
+#?delimiters [%, %], [%=, %]
+[%
+setJSONOutput()
+
+def LOCALIZED_TYPES = ["boolean", "date", "decimal", "float", "integer", "time", "timestamp"]
+%]
+{
+	"_": "wrm.l10n.LocalizationService",
+	
+	"defaultLocale": "[%= getISOCode(getDefaultLocale()) %]",
+	
+	"locales": {
+		[% wr.project.selectNodes("WebModel/Locale").eachWithSeparator(",") { locale -> %]
+			"[%= getISOCode(locale) %]": {
+				"patterns": {
+					[% LOCALIZED_TYPES.eachWithSeparator(",") { type -> %]
+						[% def pattern = getLocalePattern(locale, type) %]
+						[% if (pattern) { %]
+							"[%= type %]": "[%= pattern %]"
+						[% } %]
+					[% } %]
+				}
+			}
+		[% } %]
+	}
+}

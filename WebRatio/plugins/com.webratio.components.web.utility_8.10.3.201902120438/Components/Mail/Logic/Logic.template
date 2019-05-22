@@ -1,0 +1,64 @@
+#?delimiters [%,%],[%=,%]
+[%
+import org.apache.commons.lang.StringUtils
+
+setXMLOutput()
+def componentId = component["id"]
+def name = component["name"]
+def placeholders = component.selectNodes("Placeholder")
+def templateFile = getContentFileOptional(component.valueOf("@template"))
+Set tokens = new HashSet()
+def template = null
+def subject = component.valueOf("SubjectTemplate") != "" ? "_" + component.valueOf("SubjectTemplate") : ""
+def templateEncoding = null
+if (templateFile != null && templateFile.exists()) {
+	try {
+		template = templateFile.getText()
+		templateEncoding = getFileEncoding(component.valueOf("@template"))
+    } catch (Throwable e) {
+        // ignore any exception
+    }
+}
+if (template == null) {
+	template = component.valueOf("BodyTemplate");
+}
+def noMultipart = component.selectSingleNode("Property[@name='noMultipart']") != null
+%]
+<Descriptor service="com.webratio.components.web.utility.MailService">
+     <SmtpServerId>[%=component["smtpServer"]%]</SmtpServerId>
+     <Encoding>[%=component["encoding"]%]</Encoding>
+     <Format>[%=component["format"]%]</Format>
+     <Template>[%=component["template"]%]</Template>
+     [%if(templateEncoding){%]<TemplateEncoding>[%=templateEncoding%]</TemplateEncoding>[%}%]
+     <MessageId>[%=component["messageId"]%]</MessageId>
+     [%if(noMultipart){%]<NoMultipart>true</NoMultipart>[%}%]
+     <SubjectTemplate>[%=component.valueOf("SubjectTemplate")%]</SubjectTemplate>
+     <BodyTemplate xml:space="preserve">[%=component.valueOf("BodyTemplate")%]</BodyTemplate>
+     <Placeholders>
+     [% if (placeholders.empty) { 
+		   def stringToSplit = "_" + StringUtils.replace(template, "\$\$\$\$", "\$\$_\$\$") + subject
+	  	   holders = StringUtils.splitByWholeSeparator(stringToSplit, "\$\$")
+		   for (i in 0..holders.size() - 1) {
+		      if (i % 2 != 0) {
+		       tokens.add(holders[i])
+		      }
+		   }
+	    %]
+     [%    for (token in tokens) {%]
+	        <Placeholder name="[%=token%]"></Placeholder>
+	 [%    } 
+	 	} else { %]
+	     [% for(p in placeholders) { %]
+	       <Placeholder name="[%=p["name"]%]">[%=p.valueOf("Value")%]</Placeholder>    
+	     [%}%]
+	 [% } %]
+     </Placeholders>
+     <Attachments>
+	     [% for(a in component.selectNodes("Attachment")) { %]
+	       <Attachment name="[%=a["name"]%]" policy="[%=a["policy"]%]" contentType="[%=a["contentType"]%]"/>    
+	     [%}%]
+     </Attachments>
+     [% for (p in component.elements("Property")) { %]
+        <Property name="[%=p["name"]%]" value="[%=p["value"]%]"/>
+     [% }  %]
+</Descriptor>

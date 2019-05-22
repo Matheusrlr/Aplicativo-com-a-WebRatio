@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="operation" version="1.0.0" idPrefix="rfrr" namePrefix="Restful Request Response " label="Restful Request Response" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" successFlowSource="true" successFlowTarget="true" errorFlowSource="true" errorFlowTarget="true">
+  <StringProperty attributeName="endpointURL" figureDisplayOrder="1">
+    <Description xml:space="preserve">Specifies the enpoint URL of the service being invoked.</Description>
+  </StringProperty>
+  <EnumProperty attributeName="requestMethod" emptyInheritedLabel="POST" defaultValue="POST">
+    <Description xml:space="preserve">Specifies the HTTP method used to invoke the service.</Description>
+    <EnumItem value="POST"/>
+    <EnumItem value="GET"/>
+    <EnumItem value="PUT"/>
+    <EnumItem value="DELETE"/>
+  </EnumProperty>
+  <EnumProperty attributeName="requestContentType" defaultValue="JSON">
+    <IsEnabled>return (element["requestMethod"] == "PUT" || element["requestMethod"] == "POST")</IsEnabled>
+    <EnumItem value="JSON" label="JSON"/>
+    <EnumItem value="FORM_DATA" label="Form Data"/>
+    <Description xml:space="preserve">The request content type.</Description>
+  </EnumProperty>
+  <EnumProperty attributeName="responseContentType" emptyInheritedLabel="POST" defaultValue="json">
+    <Description xml:space="preserve">The response content type.</Description>
+    <EnumItem value="json" label="JSON"/>
+    <EnumItem value="text" label="Text"/>
+  </EnumProperty>
+  <IntegerProperty attributeName="timeOut">
+    <Description xml:space="preserve">Sets the timeout until a connection is established. 
+		A value of zero means the timeout is not used. the default value is zero.</Description>
+  </IntegerProperty>
+  <BooleanProperty label="HTTP Authentication" attributeName="httpAuthentication">
+    <Description xml:space="preserve">If checked the request is performed using the basic HTTP authentication.</Description>
+  </BooleanProperty>
+  <StringProperty label="" attributeName="username">
+    <IsEnabled>return (element["httpAuthentication"] == "true")</IsEnabled>
+    <Description xml:space="preserve">The username being used to access the Web service, if it is
+		protected by the HTTP security.</Description>
+  </StringProperty>
+  <PasswordProperty label="" attributeName="password">
+    <IsEnabled>return (element["httpAuthentication"] == "true")</IsEnabled>
+    <Description xml:space="preserve">The password being used to access the Web service, if it is
+		protected by the HTTP security.</Description>
+  </PasswordProperty>
+  
+  <SubComponent elementName="RequestParameter" idPrefix="rrp" namePrefix="RequestParameter" label="Request Parameter" figureDisplayOrder="1">
+    <StringProperty label="Value" attributeName="value">
+      <Description xml:space="preserve">The default value for this parameter if not provided at runtime.</Description>
+      <IsEnabled>return ((element.parent["requestMethod"] == "GET") || (element.parent["requestMethod"] == "DELETE"))</IsEnabled>
+    </StringProperty>
+    <BooleanProperty label="Array" attributeName="isArray" defaultValue="false">
+      <Description xml:space="preserve">If checked indicates that the parameter is an array.</Description>
+      <IsEnabled>return ((element.parent["requestMethod"] == "PUT") || (element.parent["requestMethod"] == "POST"))</IsEnabled>
+    </BooleanProperty>
+    <EnumProperty attributeName="jsonType" label="JSON Type" defaultValue="string">
+      <Description xml:space="preserve">The parameter's type. Admissible types are: 
+															&lt;ul&gt;
+															&lt;li&gt;Boolean&lt;/li&gt;
+															&lt;li&gt;Integer&lt;/li&gt;
+															&lt;li&gt;Float&lt;/li&gt;
+															&lt;li&gt;String&lt;/li&gt;
+															&lt;li&gt;JSON Object&lt;/li&gt;
+															&lt;/ul&gt;</Description>
+      <IsEnabled>return ((element.parent["requestMethod"] == "PUT") || (element.parent["requestMethod"] == "POST")) &amp;&amp; (element["isArray"] == "true")</IsEnabled>
+      <EnumItem value="boolean" label="boolean"/>
+      <EnumItem value="integer" label="integer"/>
+      <EnumItem value="float" label="float"/>
+      <EnumItem value="string" label="string"/>
+      <EnumItem value="jsonObject" label="JSON Object"/>
+    </EnumProperty>
+    <BooleanProperty label="Use as Root" attributeName="useAsRoot">
+      <Description xml:space="preserve">Explicitly include a JSON object with the parameter's name in the root.</Description>
+      <IsEnabled>return ((element.parent["requestMethod"] == "PUT") || (element.parent["requestMethod"] == "POST")) &amp;&amp; (element.parent.selectNodes("RequestParameter").size() == 1)</IsEnabled>
+    </BooleanProperty>
+    <SubComponent elementName="ComplexParameterFragment" idPrefix="cpf" namePrefix="ComplexFragment" label="Complex Parameter Fragment">
+      <IsEnabled>
+      	<!-- Keep this condition equals to the one inside Response Parameter -->
+		def component = element.selectSingleNode("ancestor-or-self::RestfulRequestResponse")
+		def isRequest = (element.selectSingleNode("ancestor-or-self::RequestParameter") != null ? true : false)
+		def isResponse = (element.selectSingleNode("ancestor-or-self::ResponseParameter") != null ? true : false)
+		return ((( isRequest &amp;&amp; ((component["requestMethod"] == "PUT") || (component["requestMethod"] == "POST"))) || ( isResponse &amp;&amp; (component["responseContentType"] == "json"))) &amp;&amp; (element["isArray"] != "true" || (element["isArray"] == "true" &amp;&amp; element["jsonType"] == "jsonObject" || element["jsonType"] == "")))</IsEnabled>
+      <BooleanProperty label="Array" attributeName="isArray">
+        <IsEnabled>return (element.selectSingleNode("ancestor::*[self::RequestParameter or self::ComplexParameterFragment][@isArray = 'true']") == null)</IsEnabled>
+        <Description xml:space="preserve">If checked indicates that the fragment is an array.</Description>
+      </BooleanProperty>
+      <SubComponentReference elementName="ComplexParameterFragment"/>
+      <SubComponentReference elementName="SimpleParameterFragment"/>
+      <Description xml:space="preserve">The parameter fragment which permits to model a complex value fragment.</Description>
+    </SubComponent>
+    <SubComponent elementName="SimpleParameterFragment" idPrefix="spf" namePrefix="SimpleFragment" label="Simple Parameter Fragment">
+      <IsEnabled>
+      	<!-- Keep this condition equals to the one inside Response Parameter -->
+		def component = element.selectSingleNode("ancestor-or-self::RestfulRequestResponse")
+		def isRequest = (element.selectSingleNode("ancestor-or-self::RequestParameter") != null ? true : false)
+		def isResponse = (element.selectSingleNode("ancestor-or-self::ResponseParameter") != null ? true : false)
+		return ((( isRequest &amp;&amp; ((component["requestMethod"] == "PUT") || (component["requestMethod"] == "POST"))) || ( isResponse &amp;&amp; (component["responseContentType"] == "json"))) &amp;&amp; (element["isArray"] != "true" || (element["isArray"] == "true" &amp;&amp; element["jsonType"] == "jsonObject" || element["jsonType"] == "")))</IsEnabled>
+      <BooleanProperty label="Array" attributeName="isArray">
+        <Description xml:space="preserve">If checked indicates that the fragment is an array.</Description>
+      </BooleanProperty>
+      <EnumProperty attributeName="jsonType" label="JSON Type" defaultValue="string">
+        <Description xml:space="preserve">The parameter's type. Admissible types are: 
+									&lt;ul&gt;
+									&lt;li&gt;Boolean&lt;/li&gt;
+									&lt;li&gt;Integer&lt;/li&gt;
+									&lt;li&gt;Float&lt;/li&gt;
+									&lt;li&gt;String&lt;/li&gt;
+									&lt;li&gt;JSON Object&lt;/li&gt;
+									&lt;/ul&gt;</Description>
+        <EnumItem value="boolean" label="boolean"/>
+        <EnumItem value="integer" label="integer"/>
+        <EnumItem value="float" label="float"/>
+        <EnumItem value="string" label="string"/>
+      </EnumProperty>
+      <StringProperty label="Value" attributeName="value">
+        <Description xml:space="preserve">The default fragment value if not provided at runtime.</Description>
+      </StringProperty>
+      <Description xml:space="preserve">The parameter fragment which permits to model a simple value fragment.</Description>
+    </SubComponent>
+    <Description xml:space="preserve">Defines a parameter to send to the invoked service.</Description>
+  </SubComponent>
+
+  <SubComponent elementName="ResponseParameter" idPrefix="rrsp" namePrefix="ResponseParameter" label="Response Parameter" figureDisplayOrder="2">
+    <IsEnabled>return (element["responseContentType"] == "json")</IsEnabled>
+    <BooleanProperty label="Array" attributeName="isArray">
+      <Description xml:space="preserve">If checked indicates that the parameter is an array.</Description>
+    </BooleanProperty>
+    <EnumProperty attributeName="jsonType" label="JSON Type" defaultValue="string">
+      <Description xml:space="preserve">The parameter's type. Admissible types are: 
+												&lt;ul&gt;
+												&lt;li&gt;Boolean&lt;/li&gt;
+												&lt;li&gt;Integer&lt;/li&gt;
+												&lt;li&gt;Float&lt;/li&gt;
+												&lt;li&gt;String&lt;/li&gt;
+												&lt;li&gt;JSON Object&lt;/li&gt;
+												&lt;/ul&gt;</Description>
+      <IsEnabled>return (element["isArray"] == "true")</IsEnabled>
+      <EnumItem value="boolean" label="boolean"/>
+      <EnumItem value="integer" label="integer"/>
+      <EnumItem value="float" label="float"/>
+      <EnumItem value="string" label="string"/>
+      <EnumItem value="jsonObject" label="JSON Object"/>
+    </EnumProperty>
+    <SubComponent elementName="ComplexParameterFragment" idPrefix="cpf" namePrefix="ComplexFragment" label="Complex Parameter Fragment">
+      <IsEnabled>
+      	<!-- Keep this condition equals to the one inside Request Parameter -->
+		def component = element.selectSingleNode("ancestor-or-self::RestfulRequestResponse")
+		def isRequest = (element.selectSingleNode("ancestor-or-self::RequestParameter") != null ? true : false)
+		def isResponse = (element.selectSingleNode("ancestor-or-self::ResponseParameter") != null ? true : false)
+		return ((( isRequest &amp;&amp; ((component["requestMethod"] == "PUT") || (component["requestMethod"] == "POST"))) || ( isResponse &amp;&amp; (component["responseContentType"] == "json"))) &amp;&amp; (element["isArray"] != "true" || (element["isArray"] == "true" &amp;&amp; element["jsonType"] == "jsonObject" || element["jsonType"] == "")))</IsEnabled>
+      <BooleanProperty label="Array" attributeName="isArray">
+        <Description xml:space="preserve">If checked indicates that the fragment is an array.</Description>
+      </BooleanProperty>
+      <SubComponentReference elementName="ComplexParameterFragment"/>
+      <SubComponentReference elementName="SimpleParameterFragment"/>
+      <Description xml:space="preserve">The parameter fragment which permits to model a complex value fragment.</Description>
+    </SubComponent>
+    <SubComponent elementName="SimpleParameterFragment" idPrefix="spf" namePrefix="SimpleFragment" label="Simple Parameter Fragment">
+      <IsEnabled>
+      	<!-- Keep this condition equals to the one inside Request Parameter -->
+		def component = element.selectSingleNode("ancestor-or-self::RestfulRequestResponse")
+		def isRequest = (element.selectSingleNode("ancestor-or-self::RequestParameter") != null ? true : false)
+		def isResponse = (element.selectSingleNode("ancestor-or-self::ResponseParameter") != null ? true : false)
+		return ((( isRequest &amp;&amp; ((component["requestMethod"] == "PUT") || (component["requestMethod"] == "POST"))) || ( isResponse &amp;&amp; (component["responseContentType"] == "json"))) &amp;&amp; (element["isArray"] != "true" || (element["isArray"] == "true" &amp;&amp; element["jsonType"] == "jsonObject" || element["jsonType"] == "")))</IsEnabled>
+      <BooleanProperty label="Array" attributeName="isArray">
+        <Description xml:space="preserve">If checked indicates that the fragment is an array.</Description>
+      </BooleanProperty>
+      <EnumProperty attributeName="jsonType" label="JSON Type" defaultValue="string">
+        <Description xml:space="preserve">The fragment's type. Admissible types are: 
+													&lt;ul&gt;
+													&lt;li&gt;Boolean&lt;/li&gt;
+													&lt;li&gt;Integer&lt;/li&gt;
+													&lt;li&gt;Float&lt;/li&gt;
+													&lt;li&gt;String&lt;/li&gt;
+													&lt;li&gt;JSON Object&lt;/li&gt;
+													&lt;/ul&gt;</Description>
+        <EnumItem value="boolean" label="boolean"/>
+        <EnumItem value="integer" label="integer"/>
+        <EnumItem value="float" label="float"/>
+        <EnumItem value="string" label="string"/>
+      </EnumProperty>
+      <StringProperty label="Value" attributeName="value">
+        <Description xml:space="preserve">The default fragment value if not provided at runtime.</Description>
+      </StringProperty>
+      <Description xml:space="preserve">The parameter fragment which permits to model a simple value fragment.</Description>
+    </SubComponent>
+    <Description xml:space="preserve">Defines a response parameter for the called service.</Description>
+  </SubComponent>
+  
+  <SubComponent elementName="RequestHeader" idPrefix="rrh" namePrefix="RequestHeader" label="Request Header" figureDisplayOrder="3">
+    <Description xml:space="preserve">Defines an header to send to the invoked service.</Description>
+    <StringProperty attributeName="value">
+      <Description xml:space="preserve">The default header value if not provided at runtime.</Description>
+    </StringProperty>
+  </SubComponent>
+  
+  <SubComponent elementName="ResponseHeader" idPrefix="rrh" namePrefix="ResponseHeader" label="Response Header" figureDisplayOrder="3">
+    <Description xml:space="preserve">Defines an header to read from the response of the invoked service.</Description>
+    <StringProperty attributeName="value">
+      <Description xml:space="preserve">The default header value if not provided at runtime.</Description>
+    </StringProperty>
+  </SubComponent>
+  
+  <Description xml:space="preserve">A Restful Request Response component invokes a specific REST web service using 
+  the provided information for building the request message.</Description>
+</Component>

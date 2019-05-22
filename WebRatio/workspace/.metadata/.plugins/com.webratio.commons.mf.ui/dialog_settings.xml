@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="com.webratio.ide.ui.dialogs.EditDomainClassDialog">
+		<item value="896" key="DIALOG_WIDTH"/>
+		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
+		<item value="741" key="DIALOG_HEIGHT"/>
+		<item value="201" key="DIALOG_X_ORIGIN"/>
+		<item value="0" key="DIALOG_Y_ORIGIN"/>
+	</section>
+	<section name="com.webratio.commons.mf.ui.patterns.PatternsSelectionPart$MobileProjectWizard">
+		<item value="true" key="Login &amp; Home"/>
+	</section>
+	<section name="DialogBounds_ExceptionDialog">
+		<item value="278" key="DIALOG_X_ORIGIN.DETAILS"/>
+		<item value="623" key="DIALOG_HEIGHT.DETAILS"/>
+		<item value="611" key="DIALOG_WIDTH"/>
+		<item value="742" key="DIALOG_WIDTH.DETAILS"/>
+		<item value="146" key="DIALOG_HEIGHT"/>
+		<item value="59" key="DIALOG_Y_ORIGIN.DETAILS"/>
+		<item value="344" key="DIALOG_X_ORIGIN"/>
+		<item value="274" key="DIALOG_Y_ORIGIN"/>
+	</section>
+	<section name="com.webratio.ide.ui.properties.items.DomainClassPropertyItem$3.DialogSettings">
+	</section>
+</section>

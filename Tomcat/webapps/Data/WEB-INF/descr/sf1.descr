@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Descriptor service="com.webratio.rtx.links.DefaultLinkService">
+  <Target>qu1</Target>
+  <Secure>false</Secure>
+  <Source>ipd2</Source>
+  <ReachableAlternativePages></ReachableAlternativePages>
+  <Navigates>true</Navigates>
+  <StartPageIdRequiredByTarget>true</StartPageIdRequiredByTarget>
+  <PreservedContextParams>
+    <Params/>
+  </PreservedContextParams>
+  <ContextPropagations>
+    <ContextPropagation targetParam="qu1.qi1" sourceComponentId="ipd2" sourceParam="pdp1"/>
+  </ContextPropagations>
+</Descriptor>

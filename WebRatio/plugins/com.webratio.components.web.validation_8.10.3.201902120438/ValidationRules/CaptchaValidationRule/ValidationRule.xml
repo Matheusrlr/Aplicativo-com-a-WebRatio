@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ValidationRule type="singleProperty" idPrefix="captcha" namePrefix="Captcha " label="Captcha" contexts="Form/Field"> 
+  <StringProperty attributeName="cfg_characters" label="Characters"> 
+    <Description xml:space="preserve">The characters list to be used by the captcha code 
+(default is ABCDEFGHIJKLMNPQRSTUVWXYZ123456789).</Description> 
+  </StringProperty>  
+  <BooleanProperty attributeName="cfg_ignoreCase" label="Ignore Case"> 
+    <Description xml:space="preserve">If checked, the comparison is performed ignoring case 
+sensitivity.</Description> 
+  </BooleanProperty>  
+  <IntegerProperty attributeName="cfg_minLength" label="Min Length"> 
+    <Description xml:space="preserve">The minimum number of characters to be used to create 
+the control code (default is 6). This value is ignored
+if greater than the Max Length property.</Description> 
+  </IntegerProperty>  
+  <IntegerProperty attributeName="cfg_maxLength" label="Max Length">
+    <Description xml:space="preserve">The maximum number of characters to be used to create 
+the control code (default is 6). This value is ignored
+if lower than the Min Length property.</Description>
+  </IntegerProperty>  
+  <IntegerProperty attributeName="cfg_minFontSize" label="Min Font Size">
+    <Description xml:space="preserve">The minimum font size to be used in the control code 
+(default is 20).</Description>
+  </IntegerProperty>  
+  <IntegerProperty attributeName="cfg_maxFontSize" label="Max Font Size">
+    <Description xml:space="preserve">The maximum font size to be used in the control code 
+(default is 35).</Description>
+  </IntegerProperty>  
+  <StringProperty attributeName="cfg_fontNames" label="Font Names">
+    <Description xml:space="preserve">The pipe-separated list of the available font families
+(default is Arial|Tahoma|Verdana).</Description>
+  </StringProperty>  
+  <IntegerProperty attributeName="cfg_width" label="Width">
+    <Description xml:space="preserve">The width of the control code container (default is 200). </Description>
+  </IntegerProperty>  
+  <IntegerProperty attributeName="cfg_height" label="Height">
+    <Description xml:space="preserve">The height of the control code container (default is 50).</Description>
+  </IntegerProperty>  
+  <StringProperty attributeName="cfg_colorRanges" label="Color Ranges">
+    <Description xml:space="preserve">The range of colors to be used to render the characters.
+It's expressed in RGB. It's composed by three couple 
+of values (default is 0,100,0,100,0,100).</Description>
+  </StringProperty>  
+  <StringProperty attributeName="cfg_background" label="Background">
+    <Description xml:space="preserve">The color of the control code background. It's expressed 
+in RGB (default value is 255,255,255).</Description>
+  </StringProperty>  
+  <Description xml:space="preserve">A Captcha validation rule decorates a field of type 
+String with a Captcha challenge-response test.&lt;br/&gt;
+The validation error message can be composed using the following placeholders:&lt;br/&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;${propertyValue}&lt;/b&gt;: the field value&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${propertyName}&lt;/b&gt;: the field name&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;${objectName}&lt;/b&gt;: the parent component name&lt;/li&gt;
+&lt;/ul&gt;
+</Description></ValidationRule>

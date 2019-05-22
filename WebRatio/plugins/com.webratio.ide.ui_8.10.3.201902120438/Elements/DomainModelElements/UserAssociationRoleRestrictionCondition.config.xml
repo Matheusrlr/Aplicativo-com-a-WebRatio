@@ -1,0 +1,18 @@
+<Element name="UserAssociationRoleRestrictionCondition" lowerName="user association condition" pluralLowerName="user association conditions">
+	<Description>
+		    	A condition based on the value of an association role involving the current service class and the class exposed in the User services.
+	</Description>
+	<ActionRef label="Help"/>
+	<PropertyCategory name="General">
+		<Property label="Association Role">
+	    	It contains the association role chain of the condition starting from the farthest role. 
+			For this particular Condition, only associations involving the User class can be selected.
+		</Property>
+		<Property label="Predicate">
+	    	The predicate used in the condition.
+		</Property>
+		<Property label="Required">
+	    	Indicates if the condition is required or implied.
+		</Property>
+	</PropertyCategory>
+</Element>

@@ -1,0 +1,79 @@
+#?delimiters [%, %], [%=, %]
+[%
+def elem = _elem
+def attrs = _layoutTagAttributes
+
+/* Template and main element parameter */
+def templatePath
+def templateParams = [:]
+def elemLandmark = false
+if (elem.qualifiedName == "layout:Grid") {
+	templatePath = wr.locateResourcePath("MVC/Grid.template")
+	templateParams["grid"] = elem
+} else if (elem.qualifiedName == "layout:CustomLocation") {
+	templatePath = wr.locateResourcePath("MVC/CustomLocation.template")
+	templateParams["customLocation"] = elem
+} else if (elem.qualifiedName == "layout:Cell") {
+	templatePath = wr.locateResourcePath("MVC/Cell.template")
+	templateParams["cell"] = elem
+} else if (elem.qualifiedName == "layout:Component") {
+	templatePath = wr.locateResourcePath("MVC/Component.template")
+	templateParams["component"] = elem
+} else if (elem.qualifiedName == "layout:Field") {
+	templatePath = wr.locateResourcePath("MVC/Field.template")
+	templateParams["field"] = elem
+} else if (elem.qualifiedName == "layout:Event") {
+	templatePath = wr.locateResourcePath("MVC/Event.template")
+	templateParams["event"] = elem
+} else if (elem.qualifiedName == "layout:Attribute") {
+	templatePath = wr.locateResourcePath("MVC/Attribute.template")
+	templateParams["attr"] = elem
+} else if (elem.qualifiedName == "layout:SubPage") {
+	templatePath = wr.locateResourcePath("MVC/SubPage.template")
+	templateParams["layoutSubPage"] = elem
+} else if (elem["landmark"] == "true" || isDefaultElement(elem) || isHomeElement(elem) || ["Page", "Area", "SiteView"].contains(elem.qualifiedName)) {
+	templatePath = wr.locateResourcePath("MVC/Event.template")
+	templateParams["event"] = elem
+	elemLandmark = true
+} else {
+	throwGenerationException("Unable to generate layout of " + elem.qualifiedName + " element which is also not a landmark")
+}
+
+/* Template mode */
+if (["layout:Field", "layout:Attribute"].contains(elem.qualifiedName)) {
+	templateParams["mode"] = attrs["mode"] ?: (elem["mode"] ?: "")
+} else if (attrs["mode"]) {
+	throwGenerationException("Attribute 'mode' is not supported for printing " + elem.qualifiedName + " elements")
+}
+
+/* Data item */
+if ("layout:Attribute" == elem.qualifiedName) {
+	templateParams["item"] = attrs["item"] ?: getLayoutAttributeItem(elem)
+} else if (attrs["item"]) {
+	throwGenerationException("Attribute 'item' is not supported for printing " + elem.qualifiedName + " elements")
+}
+
+/* Data position */
+if (["layout:Event", "layout:Attribute"].contains(elem.qualifiedName) || elemLandmark) {
+	templateParams["position"] = attrs["position"] ?: "index"
+} else if (attrs["position"]) {
+	throwGenerationException("Attribute 'position' is not supported for printing " + elem.qualifiedName + " elements")
+}
+
+/* Event type */
+if ("layout:Event" == elem.qualifiedName || elemLandmark) {
+	templateParams["type"] = attrs["type"] ?: ""
+} else if (attrs["type"]) {
+	throwGenerationException("Attribute 'type' is not supported for printing " + elem.qualifiedName + " elements")
+}
+
+/* Style class */
+if (["layout:Field", "layout:Event", "layout:Attribute"].contains(elem.qualifiedName) || elemLandmark) {
+	templateParams["styleClass"] = (elem["styleClass"] ?: "") + (attrs["class"] ? " " + attrs["class"] : "")
+} else if (attrs["class"]) {
+	throwGenerationException("Attribute 'class' is not supported for printing " + elem.qualifiedName + " elements")
+}
+
+/* Invoke the generator */
+printRaw(executeTemplate(templatePath, templateParams))
+%]

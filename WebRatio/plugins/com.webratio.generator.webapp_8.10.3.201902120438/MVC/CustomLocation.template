@@ -1,0 +1,43 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.generator.GenerationException
+
+if (customLocation == null) {
+    return  // tolerate a missing custom location
+}
+
+/* Get style */
+def layoutManager = getLayoutManager(customLocation)
+def cellLayout = getLayout(customLocation, LayoutType.CELL)
+def templatePath = layoutManager.cellLayout?.path ?: cellLayout.path
+def templateParameters = layoutManager.cellLayout?.path ? [:] : cellLayout.parameters
+if (!templatePath || templatePath == "None") {
+	templatePath = "BUILTIN/Default"  // normalize an "unspecified" cell template
+}
+def templateFile = getLayoutFile(templatePath, LayoutType.CELL)
+if (!templateFile) {
+	def title = "Custom Location Layout Not Found"
+	def reason = "Unable to find the cell layout \'" + templatePath + "\'"
+	def hint = "Check the project for the missing cell layout [name = " + templatePath + "] associated with a custom location of the page [id = " + page["id"] + "]"
+	throw new GenerationException(title, reason, [hint], null)
+}
+addUsedTemplate(templatePath)
+
+/* Render the Custom Location in a wrapper */
+printRaw(executeContextTemplate("MVC/Wrapper.template", ["refreshFragmentType": "control", "element": customLocation, "content": {
+	
+	/* Visibility condition start */
+	def visibilityCondition = getVisibilityCondition(customLocation)
+	if (visibilityCondition) {
+		%]<c:if test="${[% printJSPTagValue(visibilityCondition) %]}">[%
+	}
+	
+	/* Actual Custom Location layout */
+	printRaw(executeTemplate(templateFile.absolutePath, ["cell": customLocation, "params": templateParameters, "templateType": "cell"]).trim())
+	
+	/* Visibility condition end */
+	if (visibilityCondition) {
+		%]</c:if>[%
+	}
+}]))
+%]

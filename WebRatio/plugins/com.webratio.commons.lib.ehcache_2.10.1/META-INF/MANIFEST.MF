@@ -1,0 +1,74 @@
+Manifest-Version: 1.0
+Export-Package: com.terracotta.entity,com.terracotta.entity.ehcache,co
+ m.terracotta.entity.internal,net.sf.ehcache,net.sf.ehcache.bootstrap,
+ net.sf.ehcache.cluster,net.sf.ehcache.concurrent,net.sf.ehcache.confi
+ g,net.sf.ehcache.config.generator,net.sf.ehcache.config.generator.mod
+ el,net.sf.ehcache.config.generator.model.elements,net.sf.ehcache.cons
+ tructs,net.sf.ehcache.constructs.blocking,net.sf.ehcache.constructs.c
+ lassloader,net.sf.ehcache.constructs.eventual,net.sf.ehcache.construc
+ ts.nonstop,net.sf.ehcache.constructs.nonstop.concurrency,net.sf.ehcac
+ he.constructs.nonstop.util,net.sf.ehcache.constructs.readthrough,net.
+ sf.ehcache.constructs.refreshahead,net.sf.ehcache.constructs.schedule
+ drefresh,net.sf.ehcache.constructs.web,net.sf.ehcache.distribution,ne
+ t.sf.ehcache.event,net.sf.ehcache.exceptionhandler,net.sf.ehcache.ext
+ ension,net.sf.ehcache.hibernate,net.sf.ehcache.hibernate.ccs,net.sf.e
+ hcache.hibernate.management.api,net.sf.ehcache.hibernate.management.i
+ mpl,net.sf.ehcache.hibernate.nonstop,net.sf.ehcache.hibernate.regions
+ ,net.sf.ehcache.hibernate.strategy,net.sf.ehcache.loader,net.sf.ehcac
+ he.management,net.sf.ehcache.management.event,net.sf.ehcache.manageme
+ nt.provider,net.sf.ehcache.management.sampled,net.sf.ehcache.pool,net
+ .sf.ehcache.pool.impl,net.sf.ehcache.pool.sizeof,net.sf.ehcache.pool.
+ sizeof.annotations,net.sf.ehcache.pool.sizeof.filter,net.sf.ehcache.s
+ earch,net.sf.ehcache.search.aggregator,net.sf.ehcache.search.attribut
+ e,net.sf.ehcache.search.expression,net.sf.ehcache.search.impl,net.sf.
+ ehcache.search.parser,net.sf.ehcache.search.query,net.sf.ehcache.stat
+ istics,net.sf.ehcache.statistics.beans,net.sf.ehcache.statistics.exte
+ nded,net.sf.ehcache.store,net.sf.ehcache.store.cachingtier,net.sf.ehc
+ ache.store.chm,net.sf.ehcache.store.compound,net.sf.ehcache.store.dis
+ k,net.sf.ehcache.store.disk.ods,net.sf.ehcache.terracotta,net.sf.ehca
+ che.transaction,net.sf.ehcache.transaction.local,net.sf.ehcache.trans
+ action.manager,net.sf.ehcache.transaction.manager.selector,net.sf.ehc
+ ache.transaction.xa,net.sf.ehcache.transaction.xa.commands,net.sf.ehc
+ ache.transaction.xa.processor,net.sf.ehcache.util,net.sf.ehcache.util
+ .concurrent,net.sf.ehcache.util.counter,net.sf.ehcache.util.counter.s
+ ampled,net.sf.ehcache.util.lang,net.sf.ehcache.writer,net.sf.ehcache.
+ writer.writebehind,net.sf.ehcache.writer.writebehind.operations,net.s
+ f.ehcache.writer.writethrough,org.terracotta.context,org.terracotta.c
+ ontext.annotations,org.terracotta.context.extractor,org.terracotta.co
+ ntext.query,org.terracotta.modules.ehcache,org.terracotta.modules.ehc
+ ache.async,org.terracotta.modules.ehcache.async.exceptions,org.terrac
+ otta.modules.ehcache.async.scatterpolicies,org.terracotta.modules.ehc
+ ache.collections,org.terracotta.modules.ehcache.concurrency,org.terra
+ cotta.modules.ehcache.event,org.terracotta.modules.ehcache.management
+ ,org.terracotta.modules.ehcache.store,org.terracotta.modules.ehcache.
+ store.nonstop,org.terracotta.modules.ehcache.transaction,org.terracot
+ ta.modules.ehcache.transaction.xa,org.terracotta.modules.ehcache.wan,
+ org.terracotta.modules.ehcache.writebehind,org.terracotta.modules.ehc
+ ache.writebehind.operations,org.terracotta.statistics,org.terracotta.
+ statistics.archive,org.terracotta.statistics.derived,org.terracotta.s
+ tatistics.jsr166e,org.terracotta.statistics.observer,org.terracotta.s
+ tatistics.util
+Require-Bundle: com.webratio.commons.lib.slf4j
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/ehcache.jar
+Bundle-Version: 2.10.1
+Bundle-Name: WebRatio 3rd Party Library - Ehcache
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.ehcache
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: lib/ehcache.jar
+SHA-256-Digest: 14R4uTsuE/VtvypPF59EmxttO4iYDsntXFaWiesjM68=
+
+Name: lib/ehcachesrc.zip
+SHA-256-Digest: a3gvK7rsLjKYhz2avqZMgevVJ8AGfs0247/C7PN6llc=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: z7XZL11WLXdQt/W0jrWqAgvlzJK6Ds6hQHISDBwULG0=
+

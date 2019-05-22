@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+
+	<!-- ================================================================================================================== -->
+	<!-- Simple TAG -->
+	<!-- ================================================================================================================== -->
+
+	<Tag name="Descriptor" prefix="" body="true" cursorPosition="21" inline="false" scriptKinds="comp">
+		<Description>The root node of the component descriptor.</Description>
+
+		<Attribute name="service" def="true" required="true" defValue="">
+			The class of the component service.
+		</Attribute>
+	</Tag>
+	
+	<Tag name="Descriptor" prefix="" body="true" cursorPosition="21" inline="false" scriptKinds="vrule">
+		<Description>The root node of the validation rule descriptor.</Description>
+
+		<Attribute name="service" def="true" required="true" defValue="">
+			The class of the validation rule service.
+		</Attribute>
+	</Tag>
+
+	<!-- ================================================================================================================== -->
+	<!-- Groovy statements                                                                                                  -->
+	<!-- ================================================================================================================== -->
+
+	<Function name="Default Descriptor Content" declaration="printRaw(serializeXML(component, false))" cursorPosition="23" scriptKinds="comp">
+		<Description>
+			The default descriptor content.
+		</Description>
+		<Value>printRaw(serializeXML(component, false))</Value>
+	</Function>
+	
+	<Function name="Default Descriptor Content" declaration="printRaw(serializeXML(element, false))" cursorPosition="23" scriptKinds="vrule">
+		<Description>
+			The default descriptor content.
+		</Description>
+		<Value>printRaw(serializeXML(element, false))</Value>
+	</Function>
+
+	<Function name="XML Expression Filter" declaration="setXMLOutput()" image="FILTER" contentType="script">
+		<Description>
+			The XML expression filter declaration statement.
+		</Description>
+		<Value>setXMLOutput()</Value>
+	</Function>
+		
+
+</Configuration>

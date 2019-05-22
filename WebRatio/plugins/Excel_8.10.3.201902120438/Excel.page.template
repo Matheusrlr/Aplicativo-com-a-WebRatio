@@ -1,0 +1,27 @@
+#?delimiters [%, %], [%=, %]
+<wr:LayoutParameter label="Format" name="format" type="enum" values="XLS|XLSX" default="XLS">
+ Defines the result file format.
+ Allowed values are: XLS (default), XLSX.
+</wr:LayoutParameter>
+<wr:LayoutParameter label="Block Padding" name="blockPadding" type="enum" values="0|1|2|3|4|5" default="1">
+ Defines the gap between blocks composing the sheet.
+ Allowed values are: 0, 1 (default), 2, 3, 4, 5.
+</wr:LayoutParameter>
+[%setXMLOutput()%]
+<wr:Resources types="jspdeclaration"/>
+<%@ page contentType="application/vnd.ms-excel; charset=UTF-8"%>
+<wr:Page type="wr:excel"/>
+<webratio:Page page="<wr:Id context="page"/>"/>
+<xls:Write>
+  <Excel format="[%= params["format"].toLowerCase()%]" blockPadding="[%= params["blockPadding"]%]">
+    <FileName>
+    [%if(page.selectSingleNode("layout:CustomLocation[@name = 'Excel File Name']")){%]
+      <wr:CustomLocation name="Excel File Name"/>
+    [%} else {%]
+      <wr:Label context="page"/>
+    [%}%]
+    </FileName>
+    <wr:Grid/>
+  </Excel>
+</xls:Write>
+

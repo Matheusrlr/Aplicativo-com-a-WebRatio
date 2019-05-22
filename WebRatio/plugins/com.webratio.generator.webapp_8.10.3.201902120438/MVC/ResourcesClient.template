@@ -1,0 +1,181 @@
+#?delimiters [%, %], [%=, %]
+[%
+import com.webratio.model.layout.resources.Type
+
+setHTMLOutput()
+
+/* Client resources are supported only in HTML pages */
+if (!["html", "xhtml"].contains(pageOutputType.name)) {
+	throwGenerationException("Client resources are not supported in pages of ${pageOutputType} type")
+}
+def html5 = (Integer.parseInt(pageOutputType.version) >= 5)
+
+/*
+ * Functions for each type of entry
+ */
+def processors = [:]
+
+/* JavaScript */
+processors[Type.JAVASCRIPT] = { entry, printUrl ->
+	def name = entry.resource.name
+	def version = entry.resource.version
+	%]
+	<script src="[% printUrl() %]"[%
+		if (html5) {
+			%] data-wr-resname="[%= name %]"[% if (version) { %] data-wr-resver="[%= version %]"[% } %][%
+		}
+		if (!html5) {
+			%] type="text/javascript"[%
+		}
+	%]></script>[%
+		if (!html5) {
+			%]<!--[data] {"wr-resname": "[%= name %]"[% if (version) { %], "wr-resver": "[%= version %]"[% } %]}-->[%
+		}
+	%]
+[% }
+
+/* CSS */
+processors[Type.CSS] = { entry, printUrl ->
+	def name = entry.resource.name
+	def version = entry.resource.version
+	def media = entry.resource.element["mediaQuery"]
+	%]
+	<link href="[% printUrl() %]" type="text/css" rel="stylesheet"[% if (media) { %] media="[%= media %]"[% } %][%
+		if (html5) {
+			%] data-wr-resname="[%= name %]"[% if (version) { %] data-wr-resver="[%= version %]"[% } %][%
+		}
+	%]>[% if (pageOutputType.name == "xhtml") { %]</link>[% } %][%
+		if (!html5) {
+			%]<!--[data] {"wr-resname": "[%= name %]"[% if (version) { %], "wr-resver": "[%= version %]"[% } %]}-->[%
+		}
+	%]
+[% }
+
+/*
+ * Actual printing of resource code
+ */
+
+/* Make AJAX debug level available in a page context variable */
+%]<c:set var="wrAjaxDebugLevel" value="[%= getAjaxDebugLevel().name().toLowerCase() %]"/>
+[%
+
+/* Print resources in the correct order */
+entries.each { entry ->
+	def elem = entry.resource.element
+	def rtxName = entry.resource.style + "/" + entry.resource.name
+	
+	/* Print the resource */
+	def processor = processors[entry.resource.type]
+	if (processor) {
+		
+		/*
+		 * Content
+		 */
+		
+		/* Use as literal content either the path or the URL */
+		def contentLit = elem["path"] ?: elem["url"]
+		if (!contentLit) {
+			return
+		}
+		
+		/* If content can change at runtime, pass it through the transforming function */
+		def contentEL = null, expandedContentEL = null
+		if (elem.selectSingleNode("RuntimeContent")) {
+			contentEL = expandedContentEL = "webratio:expandLayoutResourceContent('" + rtxName + "', '" + contentLit + "', pageContext)"
+			contentLit = null
+		}
+		
+		/* If the initial content was an internal path, transform the result into an URL */
+		def contentTag = null
+		if (elem["path"]) {
+			if (contentEL) {
+				contentTag = executeTemplate {
+					%]<webratio:Resource path="${[% printJSPTagValue(contentEL) %]}"/>[%
+				}
+			} else if (contentLit) {
+				contentTag = executeTemplate {
+					%]<webratio:Resource path="[% printJSPTagValue(contentLit) %]"/>[%
+				}
+			} else {
+				return
+			}
+			contentLit = null
+			contentEL = null
+		}
+		
+		/* For the final content, prefer tag and EL (i.e., dynamic) over literal */
+		def printContent = {
+			if (contentTag) {
+				%][% printRaw(contentTag) %][%
+			} else if (contentEL) {
+				%]${[% printJSPTagValue(contentEL) %]}[%
+			} else {
+				%][%= contentLit %][%
+			}
+		}
+		
+		/*
+		 * Conditions
+		 */
+		
+		/* Compute conditions */
+		def conditions = []
+		
+		/* Add boolean conditions */
+		def boolConditions = entry.getMetadataValues("condition")
+		if (!boolConditions.isEmpty() && !boolConditions.contains("")) {
+			if (boolConditions.size() > 1) {
+				conditions.add("(" + boolConditions.join(" or ") + ")")
+			} else {
+				conditions.add(boolConditions.iterator().next())
+			}
+		}
+		
+		/* Add condition based on presence of runtime content */
+		if (expandedContentEL) {
+			conditions.add("not(empty " + expandedContentEL + ")")
+		}
+		
+		/*
+		 * Print
+		 */
+		
+		/* Condition start */
+		def hasConditions = !conditions.isEmpty()
+		if (hasConditions) { %]
+			<c:if test="${[% printJSPTagValue(conditions.join(" and ")) %]}">
+		[% }
+		
+		/* IE conditon start */
+		if (elem["ieCondition"]) { %]
+			<!--[if [%= elem["ieCondition"] %]]>
+		[% }
+		
+		/* Content */
+		processor(entry, printContent)
+		
+		/* If the Client Runtime is the printed resource, also print its configuration */
+		if (entry.resource.name == "wr-runtime") {
+			printRaw(executeContextTemplate("MVC/Ajax/RuntimeConfig.template", null))
+		}
+		
+		/* IE condition end */
+		if (elem["ieCondition"]) { %]
+			<![endif]-->
+		[% }
+		
+		/* Condition end */
+		if (hasConditions) { %]
+			</c:if>
+		[% }
+		
+		printRaw("\r\n")
+	}
+}
+
+/* Cause a refresh of the Client Runtime resource registry */
+%]<script[%
+	if (!html5) {
+		%] type="text/javascript"[%
+	}
+%]>if (typeof wr !== "undefined") { wr.ui.html.resx.refreshLoaded(); }</script>

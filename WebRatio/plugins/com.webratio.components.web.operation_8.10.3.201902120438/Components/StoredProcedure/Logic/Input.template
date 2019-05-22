@@ -1,0 +1,10 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+def componentId = component.attributeValue("id", "")
+%>
+<InputParameters>
+  <% for (par in component.selectNodes("StoredProcedureParameter[@direction  = 'input' or @direction  = 'inOutput']")) { %>
+    <InputParameter name="<%=componentId%>.<%=par["id"]%>" label="<%= par["name"]%>"/>
+  <% }  %>
+</InputParameters>

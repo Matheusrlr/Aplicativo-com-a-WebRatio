@@ -1,0 +1,89 @@
+#?delimiters [%,%],[%=,%]
+[%
+import com.webratio.generator.contributors.GeneratorContributorHelper
+import org.apache.commons.lang.StringUtils
+setXMLOutput()
+def componentId = component["id"]
+
+def webServiceProvider = component["webServiceProvider"]
+def webServiceOperation = component["webServiceOperation"]
+def httpAuth = component["httpAuthentication"] == "true" ? "BASIC" : component["httpAuthentication"];
+%]
+
+<Descriptor service="com.webratio.components.web.ws.RestFulRequestResponseService">
+	
+  [%if(!StringUtils.isBlank(webServiceOperation)){%]
+     <WebServiceProvider>[%=webServiceProvider%]</WebServiceProvider>
+     <WebServiceOperation>[%=webServiceOperation%]</WebServiceOperation>
+     
+     <RequestHeaders>
+       [% for (header in component.selectNodes("RequestHeader")) { %]
+         <Header id="[%=header["id"]%]" name="[%=header["name"]%]">[%=header["value"]%]</Header> 
+       [% } %]	
+	 </RequestHeaders>
+     
+  [%}else{%]
+     [%def requestMethod = component["requestMethod"]
+       if(component["responseContentType"] == "FORM_URL_ENCODED"){
+          requestMethod = "POST"
+       }
+     %] 
+     <Endpoint>[%=component["endpointURL"]%]</Endpoint>
+     <RequestMethod>[%=requestMethod%]</RequestMethod>
+     <RequestContentType>[%=component["requestContentType"]%]</RequestContentType>
+     <ResponseContentType>[%=component["responseContentType"]%]</ResponseContentType>
+	 
+	 <RequestHeaders>
+       [% for (header in component.selectNodes("RequestHeader")) { %]
+         <Header id="[%=header["id"]%]" name="[%=header["name"]%]">[%=header["value"]%]</Header> 
+       [% } %]	
+	 </RequestHeaders>
+	 
+	 <QueryStringParameters>
+       [% for (param in component.selectNodes("QueryStringParameter")) {
+            printRaw(param.asXML())
+       }%]
+     </QueryStringParameters>
+	 
+	 <RequestBodyParameters>
+       [% for (param in component.selectNodes("RequestBodyParameter")) { 
+       	  	param.addAttribute("isComplexType","true")
+       	  	printRaw(param.asXML())
+       }%]
+	 </RequestBodyParameters>
+	 
+	 <FormDataParameters>
+	   [% for (param in component.selectNodes("FormDataParameter")) { 
+       	  	printRaw(param.asXML())
+       }%]
+	 </FormDataParameters>
+	 
+	 <ResponseBodyParameters>
+       [% for (param in component.selectNodes("ResponseBodyParameter")) { 
+       		 param.addAttribute("isComplexType","true")
+       		 printRaw(param.asXML())  
+       } %]	
+	 </ResponseBodyParameters>
+	 
+	 <ResponseHeaders>
+       [% for (header in component.selectNodes("ResponseHeader")) { %]
+         <Header id="[%=header["id"]%]" name="[%=header["name"]%]">[%=header["value"]%]</Header> 
+       [% } %]	
+	 </ResponseHeaders>
+	
+  [%}%]
+  	 <CompressRequest>[%=component["compressRequest"]%]</CompressRequest>
+	 <Authentication httpAuthentication="[%=httpAuth%]"
+                  [%if(httpAuth == "BASIC" || httpAuth == "NTLM"){%] 
+                     httpUsername="[%=component["username"]%]" 
+                     httpPassword="[%=component["password"]%]" 
+                     cryptedHttpPassword="[%=component["cryptedPassword"]%]"
+                  [%}%]
+                  [%if(httpAuth == "NTLM"){%]
+                     httpHost="[%=component["httpAuthHost"]%]" 
+                     httpDomain="[%=component["httpAuthDomain"]%]" 
+                  [%}%]/>
+	 <Timeout>[%=component["timeout"]%]</Timeout>
+	 <SOTimeout>[%=component["soTimeout"]%]</SOTimeout>
+	 <SSLProtocol>[%=component["sslProtocol"]%]</SSLProtocol>
+</Descriptor>

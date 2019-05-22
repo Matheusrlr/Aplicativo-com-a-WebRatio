@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component type="content" formBased="true" idPrefix="enu" namePrefix="Form " label="Form" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true"  errorFlowTarget="true"  successFlowTarget="true" canPlaceLayoutComponent="true" canPlaceLayoutFields="true" canPlaceLayoutEvents="true" subComponentOrder="ValidationRule"> 
+  <DomainClassProperty attributeName="dataBinding" includeDerived="false" figureDisplayOrder="1" hideFigureWhenEmpty="true" removable="true"> 
+    <Description xml:space="preserve">The class handled by this form.</Description> 
+  </DomainClassProperty>  
+  <OrderingProperty attributeName="fieldOrder" elementsExpr="Field[string(@hidden) != 'true']|SelectionField|MultiSelectionField" customComponentPartFigureClass="com.webratio.ide.ui.figures.EntrySubUnitFigure"> 
+    <IsEnabled>return (element.selectSingleNode("Field[string(@hidden) != 'true']|SelectionField|MultiSelectionField") != null)</IsEnabled>  
+    <Description xml:space="preserve">The order of fields and selection fields of the component. 
+Such order is exploited by the code generator to 
+construct the portion of the page containing the data entry 
+form corresponding to the form.
+  	</Description> 
+  </OrderingProperty>  
+  <OrderingProperty attributeName="validationOrder" elementsExpr="VRules/*"> 
+    <IsEnabled>return (element.selectSingleNode("VRules/*") != null)</IsEnabled>  
+    <Description xml:space="preserve">The order of validation rules of the component.
+  	</Description> 
+  </OrderingProperty>  
+  <SubComponent elementName="Field" idPrefix="fld" namePrefix="Field " enableAjaxEvents="true" enableAjaxAutocomplete="true" enableAjaxUpload="true" enableValidationRules="true"> 
+    <AttributeProperty label="Attribute" attributeName="attribute" classIdExpr="../@dataBinding" includeDerived="false"> 
+      <IsEnabled>return (element.valueOf("../@dataBinding") != "")</IsEnabled>  
+      <Description xml:space="preserve">The class attribute associated to this field.</Description> 
+    </AttributeProperty>  
+    <TypeProperty attributeName="type" typeAttributeName="type" subTypeAttributeName="subType" defaultValue="string"> 
+      <Description xml:space="preserve">The type of the content of the field. The selected type determines 
+the rendition of the field.
+    </Description> 
+    </TypeProperty>  
+    <ContentTypeProperty attributeName="contentType" typeAttributeName="type"> 
+      <Description xml:space="preserve">The content type of a field of type string, text, BLOB or URL. The selected content type 
+determines the rendition of the field.</Description>  
+      <IsEnabled>return (element["type"] == "string") || (element["type"] == "text") || (element["type"] == "url") || (element["type"] == "blob")</IsEnabled> 
+    </ContentTypeProperty>  
+    <BooleanProperty attributeName="preloaded"> 
+      <Description xml:space="preserve">The field can be preloaded with a value shown to the user when the page 
+is accessed. 
+The preload value is the concatenation of the values stored in the slots 
+associated with the field.</Description> 
+    </BooleanProperty>  
+    <BooleanProperty attributeName="modifiable" defaultValue="true"> 
+      <Description xml:space="preserve">The field can be modified by the user; otherwise it is fixed. 
+Unmodifiable fields should be always preloaded.</Description> 
+    </BooleanProperty>  
+    <BooleanProperty attributeName="hidden"> 
+      <Description xml:space="preserve">The field is not shown to the user, but its preload value is submitted with the 
+form's content. Hidden fields should be always preloaded.</Description> 
+    </BooleanProperty>  
+    <OrderingProperty attributeName="slotOrder" elementsExpr="Slot"> 
+      <IsEnabled>return (element.element("Slot") != null)</IsEnabled>  
+      <Description xml:space="preserve">The order of slots.
+  	</Description> 
+    </OrderingProperty>  
+    <OrderingProperty attributeName="validationOrder" elementsExpr="VRules/*"> 
+      <IsEnabled>return (element.selectSingleNode("VRules/*") != null)</IsEnabled>  
+      <Description xml:space="preserve">The order of validation rules.
+	  	</Description> 
+    </OrderingProperty>  
+    <SubComponent elementName="Slot" idPrefix="slot" namePrefix="Slot " ignoreI18N="true"> 
+      <StringProperty attributeName="value"> 
+        <Description xml:space="preserve">A user-defined constant to be used as the value of the slot.
+If the property is left empty, the slot must be filled with the
+value of a parameter associated with one of the input flows
+of the Form containing the slot's field.</Description> 
+      </StringProperty>  
+      <BooleanProperty attributeName="label" defaultValue="true"> 
+        <IsEnabled>return false</IsEnabled>  
+        <Description xml:space="preserve">If checked, the slot value is displayed to the user in the rendition
+of the field.</Description> 
+      </BooleanProperty>  
+      <BooleanProperty attributeName="output" defaultValue="true"> 
+        <IsEnabled>return false</IsEnabled>  
+        <Description xml:space="preserve">If checked, the slot value is submitted as part of the field's data, 
+when the user submits the form.</Description> 
+      </BooleanProperty>  
+      <Description xml:space="preserve">A slot is a placeholder for a piece of data to be preloaded in a field.</Description> 
+    </SubComponent >  
+    <Description xml:space="preserve">A field is an input control whereby the user can submit data. 
+A field is specified as a sub-element of a form. 
+The data entered by the user in a field can be checked, by associating one or 
+more validation rules to the field.
+A field can be associated with a slot, which can hold value shown to the user 
+when the page is accessed.</Description> 
+  </SubComponent >  
+  <SubComponent elementName="SelectionField" idPrefix="sfld" namePrefix="Selection Field " enableAjaxEvents="true" enableValidationRules="true"> 
+    <AttributeProperty label="Attribute" attributeName="attribute" classIdExpr="../@dataBinding" includeDerived="false"> 
+      <IsEnabled>return (element.valueOf("../@dataBinding") != "")</IsEnabled>  
+      <Description xml:space="preserve">The class attribute associated to this field.</Description> 
+    </AttributeProperty>  
+    <AssociationRoleProperty label="Role" attributeName="role" sourceClassIdExpr="../@dataBinding" removable="true"> 
+      <IsEnabled>return (element.valueOf("../@dataBinding") != "")</IsEnabled>  
+      <Description xml:space="preserve">The association role involving the master class object.</Description> 
+    </AssociationRoleProperty>  
+    <TypeProperty attributeName="type" typeAttributeName="type" subTypeAttributeName="subType" excludedTypes="blob" defaultValue="string"> 
+      <Description xml:space="preserve">The type of the content of the field. The selected type determines 
+the rendition of the field.</Description> 
+    </TypeProperty>  
+    <StringProperty label="Preselected Value" attributeName="preselectValue"> 
+      <Description xml:space="preserve">A value to be shown to the user as the default option when
+the page is accessed. If the specified value does not belong
+to the list of values preloaded in the selection field,
+the property is ignored.</Description> 
+    </StringProperty>  
+    <OrderingProperty attributeName="slotOrder" elementsExpr="Slot"> 
+      <IsEnabled>return (element.element("Slot") != null)</IsEnabled>  
+      <Description xml:space="preserve">The order of slots.</Description> 
+    </OrderingProperty>  
+    <BooleanProperty label="Split Output" attributeName="splitOutput"> 
+      <Description xml:space="preserve">If checked, the submitted value is split into each slot subvalue. 
+Usually this property is used with composite key attributes.</Description> 
+    </BooleanProperty>  
+    <OrderingProperty attributeName="validationOrder" elementsExpr="VRules/*"> 
+      <IsEnabled>return (element.selectSingleNode("VRules/*") != null)</IsEnabled>  
+      <Description xml:space="preserve">The order of validation rules.</Description> 
+    </OrderingProperty>  
+    <SubComponent elementName="Slot" idPrefix="slot" namePrefix="Slot " ignoreI18N="true"> 
+      <StringProperty attributeName="value"> 
+        <Description xml:space="preserve">A user-defined constant to be used as the value of the slot.
+If the property is left empty, the slot must be filled with the
+value of a parameter associated with one of the input flows
+of the Form containing the slot's field.</Description> 
+      </StringProperty>  
+      <BooleanProperty attributeName="label" defaultValue="true"> 
+        <Description xml:space="preserve">If checked, the slot value is displayed to the user in the rendition
+of the field.</Description> 
+      </BooleanProperty>  
+      <BooleanProperty attributeName="output" defaultValue="true"> 
+        <Description xml:space="preserve">If checked, the slot value is submitted as part of the field's data, 
+when the user submits the form.</Description> 
+      </BooleanProperty>  
+      <Description xml:space="preserve">A slot is a placeholder for a piece of data to be preloaded in a field.</Description> 
+    </SubComponent >  
+    <Description xml:space="preserve">A selection field is an input control whereby the user can submit data by
+selecting a value from multiple options. A selection field is specified as 
+a sub-element of an Form. The option chosen by the user in a selection field 
+can be checked, by associating one or more validation rules to the selection field.
+A selection field must be associated with one or more slots, which hold the 
+values among which the user must select.</Description> 
+  </SubComponent >  
+  <SubComponent elementName="MultiSelectionField" idPrefix="msfld" namePrefix="Multi Selection Field " enableAjaxEvents="true" enableValidationRules="true"> 
+    <AssociationRoleProperty label="Role" attributeName="role" sourceClassIdExpr="../@dataBinding" removable="true"> 
+      <IsEnabled>return (element.valueOf("../@dataBinding") != "")</IsEnabled>  
+      <Description xml:space="preserve">The association role involving the master class object.</Description> 
+    </AssociationRoleProperty>  
+    <TypeProperty attributeName="type" typeAttributeName="type" subTypeAttributeName="subType" excludedTypes="boolean|blob" defaultValue="string"> 
+      <Description xml:space="preserve">The type of the content of the field. The selected type determines 
+the rendition of the field.
+        </Description> 
+    </TypeProperty>  
+    <StringProperty label="Preselected Value" attributeName="preselectValue"> 
+      <Description xml:space="preserve">A value to be shown to the user as the default option when
+the page is accessed. If the specified value does not belong
+to the list of values preloaded in the multi selection field,
+the property is ignored.</Description> 
+    </StringProperty>  
+    <OrderingProperty attributeName="slotOrder" elementsExpr="Slot"> 
+      <IsEnabled>return (element.element("Slot") != null)</IsEnabled>  
+      <Description>The list of slots of the field. Clicking on the activation button opens the slots ordering dialog, whereby you can define the order of slots.</Description> 
+    </OrderingProperty>  
+    <BooleanProperty label="Split Output" attributeName="splitOutput"> 
+      <Description xml:space="preserve">If checked, the submitted values are split into each slot subvalues. 
+Usually this property is used with composite key attributes.</Description> 
+    </BooleanProperty>  
+    <OrderingProperty attributeName="validationOrder" elementsExpr="VRules/*"> 
+      <IsEnabled>return (element.selectSingleNode("VRules/*") != null)</IsEnabled>  
+      <Description>The list of validation rules of the field. Clicking on the activation button opens the validation rules ordering dialog, whereby you can define the order of validation rules.</Description> 
+    </OrderingProperty>  
+    <SubComponent elementName="Slot" idPrefix="slot" namePrefix="Slot " ignoreI18N="true"> 
+      <StringProperty attributeName="value"> 
+        <Description xml:space="preserve">A user-defined constant to be used as the value of the slot.
+If the property is left empty, the slot must be filled with the
+value of a parameter associated with one of the input flows
+of the Form containing the slot's field or selection field
+or multi selection field.
+Multiple values, separated by a pipe, can be specified to
+enumerate the options for preloading a multi selection field.</Description> 
+      </StringProperty>  
+      <BooleanProperty attributeName="label" defaultValue="true"> 
+        <Description xml:space="preserve">If checked, the slot value is displayed to the user in the rendition
+of the field.</Description> 
+      </BooleanProperty>  
+      <BooleanProperty attributeName="output" defaultValue="true"> 
+        <Description xml:space="preserve">If checked, the slot value is submitted as part of the field's data, 
+when the user submits the form.</Description> 
+      </BooleanProperty>  
+      <Description xml:space="preserve">A slot is a placeholder for a piece of data to be preloaded in a multi selection field.</Description> 
+    </SubComponent >  
+    <Description xml:space="preserve">A multi selection field is an input control whereby the user can submit data by
+selecting many values from multiple options. A multi selection field is specified as 
+a sub-element of an Form. The option chosen by the user in a multi selection 
+field  can be checked, by associating one or more validation rules to the multi selection 
+field.
+A multi selection field must be associated with one or more slots, which hold the 
+values among which the user must select.</Description> 
+  </SubComponent >  
+  <Description xml:space="preserve">Forms are built-in WebML components for supporting elementary, form-based data 
+entry. Forms are used for inputting the values of fields, which are then 
+supplied to other components in order to perform some processing 
+(e.g., searches, content updates, login, external operations). The actual data
+entry is supported by &lt;i&gt;fields&lt;/i&gt;, &lt;i&gt;selection fields&lt;/i&gt;, and
+&lt;i&gt;multi selection fields&lt;/i&gt; added as sub-elements to a form. 
+The entered input can be validated, by attaching &lt;i&gt;validation rules&lt;/i&gt; 
+to an Form and to its sub-elements.</Description>  
+  <InputDescription xml:space="preserve" name="Field-Name [Slot ID]">The slot identifier of one of the preloaded fields of the Form.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Selection-Field-Name Preselection">The identifier of one of the selection fields of the Form.
+The input parameter represents the value to use as a default
+choice in the list of options of the selection field.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Multi-Selection-Field-Name Preselection">The identifier of one of the multi selection fields of the Form.
+The input parameter represents the value to use as a default
+choice in the list of options of the multi selection field.</InputDescription>  
+  <InputDescription xml:space="preserve" name="Key-Attribute">The key attribute(s) value used to preload the form in case of class based.</InputDescription>  
+  <OutputDescription xml:space="preserve" name="Field-Name">One of the fields of the Form.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Key-Attribute">The key attribute(s) value of the object handled by this component.</OutputDescription>  
+  <OutputDescription xml:space="preserve" name="Entity Object">The class object holding the properties edited by this component.</OutputDescription>  
+  <LayoutFields xml:space="preserve">def fieldIds = []
+for (subElem in component.elements()) {
+    def subElemTagName = subElem.name
+    if (subElemTagName == "Field") {
+        if (subElem.valueOf("string(@hidden)") != "true") {
+            fieldIds.add(subElem["id"])
+        }
+    } else if ((subElemTagName == "SelectionField") || (subElemTagName == "MultiSelectionField")){
+        fieldIds.add(subElem["id"])
+    }
+}
+def fieldIdSet = new HashSet(fieldIds)
+def fieldOrderIds = component["fieldOrder"].tokenize(" ")
+def ids = []
+ids += fieldOrderIds.findAll{fieldIdSet.contains(it)}
+ids += fieldIds.findAll{!fieldOrderIds.contains(it)}
+return ids</LayoutFields>  
+  <IsContextFreeComponent xml:space="preserve">return getIncomingFlows(component).empty</IsContextFreeComponent>  
+  <I18NLabels xml:space="preserve">
+def labels = []
+def fields = []
+fields += component.selectNodes("Field[string(@hidden) != 'true']")
+fields += component.elements("SelectionField")
+fields += component.elements("MultiSelectionField")
+for (field in fields) {
+  def label = [:]
+  label.id = field["id"]
+  label.key = field["name"]
+  labels.add(label)
+}
+return labels
+</I18NLabels>    <SubmitLinkIds xml:space="preserve">return getExitingFlows(component, FlowType.NAVIGATION).collect{it["id"]}</SubmitLinkIds>  
+  <BeanDescription xml:space="preserve">
+	&lt;p&gt;The component state object for the Form contains all the properties of fields, selection fields and multi selection fields. 
+	The properties depends on:
+	   &lt;ul&gt;
+  		&lt;li&gt;&lt;code&gt;Field&lt;/code&gt;: field, selection field or multi selection field&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Type&lt;/code&gt;: string, blob, and so on&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Modifiability&lt;/code&gt;: the field is modifiable or read only&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Preload&lt;/code&gt;: the field can be preload with data&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Preselection&lt;/code&gt;: the selection and multi selection fields can have a value to preselect&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Localization&lt;/code&gt;: the labels and values can be localized&lt;/li&gt;
+  		&lt;li&gt;&lt;code&gt;Rendition&lt;/code&gt;: the rendition of the field&lt;/li&gt;
+  	   &lt;/ul&gt;
+	&lt;/p&gt;
+	&lt;s3 title="Field"&gt;
+	   &lt;p&gt;If the field is a boolean field, the state object contains the following properties:
+		   &lt;ul&gt;
+	  		&lt;li&gt;&lt;code&gt;{fieldId}&lt;/code&gt; the value of the field identified by the fieldId&lt;/li&gt;
+	  		&lt;li&gt;&lt;code&gt;{fieldId}_locale&lt;/code&gt; the value of the localized field identified by the fieldId&lt;/li&gt;
+	  		&lt;li&gt;&lt;code&gt;{pageId}FormBean.map.{fieldId}&lt;/code&gt; the value of the field, if the field is a read only field&lt;/li&gt;
+	  		&lt;li&gt;&lt;code&gt;{pageId}FormBean.map.{fieldId}_locale&lt;/code&gt; the localized value of the field, if the field is a read only field&lt;/li&gt;
+	  	   &lt;/ul&gt;
+  	   &lt;/p&gt;
+  	   &lt;p&gt;If the field is a text field, the state object contains the following properties:
+		   &lt;ul&gt;
+	  		&lt;li&gt;&lt;code&gt;{fieldId}&lt;/code&gt; the value of the field identified by the fieldId&lt;/li&gt;
+	  		&lt;li&gt;&lt;code&gt;{fieldId}_locale&lt;/code&gt; the value of the localized field identified by the fieldId&lt;/li&gt;
+	  		&lt;li&gt;&lt;code&gt;{pageId}FormBean.map.{fieldId}&lt;/code&gt; the value of the field, if the field has a text/html content type&lt;/li&gt;
+	  		&lt;li&gt;&lt;code&gt;{pageId}FormBean.map.{fieldId}_locale&lt;/code&gt; the localized value of the field, if the field has a text/html content type&lt;/li&gt;
+	  	   &lt;/ul&gt;
+  	   &lt;/p&gt;
+  	   &lt;p&gt;If the field is a BLOB field, the state object contains the following properties:
+		   &lt;ul&gt;
+		    &lt;li&gt;&lt;code&gt;{fieldId}&lt;/code&gt; the value of the field identified by the fieldId, if the field is modifiable&lt;/li&gt;
+	  		&lt;li&gt;&lt;code&gt;{fieldId}_preload&lt;/code&gt; the preloaded value of the field&lt;/li&gt;
+	  		&lt;li&gt;&lt;code&gt;{pageId}FormBean.map.{fieldId}_preload&lt;/code&gt; the form bean preloaded value&lt;/li&gt;
+	  		&lt;li&gt;&lt;code&gt;{fieldId}_clear&lt;/code&gt; the clear property&lt;/li&gt;
+	  	   &lt;/ul&gt;
+  	   &lt;/p&gt;
+  	   &lt;p&gt;If the field is a date, time, timestamp field, the state object contains the following properties:
+		   &lt;ul&gt;
+		    &lt;li&gt;&lt;code&gt;{fieldId}&lt;/code&gt; the value of the field identified by the fieldId&lt;/li&gt;
+	  		&lt;li&gt;&lt;code&gt;{fieldId}_locale&lt;/code&gt; the localized value of the field identified by the fieldId&lt;/li&gt;
+	  	   &lt;/ul&gt;
+  	   &lt;/p&gt;
+	&lt;/s3&gt;
+    &lt;s3 title="Selection Field"&gt;
+	   &lt;p&gt;If the selection field is a boolean field, the state object contains the following properties:
+		   &lt;ul&gt;
+	  		&lt;li&gt;&lt;code&gt;{fieldId}&lt;/code&gt; the value of the field identified by the fieldId&lt;/li&gt;
+	  		&lt;li&gt;&lt;code&gt;{fieldId}_locale&lt;/code&gt; the value of the localized field identified by the fieldId&lt;/li&gt;
+	  	   &lt;/ul&gt;
+  	   &lt;/p&gt;
+  	   &lt;p&gt;If the selection field is rendered as a select input field, the state object contains the following properties:
+		   &lt;ul&gt;
+	  		&lt;li&gt;&lt;code&gt;{fieldId}LabelList&lt;/code&gt; the array of labels to be shown for the field identified by the fieldId&lt;/li&gt;
+	  		&lt;li&gt;&lt;code&gt;{fieldId}LabelList_locale&lt;/code&gt; the array of localized labels to be shown for the field identified by the fieldId&lt;/li&gt;
+	  	   	&lt;li&gt;&lt;code&gt;{fieldId}List&lt;/code&gt; the array of values of the field identified by the fieldId&lt;/li&gt;
+	  	   &lt;/ul&gt;
+  	   &lt;/p&gt;
+  	   &lt;p&gt;If the selection field is rendered as a radio input field, the state object contains the following properties:
+		   &lt;ul&gt;
+	  		&lt;li&gt;&lt;code&gt;{pageId}FormBean.map.{fieldId}LabelList&lt;/code&gt; the array of labels to be shown for the field identified by the fieldId&lt;/li&gt;
+	  		&lt;li&gt;&lt;code&gt;{pageId}FormBean.map.{fieldId}LabelList_locale&lt;/code&gt; the array of localized labels to be shown for the field identified by the fieldId&lt;/li&gt;
+	  	    &lt;li&gt;&lt;code&gt;{pageId}FormBean.map.{fieldId}List&lt;/code&gt; the array of values of the field identified by the fieldId&lt;/li&gt;
+	  	   &lt;/ul&gt;
+  	   &lt;/p&gt;
+	&lt;/s3&gt;
+    &lt;s3 title="Multi Selection Field"&gt;
+  	   &lt;p&gt;If the selection field is rendered as a multi select input field, the state object contains the following properties:
+		   &lt;ul&gt;
+	  		&lt;li&gt;&lt;code&gt;{fieldId}LabelList&lt;/code&gt; the array of labels to be shown for the field identified by the fieldId&lt;/li&gt;
+	  		&lt;li&gt;&lt;code&gt;{fieldId}LabelList_locale&lt;/code&gt; the array of localized labels to be shown for the field identified by the fieldId&lt;/li&gt;
+	  	   	&lt;li&gt;&lt;code&gt;{fieldId}List&lt;/code&gt; the array of values of the field identified by the fieldId&lt;/li&gt;
+	  	   &lt;/ul&gt;
+  	   &lt;/p&gt;
+  	   &lt;p&gt;If the selection field is rendered as a group of checkboxes, the state object contains the following properties:
+		   &lt;ul&gt;
+	  		&lt;li&gt;&lt;code&gt;{pageId}FormBean.map.{fieldId}LabelList&lt;/code&gt; the array of labels to be shown for the field identified by the fieldId&lt;/li&gt;
+	  		&lt;li&gt;&lt;code&gt;{pageId}FormBean.map.{fieldId}LabelList_locale&lt;/code&gt; the array of localized labels to be shown for the field identified by the fieldId&lt;/li&gt;
+	  	    &lt;li&gt;&lt;code&gt;{pageId}FormBean.map.{fieldId}List&lt;/code&gt; the array of values of the field identified by the fieldId&lt;/li&gt;
+	  	   &lt;/ul&gt;
+  	   &lt;/p&gt;
+	&lt;/s3&gt;
+  </BeanDescription> 
+</Component>

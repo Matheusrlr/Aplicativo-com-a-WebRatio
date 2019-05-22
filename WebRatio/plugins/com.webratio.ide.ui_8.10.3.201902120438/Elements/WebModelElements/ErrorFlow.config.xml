@@ -1,0 +1,104 @@
+<Element name="ErrorFlow" lowerName="error flow" pluralLowerName="error flows">
+	<Description>
+		An Error Flow 
+		is the flow followed when an operation fails.
+	</Description>
+	<ActionRef label="Add Property" />
+	<ActionRef label="Localize" />
+	<ActionRef label="Go to Source"/>
+	<ActionRef label="Go to Target"/>
+	<ActionRef label="Straighten Connections" />
+	<ActionRef label="Separate Overlapping Connections" />
+	<ActionRef label="Open Generated Code" />
+	<ActionRef label="Generate Logic Descriptors Only"/>
+	<ActionRef label="Generate Selection"/>
+	<ActionRef label="Find Model Problems"/>
+	<ActionRef label="Help"/>
+	<PropertyCategory name="General">
+		<PropertyRef label="Identifier" />
+		<PropertyRef label="Name" />
+		<PropertyRef label="Source" />	
+		<PropertyRef label="Target" />			
+		<PropertyRef label="Code" />
+		<PropertyRef label="Port Code" />
+		<PropertyRef label="Binding" />
+		<PropertyRef label="Preserve Form"/>
+		<PropertyRef label="Custom Descriptor"/>
+	</PropertyCategory>
+	<PropertyCategory name="AJAX">
+		<PropertyRef label="Component Computations"/>
+		
+		<Property label="Open Window">
+			If checked, the target page is opened inside a user interface window behaving as a child
+			of the navigation starting page.
+		</Property>
+		<Property label="Replace Existing Window">
+			If checked, the user interface window containing the navigation starting page is closed
+			before opening the new window. This effectively causes the new window to replace the
+			previous one under the same parent page.
+		</Property>
+		<Property label="Use Title">
+			If checked, the opened window is displayed with a title.&lt;br/&gt;
+			The displayed title depends on the 'Window Title' property.
+		</Property>
+		<Property label="Window Title">
+			Text used as title for the opened window.&lt;br/&gt;
+			Has no effect if 'Use Title' is unchecked.
+		</Property>
+		<Property label="Window Width">
+			Width of the opened window in pixels.&lt;br/&gt;
+			Default value: 200
+		</Property>
+		<Property label="Window Height">
+			Height of the opened window in pixels.&lt;br/&gt;
+			Default value: 300
+		</Property>
+		<Property label="Resizable">
+			If checked, the opened window can be resized by the user.
+		</Property>
+    	<Property label="Auto Resizing">
+			If checked, the opened window automatically resizes itself according to the content.
+    	</Property>
+		<Property label="Closable">
+			If checked, the opened window displays a button to close it on the client-side.&lt;br/&gt;
+			Note that no model flow is navigated when windows are closed this way.
+		</Property>
+		<Property label="Maximizable">
+			If checked, the opened window displays a button to maximize it.
+		</Property>
+		<Property label="Minimizable">
+			If checked, the opened window displays a button to minimize it.
+		</Property>
+		<Property label="Draggable">
+			If checked, the opened window can be moved by the user.
+		</Property>
+		<Property label="Modal">
+			If checked, the opened window blocks interaction with all parent pages until it is closed.
+		</Property>
+		<Property label="Class">
+			The CSS class to apply to the opened window.
+		</Property>
+		<Property label="Show Effect">
+			Effect to use for showing the opened window.&lt;br/&gt;
+			Possible values are:
+			&lt;ul&gt;
+				&lt;li&gt;None,&lt;/li&gt;
+				&lt;li&gt;Appear,&lt;/li&gt;
+				&lt;li&gt;BlindDown,&lt;/li&gt;
+				&lt;li&gt;SlideDown,&lt;/li&gt;
+				&lt;li&gt;Grow.&lt;/li&gt;
+			&lt;/ul&gt;
+		</Property>
+		<Property label="Hide Effect">
+			Effect to user for hiding the opened window.&lt;br/&gt;
+			Possible values are:
+			&lt;ul&gt;
+				&lt;li&gt;None,&lt;/li&gt;
+				&lt;li&gt;Fade,&lt;/li&gt;
+				&lt;li&gt;BlindUp,&lt;/li&gt;
+				&lt;li&gt;SlideUp,&lt;/li&gt;
+				&lt;li&gt;Shrink.&lt;/li&gt;
+			&lt;/ul&gt;
+		</Property>
+	</PropertyCategory>
+</Element>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle>
+  <Entry key="TypeValidationRule.error">the value must have the format ${pattern}</Entry>
+</Bundle>

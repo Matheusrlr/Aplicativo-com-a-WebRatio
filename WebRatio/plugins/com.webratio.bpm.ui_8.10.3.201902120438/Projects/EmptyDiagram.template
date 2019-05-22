@@ -1,0 +1,11 @@
+#?delimiters [%,%],[%=,%]
+<?xml version="1.0" encoding="UTF-8"?>
+<?bpm version="4.0.0.0"?>
+[% setXMLOutput() %]
+<BPMProject xmlns:gr="http://www.webratio.com/2006/WebML/Graph" gr:showTooltip="true" gr:showActivityParameters="true" uuid="[%=getUUID(this)%]">  
+  <Pool id="pool1" uuid="[%=getUUID()%]">
+    <Parameters/>
+    <Lane id="pool1#lane1" name="Lane 1" notification="None" uuid="[%=getUUID()%]">
+    </Lane>
+  </Pool>
+</BPMProject>

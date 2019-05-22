@@ -1,0 +1,79 @@
+#?delimiters [%, %], [%=, %]
+[%
+setJSOutput()
+
+import com.webratio.model.domain.ServiceMethodType
+
+/* Applies to N:N associations */
+def role1 = assoc.element("AssociationRole1")
+def role2 = assoc.element("AssociationRole2")
+if (role1["maxCard"] != "N" || role2["maxCard"] != "N") {
+	throw new RuntimeException("Not a many-to-many association - " + assoc)
+}
+%]
+
+/* Entity for [%= assoc["id"] %] */
+$data.Entity.extend("[%= getAssociationClassInfo(assoc).mappedName %]", {
+	
+    rowid: {
+        type: "integer",
+        key: true,
+        computed: true
+    },
+	
+	[% [role1, role2].eachWithSeparator(",") { role -> %]
+		[%
+			def targetClass = getSourceDomainClass(role)
+			def targetKeyAttr = getKeyAttribute(targetClass)
+			def targetRole = role
+		%]
+	
+		[%= getAssociationRoleFieldName(role) %]: {
+			type: "[%= getClassInfo(targetClass).mappedName %]",
+			inverseProperty: "[%= getFieldName(targetRole) %]"
+		},
+		
+		[%= getAssociationRoleFieldName(role) %]__[%= getFieldName(targetKeyAttr) %]: {
+			type: "[%= getJayDataType(targetKeyAttr) %]"
+		}
+	[% } %]
+	
+});
+
+[%
+/* Find information controlling the need for an auxiliary entity */
+def trackChanges = isServerMappedAssociation(assoc)
+def trackLocalChanges = isServerMappedAssociation(assoc, ServiceMethodType.UPDATE)
+%]
+[% if (trackChanges) { %]
+
+	/* Auxiliary entity for [%= assoc["id"] %] */
+	$data.Entity.extend("[%= getAssociationAuxiliaryClassInfo(assoc).mappedName %]", {
+		
+		oid: {
+	        type: "integer",
+	        key: true,
+	        computed: true
+		},
+		
+		[% [role1, role2].eachWithSeparator(",") { role -> %]
+			[%
+	 			def targetClassRemoteOidAttr = getRemoteOidAttribute(getTargetDomainClass(role))
+	 		%]
+			t_[%= getAssociationRoleFieldName(role) %]: {
+				type: "[%= getJayDataType(targetClassRemoteOidAttr) %]"
+			}
+		[% } %]
+		
+		[% if (trackLocalChanges) { %],
+			addedAt: {
+				type: "[%= getJayDataType("timestamp") %]"
+			},
+			removedAt: {
+				type: "[%= getJayDataType("timestamp") %]"
+			}
+		[% } %]
+		
+	});
+
+[% } %]

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Component  type="operation" version="1.0.0" idPrefix="cldo" namePrefix="Calendar " label="Calendar" dataFlowSource="true" navigationFlowSource="true" dataFlowTarget="true" navigationFlowTarget="true" successFlowSource="true" successFlowTarget="true" errorFlowSource="true" errorFlowTarget="true"> 
+	<EnumProperty attributeName="mode" defaultValue="save"> 
+    	<EnumItem value="save" label="Save Event"/>  
+    	<EnumItem value="open" label="Open Calendar"/>  
+    	<Description xml:space="preserve">Specifies the operation to be executed on the device calendar.</Description> 
+  	</EnumProperty>
+  	<NativePlugins>
+  		<RequiredPlugin localId="local:calendar.zip"/>  		
+  	</NativePlugins> 
+	<Description xml:space="preserve">The component interacts with the native device calendar and is capable of adding events.</Description>
+	<InputDescription xml:space="preserve" name="Title">The title of the event to create.</InputDescription>
+	<InputDescription xml:space="preserve" name="Location">The event location.</InputDescription>
+	<InputDescription xml:space="preserve" name="Notes">The event notes.</InputDescription>
+	<InputDescription xml:space="preserve" name="Start Date">The event beginning date.</InputDescription>
+	<InputDescription xml:space="preserve" name="End Date">The event ending date.</InputDescription>
+	<InputDescription xml:space="preserve" name="Recurrence">The recurrence frequency of the event (allowed values are daily, weekly, monthly, yearly).</InputDescription>
+	<InputDescription xml:space="preserve" name="Recurrence End Date">The event recurrence ending date.</InputDescription>
+	<InputDescription xml:space="preserve" name="All Day">A boolean flag indicating if the event has 'all day' duration.</InputDescription>
+	<InputDescription xml:space="preserve" name="Date">In case of "open" mode it indicates the date on which the system calendar must be opened.</InputDescription>
+</Component>

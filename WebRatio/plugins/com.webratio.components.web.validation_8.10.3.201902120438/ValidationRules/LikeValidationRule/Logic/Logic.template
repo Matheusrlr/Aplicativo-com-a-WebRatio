@@ -1,0 +1,14 @@
+#?delimiters <%,%>,<%=,%>
+<%
+import org.apache.commons.lang.StringUtils
+setXMLOutput()
+%>
+<ValidationRule service="com.webratio.components.web.validation.LikeValidationRuleService">
+  <Predicate><%=element["predicate"]%></Predicate>
+  <IgnoreCase><%=element["ignoreCase"] == "true"%></IgnoreCase>
+  <%if(StringUtils.isBlank(element["valueField"])){%>
+    <Value><%=element["value"]%></Value>
+  <%}else{%>  
+    <ValueProperty><%=element["valueField"]%></ValueProperty>
+  <%}%>  
+</ValidationRule>

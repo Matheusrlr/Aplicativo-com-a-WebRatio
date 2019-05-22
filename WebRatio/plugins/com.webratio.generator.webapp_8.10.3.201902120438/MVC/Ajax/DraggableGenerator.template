@@ -1,0 +1,34 @@
+#?delimiters [%, %], [%=, %]
+[% if (element["ajaxDragEnabled"] == "true") { %]
+	[%
+		/* Compute descriptor string */
+		def dragEvent = getById(element, "ajaxDragEvent")
+		def dragFlow = dragEvent.element("NavigationFlow")
+		if (!dragFlow) {
+			throwGenerationException("Drag event has no flow - ${dragEvent}")
+		}
+		def formPostDescriptor = ",,"
+		if (isFormBased(dragEvent.parent.parent)) {
+			formPostDescriptor = "," + getFormBeanName(page) + ",button:" + getEventRuntimeId(dragEvent)
+		}
+		def optionsDescriptor = ""
+		if (dragFlow["ajaxOpenWaitingDialog"] == "true") {
+			def wwOptions = [:]
+			wwOptions["id"] = "\\\"_oldajax_ww\\\""
+			wwOptions["width"] = (dragFlow["ajaxWaitingDialogWidth"] ?: "200")
+			wwOptions["height"] = (dragFlow["ajaxWaitingDialogHeight"] ?: "100")
+			wwOptions["message"] = "\\\"<spring:message code=\"" + (dragFlow["ajaxWaitingDialogMessage"] ?: "ajax.computingRequest") + "\"/>\\\""
+			wwOptions["duration"] = (dragFlow["ajaxWaitingDialogMinDuration"] ?: "1000")
+			wwOptions["className"] = "\\\"" + (dragFlow["ajaxWaitingDialogClassName"] ?: "") + "\\\""
+			optionsDescriptor = ",{\\\"waitWin\\\":{" + wwOptions.collect { "\\\"" + it["key"] + "\\\":" + it["value"] }.join(",") + "}}"
+		}
+	%]
+	<wr:RequireResource ref="jquery, wr-ui-widgets">
+		<script type="text/javascript">
+			jQuery("#<wr:AjaxUniqueIdentifier context="element" item="item" position="position"/>").wrDraggable({
+				scope: "[%= dragFlow["to"] %]",
+				wrAction: "<webratio:Link link="[%= getEventRuntimeId(dragEvent) %]" position="[%= position %]" escapeXml="false"/>[%= formPostDescriptor %][%= optionsDescriptor %]"
+			});
+		</script>
+	</wr:RequireResource>
+[% } %]

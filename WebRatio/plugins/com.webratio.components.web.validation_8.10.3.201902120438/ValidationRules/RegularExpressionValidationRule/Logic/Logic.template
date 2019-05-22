@@ -1,0 +1,6 @@
+#?delimiters <%,%>,<%=,%>
+<%setXMLOutput()%>
+<ValidationRule service="com.webratio.components.web.validation.RegularExpressionValidationRuleService">
+  <Regex><%=element["regex"]%></Regex>
+  <IgnoreCase><%=element["ignoreCase"]%></IgnoreCase>
+</ValidationRule>

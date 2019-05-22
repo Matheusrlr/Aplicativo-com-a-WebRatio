@@ -1,0 +1,17 @@
+#?delimiters [%, %], [%=, %]
+[%
+/** Applies to: IFML Element (supporting boundary events) */
+setXMLOutput()
+
+def eventsBag = element.selectSingleNode("Events")
+if (!eventsBag) {
+	return
+}
+%]
+<EventsSupport class="com.webratio.rtx.events.DefaultEventsSupport">
+	[% for (event in eventsBag.elements()) { %]
+		<[%= event.name %] id="[%= event["id"] %]" name="[%= event["name"] %]">
+			[%= event.elements("NavigationFlow").collect{ it["id"] }.join("|") %]
+		</[%= event.name %]>
+	[% } %]
+</EventsSupport>

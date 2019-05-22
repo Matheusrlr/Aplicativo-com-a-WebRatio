@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.webratio.services"
+      label="WebRatio Services"
+      version="1.1.0.201802231629"
+      provider-name="WebRatio"
+      plugin="com.webratio.services.branding">
+
+   <description>
+      WebRatio services.
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%license.url">
+      %license
+   </license>
+
+   <includes
+         id="com.webratio.services.source"
+         version="1.1.0.201802231629"/>
+
+   <plugin
+         id="com.webratio.services.branding"
+         download-size="0"
+         install-size="0"
+         version="1.1.0.201802231629"/>
+
+   <plugin
+         id="com.webratio.services.licensing.client"
+         download-size="0"
+         install-size="0"
+         version="1.1.0.201802231629"/>
+
+   <plugin
+         id="com.webratio.services.updates.client"
+         download-size="0"
+         install-size="0"
+         version="1.1.0.201802231629"/>
+
+</feature>

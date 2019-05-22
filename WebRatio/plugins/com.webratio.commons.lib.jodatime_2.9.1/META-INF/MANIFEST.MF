@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Export-Package: org.joda.time,org.joda.time.base,org.joda.time.chrono,
+ org.joda.time.convert,org.joda.time.field,org.joda.time.format,org.jo
+ da.time.tz
+Bundle-Vendor: WebRatio
+Bundle-ClassPath: lib/joda-time.jar
+Bundle-Version: 2.9.1
+Bundle-Name: WebRatio 3rd Party Library - Joda-Time
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.webratio.commons.lib.jodatime
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+
+Name: about_files/APACHE_LICENSE-2.0.txt
+SHA-256-Digest: Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=
+
+Name: lib/joda-timesrc.zip
+SHA-256-Digest: ObBk1hq9TL+tb2fZ+Zs60alwu3rDe1DnQKGr3JDTQIE=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: Aqa2kLo9OmHlLbJ+0NNvtny/w1DhRWpYHE+/SXYiaFU=
+
+Name: about.html
+SHA-256-Digest: D5vn4iopxLnXEBIX4y9oZRnlKUdi5eKexiGulojnAAU=
+
+Name: lib/joda-time.jar
+SHA-256-Digest: xQj3jtmsOIz8yteXTuKCF18FriW2jwzG7vIfius87qo=
+

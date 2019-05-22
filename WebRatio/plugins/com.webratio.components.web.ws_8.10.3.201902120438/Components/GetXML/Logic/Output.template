@@ -1,0 +1,12 @@
+#?delimiters <%,%>,<%=,%>
+<%
+setXMLOutput()
+%>
+<OutputParameters>
+  <OutputParameter name="xmlDocument" type="xml" label="Retrieved XML Document"/>
+  <OutputParameter name="errorMessage" label="Error Message"/>
+  <OutputParameter name="exception" label="Exception"/>
+  <%for(xPath in component.selectNodes("XPath")){%>
+     <OutputParameter name="<%=xPath["id"]%>" refId="<%=xPath["id"]%>" label="<%=xPath["name"]%>"/>
+  <%}%>
+</OutputParameters>
