@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Warnings>
-<Warning key="DB_MAPPING.MISSING" error="true" xpath="id('as1')" tab="mapping"><Message>The join columns of the association Categoria_Tipo are missing</Message></Warning><Warning key="DB_MAPPING.INCONSISTENCY" error="true" xpath="id('as1')" tab="mapping"><Message>The 1:N association Categoria_Tipo cannot be mapped over a bridge table</Message></Warning></Warnings>

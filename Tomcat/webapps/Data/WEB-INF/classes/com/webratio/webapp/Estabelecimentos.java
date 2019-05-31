@@ -128,16 +128,6 @@ public class Estabelecimentos implements java.io.Serializable {
         this._oidTipo = _oidTipo;
     }
 
-    private java.lang.Integer _Rel_estabelecimentosToTipo_oid;
-
-    public java.lang.Integer getRel_estabelecimentosToTipo_oid() {
-        return _Rel_estabelecimentosToTipo_oid;
-    }
-
-    public void setRel_estabelecimentosToTipo_oid(java.lang.Integer _Rel_estabelecimentosToTipo_oid) {
-        this._Rel_estabelecimentosToTipo_oid = _Rel_estabelecimentosToTipo_oid;
-    }
-
     public com.webratio.webapp.Tipo getEstabelecimentosToTipo() {
         return _estabelecimentosToTipo;
     }

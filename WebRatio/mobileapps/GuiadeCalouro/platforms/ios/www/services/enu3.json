@@ -1,0 +1,61 @@
+{
+  "service" : "wrm.comp.FormService",
+  "fields" : [ {
+    "id" : "fld6",
+    "fieldType" : "Field",
+    "type" : "string",
+    "labelSlots" : [ ],
+    "outputSlots" : [ ]
+  }, {
+    "id" : "fld5",
+    "fieldType" : "Field",
+    "type" : "integer",
+    "labelSlots" : [ ],
+    "outputSlots" : [ ]
+  }, {
+    "id" : "fld4",
+    "fieldType" : "Field",
+    "type" : "string",
+    "labelSlots" : [ ],
+    "outputSlots" : [ ]
+  }, {
+    "id" : "fld3",
+    "fieldType" : "Field",
+    "type" : "string",
+    "labelSlots" : [ ],
+    "outputSlots" : [ ]
+  }, {
+    "id" : "fld7",
+    "fieldType" : "Field",
+    "type" : "string",
+    "labelSlots" : [ ],
+    "outputSlots" : [ ]
+  } ],
+  "_form" : {
+    "_" : "wrm.form.DefaultFormSubService",
+    "formLabel" : "Feedback",
+    "viewFormRef" : "form",
+    "properties" : {
+      "fld6" : {
+        "type" : "string",
+        "label" : "E-mail"
+      },
+      "fld5" : {
+        "type" : "integer",
+        "label" : "Matrícula"
+      },
+      "fld4" : {
+        "type" : "string",
+        "label" : "Sobrenome"
+      },
+      "fld3" : {
+        "type" : "string",
+        "label" : "Nome"
+      },
+      "fld7" : {
+        "type" : "string",
+        "label" : "Sugestão"
+      }
+    }
+  }
+}

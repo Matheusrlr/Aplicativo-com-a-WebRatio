@@ -24,7 +24,7 @@
     <Attribute id="cls2#att12" name="updatedAt" specialBehavior="unsentUpdateTimestamp" type="timestamp" key="false"/>
     <Attribute id="cls2#att3" name="imagem" type="blob" serverAttribute="cls5#att33" serverProperty="imagem"/>
   </Class>
-  <Class gr:x="575" gr:y="5" id="cls3" name="Estabelecimento" duration="persistent" attributeOrder="cls3#att20 cls3#att21 cls3#att22 cls3#att23 cls3#att24 cls3#att25 cls3#att26 cls3#att27 cls3#att28 cls3#att29 cls3#att30" serverResource="Estabelecimentos" serverClass="cls4" serverResourceMethods="read create update delete">
+  <Class gr:x="600" gr:y="5" id="cls3" name="Estabelecimento" duration="persistent" attributeOrder="cls3#att20 cls3#att21 cls3#att22 cls3#att23 cls3#att24 cls3#att25 cls3#att26 cls3#att27 cls3#att28 cls3#att29 cls3#att30 cls3#att13" serverResource="Estabelecimentos" serverClass="cls4" serverResourceMethods="read create update delete">
     <Attribute id="cls3#att20" key="true" name="oid" type="integer" specialBehavior="implicitOid"/>
     <Attribute id="cls3#att27" name="logo" type="blob" key="false" serverProperty="logo" serverAttribute="cls4#att21"/>
     <Attribute id="cls3#att26" name="valor" type="integer" key="false" serverProperty="valor" serverAttribute="cls4#att15"/>
@@ -33,15 +33,35 @@
     <Attribute id="cls3#att23" name="endereco" type="string" key="false" serverProperty="endereco" serverAttribute="cls4#att18"/>
     <Attribute id="cls3#att22" name="descricao" type="string" key="false" serverProperty="descricao" serverAttribute="cls4#att19"/>
     <Attribute id="cls3#att21" name="nome" type="string" key="false" serverAttribute="cls4#att20" serverProperty="nome"/>
-    <Attribute id="cls3#att28" name="remoteOid" specialBehavior="remoteOid" serverAttribute="cls4#att14" serverProperty="oid" type="integer" key="false"/>
+    <Attribute id="cls3#att28" name="remoteOid" specialBehavior="remoteOid" type="integer" key="false" serverAttribute="cls4#att14" serverProperty="oid"/>
     <Attribute id="cls3#att29" name="createdAt" specialBehavior="unsentCreateTimestamp" type="timestamp" key="false"/>
     <Attribute id="cls3#att30" name="updatedAt" specialBehavior="unsentUpdateTimestamp" type="timestamp" key="false"/>
+    <Attribute id="cls3#att13" name="oid_tip" type="string" serverProperty="oidTipo" serverAttribute="cls4#att36"/>
   </Class>
-  <Class gr:x="305" gr:y="40" id="cls1" name="Tipo" duration="persistent" attributeOrder="cls1#att5 cls1#att6 cls1#att14 cls1#att15 cls1#att16" serverResource="Tipo" serverClass="cls3" serverResourceMethods="read create update delete">
+  <Class gr:x="305" gr:y="40" id="cls1" name="Tipo" duration="persistent" attributeOrder="cls1#att5 cls1#att6 cls1#att14 cls1#att15 cls1#att16 cls1#att4" serverResource="Tipo" serverClass="cls3" serverResourceMethods="read create update delete">
     <Attribute id="cls1#att5" key="true" name="oid" type="integer" specialBehavior="implicitOid"/>
     <Attribute id="cls1#att6" name="nome" type="string" serverProperty="nome" serverAttribute="cls3#att11"/>
     <Attribute id="cls1#att14" name="remoteOid" specialBehavior="remoteOid" serverAttribute="cls3#att10" serverProperty="oid" type="integer"/>
     <Attribute id="cls1#att15" name="createdAt" specialBehavior="unsentCreateTimestamp" type="timestamp"/>
     <Attribute id="cls1#att16" name="updatedAt" specialBehavior="unsentUpdateTimestamp" type="timestamp"/>
+    <Attribute id="cls1#att4" name="oid_cat" type="string" serverAttribute="cls3#att22" serverProperty="oidCategoria"/>
+  </Class>
+  <Class gr:x="830" gr:y="75" id="cls4" name="Feedback" duration="persistent" serverResource="Feedback" serverClass="cls2" serverResourceMethods="read create update delete" attributeOrder="cls4#att17 cls4#att18 cls4#att19 cls4#att31 cls4#att32 cls4#att33 cls4#att34 cls4#att35 cls4#att37">
+    <Attribute id="cls4#att17" key="true" name="oid" type="integer" specialBehavior="implicitOid"/>
+    <Attribute id="cls4#att18" name="remoteOid" specialBehavior="remoteOid" serverAttribute="cls2#att2" serverProperty="oid" type="integer" key="false"/>
+    <Attribute id="cls4#att19" name="createdAt" specialBehavior="unsentCreateTimestamp" type="timestamp" key="false"/>
+    <Attribute id="cls4#att31" name="updatedAt" specialBehavior="unsentUpdateTimestamp" type="timestamp" key="false"/>
+    <Attribute id="cls4#att35" name="email" type="string" serverProperty="email" serverAttribute="cls2#att6"/>
+    <Attribute id="cls4#att34" name="matr&#237;cula" type="integer" serverProperty="matrCula" serverAttribute="cls2#att7"/>
+    <Attribute id="cls4#att33" name="sobrenome" type="string" serverAttribute="cls2#att8" serverProperty="sobrenome"/>
+    <Attribute id="cls4#att32" name="nome" type="string" serverAttribute="cls2#att9" serverProperty="nome"/>
+    <Attribute id="cls4#att37" name="sugestao" type="string" serverProperty="sugestao" serverAttribute="cls2#att3"/>
+  </Class>
+  <Class gr:x="650" gr:y="335" id="cls5" name="Menu" duration="persistent" serverResource="Menu" serverClass="cls1" serverResourceMethods="read create update delete" attributeOrder="cls5#att38 cls5#att39 cls5#att40 cls5#att41 cls5#att42">
+    <Attribute id="cls5#att38" key="true" name="oid" type="integer" specialBehavior="implicitOid"/>
+    <Attribute id="cls5#att39" name="remoteOid" specialBehavior="remoteOid" serverAttribute="cls1#att1" serverProperty="oid" type="integer"/>
+    <Attribute id="cls5#att40" name="createdAt" specialBehavior="unsentCreateTimestamp" type="timestamp"/>
+    <Attribute id="cls5#att41" name="updatedAt" specialBehavior="unsentUpdateTimestamp" type="timestamp"/>
+    <Attribute id="cls5#att42" name="logo" type="blob" serverAttribute="cls1#att23" serverProperty="logo" contentType="image"/>
   </Class>
 </DomainModel>

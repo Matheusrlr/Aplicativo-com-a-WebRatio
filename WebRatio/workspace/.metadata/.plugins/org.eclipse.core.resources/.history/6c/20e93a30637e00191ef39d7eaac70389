@@ -1,0 +1,58 @@
+<Screen xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" gr:x="665" gr:y="-80" id="av1#scr4" name="Tipo">
+  <ViewComponents>
+    <List gr:x="0" gr:y="0" id="av1#scr4#pwu4" checkable="false" name="Tipo" dataBinding="cls1" displayAttributes="cls1#att6" eventOrder="av1#scr4#pwu4#oslte5">
+      <SortAttribute attribute="cls1#att6" order="ascending"/>
+      <ConditionalExpression id="av1#scr4#pwu4#sc2" defaultPolicy="fill" booleanOperator="and">
+        <AttributesCondition id="av1#scr4#pwu4#sc2#acond2" name="Key" predicate="eq" booleanOperator="or" implied="true" attributes="cls1#att4" ignoreCase="true"/>
+      </ConditionalExpression>
+      <Events>
+        <OnSelectEvent id="av1#scr4#pwu4#oslte5" name="aa" validate="true">
+          <NavigationFlow id="av1#scr4#pwu4#oslte5#nf8" to="av1#scr5#pwu2">
+            <ParameterBinding id="av1#scr4#pwu4#oslte5#nf8#par9" source="data.cls1#att14" target="maxResults" name="remoteOid - Max Results"/>
+          </NavigationFlow>
+        </OnSelectEvent>
+      </Events>
+    </List>
+    <Selector gr:x="80" gr:y="185" id="av1#scr4#seu2" name="a" dataBinding="cls1" distinctAttributes="cls1#att6" distinct="false">
+      <DataFlow id="av1#scr4#seu2#df1" to="av1#scr4#pwu4" name="aa">
+        <ParameterBinding id="av1#scr4#seu2#df1#par7" source="data.cls1#att4" target="maxResults" name="oid - Max Results"/>
+      </DataFlow>
+      <SortAttribute attribute="cls1#att6" order="ascending"/>
+    </Selector>
+  </ViewComponents>
+  <layout:Grid containerType="grid">
+    <layout:Row>
+      <layout:Cell colspan="12">
+        <layout:Component componentId="av1#scr4#pwu4">
+          <layout:Attribute attribute="cls1#att6"/>
+          <layout:Event event="av1#scr4#pwu4#oslte5" eventType="OnSelectEvent"/>
+        </layout:Component>
+      </layout:Cell>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+    <layout:Row>
+      <layout:Cell colspan="12"/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+  </layout:Grid>
+</Screen>

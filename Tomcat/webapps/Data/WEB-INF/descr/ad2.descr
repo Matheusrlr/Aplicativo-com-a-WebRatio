@@ -3,7 +3,11 @@
 <Descriptor service="com.webratio.rtx.actions.DefaultActionService">
   <CheckPermission>false</CheckPermission>
   <InputPort name="" id="ipd2">
-    <Parameter id="pdp1" name="Keys"/>
+    <Parameter id="pdp2" name="nome"/>
+    <Parameter id="pdp3" name="sobrenome"/>
+    <Parameter id="pdp4" name="matricula"/>
+    <Parameter id="pdp5" name="sugestao"/>
+    <Parameter id="pdp6" name="email"/>
   </InputPort>
   <OKPort id="spd2" name="Success Port" default="true"></OKPort>
   <KOPort id="epd2" name="Error Port" default="true"></KOPort>

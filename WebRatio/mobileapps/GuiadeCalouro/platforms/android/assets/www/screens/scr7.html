@@ -1,0 +1,93 @@
+<!-- directive: wr-screen scr7 -->
+<div>
+	<ion-header-bar class="bar-positive" align-title="center">
+		<h1 class="title"> 
+			<span class="wr-frag-applicationName ">Guia de Calouro</span>
+		</h1>
+		<div class="buttons pull-right">
+			<button type="button" class="button " ng-click="screen.throwEvent($event, 'HomeEvent', null, { position: $index })">
+			{{ 'event.Home' | wrLocalize }}
+			</button>
+		</div>
+	</ion-header-bar>
+	<ion-content class="has-header has-footer wr-safe-area">
+		<!-- directive: wr-component enu3 -->
+		<form class=" wr-comp-Form list ">
+			<div class="item item-divider">{{ 'Feedback' | wrLocalize }}</div>
+			<label class="item item-input " ng-class="{ 'has-errors' : view.formState.fld3.invalid }">
+				<span class="input-label" ng-class="{ 'has-errors' : view.formState.fld3.invalid }">
+				{{ 'Nome' | wrLocalize }}
+				</span>
+				<div class="wr-input-wrapper">
+					<input type="text" ng-model="view.form.fld3" wr-form-property />
+					<ul class="wr-error-list" ng-if="view.formState.fld3.errors.length">
+						<li ng-repeat="error in view.formState.fld3.errors track by $index">
+							{{ error }}
+						</li>
+					</ul>
+				</div>
+			</label>
+			<label class="item item-input " ng-class="{ 'has-errors' : view.formState.fld4.invalid }">
+				<span class="input-label" ng-class="{ 'has-errors' : view.formState.fld4.invalid }">
+				{{ 'Sobrenome' | wrLocalize }}
+				</span>
+				<div class="wr-input-wrapper">
+					<input type="text" ng-model="view.form.fld4" wr-form-property />
+					<ul class="wr-error-list" ng-if="view.formState.fld4.errors.length">
+						<li ng-repeat="error in view.formState.fld4.errors track by $index">
+							{{ error }}
+						</li>
+					</ul>
+				</div>
+			</label>
+			<label class="item item-input " ng-class="{ 'has-errors' : view.formState.fld5.invalid }">
+				<span class="input-label" ng-class="{ 'has-errors' : view.formState.fld5.invalid }">
+				{{ 'Matr\u00EDcula' | wrLocalize }}
+				</span>
+				<div class="wr-input-wrapper">
+					<input type="number" ng-model="view.form.fld5" wr-form-property />
+					<ul class="wr-error-list" ng-if="view.formState.fld5.errors.length">
+						<li ng-repeat="error in view.formState.fld5.errors track by $index">
+							{{ error }}
+						</li>
+					</ul>
+				</div>
+			</label>
+			<label class="item item-input " ng-class="{ 'has-errors' : view.formState.fld6.invalid }">
+				<span class="input-label" ng-class="{ 'has-errors' : view.formState.fld6.invalid }">
+				{{ 'E-mail' | wrLocalize }}
+				</span>
+				<div class="wr-input-wrapper">
+					<input type="text" ng-model="view.form.fld6" wr-form-property />
+					<ul class="wr-error-list" ng-if="view.formState.fld6.errors.length">
+						<li ng-repeat="error in view.formState.fld6.errors track by $index">
+							{{ error }}
+						</li>
+					</ul>
+				</div>
+			</label>
+			<label class="item item-input " ng-class="{ 'has-errors' : view.formState.fld7.invalid }">
+				<span class="input-label" ng-class="{ 'has-errors' : view.formState.fld7.invalid }">
+				{{ 'Sugest\u00E3o' | wrLocalize }}
+				</span>
+				<div class="wr-input-wrapper">
+					<input type="text" ng-model="view.form.fld7" wr-form-property />
+					<ul class="wr-error-list" ng-if="view.formState.fld7.errors.length">
+						<li ng-repeat="error in view.formState.fld7.errors track by $index">
+							{{ error }}
+						</li>
+					</ul>
+				</div>
+			</label>
+			<div class="item-buttons">    
+				<button type="button" class="button " ng-click="screen.throwEvent($event, 'OnSelectEvent', 'oslte1', { position: $index })">
+				{{ 'Save' | wrLocalize }}
+				</button>
+			</div>
+		</form>
+		<!-- end_directive: wr-component -->
+	</ion-content>
+	<ion-footer-bar keyboard-attach class="bar-positive hide-on-keyboard-open" align-title="center">
+	</ion-footer-bar>
+</div>
+<!-- end_directive: wr-screen -->

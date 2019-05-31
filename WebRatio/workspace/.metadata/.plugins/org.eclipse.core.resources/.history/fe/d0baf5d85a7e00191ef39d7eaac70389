@@ -1,0 +1,54 @@
+<Screen xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" gr:x="420" gr:y="-60" id="av1#scr3" name="Categoria">
+  <ViewComponents>
+    <List gr:x="0" gr:y="0" id="av1#scr3#pwu1" name="Categorias" checkable="false" dataBinding="cls2" distinct="false" displayAttributes="cls2#att8 cls2#att9" eventOrder="av1#scr3#pwu1#oslte3">
+      <SortAttribute attribute="cls2#att8" order="ascending"/>
+      <Events>
+        <OnSelectEvent id="av1#scr3#pwu1#oslte3" name="busca" validate="true">
+          <NavigationFlow id="av1#scr3#pwu1#oslte3#nf6" to="av1#scr4#pwu4" name="busca" automaticCoupling="true"/>
+        </OnSelectEvent>
+      </Events>
+    </List>
+    <Selector gr:x="30" gr:y="165" id="av1#scr3#seu4" name="Tipo" dataBinding="cls1">
+      <DataFlow id="av1#scr3#seu4#df4" to="av1#scr3#pwu1" name="retrieve data 1">
+        <ParameterBinding id="av1#scr3#seu4#df4#par11" source="data.cls1#att14" target="maxResults" name="remoteOid - Max Results"/>
+      </DataFlow>
+      <SortAttribute attribute="cls1#att14" order="ascending"/>
+    </Selector>
+  </ViewComponents>
+  <layout:Grid containerType="grid">
+    <layout:Row>
+      <layout:Cell colspan="12">
+        <layout:Component componentId="av1#scr3#pwu1">
+          <layout:Attribute attribute="cls2#att8"/>
+          <layout:Attribute attribute="cls2#att9"/>
+          <layout:Event event="av1#scr3#pwu1#oslte3" eventType="OnSelectEvent"/>
+        </layout:Component>
+      </layout:Cell>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+    <layout:Row>
+      <layout:Cell colspan="12"/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+  </layout:Grid>
+</Screen>

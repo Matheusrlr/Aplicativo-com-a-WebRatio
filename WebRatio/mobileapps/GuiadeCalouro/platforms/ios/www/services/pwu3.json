@@ -1,29 +1,21 @@
 {
   "service" : "wrm.comp.ListService",
-  "entity" : "cls3",
+  "entity" : "cls1",
   "maxResults" : 0,
   "distinct" : false,
   "output" : [ {
-    "ref" : "att25",
-    "viewName" : "telefone",
-    "bindName" : "att25"
-  }, {
-    "ref" : "att22",
-    "viewName" : "descricao",
-    "bindName" : "att22"
-  }, {
-    "ref" : "att21",
+    "ref" : "att6",
     "viewName" : "nome",
-    "bindName" : "att21"
+    "bindName" : "att6"
   }, {
-    "ref" : "att23",
-    "viewName" : "endereco",
-    "bindName" : "att23"
+    "ref" : "att14",
+    "viewName" : "remoteOid",
+    "bindName" : "att14"
   } ],
   "order" : [ ],
   "_form" : {
     "_" : "wrm.form.DefaultFormSubService",
-    "formLabel" : "Tópicos",
+    "formLabel" : "a",
     "properties" : {
       "checkedKeys" : { }
     }

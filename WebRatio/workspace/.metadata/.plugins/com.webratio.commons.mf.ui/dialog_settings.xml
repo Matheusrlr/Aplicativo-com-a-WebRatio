@@ -10,6 +10,13 @@
 	<section name="com.webratio.commons.mf.ui.patterns.PatternsSelectionPart$MobileProjectWizard">
 		<item value="true" key="Login &amp; Home"/>
 	</section>
+	<section name="com.webratio.ide.ui.dialogs.EditFormDialog">
+		<item value="1299" key="DIALOG_WIDTH"/>
+		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
+		<item value="741" key="DIALOG_HEIGHT"/>
+		<item value="0" key="DIALOG_X_ORIGIN"/>
+		<item value="0" key="DIALOG_Y_ORIGIN"/>
+	</section>
 	<section name="DialogBounds_ExceptionDialog">
 		<item value="278" key="DIALOG_X_ORIGIN.DETAILS"/>
 		<item value="623" key="DIALOG_HEIGHT.DETAILS"/>
@@ -21,5 +28,21 @@
 		<item value="274" key="DIALOG_Y_ORIGIN"/>
 	</section>
 	<section name="com.webratio.ide.ui.properties.items.DomainClassPropertyItem$3.DialogSettings">
+		<item value="false" key="SHOW_AS_LIST_DIALOG_PROPERTY_NAME"/>
+	</section>
+	<section name="ModelDocDialog">
+		<section name="COMPANY_DOCUMENTATION">
+			<item value="" key="LOGO"/>
+			<item value="Matheus Reis" key="AUTHOR"/>
+			<item value="UFSJ" key="COMPANY"/>
+		</section>
+		<section name="ExportImageDialog">
+			<section name="OUTPUT">
+				<item value="" key="TARGET"/>
+			</section>
+			<section name="GENERATION_OPTION">
+				<item value="PNG" key="DIAGRAM_FORMAT"/>
+			</section>
+		</section>
 	</section>
 </section>

@@ -8,13 +8,9 @@ public class Feedback implements java.io.Serializable {
 
     private java.lang.String _sugestao;
 
-    private java.lang.Boolean _sexo;
-
-    private java.sql.Date _dataNasc;
-
     private java.lang.String _email;
 
-    private java.lang.String _matrCula;
+    private java.lang.Integer _matricula;
 
     private java.lang.String _sobrenome;
 
@@ -44,22 +40,6 @@ public class Feedback implements java.io.Serializable {
         this._sugestao = _sugestao;
     }
 
-    public java.lang.Boolean getSexo() {
-        return _sexo;
-    }
-
-    public void setSexo(java.lang.Boolean _sexo) {
-        this._sexo = _sexo;
-    }
-
-    public java.sql.Date getDataNasc() {
-        return _dataNasc;
-    }
-
-    public void setDataNasc(java.sql.Date _dataNasc) {
-        this._dataNasc = _dataNasc;
-    }
-
     public java.lang.String getEmail() {
         return _email;
     }
@@ -68,12 +48,12 @@ public class Feedback implements java.io.Serializable {
         this._email = _email;
     }
 
-    public java.lang.String getMatrCula() {
-        return _matrCula;
+    public java.lang.Integer getMatricula() {
+        return _matricula;
     }
 
-    public void setMatrCula(java.lang.String _matrCula) {
-        this._matrCula = _matrCula;
+    public void setMatricula(java.lang.Integer _matricula) {
+        this._matricula = _matricula;
     }
 
     public java.lang.String getSobrenome() {
@@ -137,14 +117,10 @@ public class Feedback implements java.io.Serializable {
             sb.append("oid=" + _oid + ',');
         if (_sugestao != null)
             sb.append("sugestao=" + _sugestao + ',');
-        if (_sexo != null)
-            sb.append("sexo=" + _sexo + ',');
-        if (_dataNasc != null)
-            sb.append("dataNasc=" + _dataNasc + ',');
         if (_email != null)
             sb.append("email=" + _email + ',');
-        if (_matrCula != null)
-            sb.append("matrCula=" + _matrCula + ',');
+        if (_matricula != null)
+            sb.append("matricula=" + _matricula + ',');
         if (_sobrenome != null)
             sb.append("sobrenome=" + _sobrenome + ',');
         if (_nome != null)

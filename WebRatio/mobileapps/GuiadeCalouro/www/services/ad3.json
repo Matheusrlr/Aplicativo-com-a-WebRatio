@@ -1,0 +1,38 @@
+{
+  "_" : "wrm.core.ActionDefService",
+  "input" : {
+    "id" : "sf5",
+    "navTo" : "cru1",
+    "bindTo" : "cru1",
+    "bind" : {
+      "att33" : "pdp1",
+      "att32" : "pdp2",
+      "att34" : "pdp3",
+      "att35" : "pdp4",
+      "att37" : "pdp6",
+      "att18" : "pdp7"
+    }
+  },
+  "outputPorts" : {
+    "success" : "spd3",
+    "error" : "epd3"
+  },
+  "outputNotifications" : { },
+  "components" : {
+    "cru1" : {
+      "success" : {
+        "id" : "sf6",
+        "navTo" : "spd3",
+        "bindTo" : "spd3",
+        "bind" : {
+          "pdp5" : "att17"
+        }
+      },
+      "error" : {
+        "id" : "ef4",
+        "navTo" : "epd3",
+        "bindTo" : "epd3"
+      }
+    }
+  }
+}

@@ -32,6 +32,10 @@
 				"PACKAGE_NAME": "com.webratio.mobileapp.Guia de Calouro"
 			}
 		,
+			"cordova-plugin-inappbrowser": {
+				"PACKAGE_NAME": "com.webratio.mobileapp.Guia de Calouro"
+			}
+		,
 			"cordova-plugin-ionic-webview": {
 				"PACKAGE_NAME": "com.webratio.mobileapp.Guia de Calouro"
 			}

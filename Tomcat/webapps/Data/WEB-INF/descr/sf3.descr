@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Descriptor service="com.webratio.rtx.links.DefaultLinkService">
+  <Target>cru1</Target>
+  <Secure>false</Secure>
+  <Source>ipd2</Source>
+  <ReachableAlternativePages></ReachableAlternativePages>
+  <Navigates>true</Navigates>
+  <StartPageIdRequiredByTarget>true</StartPageIdRequiredByTarget>
+  <PreservedContextParams>
+    <Params/>
+  </PreservedContextParams>
+  <ContextPropagations>
+    <ContextPropagation targetParam="cru1.att6" sourceComponentId="ipd2" sourceParam="pdp6"/>
+    <ContextPropagation targetParam="cru1.att7" sourceComponentId="ipd2" sourceParam="pdp4"/>
+    <ContextPropagation targetParam="cru1.att9" sourceComponentId="ipd2" sourceParam="pdp2"/>
+    <ContextPropagation targetParam="cru1.att8" sourceComponentId="ipd2" sourceParam="pdp3"/>
+    <ContextPropagation targetParam="cru1.att3" sourceComponentId="ipd2" sourceParam="pdp5"/>
+  </ContextPropagations>
+</Descriptor>

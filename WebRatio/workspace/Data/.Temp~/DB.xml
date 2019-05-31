@@ -28,8 +28,6 @@
   <Table schema="" refreshed="true" type="TABLE" name="feedback" ignoreIndexes="false">
     <Column sqlTypeId="4" indexed="unknown" notNull="true" autoIncrement="false" type="INT" size="10" name="oid" decimalDigits="0" primaryKey="true"/>
     <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="sugestao" decimalDigits="0" primaryKey="false"/>
-    <Column sqlTypeId="-7" indexed="unknown" notNull="false" autoIncrement="false" type="BIT" size="1" name="sexo" decimalDigits="0" primaryKey="false"/>
-    <Column sqlTypeId="91" indexed="unknown" notNull="false" autoIncrement="false" type="DATE" size="10" name="data_nasc" decimalDigits="0" primaryKey="false"/>
     <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="email" decimalDigits="0" primaryKey="false"/>
     <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="matricula" decimalDigits="0" primaryKey="false"/>
     <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="sobrenome" decimalDigits="0" primaryKey="false"/>
@@ -42,6 +40,7 @@
     <Column sqlTypeId="4" indexed="unknown" notNull="true" autoIncrement="false" type="INT" size="10" name="oid" decimalDigits="0" primaryKey="true"/>
     <Column sqlTypeId="93" indexed="unknown" notNull="false" autoIncrement="false" type="DATETIME" size="19" name="createdat" decimalDigits="0" primaryKey="false"/>
     <Column sqlTypeId="93" indexed="unknown" notNull="false" autoIncrement="false" type="DATETIME" size="19" name="updatedat" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="logo" decimalDigits="0" primaryKey="false"/>
   </Table>
   <Table schema="" refreshed="true" type="TABLE" name="role" ignoreIndexes="false">
     <Column sqlTypeId="4" indexed="unknown" notNull="true" autoIncrement="false" type="INT" size="10" name="oid" decimalDigits="0" primaryKey="true"/>
@@ -57,11 +56,11 @@
   <Table schema="" refreshed="true" type="TABLE" name="topico" ignoreIndexes="false">
     <Column sqlTypeId="4" indexed="unknown" notNull="true" autoIncrement="true" type="INT" size="10" name="oid" decimalDigits="0" primaryKey="true"/>
     <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="nome" decimalDigits="0" primaryKey="false"/>
-    <Column sqlTypeId="4" indexed="unknown" notNull="false" autoIncrement="false" type="INT" size="10" name="valor" decimalDigits="0" primaryKey="false"/>
-    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="telefone" decimalDigits="0" primaryKey="false"/>
-    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="link" decimalDigits="0" primaryKey="false"/>
     <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="endereco" decimalDigits="0" primaryKey="false"/>
-    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="descricao" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="telefone" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="500" name="descricao" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="4" indexed="unknown" notNull="false" autoIncrement="false" type="INT" size="10" name="valor" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="link" decimalDigits="0" primaryKey="false"/>
     <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="logo" decimalDigits="0" primaryKey="false"/>
     <Column sqlTypeId="93" indexed="unknown" notNull="false" autoIncrement="false" type="DATETIME" size="19" name="createdat" decimalDigits="0" primaryKey="false"/>
     <Column sqlTypeId="93" indexed="unknown" notNull="false" autoIncrement="false" type="DATETIME" size="19" name="updatedat" decimalDigits="0" primaryKey="false"/>

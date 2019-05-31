@@ -150,6 +150,9 @@ $data.Entity.extend("data.Estabelecimento", {
 	},
 	updatedAt: {
 		type: "date"
+	},
+	oidTip: {
+		type: "string"
 	}
 });
 
@@ -186,6 +189,9 @@ $data.Entity.extend("data.Estabelecimento__Aux", {
 	d_nome: {
 		type: "boolean"
 	},
+	d_oidTip: {
+		type: "boolean"
+	},
 	t_oid: {
 		type: "integer"
 	},
@@ -211,6 +217,9 @@ $data.Entity.extend("data.Tipo", {
 	},
 	updatedAt: {
 		type: "date"
+	},
+	oidCat: {
+		type: "string"
 	}
 });
 
@@ -227,6 +236,131 @@ $data.Entity.extend("data.Tipo__Aux", {
 		type: "date"
 	},
 	d_nome: {
+		type: "boolean"
+	},
+	d_oidCat: {
+		type: "boolean"
+	},
+	t_oid: {
+		type: "integer"
+	},
+	t_remoteOid: {
+		type: "integer"
+	}
+});
+
+/* Entity for cls4 */
+
+$data.Entity.extend("data.Feedback", {
+	oid: {
+		type: "integer", key: true, computed: true
+	},
+	remoteOid: {
+		type: "integer"
+	},
+	createdAt: {
+		type: "date"
+	},
+	updatedAt: {
+		type: "date"
+	},
+	email: {
+		type: "string"
+	},
+	matrCula: {
+		type: "integer"
+	},
+	sobrenome: {
+		type: "string"
+	},
+	nome: {
+		type: "string"
+	},
+	sugestao: {
+		type: "string"
+	}
+});
+
+/* Auxiliary entity for cls4 */
+
+$data.Entity.extend("data.Feedback__Aux", {
+	oid: {
+		type: "integer", key: true, computed: true
+	},
+	dirty: {
+		type: "boolean"
+	},
+	deletedAt: {
+		type: "date"
+	},
+	d_email: {
+		type: "boolean"
+	},
+	d_matrCula: {
+		type: "boolean"
+	},
+	d_sobrenome: {
+		type: "boolean"
+	},
+	d_nome: {
+		type: "boolean"
+	},
+	d_sugestao: {
+		type: "boolean"
+	},
+	t_oid: {
+		type: "integer"
+	},
+	t_remoteOid: {
+		type: "integer"
+	}
+});
+
+/* Entity for cls5 */
+
+$data.Entity.extend("data.Menu", {
+	oid: {
+		type: "integer", key: true, computed: true
+	},
+	remoteOid: {
+		type: "integer"
+	},
+	createdAt: {
+		type: "date"
+	},
+	updatedAt: {
+		type: "date"
+	},
+	logo: {
+		type: "blob"
+	},
+	logo_contentType: {
+		type: "string"
+	},
+	logo_fileName: {
+		type: "string"
+	},
+	logo_remoteFileId: {
+		type: "string"
+	},
+	logo_status: {
+		type: "integer"
+	}
+});
+
+/* Auxiliary entity for cls5 */
+
+$data.Entity.extend("data.Menu__Aux", {
+	oid: {
+		type: "integer", key: true, computed: true
+	},
+	dirty: {
+		type: "boolean"
+	},
+	deletedAt: {
+		type: "date"
+	},
+	d_logo: {
 		type: "boolean"
 	},
 	t_oid: {
@@ -263,5 +397,17 @@ $data.EntityContext.extend("ManagementContext", {
 	},
 	data_TipoSet__Aux: {
 		type: $data.EntitySet, elementType: data.Tipo__Aux
+	},
+	data_FeedbackSet: {
+		type: $data.EntitySet, elementType: data.Feedback
+	},
+	data_FeedbackSet__Aux: {
+		type: $data.EntitySet, elementType: data.Feedback__Aux
+	},
+	data_MenuSet: {
+		type: $data.EntitySet, elementType: data.Menu
+	},
+	data_MenuSet__Aux: {
+		type: $data.EntitySet, elementType: data.Menu__Aux
 	}
 });

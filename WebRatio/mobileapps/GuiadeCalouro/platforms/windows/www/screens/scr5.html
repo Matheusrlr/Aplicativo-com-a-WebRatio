@@ -1,19 +1,32 @@
 <!-- directive: wr-screen scr5 -->
 <div>
-	<ion-content class=" wr-safe-area">
+	<ion-header-bar class="bar-positive" align-title="center">
+		<h1 class="title"> 
+			<span class="wr-frag-applicationName ">Guia de Calouro</span>
+		</h1>
+		<div class="buttons pull-right">
+			<button type="button" class="button " ng-click="screen.throwEvent($event, 'HomeEvent', null, { position: $index })">
+			{{ 'event.Home' | wrLocalize }}
+			</button>
+		</div>
+	</ion-header-bar>
+	<ion-content class="has-header has-footer wr-safe-area">
 		<!-- directive: wr-component pwu2 -->
 		<div class=" wr-comp-List">
 			<div ng-if="view.data &amp;&amp; view.data.length" class="list ">
-				<div class="item item-divider">{{ 'List 2' | wrLocalize }}</div>
+				<div class="item item-divider">{{ 'Estabelecimentos' | wrLocalize }}</div>
 				<div class="item" ng-repeat="current in view.data">
 					<h2>{{ current.nome }}</h2>
 					<p>{{ current.descricao }}</p>
 					<p>{{ current.endereco }}</p>
 					<p>{{ current.telefone }}</p>
+					<p><a wr-external-open target="_system" ng-href="{{ current.link }}">{{ current.link }}</a></p>
 				</div>
 			</div>
 		</div>
 		<!-- end_directive: wr-component -->
 	</ion-content>
+	<ion-footer-bar keyboard-attach class="bar-positive hide-on-keyboard-open" align-title="center">
+	</ion-footer-bar>
 </div>
 <!-- end_directive: wr-screen -->

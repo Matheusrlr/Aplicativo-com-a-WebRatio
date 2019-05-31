@@ -1,0 +1,2 @@
+24 mai 2019 15:02:26,318 ERROR [http-bio-8080-exec-7] (com.webratio.rtx.core.TransactionSupport:91) - [] - Attempted roll back outside of transaction
+ 

@@ -18,7 +18,7 @@
     <Attribute id="cls1#att1" key="true" name="oid" type="integer" specialBehavior="implicitOid"/>
     <Attribute id="cls1#att3" name="descricao" type="string"/>
     <Attribute id="cls1#att2" name="nome" type="string"/>
-    <Attribute id="cls1#att21" name="imagem" type="blob"/>
+    <Attribute id="cls1#att21" name="imagem" type="blob" contentType="image"/>
   </Class>
   <Class gr:x="690" gr:y="-20" id="cls2" name="Topico" duration="persistent" attributeOrder="cls2#att4 cls2#att5 cls2#att6 cls2#att7 cls2#att8 cls2#att9 cls2#att10 cls2#att20">
     <Attribute id="cls2#att4" key="true" name="oid" type="integer" specialBehavior="implicitOid"/>

@@ -1,18 +1,23 @@
 <ActionDefinition xmlns:gr="http://www.webratio.com/2006/WebML/Graph" id="tlads0#ad2" name="Retrieve" defaultSuccessPortDefinition="tlads0#ad2#spd2" defaultErrorPortDefinition="tlads0#ad2#epd2">
   <Operations>
-    <Query gr:x="365" gr:y="180" id="tlads0#ad2#qu1" name="Query 1" mode="select" language="SQL" db="db1" queryFile="Database_190508_145711.sql" outputsOrder="tlads0#ad2#qu1#qo1 tlads0#ad2#qu1#qo2">
-      <SuccessFlow id="tlads0#ad2#qu1#sf2" to="tlads0#ad2#spd2" automaticCoupling="true"/>
-      <ErrorFlow id="tlads0#ad2#qu1#ef1" to="tlads0#ad2#epd2" automaticCoupling="true"/>
-      <QueryInput id="tlads0#ad2#qu1#qi1" name="Keys" required="true" type="integer"/>
-      <QueryOutput id="tlads0#ad2#qu1#qo1" name="nome" type="string"/>
-      <QueryOutput id="tlads0#ad2#qu1#qo2" name="descricao" type="string"/>
-    </Query>
+    <Create gr:x="405" gr:y="125" id="tlads0#ad2#cru1" dataBinding="cls2">
+      <SuccessFlow id="tlads0#ad2#cru1#sf4" to="tlads0#ad2#spd2"/>
+      <ErrorFlow id="tlads0#ad2#cru1#ef2" to="tlads0#ad2#epd2" automaticCoupling="true"/>
+    </Create>
   </Operations>
   <InputPortDefinition id="tlads0#ad2#ipd2" gr:x="0" gr:y="30">
-    <SuccessFlow id="tlads0#ad2#ipd2#sf1" to="tlads0#ad2#qu1">
-      <ParameterBinding id="tlads0#ad2#ipd2#sf1#par1" source="tlads0#ad2#ipd2#pdp1" target="tlads0#ad2#qu1.tlads0#ad2#qu1#qi1"/>
+    <SuccessFlow id="tlads0#ad2#ipd2#sf3" to="tlads0#ad2#cru1">
+      <ParameterBinding id="tlads0#ad2#ipd2#sf3#par2" source="tlads0#ad2#ipd2#pdp6" target="tlads0#ad2#cru1.cls2#att6" name="email - email"/>
+      <ParameterBinding id="tlads0#ad2#ipd2#sf3#par3" source="tlads0#ad2#ipd2#pdp4" target="tlads0#ad2#cru1.cls2#att7" name="matricula - matricula"/>
+      <ParameterBinding id="tlads0#ad2#ipd2#sf3#par4" source="tlads0#ad2#ipd2#pdp2" target="tlads0#ad2#cru1.cls2#att9" name="nome - nome"/>
+      <ParameterBinding id="tlads0#ad2#ipd2#sf3#par5" source="tlads0#ad2#ipd2#pdp3" target="tlads0#ad2#cru1.cls2#att8" name="sobrenome - sobrenome"/>
+      <ParameterBinding id="tlads0#ad2#ipd2#sf3#par6" source="tlads0#ad2#ipd2#pdp5" target="tlads0#ad2#cru1.cls2#att3" name="sugestao - sugestao"/>
     </SuccessFlow>
-    <PortDefinitionParameter id="tlads0#ad2#ipd2#pdp1" name="Keys"/>
+    <PortDefinitionParameter id="tlads0#ad2#ipd2#pdp2" name="nome"/>
+    <PortDefinitionParameter id="tlads0#ad2#ipd2#pdp3" name="sobrenome"/>
+    <PortDefinitionParameter id="tlads0#ad2#ipd2#pdp4" name="matricula"/>
+    <PortDefinitionParameter id="tlads0#ad2#ipd2#pdp5" name="sugestao"/>
+    <PortDefinitionParameter id="tlads0#ad2#ipd2#pdp6" name="email"/>
   </InputPortDefinition>
   <SuccessPortDefinition id="tlads0#ad2#spd2" name="Success Port" gr:x="0" gr:y="30"/>
   <ErrorPortDefinition id="tlads0#ad2#epd2" name="Error Port" gr:x="0" gr:y="300"/>

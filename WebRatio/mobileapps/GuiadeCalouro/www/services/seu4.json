@@ -1,0 +1,11 @@
+{
+  "service" : "wrm.comp.SelectorService",
+  "entity" : "cls4",
+  "maxResults" : 0,
+  "distinct" : false,
+  "output" : [ ],
+  "order" : [ {
+    "property" : "att32",
+    "reverse" : false
+  } ]
+}

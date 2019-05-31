@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Descriptor service="com.webratio.components.web.operation.datasource.CreateService">
+  <DataSource>db1</DataSource>
+  <Class>cls2</Class>
+  <Bulk>false</Bulk>
+  <DeleteAllBefore/>
+  <SkipBlankRecords>false</SkipBlankRecords>
+  <NotBlank/>
+  <!--Operation Decorator Service-->
+  <wr:DecoratorService xmlns:wr="http://www.webratio.com/2013/WebML/Logic" service="com.webratio.rtx.components.DefaultOperationDecoratorService">
+    <ModelName>cru1</ModelName>
+    <ParentContainer>ad2</ParentContainer>
+    <NavigationAncestors/>
+    <Secure>false</Secure>
+    <Localized>false</Localized>
+    <CheckPermission>false</CheckPermission>
+    <LinkIdRequired>true</LinkIdRequired>
+    <OperationParams>
+      <OperationParam component="cru1">cru1.att6</OperationParam>
+      <OperationParam component="cru1">cru1.att7</OperationParam>
+      <OperationParam component="cru1">cru1.att8</OperationParam>
+      <OperationParam component="cru1">cru1.att9</OperationParam>
+      <OperationParam component="cru1">cru1.att3</OperationParam>
+      <Params/>
+    </OperationParams>
+    <Outgoing>
+      <Link resultCode="success">sf4</Link>
+      <Link resultCode="error">ef2</Link>
+    </Outgoing>
+    <IsLinkHistoryRecorded>true</IsLinkHistoryRecorded>
+    <DomainModelValidationEnabled>true</DomainModelValidationEnabled>
+  </wr:DecoratorService>
+</Descriptor>

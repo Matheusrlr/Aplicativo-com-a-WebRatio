@@ -1,11 +1,11 @@
-<Screen xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" gr:x="580" gr:y="10" id="av1#scr3" name="Categoria">
+<Screen xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" gr:x="510" gr:y="-275" id="av1#scr3" name="Categorias">
   <ViewComponents>
-    <List gr:x="0" gr:y="0" id="av1#scr3#pwu1" name="Categorias" checkable="false" dataBinding="cls2" distinct="false" displayAttributes="cls2#att8 cls2#att9" eventOrder="av1#scr3#pwu1#oslte4">
-      <SortAttribute attribute="cls2#att7" order="ascending"/>
+    <List gr:x="0" gr:y="0" id="av1#scr3#pwu1" name="Categorias" checkable="false" dataBinding="cls2" distinct="false" displayAttributes="cls2#att8 cls2#att9" eventOrder="av1#scr3#pwu1#oslte3">
+      <SortAttribute attribute="cls2#att8" order="ascending"/>
       <Events>
-        <OnSelectEvent id="av1#scr3#pwu1#oslte4" name="On Select Event 4" validate="true">
-          <NavigationFlow id="av1#scr3#pwu1#oslte4#nf7" to="av1#scr4#pwu4">
-            <ParameterBinding id="av1#scr3#pwu1#oslte4#nf7#par1" source="data.cls2#att7" target="maxResults" name="oid - Max Results"/>
+        <OnSelectEvent id="av1#scr3#pwu1#oslte3" name="busca" validate="true">
+          <NavigationFlow id="av1#scr3#pwu1#oslte3#nf6" to="av1#scr4#pwu4" name="busca">
+            <ParameterBinding id="av1#scr3#pwu1#oslte3#nf6#par6" source="data.cls2#att7" target="av1#scr4#pwu4#sc2#acond2" name="oid - Key"/>
           </NavigationFlow>
         </OnSelectEvent>
       </Events>
@@ -14,10 +14,10 @@
   <layout:Grid containerType="grid">
     <layout:Row>
       <layout:Cell colspan="12">
-        <layout:Component componentId="av1#scr3#pwu1">
+        <layout:Component componentId="av1#scr3#pwu1" layout:style="MobileDefault" layout:attributeLayout="MobileDefault/Default">
           <layout:Attribute attribute="cls2#att8"/>
           <layout:Attribute attribute="cls2#att9"/>
-          <layout:Event event="av1#scr3#pwu1#oslte4" eventType="OnSelectEvent"/>
+          <layout:Event event="av1#scr3#pwu1#oslte3" eventType="OnSelectEvent"/>
         </layout:Component>
       </layout:Cell>
       <layout:Cell/>

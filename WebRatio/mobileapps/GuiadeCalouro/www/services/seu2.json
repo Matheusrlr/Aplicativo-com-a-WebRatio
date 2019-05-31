@@ -1,0 +1,19 @@
+{
+  "service" : "wrm.comp.SelectorService",
+  "entity" : "cls1",
+  "maxResults" : 0,
+  "distinct" : false,
+  "output" : [ {
+    "ref" : "att6",
+    "viewName" : "nome",
+    "bindName" : "att6"
+  }, {
+    "ref" : "att4",
+    "viewName" : "oidCat",
+    "bindName" : "att4"
+  } ],
+  "order" : [ {
+    "property" : "att6",
+    "reverse" : false
+  } ]
+}

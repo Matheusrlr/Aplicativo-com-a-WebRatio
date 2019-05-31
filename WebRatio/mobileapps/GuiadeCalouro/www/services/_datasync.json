@@ -12,6 +12,14 @@
     "cls1" : {
       "startup" : true,
       "reopen" : 0
+    },
+    "cls4" : {
+      "startup" : true,
+      "reopen" : 0
+    },
+    "cls5" : {
+      "startup" : true,
+      "reopen" : 0
     }
   }
 }

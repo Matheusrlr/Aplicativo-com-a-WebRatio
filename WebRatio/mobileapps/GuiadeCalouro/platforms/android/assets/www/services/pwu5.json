@@ -1,0 +1,39 @@
+{
+  "service" : "wrm.comp.ListService",
+  "entity" : "cls3",
+  "maxResults" : 0,
+  "distinct" : false,
+  "output" : [ {
+    "ref" : "att26",
+    "viewName" : "valor",
+    "bindName" : "att26"
+  }, {
+    "ref" : "att25",
+    "viewName" : "telefone",
+    "bindName" : "att25"
+  }, {
+    "ref" : "att22",
+    "viewName" : "descricao",
+    "bindName" : "att22"
+  }, {
+    "ref" : "att21",
+    "viewName" : "nome",
+    "bindName" : "att21"
+  }, {
+    "ref" : "att13",
+    "viewName" : "oidTip",
+    "bindName" : "att13"
+  }, {
+    "ref" : "att23",
+    "viewName" : "endereco",
+    "bindName" : "att23"
+  } ],
+  "order" : [ ],
+  "_form" : {
+    "_" : "wrm.form.DefaultFormSubService",
+    "formLabel" : "a",
+    "properties" : {
+      "checkedKeys" : { }
+    }
+  }
+}

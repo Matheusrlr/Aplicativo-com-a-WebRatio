@@ -1,26 +1,26 @@
-[21 mai 2019 21:26:44] DEBUG Executing SQL script
-[21 mai 2019 21:26:44] INFO ================================================================================
-[21 mai 2019 21:26:44] INFO onError= 'stop'
-[21 mai 2019 21:26:44] INFO encoding= ''
-[21 mai 2019 21:26:44] INFO statementSeparator= ';'
-[21 mai 2019 21:26:44] INFO eventSocketPort= '39835'
-[21 mai 2019 21:26:44] INFO outputLogPath= '/home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/workspace/Data/.Temp~/UpdateSQL.xml.log'
-[21 mai 2019 21:26:44] INFO url= 'jdbc:mysql://localhost:3306/database'
-[21 mai 2019 21:26:44] INFO password= 'tatau25..,'
-[21 mai 2019 21:26:44] INFO outputPath= '/home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/workspace/Data/.Temp~/UpdateSQL.xml'
-[21 mai 2019 21:26:44] INFO driverClass= 'com.mysql.jdbc.Driver'
-[21 mai 2019 21:26:44] INFO sqlScript= '/home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/workspace/Data/.Temp~/UpdateSQL.sql'
-[21 mai 2019 21:26:44] INFO autoCommit= 'false'
-[21 mai 2019 21:26:44] INFO derby.system.home= '/home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/workspace/.metadata/.plugins/com.webratio.commons.db/derby'
-[21 mai 2019 21:26:44] INFO username= 'root'
-[21 mai 2019 21:26:44] INFO ================================================================================
-[21 mai 2019 21:26:44] INFO Connecting to the Database...
-[21 mai 2019 21:26:44] INFO Database connection estabilished
-[21 mai 2019 21:26:44] INFO transaction isolation: 4
-[21 mai 2019 21:26:44] DEBUG ================================================================================
-[21 mai 2019 21:26:44] DEBUG Executing SQL script file: /home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/workspace/Data/.Temp~/UpdateSQL.sql
-[21 mai 2019 21:26:44] DEBUG Executing statement:  alter table `topico`  add column  `oid_tipo`  integer
-[21 mai 2019 21:26:44] DEBUG ================================================================================
-[21 mai 2019 21:26:44] DEBUG SQL SCRIPT SUCCESSFULLY EXECUTED
-[21 mai 2019 21:26:44] INFO Database connection closed
-[21 mai 2019 21:26:44] DEBUG Total time: 466 milliseconds
+[29 mai 2019 14:06:36] DEBUG Executing SQL script
+[29 mai 2019 14:06:36] INFO ================================================================================
+[29 mai 2019 14:06:36] INFO onError= 'stop'
+[29 mai 2019 14:06:36] INFO encoding= ''
+[29 mai 2019 14:06:36] INFO statementSeparator= ';'
+[29 mai 2019 14:06:36] INFO eventSocketPort= '34099'
+[29 mai 2019 14:06:36] INFO outputLogPath= '/home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/workspace/Data/.Temp~/UpdateSQL.xml.log'
+[29 mai 2019 14:06:36] INFO url= 'jdbc:mysql://localhost:3306/database'
+[29 mai 2019 14:06:36] INFO password= 'tatau25..,'
+[29 mai 2019 14:06:36] INFO outputPath= '/home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/workspace/Data/.Temp~/UpdateSQL.xml'
+[29 mai 2019 14:06:36] INFO driverClass= 'com.mysql.jdbc.Driver'
+[29 mai 2019 14:06:36] INFO sqlScript= '/home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/workspace/Data/.Temp~/UpdateSQL.sql'
+[29 mai 2019 14:06:36] INFO autoCommit= 'false'
+[29 mai 2019 14:06:36] INFO derby.system.home= '/home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/workspace/.metadata/.plugins/com.webratio.commons.db/derby'
+[29 mai 2019 14:06:36] INFO username= 'root'
+[29 mai 2019 14:06:36] INFO ================================================================================
+[29 mai 2019 14:06:36] INFO Connecting to the Database...
+[29 mai 2019 14:06:36] INFO Database connection estabilished
+[29 mai 2019 14:06:36] INFO transaction isolation: 4
+[29 mai 2019 14:06:36] DEBUG ================================================================================
+[29 mai 2019 14:06:36] DEBUG Executing SQL script file: /home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/workspace/Data/.Temp~/UpdateSQL.sql
+[29 mai 2019 14:06:36] DEBUG Executing statement:  alter table `menu`  add column  `logo`  varchar(255)
+[29 mai 2019 14:06:36] DEBUG ================================================================================
+[29 mai 2019 14:06:36] DEBUG SQL SCRIPT SUCCESSFULLY EXECUTED
+[29 mai 2019 14:06:36] INFO Database connection closed
+[29 mai 2019 14:06:36] DEBUG Total time: 437 milliseconds

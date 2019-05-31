@@ -1,0 +1,25 @@
+<Toolbar xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" gr:x="250" gr:y="30" id="av1#tlb1" name="Main toolbar">
+  <ViewComponents/>
+  <Events>
+    <OnSelectEvent id="av1#tlb1#oslte2" name="Menu">
+      <NavigationFlow id="av1#tlb1#oslte2#nf7" to="av1#scr6" automaticCoupling="true" name="Menu"/>
+    </OnSelectEvent>
+  </Events>
+  <layout:CustomLocation name="Top Bar">
+    <layout:Grid containerType="cell">
+      <layout:Row>
+        <layout:Cell layout:cellLayout="MobileDefault/Bar">
+          <layout:Fragment type="applicationName"/>
+          <layout:Event eventType="HomeEvent"/>
+        </layout:Cell>
+      </layout:Row>
+    </layout:Grid>
+  </layout:CustomLocation>
+  <layout:CustomLocation name="Bottom Bar">
+    <layout:Grid containerType="cell">
+      <layout:Row>
+        <layout:Cell layout:cellLayout="MobileDefault/Bar"/>
+      </layout:Row>
+    </layout:Grid>
+  </layout:CustomLocation>
+</Toolbar>

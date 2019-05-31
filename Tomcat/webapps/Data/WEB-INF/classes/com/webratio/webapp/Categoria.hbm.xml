@@ -20,10 +20,7 @@
   </class>
   <!-- mapping for relationship 'CategoriaToTipo[role8]' -->
   <class entity-name="com.webratio.webapp.Rel_Categoria_to_categoriaToTipo" table="`tipo`" dynamic-update="true" dynamic-insert="true" mutable="true" polymorphism="implicit" select-before-update="false" optimistic-lock="version">
-    <composite-id mapped="false" unsaved-value="undefined">
-      <key-property name="target_oid" column="`oid`" type="java.lang.Integer"/>
-      <key-property name="target_oidCategoria" column="`oid_categoria`" type="java.lang.Integer"/>
-    </composite-id>
-    <property name="source_oid" column="`oid_categoria`" type="java.lang.Integer" insert="false" update="false" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
+    <id name="target_oid" column="`oid`" type="java.lang.Integer"/>
+    <property name="source_oid" column="`oid_categoria`" type="java.lang.Integer" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
   </class>
 </hibernate-mapping>

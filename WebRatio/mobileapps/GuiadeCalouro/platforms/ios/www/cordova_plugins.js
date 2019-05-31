@@ -426,6 +426,22 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
 			}
 		,
 			{
+				"file": "plugins/cordova-plugin-inappbrowser/www\/inappbrowser.js",
+				"id": "cordova-plugin-inappbrowser.inappbrowser",
+				"clobbers": [
+					
+						"cordova.InAppBrowser.open"
+					,
+						"window.open"
+					
+				],
+				"merges": [
+					
+				]
+				
+			}
+		,
+			{
 				"file": "plugins/cordova-plugin-ionic-webview/src\/www\/ios\/ios-wkwebview-exec.js",
 				"id": "cordova-plugin-ionic-webview.ios-wkwebview-exec",
 				"clobbers": [
@@ -514,6 +530,8 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
 			"cordova-plugin-file-transfer": "1.7.0"
 		,
 			"cordova-plugin-globalization": "1.0.9"
+		,
+			"cordova-plugin-inappbrowser": "2.0.1"
 		,
 			"cordova-plugin-ionic-webview": "1.1.19.2wr"
 		,

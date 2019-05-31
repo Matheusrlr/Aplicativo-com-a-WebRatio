@@ -8,6 +8,7 @@
     </id>
     <property name="createdAt" column="`createdat`" type="java.sql.Timestamp" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
     <property name="updatedAt" column="`updatedat`" type="java.sql.Timestamp" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
+    <property name="logoRef" column="`logo`" type="java.lang.String" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
     <set name="menuToFeedback" inverse="true" sort="unsorted" mutable="true" optimistic-lock="true" embed-xml="true">
       <key on-delete="noaction">
         <column name="`menu_oid`"/>

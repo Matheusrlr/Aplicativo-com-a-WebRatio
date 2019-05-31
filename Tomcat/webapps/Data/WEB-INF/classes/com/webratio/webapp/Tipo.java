@@ -132,19 +132,6 @@ public class Tipo implements java.io.Serializable {
                 return false;
             }
         }
-        key = this.getOidCategoria();
-        otherKey = __other.getOidCategoria();
-        if (key == null) {
-            if (otherKey != null) {
-                return false;
-            }
-        } else {
-            if (otherKey == null) {
-                return false;
-            } else if (!key.equals(otherKey)) {
-                return false;
-            }
-        }
         return true;
     }
 
@@ -152,10 +139,6 @@ public class Tipo implements java.io.Serializable {
         int hashCode = 0;
         java.lang.Object key = null;
         key = this.getOid();
-        if (key != null) {
-            hashCode |= key.hashCode();
-        }
-        key = this.getOidCategoria();
         if (key != null) {
             hashCode |= key.hashCode();
         }

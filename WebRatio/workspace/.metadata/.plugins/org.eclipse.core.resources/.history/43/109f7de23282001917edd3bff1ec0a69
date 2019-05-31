@@ -1,0 +1,51 @@
+<Screen xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" gr:x="210" gr:y="-245" id="av1#scr6" name="Menu">
+  <ViewComponents>
+    <Message gr:x="0" gr:y="0" id="av1#scr6#mssu1" name="Mensagem inicial">
+      <Message xml:space="preserve">Bem vindo ao aplicativo Guia de Calouro! Aqui voc&#234; vai encontrar informa&#231;&#245;es de servi&#231;os e estabelecimentos para   S&#227;o Jo&#227;o del-Rei</Message>
+    </Message>
+    <Form gr:x="75" gr:y="80" id="av1#scr6#enu2" name="Barra de busca" fieldOrder="av1#scr6#enu2#fld8">
+      <Field id="av1#scr6#enu2#fld8" name="Keyword" type="string" modifiable="true"/>
+    </Form>
+  </ViewComponents>
+  <layout:Grid containerType="grid">
+    <layout:Row>
+      <layout:Cell colspan="12">
+        <layout:Component componentId="av1#scr6#mssu1"/>
+      </layout:Cell>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+    <layout:Row>
+      <layout:Cell colspan="12">
+        <layout:Component componentId="av1#scr6#enu2">
+          <layout:Field field="av1#scr6#enu2#fld8"/>
+        </layout:Component>
+      </layout:Cell>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+  </layout:Grid>
+  <Events>
+    <BackEvent id="av1#scr6#bke1" name="Navegar">
+      <NavigationFlow id="av1#scr6#bke1#nf14" to="av1#scr3" automaticCoupling="true"/>
+    </BackEvent>
+  </Events>
+</Screen>

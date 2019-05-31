@@ -436,6 +436,12 @@ wrx.EmulatorSupport = (function() {
     },
     "data.Tipo" : {
       "id" : "cls1"
+    },
+    "data.Feedback" : {
+      "id" : "cls4"
+    },
+    "data.Menu" : {
+      "id" : "cls5"
     }
   },
   "notifications" : { },
@@ -443,12 +449,16 @@ wrx.EmulatorSupport = (function() {
     "Guia de Calouro" : { }
   },
   "screens" : {
+    "scr6" : {
+      "name" : "Menu",
+      "setNames" : [ ]
+    },
     "scr2" : {
       "name" : "Login",
       "setNames" : [ ]
     },
     "scr5" : {
-      "name" : "Screen 5",
+      "name" : "Estabelecimentos",
       "setNames" : [ ]
     },
     "scr1" : {
@@ -456,11 +466,19 @@ wrx.EmulatorSupport = (function() {
       "setNames" : [ ]
     },
     "scr4" : {
+      "name" : "Variedade",
+      "setNames" : [ ]
+    },
+    "scr8" : {
       "name" : "Detalhes",
       "setNames" : [ ]
     },
     "scr3" : {
-      "name" : "Categoria",
+      "name" : "Categorias",
+      "setNames" : [ ]
+    },
+    "scr7" : {
+      "name" : "Formulário",
       "setNames" : [ ]
     }
   },

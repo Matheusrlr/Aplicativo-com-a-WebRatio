@@ -1,6 +1,16 @@
 <!-- directive: wr-screen scr2 -->
 <div>
-	<ion-content class=" wr-safe-area">
+	<ion-header-bar class="bar-positive" align-title="center">
+		<h1 class="title"> 
+			<span class="wr-frag-applicationName ">Guia de Calouro</span>
+		</h1>
+		<div class="buttons pull-right">
+			<button type="button" class="button " ng-click="screen.throwEvent($event, 'HomeEvent', null, { position: $index })">
+			{{ 'event.Home' | wrLocalize }}
+			</button>
+		</div>
+	</ion-header-bar>
+	<ion-content class="has-header has-footer wr-safe-area">
 		<!-- directive: wr-component enu1 -->
 		<form class=" wr-comp-Form list ">
 			<div class="item item-divider">{{ 'Login' | wrLocalize }}</div>
@@ -38,5 +48,7 @@
 		</form>
 		<!-- end_directive: wr-component -->
 	</ion-content>
+	<ion-footer-bar keyboard-attach class="bar-positive hide-on-keyboard-open" align-title="center">
+	</ion-footer-bar>
 </div>
 <!-- end_directive: wr-screen -->

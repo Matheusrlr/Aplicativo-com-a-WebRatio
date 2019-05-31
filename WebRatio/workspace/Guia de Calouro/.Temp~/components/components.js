@@ -46,35 +46,53 @@
 
 	var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { "default": obj }; };
 
-	var _import = __webpack_require__(5);
+	var _import = __webpack_require__(4);
 
 	var mod0 = _interopRequireWildcard(_import);
 
-	var _import2 = __webpack_require__(3);
+	var _import2 = __webpack_require__(5);
 
 	var mod1 = _interopRequireWildcard(_import2);
 
-	var _import3 = __webpack_require__(4);
+	var _import3 = __webpack_require__(8);
 
 	var mod2 = _interopRequireWildcard(_import3);
 
-	var _import4 = __webpack_require__(1);
+	var _import4 = __webpack_require__(6);
 
 	var mod3 = _interopRequireWildcard(_import4);
 
-	var _import5 = __webpack_require__(2);
+	var _import5 = __webpack_require__(7);
 
 	var mod4 = _interopRequireWildcard(_import5);
 
-	wrm.defineModule("wrm/comp/val/MandatoryValidationRuleService", mod0);
+	var _import6 = __webpack_require__(3);
 
-	wrm.defineModule("wrm/comp/FormService", mod1);
+	var mod5 = _interopRequireWildcard(_import6);
 
-	wrm.defineModule("wrm/comp/ListService", mod2);
+	var _import7 = __webpack_require__(1);
 
-	wrm.defineModule("wrm/comp/LoginService", mod3);
+	var mod6 = _interopRequireWildcard(_import7);
 
-	wrm.defineModule("wrm/comp/SelectorService", mod4);
+	var _import8 = __webpack_require__(2);
+
+	var mod7 = _interopRequireWildcard(_import8);
+
+	wrm.defineModule("wrm/comp/MessageService", mod0);
+
+	wrm.defineModule("wrm/comp/DetailsService", mod1);
+
+	wrm.defineModule("wrm/comp/val/MandatoryValidationRuleService", mod2);
+
+	wrm.defineModule("wrm/comp/FormService", mod3);
+
+	wrm.defineModule("wrm/comp/ListService", mod4);
+
+	wrm.defineModule("wrm/comp/SelectorService", mod5);
+
+	wrm.defineModule("wrm/comp/LoginService", mod6);
+
+	wrm.defineModule("wrm/comp/CreateService", mod7);
 
 /***/ },
 /* 1 */
@@ -176,6 +194,162 @@
 
 /***/ },
 /* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	/**
+	 * Service for Create operations.
+	 * 
+	 * @constructor
+	 * @extends wrm.core.AbstractOperationService
+	 * @param {string} id
+	 * @param {!Object} descr
+	 * @param {!wrm.core.Manager} manager
+	 */
+	exports.default = wrm.defineService(wrm.core.AbstractOperationService, {
+
+	    /** @override */
+	    initialize: function (descr) {
+	        var thisService = this;
+
+	        /**
+	         * @private
+	         * @type {!wrm.data.meta.Entity}
+	         */
+	        this._entity; // init'd below
+
+	        /**
+	         * @private
+	         * @type {boolean}
+	         */
+	        this._bulk = descr["bulk"] || false;
+
+	        /**
+	         * @private
+	         * @type {!wrm.data.DataService}
+	         */
+	        this._dataService; // init'd below
+
+	        return this.getManager().getDataService().then(function (dataService) {
+	            thisService._entity = dataService.getMetadata().getEntity(descr["entity"]);
+	            thisService._dataService = dataService;
+	        });
+	    },
+
+	    /** @override */
+	    executeOperation: function (context) {
+	        var input = context.getInput();
+
+	        /* Create the creation promise */
+	        var createPromise = this._executeCreate(input);
+
+	        /* Output the created attribute values */
+	        return createPromise.then(function (createdValues) {
+	            return new wrm.nav.Output("success", createdValues);
+	        });
+	    },
+
+	    /**
+	     * @private
+	     * @param {!wrm.nav.Input} input
+	     * @return {!Promise.<!wrm.nav.Output>}
+	     */
+	    _executeCreate: function (input) {
+	        var entityId = this._entity.getId();
+	        var keyAttrId = this._entity.getKeyAttribute().getId();
+	        var dataService = this._dataService;
+
+	        /* Prepare new object(s) */
+	        var newValues;
+	        if (!this._bulk) {
+	            newValues = [this._computeInsertValues(input)];
+	        } else {
+	            newValues = this._computeInsertValuesFromBulk(input);
+	        }
+
+	        /* Insert in database */
+	        return this._dataService.execute(function (d) {
+	            return d.insert(entityId, newValues);
+	        }).then(function (insertedKeys) {
+
+	            /* Add inserted keys to all new objects that were inserted */
+	            for (var i = 0; i < insertedKeys.length; i++) {
+	                newValues[i][keyAttrId] = insertedKeys[i];
+	            }
+
+	            return dataService.extractPropertyValuesById(newValues, entityId);
+	        });
+	    },
+
+	    /**
+	     * @private
+	     * @param {!wrm.nav.Input} input
+	     * @return {!Object}
+	     */
+	    _computeInsertValues: function (input) {
+	        var result = {};
+	        this._entity.getProperties().forEach(function (property) {
+	            var propertyId = property.getId();
+	            if (input[propertyId] !== undefined) {
+	                result[propertyId] = input[propertyId];
+	            }
+	        });
+	        return result;
+	    },
+
+	    /**
+	     * @private
+	     * @param {!wrm.nav.Input} input
+	     * @return {!Array<Object>}
+	     */
+	    _computeInsertValuesFromBulk: function (input) {
+	        var properties = this._entity.getProperties();
+
+	        var result = [];
+
+	        /* Normalize input values, turning them in arrays of the same length */
+	        var normalizedInput = {};
+	        var maxLength = 1;
+	        for (var i = 0; i < properties.length; i++) {
+	            var property = properties[i];
+	            var propertyInput = input[property.getId()];
+	            if (propertyInput !== undefined) {
+	                if (angular.isArray(propertyInput)) {
+	                    if (propertyInput.length !== 1) {
+	                        if (maxLength === 1) {
+	                            maxLength = propertyInput.length;
+	                        } else if (maxLength !== propertyInput.length) {
+	                            throw new Error("Lengths of input arrays differ");
+	                        }
+	                    }
+	                } else {
+	                    propertyInput = [propertyInput];
+	                }
+	                normalizedInput[property.getId()] = propertyInput;
+	            }
+	        }
+
+	        /* Collect properties at the same indexes into separate value-holding objects */
+	        for (var k = 0; k < maxLength; k++) {
+	            var tmpObj = {};
+	            Object.keys(normalizedInput).forEach(function (propertyId) {
+	                if (normalizedInput[propertyId].length === 1) {
+	                    tmpObj[propertyId] = normalizedInput[propertyId][0];
+	                } else {
+	                    tmpObj[propertyId] = normalizedInput[propertyId][k];
+	                }
+	            });
+	            result.push(tmpObj);
+	        }
+
+	        return result;
+	    } });
+	module.exports = exports.default;
+
+/***/ },
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	Object.defineProperty(exports, "__esModule", {
@@ -381,7 +555,206 @@
 	module.exports = exports.default;
 
 /***/ },
-/* 3 */
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	/**
+	 * Service for Message view components.
+	 * 
+	 * @constructor
+	 * @extends wrm.core.AbstractCachedViewComponentService
+	 * @param {string} id
+	 * @param {!Object} descr
+	 * @param {!wrm.core.Manager} manager
+	 */
+	exports.default = wrm.defineService(wrm.core.AbstractCachedViewComponentService, {
+
+	    /** @override */
+	    initialize: function (descr) {
+
+	        /**
+	         * @private
+	         * @type {?string}
+	         */
+	        this._defaultMessage = descr["defaultMessage"] || null;
+
+	        /**
+	         * @private
+	         * @type {?Array}
+	         */
+	        this._placeholders = descr["placeholders"];
+	    },
+
+	    /** @override */
+	    createResult: function (context) {
+	        var input = context.getInput();
+
+	        /* Get messages from input, or use the default one */
+	        var messages = input["messages"];
+	        if (messages === undefined) {
+	            messages = this._defaultMessage;
+	        }
+
+	        /* Get placeholders values and replace in messages */
+	        var placeholder = {};
+	        for (placeholder in this._placeholders) {
+	            var value = "";
+	            placeholder = this._placeholders[placeholder];
+	            if (input[placeholder["name"]] !== undefined) {
+	                value = input[placeholder["name"]];
+	            }
+	            var exp = new RegExp("\\$\\$" + placeholder["label"] + "\\$\\$", "g");
+	            if (angular.isArray(messages)) {
+	                var message = null;
+	                for (message in messages) {
+	                    messages[message] = messages[message].replace(exp, value);
+	                }
+	            } else {
+	                messages = messages.replace(exp, value);
+	            }
+	        }
+
+	        return {
+	            "messages": wrm.data.toStringArray(messages)
+	        };
+	    } });
+	module.exports = exports.default;
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	/**
+	 * Service for Details view components.
+	 * 
+	 * @constructor
+	 * @extends wrm.core.AbstractCachedViewComponentService
+	 * @param {string} id
+	 * @param {!Object} descr
+	 * @param {!wrm.core.Manager} manager
+	 */
+	exports.default = wrm.defineService(wrm.core.AbstractCachedViewComponentService, {
+
+	    /** @override */
+	    initialize: function (descr) {
+	        var thisService = this;
+
+	        /**
+	         * @private
+	         * @type {!string}
+	         */
+	        this._entityId = descr["entity"];
+
+	        /**
+	         * @private
+	         * @type {!Object}
+	         */
+	        this._output; // init'd below
+
+	        /**
+	         * @private
+	         * @type {!Object}
+	         */
+	        this._toBind; // init'd below
+
+	        // TODO cache query instead
+	        /**
+	         * @private
+	         * @type {!Object}
+	         */
+	        this._condExpr; // init'd below
+
+	        /**
+	         * @private
+	         * @type {!wrm.data.DataService}
+	         */
+	        this._dataService; // init'd below
+
+	        return this.getManager().getDataService().then(function (dataService) {
+	            thisService._dataService = dataService;
+	            thisService._condExpr = descr["condExprs"];
+	            var output = descr["output"];
+	            thisService._output = {};
+	            thisService._toBind = {};
+	            if (output.length !== 0) {
+	                output.forEach(function (column) {
+	                    thisService._output[column["viewName"]] = column["ref"];
+	                    thisService._toBind[column["viewName"]] = column["bindName"];
+	                });
+	            }
+	        });
+	    },
+
+	    /** @override */
+	    createResult: function (context) {
+	        var thisService = this;
+	        var input = context.getInput();
+
+	        var resultsPromise = this._dataService.execute(function (d) {
+	            var options = {
+	                output: thisService._output,
+	                outputConfig: {
+	                    useNames: true
+	                },
+	                filter: thisService._condExpr
+	            };
+	            return d.selectOne(thisService._entityId, options, input);
+	        });
+
+	        return resultsPromise.then(function (row) {
+	            return {
+	                "data": row
+	            };
+	        }, function (e) {
+	            thisService.getLog().error(e);
+	        });
+	    },
+
+	    /** @override */
+	    isStaleResult: function (context, result) {
+	        return !result["data"];
+	    },
+
+	    /** @override */
+	    computeOutputFromResult: function (context, result) {
+	        return this._createOutput(result["data"]);
+	    },
+
+	    /** @override */
+	    submitView: function (context) {
+	        return this._createOutput(context.getView()["data"]);
+	    },
+
+	    /**
+	     * @private
+	     * @param {!Object} data
+	     * @returns {!Object}
+	     */
+	    _createOutput: function (data) {
+	        var output = {};
+	        if (data === null) {
+	            output["dataSize"] = 0;
+	        } else {
+	            var toBind = this._toBind;
+	            var outputData = {};
+	            Object.keys(this._output).forEach(function (key) {
+	                outputData[toBind[key]] = data[key];
+	            });
+	            output["data"] = outputData;
+	            output["dataSize"] = 1;
+	        }
+	        return output;
+	    } });
+	module.exports = exports.default;
+
+/***/ },
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	Object.defineProperty(exports, "__esModule", {
@@ -997,7 +1370,7 @@
 	module.exports = exports.default;
 
 /***/ },
-/* 4 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	Object.defineProperty(exports, "__esModule", {
@@ -1288,7 +1661,7 @@
 	module.exports = exports.default;
 
 /***/ },
-/* 5 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	Object.defineProperty(exports, "__esModule", {

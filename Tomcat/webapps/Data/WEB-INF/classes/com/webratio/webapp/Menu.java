@@ -10,6 +10,10 @@ public class Menu implements java.io.Serializable {
 
     private java.sql.Timestamp _updatedAt;
 
+    private java.lang.String _logoRef;
+
+    private java.lang.Object _logo;
+
     private java.util.Set _menuToFeedback = new java.util.HashSet();
 
     private float _searchScore;
@@ -36,6 +40,22 @@ public class Menu implements java.io.Serializable {
 
     public void setUpdatedAt(java.sql.Timestamp _updatedAt) {
         this._updatedAt = _updatedAt;
+    }
+
+    public java.lang.String getLogoRef() {
+        return _logoRef;
+    }
+
+    public void setLogoRef(java.lang.String _logoRef) {
+        this._logoRef = _logoRef;
+    }
+
+    public java.lang.Object getLogo() {
+        return _logo;
+    }
+
+    public void setLogo(java.lang.Object _logo) {
+        this._logo = _logo;
     }
 
     public java.util.Set getMenuToFeedback() {
@@ -69,6 +89,8 @@ public class Menu implements java.io.Serializable {
             sb.append("createdAt=" + _createdAt + ',');
         if (_updatedAt != null)
             sb.append("updatedAt=" + _updatedAt + ',');
+        if (_logo != null)
+            sb.append("logo=" + _logo + ',');
         n = sb.length() - 1;
         if (sb.charAt(n) == ',') {
             sb.setCharAt(n, ']');

@@ -1,0 +1,17 @@
+{
+  "service" : "wrm.comp.DetailsService",
+  "entity" : "cls5",
+  "condExprs" : {
+    "property" : "att38",
+    "operator" : "in",
+    "valueInput" : "kcond2.att38",
+    "config" : {
+      "oneImpliedInputRequired" : false
+    }
+  },
+  "output" : [ {
+    "ref" : "att42",
+    "viewName" : "logo",
+    "bindName" : "att42"
+  } ]
+}

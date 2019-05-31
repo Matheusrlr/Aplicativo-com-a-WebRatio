@@ -2,7 +2,11 @@
 
 <Descriptor service="com.webratio.web.mvc.module.CollectorService">
   <Type>INPUT</Type>
-  <Parameter name="Keys">pdp1</Parameter>
+  <Parameter name="nome">pdp2</Parameter>
+  <Parameter name="sobrenome">pdp3</Parameter>
+  <Parameter name="matricula">pdp4</Parameter>
+  <Parameter name="sugestao">pdp5</Parameter>
+  <Parameter name="email">pdp6</Parameter>
   <!--Port Definition Decorator Service-->
   <wr:DecoratorService xmlns:wr="http://www.webratio.com/2013/WebML/Logic" service="com.webratio.rtx.components.DefaultOperationDecoratorService">
     <ModelName>ipd2</ModelName>
@@ -16,7 +20,7 @@
       <Params/>
     </OperationParams>
     <Outgoing>
-      <Link resultCode="success">sf1</Link>
+      <Link resultCode="success">sf3</Link>
     </Outgoing>
     <IsLinkHistoryRecorded>true</IsLinkHistoryRecorded>
     <DomainModelValidationEnabled>true</DomainModelValidationEnabled>

@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Warnings>
-<Warning key="DB_MAPPING.INCONSISTENCY" error="true" xpath="id('as1')" tab="mapping"><Message>The join criteria of the association Categoria_Tipo is incomplete: one or more key attributes are not referenced</Message></Warning></Warnings>

@@ -7,10 +7,8 @@
       <generator class="com.webratio.hibernate.id.MaxPlusOneIncrementGenerator"/>
     </id>
     <property name="sugestao" column="`sugestao`" type="java.lang.String" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
-    <property name="sexo" column="`sexo`" type="java.lang.Boolean" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
-    <property name="dataNasc" column="`data_nasc`" type="java.sql.Date" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
     <property name="email" column="`email`" type="java.lang.String" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
-    <property name="matrCula" column="`matricula`" type="java.lang.String" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
+    <property name="matricula" column="`matricula`" type="java.lang.Integer" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
     <property name="sobrenome" column="`sobrenome`" type="java.lang.String" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
     <property name="nome" column="`nome`" type="java.lang.String" unique="false" optimistic-lock="true" lazy="false" generated="never"/>
     <property name="createdAt" column="`createdat`" type="java.sql.Timestamp" unique="false" optimistic-lock="true" lazy="false" generated="never"/>

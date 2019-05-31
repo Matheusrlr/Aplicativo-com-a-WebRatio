@@ -1,0 +1,21 @@
+{
+  "service" : "wrm.comp.FormService",
+  "fields" : [ {
+    "id" : "fld8",
+    "fieldType" : "Field",
+    "type" : "string",
+    "labelSlots" : [ ],
+    "outputSlots" : [ ]
+  } ],
+  "_form" : {
+    "_" : "wrm.form.DefaultFormSubService",
+    "formLabel" : "Barra de busca",
+    "viewFormRef" : "form",
+    "properties" : {
+      "fld8" : {
+        "type" : "string",
+        "label" : "Keyword"
+      }
+    }
+  }
+}

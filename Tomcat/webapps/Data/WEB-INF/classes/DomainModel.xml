@@ -44,6 +44,7 @@
   </Class>
   <Class id="cls1" name="Menu" className="com.webratio.webapp.Menu" duration="persistent" dataSource="db1" stateAware="true">
     <Attribute id="att1" key="true" name="oid" fieldName="oid" type="integer" javaType="java.lang.Integer" specialId="implicitOid"/>
+    <Attribute id="att23" key="false" name="logo" fieldName="logo" type="blob" javaType="java.lang.String" storageType="file" uploadPolicy="managed" deletePolicy="no action" refFieldName="logoRef" defBlobName=""/>
     <Attribute id="att26" key="false" name="createdAt" fieldName="createdAt" type="timestamp" javaType="java.sql.Timestamp" specialId="createTimestamp"/>
     <Attribute id="att27" key="false" name="updatedAt" fieldName="updatedAt" type="timestamp" javaType="java.sql.Timestamp" specialId="updateTimestamp"/>
     <OutgoingRoles>role6</OutgoingRoles>
@@ -54,10 +55,8 @@
     <Attribute id="att28" key="false" name="createdAt" fieldName="createdAt" type="timestamp" javaType="java.sql.Timestamp" specialId="createTimestamp"/>
     <Attribute id="att29" key="false" name="updatedAt" fieldName="updatedAt" type="timestamp" javaType="java.sql.Timestamp" specialId="updateTimestamp"/>
     <Attribute id="att3" key="false" name="sugestao" fieldName="sugestao" type="string" javaType="java.lang.String"/>
-    <Attribute id="att4" key="false" name="sexo" fieldName="sexo" type="boolean" javaType="java.lang.Boolean" trueValue="" falseValue=""/>
-    <Attribute id="att5" key="false" name="data_nasc" fieldName="dataNasc" type="date" javaType="java.sql.Date"/>
     <Attribute id="att6" key="false" name="email" fieldName="email" type="string" javaType="java.lang.String"/>
-    <Attribute id="att7" key="false" name="matr&#237;cula" fieldName="matrCula" type="string" javaType="java.lang.String"/>
+    <Attribute id="att7" key="false" name="matricula" fieldName="matricula" type="integer" javaType="java.lang.Integer"/>
     <Attribute id="att8" key="false" name="sobrenome" fieldName="sobrenome" type="string" javaType="java.lang.String"/>
     <Attribute id="att9" key="false" name="nome" fieldName="nome" type="string" javaType="java.lang.String"/>
     <OutgoingRoles>role5</OutgoingRoles>
@@ -68,7 +67,7 @@
     <Attribute id="att11" key="false" name="nome" fieldName="nome" type="string" javaType="java.lang.String"/>
     <Attribute id="att12" key="false" name="createdAt" fieldName="createdAt" type="timestamp" javaType="java.sql.Timestamp" specialId="createTimestamp"/>
     <Attribute id="att13" key="false" name="updatedAt" fieldName="updatedAt" type="timestamp" javaType="java.sql.Timestamp" specialId="updateTimestamp"/>
-    <Attribute id="att22" key="true" name="oid_categoria" fieldName="oidCategoria" type="integer" javaType="java.lang.Integer"/>
+    <Attribute id="att22" key="false" name="oid_categoria" fieldName="oidCategoria" type="integer" javaType="java.lang.Integer"/>
     <OutgoingRoles>role4|role7</OutgoingRoles>
     <InverseRoles>role4</InverseRoles>
   </Class>
@@ -85,7 +84,7 @@
     <Attribute id="att25" key="false" name="updatedAt" fieldName="updatedAt" type="timestamp" javaType="java.sql.Timestamp" specialId="updateTimestamp"/>
     <Attribute id="att36" key="false" name="oid_tipo" fieldName="oidTipo" type="integer" javaType="java.lang.Integer"/>
     <OutgoingRoles>role3</OutgoingRoles>
-    <InverseRoles/>
+    <InverseRoles>role3</InverseRoles>
   </Class>
   <Class id="cls5" name="Categoria" className="com.webratio.webapp.Categoria" duration="persistent" dataSource="db1" stateAware="true">
     <Attribute id="att30" key="true" name="oid" fieldName="oid" type="integer" javaType="java.lang.Integer"/>
@@ -102,7 +101,7 @@
   <AssociationRole id="Role2User" name="users" associationLogicName="UserRole" inverseId="User2Role" source="Role" target="User" maxCard="many" fieldName="users" derived="false" dataSource="db1" direct="false" userAware="false"/>
   <AssociationRole id="User2Device" name="UserToDevice" associationLogicName="UserDevice" inverseId="Device2User" source="User" target="Device" maxCard="many" fieldName="userToDevice" derived="false" dataSource="db1" direct="false" userAware="false"/>
   <AssociationRole id="User2Role" name="roles" associationLogicName="UserRole" inverseId="Role2User" source="User" target="Role" maxCard="many" fieldName="roles" derived="false" dataSource="db1" direct="true" userAware="false"/>
-  <AssociationRole id="role3" name="EstabelecimentosToTipo" associationLogicName="EstabelecimentosTipo" inverseId="role4" source="cls4" target="cls3" maxCard="1" fieldName="estabelecimentosToTipo" derived="false" dataSource="db1" direct="true" userAware="false"/>
+  <AssociationRole id="role3" name="EstabelecimentosToTipo" associationLogicName="EstabelecimentosTipo" inverseId="role4" source="cls4" target="cls3" maxCard="1" fieldName="estabelecimentosToTipo" derived="false" dataSource="db1" direct="false" userAware="false"/>
   <AssociationRole id="role4" name="TipoToEstabelecimentos" associationLogicName="EstabelecimentosTipo" inverseId="role3" source="cls3" target="cls4" maxCard="many" fieldName="tipoToEstabelecimentos" derived="false" dataSource="db1" direct="false" userAware="false"/>
   <AssociationRole id="role5" name="FeedbackToMenu" associationLogicName="FeedbackMenu" inverseId="role6" source="cls2" target="cls1" maxCard="1" fieldName="feedbackToMenu" derived="false" dataSource="db1" direct="true" userAware="false"/>
   <AssociationRole id="role6" name="MenuToFeedback" associationLogicName="FeedbackMenu" inverseId="role5" source="cls1" target="cls2" maxCard="many" fieldName="menuToFeedback" derived="false" dataSource="db1" direct="false" userAware="false"/>

@@ -1,25 +1,33 @@
 {
   "service" : "wrm.comp.DetailsService",
-  "entity" : "cls3",
+  "entity" : "cls4",
   "condExprs" : {
-    "property" : "att20",
+    "property" : "att17",
     "operator" : "in",
-    "valueInput" : "kcond1.att20",
+    "valueInput" : "kcond1.att17",
     "config" : {
       "oneImpliedInputRequired" : false
     }
   },
   "output" : [ {
-    "ref" : "att25",
-    "viewName" : "telefone",
-    "bindName" : "att25"
+    "ref" : "att37",
+    "viewName" : "sugestao",
+    "bindName" : "att37"
   }, {
-    "ref" : "att21",
+    "ref" : "att33",
+    "viewName" : "sobrenome",
+    "bindName" : "att33"
+  }, {
+    "ref" : "att32",
     "viewName" : "nome",
-    "bindName" : "att21"
+    "bindName" : "att32"
   }, {
-    "ref" : "att23",
-    "viewName" : "endereco",
-    "bindName" : "att23"
+    "ref" : "att35",
+    "viewName" : "email",
+    "bindName" : "att35"
+  }, {
+    "ref" : "att34",
+    "viewName" : "matrCula",
+    "bindName" : "att34"
   } ]
 }

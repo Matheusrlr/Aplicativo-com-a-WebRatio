@@ -85,25 +85,24 @@
   <UserServices>
     <UserServiceOperation type="login"/>
   </UserServices>
-  <Class id="cls1" name="Menu" duration="persistent" gr:x="415" gr:y="-125" attributeOrder="cls1#att1 cls1#att26 cls1#att27" db:database="db1" db:table="menu">
+  <Class id="cls1" name="Menu" duration="persistent" gr:x="415" gr:y="-125" attributeOrder="cls1#att1 cls1#att26 cls1#att27 cls1#att23" db:database="db1" db:table="menu">
     <Attribute id="cls1#att1" name="oid" key="true" specialBehavior="implicitOid" type="integer" db:column="oid"/>
     <Attribute id="cls1#att26" name="createdAt" type="timestamp" specialBehavior="createTimestamp" db:column="createdat"/>
     <Attribute id="cls1#att27" name="updatedAt" type="timestamp" specialBehavior="updateTimestamp" db:column="updatedat"/>
+    <Attribute id="cls1#att23" name="logo" type="blob" db:column="logo"/>
   </Class>
-  <Class id="cls2" name="Feedback" duration="persistent" attributeOrder="cls2#att2 cls2#att9 cls2#att8 cls2#att7 cls2#att6 cls2#att5 cls2#att4 cls2#att3 cls2#att28 cls2#att29" gr:x="590" gr:y="140" db:database="db1" db:table="feedback">
+  <Class id="cls2" name="Feedback" duration="persistent" attributeOrder="cls2#att2 cls2#att9 cls2#att8 cls2#att7 cls2#att6 cls2#att3 cls2#att28 cls2#att29" gr:x="590" gr:y="140" db:database="db1" db:table="feedback">
     <Attribute id="cls2#att2" name="oid" key="true" specialBehavior="implicitOid" type="integer" db:column="oid"/>
     <Attribute id="cls2#att3" name="sugestao" type="string" db:column="sugestao"/>
-    <Attribute id="cls2#att4" name="sexo" type="boolean" db:column="sexo"/>
-    <Attribute id="cls2#att5" name="data_nasc" type="date" db:column="data_nasc"/>
     <Attribute id="cls2#att6" name="email" type="string" db:column="email"/>
-    <Attribute id="cls2#att7" name="matr&#237;cula" type="string" db:column="matricula"/>
+    <Attribute id="cls2#att7" name="matricula" type="integer" db:column="matricula"/>
     <Attribute id="cls2#att8" name="sobrenome" type="string" db:column="sobrenome"/>
     <Attribute id="cls2#att9" name="nome" type="string" db:column="nome"/>
     <Attribute id="cls2#att28" name="createdAt" type="timestamp" specialBehavior="createTimestamp" db:column="createdat"/>
     <Attribute id="cls2#att29" name="updatedAt" type="timestamp" specialBehavior="updateTimestamp" db:column="updatedat"/>
   </Class>
   <Class id="cls4" name="Estabelecimentos" duration="persistent" attributeOrder="cls4#att14 cls4#att20 cls4#att19 cls4#att18 cls4#att17 cls4#att16 cls4#att15 cls4#att21 cls4#att24 cls4#att25 cls4#att36" gr:x="940" gr:y="85" db:database="db1" db:table="topico">
-    <Attribute id="cls4#att14" name="oid" key="true" specialBehavior="implicitOid" type="integer" db:column="oid" db:idGenerator="identity"/>
+    <Attribute id="cls4#att14" name="oid" key="true" specialBehavior="implicitOid" type="integer" db:column="oid"/>
     <Attribute id="cls4#att15" name="valor" type="integer" db:column="valor" key="false"/>
     <Attribute id="cls4#att16" name="telefone" type="string" db:column="telefone" key="false"/>
     <Attribute id="cls4#att17" name="link" type="url" db:column="link" key="false"/>
@@ -113,7 +112,7 @@
     <Attribute id="cls4#att21" name="logo" type="blob" db:column="logo" key="false"/>
     <Attribute id="cls4#att24" name="createdAt" type="timestamp" specialBehavior="createTimestamp" db:column="createdat" key="false"/>
     <Attribute id="cls4#att25" name="updatedAt" type="timestamp" specialBehavior="updateTimestamp" db:column="updatedat" key="false"/>
-    <Attribute id="cls4#att36" name="oid_tipo" type="integer" db:column="oid_tipo"/>
+    <Attribute id="cls4#att36" name="oid_tipo" type="integer" db:column="oid_tipo" key="false"/>
   </Class>
   <db:Database id="db1" name="database" type="MySQL" url="jdbc:mysql://localhost:3306/database" username="root" password="dGF0YXUyNS4uLA==" validateConnection="false" cryptedPassword="true">
   </db:Database>
@@ -130,7 +129,7 @@
     <Attribute id="cls3#att11" name="nome" type="string" db:column="nome" key="false"/>
     <Attribute id="cls3#att12" name="createdAt" type="timestamp" specialBehavior="createTimestamp" db:column="createdat" key="false"/>
     <Attribute id="cls3#att13" name="updatedAt" type="timestamp" specialBehavior="updateTimestamp" db:column="updatedat" key="false"/>
-    <Attribute id="cls3#att22" name="oid_categoria" type="integer" db:column="oid_categoria" key="true"/>
+    <Attribute id="cls3#att22" name="oid_categoria" type="integer" db:column="oid_categoria" key="false"/>
   </Class>
   <Association id="rel1" name="FeedbackMenu" db:database="db1" db:table="feedback" sourceClass="cls2" targetClass="cls1">
     <AssociationRole1 id="rel1#role5" name="FeedbackToMenu" maxCard="1">
@@ -141,17 +140,12 @@
     </AssociationRole2>
   </Association>
   <Association id="rel2" name="EstabelecimentosTipo" db:database="db1" db:table="topico" sourceClass="cls4" targetClass="cls3">
-    <AssociationRole1 id="rel2#role3" name="EstabelecimentosToTipo" maxCard="1">
-      <db:JoinColumn attribute="cls4#att14" name="oid"/>
-    </AssociationRole1>
-    <AssociationRole2 id="rel2#role4" name="TipoToEstabelecimentos" maxCard="N">
-      <db:JoinColumn attribute="cls3#att10" name="oid_tipo"/>
-    </AssociationRole2>
+    <AssociationRole1 id="rel2#role3" name="EstabelecimentosToTipo" maxCard="1"/>
+    <AssociationRole2 id="rel2#role4" name="TipoToEstabelecimentos" maxCard="N"/>
   </Association>
   <Association id="rel3" name="TipoCategoria" db:database="db1" db:table="tipo" sourceClass="cls3" targetClass="cls5">
     <AssociationRole1 id="rel3#role7" name="TipoToCategoria" maxCard="1">
       <db:JoinColumn attribute="cls3#att10" name="oid"/>
-      <db:JoinColumn attribute="cls3#att22" name="oid_categoria"/>
     </AssociationRole1>
     <AssociationRole2 id="rel3#role8" name="CategoriaToTipo" maxCard="N">
       <db:JoinColumn attribute="cls5#att30" name="oid_categoria"/>

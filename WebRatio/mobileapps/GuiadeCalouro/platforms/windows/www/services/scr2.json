@@ -1,6 +1,7 @@
 {
   "_" : "wrm.core.PanelService",
   "gateway" : true,
+  "masters" : [ "tlb1" ],
   "navigations" : {
     "0" : {
       "nc" : true,

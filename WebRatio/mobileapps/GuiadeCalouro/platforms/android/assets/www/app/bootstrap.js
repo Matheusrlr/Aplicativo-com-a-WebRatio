@@ -79,6 +79,10 @@
 		
 			modules.push("angularExtension");
 		
+			modules.push("mobileDefault.externalOpen");
+		
+			modules.push("mobileDefault.numberInput");
+		
 		angular.bootstrap(document, modules);
 	}
 	

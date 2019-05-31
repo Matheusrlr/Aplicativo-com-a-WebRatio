@@ -1,5 +1,6 @@
 {
   "_" : "wrm.core.PanelService",
+  "masters" : [ "tlb1" ],
   "navigations" : {
     "0" : {
       "nc" : true,
@@ -19,11 +20,11 @@
       "flows" : "scr3.auto-link"
     },
     "4" : {
-      "flows" : "nf3",
+      "flows" : "nf19",
       "fr" : true
     },
     "5" : {
-      "flows" : "nf3"
+      "flows" : "nf19"
     }
   },
   "knownEffects" : "#pr#",
@@ -48,16 +49,16 @@
     }
   },
   "events" : {
-    "oslte4" : {
+    "oslte3" : {
       "component" : "pwu1",
       "type" : "OnSelectEvent",
       "flow" : {
-        "id" : "nf7",
+        "id" : "nf6",
         "navTo" : "scr4",
         "bindTo" : "pwu4",
         "preserve" : "",
         "bind" : {
-          "maxResults" : "data.att7"
+          "acond2" : "data.att7"
         }
       }
     }

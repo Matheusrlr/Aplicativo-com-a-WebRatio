@@ -1,0 +1,15 @@
+{
+  "service" : "wrm.comp.SelectorService",
+  "entity" : "cls3",
+  "maxResults" : 0,
+  "distinct" : false,
+  "output" : [ {
+    "ref" : "att28",
+    "viewName" : "remoteOid",
+    "bindName" : "att28"
+  } ],
+  "order" : [ {
+    "property" : "att28",
+    "reverse" : false
+  } ]
+}

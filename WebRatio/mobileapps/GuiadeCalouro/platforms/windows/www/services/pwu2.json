@@ -2,6 +2,15 @@
   "service" : "wrm.comp.ListService",
   "entity" : "cls3",
   "maxResults" : 0,
+  "condExprs" : {
+    "property" : "att13",
+    "operator" : "eq.ic",
+    "valueInput" : "acond3",
+    "implied" : true,
+    "config" : {
+      "oneImpliedInputRequired" : false
+    }
+  },
   "distinct" : false,
   "output" : [ {
     "ref" : "att25",
@@ -16,17 +25,21 @@
     "viewName" : "nome",
     "bindName" : "att21"
   }, {
+    "ref" : "att24",
+    "viewName" : "link",
+    "bindName" : "att24"
+  }, {
     "ref" : "att23",
     "viewName" : "endereco",
     "bindName" : "att23"
   } ],
   "order" : [ {
-    "property" : "att28",
+    "property" : "att21",
     "reverse" : false
   } ],
   "_form" : {
     "_" : "wrm.form.DefaultFormSubService",
-    "formLabel" : "List 2",
+    "formLabel" : "Estabelecimentos",
     "properties" : {
       "checkedKeys" : { }
     }

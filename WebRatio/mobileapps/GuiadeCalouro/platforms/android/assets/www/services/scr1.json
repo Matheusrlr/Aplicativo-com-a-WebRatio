@@ -1,6 +1,7 @@
 {
   "_" : "wrm.core.PanelService",
   "protected" : [ ],
+  "masters" : [ "tlb1" ],
   "navigations" : {
     "0" : {
       "nc" : true,
@@ -33,18 +34,7 @@
   "propagationSequence" : "",
   "propagations" : { },
   "components" : { },
-  "events" : {
-    "bke1" : {
-      "generic" : true,
-      "type" : "BackEvent",
-      "flow" : {
-        "id" : "nf3",
-        "navTo" : "scr3",
-        "bindTo" : "scr3",
-        "preserve" : ""
-      }
-    }
-  },
+  "events" : { },
   "autoFlow" : {
     "preserve" : ""
   },

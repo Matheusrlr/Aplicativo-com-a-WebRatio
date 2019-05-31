@@ -1,5 +1,6 @@
 {
   "_" : "wrm.core.PanelService",
+  "masters" : [ "tlb1" ],
   "navigations" : {
     "0" : {
       "nc" : true,
@@ -19,16 +20,24 @@
       "flows" : "scr5.auto-link"
     },
     "4" : {
-      "flows" : "nf4",
+      "flows" : "nf8",
       "fr" : true
     },
     "5" : {
-      "flows" : "nf4"
+      "flows" : "nf8"
     }
   },
   "knownEffects" : "#pr#",
-  "propagationSequence" : "",
-  "propagations" : { },
+  "propagationSequence" : "df2",
+  "propagations" : {
+    "df2" : {
+      "bindTo" : "pwu2",
+      "bindFrom" : "seu3",
+      "bind" : {
+        "maxResults" : "data.att13"
+      }
+    }
+  },
   "components" : {
     "pwu2" : {
       "fb" : true,
@@ -44,23 +53,32 @@
         "all" : true,
         "fr" : true,
         "navs" : "4",
-        "inputs" : "pwu2:maxResults"
+        "inputs" : "pwu2:acond3"
       }, {
         "all" : true,
         "navs" : "5",
-        "inputs" : "pwu2:maxResults"
+        "inputs" : "pwu2:acond3"
       }, {
         "all" : true,
         "fr" : true,
         "navs" : "0|1"
       } ]
+    },
+    "seu3" : {
+      "fb" : false,
+      "nv" : true,
+      "conds" : [ {
+        "fr" : false,
+        "navs" : "3",
+        "effects" : "#pr#"
+      } ]
     }
   },
   "events" : { },
   "autoFlow" : {
-    "preserve" : "pwu2:maxResults"
+    "preserve" : "pwu2:acond3"
   },
   "autoFlowFull" : {
-    "preserve" : "pwu2:maxResults"
+    "preserve" : "pwu2:acond3"
   }
 }
