@@ -33,8 +33,61 @@
   "knownEffects" : "#pr#",
   "propagationSequence" : "",
   "propagations" : { },
-  "components" : { },
-  "events" : { },
+  "components" : {
+    "gctu1" : {
+      "fb" : false,
+      "conds" : [ {
+        "fr" : false,
+        "navs" : "5",
+        "effects" : "-"
+      }, {
+        "fr" : false,
+        "effects" : "#pr#"
+      } ]
+    }
+  },
+  "events" : {
+    "oslte6" : {
+      "component" : "gctu1",
+      "type" : "OnSelectEvent",
+      "flow" : {
+        "id" : "nf12",
+        "navTo" : "scr14",
+        "bindTo" : "scr14",
+        "preserve" : ""
+      }
+    },
+    "oslte9" : {
+      "component" : "gctu1",
+      "type" : "OnSelectEvent",
+      "flow" : {
+        "id" : "nf22",
+        "navTo" : "scr9",
+        "bindTo" : "scr9",
+        "preserve" : ""
+      }
+    },
+    "oslte10" : {
+      "component" : "gctu1",
+      "type" : "OnSelectEvent",
+      "flow" : {
+        "id" : "nf26",
+        "navTo" : "scr11",
+        "bindTo" : "scr11",
+        "preserve" : ""
+      }
+    },
+    "oslte15" : {
+      "component" : "gctu1",
+      "type" : "OnSelectEvent",
+      "flow" : {
+        "id" : "nf27",
+        "navTo" : "scr13",
+        "bindTo" : "scr13",
+        "preserve" : ""
+      }
+    }
+  },
   "autoFlow" : {
     "preserve" : ""
   },

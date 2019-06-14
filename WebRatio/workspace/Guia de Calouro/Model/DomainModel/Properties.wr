@@ -52,7 +52,7 @@
     <Attribute id="cls4#att19" name="createdAt" specialBehavior="unsentCreateTimestamp" type="timestamp" key="false"/>
     <Attribute id="cls4#att31" name="updatedAt" specialBehavior="unsentUpdateTimestamp" type="timestamp" key="false"/>
     <Attribute id="cls4#att35" name="email" type="string" serverProperty="email" serverAttribute="cls2#att6"/>
-    <Attribute id="cls4#att34" name="matr&#237;cula" type="integer" serverProperty="matrCula" serverAttribute="cls2#att7"/>
+    <Attribute id="cls4#att34" name="matricula" type="integer" serverAttribute="cls2#att7" serverProperty="matricula"/>
     <Attribute id="cls4#att33" name="sobrenome" type="string" serverAttribute="cls2#att8" serverProperty="sobrenome"/>
     <Attribute id="cls4#att32" name="nome" type="string" serverAttribute="cls2#att9" serverProperty="nome"/>
     <Attribute id="cls4#att37" name="sugestao" type="string" serverProperty="sugestao" serverAttribute="cls2#att3"/>

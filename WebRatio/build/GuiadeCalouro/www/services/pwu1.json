@@ -1,0 +1,30 @@
+{
+  "service" : "wrm.comp.ListService",
+  "entity" : "cls2",
+  "maxResults" : 0,
+  "distinct" : false,
+  "output" : [ {
+    "ref" : "att9",
+    "viewName" : "decricao",
+    "bindName" : "att9"
+  }, {
+    "ref" : "att8",
+    "viewName" : "nome",
+    "bindName" : "att8"
+  }, {
+    "ref" : "att7",
+    "viewName" : "oid",
+    "bindName" : "att7"
+  } ],
+  "order" : [ {
+    "property" : "att8",
+    "reverse" : false
+  } ],
+  "_form" : {
+    "_" : "wrm.form.DefaultFormSubService",
+    "formLabel" : "Categorias",
+    "properties" : {
+      "checkedKeys" : { }
+    }
+  }
+}

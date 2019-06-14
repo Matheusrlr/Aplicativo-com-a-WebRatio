@@ -1,0 +1,124 @@
+jun 09, 2019 11:23:12 PM org.apache.catalina.core.AprLifecycleListener init
+INFORMAÇÕES: The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: /usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+jun 09, 2019 11:23:12 PM org.apache.coyote.AbstractProtocol init
+INFORMAÇÕES: Initializing ProtocolHandler ["http-bio-8080"]
+jun 09, 2019 11:23:12 PM org.apache.coyote.AbstractProtocol init
+INFORMAÇÕES: Initializing ProtocolHandler ["http-bio-8443"]
+jun 09, 2019 11:23:12 PM org.apache.coyote.AbstractProtocol init
+INFORMAÇÕES: Initializing ProtocolHandler ["ajp-bio-8009"]
+jun 09, 2019 11:23:12 PM org.apache.catalina.startup.Catalina load
+INFORMAÇÕES: Initialization processed in 845 ms
+jun 09, 2019 11:23:12 PM org.apache.catalina.core.StandardService startInternal
+INFORMAÇÕES: Starting service Catalina
+jun 09, 2019 11:23:12 PM org.apache.catalina.core.StandardEngine startInternal
+INFORMAÇÕES: Starting Servlet Engine: Apache Tomcat/7.0.53
+jun 09, 2019 11:23:12 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFORMAÇÕES: Deploying web application directory /home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/Tomcat/webapps/manager
+jun 09, 2019 11:23:13 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFORMAÇÕES: Deploying web application directory /home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/Tomcat/webapps/docs
+jun 09, 2019 11:23:13 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFORMAÇÕES: Deploying web application directory /home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/Tomcat/webapps/examples
+jun 09, 2019 11:23:13 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFORMAÇÕES: Deploying web application directory /home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/Tomcat/webapps/ROOT
+jun 09, 2019 11:23:13 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFORMAÇÕES: Deploying web application directory /home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/Tomcat/webapps/Data
+jun 09, 2019 11:23:18 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFORMAÇÕES: Deploying web application directory /home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/Tomcat/webapps/host-manager
+jun 09, 2019 11:23:18 PM org.apache.coyote.AbstractProtocol start
+INFORMAÇÕES: Starting ProtocolHandler ["http-bio-8080"]
+jun 09, 2019 11:23:18 PM org.apache.coyote.AbstractProtocol start
+INFORMAÇÕES: Starting ProtocolHandler ["http-bio-8443"]
+jun 09, 2019 11:23:18 PM org.apache.coyote.AbstractProtocol start
+INFORMAÇÕES: Starting ProtocolHandler ["ajp-bio-8009"]
+jun 09, 2019 11:23:18 PM org.apache.catalina.startup.Catalina start
+INFORMAÇÕES: Server startup in 5399 ms
+jun 09, 2019 11:35:56 PM org.apache.catalina.core.StandardServer await
+INFORMAÇÕES: A valid shutdown command was received via the shutdown port. Stopping the Server instance.
+jun 09, 2019 11:35:56 PM org.apache.coyote.AbstractProtocol pause
+INFORMAÇÕES: Pausing ProtocolHandler ["http-bio-8080"]
+jun 09, 2019 11:35:56 PM org.apache.coyote.AbstractProtocol pause
+INFORMAÇÕES: Pausing ProtocolHandler ["http-bio-8443"]
+jun 09, 2019 11:35:56 PM org.apache.coyote.AbstractProtocol pause
+INFORMAÇÕES: Pausing ProtocolHandler ["ajp-bio-8009"]
+jun 09, 2019 11:35:56 PM org.apache.catalina.core.StandardService stopInternal
+INFORMAÇÕES: Stopping service Catalina
+jun 09, 2019 11:35:57 PM org.apache.catalina.loader.WebappClassLoader clearReferencesJdbc
+GRAVE: The web application [/Data] registered the JDBC driver [com.mysql.jdbc.Driver] but failed to unregister it when the web application was stopped. To prevent a memory leak, the JDBC Driver has been forcibly unregistered.
+jun 09, 2019 11:35:57 PM org.apache.catalina.loader.WebappClassLoader clearReferencesThreads
+GRAVE: The web application [/Data] appears to have started a thread named [Abandoned connection cleanup thread] but has failed to stop it. This is very likely to create a memory leak.
+jun 09, 2019 11:35:57 PM org.apache.catalina.loader.WebappClassLoader clearReferencesThreads
+GRAVE: The web application [/Data] appears to have started a thread named [__DEFAULT__] but has failed to stop it. This is very likely to create a memory leak.
+jun 09, 2019 11:35:57 PM org.apache.catalina.loader.WebappClassLoader clearReferencesThreads
+GRAVE: The web application [/Data] appears to have started a thread named [data%0043ache.data] but has failed to stop it. This is very likely to create a memory leak.
+jun 09, 2019 11:35:57 PM org.apache.catalina.loader.WebappClassLoader clearReferencesThreads
+GRAVE: The web application [/Data] appears to have started a thread named [Statistics Thread-__DEFAULT__-1] but has failed to stop it. This is very likely to create a memory leak.
+jun 09, 2019 11:35:57 PM org.apache.catalina.loader.WebappClassLoader clearReferencesThreads
+GRAVE: The web application [/Data] appears to have started a thread named [deleted%004fbject%0049ds%0043ache.data] but has failed to stop it. This is very likely to create a memory leak.
+jun 09, 2019 11:35:57 PM org.apache.catalina.loader.WebappClassLoader clearReferencesThreads
+GRAVE: The web application [/Data] appears to have started a thread named [checksums%0043ache.data] but has failed to stop it. This is very likely to create a memory leak.
+jun 09, 2019 11:35:57 PM org.apache.catalina.loader.WebappClassLoader checkThreadLocalMapForLeaks
+GRAVE: The web application [/Data] created a ThreadLocal with key of type [net.sf.ehcache.util.concurrent.Striped64.ThreadHashCode] (value [net.sf.ehcache.util.concurrent.Striped64$ThreadHashCode@170ee490]) and a value of type [net.sf.ehcache.util.concurrent.Striped64.HashCode] (value [net.sf.ehcache.util.concurrent.Striped64$HashCode@4c9b38b5]) but failed to remove it when the web application was stopped. Threads are going to be renewed over time to try and avoid a probable memory leak.
+jun 09, 2019 11:35:57 PM org.apache.catalina.loader.WebappClassLoader checkThreadLocalMapForLeaks
+GRAVE: The web application [/Data] created a ThreadLocal with key of type [net.sf.ehcache.util.concurrent.Striped64.ThreadHashCode] (value [net.sf.ehcache.util.concurrent.Striped64$ThreadHashCode@170ee490]) and a value of type [net.sf.ehcache.util.concurrent.Striped64.HashCode] (value [net.sf.ehcache.util.concurrent.Striped64$HashCode@6fd1ed5]) but failed to remove it when the web application was stopped. Threads are going to be renewed over time to try and avoid a probable memory leak.
+jun 09, 2019 11:35:57 PM org.apache.catalina.loader.WebappClassLoader checkThreadLocalMapForLeaks
+GRAVE: The web application [/Data] created a ThreadLocal with key of type [net.sf.ehcache.util.concurrent.Striped64.ThreadHashCode] (value [net.sf.ehcache.util.concurrent.Striped64$ThreadHashCode@170ee490]) and a value of type [net.sf.ehcache.util.concurrent.Striped64.HashCode] (value [net.sf.ehcache.util.concurrent.Striped64$HashCode@66b740fe]) but failed to remove it when the web application was stopped. Threads are going to be renewed over time to try and avoid a probable memory leak.
+jun 09, 2019 11:35:57 PM org.apache.catalina.loader.WebappClassLoader checkThreadLocalMapForLeaks
+GRAVE: The web application [/Data] created a ThreadLocal with key of type [net.sf.ehcache.util.concurrent.Striped64.ThreadHashCode] (value [net.sf.ehcache.util.concurrent.Striped64$ThreadHashCode@170ee490]) and a value of type [net.sf.ehcache.util.concurrent.Striped64.HashCode] (value [net.sf.ehcache.util.concurrent.Striped64$HashCode@73fc920d]) but failed to remove it when the web application was stopped. Threads are going to be renewed over time to try and avoid a probable memory leak.
+jun 09, 2019 11:35:57 PM org.apache.catalina.loader.WebappClassLoader checkThreadLocalMapForLeaks
+GRAVE: The web application [/Data] created a ThreadLocal with key of type [net.sf.ehcache.util.concurrent.Striped64.ThreadHashCode] (value [net.sf.ehcache.util.concurrent.Striped64$ThreadHashCode@170ee490]) and a value of type [net.sf.ehcache.util.concurrent.Striped64.HashCode] (value [net.sf.ehcache.util.concurrent.Striped64$HashCode@5cc20236]) but failed to remove it when the web application was stopped. Threads are going to be renewed over time to try and avoid a probable memory leak.
+jun 09, 2019 11:35:57 PM org.apache.catalina.loader.WebappClassLoader checkThreadLocalMapForLeaks
+GRAVE: The web application [/Data] created a ThreadLocal with key of type [net.sf.ehcache.util.concurrent.Striped64.ThreadHashCode] (value [net.sf.ehcache.util.concurrent.Striped64$ThreadHashCode@170ee490]) and a value of type [net.sf.ehcache.util.concurrent.Striped64.HashCode] (value [net.sf.ehcache.util.concurrent.Striped64$HashCode@32a7b4cd]) but failed to remove it when the web application was stopped. Threads are going to be renewed over time to try and avoid a probable memory leak.
+jun 09, 2019 11:35:57 PM org.apache.catalina.loader.WebappClassLoader checkThreadLocalMapForLeaks
+GRAVE: The web application [/Data] created a ThreadLocal with key of type [net.sf.ehcache.util.concurrent.Striped64.ThreadHashCode] (value [net.sf.ehcache.util.concurrent.Striped64$ThreadHashCode@170ee490]) and a value of type [net.sf.ehcache.util.concurrent.Striped64.HashCode] (value [net.sf.ehcache.util.concurrent.Striped64$HashCode@6e4bb2d7]) but failed to remove it when the web application was stopped. Threads are going to be renewed over time to try and avoid a probable memory leak.
+jun 09, 2019 11:35:57 PM org.apache.catalina.loader.WebappClassLoader checkThreadLocalMapForLeaks
+GRAVE: The web application [/Data] created a ThreadLocal with key of type [net.sf.ehcache.util.concurrent.Striped64.ThreadHashCode] (value [net.sf.ehcache.util.concurrent.Striped64$ThreadHashCode@170ee490]) and a value of type [net.sf.ehcache.util.concurrent.Striped64.HashCode] (value [net.sf.ehcache.util.concurrent.Striped64$HashCode@793029e9]) but failed to remove it when the web application was stopped. Threads are going to be renewed over time to try and avoid a probable memory leak.
+jun 09, 2019 11:35:57 PM org.apache.catalina.loader.WebappClassLoader checkThreadLocalMapForLeaks
+GRAVE: The web application [/Data] created a ThreadLocal with key of type [net.sf.ehcache.util.concurrent.Striped64.ThreadHashCode] (value [net.sf.ehcache.util.concurrent.Striped64$ThreadHashCode@170ee490]) and a value of type [net.sf.ehcache.util.concurrent.Striped64.HashCode] (value [net.sf.ehcache.util.concurrent.Striped64$HashCode@35af474b]) but failed to remove it when the web application was stopped. Threads are going to be renewed over time to try and avoid a probable memory leak.
+jun 09, 2019 11:35:57 PM org.apache.catalina.loader.WebappClassLoader checkThreadLocalMapForLeaks
+GRAVE: The web application [/Data] created a ThreadLocal with key of type [net.sf.ehcache.util.concurrent.Striped64.ThreadHashCode] (value [net.sf.ehcache.util.concurrent.Striped64$ThreadHashCode@170ee490]) and a value of type [net.sf.ehcache.util.concurrent.Striped64.HashCode] (value [net.sf.ehcache.util.concurrent.Striped64$HashCode@3aa19cef]) but failed to remove it when the web application was stopped. Threads are going to be renewed over time to try and avoid a probable memory leak.
+jun 09, 2019 11:35:57 PM org.apache.coyote.AbstractProtocol stop
+INFORMAÇÕES: Stopping ProtocolHandler ["http-bio-8080"]
+jun 09, 2019 11:35:57 PM org.apache.coyote.AbstractProtocol stop
+INFORMAÇÕES: Stopping ProtocolHandler ["http-bio-8443"]
+jun 09, 2019 11:35:57 PM org.apache.coyote.AbstractProtocol stop
+INFORMAÇÕES: Stopping ProtocolHandler ["ajp-bio-8009"]
+jun 09, 2019 11:35:57 PM org.apache.coyote.AbstractProtocol destroy
+INFORMAÇÕES: Destroying ProtocolHandler ["http-bio-8080"]
+jun 09, 2019 11:35:57 PM org.apache.coyote.AbstractProtocol destroy
+INFORMAÇÕES: Destroying ProtocolHandler ["http-bio-8443"]
+jun 09, 2019 11:35:57 PM org.apache.coyote.AbstractProtocol destroy
+INFORMAÇÕES: Destroying ProtocolHandler ["ajp-bio-8009"]
+jun 09, 2019 11:35:58 PM org.apache.catalina.core.AprLifecycleListener init
+INFORMAÇÕES: The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: /usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+jun 09, 2019 11:35:59 PM org.apache.coyote.AbstractProtocol init
+INFORMAÇÕES: Initializing ProtocolHandler ["http-bio-8080"]
+jun 09, 2019 11:35:59 PM org.apache.coyote.AbstractProtocol init
+INFORMAÇÕES: Initializing ProtocolHandler ["http-bio-8443"]
+jun 09, 2019 11:35:59 PM org.apache.coyote.AbstractProtocol init
+INFORMAÇÕES: Initializing ProtocolHandler ["ajp-bio-8009"]
+jun 09, 2019 11:35:59 PM org.apache.catalina.startup.Catalina load
+INFORMAÇÕES: Initialization processed in 811 ms
+jun 09, 2019 11:35:59 PM org.apache.catalina.core.StandardService startInternal
+INFORMAÇÕES: Starting service Catalina
+jun 09, 2019 11:35:59 PM org.apache.catalina.core.StandardEngine startInternal
+INFORMAÇÕES: Starting Servlet Engine: Apache Tomcat/7.0.53
+jun 09, 2019 11:35:59 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFORMAÇÕES: Deploying web application directory /home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/Tomcat/webapps/manager
+jun 09, 2019 11:35:59 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFORMAÇÕES: Deploying web application directory /home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/Tomcat/webapps/docs
+jun 09, 2019 11:35:59 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFORMAÇÕES: Deploying web application directory /home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/Tomcat/webapps/examples
+jun 09, 2019 11:36:00 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFORMAÇÕES: Deploying web application directory /home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/Tomcat/webapps/ROOT
+jun 09, 2019 11:36:00 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFORMAÇÕES: Deploying web application directory /home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/Tomcat/webapps/Data
+jun 09, 2019 11:36:05 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFORMAÇÕES: Deploying web application directory /home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/Tomcat/webapps/host-manager
+jun 09, 2019 11:36:05 PM org.apache.coyote.AbstractProtocol start
+INFORMAÇÕES: Starting ProtocolHandler ["http-bio-8080"]
+jun 09, 2019 11:36:05 PM org.apache.coyote.AbstractProtocol start
+INFORMAÇÕES: Starting ProtocolHandler ["http-bio-8443"]
+jun 09, 2019 11:36:05 PM org.apache.coyote.AbstractProtocol start
+INFORMAÇÕES: Starting ProtocolHandler ["ajp-bio-8009"]
+jun 09, 2019 11:36:05 PM org.apache.catalina.startup.Catalina start
+INFORMAÇÕES: Server startup in 5550 ms

@@ -1,0 +1,93 @@
+{
+  "service" : "wrm.comp.FormService",
+  "fields" : [ {
+    "id" : "sfld2",
+    "fieldType" : "SelectionField",
+    "type" : "string",
+    "preselectValue" : "",
+    "splitOutput" : false,
+    "labelSlots" : [ ],
+    "outputSlots" : [ ]
+  }, {
+    "id" : "fld14",
+    "fieldType" : "Field",
+    "type" : "string",
+    "labelSlots" : [ ],
+    "outputSlots" : [ ]
+  }, {
+    "id" : "fld13",
+    "fieldType" : "Field",
+    "type" : "string",
+    "labelSlots" : [ ],
+    "outputSlots" : [ ]
+  }, {
+    "id" : "fld12",
+    "fieldType" : "Field",
+    "type" : "string",
+    "labelSlots" : [ ],
+    "outputSlots" : [ ]
+  }, {
+    "id" : "fld11",
+    "fieldType" : "Field",
+    "type" : "string",
+    "labelSlots" : [ ],
+    "outputSlots" : [ ]
+  }, {
+    "id" : "fld10",
+    "fieldType" : "Field",
+    "type" : "string",
+    "labelSlots" : [ ],
+    "outputSlots" : [ ]
+  } ],
+  "_form" : {
+    "_" : "wrm.form.DefaultFormSubService",
+    "formLabel" : "Cadastrar Estabelecimento",
+    "viewFormRef" : "form",
+    "properties" : {
+      "sfld2" : {
+        "type" : "string",
+        "label" : "Variedade"
+      },
+      "fld14" : {
+        "type" : "string",
+        "label" : "Link"
+      },
+      "fld13" : {
+        "type" : "string",
+        "label" : "Descrição"
+      },
+      "fld12" : {
+        "type" : "string",
+        "label" : "Telefone"
+      },
+      "fld11" : {
+        "type" : "string",
+        "label" : "Endereço"
+      },
+      "fld10" : {
+        "type" : "string",
+        "label" : "Nome"
+      }
+    }
+  },
+  "_validation" : {
+    "_" : "wrm.form.DefaultValidationSubService",
+    "events" : "oslte12",
+    "properties" : {
+      "sfld2" : { },
+      "fld14" : { },
+      "fld13" : { },
+      "fld12" : { },
+      "fld11" : { },
+      "fld10" : {
+        "rules" : [ {
+          "id" : "mnd11",
+          "descr" : {
+            "service" : "wrm.comp.val.MandatoryValidationRuleService",
+            "messageKeyPrefix" : "MandatoryValidationRule."
+          }
+        } ]
+      }
+    }
+  }
+}

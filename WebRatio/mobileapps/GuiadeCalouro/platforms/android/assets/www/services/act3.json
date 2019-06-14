@@ -1,0 +1,20 @@
+{
+  "_" : "wrm.core.ActionService",
+  "definition" : "ad5",
+  "flows" : {
+    "spd5" : {
+      "id" : "nf14",
+      "navTo" : "scr10",
+      "bindTo" : "dau3",
+      "bind" : {
+        "kcond3.att5" : "pdp15"
+      }
+    },
+    "epd5" : {
+      "id" : "nf15",
+      "navTo" : "scr9",
+      "bindTo" : "scr9"
+    }
+  },
+  "notifications" : { }
+}

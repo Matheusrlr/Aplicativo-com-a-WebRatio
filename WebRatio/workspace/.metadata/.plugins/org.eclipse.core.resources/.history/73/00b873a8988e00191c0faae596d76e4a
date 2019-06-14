@@ -1,0 +1,70 @@
+<Screen xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" gr:x="755" gr:y="275" id="av1#scr11" name="Screen 11">
+  <ViewComponents>
+    <Form gr:x="0" gr:y="0" id="av1#scr11#enu5" name="Cadastrar Estabelecimento" eventOrder="av1#scr11#enu5#oslte12" fieldOrder="av1#scr11#enu5#fld10 av1#scr11#enu5#fld11 av1#scr11#enu5#fld12 av1#scr11#enu5#fld13 av1#scr11#enu5#fld14 av1#scr11#enu5#sfld2">
+      <Events>
+        <OnSelectEvent id="av1#scr11#enu5#oslte12" name="Save" validate="true">
+          <NavigationFlow id="av1#scr11#enu5#oslte12#nf23" to="av1#act5">
+            <ParameterBinding id="av1#scr11#enu5#oslte12#nf23#par44" source="av1#scr11#enu5#fld13" target="av1#act5.tlads0#ad6#ipd6#pdp18" name="Descri&#231;&#227;o - descricao"/>
+            <ParameterBinding id="av1#scr11#enu5#oslte12#nf23#par45" source="av1#scr11#enu5#fld11" target="av1#act5.tlads0#ad6#ipd6#pdp16" name="Endere&#231;o - endereco"/>
+            <ParameterBinding id="av1#scr11#enu5#oslte12#nf23#par46" source="av1#scr11#enu5#fld14" target="av1#act5.tlads0#ad6#ipd6#pdp22" name="Link - link"/>
+            <ParameterBinding id="av1#scr11#enu5#oslte12#nf23#par47" source="av1#scr11#enu5#fld10" target="av1#act5.tlads0#ad6#ipd6#pdp21" name="Nome - nome"/>
+            <ParameterBinding id="av1#scr11#enu5#oslte12#nf23#par48" source="av1#scr11#enu5#sfld2" target="av1#act5.tlads0#ad6#ipd6#pdp19" name="Variedade - oid_tip"/>
+            <ParameterBinding id="av1#scr11#enu5#oslte12#nf23#par49" source="av1#scr11#enu5#fld12" target="av1#act5.tlads0#ad6#ipd6#pdp20" name="Telefone - telefone"/>
+          </NavigationFlow>
+        </OnSelectEvent>
+      </Events>
+      <SelectionField id="av1#scr11#enu5#sfld2" name="Variedade" type="string" modifiable="true"/>
+      <Field id="av1#scr11#enu5#fld14" name="Link" type="string" modifiable="true"/>
+      <Field id="av1#scr11#enu5#fld13" name="Descri&#231;&#227;o" type="string" modifiable="true"/>
+      <Field id="av1#scr11#enu5#fld12" name="Telefone" type="string" modifiable="true"/>
+      <Field id="av1#scr11#enu5#fld11" name="Endere&#231;o" type="string" modifiable="true"/>
+      <Field id="av1#scr11#enu5#fld10" name="Nome" type="string" modifiable="true"/>
+    </Form>
+    <Selector gr:x="55" gr:y="165" id="av1#scr11#seu5" name="select_data 4" dataBinding="cls1">
+      <DataFlow id="av1#scr11#seu5#df4" to="av1#scr11#enu5">
+        <ParameterBinding id="av1#scr11#seu5#df4#par57" source="data.cls1#att6" target="av1#scr11#enu5#sfld2_label" name="nome - Variedade [label]"/>
+        <ParameterBinding id="av1#scr11#seu5#df4#par58" source="data.cls1#att5" target="av1#scr11#enu5#sfld2_output" name="oid - Variedade [output]"/>
+      </DataFlow>
+    </Selector>
+  </ViewComponents>
+  <layout:Grid containerType="grid">
+    <layout:Row>
+      <layout:Cell colspan="12">
+        <layout:Component componentId="av1#scr11#enu5">
+          <layout:Event event="av1#scr11#enu5#oslte12" eventType="OnSelectEvent"/>
+          <layout:Field field="av1#scr11#enu5#fld10"/>
+          <layout:Field field="av1#scr11#enu5#fld11"/>
+          <layout:Field field="av1#scr11#enu5#fld12"/>
+          <layout:Field field="av1#scr11#enu5#fld13"/>
+          <layout:Field field="av1#scr11#enu5#fld14"/>
+          <layout:Field field="av1#scr11#enu5#sfld2"/>
+        </layout:Component>
+      </layout:Cell>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+    <layout:Row>
+      <layout:Cell colspan="12"/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+  </layout:Grid>
+</Screen>

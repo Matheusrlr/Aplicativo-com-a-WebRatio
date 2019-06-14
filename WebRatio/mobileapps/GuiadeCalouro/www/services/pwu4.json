@@ -27,7 +27,7 @@
   } ],
   "_form" : {
     "_" : "wrm.form.DefaultFormSubService",
-    "formLabel" : "Tipo",
+    "formLabel" : "Variedades",
     "properties" : {
       "checkedKeys" : { }
     }

@@ -1,21 +1,33 @@
 {
   "service" : "wrm.comp.ListService",
-  "entity" : "cls1",
+  "entity" : "cls4",
   "maxResults" : 0,
   "distinct" : false,
   "output" : [ {
-    "ref" : "att6",
-    "viewName" : "nome",
-    "bindName" : "att6"
+    "ref" : "att37",
+    "viewName" : "sugestao",
+    "bindName" : "att37"
   }, {
-    "ref" : "att14",
-    "viewName" : "remoteOid",
-    "bindName" : "att14"
+    "ref" : "att33",
+    "viewName" : "sobrenome",
+    "bindName" : "att33"
+  }, {
+    "ref" : "att32",
+    "viewName" : "nome",
+    "bindName" : "att32"
+  }, {
+    "ref" : "att35",
+    "viewName" : "email",
+    "bindName" : "att35"
+  }, {
+    "ref" : "att34",
+    "viewName" : "matricula",
+    "bindName" : "att34"
   } ],
   "order" : [ ],
   "_form" : {
     "_" : "wrm.form.DefaultFormSubService",
-    "formLabel" : "a",
+    "formLabel" : "Dados dos alunos",
     "properties" : {
       "checkedKeys" : { }
     }

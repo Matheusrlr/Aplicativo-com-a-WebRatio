@@ -1,0 +1,21 @@
+{
+  "service" : "wrm.comp.DetailsService",
+  "entity" : "cls2",
+  "condExprs" : {
+    "property" : "att7",
+    "operator" : "in",
+    "valueInput" : "kcond4.att7",
+    "config" : {
+      "oneImpliedInputRequired" : false
+    }
+  },
+  "output" : [ {
+    "ref" : "att9",
+    "viewName" : "decricao",
+    "bindName" : "att9"
+  }, {
+    "ref" : "att8",
+    "viewName" : "nome",
+    "bindName" : "att8"
+  } ]
+}

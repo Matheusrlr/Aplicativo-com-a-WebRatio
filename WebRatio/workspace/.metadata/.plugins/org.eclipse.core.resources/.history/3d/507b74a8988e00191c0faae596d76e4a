@@ -1,0 +1,59 @@
+<Screen xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" gr:x="20" gr:y="440" id="av1#scr9" name="Screen 9">
+  <ViewComponents>
+    <Form gr:x="0" gr:y="0" id="av1#scr9#enu4" name="Cadastrar Variedade" fieldOrder="av1#scr9#enu4#fld9 av1#scr9#enu4#sfld1" eventOrder="av1#scr9#enu4#oslte11">
+      <SelectionField id="av1#scr9#enu4#sfld1" name="Categoria" type="string" modifiable="true"/>
+      <Field id="av1#scr9#enu4#fld9" name="Nome" type="string" modifiable="true"/>
+      <Events>
+        <OnSelectEvent id="av1#scr9#enu4#oslte11" name="Save" validate="true">
+          <NavigationFlow id="av1#scr9#enu4#oslte11#nf13" to="av1#act3">
+            <ParameterBinding id="av1#scr9#enu4#oslte11#nf13#par33" source="av1#scr9#enu4#fld9" target="av1#act3.tlads0#ad5#ipd5#pdp13" name="Nome - nome"/>
+            <ParameterBinding id="av1#scr9#enu4#oslte11#nf13#par34" source="av1#scr9#enu4#sfld1" target="av1#act3.tlads0#ad5#ipd5#pdp14" name="Categoria - oid_cat"/>
+          </NavigationFlow>
+        </OnSelectEvent>
+      </Events>
+    </Form>
+    <Selector gr:x="5" gr:y="130" id="av1#scr9#seu4" name="select_data3" dataBinding="cls2" distinctAttributes="cls2#att7 cls2#att8">
+      <DataFlow id="av1#scr9#seu4#df5" to="av1#scr9#enu4">
+        <ParameterBinding id="av1#scr9#seu4#df5#par53" source="data.cls2#att8" target="av1#scr9#enu4#sfld1_label" name="nome - Categoria [label]"/>
+        <ParameterBinding id="av1#scr9#seu4#df5#par56" source="data.cls2#att7" target="av1#scr9#enu4#sfld1_output" name="oid - Categoria [output]"/>
+      </DataFlow>
+      <SortAttribute attribute="cls2#att8" order="ascending"/>
+    </Selector>
+  </ViewComponents>
+  <layout:Grid containerType="grid">
+    <layout:Row>
+      <layout:Cell colspan="12">
+        <layout:Component componentId="av1#scr9#enu4">
+          <layout:Field field="av1#scr9#enu4#fld9"/>
+          <layout:Field field="av1#scr9#enu4#sfld1"/>
+          <layout:Event event="av1#scr9#enu4#oslte11" eventType="OnSelectEvent"/>
+        </layout:Component>
+      </layout:Cell>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+    <layout:Row>
+      <layout:Cell colspan="12"/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+  </layout:Grid>
+</Screen>

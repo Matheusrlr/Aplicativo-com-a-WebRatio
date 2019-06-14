@@ -5079,3 +5079,255 @@ Caused by: java.net.UnknownHostException: license.webratio.com: Nome ou serviço
 	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:107)
 	at com.webratio.services.licensing.client.LicensingClient.post(LicensingClient.java:160)
 	... 5 more
+!SESSION 2019-06-01 22:40:40.717 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_201
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=pt_BR
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.core.resources 2 10035 2019-06-01 22:40:44.581
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+!SESSION 2019-06-04 17:22:24.319 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_201
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=pt_BR
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.core.resources 2 10035 2019-06-04 17:22:27.473
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+!SESSION 2019-06-04 17:28:11.607 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_201
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=pt_BR
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.core.resources 2 10035 2019-06-04 17:28:15.869
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+!SESSION 2019-06-04 19:23:27.376 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_201
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=pt_BR
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.core.resources 2 10035 2019-06-04 19:23:30.745
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+!SESSION 2019-06-07 16:51:47.227 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_201
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=pt_BR
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY com.webratio.commons.startup 4 1 2019-06-07 17:52:18.965
+!MESSAGE com.webratio.services.licensing.client.LicensingException
+!STACK 0
+com.webratio.services.licensing.client.LicensingException
+	at com.webratio.services.licensing.client.LicensingClient.post(LicensingClient.java:173)
+	at com.webratio.services.licensing.client.LicensingClient.ping(LicensingClient.java:125)
+	at com.webratio.commons.startup.internal.server.WR8CRMServerHandler.sendActivationRequest(WR8CRMServerHandler.java:155)
+	at com.webratio.commons.startup.internal.server.WR8CRMServerHandler.sendRequest(WR8CRMServerHandler.java:282)
+	at com.webratio.commons.startup.internal.server.WR8CRMServerHandler$1.run(WR8CRMServerHandler.java:384)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.net.UnknownHostException: license.webratio.com: Nome ou serviço desconhecido
+	at java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.net.InetAddress$2.lookupAllHostAddr(InetAddress.java:929)
+	at java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1324)
+	at java.net.InetAddress.getAllByName0(InetAddress.java:1277)
+	at java.net.InetAddress.getAllByName(InetAddress.java:1193)
+	at java.net.InetAddress.getAllByName(InetAddress.java:1127)
+	at org.apache.http.impl.conn.SystemDefaultDnsResolver.resolve(SystemDefaultDnsResolver.java:45)
+	at org.apache.http.impl.conn.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:111)
+	at org.apache.http.impl.conn.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:353)
+	at org.apache.http.impl.execchain.MainClientExec.establishRoute(MainClientExec.java:380)
+	at org.apache.http.impl.execchain.MainClientExec.execute(MainClientExec.java:236)
+	at org.apache.http.impl.execchain.ProtocolExec.execute(ProtocolExec.java:184)
+	at org.apache.http.impl.execchain.RetryExec.execute(RetryExec.java:88)
+	at org.apache.http.impl.execchain.RedirectExec.execute(RedirectExec.java:110)
+	at org.apache.http.impl.client.InternalHttpClient.doExecute(InternalHttpClient.java:184)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:82)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:107)
+	at com.webratio.services.licensing.client.LicensingClient.post(LicensingClient.java:160)
+	... 5 more
+!SESSION 2019-06-11 20:20:46.734 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_201
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=pt_BR
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.core.resources 2 10035 2019-06-11 20:20:50.668
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY com.webratio.ide.ui 4 1 2019-06-11 21:32:02.020
+!MESSAGE Error opening dashboard in browser
+!STACK 1
+org.eclipse.ui.PartInitException: Could not open a web browser because there are none configured. Check the Web Browser preferences.
+	at org.eclipse.ui.internal.browser.DefaultBrowserSupport.createBrowser(DefaultBrowserSupport.java:113)
+	at org.eclipse.ui.internal.browser.WorkbenchBrowserSupport.createBrowser(WorkbenchBrowserSupport.java:100)
+	at org.eclipse.ui.browser.AbstractWorkbenchBrowserSupport.getExternalBrowser(AbstractWorkbenchBrowserSupport.java:40)
+	at com.webratio.ide.deploy.core.mobile.dashboard.MobileBuildDashboard$1.run(MobileBuildDashboard.java:94)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:35)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:136)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:3774)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3412)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$9.run(PartRenderingEngine.java:1151)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:332)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1032)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:148)
+	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:636)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:332)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:579)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:150)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:135)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:196)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:134)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:380)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:235)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:648)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:603)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1465)
+	at org.eclipse.equinox.launcher.Main.main(Main.java:1438)
+!SUBENTRY 1 org.eclipse.ui 4 0 2019-06-11 21:32:02.021
+!MESSAGE Could not open a web browser because there are none configured. Check the Web Browser preferences.
+!SESSION 2019-06-11 21:32:17.550 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_201
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=pt_BR
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.core.resources 2 10035 2019-06-11 21:32:21.219
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY com.webratio.ide.core 4 1 2019-06-11 21:52:31.396
+!MESSAGE Invalid id ''
+!STACK 0
+com.webratio.model.problems.IllegalIdException: Invalid id ''
+	at com.webratio.model.query.Explorer.getById(Explorer.java:231)
+	at sun.reflect.GeneratedMethodAccessor93.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.webratio.commons.base.reflect.AbstractDispatcher$SimpleInvoker.invoke(AbstractDispatcher.java:320)
+	at com.webratio.commons.base.reflect.AbstractDispatcher$OverloadedInvoker.invoke(AbstractDispatcher.java:776)
+	at com.webratio.commons.base.reflect.AbstractDispatcher.invokeMethod(AbstractDispatcher.java:105)
+	at com.webratio.commons.base.reflect.DefaultDispatcher$Instance.invokeMethod(DefaultDispatcher.java:1)
+	at com.webratio.commons.base.reflect.CompoundDispatcher.invokeMethod(CompoundDispatcher.java:93)
+	at com.webratio.commons.transform.groovy.mixin.DispatcherClosure.doInvoke(DispatcherClosure.java:79)
+	at com.webratio.commons.transform.groovy.mixin.DispatcherClosure.call(DispatcherClosure.java:67)
+	at sun.reflect.GeneratedMethodAccessor39.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:93)
+	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:325)
+	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1210)
+	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1019)
+	at groovy.lang.MetaClassImpl.invokePropertyOrMissing(MetaClassImpl.java:1256)
+	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1212)
+	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1019)
+	at org.codehaus.groovy.runtime.callsite.PogoMetaClassSite.callCurrent(PogoMetaClassSite.java:69)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:52)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:154)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:166)
+	at Create_Logic_Input_template_1560300751364.run(Create_Logic_Input_template_1560300751364:5)
+	at com.webratio.commons.transform.groovy.GroovyTemplate.evaluateObject(GroovyTemplate.java:249)
+	at com.webratio.commons.transform.groovy.GroovyTemplate.evaluateScript(GroovyTemplate.java:186)
+	at com.webratio.commons.transform.groovy.GroovyTemplate.evaluate(GroovyTemplate.java:161)
+	at com.webratio.commons.transform.groovy.GroovyRunner.evaluateTemplate(GroovyRunner.java:349)
+	at com.webratio.commons.transform.groovy.GroovyRunner.access$1(GroovyRunner.java:335)
+	at com.webratio.commons.transform.groovy.GroovyRunner$TemplateEvaluator.evaluate(GroovyRunner.java:312)
+	at com.webratio.commons.transform.groovy.GroovyRunner.evaluateTemplate(GroovyRunner.java:234)
+	at com.webratio.model.query.Explorer.evaluateTemplate(Explorer.java:711)
+	at com.webratio.model.query.elements.AbstractComponentDetailer.evaluateInputsTemplate(AbstractComponentDetailer.java:36)
+	at com.webratio.model.query.elements.IFComponentDetailer.getInputs(IFComponentDetailer.java:51)
+	at com.webratio.model.query.AbstractInteractionModelExplorer$1.init(AbstractInteractionModelExplorer.java:379)
+	at com.webratio.model.query.AbstractInteractionModelExplorer$1.init(AbstractInteractionModelExplorer.java:1)
+	at com.webratio.model.query.RealmDependencyInterceptor$Wrapper1.init(RealmDependencyInterceptor.java:182)
+	at com.webratio.model.query.cache.AbstractCache.invokeInitializer1(AbstractCache.java:148)
+	at com.webratio.model.query.cache.AbstractCache.internalGetOrInit1(AbstractCache.java:130)
+	at com.webratio.model.query.cache.AbstractCache.get(AbstractCache.java:26)
+	at com.webratio.model.query.RealmAwareCache.get(RealmAwareCache.java:39)
+	at com.webratio.model.query.AbstractInteractionModelExplorer.doGetInputParameters(AbstractInteractionModelExplorer.java:376)
+	at com.webratio.model.query.AbstractInteractionModelExplorer.getInputParameters(AbstractInteractionModelExplorer.java:350)
+	at com.webratio.ide.core.LinkHelper.getUnitInputParameters(LinkHelper.java:225)
+	at com.webratio.ide.ui.wizards.InputPortDefinitionWizard$Context.computeParameterInfos(InputPortDefinitionWizard.java:73)
+	at com.webratio.ide.ui.wizards.InputPortDefinitionWizard$Context.computeParameterInfos(InputPortDefinitionWizard.java:1)
+	at com.webratio.ide.ui.wizards.AbstractPortDefinitionWizard$AbstractContext.getAvailableParameterInfos(AbstractPortDefinitionWizard.java:156)
+	at com.webratio.ide.ui.wizards.PortDefinitionParametersSelectionPage.validate(PortDefinitionParametersSelectionPage.java:140)
+	at com.webratio.ide.ui.wizards.PortDefinitionParametersSelectionPage.createControl(PortDefinitionParametersSelectionPage.java:136)
+	at org.eclipse.jface.wizard.Wizard.createPageControls(Wizard.java:178)
+	at org.eclipse.jface.wizard.WizardDialog.createPageControls(WizardDialog.java:759)
+	at org.eclipse.jface.wizard.WizardDialog.createContents(WizardDialog.java:622)
+	at org.eclipse.jface.window.Window.create(Window.java:435)
+	at org.eclipse.jface.dialogs.Dialog.create(Dialog.java:1101)
+	at com.webratio.ide.ui.actions.CollectorWizardAction$1.run(CollectorWizardAction.java:125)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:35)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:136)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:3774)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3412)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$9.run(PartRenderingEngine.java:1151)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:332)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1032)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:148)
+	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:636)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:332)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:579)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:150)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:135)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:196)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:134)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:380)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:235)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:648)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:603)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1465)
+	at org.eclipse.equinox.launcher.Main.main(Main.java:1438)
+!SESSION 2019-06-12 16:05:52.716 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_201
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=pt_BR
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.core.resources 2 10035 2019-06-12 16:05:56.511
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+!SESSION 2019-06-12 16:10:53.840 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_201
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=pt_BR
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.core.resources 2 10035 2019-06-12 16:10:59.094
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+!SESSION 2019-06-14 07:09:30.213 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_201
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=pt_BR
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.core.resources 2 10035 2019-06-14 07:09:34.430
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+!SESSION 2019-06-14 07:53:16.139 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_201
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=pt_BR
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.core.resources 2 10035 2019-06-14 07:53:21.206
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.

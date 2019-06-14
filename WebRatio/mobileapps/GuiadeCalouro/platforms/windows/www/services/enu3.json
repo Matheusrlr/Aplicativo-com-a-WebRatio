@@ -57,5 +57,62 @@
         "label" : "Sugestão"
       }
     }
+  },
+  "_validation" : {
+    "_" : "wrm.form.DefaultValidationSubService",
+    "events" : "oslte1",
+    "properties" : {
+      "fld6" : {
+        "rules" : [ {
+          "id" : "email1",
+          "descr" : {
+            "service" : "wrm.comp.val.EMailValidationRuleService",
+            "messageKeyPrefix" : "EMailValidationRule."
+          }
+        }, {
+          "id" : "mnd3",
+          "descr" : {
+            "service" : "wrm.comp.val.MandatoryValidationRuleService",
+            "messageKeyPrefix" : "MandatoryValidationRule."
+          }
+        } ]
+      },
+      "fld5" : {
+        "rules" : [ {
+          "id" : "mnd4",
+          "descr" : {
+            "service" : "wrm.comp.val.MandatoryValidationRuleService",
+            "messageKeyPrefix" : "MandatoryValidationRule."
+          }
+        } ]
+      },
+      "fld4" : {
+        "rules" : [ {
+          "id" : "mnd6",
+          "descr" : {
+            "service" : "wrm.comp.val.MandatoryValidationRuleService",
+            "messageKeyPrefix" : "MandatoryValidationRule."
+          }
+        } ]
+      },
+      "fld3" : {
+        "rules" : [ {
+          "id" : "mnd5",
+          "descr" : {
+            "service" : "wrm.comp.val.MandatoryValidationRuleService",
+            "messageKeyPrefix" : "MandatoryValidationRule."
+          }
+        } ]
+      },
+      "fld7" : {
+        "rules" : [ {
+          "id" : "mnd7",
+          "descr" : {
+            "service" : "wrm.comp.val.MandatoryValidationRuleService",
+            "messageKeyPrefix" : "MandatoryValidationRule."
+          }
+        } ]
+      }
+    }
   }
 }

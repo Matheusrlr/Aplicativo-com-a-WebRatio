@@ -1,0 +1,58 @@
+{
+  "_" : "wrm.core.PanelService",
+  "masters" : [ "tlb1" ],
+  "navigations" : {
+    "0" : {
+      "nc" : true,
+      "flows" : "scr13",
+      "fr" : true
+    },
+    "1" : {
+      "nc" : true,
+      "flows" : "scr13.link",
+      "fr" : true
+    },
+    "2" : {
+      "flows" : "scr13.auto-link",
+      "fr" : true
+    },
+    "3" : {
+      "flows" : "scr13.auto-link"
+    },
+    "4" : {
+      "flows" : "nf27",
+      "fr" : true
+    },
+    "5" : {
+      "flows" : "nf27"
+    }
+  },
+  "knownEffects" : "#pr#",
+  "propagationSequence" : "",
+  "propagations" : { },
+  "components" : {
+    "pwu6" : {
+      "fb" : true,
+      "conds" : [ {
+        "fr" : false,
+        "navs" : "3",
+        "effects" : "#pr#"
+      } ],
+      "rf" : [ {
+        "all" : true,
+        "fr" : true,
+        "navs" : "0|1|4"
+      }, {
+        "all" : true,
+        "navs" : "5"
+      } ]
+    }
+  },
+  "events" : { },
+  "autoFlow" : {
+    "preserve" : ""
+  },
+  "autoFlowFull" : {
+    "preserve" : ""
+  }
+}

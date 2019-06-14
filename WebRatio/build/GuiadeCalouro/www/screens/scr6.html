@@ -1,0 +1,55 @@
+<!-- directive: wr-screen scr6 -->
+<div>
+	<ion-header-bar class="bar-positive" align-title="center">
+		<h1 class="title"> 
+			<span class="wr-frag-applicationName ">Guia de Calouro</span>
+		</h1>
+		<div class="buttons pull-right">
+			<button type="button" class="button " ng-click="screen.throwEvent($event, 'HomeEvent', null, { position: $index })">
+			{{ 'event.Home' | wrLocalize }}
+			</button>
+		</div>
+	</ion-header-bar>
+	<ion-content class="has-header has-footer wr-safe-area">
+		<!-- directive: wr-component mssu1 -->
+		<div class=" wr-comp-Message">
+			<div ng-if="view.messages &amp;&amp; view.messages.length" class="list ">
+				<div class="item item-divider">{{ 'Ol\u00E1' | wrLocalize }}</div>
+				<div ng-repeat="msg in view.messages track by $index" class="item item-text-wrap" ng-bind="msg"></div>
+			</div>
+		</div>
+		<!-- end_directive: wr-component --><button type="button" class="button button-positive button-full " ng-click="screen.throwEvent($event, 'OnSelectEvent', 'oslte14', { position: $index })">
+		{{ 'Estabelecimentos' | wrLocalize }}
+		</button><button type="button" class="button button-positive button-full " ng-click="screen.throwEvent($event, 'OnSelectEvent', 'oslte13', { position: $index })">
+		{{ 'Formu\u00E1rio' | wrLocalize }}
+		</button><!-- directive: wr-component dau2 -->
+		<div class=" wr-comp-Details">
+			<div ng-if="view.data" class="list card">
+				<div class="item item-divider">{{ 'Logo' | wrLocalize }}</div>
+				<div class="item item-image">
+					<span wr-blob="view.data.logo" class="wr-attr-image  item-image">
+					<img ng-show="blob.url" ng-src="{{ blob.url }}" />
+					<span ng-show="blob.loading" class="wr-placeholder icon ion-load-d"></span>
+					<span ng-show="blob.failed" class="wr-placeholder icon ion-alert-circled"></span>
+					</span>
+				</div>
+				<div class="item-buttons">    
+					<button type="button" class="button " ng-click="screen.throwEvent($event, 'OnSelectEvent', 'oslte7', { position: $index })">
+					{{ 'Login' | wrLocalize }}
+					</button>
+				</div>
+			</div>
+		</div>
+		<!-- end_directive: wr-component --><!-- directive: wr-component dau2 --><button type="button" class="button button-assertive " ng-click="screen.throwEvent($event, 'OnSelectEvent', 'oslte7', { position: $index })">
+		{{ 'Login' | wrLocalize }}
+		</button><!-- end_directive: wr-component -->
+	</ion-content>
+	<ion-footer-bar keyboard-attach class="bar-positive hide-on-keyboard-open" align-title="center">
+		<div class="buttons">
+			<button type="button" class="button " ng-click="screen.throwEvent($event, 'BackEvent', null, { position: $index })">
+			{{ 'event.Back' | wrLocalize }}
+			</button>
+		</div>
+	</ion-footer-bar>
+</div>
+<!-- end_directive: wr-screen -->

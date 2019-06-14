@@ -20,10 +20,17 @@
       "flows" : "scr3.auto-link"
     },
     "4" : {
-      "flows" : "nf19",
+      "flows" : "nf11",
       "fr" : true
     },
     "5" : {
+      "flows" : "nf11"
+    },
+    "6" : {
+      "flows" : "nf19",
+      "fr" : true
+    },
+    "7" : {
       "flows" : "nf19"
     }
   },
@@ -41,10 +48,10 @@
       "rf" : [ {
         "all" : true,
         "fr" : true,
-        "navs" : "0|1|4"
+        "navs" : "0|1|4|6"
       }, {
         "all" : true,
-        "navs" : "5"
+        "navs" : "5|7"
       } ]
     }
   },

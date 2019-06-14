@@ -1,0 +1,470 @@
+{
+  "_" : "wrm.data.DataService",
+  "databaseName" : "Guia de Calouro",
+  "contextName" : "ManagementContext",
+  "metadata" : {
+    "version" : 557865660,
+    "entities" : {
+      "MUser" : {
+        "name" : "data.AppUser",
+        "setName" : "data_AppUserSet",
+        "serverName" : "User",
+        "serverReadable" : false,
+        "attributes" : {
+          "mUserOID" : {
+            "name" : "oid",
+            "type" : "integer",
+            "key" : true
+          },
+          "mUsername" : {
+            "name" : "username",
+            "serverName" : "userName",
+            "type" : "string"
+          },
+          "att1" : {
+            "name" : "remoteOid",
+            "serverName" : "oid",
+            "type" : "integer",
+            "serverKey" : true,
+            "indexed" : true
+          },
+          "att2" : {
+            "name" : "email",
+            "serverName" : "email",
+            "type" : "string"
+          }
+        },
+        "roles" : {
+          "MUser2MRole" : {
+            "name" : "AppUserToAppRole",
+            "many" : true,
+            "inverse" : "MRole2MUser"
+          }
+        }
+      },
+      "MRole" : {
+        "name" : "data.AppRole",
+        "setName" : "data_AppRoleSet",
+        "attributes" : {
+          "mRoleOID" : {
+            "name" : "oid",
+            "type" : "integer",
+            "key" : true
+          },
+          "mRoleName" : {
+            "name" : "name",
+            "type" : "string"
+          }
+        },
+        "roles" : {
+          "MRole2MUser" : {
+            "name" : "AppRoleToAppUser",
+            "foreignKeyName" : "AppRoleToAppUser__oid",
+            "many" : false,
+            "inverse" : "MUser2MRole"
+          }
+        }
+      },
+      "cls2" : {
+        "name" : "data.Categoria",
+        "setName" : "data_CategoriaSet",
+        "serverName" : "Categoria",
+        "auxEntity" : {
+          "name" : "data.Categoria__Aux",
+          "setName" : "data_CategoriaSet__Aux",
+          "attributes" : {
+            "cls2_auxOid" : {
+              "name" : "oid",
+              "type" : "integer",
+              "key" : true
+            }
+          }
+        },
+        "dirtyName" : "dirty",
+        "deleteTimestampName" : "deletedAt",
+        "attributes" : {
+          "att7" : {
+            "name" : "oid",
+            "trackerName" : "t_oid",
+            "type" : "integer",
+            "key" : true
+          },
+          "att9" : {
+            "name" : "decricao",
+            "serverName" : "descricao",
+            "dirtyName" : "d_decricao",
+            "type" : "string"
+          },
+          "att8" : {
+            "name" : "nome",
+            "serverName" : "nome",
+            "dirtyName" : "d_nome",
+            "type" : "string"
+          },
+          "att10" : {
+            "name" : "remoteOid",
+            "serverName" : "oid",
+            "trackerName" : "t_remoteOid",
+            "type" : "integer",
+            "serverKey" : true,
+            "indexed" : true
+          },
+          "att11" : {
+            "name" : "createdAt",
+            "type" : "timestamp",
+            "createTS" : true
+          },
+          "att12" : {
+            "name" : "updatedAt",
+            "type" : "timestamp",
+            "updateTS" : true
+          },
+          "att3" : {
+            "name" : "imagem",
+            "serverName" : "imagem",
+            "dirtyName" : "d_imagem",
+            "type" : "blob",
+            "meta" : {
+              "contentType" : {
+                "name" : "imagem_contentType",
+                "type" : "string"
+              },
+              "fileName" : {
+                "name" : "imagem_fileName",
+                "type" : "string"
+              },
+              "serverFileId" : {
+                "name" : "imagem_remoteFileId",
+                "type" : "string"
+              },
+              "status" : {
+                "name" : "imagem_status",
+                "type" : "integer"
+              }
+            }
+          }
+        },
+        "roles" : { }
+      },
+      "cls3" : {
+        "name" : "data.Estabelecimento",
+        "setName" : "data_EstabelecimentoSet",
+        "serverName" : "Estabelecimentos",
+        "auxEntity" : {
+          "name" : "data.Estabelecimento__Aux",
+          "setName" : "data_EstabelecimentoSet__Aux",
+          "attributes" : {
+            "cls3_auxOid" : {
+              "name" : "oid",
+              "type" : "integer",
+              "key" : true
+            }
+          }
+        },
+        "dirtyName" : "dirty",
+        "deleteTimestampName" : "deletedAt",
+        "attributes" : {
+          "att20" : {
+            "name" : "oid",
+            "trackerName" : "t_oid",
+            "type" : "integer",
+            "key" : true
+          },
+          "att27" : {
+            "name" : "logo",
+            "serverName" : "logo",
+            "dirtyName" : "d_logo",
+            "type" : "blob",
+            "meta" : {
+              "contentType" : {
+                "name" : "logo_contentType",
+                "type" : "string"
+              },
+              "fileName" : {
+                "name" : "logo_fileName",
+                "type" : "string"
+              },
+              "serverFileId" : {
+                "name" : "logo_remoteFileId",
+                "type" : "string"
+              },
+              "status" : {
+                "name" : "logo_status",
+                "type" : "integer"
+              }
+            }
+          },
+          "att26" : {
+            "name" : "valor",
+            "serverName" : "valor",
+            "dirtyName" : "d_valor",
+            "type" : "integer"
+          },
+          "att25" : {
+            "name" : "telefone",
+            "serverName" : "telefone",
+            "dirtyName" : "d_telefone",
+            "type" : "string"
+          },
+          "att24" : {
+            "name" : "link",
+            "serverName" : "link",
+            "dirtyName" : "d_link",
+            "type" : "url"
+          },
+          "att23" : {
+            "name" : "endereco",
+            "serverName" : "endereco",
+            "dirtyName" : "d_endereco",
+            "type" : "string"
+          },
+          "att22" : {
+            "name" : "descricao",
+            "serverName" : "descricao",
+            "dirtyName" : "d_descricao",
+            "type" : "string"
+          },
+          "att21" : {
+            "name" : "nome",
+            "serverName" : "nome",
+            "dirtyName" : "d_nome",
+            "type" : "string"
+          },
+          "att28" : {
+            "name" : "remoteOid",
+            "serverName" : "oid",
+            "trackerName" : "t_remoteOid",
+            "type" : "integer",
+            "serverKey" : true,
+            "indexed" : true
+          },
+          "att29" : {
+            "name" : "createdAt",
+            "type" : "timestamp",
+            "createTS" : true
+          },
+          "att30" : {
+            "name" : "updatedAt",
+            "type" : "timestamp",
+            "updateTS" : true
+          },
+          "att13" : {
+            "name" : "oidTip",
+            "serverName" : "oidTipo",
+            "dirtyName" : "d_oidTip",
+            "type" : "string"
+          }
+        },
+        "roles" : { }
+      },
+      "cls1" : {
+        "name" : "data.Tipo",
+        "setName" : "data_TipoSet",
+        "serverName" : "Tipo",
+        "auxEntity" : {
+          "name" : "data.Tipo__Aux",
+          "setName" : "data_TipoSet__Aux",
+          "attributes" : {
+            "cls1_auxOid" : {
+              "name" : "oid",
+              "type" : "integer",
+              "key" : true
+            }
+          }
+        },
+        "dirtyName" : "dirty",
+        "deleteTimestampName" : "deletedAt",
+        "attributes" : {
+          "att5" : {
+            "name" : "oid",
+            "trackerName" : "t_oid",
+            "type" : "integer",
+            "key" : true
+          },
+          "att6" : {
+            "name" : "nome",
+            "serverName" : "nome",
+            "dirtyName" : "d_nome",
+            "type" : "string"
+          },
+          "att14" : {
+            "name" : "remoteOid",
+            "serverName" : "oid",
+            "trackerName" : "t_remoteOid",
+            "type" : "integer",
+            "serverKey" : true,
+            "indexed" : true
+          },
+          "att15" : {
+            "name" : "createdAt",
+            "type" : "timestamp",
+            "createTS" : true
+          },
+          "att16" : {
+            "name" : "updatedAt",
+            "type" : "timestamp",
+            "updateTS" : true
+          },
+          "att4" : {
+            "name" : "oidCat",
+            "serverName" : "oidCategoria",
+            "dirtyName" : "d_oidCat",
+            "type" : "string"
+          }
+        },
+        "roles" : { }
+      },
+      "cls4" : {
+        "name" : "data.Feedback",
+        "setName" : "data_FeedbackSet",
+        "serverName" : "Feedback",
+        "auxEntity" : {
+          "name" : "data.Feedback__Aux",
+          "setName" : "data_FeedbackSet__Aux",
+          "attributes" : {
+            "cls4_auxOid" : {
+              "name" : "oid",
+              "type" : "integer",
+              "key" : true
+            }
+          }
+        },
+        "dirtyName" : "dirty",
+        "deleteTimestampName" : "deletedAt",
+        "attributes" : {
+          "att17" : {
+            "name" : "oid",
+            "trackerName" : "t_oid",
+            "type" : "integer",
+            "key" : true
+          },
+          "att18" : {
+            "name" : "remoteOid",
+            "serverName" : "oid",
+            "trackerName" : "t_remoteOid",
+            "type" : "integer",
+            "serverKey" : true,
+            "indexed" : true
+          },
+          "att19" : {
+            "name" : "createdAt",
+            "type" : "timestamp",
+            "createTS" : true
+          },
+          "att31" : {
+            "name" : "updatedAt",
+            "type" : "timestamp",
+            "updateTS" : true
+          },
+          "att35" : {
+            "name" : "email",
+            "serverName" : "email",
+            "dirtyName" : "d_email",
+            "type" : "string"
+          },
+          "att34" : {
+            "name" : "matricula",
+            "serverName" : "matricula",
+            "dirtyName" : "d_matricula",
+            "type" : "integer"
+          },
+          "att33" : {
+            "name" : "sobrenome",
+            "serverName" : "sobrenome",
+            "dirtyName" : "d_sobrenome",
+            "type" : "string"
+          },
+          "att32" : {
+            "name" : "nome",
+            "serverName" : "nome",
+            "dirtyName" : "d_nome",
+            "type" : "string"
+          },
+          "att37" : {
+            "name" : "sugestao",
+            "serverName" : "sugestao",
+            "dirtyName" : "d_sugestao",
+            "type" : "string"
+          }
+        },
+        "roles" : { }
+      },
+      "cls5" : {
+        "name" : "data.Menu",
+        "setName" : "data_MenuSet",
+        "serverName" : "Menu",
+        "auxEntity" : {
+          "name" : "data.Menu__Aux",
+          "setName" : "data_MenuSet__Aux",
+          "attributes" : {
+            "cls5_auxOid" : {
+              "name" : "oid",
+              "type" : "integer",
+              "key" : true
+            }
+          }
+        },
+        "dirtyName" : "dirty",
+        "deleteTimestampName" : "deletedAt",
+        "attributes" : {
+          "att38" : {
+            "name" : "oid",
+            "trackerName" : "t_oid",
+            "type" : "integer",
+            "key" : true
+          },
+          "att39" : {
+            "name" : "remoteOid",
+            "serverName" : "oid",
+            "trackerName" : "t_remoteOid",
+            "type" : "integer",
+            "serverKey" : true,
+            "indexed" : true
+          },
+          "att40" : {
+            "name" : "createdAt",
+            "type" : "timestamp",
+            "createTS" : true
+          },
+          "att41" : {
+            "name" : "updatedAt",
+            "type" : "timestamp",
+            "updateTS" : true
+          },
+          "att42" : {
+            "name" : "logo",
+            "serverName" : "logo",
+            "dirtyName" : "d_logo",
+            "type" : "blob",
+            "meta" : {
+              "contentType" : {
+                "name" : "logo_contentType",
+                "type" : "string"
+              },
+              "fileName" : {
+                "name" : "logo_fileName",
+                "type" : "string"
+              },
+              "serverFileId" : {
+                "name" : "logo_remoteFileId",
+                "type" : "string"
+              },
+              "status" : {
+                "name" : "logo_status",
+                "type" : "integer"
+              }
+            }
+          }
+        },
+        "roles" : { }
+      }
+    },
+    "associations" : {
+      "MUser2MRole_MRole2MUser" : {
+        "name" : "appUserToAppRole_appRoleToAppUser",
+        "roles" : [ "MUser2MRole", "MRole2MUser" ]
+      }
+    }
+  },
+  "dataRestoreDisabled" : [ ]
+}

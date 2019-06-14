@@ -1,0 +1,27 @@
+{
+  "_" : "wrm.core.ActionDefService",
+  "input" : {
+    "id" : "sf3",
+    "navTo" : "seu1",
+    "bindTo" : "seu1"
+  },
+  "outputPorts" : {
+    "success" : "spd2",
+    "error" : "epd2"
+  },
+  "outputNotifications" : { },
+  "components" : {
+    "seu1" : {
+      "success" : {
+        "id" : "sf4",
+        "navTo" : "spd2",
+        "bindTo" : "spd2"
+      },
+      "error" : {
+        "id" : "ef3",
+        "navTo" : "epd2",
+        "bindTo" : "epd2"
+      }
+    }
+  }
+}

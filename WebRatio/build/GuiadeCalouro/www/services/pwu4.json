@@ -1,0 +1,35 @@
+{
+  "service" : "wrm.comp.ListService",
+  "entity" : "cls1",
+  "maxResults" : 0,
+  "condExprs" : {
+    "property" : "att4",
+    "operator" : "eq.ic",
+    "valueInput" : "acond2",
+    "implied" : true,
+    "config" : {
+      "oneImpliedInputRequired" : false
+    }
+  },
+  "distinct" : false,
+  "output" : [ {
+    "ref" : "att6",
+    "viewName" : "nome",
+    "bindName" : "att6"
+  }, {
+    "ref" : "att5",
+    "viewName" : "oid",
+    "bindName" : "att5"
+  } ],
+  "order" : [ {
+    "property" : "att6",
+    "reverse" : false
+  } ],
+  "_form" : {
+    "_" : "wrm.form.DefaultFormSubService",
+    "formLabel" : "Tipo",
+    "properties" : {
+      "checkedKeys" : { }
+    }
+  }
+}

@@ -449,16 +449,48 @@ wrx.EmulatorSupport = (function() {
     "Guia de Calouro" : { }
   },
   "screens" : {
-    "scr6" : {
-      "name" : "Menu",
-      "setNames" : [ ]
-    },
     "scr2" : {
       "name" : "Login",
       "setNames" : [ ]
     },
     "scr5" : {
       "name" : "Estabelecimentos",
+      "setNames" : [ ]
+    },
+    "scr10" : {
+      "name" : "Screen 10",
+      "setNames" : [ ]
+    },
+    "scr13" : {
+      "name" : "Screen 13",
+      "setNames" : [ ]
+    },
+    "scr8" : {
+      "name" : "Detalhes",
+      "setNames" : [ ]
+    },
+    "scr12" : {
+      "name" : "Screen 12",
+      "setNames" : [ ]
+    },
+    "scr7" : {
+      "name" : "Formulário",
+      "setNames" : [ ]
+    },
+    "scr11" : {
+      "name" : "Screen 11",
+      "setNames" : [ ]
+    },
+    "scr6" : {
+      "name" : "Menu",
+      "setNames" : [ ]
+    },
+    "scr9" : {
+      "name" : "Screen 9",
+      "setNames" : [ ]
+    },
+    "scr14" : {
+      "name" : "Cadastro",
       "setNames" : [ ]
     },
     "scr1" : {
@@ -469,16 +501,12 @@ wrx.EmulatorSupport = (function() {
       "name" : "Variedade",
       "setNames" : [ ]
     },
-    "scr8" : {
-      "name" : "Detalhes",
-      "setNames" : [ ]
-    },
     "scr3" : {
       "name" : "Categorias",
       "setNames" : [ ]
     },
-    "scr7" : {
-      "name" : "Formulário",
+    "scr15" : {
+      "name" : "Screen 15",
       "setNames" : [ ]
     }
   },

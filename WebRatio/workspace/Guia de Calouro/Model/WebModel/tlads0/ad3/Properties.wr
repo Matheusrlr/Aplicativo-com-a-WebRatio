@@ -18,7 +18,7 @@
     </SuccessFlow>
     <PortDefinitionParameter id="tlads0#ad3#ipd3#pdp1" name="sobrenome"/>
     <PortDefinitionParameter id="tlads0#ad3#ipd3#pdp2" name="nome"/>
-    <PortDefinitionParameter id="tlads0#ad3#ipd3#pdp3" name="matr&#237;cula"/>
+    <PortDefinitionParameter id="tlads0#ad3#ipd3#pdp3" name="matricula"/>
     <PortDefinitionParameter id="tlads0#ad3#ipd3#pdp4" name="email"/>
     <PortDefinitionParameter id="tlads0#ad3#ipd3#pdp6" name="sugestao"/>
     <PortDefinitionParameter id="tlads0#ad3#ipd3#pdp7" name="remoteOid"/>

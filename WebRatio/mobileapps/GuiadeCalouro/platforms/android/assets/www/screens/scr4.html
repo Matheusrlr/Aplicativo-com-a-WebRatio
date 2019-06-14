@@ -14,7 +14,7 @@
 		<!-- directive: wr-component pwu4 -->
 		<div class=" wr-comp-List">
 			<div ng-if="view.data &amp;&amp; view.data.length" class="list ">
-				<div class="item item-divider">{{ 'Tipo' | wrLocalize }}</div>
+				<div class="item item-divider">{{ 'Variedades' | wrLocalize }}</div>
 				<div class="item item-icon-right" ng-repeat="current in view.data" ng-click="screen.throwEvent($event, 'OnSelectEvent', 'oslte5', { position: $index })">
 					<h2>{{ current.nome }}</h2>
 					<span class="icon ion-chevron-right"></span>
@@ -23,7 +23,5 @@
 		</div>
 		<!-- end_directive: wr-component -->
 	</ion-content>
-	<ion-footer-bar keyboard-attach class="bar-positive hide-on-keyboard-open" align-title="center">
-	</ion-footer-bar>
 </div>
 <!-- end_directive: wr-screen -->

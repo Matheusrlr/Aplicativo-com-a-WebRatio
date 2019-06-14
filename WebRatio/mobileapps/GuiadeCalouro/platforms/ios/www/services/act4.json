@@ -1,0 +1,20 @@
+{
+  "_" : "wrm.core.ActionService",
+  "definition" : "ad4",
+  "flows" : {
+    "spd4" : {
+      "id" : "nf20",
+      "navTo" : "scr15",
+      "bindTo" : "dau4",
+      "bind" : {
+        "kcond4.att7" : "pdp10"
+      }
+    },
+    "epd4" : {
+      "id" : "nf21",
+      "navTo" : "scr14",
+      "bindTo" : "scr14"
+    }
+  },
+  "notifications" : { }
+}

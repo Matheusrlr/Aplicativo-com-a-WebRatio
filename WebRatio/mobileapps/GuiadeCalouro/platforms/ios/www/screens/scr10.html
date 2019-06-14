@@ -1,0 +1,34 @@
+<!-- directive: wr-screen scr10 -->
+<div>
+	<ion-header-bar class="bar-positive" align-title="center">
+		<h1 class="title"> 
+			<span class="wr-frag-applicationName ">Guia de Calouro</span>
+		</h1>
+		<div class="buttons pull-right">
+			<button type="button" class="button " ng-click="screen.throwEvent($event, 'HomeEvent', null, { position: $index })">
+			{{ 'event.Home' | wrLocalize }}
+			</button>
+		</div>
+	</ion-header-bar>
+	<ion-content class="has-header has-footer wr-safe-area">
+		<!-- directive: wr-component dau3 -->
+		<div class=" wr-comp-Details">
+			<div ng-if="view.data" class="list card">
+				<div class="item item-divider">{{ 'Detalhes' | wrLocalize }}</div>
+				<div class="item ">
+					<h2>{{ view.data.nome }}</h2>
+					<p>{{ view.data.oidCat }}</p>
+				</div>
+			</div>
+		</div>
+		<!-- end_directive: wr-component -->
+	</ion-content>
+	<ion-footer-bar keyboard-attach class="bar-positive hide-on-keyboard-open" align-title="center">
+		<div class="buttons">
+			<button type="button" class="button " ng-click="screen.throwEvent($event, 'BackEvent', null, { position: $index })">
+			{{ 'event.Back' | wrLocalize }}
+			</button>
+		</div>
+	</ion-footer-bar>
+</div>
+<!-- end_directive: wr-screen -->

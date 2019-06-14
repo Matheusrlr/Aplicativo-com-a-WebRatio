@@ -1,0 +1,30 @@
+<Screen xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" gr:x="545" gr:y="505" id="av1#scr10" name="Screen 10">
+  <ViewComponents>
+    <Details gr:x="0" gr:y="0" id="av1#scr10#dau3" name="Detalhes" dataBinding="cls1" displayAttributes="cls1#att6 cls1#att4">
+      <ConditionalExpression id="av1#scr10#dau3#sc4" defaultPolicy="fill" booleanOperator="and">
+        <KeyCondition id="av1#scr10#dau3#sc4#kcond3" name="KeyCondition3" predicate="in" implied="false"/>
+      </ConditionalExpression>
+    </Details>
+  </ViewComponents>
+  <layout:Grid containerType="grid">
+    <layout:Row>
+      <layout:Cell colspan="12">
+        <layout:Component componentId="av1#scr10#dau3">
+          <layout:Attribute attribute="cls1#att6"/>
+          <layout:Attribute attribute="cls1#att4"/>
+        </layout:Component>
+      </layout:Cell>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+  </layout:Grid>
+</Screen>

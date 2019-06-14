@@ -1,4 +1,4 @@
-<Screen xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" id="av1#scr1" gr:x="265" gr:y="245" name="Home" protected="true">
+<Screen xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" id="av1#scr1" gr:x="225" gr:y="-35" name="Home" protected="true">
   <layout:Grid>
     <layout:Row>
       <layout:Cell colspan="12"/>
@@ -14,7 +14,57 @@
       <layout:Cell/>
       <layout:Cell/>
     </layout:Row>
+    <layout:Row>
+      <layout:Cell colspan="12">
+        <layout:Component componentId="av1#scr1#gctu1">
+          <layout:Event event="av1#scr1#gctu1#oslte6" eventType="OnSelectEvent">
+            <layout:LayoutParameter name="color" value="blue" type="event"/>
+            <layout:LayoutParameter name="size" value="full" type="event"/>
+          </layout:Event>
+          <layout:Event event="av1#scr1#gctu1#oslte9" eventType="OnSelectEvent">
+            <layout:LayoutParameter name="color" value="blue" type="event"/>
+            <layout:LayoutParameter name="size" value="full" type="event"/>
+          </layout:Event>
+          <layout:Event event="av1#scr1#gctu1#oslte10" eventType="OnSelectEvent">
+            <layout:LayoutParameter name="color" value="blue" type="event"/>
+            <layout:LayoutParameter name="size" value="full" type="event"/>
+          </layout:Event>
+          <layout:Event event="av1#scr1#gctu1#oslte15" eventType="OnSelectEvent">
+            <layout:LayoutParameter name="color" value="blue" type="event"/>
+            <layout:LayoutParameter name="size" value="full" type="event"/>
+          </layout:Event>
+        </layout:Component>
+      </layout:Cell>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
   </layout:Grid>
-  <ViewComponents/>
+  <ViewComponents>
+    <ViewComponent gr:x="0" gr:y="135" id="av1#scr1#gctu1" eventOrder="av1#scr1#gctu1#oslte6 av1#scr1#gctu1#oslte9 av1#scr1#gctu1#oslte10 av1#scr1#gctu1#oslte15" name="Cadastro">
+      <Events>
+        <OnSelectEvent id="av1#scr1#gctu1#oslte6" name="Cadastrar nova categoria" gr:pinned="true" gr:side="2" gr:pos="0">
+          <NavigationFlow id="av1#scr1#gctu1#oslte6#nf12" to="av1#scr14" automaticCoupling="true"/>
+        </OnSelectEvent>
+        <OnSelectEvent id="av1#scr1#gctu1#oslte9" name="Cadastrar nova variedade" gr:pinned="true" gr:side="2" gr:pos="2">
+          <NavigationFlow id="av1#scr1#gctu1#oslte9#nf22" to="av1#scr9" automaticCoupling="true"/>
+        </OnSelectEvent>
+        <OnSelectEvent id="av1#scr1#gctu1#oslte10" name="Cadastrar novo estabelecimento" gr:pinned="true" gr:side="1" gr:pos="1">
+          <NavigationFlow id="av1#scr1#gctu1#oslte10#nf26" to="av1#scr11" automaticCoupling="true"/>
+        </OnSelectEvent>
+        <OnSelectEvent id="av1#scr1#gctu1#oslte15" name="Visualizar feedback" gr:pinned="true" gr:side="1" gr:pos="0">
+          <NavigationFlow id="av1#scr1#gctu1#oslte15#nf27" to="av1#scr13" automaticCoupling="true"/>
+        </OnSelectEvent>
+      </Events>
+    </ViewComponent>
+  </ViewComponents>
   <Comment xml:space="preserve">This is the main screen of the mobile application. This screen must be protected so that the application redirects the user to the login screen when the user credentials are missing or when the user lacks access rights to see the screen. Feel free to change this model by encapsulating the screen in a protected screen set or by modeling other protected screens.</Comment>
 </Screen>

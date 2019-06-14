@@ -1,0 +1,110 @@
+{
+  "_" : "wrm.core.PanelService",
+  "masters" : [ "tlb1" ],
+  "navigations" : {
+    "0" : {
+      "nc" : true,
+      "flows" : "scr11",
+      "fr" : true
+    },
+    "1" : {
+      "nc" : true,
+      "flows" : "scr11.link",
+      "fr" : true
+    },
+    "2" : {
+      "flows" : "scr11.auto-link",
+      "fr" : true
+    },
+    "3" : {
+      "flows" : "scr11.auto-link"
+    },
+    "4" : {
+      "flows" : "nf23|validation-failed"
+    },
+    "5" : {
+      "flows" : "nf23|nf25",
+      "effects" : "#pr#"
+    },
+    "6" : {
+      "flows" : "nf26",
+      "fr" : true
+    },
+    "7" : {
+      "flows" : "nf26"
+    }
+  },
+  "knownEffects" : "#pr#",
+  "propagationSequence" : "df4",
+  "propagations" : {
+    "df4" : {
+      "bindTo" : "enu5",
+      "bindFrom" : "seu5",
+      "bind" : {
+        "sfld2_label" : "data.att6",
+        "sfld2_output" : "data.att5"
+      }
+    }
+  },
+  "components" : {
+    "enu5" : {
+      "fb" : true,
+      "conds" : [ {
+        "fr" : false,
+        "navs" : "5",
+        "effects" : "-"
+      }, {
+        "fr" : false,
+        "navs" : "3|5",
+        "effects" : "#pr#"
+      } ],
+      "rf" : [ {
+        "all" : true,
+        "navs" : "5|7"
+      }, {
+        "all" : true,
+        "fr" : true,
+        "navs" : "0|1|6"
+      } ]
+    },
+    "seu5" : {
+      "fb" : false,
+      "nv" : true,
+      "conds" : [ {
+        "fr" : false,
+        "navs" : "5",
+        "effects" : "-"
+      }, {
+        "fr" : false,
+        "navs" : "3|5",
+        "effects" : "#pr#"
+      } ]
+    }
+  },
+  "events" : {
+    "oslte12" : {
+      "component" : "enu5",
+      "type" : "OnSelectEvent",
+      "flow" : {
+        "id" : "nf23",
+        "navTo" : "act5",
+        "bindTo" : "act5",
+        "preserve" : "",
+        "bind" : {
+          "act5.pdp18" : "fld13",
+          "act5.pdp16" : "fld11",
+          "act5.pdp22" : "fld14",
+          "act5.pdp21" : "fld10",
+          "act5.pdp19" : "sfld2",
+          "act5.pdp20" : "fld12"
+        }
+      }
+    }
+  },
+  "autoFlow" : {
+    "preserve" : ""
+  },
+  "autoFlowFull" : {
+    "preserve" : ""
+  }
+}

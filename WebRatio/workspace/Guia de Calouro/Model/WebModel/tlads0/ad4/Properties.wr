@@ -1,0 +1,24 @@
+<ActionDefinition xmlns:gr="http://www.webratio.com/2006/WebML/Graph" id="tlads0#ad4" name="Save Categoria" defaultSuccessPortDefinition="tlads0#ad4#spd4" defaultErrorPortDefinition="tlads0#ad4#epd4">
+  <Operations>
+    <Create gr:x="390" gr:y="105" id="tlads0#ad4#cru2" dataBinding="cls2">
+      <SuccessFlow id="tlads0#ad4#cru2#sf8" to="tlads0#ad4#spd4">
+        <ParameterBinding id="tlads0#ad4#cru2#sf8#par23" source="cls2#att7" target="tlads0#ad4#spd4#pdp10" name="oid - oid1"/>
+      </SuccessFlow>
+      <ErrorFlow id="tlads0#ad4#cru2#ef5" to="tlads0#ad4#epd4" automaticCoupling="true"/>
+    </Create>
+  </Operations>
+  <InputPortDefinition id="tlads0#ad4#ipd4" gr:x="0" gr:y="30">
+    <SuccessFlow id="tlads0#ad4#ipd4#sf7" to="tlads0#ad4#cru2">
+      <ParameterBinding id="tlads0#ad4#ipd4#sf7#par21" source="tlads0#ad4#ipd4#pdp8" target="cls2#att8" name="nome - nome"/>
+      <ParameterBinding id="tlads0#ad4#ipd4#sf7#par22" source="tlads0#ad4#ipd4#pdp9" target="cls2#att9" name="decricao - decricao"/>
+      <ParameterBinding id="tlads0#ad4#ipd4#sf7#par26" source="tlads0#ad4#ipd4#pdp11" target="cls2#att10" name="remoteOid - remoteOid"/>
+    </SuccessFlow>
+    <PortDefinitionParameter id="tlads0#ad4#ipd4#pdp8" name="nome"/>
+    <PortDefinitionParameter id="tlads0#ad4#ipd4#pdp9" name="decricao"/>
+    <PortDefinitionParameter id="tlads0#ad4#ipd4#pdp11" name="remoteOid"/>
+  </InputPortDefinition>
+  <SuccessPortDefinition id="tlads0#ad4#spd4" name="Success Port" gr:x="0" gr:y="30">
+    <PortDefinitionParameter id="tlads0#ad4#spd4#pdp10" name="oid1"/>
+  </SuccessPortDefinition>
+  <ErrorPortDefinition id="tlads0#ad4#epd4" name="Error Port" gr:x="0" gr:y="300"/>
+</ActionDefinition>

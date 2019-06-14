@@ -1,0 +1,114 @@
+<Screen xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" gr:x="1190" gr:y="-260" id="av1#scr5" name="Estabelecimentos">
+  <ViewComponents>
+    <List gr:x="55" gr:y="0" id="av1#scr5#pwu2" name="Estabelecimentos" checkable="false" dataBinding="cls3" displayAttributes="cls3#att21 cls3#att22 cls3#att23 cls3#att25 cls3#att24">
+      <SortAttribute attribute="cls3#att21" order="ascending"/>
+      <ConditionalExpression id="av1#scr5#pwu2#sc3" defaultPolicy="fill" booleanOperator="and">
+        <AttributesCondition id="av1#scr5#pwu2#sc3#acond3" name="Key2" predicate="eq" booleanOperator="or" implied="true" attributes="cls3#att13" ignoreCase="true"/>
+        <AttributesCondition id="av1#scr5#pwu2#sc3#acond1" name="keysearch" predicate="beginsWith" booleanOperator="or" implied="true" ignoreCase="true" attributes="cls3#att21"/>
+      </ConditionalExpression>
+    </List>
+    <Selector gr:x="115" gr:y="175" id="av1#scr5#seu3" name="select_data2" dataBinding="cls3">
+      <DataFlow id="av1#scr5#seu3#df2" to="av1#scr5#pwu2">
+        <ParameterBinding id="av1#scr5#seu3#df2#par10" source="data.cls3#att13" target="maxResults" name="oid_tip - Max Results"/>
+      </DataFlow>
+      <SortAttribute attribute="cls3#att21" order="ascending"/>
+    </Selector>
+    <Form gr:x="0" gr:y="180" id="av1#scr5#enu2" name="Buscador" fieldOrder="av1#scr5#enu2#fld8" eventOrder="av1#scr5#enu2#oslte4">
+      <Field id="av1#scr5#enu2#fld8" name="Pesquisar" type="string" modifiable="true"/>
+      <Events>
+        <OnSelectEvent id="av1#scr5#enu2#oslte4" name="Busca" validate="true">
+          <NavigationFlow id="av1#scr5#enu2#oslte4#nf9" to="av1#scr5#pwu2">
+            <ParameterBinding id="av1#scr5#enu2#oslte4#nf9#par20" source="av1#scr5#enu2#fld8" target="av1#scr5#pwu2#sc3#acond1" name="Pesquisar - keysearch"/>
+          </NavigationFlow>
+        </OnSelectEvent>
+      </Events>
+    </Form>
+  </ViewComponents>
+  <layout:Grid containerType="grid">
+    <layout:Row>
+      <layout:Cell colspan="12">
+        <layout:Component componentId="av1#scr5#enu2">
+          <layout:Field field="av1#scr5#enu2#fld8"/>
+          <layout:Event event="av1#scr5#enu2#oslte4" eventType="OnSelectEvent"/>
+        </layout:Component>
+      </layout:Cell>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+    <layout:Row>
+      <layout:Cell colspan="12" rowspan="2">
+        <layout:Component componentId="av1#scr5#pwu2">
+          <layout:Attribute attribute="cls3#att21"/>
+          <layout:Attribute attribute="cls3#att22"/>
+          <layout:Attribute attribute="cls3#att23"/>
+          <layout:Attribute attribute="cls3#att25"/>
+          <layout:Attribute attribute="cls3#att24"/>
+        </layout:Component>
+      </layout:Cell>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+    <layout:Row>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+    <layout:Row>
+      <layout:Cell colspan="7"/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell colspan="5">
+        <layout:Event componentId="av1#scr5#enu2" event="av1#scr5#enu2#oslte4" eventType="OnSelectEvent">
+          <layout:LayoutParameter name="color" value="blue" type="event"/>
+        </layout:Event>
+      </layout:Cell>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+  </layout:Grid>
+  <Events>
+    <BackEvent id="av1#scr5#bke1" name="Voltar">
+      <NavigationFlow id="av1#scr5#bke1#nf10" to="av1#scr4" automaticCoupling="true" name="Voltar"/>
+    </BackEvent>
+  </Events>
+  <layout:CustomLocation name="Bottom Bar" customizeContent="true">
+    <layout:Grid containerType="cell">
+      <layout:Row>
+        <layout:Cell label="Voltar"/>
+      </layout:Row>
+    </layout:Grid>
+  </layout:CustomLocation>
+</Screen>

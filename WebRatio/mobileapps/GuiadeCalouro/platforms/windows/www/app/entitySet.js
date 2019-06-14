@@ -267,7 +267,7 @@ $data.Entity.extend("data.Feedback", {
 	email: {
 		type: "string"
 	},
-	matrCula: {
+	matricula: {
 		type: "integer"
 	},
 	sobrenome: {
@@ -296,7 +296,7 @@ $data.Entity.extend("data.Feedback__Aux", {
 	d_email: {
 		type: "boolean"
 	},
-	d_matrCula: {
+	d_matricula: {
 		type: "boolean"
 	},
 	d_sobrenome: {

@@ -1,0 +1,29 @@
+{
+  "name" : "Guia_de_Calouro",
+  "version" : "0.0.1",
+  "preferGlobal" : "false",
+  "dependencies" : {
+    "cordova-plugin-device" : "file:plugins/cordova-plugin-device",
+    "cordova-plugin-websql" : "file:plugins/cordova-plugin-websql",
+    "ionic-plugin-keyboard" : "file:plugins/ionic-plugin-keyboard",
+    "cordova-plugin-splashscreen" : "file:plugins/cordova-plugin-splashscreen",
+    "cordova-plugin-network-information" : "file:plugins/cordova-plugin-network-information",
+    "pgplugin-accountmanager" : "file:plugins/com.webratio.accountmanager",
+    "cordova-plugin-dialogs" : "file:plugins/cordova-plugin-dialogs",
+    "cordova-plugin-ionic-webview" : "file:plugins/cordova-plugin-ionic-webview",
+    "cordova-plugin-inappbrowser" : "file:plugins/cordova-plugin-inappbrowser",
+    "cordova-plugin-whitelist" : "file:plugins/cordova-plugin-whitelist",
+    "cordova-plugin-globalization" : "file:plugins/cordova-plugin-globalization",
+    "cordova-plugin-file" : "file:plugins/cordova-plugin-file",
+    "cordova-plugin-file-transfer" : "file:plugins/cordova-plugin-file-transfer"
+  },
+  "devDependencies" : {
+    "fs-extra" : "^0.24.0",
+    "iconv-lite" : "^0.4.19",
+    "lodash" : "^3.10.1",
+    "xcode" : "^0.9.3",
+    "xml-writer" : "^1.7.0",
+    "xmldom" : "^0.1.27",
+    "xpath" : "^0.0.27"
+  }
+}

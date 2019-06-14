@@ -1,6 +1,6 @@
-<Screen xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" gr:x="740" gr:y="-200" id="av1#scr4" name="Variedade">
+<Screen xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" gr:x="960" gr:y="-330" id="av1#scr4" name="Variedade">
   <ViewComponents>
-    <List gr:x="0" gr:y="0" id="av1#scr4#pwu4" checkable="false" name="Tipo" dataBinding="cls1" displayAttributes="cls1#att6" eventOrder="av1#scr4#pwu4#oslte5">
+    <List gr:x="0" gr:y="0" id="av1#scr4#pwu4" checkable="false" name="Variedades" dataBinding="cls1" displayAttributes="cls1#att6" eventOrder="av1#scr4#pwu4#oslte5">
       <SortAttribute attribute="cls1#att6" order="ascending"/>
       <ConditionalExpression id="av1#scr4#pwu4#sc2" defaultPolicy="fill" booleanOperator="and">
         <AttributesCondition id="av1#scr4#pwu4#sc2#acond2" name="Key" predicate="eq" booleanOperator="or" implied="true" attributes="cls1#att4" ignoreCase="true"/>
@@ -55,4 +55,16 @@
       <layout:Cell/>
     </layout:Row>
   </layout:Grid>
+  <Events>
+    <BackEvent id="av1#scr4#bke2" name="Voltar">
+      <NavigationFlow id="av1#scr4#bke2#nf11" to="av1#scr3" automaticCoupling="true" name="Voltar"/>
+    </BackEvent>
+  </Events>
+  <layout:CustomLocation name="Bottom Bar" customizeContent="true">
+    <layout:Grid containerType="cell">
+      <layout:Row>
+        <layout:Cell/>
+      </layout:Row>
+    </layout:Grid>
+  </layout:CustomLocation>
 </Screen>

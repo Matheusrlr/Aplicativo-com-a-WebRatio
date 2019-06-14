@@ -1,0 +1,29 @@
+<Screen xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" gr:x="640" gr:y="240" id="av1#scr13" name="Screen 13">
+  <ViewComponents>
+    <List gr:x="0" gr:y="0" id="av1#scr13#pwu6" name="Feedback" checkable="false" dataBinding="cls4" displayAttributes="cls4#att32 cls4#att33 cls4#att34 cls4#att35 cls4#att37"/>
+  </ViewComponents>
+  <layout:Grid containerType="grid">
+    <layout:Row>
+      <layout:Cell colspan="12">
+        <layout:Component componentId="av1#scr13#pwu6">
+          <layout:Attribute attribute="cls4#att32"/>
+          <layout:Attribute attribute="cls4#att33"/>
+          <layout:Attribute attribute="cls4#att34"/>
+          <layout:Attribute attribute="cls4#att35"/>
+          <layout:Attribute attribute="cls4#att37"/>
+        </layout:Component>
+      </layout:Cell>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+  </layout:Grid>
+</Screen>

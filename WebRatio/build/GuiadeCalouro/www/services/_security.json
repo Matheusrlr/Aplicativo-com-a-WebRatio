@@ -1,0 +1,9 @@
+{
+  "_" : "wrm.core.SecurityService",
+  "requireAllowRoles" : false,
+  "authScreen" : "scr2",
+  "authActionDefinition" : "ad1",
+  "accountManager" : {
+    "packageName" : "com.mycompany.guiadecalouro"
+  }
+}

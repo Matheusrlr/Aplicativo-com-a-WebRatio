@@ -1,126 +1,126 @@
-[30 mai 2019 20:58:04] Building database metadata model
-[30 mai 2019 20:58:04] Properties: {includeTables=true, processColumnsUsingSelect=, readIndexes=null, tableRegex=null, includePrimaryKeys=true, outputPath=/home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/workspace/Data/.Temp~/DB.xml, driverClass=com.mysql.jdbc.Driver, includeSynonyms=true, derby.system.home=/home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/workspace/.metadata/.plugins/com.webratio.commons.db/derby, metaDataProviderClass=com.webratio.commons.db.metadata.MySQLMetaDataProvider, readSQLDefinitions=true, includeViews=true, schemaRegex=null, includeForeignKeys=false, retrieveAllNames=false, outputLogPath=/home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/workspace/Data/.Temp~/DB.xml.log, eventSocketPort=44665, url=jdbc:mysql://localhost:3306/database, tablesToRefresh=, readProcedures=null, eventSocketClient=com.webratio.commons.net.EventSocketClient@3b6eb2ec, partialRefresh=false, username=root}
-[30 mai 2019 20:58:04] URL: jdbc:mysql://localhost:3306/database
-[30 mai 2019 20:58:04] Product name: MySQL
-[30 mai 2019 20:58:04] Product version: 5.7.26-0ubuntu0.18.04.1
-[30 mai 2019 20:58:04] Driver name: MySQL Connector Java
-[30 mai 2019 20:58:04] Driver version: mysql-connector-java-5.1.33 ( Revision: alexander.soklakov@oracle.com-20140908134200-8ukofe1izi0r2b63 )
-[30 mai 2019 20:58:04] Driver major version: 5
-[30 mai 2019 20:58:04] Driver minor version: 1
-[30 mai 2019 20:58:04] Identifier quote string: 1
-[30 mai 2019 20:58:04] Retrieving schemas
-[30 mai 2019 20:58:04] Retrieving [TABLE, VIEW, SYNONYM] for schema ''
-[30 mai 2019 20:58:04]   Found 'WR_DELETE_HISTORY' [type = TABLE]
-[30 mai 2019 20:58:04]   Found 'categoria_2' [type = TABLE]
-[30 mai 2019 20:58:04]   Found 'device' [type = TABLE]
-[30 mai 2019 20:58:04]   Found 'feedback' [type = TABLE]
-[30 mai 2019 20:58:04]   Found 'menu' [type = TABLE]
-[30 mai 2019 20:58:04]   Found 'role' [type = TABLE]
-[30 mai 2019 20:58:04]   Found 'tipo' [type = TABLE]
-[30 mai 2019 20:58:04]   Found 'topico' [type = TABLE]
-[30 mai 2019 20:58:04]   Found 'user' [type = TABLE]
-[30 mai 2019 20:58:04]   Found 'user_role' [type = TABLE]
-[30 mai 2019 20:58:04] Retrieving columns for 'WR_DELETE_HISTORY' [type = TABLE]
-[30 mai 2019 20:58:04]   Found column: OID [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: OBJECT_ID [type = VARCHAR][SQL/XOPEN type = 12][size = 200][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: CLASS_ID [type = VARCHAR][SQL/XOPEN type = 12][size = 32][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: DELETED_AT [type = DATETIME][SQL/XOPEN type = 93][size = 19][dec. digits = 0]
-[30 mai 2019 20:58:04] Retrieving primary keys for 'WR_DELETE_HISTORY' [type = TABLE]
-[30 mai 2019 20:58:04]   Found primary key column: OID
-[30 mai 2019 20:58:04] Retrieving columns for 'categoria_2' [type = TABLE]
-[30 mai 2019 20:58:04]   Found column: oid [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: nome [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: imagem [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: descricao [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: createdat [type = DATETIME][SQL/XOPEN type = 93][size = 19][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: updatedat [type = DATETIME][SQL/XOPEN type = 93][size = 19][dec. digits = 0]
-[30 mai 2019 20:58:04] Retrieving primary keys for 'categoria_2' [type = TABLE]
-[30 mai 2019 20:58:04]   Found primary key column: oid
-[30 mai 2019 20:58:04] Retrieving columns for 'device' [type = TABLE]
-[30 mai 2019 20:58:04]   Found column: oid [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: device_id [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: notification_device_id [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: model [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: platform [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: platform_version [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: browser [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: user_oid [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
-[30 mai 2019 20:58:04] Retrieving primary keys for 'device' [type = TABLE]
-[30 mai 2019 20:58:04]   Found primary key column: oid
-[30 mai 2019 20:58:04] Retrieving columns for 'feedback' [type = TABLE]
-[30 mai 2019 20:58:04]   Found column: oid [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: sugestao [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: email [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: matricula [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: sobrenome [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: nome [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: createdat [type = DATETIME][SQL/XOPEN type = 93][size = 19][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: updatedat [type = DATETIME][SQL/XOPEN type = 93][size = 19][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: menu_oid [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
-[30 mai 2019 20:58:04] Retrieving primary keys for 'feedback' [type = TABLE]
-[30 mai 2019 20:58:04]   Found primary key column: oid
-[30 mai 2019 20:58:04] Retrieving columns for 'menu' [type = TABLE]
-[30 mai 2019 20:58:04]   Found column: oid [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: createdat [type = DATETIME][SQL/XOPEN type = 93][size = 19][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: updatedat [type = DATETIME][SQL/XOPEN type = 93][size = 19][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: logo [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
-[30 mai 2019 20:58:04] Retrieving primary keys for 'menu' [type = TABLE]
-[30 mai 2019 20:58:04]   Found primary key column: oid
-[30 mai 2019 20:58:04] Retrieving columns for 'role' [type = TABLE]
-[30 mai 2019 20:58:04]   Found column: oid [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: rolename [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
-[30 mai 2019 20:58:04] Retrieving primary keys for 'role' [type = TABLE]
-[30 mai 2019 20:58:04]   Found primary key column: oid
-[30 mai 2019 20:58:04] Retrieving columns for 'tipo' [type = TABLE]
-[30 mai 2019 20:58:04]   Found column: oid [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: nome [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: createdat [type = DATETIME][SQL/XOPEN type = 93][size = 19][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: updatedat [type = DATETIME][SQL/XOPEN type = 93][size = 19][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: oid_categoria [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
-[30 mai 2019 20:58:04] Retrieving primary keys for 'tipo' [type = TABLE]
-[30 mai 2019 20:58:04]   Found primary key column: oid
-[30 mai 2019 20:58:04] Retrieving columns for 'topico' [type = TABLE]
-[30 mai 2019 20:58:04]   Found column: oid [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: nome [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: endereco [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: telefone [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: descricao [type = VARCHAR][SQL/XOPEN type = 12][size = 500][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: valor [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: link [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: logo [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: createdat [type = DATETIME][SQL/XOPEN type = 93][size = 19][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: updatedat [type = DATETIME][SQL/XOPEN type = 93][size = 19][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: oid_tipo [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
-[30 mai 2019 20:58:04] Retrieving primary keys for 'topico' [type = TABLE]
-[30 mai 2019 20:58:04]   Found primary key column: oid
-[30 mai 2019 20:58:04] Retrieving columns for 'user' [type = TABLE]
-[30 mai 2019 20:58:04]   Found column: oid [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: username [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: password [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: email [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: token [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: token_expiration_date [type = DATETIME][SQL/XOPEN type = 93][size = 19][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: secretkey [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
-[30 mai 2019 20:58:04] Retrieving primary keys for 'user' [type = TABLE]
-[30 mai 2019 20:58:04]   Found primary key column: oid
-[30 mai 2019 20:58:04] Retrieving columns for 'user_role' [type = TABLE]
-[30 mai 2019 20:58:04]   Found column: user_oid [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
-[30 mai 2019 20:58:04]   Found column: role_oid [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
-[30 mai 2019 20:58:04] Retrieving primary keys for 'user_role' [type = TABLE]
-[30 mai 2019 20:58:04]   Found primary key column: user_oid
-[30 mai 2019 20:58:04]   Found primary key column: role_oid
-[30 mai 2019 20:58:04] Database metadata retrieved (100 ms)
-[30 mai 2019 20:58:04] Retrieving auto-increment columns for 'WR_DELETE_HISTORY' [type = TABLE]
-[30 mai 2019 20:58:04] Retrieving auto-increment columns for 'categoria_2' [type = TABLE]
-[30 mai 2019 20:58:04]   Found auto-increment column: oid
-[30 mai 2019 20:58:04] Retrieving auto-increment columns for 'device' [type = TABLE]
-[30 mai 2019 20:58:04] Retrieving auto-increment columns for 'feedback' [type = TABLE]
-[30 mai 2019 20:58:04] Retrieving auto-increment columns for 'menu' [type = TABLE]
-[30 mai 2019 20:58:04] Retrieving auto-increment columns for 'role' [type = TABLE]
-[30 mai 2019 20:58:04] Retrieving auto-increment columns for 'tipo' [type = TABLE]
-[30 mai 2019 20:58:04]   Found auto-increment column: oid
-[30 mai 2019 20:58:04] Retrieving auto-increment columns for 'topico' [type = TABLE]
-[30 mai 2019 20:58:04]   Found auto-increment column: oid
-[30 mai 2019 20:58:04] Retrieving auto-increment columns for 'user' [type = TABLE]
-[30 mai 2019 20:58:04] Retrieving auto-increment columns for 'user_role' [type = TABLE]
-[30 mai 2019 20:58:04] Database connection closed
+[14 jun 2019 07:04:09] Building database metadata model
+[14 jun 2019 07:04:09] Properties: {includeTables=true, processColumnsUsingSelect=, readIndexes=null, tableRegex=null, includePrimaryKeys=true, outputPath=/home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/workspace/Data/.Temp~/DB.xml, driverClass=com.mysql.jdbc.Driver, includeSynonyms=true, derby.system.home=/home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/workspace/.metadata/.plugins/com.webratio.commons.db/derby, metaDataProviderClass=com.webratio.commons.db.metadata.MySQLMetaDataProvider, readSQLDefinitions=true, includeViews=true, schemaRegex=null, includeForeignKeys=false, retrieveAllNames=false, outputLogPath=/home/matheus/Área de Trabalho/1º Semestre 2019/POC II/WebRatioMobilePlatformCommunityEdition_8.10.3.Linux/WebRatio/workspace/Data/.Temp~/DB.xml.log, eventSocketPort=36723, url=jdbc:mysql://localhost:3306/database, tablesToRefresh=, readProcedures=null, eventSocketClient=com.webratio.commons.net.EventSocketClient@3b6eb2ec, partialRefresh=false, username=root}
+[14 jun 2019 07:04:09] URL: jdbc:mysql://localhost:3306/database
+[14 jun 2019 07:04:09] Product name: MySQL
+[14 jun 2019 07:04:09] Product version: 5.7.26-0ubuntu0.18.04.1
+[14 jun 2019 07:04:09] Driver name: MySQL Connector Java
+[14 jun 2019 07:04:09] Driver version: mysql-connector-java-5.1.33 ( Revision: alexander.soklakov@oracle.com-20140908134200-8ukofe1izi0r2b63 )
+[14 jun 2019 07:04:09] Driver major version: 5
+[14 jun 2019 07:04:09] Driver minor version: 1
+[14 jun 2019 07:04:09] Identifier quote string: 1
+[14 jun 2019 07:04:09] Retrieving schemas
+[14 jun 2019 07:04:09] Retrieving [TABLE, VIEW, SYNONYM] for schema ''
+[14 jun 2019 07:04:09]   Found 'WR_DELETE_HISTORY' [type = TABLE]
+[14 jun 2019 07:04:09]   Found 'categoria_2' [type = TABLE]
+[14 jun 2019 07:04:09]   Found 'device' [type = TABLE]
+[14 jun 2019 07:04:09]   Found 'feedback' [type = TABLE]
+[14 jun 2019 07:04:09]   Found 'menu' [type = TABLE]
+[14 jun 2019 07:04:09]   Found 'role' [type = TABLE]
+[14 jun 2019 07:04:09]   Found 'tipo' [type = TABLE]
+[14 jun 2019 07:04:09]   Found 'topico' [type = TABLE]
+[14 jun 2019 07:04:09]   Found 'user' [type = TABLE]
+[14 jun 2019 07:04:09]   Found 'user_role' [type = TABLE]
+[14 jun 2019 07:04:09] Retrieving columns for 'WR_DELETE_HISTORY' [type = TABLE]
+[14 jun 2019 07:04:09]   Found column: OID [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: OBJECT_ID [type = VARCHAR][SQL/XOPEN type = 12][size = 200][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: CLASS_ID [type = VARCHAR][SQL/XOPEN type = 12][size = 32][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: DELETED_AT [type = DATETIME][SQL/XOPEN type = 93][size = 19][dec. digits = 0]
+[14 jun 2019 07:04:09] Retrieving primary keys for 'WR_DELETE_HISTORY' [type = TABLE]
+[14 jun 2019 07:04:09]   Found primary key column: OID
+[14 jun 2019 07:04:09] Retrieving columns for 'categoria_2' [type = TABLE]
+[14 jun 2019 07:04:09]   Found column: oid [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: nome [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: imagem [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: descricao [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: createdat [type = DATETIME][SQL/XOPEN type = 93][size = 19][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: updatedat [type = DATETIME][SQL/XOPEN type = 93][size = 19][dec. digits = 0]
+[14 jun 2019 07:04:09] Retrieving primary keys for 'categoria_2' [type = TABLE]
+[14 jun 2019 07:04:09]   Found primary key column: oid
+[14 jun 2019 07:04:09] Retrieving columns for 'device' [type = TABLE]
+[14 jun 2019 07:04:09]   Found column: oid [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: device_id [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: notification_device_id [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: model [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: platform [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: platform_version [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: browser [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: user_oid [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
+[14 jun 2019 07:04:09] Retrieving primary keys for 'device' [type = TABLE]
+[14 jun 2019 07:04:09]   Found primary key column: oid
+[14 jun 2019 07:04:09] Retrieving columns for 'feedback' [type = TABLE]
+[14 jun 2019 07:04:09]   Found column: oid [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: sugestao [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: email [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: matricula [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: sobrenome [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: nome [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: createdat [type = DATETIME][SQL/XOPEN type = 93][size = 19][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: updatedat [type = DATETIME][SQL/XOPEN type = 93][size = 19][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: menu_oid [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
+[14 jun 2019 07:04:09] Retrieving primary keys for 'feedback' [type = TABLE]
+[14 jun 2019 07:04:09]   Found primary key column: oid
+[14 jun 2019 07:04:09] Retrieving columns for 'menu' [type = TABLE]
+[14 jun 2019 07:04:09]   Found column: oid [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: createdat [type = DATETIME][SQL/XOPEN type = 93][size = 19][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: updatedat [type = DATETIME][SQL/XOPEN type = 93][size = 19][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: logo [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
+[14 jun 2019 07:04:09] Retrieving primary keys for 'menu' [type = TABLE]
+[14 jun 2019 07:04:09]   Found primary key column: oid
+[14 jun 2019 07:04:09] Retrieving columns for 'role' [type = TABLE]
+[14 jun 2019 07:04:09]   Found column: oid [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: rolename [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
+[14 jun 2019 07:04:09] Retrieving primary keys for 'role' [type = TABLE]
+[14 jun 2019 07:04:09]   Found primary key column: oid
+[14 jun 2019 07:04:09] Retrieving columns for 'tipo' [type = TABLE]
+[14 jun 2019 07:04:09]   Found column: oid [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: nome [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: createdat [type = DATETIME][SQL/XOPEN type = 93][size = 19][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: updatedat [type = DATETIME][SQL/XOPEN type = 93][size = 19][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: oid_categoria [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
+[14 jun 2019 07:04:09] Retrieving primary keys for 'tipo' [type = TABLE]
+[14 jun 2019 07:04:09]   Found primary key column: oid
+[14 jun 2019 07:04:09] Retrieving columns for 'topico' [type = TABLE]
+[14 jun 2019 07:04:09]   Found column: oid [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: nome [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: endereco [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: telefone [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: descricao [type = VARCHAR][SQL/XOPEN type = 12][size = 500][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: valor [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: link [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: logo [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: createdat [type = DATETIME][SQL/XOPEN type = 93][size = 19][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: updatedat [type = DATETIME][SQL/XOPEN type = 93][size = 19][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: oid_tipo [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
+[14 jun 2019 07:04:09] Retrieving primary keys for 'topico' [type = TABLE]
+[14 jun 2019 07:04:09]   Found primary key column: oid
+[14 jun 2019 07:04:09] Retrieving columns for 'user' [type = TABLE]
+[14 jun 2019 07:04:09]   Found column: oid [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: username [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: password [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: email [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: token [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: token_expiration_date [type = DATETIME][SQL/XOPEN type = 93][size = 19][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: secretkey [type = VARCHAR][SQL/XOPEN type = 12][size = 255][dec. digits = 0]
+[14 jun 2019 07:04:09] Retrieving primary keys for 'user' [type = TABLE]
+[14 jun 2019 07:04:09]   Found primary key column: oid
+[14 jun 2019 07:04:09] Retrieving columns for 'user_role' [type = TABLE]
+[14 jun 2019 07:04:09]   Found column: user_oid [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
+[14 jun 2019 07:04:09]   Found column: role_oid [type = INT][SQL/XOPEN type = 4][size = 10][dec. digits = 0]
+[14 jun 2019 07:04:09] Retrieving primary keys for 'user_role' [type = TABLE]
+[14 jun 2019 07:04:09]   Found primary key column: user_oid
+[14 jun 2019 07:04:09]   Found primary key column: role_oid
+[14 jun 2019 07:04:09] Database metadata retrieved (109 ms)
+[14 jun 2019 07:04:09] Retrieving auto-increment columns for 'WR_DELETE_HISTORY' [type = TABLE]
+[14 jun 2019 07:04:09] Retrieving auto-increment columns for 'categoria_2' [type = TABLE]
+[14 jun 2019 07:04:09]   Found auto-increment column: oid
+[14 jun 2019 07:04:09] Retrieving auto-increment columns for 'device' [type = TABLE]
+[14 jun 2019 07:04:09] Retrieving auto-increment columns for 'feedback' [type = TABLE]
+[14 jun 2019 07:04:09] Retrieving auto-increment columns for 'menu' [type = TABLE]
+[14 jun 2019 07:04:09] Retrieving auto-increment columns for 'role' [type = TABLE]
+[14 jun 2019 07:04:09] Retrieving auto-increment columns for 'tipo' [type = TABLE]
+[14 jun 2019 07:04:09]   Found auto-increment column: oid
+[14 jun 2019 07:04:09] Retrieving auto-increment columns for 'topico' [type = TABLE]
+[14 jun 2019 07:04:09]   Found auto-increment column: oid
+[14 jun 2019 07:04:09] Retrieving auto-increment columns for 'user' [type = TABLE]
+[14 jun 2019 07:04:09] Retrieving auto-increment columns for 'user_role' [type = TABLE]
+[14 jun 2019 07:04:10] Database connection closed

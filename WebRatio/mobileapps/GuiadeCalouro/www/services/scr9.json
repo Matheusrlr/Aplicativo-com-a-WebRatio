@@ -1,0 +1,106 @@
+{
+  "_" : "wrm.core.PanelService",
+  "masters" : [ "tlb1" ],
+  "navigations" : {
+    "0" : {
+      "nc" : true,
+      "flows" : "scr9",
+      "fr" : true
+    },
+    "1" : {
+      "nc" : true,
+      "flows" : "scr9.link",
+      "fr" : true
+    },
+    "2" : {
+      "flows" : "scr9.auto-link",
+      "fr" : true
+    },
+    "3" : {
+      "flows" : "scr9.auto-link"
+    },
+    "4" : {
+      "flows" : "nf13|validation-failed"
+    },
+    "5" : {
+      "flows" : "nf13|nf15",
+      "effects" : "#pr#"
+    },
+    "6" : {
+      "flows" : "nf22",
+      "fr" : true
+    },
+    "7" : {
+      "flows" : "nf22"
+    }
+  },
+  "knownEffects" : "#pr#",
+  "propagationSequence" : "df5",
+  "propagations" : {
+    "df5" : {
+      "bindTo" : "enu4",
+      "bindFrom" : "seu4",
+      "bind" : {
+        "sfld1_label" : "data.att8",
+        "sfld1_output" : "data.att7"
+      }
+    }
+  },
+  "components" : {
+    "enu4" : {
+      "fb" : true,
+      "conds" : [ {
+        "fr" : false,
+        "navs" : "5",
+        "effects" : "-"
+      }, {
+        "fr" : false,
+        "navs" : "3|5",
+        "effects" : "#pr#"
+      } ],
+      "rf" : [ {
+        "all" : true,
+        "navs" : "5|7"
+      }, {
+        "all" : true,
+        "fr" : true,
+        "navs" : "0|1|6"
+      } ]
+    },
+    "seu4" : {
+      "fb" : false,
+      "nv" : true,
+      "conds" : [ {
+        "fr" : false,
+        "navs" : "5",
+        "effects" : "-"
+      }, {
+        "fr" : false,
+        "navs" : "3|5",
+        "effects" : "#pr#"
+      } ]
+    }
+  },
+  "events" : {
+    "oslte11" : {
+      "component" : "enu4",
+      "type" : "OnSelectEvent",
+      "flow" : {
+        "id" : "nf13",
+        "navTo" : "act3",
+        "bindTo" : "act3",
+        "preserve" : "",
+        "bind" : {
+          "act3.pdp13" : "fld9",
+          "act3.pdp14" : "sfld1"
+        }
+      }
+    }
+  },
+  "autoFlow" : {
+    "preserve" : ""
+  },
+  "autoFlowFull" : {
+    "preserve" : ""
+  }
+}

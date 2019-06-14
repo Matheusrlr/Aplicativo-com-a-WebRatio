@@ -18,9 +18,9 @@
 				<div ng-repeat="msg in view.messages track by $index" class="item item-text-wrap" ng-bind="msg"></div>
 			</div>
 		</div>
-		<!-- end_directive: wr-component --><button type="button" class="button button-positive " ng-click="screen.throwEvent($event, 'OnSelectEvent', 'oslte14', { position: $index })">
+		<!-- end_directive: wr-component --><button type="button" class="button button-positive button-full " ng-click="screen.throwEvent($event, 'OnSelectEvent', 'oslte14', { position: $index })">
 		{{ 'Estabelecimentos' | wrLocalize }}
-		</button><button type="button" class="button button-calm " ng-click="screen.throwEvent($event, 'OnSelectEvent', 'oslte13', { position: $index })">
+		</button><button type="button" class="button button-positive button-full " ng-click="screen.throwEvent($event, 'OnSelectEvent', 'oslte13', { position: $index })">
 		{{ 'Formu\u00E1rio' | wrLocalize }}
 		</button><!-- directive: wr-component dau2 -->
 		<div class=" wr-comp-Details">
@@ -33,11 +33,23 @@
 					<span ng-show="blob.failed" class="wr-placeholder icon ion-alert-circled"></span>
 					</span>
 				</div>
+				<div class="item-buttons">    
+					<button type="button" class="button " ng-click="screen.throwEvent($event, 'OnSelectEvent', 'oslte7', { position: $index })">
+					{{ 'Acesso Admin' | wrLocalize }}
+					</button>
+				</div>
 			</div>
 		</div>
-		<!-- end_directive: wr-component -->
+		<!-- end_directive: wr-component --><!-- directive: wr-component dau2 --><button type="button" class="button button-positive " ng-click="screen.throwEvent($event, 'OnSelectEvent', 'oslte7', { position: $index })">
+		{{ 'Acesso Admin' | wrLocalize }}
+		</button><!-- end_directive: wr-component -->
 	</ion-content>
 	<ion-footer-bar keyboard-attach class="bar-positive hide-on-keyboard-open" align-title="center">
+		<div class="buttons">
+			<button type="button" class="button " ng-click="screen.throwEvent($event, 'BackEvent', null, { position: $index })">
+			{{ 'event.Back' | wrLocalize }}
+			</button>
+		</div>
 	</ion-footer-bar>
 </div>
 <!-- end_directive: wr-screen -->

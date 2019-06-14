@@ -24,6 +24,13 @@
       "flows" : "nf2|validation-failed"
     },
     "5" : {
+      "flows" : "nf17",
+      "fr" : true
+    },
+    "6" : {
+      "flows" : "nf17"
+    },
+    "7" : {
       "flows" : "nf2|impl"
     }
   },
@@ -41,7 +48,10 @@
       "rf" : [ {
         "all" : true,
         "fr" : true,
-        "navs" : "0|1"
+        "navs" : "0|1|5"
+      }, {
+        "all" : true,
+        "navs" : "6"
       } ]
     }
   },

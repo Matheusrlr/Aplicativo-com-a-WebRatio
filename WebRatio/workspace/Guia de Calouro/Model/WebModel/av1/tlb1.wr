@@ -1,4 +1,4 @@
-<Toolbar xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" gr:x="250" gr:y="30" id="av1#tlb1" name="Main toolbar">
+<Toolbar xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" gr:x="545" gr:y="-25" id="av1#tlb1" name="Main toolbar">
   <ViewComponents/>
   <Events>
     <OnSelectEvent id="av1#tlb1#oslte2" name="Menu">
@@ -24,7 +24,9 @@
   <layout:CustomLocation name="Bottom Bar">
     <layout:Grid containerType="cell">
       <layout:Row>
-        <layout:Cell layout:cellLayout="MobileDefault/Bar"/>
+        <layout:Cell layout:cellLayout="MobileDefault/Bar">
+          <layout:Event eventType="BackEvent"/>
+        </layout:Cell>
       </layout:Row>
     </layout:Grid>
   </layout:CustomLocation>

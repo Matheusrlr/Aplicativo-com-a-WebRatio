@@ -44,7 +44,7 @@
   </Class>
   <Class id="cls1" name="Menu" className="com.webratio.webapp.Menu" duration="persistent" dataSource="db1" stateAware="true">
     <Attribute id="att1" key="true" name="oid" fieldName="oid" type="integer" javaType="java.lang.Integer" specialId="implicitOid"/>
-    <Attribute id="att23" key="false" name="logo" fieldName="logo" type="blob" javaType="java.lang.String" storageType="file" uploadPolicy="managed" deletePolicy="no action" refFieldName="logoRef" defBlobName=""/>
+    <Attribute id="att23" key="false" name="logo" fieldName="logo" type="blob" javaType="java.lang.String" storageType="file" uploadPolicy="managed" deletePolicy="no action" refFieldName="logoRef" defBlobName="" uploadPath="home/matheus/imagens_webratio" contentType="image"/>
     <Attribute id="att26" key="false" name="createdAt" fieldName="createdAt" type="timestamp" javaType="java.sql.Timestamp" specialId="createTimestamp"/>
     <Attribute id="att27" key="false" name="updatedAt" fieldName="updatedAt" type="timestamp" javaType="java.sql.Timestamp" specialId="updateTimestamp"/>
     <OutgoingRoles>role6</OutgoingRoles>

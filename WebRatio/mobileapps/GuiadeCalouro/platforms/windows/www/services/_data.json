@@ -3,7 +3,7 @@
   "databaseName" : "Guia de Calouro",
   "contextName" : "ManagementContext",
   "metadata" : {
-    "version" : 557359823,
+    "version" : 558617794,
     "entities" : {
       "MUser" : {
         "name" : "data.AppUser",
@@ -363,9 +363,9 @@
             "type" : "string"
           },
           "att34" : {
-            "name" : "matrCula",
-            "serverName" : "matrCula",
-            "dirtyName" : "d_matrCula",
+            "name" : "matricula",
+            "serverName" : "matricula",
+            "dirtyName" : "d_matricula",
             "type" : "integer"
           },
           "att33" : {

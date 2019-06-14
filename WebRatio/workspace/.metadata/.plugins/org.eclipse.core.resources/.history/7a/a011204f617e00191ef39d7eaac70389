@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Warnings>
-<Warning key="DOMAIN.MISSING_CONTENT_TYPE" error="false" xpath="id('cls2#att3')"><Message>Missing Content Type</Message></Warning><Warning key="DOMAIN.MISSING_CONTENT_TYPE" error="false" xpath="id('cls3#att27')"><Message>Missing Content Type</Message></Warning></Warnings>

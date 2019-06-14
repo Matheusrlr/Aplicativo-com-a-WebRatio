@@ -1,11 +1,19 @@
 {
   "service" : "wrm.comp.SelectorService",
-  "entity" : "cls4",
+  "entity" : "cls2",
   "maxResults" : 0,
   "distinct" : false,
-  "output" : [ ],
+  "output" : [ {
+    "ref" : "att8",
+    "viewName" : "nome",
+    "bindName" : "att8"
+  }, {
+    "ref" : "att7",
+    "viewName" : "oid",
+    "bindName" : "att7"
+  } ],
   "order" : [ {
-    "property" : "att32",
+    "property" : "att8",
     "reverse" : false
   } ]
 }

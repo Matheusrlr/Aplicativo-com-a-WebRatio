@@ -1,4 +1,4 @@
-<Screen xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" id="av1#scr2" gr:x="0" gr:y="10" name="Login">
+<Screen xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" id="av1#scr2" gr:x="5" gr:y="-180" name="Login">
   <layout:Grid>
     <layout:Row>
       <layout:Cell colspan="12">

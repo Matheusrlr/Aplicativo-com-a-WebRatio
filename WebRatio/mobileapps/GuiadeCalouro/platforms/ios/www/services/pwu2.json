@@ -3,10 +3,17 @@
   "entity" : "cls3",
   "maxResults" : 0,
   "condExprs" : {
-    "property" : "att13",
-    "operator" : "eq.ic",
-    "valueInput" : "acond3",
-    "implied" : true,
+    "and" : [ {
+      "property" : "att13",
+      "operator" : "eq.ic",
+      "valueInput" : "acond3",
+      "implied" : true
+    }, {
+      "property" : "att21",
+      "operator" : "bw.ic",
+      "valueInput" : "acond1",
+      "implied" : true
+    } ],
     "config" : {
       "oneImpliedInputRequired" : false
     }

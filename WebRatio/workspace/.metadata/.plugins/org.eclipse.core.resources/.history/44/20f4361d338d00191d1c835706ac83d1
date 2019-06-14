@@ -1,0 +1,38 @@
+<Screen xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" gr:x="30" gr:y="595" id="av1#scr9" name="Screen 9">
+  <ViewComponents>
+    <Form gr:x="0" gr:y="0" id="av1#scr9#enu4" name="Cadastrar Variedade" fieldOrder="av1#scr9#enu4#fld9 av1#scr9#enu4#sfld1" eventOrder="av1#scr9#enu4#oslte11">
+      <SelectionField id="av1#scr9#enu4#sfld1" name="Categoria" type="string" modifiable="true"/>
+      <Field id="av1#scr9#enu4#fld9" name="Nome" type="string" modifiable="true"/>
+      <Events>
+        <OnSelectEvent id="av1#scr9#enu4#oslte11" name="Save" validate="true">
+          <NavigationFlow id="av1#scr9#enu4#oslte11#nf13" to="av1#act3">
+            <ParameterBinding id="av1#scr9#enu4#oslte11#nf13#par33" source="av1#scr9#enu4#fld9" target="av1#act3.tlads0#ad5#ipd5#pdp13" name="Nome - nome"/>
+            <ParameterBinding id="av1#scr9#enu4#oslte11#nf13#par34" source="av1#scr9#enu4#sfld1" target="av1#act3.tlads0#ad5#ipd5#pdp14" name="Categoria - oid_cat"/>
+          </NavigationFlow>
+        </OnSelectEvent>
+      </Events>
+    </Form>
+  </ViewComponents>
+  <layout:Grid containerType="grid">
+    <layout:Row>
+      <layout:Cell colspan="12">
+        <layout:Component componentId="av1#scr9#enu4">
+          <layout:Field field="av1#scr9#enu4#fld9"/>
+          <layout:Field field="av1#scr9#enu4#sfld1"/>
+          <layout:Event event="av1#scr9#enu4#oslte11" eventType="OnSelectEvent"/>
+        </layout:Component>
+      </layout:Cell>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+  </layout:Grid>
+</Screen>

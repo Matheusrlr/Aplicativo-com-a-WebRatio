@@ -1,0 +1,87 @@
+{
+  "_" : "wrm.core.PanelService",
+  "masters" : [ "tlb1" ],
+  "navigations" : {
+    "0" : {
+      "nc" : true,
+      "flows" : "scr7",
+      "fr" : true
+    },
+    "1" : {
+      "nc" : true,
+      "flows" : "scr7.link",
+      "fr" : true
+    },
+    "2" : {
+      "flows" : "scr7.auto-link",
+      "fr" : true
+    },
+    "3" : {
+      "flows" : "scr7.auto-link"
+    },
+    "4" : {
+      "flows" : "nf3|validation-failed"
+    },
+    "5" : {
+      "flows" : "nf18",
+      "fr" : true
+    },
+    "6" : {
+      "flows" : "nf18"
+    },
+    "7" : {
+      "flows" : "nf3|nf5",
+      "effects" : "#pr#"
+    }
+  },
+  "knownEffects" : "#pr#",
+  "propagationSequence" : "",
+  "propagations" : { },
+  "components" : {
+    "enu3" : {
+      "fb" : true,
+      "conds" : [ {
+        "fr" : false,
+        "navs" : "3|7",
+        "effects" : "#pr#"
+      }, {
+        "fr" : false,
+        "navs" : "7",
+        "effects" : "-"
+      } ],
+      "rf" : [ {
+        "all" : true,
+        "navs" : "6|7"
+      }, {
+        "all" : true,
+        "fr" : true,
+        "navs" : "0|1|5"
+      } ]
+    }
+  },
+  "events" : {
+    "oslte1" : {
+      "component" : "enu3",
+      "type" : "OnSelectEvent",
+      "flow" : {
+        "id" : "nf3",
+        "navTo" : "act2",
+        "bindTo" : "act2",
+        "preserve" : "",
+        "bind" : {
+          "act2.pdp4" : "fld6",
+          "act2.pdp3" : "fld5",
+          "act2.pdp2" : "fld3",
+          "act2.pdp1" : "fld4",
+          "act2.pdp6" : "fld7"
+        }
+      }
+    }
+  },
+  "autoFlow" : {
+    "preserve" : ""
+  },
+  "autoFlowFull" : {
+    "preserve" : ""
+  }
+}

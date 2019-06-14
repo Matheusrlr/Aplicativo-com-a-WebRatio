@@ -89,7 +89,7 @@
     <Attribute id="cls1#att1" name="oid" key="true" specialBehavior="implicitOid" type="integer" db:column="oid"/>
     <Attribute id="cls1#att26" name="createdAt" type="timestamp" specialBehavior="createTimestamp" db:column="createdat"/>
     <Attribute id="cls1#att27" name="updatedAt" type="timestamp" specialBehavior="updateTimestamp" db:column="updatedat"/>
-    <Attribute id="cls1#att23" name="logo" type="blob" db:column="logo"/>
+    <Attribute id="cls1#att23" name="logo" type="blob" db:column="logo" contentType="image" uploadPath="/home/matheus/imagens_webratio"/>
   </Class>
   <Class id="cls2" name="Feedback" duration="persistent" attributeOrder="cls2#att2 cls2#att9 cls2#att8 cls2#att7 cls2#att6 cls2#att3 cls2#att28 cls2#att29" gr:x="590" gr:y="140" db:database="db1" db:table="feedback">
     <Attribute id="cls2#att2" name="oid" key="true" specialBehavior="implicitOid" type="integer" db:column="oid"/>

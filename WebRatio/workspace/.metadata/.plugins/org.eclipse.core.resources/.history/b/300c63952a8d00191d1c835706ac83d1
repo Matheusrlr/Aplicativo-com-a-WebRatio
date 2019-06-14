@@ -1,0 +1,31 @@
+<Screen xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" gr:x="670" gr:y="405" id="av1#scr11" name="Screen 11">
+  <ViewComponents>
+    <Form gr:x="0" gr:y="0" id="av1#scr11#enu5" name="Cadastrar Estabelecimento" eventOrder="av1#scr11#enu5#oslte12">
+      <Events>
+        <OnSelectEvent id="av1#scr11#enu5#oslte12" name="Save" validate="true">
+          <NavigationFlow id="av1#scr11#enu5#oslte12#nf23" to="av1#act5" automaticCoupling="true"/>
+        </OnSelectEvent>
+      </Events>
+    </Form>
+  </ViewComponents>
+  <layout:Grid containerType="grid">
+    <layout:Row>
+      <layout:Cell colspan="12">
+        <layout:Component componentId="av1#scr11#enu5">
+          <layout:Event event="av1#scr11#enu5#oslte12" eventType="OnSelectEvent"/>
+        </layout:Component>
+      </layout:Cell>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+  </layout:Grid>
+</Screen>

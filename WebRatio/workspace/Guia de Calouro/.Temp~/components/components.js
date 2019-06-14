@@ -46,53 +46,65 @@
 
 	var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { "default": obj }; };
 
-	var _import = __webpack_require__(4);
+	var _import = __webpack_require__(9);
 
 	var mod0 = _interopRequireWildcard(_import);
 
-	var _import2 = __webpack_require__(5);
+	var _import2 = __webpack_require__(4);
 
 	var mod1 = _interopRequireWildcard(_import2);
 
-	var _import3 = __webpack_require__(8);
+	var _import3 = __webpack_require__(5);
 
 	var mod2 = _interopRequireWildcard(_import3);
 
-	var _import4 = __webpack_require__(6);
+	var _import4 = __webpack_require__(3);
 
 	var mod3 = _interopRequireWildcard(_import4);
 
-	var _import5 = __webpack_require__(7);
+	var _import5 = __webpack_require__(6);
 
 	var mod4 = _interopRequireWildcard(_import5);
 
-	var _import6 = __webpack_require__(3);
+	var _import6 = __webpack_require__(10);
 
 	var mod5 = _interopRequireWildcard(_import6);
 
-	var _import7 = __webpack_require__(1);
+	var _import7 = __webpack_require__(7);
 
 	var mod6 = _interopRequireWildcard(_import7);
 
-	var _import8 = __webpack_require__(2);
+	var _import8 = __webpack_require__(8);
 
 	var mod7 = _interopRequireWildcard(_import8);
 
-	wrm.defineModule("wrm/comp/MessageService", mod0);
+	var _import9 = __webpack_require__(1);
 
-	wrm.defineModule("wrm/comp/DetailsService", mod1);
+	var mod8 = _interopRequireWildcard(_import9);
 
-	wrm.defineModule("wrm/comp/val/MandatoryValidationRuleService", mod2);
+	var _import10 = __webpack_require__(2);
 
-	wrm.defineModule("wrm/comp/FormService", mod3);
+	var mod9 = _interopRequireWildcard(_import10);
 
-	wrm.defineModule("wrm/comp/ListService", mod4);
+	wrm.defineModule("wrm/comp/val/MandatoryValidationRuleService", mod0);
 
-	wrm.defineModule("wrm/comp/SelectorService", mod5);
+	wrm.defineModule("wrm/comp/FormService", mod1);
 
-	wrm.defineModule("wrm/comp/LoginService", mod6);
+	wrm.defineModule("wrm/comp/ListService", mod2);
 
-	wrm.defineModule("wrm/comp/CreateService", mod7);
+	wrm.defineModule("wrm/comp/SelectorService", mod3);
+
+	wrm.defineModule("wrm/comp/DetailsService", mod4);
+
+	wrm.defineModule("wrm/comp/val/EMailValidationRuleService", mod5);
+
+	wrm.defineModule("wrm/comp/MessageService", mod6);
+
+	wrm.defineModule("wrm/comp/ViewComponentService", mod7);
+
+	wrm.defineModule("wrm/comp/LoginService", mod8);
+
+	wrm.defineModule("wrm/comp/CreateService", mod9);
 
 /***/ },
 /* 1 */
@@ -556,205 +568,6 @@
 
 /***/ },
 /* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	/**
-	 * Service for Message view components.
-	 * 
-	 * @constructor
-	 * @extends wrm.core.AbstractCachedViewComponentService
-	 * @param {string} id
-	 * @param {!Object} descr
-	 * @param {!wrm.core.Manager} manager
-	 */
-	exports.default = wrm.defineService(wrm.core.AbstractCachedViewComponentService, {
-
-	    /** @override */
-	    initialize: function (descr) {
-
-	        /**
-	         * @private
-	         * @type {?string}
-	         */
-	        this._defaultMessage = descr["defaultMessage"] || null;
-
-	        /**
-	         * @private
-	         * @type {?Array}
-	         */
-	        this._placeholders = descr["placeholders"];
-	    },
-
-	    /** @override */
-	    createResult: function (context) {
-	        var input = context.getInput();
-
-	        /* Get messages from input, or use the default one */
-	        var messages = input["messages"];
-	        if (messages === undefined) {
-	            messages = this._defaultMessage;
-	        }
-
-	        /* Get placeholders values and replace in messages */
-	        var placeholder = {};
-	        for (placeholder in this._placeholders) {
-	            var value = "";
-	            placeholder = this._placeholders[placeholder];
-	            if (input[placeholder["name"]] !== undefined) {
-	                value = input[placeholder["name"]];
-	            }
-	            var exp = new RegExp("\\$\\$" + placeholder["label"] + "\\$\\$", "g");
-	            if (angular.isArray(messages)) {
-	                var message = null;
-	                for (message in messages) {
-	                    messages[message] = messages[message].replace(exp, value);
-	                }
-	            } else {
-	                messages = messages.replace(exp, value);
-	            }
-	        }
-
-	        return {
-	            "messages": wrm.data.toStringArray(messages)
-	        };
-	    } });
-	module.exports = exports.default;
-
-/***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	/**
-	 * Service for Details view components.
-	 * 
-	 * @constructor
-	 * @extends wrm.core.AbstractCachedViewComponentService
-	 * @param {string} id
-	 * @param {!Object} descr
-	 * @param {!wrm.core.Manager} manager
-	 */
-	exports.default = wrm.defineService(wrm.core.AbstractCachedViewComponentService, {
-
-	    /** @override */
-	    initialize: function (descr) {
-	        var thisService = this;
-
-	        /**
-	         * @private
-	         * @type {!string}
-	         */
-	        this._entityId = descr["entity"];
-
-	        /**
-	         * @private
-	         * @type {!Object}
-	         */
-	        this._output; // init'd below
-
-	        /**
-	         * @private
-	         * @type {!Object}
-	         */
-	        this._toBind; // init'd below
-
-	        // TODO cache query instead
-	        /**
-	         * @private
-	         * @type {!Object}
-	         */
-	        this._condExpr; // init'd below
-
-	        /**
-	         * @private
-	         * @type {!wrm.data.DataService}
-	         */
-	        this._dataService; // init'd below
-
-	        return this.getManager().getDataService().then(function (dataService) {
-	            thisService._dataService = dataService;
-	            thisService._condExpr = descr["condExprs"];
-	            var output = descr["output"];
-	            thisService._output = {};
-	            thisService._toBind = {};
-	            if (output.length !== 0) {
-	                output.forEach(function (column) {
-	                    thisService._output[column["viewName"]] = column["ref"];
-	                    thisService._toBind[column["viewName"]] = column["bindName"];
-	                });
-	            }
-	        });
-	    },
-
-	    /** @override */
-	    createResult: function (context) {
-	        var thisService = this;
-	        var input = context.getInput();
-
-	        var resultsPromise = this._dataService.execute(function (d) {
-	            var options = {
-	                output: thisService._output,
-	                outputConfig: {
-	                    useNames: true
-	                },
-	                filter: thisService._condExpr
-	            };
-	            return d.selectOne(thisService._entityId, options, input);
-	        });
-
-	        return resultsPromise.then(function (row) {
-	            return {
-	                "data": row
-	            };
-	        }, function (e) {
-	            thisService.getLog().error(e);
-	        });
-	    },
-
-	    /** @override */
-	    isStaleResult: function (context, result) {
-	        return !result["data"];
-	    },
-
-	    /** @override */
-	    computeOutputFromResult: function (context, result) {
-	        return this._createOutput(result["data"]);
-	    },
-
-	    /** @override */
-	    submitView: function (context) {
-	        return this._createOutput(context.getView()["data"]);
-	    },
-
-	    /**
-	     * @private
-	     * @param {!Object} data
-	     * @returns {!Object}
-	     */
-	    _createOutput: function (data) {
-	        var output = {};
-	        if (data === null) {
-	            output["dataSize"] = 0;
-	        } else {
-	            var toBind = this._toBind;
-	            var outputData = {};
-	            Object.keys(this._output).forEach(function (key) {
-	                outputData[toBind[key]] = data[key];
-	            });
-	            output["data"] = outputData;
-	            output["dataSize"] = 1;
-	        }
-	        return output;
-	    } });
-	module.exports = exports.default;
-
-/***/ },
-/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	Object.defineProperty(exports, "__esModule", {
@@ -1370,7 +1183,7 @@
 	module.exports = exports.default;
 
 /***/ },
-/* 7 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	Object.defineProperty(exports, "__esModule", {
@@ -1661,7 +1474,232 @@
 	module.exports = exports.default;
 
 /***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	/**
+	 * Service for Details view components.
+	 * 
+	 * @constructor
+	 * @extends wrm.core.AbstractCachedViewComponentService
+	 * @param {string} id
+	 * @param {!Object} descr
+	 * @param {!wrm.core.Manager} manager
+	 */
+	exports.default = wrm.defineService(wrm.core.AbstractCachedViewComponentService, {
+
+	    /** @override */
+	    initialize: function (descr) {
+	        var thisService = this;
+
+	        /**
+	         * @private
+	         * @type {!string}
+	         */
+	        this._entityId = descr["entity"];
+
+	        /**
+	         * @private
+	         * @type {!Object}
+	         */
+	        this._output; // init'd below
+
+	        /**
+	         * @private
+	         * @type {!Object}
+	         */
+	        this._toBind; // init'd below
+
+	        // TODO cache query instead
+	        /**
+	         * @private
+	         * @type {!Object}
+	         */
+	        this._condExpr; // init'd below
+
+	        /**
+	         * @private
+	         * @type {!wrm.data.DataService}
+	         */
+	        this._dataService; // init'd below
+
+	        return this.getManager().getDataService().then(function (dataService) {
+	            thisService._dataService = dataService;
+	            thisService._condExpr = descr["condExprs"];
+	            var output = descr["output"];
+	            thisService._output = {};
+	            thisService._toBind = {};
+	            if (output.length !== 0) {
+	                output.forEach(function (column) {
+	                    thisService._output[column["viewName"]] = column["ref"];
+	                    thisService._toBind[column["viewName"]] = column["bindName"];
+	                });
+	            }
+	        });
+	    },
+
+	    /** @override */
+	    createResult: function (context) {
+	        var thisService = this;
+	        var input = context.getInput();
+
+	        var resultsPromise = this._dataService.execute(function (d) {
+	            var options = {
+	                output: thisService._output,
+	                outputConfig: {
+	                    useNames: true
+	                },
+	                filter: thisService._condExpr
+	            };
+	            return d.selectOne(thisService._entityId, options, input);
+	        });
+
+	        return resultsPromise.then(function (row) {
+	            return {
+	                "data": row
+	            };
+	        }, function (e) {
+	            thisService.getLog().error(e);
+	        });
+	    },
+
+	    /** @override */
+	    isStaleResult: function (context, result) {
+	        return !result["data"];
+	    },
+
+	    /** @override */
+	    computeOutputFromResult: function (context, result) {
+	        return this._createOutput(result["data"]);
+	    },
+
+	    /** @override */
+	    submitView: function (context) {
+	        return this._createOutput(context.getView()["data"]);
+	    },
+
+	    /**
+	     * @private
+	     * @param {!Object} data
+	     * @returns {!Object}
+	     */
+	    _createOutput: function (data) {
+	        var output = {};
+	        if (data === null) {
+	            output["dataSize"] = 0;
+	        } else {
+	            var toBind = this._toBind;
+	            var outputData = {};
+	            Object.keys(this._output).forEach(function (key) {
+	                outputData[toBind[key]] = data[key];
+	            });
+	            output["data"] = outputData;
+	            output["dataSize"] = 1;
+	        }
+	        return output;
+	    } });
+	module.exports = exports.default;
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	/**
+	 * Service for Message view components.
+	 * 
+	 * @constructor
+	 * @extends wrm.core.AbstractCachedViewComponentService
+	 * @param {string} id
+	 * @param {!Object} descr
+	 * @param {!wrm.core.Manager} manager
+	 */
+	exports.default = wrm.defineService(wrm.core.AbstractCachedViewComponentService, {
+
+	    /** @override */
+	    initialize: function (descr) {
+
+	        /**
+	         * @private
+	         * @type {?string}
+	         */
+	        this._defaultMessage = descr["defaultMessage"] || null;
+
+	        /**
+	         * @private
+	         * @type {?Array}
+	         */
+	        this._placeholders = descr["placeholders"];
+	    },
+
+	    /** @override */
+	    createResult: function (context) {
+	        var input = context.getInput();
+
+	        /* Get messages from input, or use the default one */
+	        var messages = input["messages"];
+	        if (messages === undefined) {
+	            messages = this._defaultMessage;
+	        }
+
+	        /* Get placeholders values and replace in messages */
+	        var placeholder = {};
+	        for (placeholder in this._placeholders) {
+	            var value = "";
+	            placeholder = this._placeholders[placeholder];
+	            if (input[placeholder["name"]] !== undefined) {
+	                value = input[placeholder["name"]];
+	            }
+	            var exp = new RegExp("\\$\\$" + placeholder["label"] + "\\$\\$", "g");
+	            if (angular.isArray(messages)) {
+	                var message = null;
+	                for (message in messages) {
+	                    messages[message] = messages[message].replace(exp, value);
+	                }
+	            } else {
+	                messages = messages.replace(exp, value);
+	            }
+	        }
+
+	        return {
+	            "messages": wrm.data.toStringArray(messages)
+	        };
+	    } });
+	module.exports = exports.default;
+
+/***/ },
 /* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	/**
+	 * Service for View Component view components.
+	 * 
+	 * @constructor
+	 * @extends wrm.core.AbstractCachedViewComponentService
+	 * @param {string} id
+	 * @param {!Object} descr
+	 * @param {!wrm.core.Manager} manager
+	 */
+	exports.default = wrm.defineService(wrm.core.AbstractCachedViewComponentService, {
+
+	    /** @override */
+	    createResult: function (context) {
+	        return {};
+	    }
+
+	});
+	module.exports = exports.default;
+
+/***/ },
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	Object.defineProperty(exports, "__esModule", {
@@ -1776,6 +1814,41 @@
 	     */
 	    _isEmpty: function (value) {
 	        return value === null || value === undefined || value === "";
+	    } });
+	module.exports = exports.default;
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	/**
+	 * Service for EMail validation rules.
+	 * 
+	 * @constructor
+	 * @extends wrm.val.AbstractPropertyValidationRuleService
+	 * @param {string} id
+	 * @param {!Object} descr
+	 * @param {!wrm.core.Manager} manager
+	 */
+	exports.default = wrm.defineService(wrm.val.AbstractPropertyValidationRuleService, {
+
+	    /** @override */
+	    validate: function (context) {
+	        var property = context.getElement();
+	        var propertyValue = property.getValue();
+	        if (propertyValue === undefined || propertyValue === null || propertyValue === "") {
+	            return wrm.val.RulePolicy.CONTINUE;
+	        }
+	        /* regex copied from http://scraping.pro/email-validation-regexes and added capital letters */
+	        var mailRegex = /^(?:[a-zA-Z0-9!#$%&'*+/=?^_{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-zA-Z0-9-]*[a-zA-Z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
+	        if (!mailRegex.exec(propertyValue)) {
+	            property.addError(this.getMessageKey("error"));
+	            return wrm.val.RulePolicy.STOP;
+	        }
+	        return wrm.val.RulePolicy.CONTINUE;
 	    } });
 	module.exports = exports.default;
 

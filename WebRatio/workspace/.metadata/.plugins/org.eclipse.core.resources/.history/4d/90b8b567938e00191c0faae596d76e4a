@@ -1,0 +1,33 @@
+<Toolbar xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" gr:x="445" gr:y="10" id="av1#tlb1" name="Main toolbar">
+  <ViewComponents/>
+  <Events>
+    <OnSelectEvent id="av1#tlb1#oslte2" name="Menu">
+      <NavigationFlow id="av1#tlb1#oslte2#nf7" to="av1#scr6" automaticCoupling="true" name="Menu"/>
+    </OnSelectEvent>
+    <OnSelectEvent id="av1#tlb1#oslte13" name="Formu&#225;rio">
+      <NavigationFlow id="av1#tlb1#oslte13#nf18" to="av1#scr7" automaticCoupling="true"/>
+    </OnSelectEvent>
+    <OnSelectEvent id="av1#tlb1#oslte14" name="Estabelecimentos">
+      <NavigationFlow id="av1#tlb1#oslte14#nf19" to="av1#scr3" automaticCoupling="true"/>
+    </OnSelectEvent>
+  </Events>
+  <layout:CustomLocation name="Top Bar">
+    <layout:Grid containerType="cell">
+      <layout:Row>
+        <layout:Cell layout:cellLayout="MobileDefault/Bar">
+          <layout:Fragment type="applicationName"/>
+          <layout:Event eventType="HomeEvent"/>
+        </layout:Cell>
+      </layout:Row>
+    </layout:Grid>
+  </layout:CustomLocation>
+  <layout:CustomLocation name="Bottom Bar">
+    <layout:Grid containerType="cell">
+      <layout:Row>
+        <layout:Cell layout:cellLayout="MobileDefault/Bar">
+          <layout:Event eventType="BackEvent"/>
+        </layout:Cell>
+      </layout:Row>
+    </layout:Grid>
+  </layout:CustomLocation>
+</Toolbar>

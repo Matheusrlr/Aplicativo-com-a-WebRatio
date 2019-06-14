@@ -1,10 +1,10 @@
 ENABLE_USAGE_STATISTICS=ENABLED
 PROXY_PORT=0
 WORKING_MODE=OnlineServer
-com.webratio.ide.UsageStatisticsManager.ACT_SECS_NAME=31606
-com.webratio.ide.UsageStatisticsManager.GENERATION_PREF_NAME=71
+com.webratio.ide.UsageStatisticsManager.ACT_SECS_NAME=40336
+com.webratio.ide.UsageStatisticsManager.GENERATION_PREF_NAME=80
 com.webratio.ide.UsageStatisticsManager.ID_PREF_NAME=5973CE25
-com.webratio.ide.UsageStatisticsManager.MOBILE_GENERATION_PREF_NAME=161
+com.webratio.ide.UsageStatisticsManager.MOBILE_GENERATION_PREF_NAME=205
 com.webratio.ide.UsageStatisticsManager.MODEL_WARNING_GENERATION_PREF_NAME=54
 com.webratio.ide.last-build-id=201902120438
 eclipse.preferences.version=1

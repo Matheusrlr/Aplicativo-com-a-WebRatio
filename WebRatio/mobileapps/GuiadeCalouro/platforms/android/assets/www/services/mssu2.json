@@ -1,0 +1,5 @@
+{
+  "service" : "wrm.comp.MessageService",
+  "defaultMessage" : "Bem vindo!",
+  "placeholders" : [ ]
+}

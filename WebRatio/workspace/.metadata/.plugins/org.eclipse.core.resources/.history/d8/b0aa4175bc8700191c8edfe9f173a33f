@@ -1,0 +1,33 @@
+<Screen xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" id="av1#scr1" gr:x="250" gr:y="120" name="Home" protected="false">
+  <layout:Grid>
+    <layout:Row>
+      <layout:Cell colspan="12">
+        <layout:Component componentId="av1#scr1#mssu2">
+          <layout:Event event="av1#scr1#mssu2#oslte6" eventType="OnSelectEvent"/>
+        </layout:Component>
+      </layout:Cell>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+  </layout:Grid>
+  <ViewComponents>
+    <Message gr:x="0" gr:y="0" id="av1#scr1#mssu2" name="Mensagem" eventOrder="av1#scr1#mssu2#oslte6">
+      <Message xml:space="preserve">Bem vindo!</Message>
+      <Events>
+        <OnSelectEvent id="av1#scr1#mssu2#oslte6" name="ir" gr:pinned="true" gr:side="2" gr:pos="3">
+          <NavigationFlow id="av1#scr1#mssu2#oslte6#nf15" to="av1#scr6" automaticCoupling="true"/>
+        </OnSelectEvent>
+      </Events>
+    </Message>
+  </ViewComponents>
+  <Comment xml:space="preserve">This is the main screen of the mobile application. This screen must be protected so that the application redirects the user to the login screen when the user credentials are missing or when the user lacks access rights to see the screen. Feel free to change this model by encapsulating the screen in a protected screen set or by modeling other protected screens.</Comment>
+</Screen>

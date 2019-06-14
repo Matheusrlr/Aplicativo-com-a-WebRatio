@@ -1,4 +1,4 @@
-<Screen xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" gr:x="510" gr:y="-275" id="av1#scr3" name="Categorias">
+<Screen xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" gr:x="600" gr:y="-320" id="av1#scr3" name="Categorias">
   <ViewComponents>
     <List gr:x="0" gr:y="0" id="av1#scr3#pwu1" name="Categorias" checkable="false" dataBinding="cls2" distinct="false" displayAttributes="cls2#att8 cls2#att9" eventOrder="av1#scr3#pwu1#oslte3">
       <SortAttribute attribute="cls2#att8" order="ascending"/>

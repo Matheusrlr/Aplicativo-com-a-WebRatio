@@ -17,10 +17,10 @@
     <CheckPermission>false</CheckPermission>
     <LinkIdRequired>true</LinkIdRequired>
     <OperationParams>
-      <OperationParam component="cru1">cru1.att6</OperationParam>
-      <OperationParam component="cru1">cru1.att7</OperationParam>
-      <OperationParam component="cru1">cru1.att8</OperationParam>
       <OperationParam component="cru1">cru1.att9</OperationParam>
+      <OperationParam component="cru1">cru1.att8</OperationParam>
+      <OperationParam component="cru1">cru1.att7</OperationParam>
+      <OperationParam component="cru1">cru1.att6</OperationParam>
       <OperationParam component="cru1">cru1.att3</OperationParam>
       <Params/>
     </OperationParams>

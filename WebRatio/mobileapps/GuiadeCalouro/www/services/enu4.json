@@ -1,0 +1,49 @@
+{
+  "service" : "wrm.comp.FormService",
+  "fields" : [ {
+    "id" : "sfld1",
+    "fieldType" : "SelectionField",
+    "type" : "string",
+    "preselectValue" : "",
+    "splitOutput" : false,
+    "labelSlots" : [ ],
+    "outputSlots" : [ ]
+  }, {
+    "id" : "fld9",
+    "fieldType" : "Field",
+    "type" : "string",
+    "labelSlots" : [ ],
+    "outputSlots" : [ ]
+  } ],
+  "_form" : {
+    "_" : "wrm.form.DefaultFormSubService",
+    "formLabel" : "Cadastrar Variedade",
+    "viewFormRef" : "form",
+    "properties" : {
+      "sfld1" : {
+        "type" : "string",
+        "label" : "Categoria"
+      },
+      "fld9" : {
+        "type" : "string",
+        "label" : "Nome"
+      }
+    }
+  },
+  "_validation" : {
+    "_" : "wrm.form.DefaultValidationSubService",
+    "events" : "oslte11",
+    "properties" : {
+      "sfld1" : { },
+      "fld9" : {
+        "rules" : [ {
+          "id" : "mnd10",
+          "descr" : {
+            "service" : "wrm.comp.val.MandatoryValidationRuleService",
+            "messageKeyPrefix" : "MandatoryValidationRule."
+          }
+        } ]
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "_" : "wrm.data.sync.DataSyncService",
+  "entities" : {
+    "cls2" : {
+      "startup" : true,
+      "reopen" : 0
+    },
+    "cls3" : {
+      "startup" : true,
+      "reopen" : 0
+    },
+    "cls1" : {
+      "startup" : true,
+      "reopen" : 0
+    },
+    "cls4" : {
+      "startup" : true,
+      "reopen" : 0
+    },
+    "cls5" : {
+      "startup" : true,
+      "reopen" : 0
+    }
+  }
+}

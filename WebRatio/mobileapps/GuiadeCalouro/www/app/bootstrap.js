@@ -77,6 +77,8 @@
 		
 			modules.push("mobileDefault.ionicExtension");
 		
+			modules.push("mobileDefault.select");
+		
 			modules.push("angularExtension");
 		
 			modules.push("mobileDefault.externalOpen");

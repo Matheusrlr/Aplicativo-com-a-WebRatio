@@ -1,0 +1,46 @@
+<Screen xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" gr:x="0" gr:y="280" id="av1#scr14" name="Cadastro">
+  <ViewComponents>
+    <Form gr:x="0" gr:y="0" id="av1#scr14#enu7" name="Cadastrar Categoria" fieldOrder="av1#scr14#enu7#fld17 av1#scr14#enu7#fld18" eventOrder="av1#scr14#enu7#oslte8">
+      <Field id="av1#scr14#enu7#fld18" name="Descri&#231;&#227;o" type="string" modifiable="true">
+        <VRules>
+          <MandatoryValidationRule id="av1#scr14#enu7#fld18#mnd8" name="Mandatory8"/>
+        </VRules>
+      </Field>
+      <Field id="av1#scr14#enu7#fld17" name="Nome" type="string" modifiable="true">
+        <VRules>
+          <MandatoryValidationRule id="av1#scr14#enu7#fld17#mnd9" name="Mandatory9"/>
+        </VRules>
+      </Field>
+      <Events>
+        <OnSelectEvent id="av1#scr14#enu7#oslte8" name="Save" validate="true">
+          <NavigationFlow id="av1#scr14#enu7#oslte8#nf16" to="av1#act4">
+            <ParameterBinding id="av1#scr14#enu7#oslte8#nf16#par27" source="av1#scr14#enu7#fld18" target="av1#act4.tlads0#ad4#ipd4#pdp9" name="Descri&#231;&#227;o - decricao"/>
+            <ParameterBinding id="av1#scr14#enu7#oslte8#nf16#par28" source="av1#scr14#enu7#fld17" target="av1#act4.tlads0#ad4#ipd4#pdp8" name="Nome - nome"/>
+          </NavigationFlow>
+        </OnSelectEvent>
+      </Events>
+    </Form>
+  </ViewComponents>
+  <layout:Grid containerType="grid">
+    <layout:Row>
+      <layout:Cell colspan="12">
+        <layout:Component componentId="av1#scr14#enu7">
+          <layout:Field field="av1#scr14#enu7#fld17"/>
+          <layout:Field field="av1#scr14#enu7#fld18"/>
+          <layout:Event event="av1#scr14#enu7#oslte8" eventType="OnSelectEvent"/>
+        </layout:Component>
+      </layout:Cell>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+  </layout:Grid>
+</Screen>

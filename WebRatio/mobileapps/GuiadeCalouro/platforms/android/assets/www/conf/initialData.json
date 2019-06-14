@@ -244,7 +244,8 @@
     "matrCula" : 1,
     "sobrenome" : "Feedback sobrenome 1",
     "nome" : "Feedback nome 1",
-    "sugestao" : "Feedback sugestao 1"
+    "sugestao" : "Feedback sugestao 1",
+    "matricula" : 1
   }, {
     "oid" : 2,
     "sexo" : "Feedback sexo 2",
@@ -252,7 +253,8 @@
     "matrCula" : 2,
     "sobrenome" : "Feedback sobrenome 2",
     "nome" : "Feedback nome 2",
-    "sugestao" : "Feedback sugestao 2"
+    "sugestao" : "Feedback sugestao 2",
+    "matricula" : 2
   }, {
     "oid" : 3,
     "sexo" : "Feedback sexo 3",
@@ -260,7 +262,8 @@
     "matrCula" : 3,
     "sobrenome" : "Feedback sobrenome 3",
     "nome" : "Feedback nome 3",
-    "sugestao" : "Feedback sugestao 3"
+    "sugestao" : "Feedback sugestao 3",
+    "matricula" : 3
   }, {
     "oid" : 4,
     "sexo" : "Feedback sexo 4",
@@ -268,7 +271,8 @@
     "matrCula" : 4,
     "sobrenome" : "Feedback sobrenome 4",
     "nome" : "Feedback nome 4",
-    "sugestao" : "Feedback sugestao 4"
+    "sugestao" : "Feedback sugestao 4",
+    "matricula" : 4
   }, {
     "oid" : 5,
     "sexo" : "Feedback sexo 5",
@@ -276,7 +280,8 @@
     "matrCula" : 5,
     "sobrenome" : "Feedback sobrenome 5",
     "nome" : "Feedback nome 5",
-    "sugestao" : "Feedback sugestao 5"
+    "sugestao" : "Feedback sugestao 5",
+    "matricula" : 5
   }, {
     "oid" : 6,
     "sexo" : "Feedback sexo 6",
@@ -284,7 +289,8 @@
     "matrCula" : 6,
     "sobrenome" : "Feedback sobrenome 6",
     "nome" : "Feedback nome 6",
-    "sugestao" : "Feedback sugestao 6"
+    "sugestao" : "Feedback sugestao 6",
+    "matricula" : 6
   } ],
   "data.Menu" : [ {
     "oid" : 1,

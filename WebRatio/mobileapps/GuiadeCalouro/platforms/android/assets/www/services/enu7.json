@@ -1,0 +1,55 @@
+{
+  "service" : "wrm.comp.FormService",
+  "fields" : [ {
+    "id" : "fld18",
+    "fieldType" : "Field",
+    "type" : "string",
+    "labelSlots" : [ ],
+    "outputSlots" : [ ]
+  }, {
+    "id" : "fld17",
+    "fieldType" : "Field",
+    "type" : "string",
+    "labelSlots" : [ ],
+    "outputSlots" : [ ]
+  } ],
+  "_form" : {
+    "_" : "wrm.form.DefaultFormSubService",
+    "formLabel" : "Cadastrar Categoria",
+    "viewFormRef" : "form",
+    "properties" : {
+      "fld18" : {
+        "type" : "string",
+        "label" : "Descrição"
+      },
+      "fld17" : {
+        "type" : "string",
+        "label" : "Nome"
+      }
+    }
+  },
+  "_validation" : {
+    "_" : "wrm.form.DefaultValidationSubService",
+    "events" : "oslte8",
+    "properties" : {
+      "fld18" : {
+        "rules" : [ {
+          "id" : "mnd8",
+          "descr" : {
+            "service" : "wrm.comp.val.MandatoryValidationRuleService",
+            "messageKeyPrefix" : "MandatoryValidationRule."
+          }
+        } ]
+      },
+      "fld17" : {
+        "rules" : [ {
+          "id" : "mnd9",
+          "descr" : {
+            "service" : "wrm.comp.val.MandatoryValidationRuleService",
+            "messageKeyPrefix" : "MandatoryValidationRule."
+          }
+        } ]
+      }
+    }
+  }
+}

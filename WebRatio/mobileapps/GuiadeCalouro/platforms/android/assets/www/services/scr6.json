@@ -48,7 +48,18 @@
       } ]
     }
   },
-  "events" : { },
+  "events" : {
+    "oslte7" : {
+      "component" : "dau2",
+      "type" : "OnSelectEvent",
+      "flow" : {
+        "id" : "nf17",
+        "navTo" : "scr2",
+        "bindTo" : "scr2",
+        "preserve" : ""
+      }
+    }
+  },
   "autoFlow" : {
     "preserve" : ""
   },

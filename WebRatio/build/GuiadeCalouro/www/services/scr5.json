@@ -1,0 +1,131 @@
+{
+  "_" : "wrm.core.PanelService",
+  "masters" : [ "tlb1" ],
+  "navigations" : {
+    "0" : {
+      "nc" : true,
+      "flows" : "scr5",
+      "fr" : true
+    },
+    "1" : {
+      "nc" : true,
+      "flows" : "scr5.link",
+      "fr" : true
+    },
+    "2" : {
+      "flows" : "scr5.auto-link",
+      "fr" : true
+    },
+    "3" : {
+      "flows" : "scr5.auto-link"
+    },
+    "4" : {
+      "flows" : "nf8",
+      "fr" : true
+    },
+    "5" : {
+      "flows" : "nf8"
+    },
+    "6" : {
+      "flows" : "nf9"
+    }
+  },
+  "knownEffects" : "#pr#",
+  "propagationSequence" : "df2",
+  "propagations" : {
+    "df2" : {
+      "bindTo" : "pwu2",
+      "bindFrom" : "seu3",
+      "bind" : {
+        "maxResults" : "data.att13"
+      }
+    }
+  },
+  "components" : {
+    "pwu2" : {
+      "fb" : true,
+      "conds" : [ {
+        "fr" : false,
+        "effects" : "#pr#"
+      }, {
+        "fr" : false,
+        "navs" : "5|6",
+        "effects" : "-"
+      } ],
+      "rf" : [ {
+        "all" : true,
+        "fr" : true,
+        "navs" : "4",
+        "inputs" : "pwu2:acond3"
+      }, {
+        "all" : true,
+        "navs" : "5",
+        "inputs" : "pwu2:acond3"
+      }, {
+        "all" : true,
+        "fr" : true,
+        "navs" : "0|1"
+      }, {
+        "all" : false,
+        "navs" : "6",
+        "inputs" : "pwu2:acond1"
+      } ]
+    },
+    "seu3" : {
+      "fb" : false,
+      "nv" : true,
+      "conds" : [ {
+        "fr" : false,
+        "navs" : "3",
+        "effects" : "#pr#"
+      } ]
+    },
+    "enu2" : {
+      "fb" : true,
+      "conds" : [ {
+        "fr" : false,
+        "navs" : "3",
+        "effects" : "#pr#"
+      } ],
+      "rf" : [ {
+        "all" : true,
+        "fr" : true,
+        "navs" : "0|1|4"
+      }, {
+        "all" : true,
+        "navs" : "5"
+      } ]
+    }
+  },
+  "events" : {
+    "oslte4" : {
+      "component" : "enu2",
+      "type" : "OnSelectEvent",
+      "flow" : {
+        "id" : "nf9",
+        "navTo" : "scr5",
+        "bindTo" : "pwu2",
+        "preserve" : "pwu2:maxResults|pwu2:acond1|pwu2:acond3",
+        "bind" : {
+          "acond1" : "fld8"
+        }
+      }
+    },
+    "bke1" : {
+      "generic" : true,
+      "type" : "BackEvent",
+      "flow" : {
+        "id" : "nf10",
+        "navTo" : "scr4",
+        "bindTo" : "scr4",
+        "preserve" : ""
+      }
+    }
+  },
+  "autoFlow" : {
+    "preserve" : "pwu2:acond3"
+  },
+  "autoFlowFull" : {
+    "preserve" : "pwu2:acond3|pwu2:acond1"
+  }
+}

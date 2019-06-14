@@ -1,0 +1,15 @@
+{
+  "service" : "wrm.comp.SelectorService",
+  "entity" : "cls3",
+  "maxResults" : 0,
+  "distinct" : false,
+  "output" : [ {
+    "ref" : "att13",
+    "viewName" : "oidTip",
+    "bindName" : "att13"
+  } ],
+  "order" : [ {
+    "property" : "att21",
+    "reverse" : false
+  } ]
+}

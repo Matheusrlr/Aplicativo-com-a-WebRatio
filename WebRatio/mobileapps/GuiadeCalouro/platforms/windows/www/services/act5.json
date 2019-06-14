@@ -1,0 +1,20 @@
+{
+  "_" : "wrm.core.ActionService",
+  "definition" : "ad6",
+  "flows" : {
+    "spd6" : {
+      "id" : "nf24",
+      "navTo" : "scr12",
+      "bindTo" : "dau5",
+      "bind" : {
+        "kcond5.att20" : "pdp23"
+      }
+    },
+    "epd6" : {
+      "id" : "nf25",
+      "navTo" : "scr11",
+      "bindTo" : "scr11"
+    }
+  },
+  "notifications" : { }
+}

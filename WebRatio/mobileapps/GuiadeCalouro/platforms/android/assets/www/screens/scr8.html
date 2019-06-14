@@ -20,8 +20,8 @@
 					<p>{{ view.data.sobrenome }}</p>
 				</div>
 				<div class="item item-attribute item-body">
-					{{ 'matr\u00EDcula' | wrLocalize }}
-					<p>{{ view.data.matrCula | number : 'wr-integer' }}</p>
+					{{ 'matricula' | wrLocalize }}
+					<p>{{ view.data.matricula | number : 'wr-integer' }}</p>
 				</div>
 				<div class="item item-attribute item-body">
 					{{ 'email' | wrLocalize }}
@@ -36,6 +36,11 @@
 		<!-- end_directive: wr-component -->
 	</ion-content>
 	<ion-footer-bar keyboard-attach class="bar-positive hide-on-keyboard-open" align-title="center">
+		<div class="buttons">
+			<button type="button" class="button " ng-click="screen.throwEvent($event, 'BackEvent', null, { position: $index })">
+			{{ 'event.Back' | wrLocalize }}
+			</button>
+		</div>
 	</ion-footer-bar>
 </div>
 <!-- end_directive: wr-screen -->

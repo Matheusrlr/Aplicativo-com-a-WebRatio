@@ -1,0 +1,21 @@
+{
+  "service" : "wrm.comp.DetailsService",
+  "entity" : "cls1",
+  "condExprs" : {
+    "property" : "att5",
+    "operator" : "in",
+    "valueInput" : "kcond3.att5",
+    "config" : {
+      "oneImpliedInputRequired" : false
+    }
+  },
+  "output" : [ {
+    "ref" : "att6",
+    "viewName" : "nome",
+    "bindName" : "att6"
+  }, {
+    "ref" : "att4",
+    "viewName" : "oidCat",
+    "bindName" : "att4"
+  } ]
+}

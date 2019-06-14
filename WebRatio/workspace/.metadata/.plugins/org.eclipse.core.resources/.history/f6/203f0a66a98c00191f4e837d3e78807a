@@ -1,0 +1,44 @@
+<Screen xmlns:gr="http://www.webratio.com/2006/WebML/Graph" xmlns:layout="http://www.webratio.com/2006/WebML/Layout" id="av1#scr1" gr:x="250" gr:y="120" name="Home" protected="true">
+  <layout:Grid>
+    <layout:Row>
+      <layout:Cell colspan="12">
+        <layout:Component componentId="av1#scr1#pwu3">
+          <layout:Attribute attribute="cls4#att32"/>
+          <layout:Attribute attribute="cls4#att33"/>
+          <layout:Attribute attribute="cls4#att34"/>
+          <layout:Attribute attribute="cls4#att35"/>
+          <layout:Attribute attribute="cls4#att37"/>
+        </layout:Component>
+      </layout:Cell>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+    <layout:Row>
+      <layout:Cell colspan="12"/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+      <layout:Cell/>
+    </layout:Row>
+  </layout:Grid>
+  <ViewComponents>
+    <List gr:x="0" gr:y="0" id="av1#scr1#pwu3" name="Cadastros" checkable="false" dataBinding="cls4" displayAttributes="cls4#att32 cls4#att33 cls4#att34 cls4#att35 cls4#att37"/>
+  </ViewComponents>
+  <Comment xml:space="preserve">This is the main screen of the mobile application. This screen must be protected so that the application redirects the user to the login screen when the user credentials are missing or when the user lacks access rights to see the screen. Feel free to change this model by encapsulating the screen in a protected screen set or by modeling other protected screens.</Comment>
+</Screen>
